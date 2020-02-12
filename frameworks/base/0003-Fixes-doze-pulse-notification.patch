@@ -1,7 +1,7 @@
-From eaf83bb6a35d2626d3364d1cb73dc1bcfeffa7f9 Mon Sep 17 00:00:00 2001
+From c436589b9f3b6bd827f0c9c81b665f86632c500e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 16 Dec 2019 00:14:33 +0200
-Subject: [PATCH 03/12] Fixes doze pulse notification
+Subject: [PATCH 03/18] Fixes doze pulse notification
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/6f378949b7ab4af3399334b8f5470811dfa4e4e4

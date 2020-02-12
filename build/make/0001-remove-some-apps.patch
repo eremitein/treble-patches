@@ -1,7 +1,7 @@
-From f2315db3fd7079866530f3ba67894ed808d4039d Mon Sep 17 00:00:00 2001
+From ae38626ea6150777075c8c98decfc297dc445140 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 7 Dec 2019 16:38:50 +0200
-Subject: [PATCH 1/5] remove some apps
+Subject: [PATCH 1/4] remove some apps
 
 	modified:   target/product/handheld_product.mk
 	modified:   target/product/mainline_arm64.mk
@@ -11,7 +11,7 @@ Subject: [PATCH 1/5] remove some apps
  2 files changed, 7 deletions(-)
 
 diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
-index 0d100b2..0269afe 100644
+index 0d100b267..0269afe9c 100644
 --- a/target/product/handheld_product.mk
 +++ b/target/product/handheld_product.mk
 @@ -22,19 +22,15 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/media_product.mk)
@@ -35,7 +35,7 @@ index 0d100b2..0269afe 100644
      SettingsIntelligence \
      StorageManager \
 diff --git a/target/product/mainline_arm64.mk b/target/product/mainline_arm64.mk
-index f21fa89..92c9e0c 100644
+index f21fa89c0..92c9e0c04 100644
 --- a/target/product/mainline_arm64.mk
 +++ b/target/product/mainline_arm64.mk
 @@ -37,13 +37,10 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST += \
@@ -53,5 +53,5 @@ index f21fa89..92c9e0c 100644
    system/bin/healthd \
    system/etc/init/healthd.rc \
 -- 
-2.17.1
+2.11.0
 

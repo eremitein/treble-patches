@@ -1,0 +1,39 @@
+From 09d37eb8d13fa7a28741c1442182d6922e0cb35c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 30 Dec 2019 08:46:44 +0200
+Subject: [PATCH 14/18] decrease recent apps transition
+
+  * based on https://github.com/BlissRoms/platform_frameworks_base/commit/851ee116b8a7f6a6db3fcd0beccb05247fdbdb76
+
+	modified:   packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml
+	modified:   packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_exit.xml
+---
+ .../SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml    | 2 +-
+ .../SystemUI/legacy/recents/res/anim/recents_from_launcher_exit.xml     | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml b/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml
+index 00b3dfda135..7c7478b6150 100644
+--- a/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml
++++ b/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml
+@@ -24,5 +24,5 @@
+          android:fillEnabled="true"
+          android:fillBefore="true" android:fillAfter="true"
+          android:interpolator="@android:interpolator/linear_out_slow_in"
+-         android:duration="150"/>
++         android:duration="50"/>
+ </set>
+diff --git a/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_exit.xml b/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_exit.xml
+index 33831b8c0a3..7c6f175430f 100644
+--- a/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_exit.xml
++++ b/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_exit.xml
+@@ -24,5 +24,5 @@
+          android:fillEnabled="true"
+          android:fillBefore="true" android:fillAfter="true"
+          android:interpolator="@interpolator/recents_from_launcher_exit_interpolator"
+-         android:duration="133"/>
++         android:duration="30"/>
+ </set>
+-- 
+2.11.0
+

@@ -1,7 +1,7 @@
-From c5b9e29eeefa2ad82bfb7b569d416ec155ec93f1 Mon Sep 17 00:00:00 2001
+From 6e28100ce33ba36b686d91a1ae4bd91d775a49e4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 10 Jan 2020 20:20:08 +0200
-Subject: [PATCH 02/12] Fix protected broadcast error for doze intents
+Subject: [PATCH 02/18] Fix protected broadcast error for doze intents
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/04c6913b3c97a15b2b322e30960fe0c4209b18c1

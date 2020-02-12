@@ -1,0 +1,51 @@
+From 9b997217938da2be39933cfd0aa2b80edf8ef98c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 6 Feb 2020 15:33:39 +0200
+Subject: [PATCH 08/14] Fix FATAL EXCEPTION on SmsStorageLowWarningActivity
+
+  * from
+  https://github.com/LineageOS/android_packages_apps_Messaging/commit/f0318eb20b27e98c06f4c394ff5937d38a681c0a
+
+	modified:   AndroidManifest.xml
+	modified:   res/values/styles.xml
+---
+ AndroidManifest.xml   | 2 +-
+ res/values/styles.xml | 9 +++++++++
+ 2 files changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index d61a1d4..1757415 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -431,7 +431,7 @@
+         </activity>
+ 
+         <activity android:name=".ui.SmsStorageLowWarningActivity"
+-                  android:theme="@style/Invisible"
++                  android:theme="@style/Translucent"
+                   android:configChanges="orientation|screenSize|keyboardHidden" />
+ 
+         <activity android:name=".ui.appsettings.ApnSettingsActivity"
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+index d374a1c..d3f713d 100644
+--- a/res/values/styles.xml
++++ b/res/values/styles.xml
+@@ -76,6 +76,15 @@
+         <item name="android:windowNoDisplay">true</item>
+     </style>
+ 
++    <style name="Translucent" parent="BugleBaseTheme">
++        <item name="android:windowBackground">@android:color/transparent</item>
++        <item name="android:windowContentOverlay">@null</item>
++        <item name="android:windowIsTranslucent">true</item>
++        <item name="android:windowNoTitle">true</item>
++        <item name="android:windowAnimationStyle">@null</item>
++        <item name="android:windowDisablePreview">true</item>
++    </style>
++
+     <style name="BugleActionBar" parent="@style/Widget.AppCompat.Light.ActionBar.Solid">
+         <item name="height">@dimen/action_bar_height</item>
+         <item name="displayOptions">showTitle</item>
+-- 
+2.11.0
+

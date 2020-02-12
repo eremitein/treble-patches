@@ -1,7 +1,7 @@
-From 8d66c58a92223c38d7417640535620e1d13c9de2 Mon Sep 17 00:00:00 2001
+From 65cc9320e4094df1cdf55372e8e4291b84873722 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 25 Dec 2019 12:51:49 +0200
-Subject: [PATCH 5/6] set another animation value
+Subject: [PATCH 05/11] set another animation value
 
 	modified:   src/com/android/settings/development/TransitionAnimationScalePreferenceController.java
 	modified:   src/com/android/settings/development/WindowAnimationScalePreferenceController.java

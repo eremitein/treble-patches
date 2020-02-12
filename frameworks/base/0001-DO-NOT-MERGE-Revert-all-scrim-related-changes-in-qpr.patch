@@ -1,7 +1,7 @@
-From 5e143072bc6800dae1a1c9faf88d2de11f326d91 Mon Sep 17 00:00:00 2001
+From 25ba1adc3efa74b13b5e46cd85cca86a173ef51a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 10 Jan 2020 23:15:16 +0200
-Subject: [PATCH 01/12] DO NOT MERGE Revert all scrim related changes in qpr
+Subject: [PATCH 01/18] DO NOT MERGE Revert all scrim related changes in qpr
 
   * from
   https://android.googlesource.com/platform/frameworks/base/+/b4ba5c9144685a1847d46c75ea3c2e06b0ed203d%5E!/

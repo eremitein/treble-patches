@@ -1,7 +1,7 @@
-From 1fb12d165dbb0fe09f731f0a21177ff48bea33ac Mon Sep 17 00:00:00 2001
+From 134427714c8016a5c38509a5ab08eb32fe08918e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 7 Dec 2019 14:55:14 +0200
-Subject: [PATCH 1/5] selinux: allow treble_app access to dt2w nodes
+Subject: [PATCH 1/9] selinux: allow treble_app access to dt2w nodes
 
 	new file:   sepolicy/xiaomi.te
 ---

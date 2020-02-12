@@ -1,4 +1,4 @@
-From 309eaeda39f92eca94ab4d9ead7e039fa8b4549d Mon Sep 17 00:00:00 2001
+From 9aec5e862e584f51c6c2bd45bdb2a7986ea7f439 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 10 Jan 2020 21:26:13 +0200
 Subject: [PATCH 3/3] fix widget's cropped font

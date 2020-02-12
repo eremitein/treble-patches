@@ -1,7 +1,7 @@
-From 7b89b26244fcaa2c21a5733bca1c2dc5a751a209 Mon Sep 17 00:00:00 2001
+From 4d797b49fdae4778f126b19caf5214b75546ef56 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 13:08:27 +0200
-Subject: [PATCH 3/6] hide vertical dividers in settings
+Subject: [PATCH 03/11] hide vertical dividers in settings
 
 	modified:   res/values/colors.xml
 ---

@@ -1,7 +1,7 @@
-From 809955b64c73ee50d9b15382934563bd76215660 Mon Sep 17 00:00:00 2001
+From 4341ea760c6a7ea9a21b43848b3adc8e14a75d8c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 19:19:34 +0200
-Subject: [PATCH 3/5] rw-system: try to fix dt2w evnode detection
+Subject: [PATCH 3/9] rw-system: try to fix dt2w evnode detection
 
 	modified:   rw-system.sh
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 3/5] rw-system: try to fix dt2w evnode detection
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/rw-system.sh b/rw-system.sh
-index c72245f..6526b89 100644
+index 025a4ea..5b995c3 100644
 --- a/rw-system.sh
 +++ b/rw-system.sh
 @@ -499,7 +499,7 @@ fi

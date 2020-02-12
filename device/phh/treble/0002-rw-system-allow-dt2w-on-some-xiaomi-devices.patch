@@ -1,7 +1,7 @@
-From 20aba246dab235bc2e4be8ad3cb3ef08376aa998 Mon Sep 17 00:00:00 2001
+From dfb9d51fdfba270e39f93053489b9f6fb11d8dd0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Dec 2019 00:28:14 +0200
-Subject: [PATCH 2/5] rw-system: allow dt2w on some xiaomi devices
+Subject: [PATCH 2/9] rw-system: allow dt2w on some xiaomi devices
 
 	modified:   rw-system.sh
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 2/5] rw-system: allow dt2w on some xiaomi devices
  1 file changed, 9 insertions(+)
 
 diff --git a/rw-system.sh b/rw-system.sh
-index bfa1416..c72245f 100644
+index e53acf3..025a4ea 100644
 --- a/rw-system.sh
 +++ b/rw-system.sh
 @@ -504,6 +504,15 @@ for ev in $(cd /sys/class/input;echo event*);do
