@@ -1,0 +1,89 @@
+From 1379314e6ddea3dc9b7c7b7d06676708be499121 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 27 Dec 2019 12:35:49 +0200
+Subject: [PATCH 6/6] Pixel UI
+
+  * from
+  https://github.com/Havoc-OS/android_packages_apps_Settings/commit/fe6ec9d5978149a5652c70a665d914e389e40890
+
+	modified:   res/layout/search_bar.xml
+	modified:   res/values-night/colors.xml
+	modified:   res/values/dimens.xml
+	modified:   res/values/styles.xml
+---
+ res/layout/search_bar.xml   | 5 +++--
+ res/values-night/colors.xml | 2 +-
+ res/values/dimens.xml       | 4 ++--
+ res/values/styles.xml       | 1 +
+ 4 files changed, 7 insertions(+), 5 deletions(-)
+
+diff --git a/res/layout/search_bar.xml b/res/layout/search_bar.xml
+index 420c965a19..50178370ac 100644
+--- a/res/layout/search_bar.xml
++++ b/res/layout/search_bar.xml
+@@ -22,12 +22,13 @@
+     style="@style/SearchBarStyle"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+-    app:layout_scrollFlags="scroll|enterAlways">
++    app:layout_scrollFlags="scroll|enterAlways"
++    app:cardCornerRadius="24dp">
+     <Toolbar
+         android:id="@+id/search_action_bar"
+         android:layout_width="match_parent"
+         android:layout_height="@dimen/search_bar_height"
+-        android:layout_marginStart="-2dp"
++        android:layout_marginStart="0dp"
+         android:background="@drawable/search_bar_selected_background"
+         android:contentInsetStartWithNavigation="@dimen/search_bar_content_inset"
+         android:navigationIcon="@drawable/ic_homepage_search">
+diff --git a/res/values-night/colors.xml b/res/values-night/colors.xml
+index b1f9dfbd67..7d9fe61cca 100644
+--- a/res/values-night/colors.xml
++++ b/res/values-night/colors.xml
+@@ -21,7 +21,7 @@
+     <color name="homepage_support_background">#3F5FBD</color>
+     <color name="homepage_card_dismissal_background">@*android:color/material_grey_900</color>
+     <color name="contextual_card_background">@*android:color/material_grey_900</color>
+-    <color name="search_bar_background">@*android:color/material_grey_800</color>
++    <color name="search_bar_background">@*android:color/material_grey_900</color>
+     <!-- Dialog background color -->
+     <color name="dialog_background">@*android:color/material_grey_800</color>
+     <color name="notification_importance_selection_bg">@*android:color/material_grey_800</color>
+diff --git a/res/values/dimens.xml b/res/values/dimens.xml
+index f31a2667ca..afe6e82bbf 100755
+--- a/res/values/dimens.xml
++++ b/res/values/dimens.xml
+@@ -115,7 +115,7 @@
+     <dimen name="search_bar_margin">16dp</dimen>
+ 
+     <dimen name="search_bar_height">48dp</dimen>
+-    <dimen name="search_bar_corner_radius">2dp</dimen>
++    <dimen name="search_bar_corner_radius">24dp</dimen>
+     <dimen name="search_bar_text_size">16dp</dimen>
+     <dimen name="search_bar_card_elevation">2dp</dimen>
+     <dimen name="search_bar_content_inset">64dp</dimen>
+@@ -134,7 +134,7 @@
+     <dimen name="wifi_assistant_image_top">32dp</dimen>
+     <dimen name="wifi_assistant_image_start">24dp</dimen>
+     <!-- appbar height is equal search bar height (48dp) plus search bar top and bottom margin  -->
+-    <dimen name="app_bar_height">80dp</dimen>
++    <dimen name="app_bar_height">64dp</dimen>
+ 
+     <!-- CryptKeeper top margin for password/pin screen -->
+     <dimen name="crypt_keeper_password_top_margin">88dip</dimen>
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+index d3d3199f62..41a7ff3b28 100644
+--- a/res/values/styles.xml
++++ b/res/values/styles.xml
+@@ -274,6 +274,7 @@
+     <style name="TextAppearance.SearchBar"
+            parent="@*android:style/TextAppearance.DeviceDefault.Widget.Toolbar.Subtitle">
+         <item name="android:textSize">@dimen/search_bar_text_size</item>
++        <item name="android:layout_gravity">center</item>
+     </style>
+ 
+     <style name="TextAppearance.ConditionCardTitle"
+-- 
+2.11.0
+

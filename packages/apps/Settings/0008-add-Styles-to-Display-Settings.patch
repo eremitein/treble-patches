@@ -1,0 +1,49 @@
+From d95df261f60f1e95b540b38235284f273b177881 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 2 Feb 2020 16:59:22 +0200
+Subject: [PATCH] add Styles to Display Settings
+
+  * from
+  https://github.com/LineageOS/android_vendor_lineage/commit/e5df0f0c7efc168ae62ce7e32ca6c913a1d7fc87
+  https://github.com/LineageOS/android_packages_apps_Settings/commit/2a9911e3a0efe3e1c39f3a98144fd39c36c4dedc
+
+	modified:   res/values/config.xml
+	modified:   res/xml/display_settings.xml
+---
+ res/values/config.xml        | 6 +++---
+ res/xml/display_settings.xml | 1 -
+ 2 files changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/res/values/config.xml b/res/values/config.xml
+index a4a85ba..8db020d 100755
+--- a/res/values/config.xml
++++ b/res/values/config.xml
+@@ -45,10 +45,10 @@
+     <string name="config_featureFactory" translatable="false">com.android.settings.overlay.FeatureFactoryImpl</string>
+ 
+     <!-- Package name and fully-qualified class name for the wallpaper picker activity. -->
+-    <string name="config_wallpaper_picker_package" translatable="false">com.android.settings</string>
+-    <string name="config_wallpaper_picker_class" translatable="false">com.android.settings.Settings$WallpaperSettingsActivity</string>
++    <string name="config_wallpaper_picker_package" translatable="false">com.android.wallpaper</string>
++    <string name="config_wallpaper_picker_class" translatable="false">com.android.customization.picker.CustomizationPickerActivity</string>
+     <!-- Fully-qualified class name for the styles & wallpaper picker activity. -->
+-    <string name="config_styles_and_wallpaper_picker_class" translatable="false"></string>
++    <string name="config_styles_and_wallpaper_picker_class" translatable="false">com.android.customization.picker.CustomizationPickerActivity</string>
+ 
+     <!-- Manufacturer backup settings to launch -->
+     <string name="config_backup_settings_intent" translatable="false"></string>
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index e5a20c3..d9aad89 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -54,7 +54,6 @@
+         settings:controller="com.android.settings.display.WallpaperPreferenceController">
+     </com.android.settingslib.RestrictedPreference>
+ 
+-
+     <SwitchPreference
+         android:key="dark_ui_mode"
+         android:title="@string/dark_ui_mode"
+-- 
+2.11.0
+

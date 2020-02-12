@@ -1,0 +1,26 @@
+From 3270bf4acb5f57bbd0b36b7383fd28905d66e5f2 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 2 Feb 2020 17:27:20 +0200
+Subject: [PATCH] disable legacy suggestions
+
+	modified:   res/values/config.xml
+---
+ res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/res/values/config.xml b/res/values/config.xml
+index 8db020d..bc0156b 100755
+--- a/res/values/config.xml
++++ b/res/values/config.xml
+@@ -184,7 +184,7 @@
+         Whether or not the homepage should be powered by legacy suggestion (versus contextual cards)
+         Default to true as not all devices support contextual cards.
+     -->
+-    <bool name="config_use_legacy_suggestion">true</bool>
++    <bool name="config_use_legacy_suggestion">false</bool>
+ 
+     <!-- Whether or not homepage should display user's account avatar -->
+     <bool name="config_show_avatar_in_homepage">false</bool>
+-- 
+2.11.0
+

@@ -1,0 +1,57 @@
+From f2315db3fd7079866530f3ba67894ed808d4039d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 7 Dec 2019 16:38:50 +0200
+Subject: [PATCH 1/5] remove some apps
+
+	modified:   target/product/handheld_product.mk
+	modified:   target/product/mainline_arm64.mk
+---
+ target/product/handheld_product.mk | 4 ----
+ target/product/mainline_arm64.mk   | 3 ---
+ 2 files changed, 7 deletions(-)
+
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index 0d100b2..0269afe 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -22,19 +22,15 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/media_product.mk)
+ 
+ # /product packages
+ PRODUCT_PACKAGES += \
+-    Browser2 \
+     Calendar \
+     Camera2 \
+     Contacts \
+     DeskClock \
+-    Email \
+     Gallery2 \
+     LatinIME \
+     Launcher3QuickStep \
+-    Music \
+     OneTimeInitializer \
+     Provision \
+-    QuickSearchBox \
+     Settings \
+     SettingsIntelligence \
+     StorageManager \
+diff --git a/target/product/mainline_arm64.mk b/target/product/mainline_arm64.mk
+index f21fa89..92c9e0c 100644
+--- a/target/product/mainline_arm64.mk
++++ b/target/product/mainline_arm64.mk
+@@ -37,13 +37,10 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST += \
+   system/app/DeskClock/DeskClock.apk \
+   system/app/DeskClock/oat/arm64/DeskClock.odex \
+   system/app/DeskClock/oat/arm64/DeskClock.vdex \
+-  system/app/Email/Email.apk \
+   system/app/Gallery2/Gallery2.apk \
+   system/app/LatinIME/LatinIME.apk \
+   system/app/LatinIME/oat/arm64/LatinIME.odex \
+   system/app/LatinIME/oat/arm64/LatinIME.vdex \
+-  system/app/Music/Music.apk \
+-  system/app/QuickSearchBox/QuickSearchBox.apk \
+   system/app/webview/webview.apk \
+   system/bin/healthd \
+   system/etc/init/healthd.rc \
+-- 
+2.17.1
+

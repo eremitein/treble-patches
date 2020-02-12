@@ -1,0 +1,63 @@
+From 1cf3975ac6082e4ce0c09a1c0d67dd8f4ef7a02f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 3 Feb 2020 21:19:53 +0200
+Subject: [PATCH 1/2] Update the Messaging version to 24
+
+  * from
+  https://github.com/LineageOS/android_packages_apps_Messaging/commit/7b977ef9958ee63e1a40080b2dd8b09cf214ebe3
+
+	modified:   AndroidManifest.xml
+	modified:   tests/AndroidManifest.xml
+	modified:   tests/src/com/android/messaging/datamodel/action/GetOrCreateConversationActionTest.java
+---
+ AndroidManifest.xml                                                 | 2 +-
+ tests/AndroidManifest.xml                                           | 2 +-
+ .../datamodel/action/GetOrCreateConversationActionTest.java         | 6 ------
+ 3 files changed, 2 insertions(+), 8 deletions(-)
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index 58a1817..5fefe96 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -18,7 +18,7 @@
+     package="com.android.messaging"
+     android:installLocation="internalOnly">
+ 
+-    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="28" />
++    <uses-sdk android:minSdkVersion="19" android:targetSdkVersion="24" />
+ 
+     <!-- Application holds CPU wakelock while working in background -->
+     <uses-permission android:name="android.permission.WAKE_LOCK" />
+diff --git a/tests/AndroidManifest.xml b/tests/AndroidManifest.xml
+index 3ad7d8e..07f0d17 100644
+--- a/tests/AndroidManifest.xml
++++ b/tests/AndroidManifest.xml
+@@ -17,7 +17,7 @@
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+     package="com.android.messaging.test" >
+ 
+-    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="28"/>
++    <uses-sdk android:minSdkVersion="16" android:targetSdkVersion="24"/>
+ 
+     <application android:label="Messaging Tests" >
+         <uses-library android:name="android.test.runner" />
+diff --git a/tests/src/com/android/messaging/datamodel/action/GetOrCreateConversationActionTest.java b/tests/src/com/android/messaging/datamodel/action/GetOrCreateConversationActionTest.java
+index 1c0d0b5..9643b1e 100644
+--- a/tests/src/com/android/messaging/datamodel/action/GetOrCreateConversationActionTest.java
++++ b/tests/src/com/android/messaging/datamodel/action/GetOrCreateConversationActionTest.java
+@@ -67,12 +67,6 @@ public class GetOrCreateConversationActionTest extends BugleTestCase {
+         final long threadId = MmsUtils.getOrCreateThreadId(mContext, recipients);
+         assertEquals(TestDataFactory.SMS_MMS_THREAD_ID_CURSOR_VALUE, threadId);
+ 
+-        // TestDataFactory creates NUM_TEST_CONVERSATIONS conversations. blank
+-        // conversation would be the next conversation.
+-        final String blankId = BugleDatabaseOperations.getExistingConversation(db, threadId, false);
+-        // TODO(rtenneti): Investigate why blankId is 4 more than NUM_TEST_CONVERSATIONS.
+-        assertEquals(TestDataFactory.NUM_TEST_CONVERSATIONS+4, Integer.parseInt((String)blankId));
+-
+         ArrayList<StubActionServiceCallLog> calls = mService.getCalls();
+ 
+         GetOrCreateConversationActionMonitor monitor =
+-- 
+2.11.0
+

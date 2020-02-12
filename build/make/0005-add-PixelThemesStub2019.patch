@@ -1,0 +1,39 @@
+From 13813b22317310bf53d44485d615e7acb9119af8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 2 Feb 2020 17:50:38 +0200
+Subject: [PATCH] add PixelThemesStub2019
+
+	modified:   handheld_product.mk
+	modified:   mainline_arm64.mk
+---
+ target/product/handheld_product.mk | 1 +
+ target/product/mainline_arm64.mk   | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index 0fdb1b2..d7459d6 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -29,6 +29,7 @@ PRODUCT_PACKAGES += \
+     LatinIME \
+     Launcher3QuickStep \
+     OneTimeInitializer \
++    PixelThemesStub2019 \
+     Provision \
+     Settings \
+     SettingsIntelligence \
+diff --git a/target/product/mainline_arm64.mk b/target/product/mainline_arm64.mk
+index 52a06ca..854b341 100644
+--- a/target/product/mainline_arm64.mk
++++ b/target/product/mainline_arm64.mk
+@@ -40,6 +40,7 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST += \
+   system/app/LatinIME/LatinIME.apk \
+   system/app/LatinIME/oat/arm64/LatinIME.odex \
+   system/app/LatinIME/oat/arm64/LatinIME.vdex \
++  system/app/PixelThemesStub2019/PixelThemesStub2019.apk \
+   system/app/SimpleGallery/SimpleGallery.apk \
+   system/app/webview/webview.apk \
+   system/bin/healthd \
+-- 
+2.11.0
+

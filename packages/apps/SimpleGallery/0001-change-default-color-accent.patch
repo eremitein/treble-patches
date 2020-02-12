@@ -1,0 +1,149 @@
+From dcc3a32ecf35f060eb7f0a1a0ca1e0adce9364be Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 29 Dec 2019 17:00:07 +0200
+Subject: [PATCH] change default color accent
+
+	modified:   app/src/main/AndroidManifest.xml
+	modified:   app/src/main/kotlin/com/simplemobiletools/gallery/pro/activities/SimpleActivity.kt
+	modified:   app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+	renamed:    app/src/main/res/mipmap-anydpi-v26/ic_launcher_blue.xml -> app/src/main/res/mipmap-anydpi-v26/ic_launcher_orange.xml
+	modified:   app/src/main/res/values/colors.xml
+	new file:   build.sh
+
+ Untracked files:
+	keys/
+	sdk/
+	signapk/
+---
+ app/src/main/AndroidManifest.xml              | 12 +++++-----
+ .../gallery/pro/activities/SimpleActivity.kt  |  4 ++--
+ .../res/mipmap-anydpi-v26/ic_launcher.xml     |  2 +-
+ ...uncher_blue.xml => ic_launcher_orange.xml} |  2 +-
+ app/src/main/res/values/colors.xml            |  5 +++++
+ build.sh                                      | 22 +++++++++++++++++++
+ 6 files changed, 37 insertions(+), 10 deletions(-)
+ rename app/src/main/res/mipmap-anydpi-v26/{ic_launcher_blue.xml => ic_launcher_orange.xml} (77%)
+ create mode 100755 build.sh
+
+diff --git a/app/src/main/AndroidManifest.xml b/app/src/main/AndroidManifest.xml
+index 11b2f5c9..69bae409 100644
+--- a/app/src/main/AndroidManifest.xml
++++ b/app/src/main/AndroidManifest.xml
+@@ -358,9 +358,9 @@
+ 
+         <activity-alias
+             android:name=".activities.SplashActivity.Blue"
+-            android:enabled="false"
+-            android:icon="@mipmap/ic_launcher_blue"
+-            android:roundIcon="@mipmap/ic_launcher_blue"
++            android:enabled="true"
++            android:icon="@mipmap/ic_launcher"
++            android:roundIcon="@mipmap/ic_launcher"
+             android:targetActivity=".activities.SplashActivity">
+ 
+             <intent-filter>
+@@ -475,9 +475,9 @@
+ 
+         <activity-alias
+             android:name=".activities.SplashActivity.Orange"
+-            android:enabled="true"
+-            android:icon="@mipmap/ic_launcher"
+-            android:roundIcon="@mipmap/ic_launcher"
++            android:enabled="false"
++            android:icon="@mipmap/ic_launcher_orange"
++            android:roundIcon="@mipmap/ic_launcher_orange"
+             android:targetActivity=".activities.SplashActivity">
+             <intent-filter>
+                 <action android:name="android.intent.action.MAIN"/>
+diff --git a/app/src/main/kotlin/com/simplemobiletools/gallery/pro/activities/SimpleActivity.kt b/app/src/main/kotlin/com/simplemobiletools/gallery/pro/activities/SimpleActivity.kt
+index da2a9598..ba823abd 100644
+--- a/app/src/main/kotlin/com/simplemobiletools/gallery/pro/activities/SimpleActivity.kt
++++ b/app/src/main/kotlin/com/simplemobiletools/gallery/pro/activities/SimpleActivity.kt
+@@ -35,7 +35,7 @@ open class SimpleActivity : BaseSimpleActivity() {
+             R.mipmap.ic_launcher_purple,
+             R.mipmap.ic_launcher_deep_purple,
+             R.mipmap.ic_launcher_indigo,
+-            R.mipmap.ic_launcher_blue,
++            R.mipmap.ic_launcher,
+             R.mipmap.ic_launcher_light_blue,
+             R.mipmap.ic_launcher_cyan,
+             R.mipmap.ic_launcher_teal,
+@@ -44,7 +44,7 @@ open class SimpleActivity : BaseSimpleActivity() {
+             R.mipmap.ic_launcher_lime,
+             R.mipmap.ic_launcher_yellow,
+             R.mipmap.ic_launcher_amber,
+-            R.mipmap.ic_launcher,
++            R.mipmap.ic_launcher_orange,
+             R.mipmap.ic_launcher_deep_orange,
+             R.mipmap.ic_launcher_brown,
+             R.mipmap.ic_launcher_blue_grey,
+diff --git a/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml b/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+index a77f7223..37bf057f 100644
+--- a/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
++++ b/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+-    <background android:drawable="@color/md_orange_700"/>
++    <background android:drawable="@color/md_blue_700"/>
+     <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
+ </adaptive-icon>
+diff --git a/app/src/main/res/mipmap-anydpi-v26/ic_launcher_blue.xml b/app/src/main/res/mipmap-anydpi-v26/ic_launcher_orange.xml
+similarity index 77%
+rename from app/src/main/res/mipmap-anydpi-v26/ic_launcher_blue.xml
+rename to app/src/main/res/mipmap-anydpi-v26/ic_launcher_orange.xml
+index 37bf057f..a77f7223 100644
+--- a/app/src/main/res/mipmap-anydpi-v26/ic_launcher_blue.xml
++++ b/app/src/main/res/mipmap-anydpi-v26/ic_launcher_orange.xml
+@@ -1,5 +1,5 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <adaptive-icon xmlns:android="http://schemas.android.com/apk/res/android">
+-    <background android:drawable="@color/md_blue_700"/>
++    <background android:drawable="@color/md_orange_700"/>
+     <foreground android:drawable="@mipmap/ic_launcher_foreground"/>
+ </adaptive-icon>
+diff --git a/app/src/main/res/values/colors.xml b/app/src/main/res/values/colors.xml
+index 79994945..0107e5c7 100644
+--- a/app/src/main/res/values/colors.xml
++++ b/app/src/main/res/values/colors.xml
+@@ -3,4 +3,9 @@
+     <color name="actionbar_menu_icon">#454545</color>
+     <color name="crop_image_view_background">#BB000000</color>
+     <color name="circle_black_background">#66000000</color>
++    <color name="color_accent">@color/color_primary</color>
++    <color name="color_primary">#ff1a73e8</color>
++    <color name="color_primary_dark">#ff1764c9</color>
++    <color name="default_background_color">#ff202124</color>
++    <color name="md_blue_700">#ff1a73e8</color>
+ </resources>
+diff --git a/build.sh b/build.sh
+new file mode 100755
+index 00000000..12d09a12
+--- /dev/null
++++ b/build.sh
+@@ -0,0 +1,22 @@
++#!/bin/bash
++
++set -e
++
++if [ -d /usr/lib/jvm/java-8-openjdk-amd64/bin/ ];then
++export PATH=/usr/lib/jvm/java-8-openjdk-amd64/bin/:$PATH
++fi
++
++if [ -z "$ANDROID_HOME" ];then
++    export ANDROID_HOME=$PWD/sdk
++fi
++
++gradleTarget=assembleDebug
++target=debug
++file=gallery-debug
++if [ "$1" == "release" ];then
++    gradleTarget=assembleRelease
++    target=release
++    file=gallery-release-unsigned
++fi
++./gradlew $gradleTarget
++LD_LIBRARY_PATH=./signapk/ java -jar signapk/signapk.jar keys/platform.x509.pem keys/platform.pk8 ./app/build/outputs/apk/$target/${file}.apk app.apk
+-- 
+2.17.1
+

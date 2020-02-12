@@ -1,0 +1,26 @@
+From 809955b64c73ee50d9b15382934563bd76215660 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 14 Dec 2019 19:19:34 +0200
+Subject: [PATCH 3/5] rw-system: try to fix dt2w evnode detection
+
+	modified:   rw-system.sh
+---
+ rw-system.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rw-system.sh b/rw-system.sh
+index c72245f..6526b89 100644
+--- a/rw-system.sh
++++ b/rw-system.sh
+@@ -499,7 +499,7 @@ fi
+ 
+ #Try to detect DT2W
+ for ev in $(cd /sys/class/input;echo event*);do
+-	if [ -f "/sys/class/input/$ev/device/device/gesture_mask" ];then
++	if [ $(ls /sys/class/input/${ev}/device/device/ |grep -m1 gesture) ]; then
+ 		setprop persist.sys.phh.dt2w_evnode /dev/input/$ev
+ 	fi
+ done
+-- 
+2.11.0
+

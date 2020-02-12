@@ -1,0 +1,110 @@
+From 6b0449c86df6cfab5098a9c2bb4b911f69a62376 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 28 Dec 2019 19:08:14 +0200
+Subject: [PATCH] Match Settings Pixel style
+
+  * from
+  https://github.com/Havoc-OS/android_packages_apps_SettingsIntelligence/commit/eaad8c26fd2d098c6aa38bc667c1d55d80294538
+
+	modified:   res/layout/search_panel.xml
+	new file:   res/values-night/colors.xml
+	modified:   res/values/colors.xml
+	modified:   res/values/dimens.xml
+
+Change-Id: Idb9f084a2f3b55d9ec96d5804885f7615df77537
+---
+ res/layout/search_panel.xml |  8 ++++----
+ res/values-night/colors.xml | 16 ++++++++++++++++
+ res/values/colors.xml       |  2 +-
+ res/values/dimens.xml       |  6 +++---
+ 4 files changed, 24 insertions(+), 8 deletions(-)
+ create mode 100644 res/values-night/colors.xml
+
+diff --git a/res/layout/search_panel.xml b/res/layout/search_panel.xml
+index 5f621cd..1078803 100644
+--- a/res/layout/search_panel.xml
++++ b/res/layout/search_panel.xml
+@@ -25,15 +25,15 @@
+         android:id="@+id/search_bar_container"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:background="@color/search_panel_background"
++        android:background="?android:attr/colorPrimary"
+         android:elevation="4dp">
+         <androidx.cardview.widget.CardView
+             android:id="@+id/search_bar"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="@dimen/search_bar_margin"
+-            app:cardCornerRadius="2dp"
+-            app:cardBackgroundColor="?android:attr/colorBackground"
++            app:cardBackgroundColor="@color/search_panel_background"
++            app:cardCornerRadius="24dp"
+             app:cardElevation="2dp">
+             <Toolbar
+                 android:id="@+id/search_toolbar"
+@@ -105,4 +105,4 @@
+ 
+     <include layout="@layout/search_feedback"/>
+ 
+-</LinearLayout>
+\ No newline at end of file
++</LinearLayout>
+diff --git a/res/values-night/colors.xml b/res/values-night/colors.xml
+new file mode 100644
+index 0000000..1ac17bf
+--- /dev/null
++++ b/res/values-night/colors.xml
+@@ -0,0 +1,16 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2018 The Android Open Source Project
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++          http://www.apache.org/licenses/LICENSE-2.0
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<resources>
++    <color name="search_panel_background">@*android:color/material_grey_900</color>
++</resources>
+diff --git a/res/values/colors.xml b/res/values/colors.xml
+index a2105f0..632c72d 100644
+--- a/res/values/colors.xml
++++ b/res/values/colors.xml
+@@ -18,5 +18,5 @@
+ <resources>
+     <color name="launcher_background_color">#ff008577</color>
+ 
+-    <color name="search_panel_background">#f2f2f2</color>
++    <color name="search_panel_background">@android:color/white</color>
+ </resources>
+diff --git a/res/values/dimens.xml b/res/values/dimens.xml
+index 8a40eb6..7cebe37 100644
+--- a/res/values/dimens.xml
++++ b/res/values/dimens.xml
+@@ -26,8 +26,8 @@
+     <!-- The following two margins need to match, with the caveat that
+      the second should be negative. The second one ensures that the icons and text
+      align despite the additional padding caused by the search bar's card background. -->
+-    <dimen name="search_bar_margin">8dp</dimen>
+-    <dimen name="search_bar_negative_margin">-8dp</dimen>
++    <dimen name="search_bar_margin">16dp</dimen>
++    <dimen name="search_bar_negative_margin">-16dp</dimen>
+ 
+     <dimen name="search_bar_height">48dp</dimen>
+     <dimen name="search_bar_text_size">16dp</dimen>
+@@ -37,4 +37,4 @@
+ 
+     <!-- Dashboard tile image margin start / end -->
+     <dimen name="dashboard_tile_image_margin">24dp</dimen>
+-</resources>
+\ No newline at end of file
++</resources>
+-- 
+2.17.1
+
