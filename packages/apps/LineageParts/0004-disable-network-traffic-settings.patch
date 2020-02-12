@@ -1,0 +1,28 @@
+From 6c330d8d00c18a155ec799733ca4c361b4169780 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 11 Feb 2020 01:00:21 +0200
+Subject: [PATCH 4/4] disable network traffic settings
+
+	modified:   src/org/lineageos/lineageparts/statusbar/StatusBarSettings.java
+---
+ src/org/lineageos/lineageparts/statusbar/StatusBarSettings.java | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/src/org/lineageos/lineageparts/statusbar/StatusBarSettings.java b/src/org/lineageos/lineageparts/statusbar/StatusBarSettings.java
+index d547abb..a78f922 100644
+--- a/src/org/lineageos/lineageparts/statusbar/StatusBarSettings.java
++++ b/src/org/lineageos/lineageparts/statusbar/StatusBarSettings.java
+@@ -82,9 +82,7 @@ public class StatusBarSettings extends SettingsPreferenceFragment
+         sHasNotch = getResources().getBoolean(
+                 org.lineageos.platform.internal.R.bool.config_haveNotch);
+ 
+-        if (sHasNotch) {
+-            getPreferenceScreen().removePreference(mNetworkTrafficPref);
+-        }
++        getPreferenceScreen().removePreference(mNetworkTrafficPref);
+ 
+         mStatusBarAmPm =
+                 (LineageSystemSettingListPreference) findPreference(STATUS_BAR_AM_PM);
+-- 
+2.11.0
+

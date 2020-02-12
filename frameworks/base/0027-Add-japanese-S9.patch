@@ -1,0 +1,26 @@
+From 40d721280665312afe04409f941aa6d9846bee65 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 28 Aug 2018 20:39:26 +0200
+Subject: [PATCH 27/62] Add japanese S9
+
+---
+ services/core/java/com/android/server/lights/LightsService.java | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 6a7876b75f0..b2d74ca964a 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -94,7 +94,8 @@ public class LightsService extends SystemService {
+ 
+                 if(mId == 0) {
+                     String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
+-                    if(fp.matches(".*(crown|star)[q2]*lte.*")) {
++                    if(fp.matches(".*(crown|star)[q2]*lte.*") ||
++				    fp.matches(".*(SC-0[23]K|SCV3[89]).*")) {
+                         int newBrightness = brightness * 100;
+                         if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
+                             newBrightness = (int) (brightness * 40960.0 / 255.0);
+-- 
+2.11.0
+

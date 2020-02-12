@@ -1,0 +1,402 @@
+From 2ce92ae201dc2970fbedaaca95e9f9cbd0a3c8f7 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 23 Dec 2019 14:42:14 +0200
+Subject: [PATCH 5/8] Move IMEI information to Sim status
+
+  * from
+  https://github.com/Havoc-OS/android_packages_apps_Settings/commit/3741d37c0639883cdc6855bb371fce259ffc0775#diff-8e0314d48f88bb73a3b9ebce6165548d
+
+	modified:   res/layout/dialog_sim_status.xml
+	modified:   res/values/strings.xml
+	modified:   res/xml/my_device_info.xml
+	modified:   src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
+	modified:   src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java
+---
+ res/layout/dialog_sim_status.xml                   | 80 +++++++++++++++++++
+ res/values/strings.xml                             |  2 +-
+ res/xml/my_device_info.xml                         | 59 --------------
+ .../aboutphone/MyDeviceInfoFragment.java           | 10 ---
+ .../simstatus/SimStatusDialogController.java       | 89 ++++++++++++++++++++++
+ 5 files changed, 170 insertions(+), 70 deletions(-)
+
+diff --git a/res/layout/dialog_sim_status.xml b/res/layout/dialog_sim_status.xml
+index 27d12a8..9383499 100644
+--- a/res/layout/dialog_sim_status.xml
++++ b/res/layout/dialog_sim_status.xml
+@@ -180,5 +180,85 @@
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:text="@string/device_info_not_available"/>
++
++        <!-- These items are only for CDMA phones -->
++        <LinearLayout
++            android:id="@+id/cdma_settings"
++            android:orientation="vertical"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content">
++            <TextView
++                style="@style/device_info_dialog_label"
++                android:id="@+id/min_number_label"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/status_min_number"/>
++            <TextView
++                style="@style/device_info_dialog_value"
++                android:id="@+id/min_number_value"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/device_info_not_available"/>
++
++            <TextView
++                style="@style/device_info_dialog_label"
++                android:id="@+id/prl_version_label"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/status_prl_version"/>
++            <TextView
++                style="@style/device_info_dialog_value"
++                android:id="@+id/prl_version_value"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/device_info_not_available"/>
++
++            <TextView
++                style="@style/device_info_dialog_label"
++                android:id="@+id/meid_number_label"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/status_meid_number"/>
++            <TextView
++                style="@style/device_info_dialog_value"
++                android:id="@+id/meid_number_value"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/device_info_not_available"/>
++
++        </LinearLayout>
++
++        <!-- These items are for GSM and LTE enabled CDMA phones -->
++        <LinearLayout
++            android:id="@+id/gsm_settings"
++            android:orientation="vertical"
++            android:layout_width="match_parent"
++            android:layout_height="wrap_content">
++            <TextView
++                style="@style/device_info_dialog_label"
++                android:id="@+id/imei_label"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/status_imei"/>
++            <TextView
++                style="@style/device_info_dialog_value"
++                android:id="@+id/imei_value"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/device_info_not_available"/>
++
++            <TextView
++                style="@style/device_info_dialog_label"
++                android:id="@+id/imei_sv_label"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/status_imei_sv"/>
++            <TextView
++                style="@style/device_info_dialog_value"
++                android:id="@+id/imei_sv_value"
++                android:layout_width="match_parent"
++                android:layout_height="wrap_content"
++                android:text="@string/device_info_not_available"/>
++        </LinearLayout>
+     </LinearLayout>
+ </ScrollView>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 89f27d3..41d78bb 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -7240,7 +7240,7 @@
+     <!-- SIM status title  [CHAR LIMIT=40] -->
+     <string name="sim_status_title">SIM status</string>
+     <!-- SIM status title  [CHAR LIMIT=40] -->
+-    <string name="sim_status_title_sim_slot">SIM status (sim slot %1$d)</string>
++    <string name="sim_status_title_sim_slot">SIM status (Slot %1$d)</string>
+     <!-- Title for call back. [CHAR LIMIT=60] -->
+     <string name="sim_call_back_title">Call back from default SIM</string>
+     <!-- Title for outgoing back. [CHAR LIMIT=60] -->
+diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
+index 9a6047c..aa653dd 100644
+--- a/res/xml/my_device_info.xml
++++ b/res/xml/my_device_info.xml
+@@ -45,16 +45,6 @@
+         android:summary="@string/summary_placeholder"
+         settings:controller="com.android.settings.deviceinfo.BrandedAccountPreferenceController"/>
+ 
+-    <!-- Phone number -->
+-    <Preference
+-        android:key="phone_number"
+-        android:order="3"
+-        android:title="@string/status_number"
+-        android:summary="@string/summary_placeholder"
+-        android:selectable="false"
+-        settings:controller="com.android.settings.deviceinfo.PhoneNumberPreferenceController"
+-        settings:enableCopying="true"/>
+-
+     <Preference
+         android:key="emergency_info"
+         android:order="14"
+@@ -62,31 +52,6 @@
+         android:summary="@string/summary_placeholder"
+         settings:controller="com.android.settings.accounts.EmergencyInfoPreferenceController"/>
+ 
+-    <!-- Legal information -->
+-    <Preference
+-        android:key="legal_container"
+-        android:order="15"
+-        android:title="@string/legal_information"
+-        android:fragment="com.android.settings.LegalSettings"
+-        settings:allowDividerAbove="true"
+-        settings:searchable="false"/>
+-
+-    <!-- Regulatory labels -->
+-    <Preference
+-        android:key="regulatory_info"
+-        android:order="16"
+-        android:title="@string/regulatory_labels">
+-        <intent android:action="android.settings.SHOW_REGULATORY_INFO"/>
+-    </Preference>
+-
+-    <!-- Safety & regulatory manual -->
+-    <Preference
+-        android:key="safety_info"
+-        android:order="17"
+-        android:title="@string/safety_and_regulatory_info">
+-        <intent android:action="android.settings.SHOW_SAFETY_AND_REGULATORY_INFO"/>
+-    </Preference>
+-
+     <!-- SIM status -->
+     <Preference
+         android:key="sim_status"
+@@ -106,15 +71,6 @@
+         android:fragment="com.android.settings.deviceinfo.hardwareinfo.HardwareInfoFragment"
+         settings:controller="com.android.settings.deviceinfo.HardwareInfoPreferenceController"/>
+ 
+-    <!-- IMEI -->
+-    <Preference
+-        android:key="imei_info"
+-        android:order="32"
+-        android:title="@string/status_imei"
+-        settings:keywords="@string/keywords_imei_info"
+-        android:summary="@string/summary_placeholder"
+-        settings:controller="com.android.settings.deviceinfo.imei.ImeiInfoPreferenceController"/>
+-
+     <!-- Android version -->
+     <Preference
+         android:key="firmware_version"
+@@ -160,21 +116,6 @@
+         android:summary="@string/summary_placeholder"
+         android:selectable="false"/>
+ 
+-    <!-- Manual -->
+-    <Preference
+-        android:key="manual"
+-        android:order="50"
+-        android:title="@string/manual">
+-        <intent android:action="android.settings.SHOW_MANUAL"/>
+-    </Preference>
+-
+-    <!-- Feedback on the device -->
+-    <Preference
+-        android:key="device_feedback"
+-        android:order="51"
+-        android:title="@string/device_feedback"
+-        settings:keywords="@string/keywords_device_feedback"/>
+-
+     <!-- Device FCC equipment id -->
+     <Preference
+         android:key="fcc_equipment_id"
+diff --git a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
+index e6afb7b..a84defb 100644
+--- a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
++++ b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
+@@ -33,14 +33,9 @@ import com.android.settings.deviceinfo.BluetoothAddressPreferenceController;
+ import com.android.settings.deviceinfo.BuildNumberPreferenceController;
+ import com.android.settings.deviceinfo.DeviceNamePreferenceController;
+ import com.android.settings.deviceinfo.FccEquipmentIdPreferenceController;
+-import com.android.settings.deviceinfo.FeedbackPreferenceController;
+ import com.android.settings.deviceinfo.IpAddressPreferenceController;
+-import com.android.settings.deviceinfo.ManualPreferenceController;
+-import com.android.settings.deviceinfo.RegulatoryInfoPreferenceController;
+-import com.android.settings.deviceinfo.SafetyInfoPreferenceController;
+ import com.android.settings.deviceinfo.UptimePreferenceController;
+ import com.android.settings.deviceinfo.WifiMacAddressPreferenceController;
+-import com.android.settings.deviceinfo.imei.ImeiInfoPreferenceController;
+ import com.android.settings.deviceinfo.simstatus.SimStatusPreferenceController;
+ import com.android.settings.search.BaseSearchIndexProvider;
+ import com.android.settings.widget.EntityHeaderController;
+@@ -75,7 +70,6 @@ public class MyDeviceInfoFragment extends DashboardFragment
+     @Override
+     public void onAttach(Context context) {
+         super.onAttach(context);
+-        use(ImeiInfoPreferenceController.class).setHost(this /* parent */);
+         use(DeviceNamePreferenceController.class).setHost(this /* parent */);
+         mBuildNumberPreferenceController = use(BuildNumberPreferenceController.class);
+         mBuildNumberPreferenceController.setHost(this /* parent */);
+@@ -109,10 +103,6 @@ public class MyDeviceInfoFragment extends DashboardFragment
+         controllers.add(new IpAddressPreferenceController(context, lifecycle));
+         controllers.add(new WifiMacAddressPreferenceController(context, lifecycle));
+         controllers.add(new BluetoothAddressPreferenceController(context, lifecycle));
+-        controllers.add(new RegulatoryInfoPreferenceController(context));
+-        controllers.add(new SafetyInfoPreferenceController(context));
+-        controllers.add(new ManualPreferenceController(context));
+-        controllers.add(new FeedbackPreferenceController(fragment, context));
+         controllers.add(new FccEquipmentIdPreferenceController(context));
+         controllers.add(new UptimePreferenceController(context, lifecycle));
+         return controllers;
+diff --git a/src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java b/src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java
+index 3fafd14..3978a72 100644
+--- a/src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java
++++ b/src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java
+@@ -41,12 +41,18 @@ import android.telephony.SubscriptionManager.OnSubscriptionsChangedListener;
+ import android.telephony.TelephonyManager;
+ import android.telephony.euicc.EuiccManager;
+ import android.text.BidiFormatter;
++import android.text.Spannable;
++import android.text.SpannableStringBuilder;
++import android.text.Spanned;
+ import android.text.TextDirectionHeuristics;
+ import android.text.TextUtils;
++import android.text.style.TtsSpan;
+ 
+ import androidx.annotation.NonNull;
+ import androidx.annotation.VisibleForTesting;
+ 
++import com.android.internal.telephony.PhoneConstants;
++
+ import com.android.settings.R;
+ import com.android.settingslib.DeviceInfoUtils;
+ import com.android.settingslib.Utils;
+@@ -91,6 +97,21 @@ public class SimStatusDialogController implements LifecycleObserver, OnResume, O
+     final static int IMS_REGISTRATION_STATE_LABEL_ID = R.id.ims_reg_state_label;
+     @VisibleForTesting
+     final static int IMS_REGISTRATION_STATE_VALUE_ID = R.id.ims_reg_state_value;
++    @VisibleForTesting
++    static final int ID_PRL_VERSION_VALUE = R.id.prl_version_value;
++    private static final int ID_MIN_NUMBER_LABEL = R.id.min_number_label;
++    @VisibleForTesting
++    static final int ID_MIN_NUMBER_VALUE = R.id.min_number_value;
++    @VisibleForTesting
++    static final int ID_MEID_NUMBER_VALUE = R.id.meid_number_value;
++    @VisibleForTesting
++    static final int ID_IMEI_VALUE = R.id.imei_value;
++    @VisibleForTesting
++    static final int ID_IMEI_SV_VALUE = R.id.imei_sv_value;
++    @VisibleForTesting
++    static final int ID_CDMA_SETTINGS = R.id.cdma_settings;
++    @VisibleForTesting
++    static final int ID_GSM_SETTINGS = R.id.gsm_settings;
+ 
+     private final static String CB_AREA_INFO_RECEIVED_ACTION =
+             "com.android.cellbroadcastreceiver.CB_AREA_INFO_RECEIVED";
+@@ -115,6 +136,7 @@ public class SimStatusDialogController implements LifecycleObserver, OnResume, O
+     private final SubscriptionManager mSubscriptionManager;
+     private final CarrierConfigManager mCarrierConfigManager;
+     private final EuiccManager mEuiccManager;
++    private final int mSlotId;
+     private final Resources mRes;
+     private final Context mContext;
+ 
+@@ -144,6 +166,7 @@ public class SimStatusDialogController implements LifecycleObserver, OnResume, O
+     public SimStatusDialogController(@NonNull SimStatusDialogFragment dialog, Lifecycle lifecycle,
+             int slotId) {
+         mDialog = dialog;
++        mSlotId = slotId;
+         mContext = dialog.getContext();
+         mSubscriptionInfo = getPhoneSubscriptionInfo(slotId);
+         mTelephonyManager =  mContext.getSystemService(TelephonyManager.class);
+@@ -177,6 +200,12 @@ public class SimStatusDialogController implements LifecycleObserver, OnResume, O
+         updateRoamingStatus(serviceState);
+         updateIccidNumber();
+         updateImsRegistrationState();
++
++        if (mTelephonyManager.getPhoneType() == TelephonyManager.PHONE_TYPE_CDMA) {
++            updateDialogForCdmaPhone();
++        } else {
++            updateDialogForGsmPhone();
++        }
+     }
+ 
+     @Override
+@@ -423,6 +452,40 @@ public class SimStatusDialogController implements LifecycleObserver, OnResume, O
+         }
+     }
+ 
++    private void updateDialogForCdmaPhone() {
++        final Resources res = mDialog.getContext().getResources();
++        mDialog.setText(ID_MEID_NUMBER_VALUE, getMeid());
++        mDialog.setText(ID_MIN_NUMBER_VALUE,
++                mSubscriptionInfo != null ? mTelephonyManager.getCdmaMin(
++                        mSubscriptionInfo.getSubscriptionId()) : "");
++
++        if (res.getBoolean(R.bool.config_msid_enable)) {
++            mDialog.setText(ID_MIN_NUMBER_LABEL,
++                    res.getString(R.string.status_msid_number));
++        }
++
++        mDialog.setText(ID_PRL_VERSION_VALUE, getCdmaPrlVersion());
++
++        if (mSubscriptionInfo != null && isCdmaLteEnabled()) {
++            // Show IMEI for LTE device
++            mDialog.setText(ID_IMEI_VALUE,
++                    getTextAsDigits(mTelephonyManager.getImei(mSlotId)));
++            mDialog.setText(ID_IMEI_SV_VALUE,
++                    getTextAsDigits(mTelephonyManager.getDeviceSoftwareVersion(mSlotId)));
++        } else {
++            // device is not GSM/UMTS, do not display GSM/UMTS features
++            mDialog.removeSettingFromScreen(ID_GSM_SETTINGS);
++        }
++    }
++
++    private void updateDialogForGsmPhone() {
++        mDialog.setText(ID_IMEI_VALUE, getTextAsDigits(mTelephonyManager.getImei(mSlotId)));
++        mDialog.setText(ID_IMEI_SV_VALUE,
++                getTextAsDigits(mTelephonyManager.getDeviceSoftwareVersion(mSlotId)));
++        // device is not CDMA, do not display CDMA features
++        mDialog.removeSettingFromScreen(ID_CDMA_SETTINGS);
++    }
++
+     private SubscriptionInfo getPhoneSubscriptionInfo(int slotId) {
+         return SubscriptionManager.from(mContext).getActiveSubscriptionInfoForSimSlotIndex(slotId);
+     }
+@@ -478,4 +541,30 @@ public class SimStatusDialogController implements LifecycleObserver, OnResume, O
+     String getSimSerialNumber(int subscriptionId) {
+         return mTelephonyManager.getSimSerialNumber(subscriptionId);
+     }
++
++    @VisibleForTesting
++    String getCdmaPrlVersion() {
++        return mTelephonyManager.getCdmaPrlVersion();
++    }
++
++    @VisibleForTesting
++    boolean isCdmaLteEnabled() {
++        return mTelephonyManager.getLteOnCdmaMode(mSubscriptionInfo.getSubscriptionId())
++                == PhoneConstants.LTE_ON_CDMA_TRUE;
++    }
++
++    @VisibleForTesting
++    String getMeid() {
++        return mTelephonyManager.getMeid(mSlotId);
++    }
++
++    private static CharSequence getTextAsDigits(CharSequence text) {
++        if (TextUtils.isDigitsOnly(text)) {
++            final Spannable spannable = new SpannableStringBuilder(text);
++            final TtsSpan span = new TtsSpan.DigitsBuilder(text.toString()).build();
++            spannable.setSpan(span, 0, spannable.length(), Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
++            text = spannable;
++        }
++        return text;
++    }
+ }
+-- 
+2.11.0
+

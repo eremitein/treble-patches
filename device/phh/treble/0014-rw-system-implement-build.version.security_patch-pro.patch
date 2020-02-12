@@ -1,0 +1,25 @@
+From 98593cb31ca270b0ce6dd57d78efc2d3c181bc15 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 5 Feb 2020 15:41:12 +0200
+Subject: [PATCH 14/14] rw-system: implement build.version.security_patch prop
+
+	modified:   rw-system.sh
+---
+ rw-system.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/rw-system.sh b/rw-system.sh
+index 1a91526..0940396 100644
+--- a/rw-system.sh
++++ b/rw-system.sh
+@@ -473,6 +473,7 @@ if [ -f /system/phh/secure ];then
+     copyprop ro.product.manufacturer ro.vendor.product.manufacturer
+     copyprop ro.system.product.manufacturer ro.product.vendor.manufacturer
+     copyprop ro.product.manufacturer ro.product.vendor.manufacturer
++    copyprop build.version.security_patch ro.build.version.security_patch
+     copyprop ro.build.version.security_patch ro.vendor.build.security_patch
+     copyprop ro.build.version.security_patch ro.keymaster.xxx.security_patch
+     resetprop ro.build.tags release-keys
+-- 
+2.11.0
+

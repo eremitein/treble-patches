@@ -1,0 +1,142 @@
+From 38828fca77c13618e3732fb9ead41673e3dda979 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 25 Dec 2019 09:26:37 +0200
+Subject: [PATCH 10/14] rw-system: add 'daisy' stock keylayout files
+
+	modified:   base.mk
+	new file:   files/daisy-buttonJack.kl
+	new file:   files/daisy-uinput-fpc.kl
+	new file:   files/daisy-uinput-goodix.kl
+	modified:   rw-system.sh
+---
+ base.mk                      |  5 ++++-
+ files/daisy-buttonJack.kl    | 30 ++++++++++++++++++++++++++++++
+ files/daisy-uinput-fpc.kl    | 11 +++++++++++
+ files/daisy-uinput-goodix.kl | 11 +++++++++++
+ rw-system.sh                 | 17 ++++++++++++++++-
+ 5 files changed, 72 insertions(+), 2 deletions(-)
+ create mode 100644 files/daisy-buttonJack.kl
+ create mode 100644 files/daisy-uinput-fpc.kl
+ create mode 100644 files/daisy-uinput-goodix.kl
+
+diff --git a/base.mk b/base.mk
+index 51ceb02..7755bb6 100644
+--- a/base.mk
++++ b/base.mk
+@@ -111,7 +111,10 @@ PRODUCT_COPY_FILES += \
+ 	device/phh/treble/files/samsung-9810-floating_feature.xml:system/ph/sam-9810-flo_feat.xml \
+ 	device/phh/treble/files/mimix3-gpio-keys.kl:system/phh/mimix3-gpio-keys.kl \
+ 	device/phh/treble/files/nokia-soc_gpio_keys.kl:system/phh/nokia-soc_gpio_keys.kl \
+-	device/phh/treble/files/lenovo-synaptics_dsx.kl:system/phh/lenovo-synaptics_dsx.kl
++	device/phh/treble/files/lenovo-synaptics_dsx.kl:system/phh/lenovo-synaptics_dsx.kl \
++	device/phh/treble/files/daisy-buttonJack.kl:system/phh/daisy-buttonJack.kl \
++	device/phh/treble/files/daisy-uinput-fpc.kl:system/phh/daisy-uinput-fpc.kl \
++	device/phh/treble/files/daisy-uinput-goodix.kl:system/phh/daisy-uinput-goodix.kl
+ 
+ SELINUX_IGNORE_NEVERALLOWS := true
+ 
+diff --git a/files/daisy-buttonJack.kl b/files/daisy-buttonJack.kl
+new file mode 100644
+index 0000000..8a2c319
+--- /dev/null
++++ b/files/daisy-buttonJack.kl
+@@ -0,0 +1,30 @@
++# Copyright (c) 2019, The Linux Foundation. All rights reserved.
++#
++# Redistribution and use in source and binary forms, with or without
++# modification, are permitted provided that the following conditions are
++# met:
++#     * Redistributions of source code must retain the above copyright
++#       notice, this list of conditions and the following disclaimer.
++#     * Redistributions in binary form must reproduce the above
++#       copyright notice, this list of conditions and the following
++#       disclaimer in the documentation and/or other materials provided
++#       with the distribution.
++#     * Neither the name of The Linux Foundation nor the names of its
++#       contributors may be used to endorse or promote products derived
++#       from this software without specific prior written permission.
++#
++# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
++# WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
++# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
++# ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
++# BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
++# CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
++# SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
++# BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
++# WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
++# OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
++# IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++
++key 226 HEADSETHOOK
++key 257 VOLUME_UP
++key 258 VOLUME_DOWN
+diff --git a/files/daisy-uinput-fpc.kl b/files/daisy-uinput-fpc.kl
+new file mode 100644
+index 0000000..754b787
+--- /dev/null
++++ b/files/daisy-uinput-fpc.kl
+@@ -0,0 +1,11 @@
++##################################
++#
++#add for fpc fingerprints
++#
++##################################
++
++key 195 SYSTEM_NAVIGATION_UP
++key 196 SYSTEM_NAVIGATION_DOWN
++key 197 SYSTEM_NAVIGATION_LEFT
++key 198 SYSTEM_NAVIGATION_RIGHT
++key 353 DPAD_CENTER
+diff --git a/files/daisy-uinput-goodix.kl b/files/daisy-uinput-goodix.kl
+new file mode 100644
+index 0000000..c0b0089
+--- /dev/null
++++ b/files/daisy-uinput-goodix.kl
+@@ -0,0 +1,11 @@
++##################################
++#
++#add for goodix fingerprints
++#
++##################################
++
++key 195 SYSTEM_NAVIGATION_UP
++key 196 SYSTEM_NAVIGATION_DOWN
++key 197 SYSTEM_NAVIGATION_LEFT
++key 198 SYSTEM_NAVIGATION_RIGHT
++key 353 DPAD_CENTER
+diff --git a/rw-system.sh b/rw-system.sh
+index 5b995c3..459dd97 100644
+--- a/rw-system.sh
++++ b/rw-system.sh
+@@ -81,11 +81,26 @@ changeKeylayout() {
+         chmod 0644 /mnt/phh/keylayout/gpio_keys.kl /mnt/phh/keylayout/sec_touchscreen.kl
+     fi
+ 
++    if getprop ro.vendor.build.fingerprint | grep -iq -e xiaomi/daisy; then
++        mpk="/mnt/phh/keylayout"
++        cp /system/phh/daisy-buttonJack.kl ${mpk}/msm8953-snd-card-mtp_Button_Jack.kl
++        changed=true
++        if [ ! -f /mnt/phh/keylayout/uinput-goodix.kl ]; then
++           cp /system/phh/daisy-uinput-goodix.kl ${mpk}/uinput-goodix.kl
++           changed=true
++        fi
++        if [ ! -f /mnt/phh/keylayout/uinput-fpc.kl ]; then
++           cp /system/phh/daisy-uinput-fpc.kl ${mpk}/uinput-fpc.kl
++           changed=true
++        fi
++        chmod 0644 ${mpk}/uinput* ${mpk}/msm8953*
++    fi
++
+     if getprop ro.vendor.build.fingerprint | grep -iq \
+         -e xiaomi/polaris -e xiaomi/sirius -e xiaomi/dipper \
+         -e xiaomi/wayne -e xiaomi/jasmine -e xiaomi/jasmine_sprout \
+         -e xiaomi/platina -e iaomi/perseus -e xiaomi/ysl \
+-        -e xiaomi/nitrogen -e xiaomi/daisy -e xiaomi/sakura \
++        -e xiaomi/nitrogen -e xiaomi/sakura \
+         -e xiaomi/whyred -e xiaomi/tulip -e xiaomi/onc; then
+         if [ ! -f /mnt/phh/keylayout/uinput-goodix.kl ]; then
+           cp /system/phh/empty /mnt/phh/keylayout/uinput-goodix.kl
+-- 
+2.11.0
+

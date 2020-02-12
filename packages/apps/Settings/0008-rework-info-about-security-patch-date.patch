@@ -1,0 +1,213 @@
+From 65a21c19f6d391868eada86bbd2bf37b83e9976d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 10 Feb 2020 16:33:15 +0200
+Subject: [PATCH 8/8] rework info about security patch date
+
+	modified:   res/xml/firmware_version.xml
+	modified:   src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
+	new file:   src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
+
+Change-Id: Icf527265c090b22799d7c4ff3963020a81094e06
+---
+ res/xml/firmware_version.xml                       | 10 +--
+ .../SecurityPatchLevelPreferenceController.java    | 60 +++++++++---------
+ .../SecurityPatchVendorPreferenceController.java   | 73 ++++++++++++++++++++++
+ 3 files changed, 103 insertions(+), 40 deletions(-)
+ create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
+
+diff --git a/res/xml/firmware_version.xml b/res/xml/firmware_version.xml
+index 7a456c7..825a46b 100644
+--- a/res/xml/firmware_version.xml
++++ b/res/xml/firmware_version.xml
+@@ -58,15 +58,7 @@
+         android:key="vendor_security_key"
+         android:title="@*lineageos.platform:string/lineage_vendor_security_patch"
+         settings:enableCopying="true"
+-        settings:controller="com.android.settings.deviceinfo.firmwareversion.LineageVendorSecurityPatchLevelPreferenceController"/>
+-
+-    <!-- Mainline module version -->
+-    <Preference
+-        android:key="module_version"
+-        android:title="@string/module_version"
+-        android:summary="@string/summary_placeholder"
+-        settings:enableCopying="true"
+-        settings:controller="com.android.settings.deviceinfo.firmwareversion.MainlineModuleVersionPreferenceController"/>
++        settings:controller="com.android.settings.deviceinfo.firmwareversion.SecurityPatchVendorPreferenceController"/>
+ 
+     <!-- Baseband -->
+     <Preference
+diff --git a/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
+index 1df78a8..029e850 100644
+--- a/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
++++ b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
+@@ -17,59 +17,57 @@
+ package com.android.settings.deviceinfo.firmwareversion;
+ 
+ import android.content.Context;
+-import android.content.Intent;
+-import android.content.pm.PackageManager;
+-import android.net.Uri;
+-import android.text.TextUtils;
+-import android.util.Log;
+-
+-import androidx.preference.Preference;
++import android.os.SystemProperties;
++import android.text.format.DateFormat;
+ 
++import com.android.settings.R;
+ import com.android.settings.core.BasePreferenceController;
+-import com.android.settingslib.DeviceInfoUtils;
++
++import java.text.ParseException;
++import java.text.SimpleDateFormat;
++import java.util.Date;
++import java.util.Locale;
+ 
+ public class SecurityPatchLevelPreferenceController extends BasePreferenceController {
+ 
+     private static final String TAG = "SecurityPatchCtrl";
+-    private static final Uri INTENT_URI_DATA = Uri.parse(
+-            "https://source.android.com/security/bulletin/");
+ 
+-    private final PackageManager mPackageManager;
+-    private final String mCurrentPatch;
++    private static final String KEY_AOSP_SECURITY_PATCH =
++            "ro.build.version.security_patch";
++
++    private static final String KEY_AOSP_SECURITY_PATCH_COPY =
++            "build.version.security_patch";
+ 
+     public SecurityPatchLevelPreferenceController(Context context, String key) {
+         super(context, key);
+-        mPackageManager = mContext.getPackageManager();
+-        mCurrentPatch = DeviceInfoUtils.getSecurityPatch();
+     }
+ 
+     @Override
+     public int getAvailabilityStatus() {
+-        return !TextUtils.isEmpty(mCurrentPatch)
+-                ? AVAILABLE : CONDITIONALLY_UNAVAILABLE;
++        return AVAILABLE;
+     }
+ 
+     @Override
+     public CharSequence getSummary() {
+-        return mCurrentPatch;
+-    }
++        String patchLevel = SystemProperties.get(KEY_AOSP_SECURITY_PATCH_COPY);
+ 
+-    @Override
+-    public boolean handlePreferenceTreeClick(Preference preference) {
+-        if (!TextUtils.equals(preference.getKey(), getPreferenceKey())) {
+-            return false;
++        if (patchLevel.isEmpty()) {
++            patchLevel = SystemProperties.get(KEY_AOSP_SECURITY_PATCH);
+         }
+ 
+-        final Intent intent = new Intent();
+-        intent.setAction(Intent.ACTION_VIEW);
+-        intent.setData(INTENT_URI_DATA);
+-        if (mPackageManager.queryIntentActivities(intent, 0).isEmpty()) {
+-            // Don't send out the intent to stop crash
+-            Log.w(TAG, "queryIntentActivities() returns empty");
+-            return true;
++        if (!patchLevel.isEmpty()) {
++            try {
++                SimpleDateFormat template = new SimpleDateFormat("yyyy-MM-dd");
++                Date patchLevelDate = template.parse(patchLevel);
++                String format = DateFormat.getBestDateTimePattern(Locale.getDefault(), "dMMMMyyyy");
++                patchLevel = DateFormat.format(format, patchLevelDate).toString();
++            } catch (ParseException e) {
++                // parsing failed, use raw string
++            }
++        } else {
++            patchLevel = mContext.getString(R.string.unknown);
+         }
+ 
+-        mContext.startActivity(intent);
+-        return true;
++        return patchLevel;
+     }
+ }
+diff --git a/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
+new file mode 100644
+index 0000000..7ed48b1
+--- /dev/null
++++ b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
+@@ -0,0 +1,73 @@
++/*
++ * Copyright (C) 2019 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.settings.deviceinfo.firmwareversion;
++
++import android.content.Context;
++import android.os.SystemProperties;
++import android.text.format.DateFormat;
++
++import com.android.settings.R;
++import com.android.settings.core.BasePreferenceController;
++
++import java.text.ParseException;
++import java.text.SimpleDateFormat;
++import java.util.Date;
++import java.util.Locale;
++
++public class SecurityPatchVendorPreferenceController extends BasePreferenceController {
++
++    private static final String TAG = "SecurityPatchVendorCtrl";
++
++    private static final String KEY_VENDOR_SECURITY_PATCH =
++            "ro.vendor.build.security_patch";
++
++    private static final String KEY_XXX_SECURITY_PATCH =
++            "ro.keymaster.xxx.security_patch";
++
++    public SecurityPatchVendorPreferenceController(Context context, String key) {
++        super(context, key);
++    }
++
++    @Override
++    public int getAvailabilityStatus() {
++        return AVAILABLE;
++    }
++
++    @Override
++    public CharSequence getSummary() {
++        String patchLevel = SystemProperties.get(KEY_XXX_SECURITY_PATCH);
++
++        if (patchLevel.isEmpty()) {
++            patchLevel = SystemProperties.get(KEY_VENDOR_SECURITY_PATCH);
++        }
++
++        if (!patchLevel.isEmpty()) {
++            try {
++                SimpleDateFormat template = new SimpleDateFormat("yyyy-MM-dd");
++                Date patchLevelDate = template.parse(patchLevel);
++                String format = DateFormat.getBestDateTimePattern(Locale.getDefault(), "dMMMMyyyy");
++                patchLevel = DateFormat.format(format, patchLevelDate).toString();
++            } catch (ParseException e) {
++                // parsing failed, use raw string
++            }
++        } else {
++            patchLevel = mContext.getString(R.string.unknown);
++        }
++
++        return patchLevel;
++    }
++}
+-- 
+2.11.0
+

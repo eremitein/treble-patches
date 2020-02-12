@@ -1,0 +1,46 @@
+From f2059b3f7373108f704da0226a291af86ca1793b Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 15 Dec 2019 16:58:38 +0100
+Subject: [PATCH 47/62] Add a nodim property for FacolaView
+
+Set persist.sys.phh.nodim to true to remove diming/full brightness
+---
+ .../com/android/server/biometrics/fingerprint/FacolaView.java     | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+index 4ff373a108d..08436019bc9 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+@@ -57,6 +57,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+ 
+     private final WindowManager mWM;
+     private final boolean samsungFod = samsungHasCmd("fod_enable");
++    private final boolean noDim;
+ 
+     private boolean mHidden = true;
+     FacolaView(Context context) {
+@@ -68,6 +69,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+         mHandlerThread.start();
+         mHandler = new Handler(mHandlerThread.getLooper());
+ 
++        noDim = android.os.SystemProperties.getBoolean("persist.sys.phh.nodim", false);
+         String[] location = android.os.SystemProperties.get("persist.vendor.sys.fp.fod.location.X_Y", "").split(",");
+         String[] size = android.os.SystemProperties.get("persist.vendor.sys.fp.fod.size.width_height", "").split(",");
+         Slog.d("PHH-Enroll", "FacolaView hello");
+@@ -149,8 +151,10 @@ public class FacolaView extends ImageView implements OnTouchListener {
+             return false;
+         }
+ 
+-        mParams.dimAmount = TOUCHED_DIM;
+-        mParams.screenBrightness = 1.0f;
++	if(!noDim) {
++		mParams.dimAmount = TOUCHED_DIM;
++		mParams.screenBrightness = 1.0f;
++	}
+         mWM.updateViewLayout(this, mParams);
+ 
+         return true;
+-- 
+2.11.0
+
