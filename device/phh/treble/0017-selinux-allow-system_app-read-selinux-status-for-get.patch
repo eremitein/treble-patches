@@ -1,0 +1,25 @@
+From 7fdc23e9f516685c56d8b048943c5ae27fd852ae Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 11 Jan 2020 13:17:06 +0200
+Subject: [PATCH 17/20] selinux: allow system_app read selinux status (for
+ getenforce)
+
+	new file:   sepolicy/getenforce.te
+---
+ sepolicy/getenforce.te | 4 ++++
+ 1 file changed, 4 insertions(+)
+ create mode 100644 sepolicy/getenforce.te
+
+diff --git a/sepolicy/getenforce.te b/sepolicy/getenforce.te
+new file mode 100644
+index 0000000..3ef0c48
+--- /dev/null
++++ b/sepolicy/getenforce.te
+@@ -0,0 +1,4 @@
++# getenforce: type=1400 audit(0.0:111): avc: denied { read } for name="enforce"
++# dev="selinuxfs" ino=4 scontext=u:r:system_app:s0
++# tcontext=u:object_r:selinuxfs:s0 tclass=file permissive=0
++allow system_app selinuxfs:file r_file_perms;
+-- 
+2.17.1
+

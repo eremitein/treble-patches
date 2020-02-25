@@ -1,0 +1,25 @@
+From e2583d56e6ba39a36c5e7cec0c2032d28912b1f6 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 10:14:46 +0200
+Subject: [PATCH] include Simple Day font overlay
+
+	modified:   packages/overlays/Android.mk
+---
+ packages/overlays/Android.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 33fd757e..32da739e 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -34,6 +34,7 @@ LOCAL_REQUIRED_MODULES := \
+ 	FontNotoSerifOverlay \
+ 	FontRobotoOverlay \
+ 	FontRubikOverlay \
++	FontSimpleDayOverlay \
+ 	FontSourceOverlay \
+ 	FontZillaOverlay \
+ 	IconPackCircularAndroidOverlay \
+-- 
+2.17.1
+

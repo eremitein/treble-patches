@@ -1,0 +1,161 @@
+From 5c331636d497c2be2123d3f8c28d4b57530ca7d6 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 22 Feb 2020 21:21:37 +0200
+Subject: [PATCH 09/17] add Gray accent overlay
+
+	new file:   packages/overlays/AccentColorGrayOverlay/Android.mk
+	new file:   packages/overlays/AccentColorGrayOverlay/AndroidManifest.xml
+	new file:   packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+	new file:   packages/overlays/AccentColorGrayOverlay/res/values/strings.xml
+	modified:   packages/overlays/Android.mk
+---
+ .../AccentColorGrayOverlay/Android.mk         | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 25 +++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 22 +++++++++++++
+ .../res/values/strings.xml                    | 22 +++++++++++++
+ packages/overlays/Android.mk                  |  1 +
+ 5 files changed, 101 insertions(+)
+ create mode 100644 packages/overlays/AccentColorGrayOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorGrayOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorGrayOverlay/res/values/strings.xml
+
+diff --git a/packages/overlays/AccentColorGrayOverlay/Android.mk b/packages/overlays/AccentColorGrayOverlay/Android.mk
+new file mode 100644
+index 00000000..201d6259
+--- /dev/null
++++ b/packages/overlays/AccentColorGrayOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorGray
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorGrayOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorGrayOverlay/AndroidManifest.xml b/packages/overlays/AccentColorGrayOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000..01f0f75d
+--- /dev/null
++++ b/packages/overlays/AccentColorGrayOverlay/AndroidManifest.xml
+@@ -0,0 +1,25 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.gray"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.accent_color" android:priority="1"/>
++
++    <application android:label="@string/accent_color_gray_overlay" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000..b3492d3a
+--- /dev/null
++++ b/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <color name="accent_device_default_light">#303030</color>
++    <color name="accent_device_default_dark">#C0C0C0</color>
++</resources>
+diff --git a/packages/overlays/AccentColorGrayOverlay/res/values/strings.xml b/packages/overlays/AccentColorGrayOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000..e385b720
+--- /dev/null
++++ b/packages/overlays/AccentColorGrayOverlay/res/values/strings.xml
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Gray accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_gray_overlay" translatable="false">Gray</string>
++</resources>
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 6a1718cf..0e80b54a 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -19,6 +19,7 @@ LOCAL_MODULE := frameworks-base-overlays
+ LOCAL_REQUIRED_MODULES := \
+ 	AccentColorBlackOverlay \
+ 	AccentColorCinnamonOverlay \
++	AccentColorGrayOverlay \
+ 	AccentColorOceanOverlay \
+ 	AccentColorOrchidOverlay \
+ 	AccentColorSpaceOverlay \
+-- 
+2.17.1
+

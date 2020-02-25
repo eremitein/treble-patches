@@ -1,0 +1,27 @@
+From 6c7fd6a37095b5fc6f2c59b613b924f90774f41d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 22 Feb 2020 16:45:25 +0200
+Subject: [PATCH] add GoogleSans font normally
+
+	modified:   target/product/handheld_system.mk
+
+Change-Id: Ie29f6aff0727700e698c4278c0e2202a3e9c1986
+---
+ target/product/handheld_system.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/target/product/handheld_system.mk b/target/product/handheld_system.mk
+index 6bcfe47..50a1001 100644
+--- a/target/product/handheld_system.mk
++++ b/target/product/handheld_system.mk
+@@ -20,6 +20,7 @@
+ # does, use base_vendor.mk).
+ $(call inherit-product, $(SRC_TARGET_DIR)/product/media_system.mk)
+ $(call inherit-product-if-exists, frameworks/base/data/fonts/fonts.mk)
++$(call inherit-product-if-exists, external/googlesans-fonts/fonts.mk)
+ $(call inherit-product-if-exists, external/google-fonts/dancing-script/fonts.mk)
+ $(call inherit-product-if-exists, external/google-fonts/carrois-gothic-sc/fonts.mk)
+ $(call inherit-product-if-exists, external/google-fonts/coming-soon/fonts.mk)
+-- 
+2.17.1
+

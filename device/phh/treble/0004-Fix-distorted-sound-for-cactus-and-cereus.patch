@@ -1,0 +1,28 @@
+From a35833ed12c8e7c4d4e2e0c0de8ec5a7dd34aa88 Mon Sep 17 00:00:00 2001
+From: Myst33d <myst33d@gmail.com>
+Date: Thu, 20 Feb 2020 19:39:40 +0600
+Subject: [PATCH 04/20] Fix distorted sound for cactus and cereus
+
+---
+ rw-system.sh | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/rw-system.sh b/rw-system.sh
+index db4efb2..18dfbf8 100644
+--- a/rw-system.sh
++++ b/rw-system.sh
+@@ -277,6 +277,11 @@ for f in /vendor/lib/mtk-ril.so /vendor/lib64/mtk-ril.so /vendor/lib/libmtk-ril.
+     setprop persist.sys.radio.ussd.fix true
+ done
+ 
++if getprop ro.vendor.build.fingerprint | grep -iq -e iaomi/cactus -e iaomi/cereus; then
++    setprop debug.stagefright.omx_default_rank.sw-audio 1
++    setprop debug.stagefright.omx_default_rank 0
++fi
++
+ mount -o bind /system/phh/empty /vendor/overlay/SysuiDarkTheme/SysuiDarkTheme.apk || true
+ mount -o bind /system/phh/empty /vendor/overlay/SysuiDarkTheme/SysuiDarkThemeOverlay.apk || true
+ 
+-- 
+2.17.1
+

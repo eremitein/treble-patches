@@ -1,0 +1,54 @@
+From 8aa1ec7f5ae23801825d8102c46c99941f3cf928 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Feb 2020 18:54:46 +0200
+Subject: [PATCH 15/17] Revert "try to tune QS"
+
+This reverts commit 4f347fc2704da93b96322af9c51ede36fc9ca22a.
+
+	modified:   packages/SystemUI/res/values-land/config.xml
+	modified:   packages/SystemUI/res/values/config.xml
+---
+ packages/SystemUI/res/values-land/config.xml | 7 -------
+ packages/SystemUI/res/values/config.xml      | 4 ++--
+ 2 files changed, 2 insertions(+), 9 deletions(-)
+
+diff --git a/packages/SystemUI/res/values-land/config.xml b/packages/SystemUI/res/values-land/config.xml
+index 233bde16..63bbe62a 100644
+--- a/packages/SystemUI/res/values-land/config.xml
++++ b/packages/SystemUI/res/values-land/config.xml
+@@ -31,11 +31,4 @@
+ 
+     <!-- orientation of the dead zone when touches have recently occurred elsewhere on screen -->
+     <integer name="navigation_bar_deadzone_orientation">1</integer>
+-
+-    <!-- The maximum number of tiles in the QuickQSPanel -->
+-    <integer name="quick_qs_panel_max_columns">7</integer>
+-
+-    <!-- The number of columns in the QuickSettings -->
+-    <integer name="quick_settings_num_columns">5</integer>
+-
+ </resources>
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index f0396d87..78318cb7 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -102,14 +102,14 @@
+     <integer name="quick_settings_num_columns">3</integer>
+ 
+     <!-- The number of rows in the QuickSettings -->
+-    <integer name="quick_settings_max_rows">4</integer>
++    <integer name="quick_settings_max_rows">3</integer>
+ 
+     <!-- The number of columns that the top level tiles span in the QuickSettings -->
+     <integer name="quick_settings_user_time_settings_tile_span">1</integer>
+ 
+     <!-- The default tiles to display in QuickSettings -->
+     <string name="quick_settings_tiles_default" translatable="false">
+-        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,night,cast,dark,location
++        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,cast
+     </string>
+ 
+     <!-- The minimum number of tiles to display in QuickSettings -->
+-- 
+2.17.1
+
