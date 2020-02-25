@@ -1,0 +1,36 @@
+From de6199a7d5d3c340216266cda915c5cbfde5131f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 17:50:51 +0200
+Subject: [PATCH 097/105] rework fonts xml v2
+
+	modified:   data/fonts/fonts.xml
+---
+ data/fonts/fonts.xml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index da249b27ded..08d19c7f505 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -42,8 +42,10 @@
+     <alias name="sans-serif-medium" to="sans-serif" weight="500" />
+     <alias name="sans-serif-black" to="sans-serif" weight="900" />
+     <alias name="arial" to="sans-serif" />
++    <alias name="google-sans" to="sans-serif" />
+     <alias name="helvetica" to="sans-serif" />
+     <alias name="tahoma" to="sans-serif" />
++    <alias name="sans" to="sans-serif" />
+     <alias name="verdana" to="sans-serif" />
+ 
+     <family name="sans-serif-condensed">
+@@ -158,6 +160,7 @@
+         <font weight="700" style="normal">SimpleDay-Bold.ttf</font>
+         <font weight="700" style="italic">SimpleDay-BoldItalic.ttf</font>
+     </family>
++    <alias name="simple-day-bold" to="simple-day" weight="700" />
+     <alias name="simple-day-medium" to="simple-day" weight="500" />
+ 
+     <!-- fallback fonts -->
+-- 
+2.17.1
+

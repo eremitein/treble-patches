@@ -1,11 +1,11 @@
 From 3cabf1fc987064bef0ec0617b261d9ff220d1040 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 21 Aug 2018 22:24:02 +0200
-Subject: [PATCH 23/62] Don't wake IR HAL to the infinity and beyond
+Subject: [PATCH 023/105] Don't wake IR HAL to the infinity and beyond
 
 ---
- services/core/java/com/android/server/ConsumerIrService.java | 7 -------
- services/core/jni/com_android_server_ConsumerIrService.cpp   | 2 +-
+ .../core/java/com/android/server/ConsumerIrService.java    | 7 -------
+ services/core/jni/com_android_server_ConsumerIrService.cpp | 2 +-
  2 files changed, 1 insertion(+), 8 deletions(-)
 
 diff --git a/services/core/java/com/android/server/ConsumerIrService.java b/services/core/java/com/android/server/ConsumerIrService.java
@@ -40,5 +40,5 @@ index 2ca348b3ae4..148fba9a688 100644
  }
  
 -- 
-2.11.0
+2.17.1
 

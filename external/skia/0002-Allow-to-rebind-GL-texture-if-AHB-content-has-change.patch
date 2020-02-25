@@ -1,0 +1,327 @@
+From 291ef6981994f98173d6a6505aa89a018d7bedd3 Mon Sep 17 00:00:00 2001
+From: Stan Iliev <stani@google.com>
+Date: Thu, 1 Aug 2019 14:22:34 -0400
+Subject: [PATCH 2/2] Allow to rebind GL texture if AHB content has changed
+
+Add an output function argument updateProc to MakeBackendTexture.
+updateProc needs to be invoked, when AHB buffer content has
+changed.  OES_EGL_image_external spec requires to bind the
+texture, when buffer content has changed.
+glEGLImageTargetTexture2DOES is invoked too (spec is not clear,
+but MTK devices require it).
+
+Test: Built and ran android
+Bug: b/138674291
+Change-Id: I4e20885931d1446c45119eec1b992a85bcd97450
+Merged-In: Ib5f15408e766c1e5344f18c287a202c1853ddd20
+---
+ src/gpu/GrAHardwareBufferImageGenerator.cpp | 12 ++--
+ src/gpu/GrAHardwareBufferUtils.cpp          | 70 +++++++++++++++++----
+ src/gpu/GrAHardwareBufferUtils.h            | 39 +++++++++++-
+ src/image/SkImage_Gpu.cpp                   |  7 ++-
+ src/image/SkSurface_Gpu.cpp                 |  9 +--
+ 5 files changed, 110 insertions(+), 27 deletions(-)
+
+diff --git a/src/gpu/GrAHardwareBufferImageGenerator.cpp b/src/gpu/GrAHardwareBufferImageGenerator.cpp
+index 205595526f..2dcdeb5911 100644
+--- a/src/gpu/GrAHardwareBufferImageGenerator.cpp
++++ b/src/gpu/GrAHardwareBufferImageGenerator.cpp
+@@ -152,20 +152,22 @@ sk_sp<GrTextureProxy> GrAHardwareBufferImageGenerator::makeProxy(GrRecordingCont
+             [direct, buffer = AutoAHBRelease(hardwareBuffer), width, height, pixelConfig,
+              isProtectedContent, backendFormat](GrResourceProvider* resourceProvider) {
+                 GrAHardwareBufferUtils::DeleteImageProc deleteImageProc = nullptr;
+-                GrAHardwareBufferUtils::DeleteImageCtx deleteImageCtx = nullptr;
++                GrAHardwareBufferUtils::UpdateImageProc updateImageProc = nullptr;
++                GrAHardwareBufferUtils::TexImageCtx texImageCtx = nullptr;
+ 
+                 GrBackendTexture backendTex =
+                         GrAHardwareBufferUtils::MakeBackendTexture(direct, buffer.get(),
+                                                                    width, height,
+                                                                    &deleteImageProc,
+-                                                                   &deleteImageCtx,
++                                                                   &updateImageProc,
++                                                                   &texImageCtx,
+                                                                    isProtectedContent,
+                                                                    backendFormat,
+                                                                    false);
+                 if (!backendTex.isValid()) {
+                     return sk_sp<GrTexture>();
+                 }
+-                SkASSERT(deleteImageProc && deleteImageCtx);
++                SkASSERT(deleteImageProc && texImageCtx);
+ 
+                 backendTex.fConfig = pixelConfig;
+                 // We make this texture cacheable to avoid recreating a GrTexture every time this
+@@ -174,12 +176,12 @@ sk_sp<GrTextureProxy> GrAHardwareBufferImageGenerator::makeProxy(GrRecordingCont
+                 sk_sp<GrTexture> tex = resourceProvider->wrapBackendTexture(
+                         backendTex, kBorrow_GrWrapOwnership, GrWrapCacheable::kYes, kRead_GrIOType);
+                 if (!tex) {
+-                    deleteImageProc(deleteImageCtx);
++                    deleteImageProc(texImageCtx);
+                     return sk_sp<GrTexture>();
+                 }
+ 
+                 if (deleteImageProc) {
+-                    tex->setRelease(deleteImageProc, deleteImageCtx);
++                    tex->setRelease(deleteImageProc, texImageCtx);
+                 }
+ 
+                 return tex;
+diff --git a/src/gpu/GrAHardwareBufferUtils.cpp b/src/gpu/GrAHardwareBufferUtils.cpp
+index 43272cea33..f22343a804 100644
+--- a/src/gpu/GrAHardwareBufferUtils.cpp
++++ b/src/gpu/GrAHardwareBufferUtils.cpp
+@@ -157,33 +157,59 @@ GrBackendFormat GetBackendFormat(GrContext* context, AHardwareBuffer* hardwareBu
+     return GrBackendFormat();
+ }
+ 
+-class GLCleanupHelper {
++class GLTextureHelper {
+ public:
+-    GLCleanupHelper(GrGLuint texID, EGLImageKHR image, EGLDisplay display)
++    GLTextureHelper(GrGLuint texID, EGLImageKHR image, EGLDisplay display, GrGLuint texTarget)
+         : fTexID(texID)
+         , fImage(image)
+-        , fDisplay(display) { }
+-    ~GLCleanupHelper() {
++        , fDisplay(display)
++        , fTexTarget(texTarget) { }
++    ~GLTextureHelper() {
+         glDeleteTextures(1, &fTexID);
+         // eglDestroyImageKHR will remove a ref from the AHardwareBuffer
+         eglDestroyImageKHR(fDisplay, fImage);
+     }
++    void rebind(GrContext* grContext);
++
+ private:
+     GrGLuint    fTexID;
+     EGLImageKHR fImage;
+     EGLDisplay  fDisplay;
++    GrGLuint    fTexTarget;
+ };
+ 
++void GLTextureHelper::rebind(GrContext* grContext) {
++    glBindTexture(fTexTarget, fTexID);
++    GLenum status = GL_NO_ERROR;
++    if ((status = glGetError()) != GL_NO_ERROR) {
++        SkDebugf("glBindTexture(%#x, %d) failed (%#x)", (int) fTexTarget,
++            (int) fTexID, (int) status);
++        return;
++    }
++    glEGLImageTargetTexture2DOES(fTexTarget, fImage);
++    if ((status = glGetError()) != GL_NO_ERROR) {
++        SkDebugf("glEGLImageTargetTexture2DOES failed (%#x)", (int) status);
++        return;
++    }
++    grContext->resetContext(kTextureBinding_GrGLBackendState);
++}
++
+ void delete_gl_texture(void* context) {
+-    GLCleanupHelper* cleanupHelper = static_cast<GLCleanupHelper*>(context);
++    GLTextureHelper* cleanupHelper = static_cast<GLTextureHelper*>(context);
+     delete cleanupHelper;
+ }
+ 
++void update_gl_texture(void* context, GrContext* grContext) {
++    GLTextureHelper* cleanupHelper = static_cast<GLTextureHelper*>(context);
++    cleanupHelper->rebind(grContext);
++}
++
+ static GrBackendTexture make_gl_backend_texture(
+         GrContext* context, AHardwareBuffer* hardwareBuffer,
+         int width, int height,
+         DeleteImageProc* deleteProc,
+-        DeleteImageCtx* deleteCtx,
++        UpdateImageProc* updateProc,
++        TexImageCtx* imageCtx,
+         bool isProtectedContent,
+         const GrBackendFormat& backendFormat,
+         bool isRenderable) {
+@@ -236,7 +262,8 @@ static GrBackendTexture make_gl_backend_texture(
+     textureInfo.fFormat = *backendFormat.getGLFormat();
+ 
+     *deleteProc = delete_gl_texture;
+-    *deleteCtx = new GLCleanupHelper(texID, image, display);
++    *updateProc = update_gl_texture;
++    *imageCtx = new GLTextureHelper(texID, image, display, target);
+ 
+     return GrBackendTexture(width, height, GrMipMapped::kNo, textureInfo);
+ }
+@@ -267,11 +294,16 @@ void delete_vk_image(void* context) {
+     delete cleanupHelper;
+ }
+ 
++void update_vk_image(void* context, GrContext* grContext) {
++    // no op
++}
++
+ static GrBackendTexture make_vk_backend_texture(
+         GrContext* context, AHardwareBuffer* hardwareBuffer,
+         int width, int height,
+         DeleteImageProc* deleteProc,
+-        DeleteImageCtx* deleteCtx,
++        UpdateImageProc* updateProc,
++        TexImageCtx* imageCtx,
+         bool isProtectedContent,
+         const GrBackendFormat& backendFormat,
+         bool isRenderable) {
+@@ -456,7 +488,8 @@ static GrBackendTexture make_vk_backend_texture(
+     imageInfo.fYcbcrConversionInfo = *ycbcrConversion;
+ 
+     *deleteProc = delete_vk_image;
+-    *deleteCtx = new VulkanCleanupHelper(gpu, image, memory);
++    *updateProc = update_vk_image;
++    *imageCtx = new VulkanCleanupHelper(gpu, image, memory);
+ 
+     return GrBackendTexture(width, height, imageInfo);
+ }
+@@ -489,7 +522,8 @@ static bool can_import_protected_content(GrContext* context) {
+ GrBackendTexture MakeBackendTexture(GrContext* context, AHardwareBuffer* hardwareBuffer,
+                                     int width, int height,
+                                     DeleteImageProc* deleteProc,
+-                                    DeleteImageCtx* deleteCtx,
++                                    UpdateImageProc* updateProc,
++                                    TexImageCtx* imageCtx,
+                                     bool isProtectedContent,
+                                     const GrBackendFormat& backendFormat,
+                                     bool isRenderable) {
+@@ -500,7 +534,7 @@ GrBackendTexture MakeBackendTexture(GrContext* context, AHardwareBuffer* hardwar
+ 
+     if (GrBackendApi::kOpenGL == context->backend()) {
+         return make_gl_backend_texture(context, hardwareBuffer, width, height, deleteProc,
+-                                       deleteCtx, createProtectedImage, backendFormat,
++                                       updateProc, imageCtx, createProtectedImage, backendFormat,
+                                        isRenderable);
+     } else {
+         SkASSERT(GrBackendApi::kVulkan == context->backend());
+@@ -508,7 +542,7 @@ GrBackendTexture MakeBackendTexture(GrContext* context, AHardwareBuffer* hardwar
+         // Currently we don't support protected images on vulkan
+         SkASSERT(!createProtectedImage);
+         return make_vk_backend_texture(context, hardwareBuffer, width, height, deleteProc,
+-                                       deleteCtx, createProtectedImage, backendFormat,
++                                       updateProc, imageCtx, createProtectedImage, backendFormat,
+                                        isRenderable);
+ #else
+         return GrBackendTexture();
+@@ -516,6 +550,18 @@ GrBackendTexture MakeBackendTexture(GrContext* context, AHardwareBuffer* hardwar
+     }
+ }
+ 
++GrBackendTexture MakeBackendTexture(GrContext* context, AHardwareBuffer* hardwareBuffer,
++                                    int width, int height,
++                                    DeleteImageProc* deleteProc,
++                                    TexImageCtx* imageCtx,
++                                    bool isProtectedContent,
++                                    const GrBackendFormat& backendFormat,
++                                    bool isRenderable) {
++    UpdateImageProc updateProc;
++    return MakeBackendTexture(context, hardwareBuffer, width, height, deleteProc, &updateProc,
++                              imageCtx, isProtectedContent, backendFormat, isRenderable);
++}
++
+ } // GrAHardwareBufferUtils
+ 
+ #endif
+diff --git a/src/gpu/GrAHardwareBufferUtils.h b/src/gpu/GrAHardwareBufferUtils.h
+index 31cb1407a5..8e637452df 100644
+--- a/src/gpu/GrAHardwareBufferUtils.h
++++ b/src/gpu/GrAHardwareBufferUtils.h
+@@ -27,13 +27,46 @@ SkColorType GetSkColorTypeFromBufferFormat(uint32_t bufferFormat);
+ GrBackendFormat GetBackendFormat(GrContext* context, AHardwareBuffer* hardwareBuffer,
+                                  uint32_t bufferFormat, bool requireKnownFormat);
+ 
+-typedef void* DeleteImageCtx;
+-typedef void (*DeleteImageProc)(DeleteImageCtx);
++typedef void* TexImageCtx;
++typedef void (*DeleteImageProc)(TexImageCtx);
++typedef void (*UpdateImageProc)(TexImageCtx, GrContext*);
+ 
++//TODO: delete this function after clients stop using it.
+ GrBackendTexture MakeBackendTexture(GrContext* context, AHardwareBuffer* hardwareBuffer,
+                                     int width, int height,
+                                     DeleteImageProc* deleteProc,
+-                                    DeleteImageCtx* deleteCtx,
++                                    TexImageCtx* imageCtx,
++                                    bool isProtectedContent,
++                                    const GrBackendFormat& backendFormat,
++                                    bool isRenderable);
++
++/**
++ * Create a GrBackendTexture from AHardwareBuffer
++ *
++ * @param   context         GPU context
++ * @param   hardwareBuffer  AHB
++ * @param   width           texture width
++ * @param   height          texture height
++ * @param   deleteProc      returns a function that deletes the texture and
++ *                          other GPU resources. Must be invoked on the same
++ *                          thread as MakeBackendTexture
++ * @param   updateProc      returns a function, that needs to be invoked, when
++ *                          AHB buffer content has changed. Must be invoked on
++ *                          the same thread as MakeBackendTexture
++ * @param   imageCtx        returns an opaque image context, that is passed as
++ *                          first argument to deleteProc and updateProc
++ * @param   isProtectedContent if true, GL backend uses EXT_protected_content
++ * @param   backendFormat   backend format, usually created with helper
++ *                          function GetBackendFormat
++ * @param   isRenderable    true if GrBackendTexture can be used as a color
++ *                          attachment
++ * @return                  valid GrBackendTexture object on success
++ */
++GrBackendTexture MakeBackendTexture(GrContext* context, AHardwareBuffer* hardwareBuffer,
++                                    int width, int height,
++                                    DeleteImageProc* deleteProc,
++                                    UpdateImageProc* updateProc,
++                                    TexImageCtx* imageCtx,
+                                     bool isProtectedContent,
+                                     const GrBackendFormat& backendFormat,
+                                     bool isRenderable);
+diff --git a/src/image/SkImage_Gpu.cpp b/src/image/SkImage_Gpu.cpp
+index eb64b8cf19..708286eb43 100644
+--- a/src/image/SkImage_Gpu.cpp
++++ b/src/image/SkImage_Gpu.cpp
+@@ -613,13 +613,14 @@ sk_sp<SkImage> SkImage::MakeFromAHardwareBufferWithData(GrContext* context,
+     }
+ 
+     GrAHardwareBufferUtils::DeleteImageProc deleteImageProc = nullptr;
+-    GrAHardwareBufferUtils::DeleteImageCtx deleteImageCtx = nullptr;
++    GrAHardwareBufferUtils::UpdateImageProc updateImageProc = nullptr;
++    GrAHardwareBufferUtils::TexImageCtx deleteImageCtx = nullptr;
+ 
+     GrBackendTexture backendTexture =
+             GrAHardwareBufferUtils::MakeBackendTexture(context, hardwareBuffer,
+                                                        bufferDesc.width, bufferDesc.height,
+-                                                       &deleteImageProc, &deleteImageCtx,
+-                                                       false, backendFormat, true);
++                                                       &deleteImageProc, &updateImageProc,
++                                                       &deleteImageCtx, false, backendFormat, true);
+     if (!backendTexture.isValid()) {
+         return nullptr;
+     }
+diff --git a/src/image/SkSurface_Gpu.cpp b/src/image/SkSurface_Gpu.cpp
+index 5a2a12d485..cd340000ae 100644
+--- a/src/image/SkSurface_Gpu.cpp
++++ b/src/image/SkSurface_Gpu.cpp
+@@ -617,14 +617,15 @@ sk_sp<SkSurface> SkSurface::MakeFromAHardwareBuffer(GrContext* context,
+ 
+     if (isTextureable) {
+         GrAHardwareBufferUtils::DeleteImageProc deleteImageProc = nullptr;
+-        GrAHardwareBufferUtils::DeleteImageCtx deleteImageCtx = nullptr;
++        GrAHardwareBufferUtils::UpdateImageProc updateImageProc = nullptr;
++        GrAHardwareBufferUtils::TexImageCtx deleteImageCtx = nullptr;
+ 
+         GrBackendTexture backendTexture =
+                 GrAHardwareBufferUtils::MakeBackendTexture(context, hardwareBuffer,
+                                                            bufferDesc.width, bufferDesc.height,
+-                                                           &deleteImageProc, &deleteImageCtx,
+-                                                           isProtectedContent, backendFormat,
+-                                                           true);
++                                                           &deleteImageProc, &updateImageProc,
++                                                           &deleteImageCtx, isProtectedContent,
++                                                           backendFormat, true);
+         if (!backendTexture.isValid()) {
+             return nullptr;
+         }
+-- 
+2.17.1
+

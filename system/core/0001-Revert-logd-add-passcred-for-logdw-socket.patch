@@ -1,0 +1,53 @@
+From 9051fb432dcc04bf8735429b0644facc0d1251af Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 10 Dec 2017 00:26:21 +0100
+Subject: [PATCH 01/17] Revert "logd: add "+passcred" for logdw socket"
+
+This reverts commit 54d8ff1121440d0ef4565ce0ab3751f82fdb393c.
+
+Android 8.0 init doesn't understand this new syntax
+---
+ logd/LogListener.cpp | 10 +++++-----
+ logd/logd.rc         |  2 +-
+ 2 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/logd/LogListener.cpp b/logd/LogListener.cpp
+index 2f22778..240127e 100644
+--- a/logd/LogListener.cpp
++++ b/logd/LogListener.cpp
+@@ -149,14 +149,14 @@ int LogListener::getLogSocket() {
+     static const char socketName[] = "logdw";
+     int sock = android_get_control_socket(socketName);
+ 
+-    if (sock < 0) {  // logd started up in init.sh
++    if (sock < 0) {
+         sock = socket_local_server(
+             socketName, ANDROID_SOCKET_NAMESPACE_RESERVED, SOCK_DGRAM);
++    }
+ 
+-        int on = 1;
+-        if (setsockopt(sock, SOL_SOCKET, SO_PASSCRED, &on, sizeof(on))) {
+-            return -1;
+-        }
++    int on = 1;
++    if (setsockopt(sock, SOL_SOCKET, SO_PASSCRED, &on, sizeof(on)) < 0) {
++        return -1;
+     }
+     return sock;
+ }
+diff --git a/logd/logd.rc b/logd/logd.rc
+index 438419a..5514e94 100644
+--- a/logd/logd.rc
++++ b/logd/logd.rc
+@@ -1,7 +1,7 @@
+ service logd /system/bin/logd
+     socket logd stream 0666 logd logd
+     socket logdr seqpacket 0666 logd logd
+-    socket logdw dgram+passcred 0222 logd logd
++    socket logdw dgram 0222 logd logd
+     file /proc/kmsg r
+     file /dev/kmsg w
+     user logd
+-- 
+2.17.1
+

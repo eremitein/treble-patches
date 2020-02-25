@@ -1,0 +1,48 @@
+From f47afbca6e884d85abc46fdac353abfbaebed503 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 07:23:44 +0200
+Subject: [PATCH 17/17] fix offline charger
+
+	modified:   rootdir/init.rc
+---
+ rootdir/init.rc | 10 ++++++++--
+ 1 file changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/rootdir/init.rc b/rootdir/init.rc
+index 58a83e0..92fe1e6 100644
+--- a/rootdir/init.rc
++++ b/rootdir/init.rc
+@@ -11,6 +11,12 @@ import /vendor/etc/init/hw/init.${ro.hardware}.rc
+ import /init.usb.configfs.rc
+ import /init.${ro.zygote}.rc
+ 
++service gsicharger /bin/charger
++    class gsicharger
++    user system
++    group system shell input graphics
++    seclabel u:r:charger:s0
++
+ # Cgroups are mounted right before early-init using list from /etc/cgroups.json
+ on early-init
+     # Disable sysrq from keyboard
+@@ -304,7 +310,7 @@ on init
+ # Healthd can trigger a full boot from charger mode by signaling this
+ # property when the power button is held.
+ on property:sys.boot_from_charger_mode=1
+-    class_stop charger
++    class_stop gsicharger
+     trigger late-init
+ 
+ on load_persist_props_action
+@@ -764,7 +770,7 @@ on property:sys.init_log_level=*
+     loglevel ${sys.init_log_level}
+ 
+ on charger
+-    class_start charger
++    class_start gsicharger
+ 
+ on property:vold.decrypt=trigger_load_persist_props
+     load_persist_props
+-- 
+2.17.1
+

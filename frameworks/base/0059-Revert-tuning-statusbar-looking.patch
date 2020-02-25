@@ -1,7 +1,7 @@
 From da6792c7b00e4758e33cd86aea8f1c2fa6948148 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 22:36:42 +0200
-Subject: [PATCH 59/62] Revert "tuning statusbar looking"
+Subject: [PATCH 059/105] Revert "tuning statusbar looking"
 
 This reverts commit e38117776802d29955eca83305f5e1c254a91797.
 
@@ -22,5 +22,5 @@ index 3e638599031..4ee7242729b 100644
 +</LinearLayout>
 \ No newline at end of file
 -- 
-2.11.0
+2.17.1
 

@@ -1,8 +1,8 @@
 From 7d5af97684bdb44d56bdc159c8fd64b0b805160a Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 12 Jun 2018 22:55:32 +0200
-Subject: [PATCH 16/62] property-matching RROs: allow to prefix the value with
- + to do glob match instead of exact match
+Subject: [PATCH 016/105] property-matching RROs: allow to prefix the value
+ with + to do glob match instead of exact match
 
 ---
  cmds/idmap/scan.cpp | 5 +++++
@@ -31,5 +31,5 @@ index d69dd79555a..2be6d23ac78 100644
      }
  
 -- 
-2.11.0
+2.17.1
 

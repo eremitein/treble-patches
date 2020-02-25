@@ -1,16 +1,16 @@
 From 88a9bb96ef793dd7d6118ad4a4fdad7a00d9f755 Mon Sep 17 00:00:00 2001
 From: gudenau <gudenau>
 Date: Tue, 25 Sep 2018 09:44:26 +0200
-Subject: [PATCH 54/62] core: Add support for MicroG
+Subject: [PATCH 054/105] core: Add support for MicroG
 
 -fake signatures, enabled per app by dynamic permission
 
 Change-Id: I84fc7e5c606f4b57012d948a4cc6cb521db6b03e
 ---
- core/res/AndroidManifest.xml                       |  7 +++++++
- core/res/res/values/config.xml                     |  2 ++
- core/res/res/values/strings.xml                    |  5 +++++
- .../android/server/pm/PackageManagerService.java   | 23 ++++++++++++++++++++--
+ core/res/AndroidManifest.xml                  |  7 ++++++
+ core/res/res/values/config.xml                |  2 ++
+ core/res/res/values/strings.xml               |  5 ++++
+ .../server/pm/PackageManagerService.java      | 23 +++++++++++++++++--
  4 files changed, 35 insertions(+), 2 deletions(-)
 
 diff --git a/core/res/AndroidManifest.xml b/core/res/AndroidManifest.xml
@@ -48,18 +48,18 @@ diff --git a/core/res/res/values/strings.xml b/core/res/res/values/strings.xml
 index 71bd8022983..efe8fced90f 100644
 --- a/core/res/res/values/strings.xml
 +++ b/core/res/res/values/strings.xml
-@@ -831,6 +831,11 @@
+@@ -830,6 +830,11 @@
+ 
      <!--  Permissions -->
  
-     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
++    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 +    <string name="permlab_fakePackageSignature">Spoof package signature</string>
 +    <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 +    <string name="permdesc_fakePackageSignature">Allows the app to pretend to be a different app. Malicious applications might be able to use this to access private application data. Legitimate uses include an emulator pretending to be what it emulates. Grant this permission with caution only!</string>
 +
-+    <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
+     <!-- Title of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
      <string name="permlab_statusBar">disable or modify status bar</string>
      <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
-     <string name="permdesc_statusBar">Allows the app to disable the status bar or add and remove system icons.</string>
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
 index a6d2e20af6d..159e73cd104 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
@@ -102,5 +102,5 @@ index a6d2e20af6d..159e73cd104 100644
      public void checkPackageStartable(String packageName, int userId) {
          final int callingUid = Binder.getCallingUid();
 -- 
-2.11.0
+2.17.1
 

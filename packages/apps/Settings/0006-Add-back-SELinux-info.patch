@@ -1,7 +1,7 @@
 From 5735e7a06b208f941aeb1b1fa730d6fa4cec3745 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 20:49:53 +0200
-Subject: [PATCH 6/8] Add back SELinux info
+Subject: [PATCH 06/11] Add back SELinux info
 
   * based on https://github.com/Evolution-X/packages_apps_Settings/commit/d1dc320beb1b6d0c8d5c04f69951f903d841a183
 
@@ -9,9 +9,9 @@ Subject: [PATCH 6/8] Add back SELinux info
 	modified:   res/xml/firmware_version.xml
 	new file:   src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
 ---
- res/values/strings.xml                             |  7 +++
- res/xml/firmware_version.xml                       | 10 +++-
- .../SelinuxStatusPreferenceController.java         | 70 ++++++++++++++++++++++
+ res/values/strings.xml                        |  7 ++
+ res/xml/firmware_version.xml                  | 10 ++-
+ .../SelinuxStatusPreferenceController.java    | 70 +++++++++++++++++++
  3 files changed, 86 insertions(+), 1 deletion(-)
  create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
 
@@ -136,5 +136,5 @@ index 0000000..df642d6
 +		}
 +}
 -- 
-2.11.0
+2.17.1
 

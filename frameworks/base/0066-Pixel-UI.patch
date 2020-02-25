@@ -1,0 +1,151 @@
+From 073349fcc606b2ebb6d4c36741a069672c88ddc2 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 27 Dec 2019 12:55:43 +0200
+Subject: [PATCH 066/105] Pixel UI
+
+  * from
+  https://github.com/Havoc-OS/android_frameworks_base/commit/9f98b8ef947fcc6f7eea6690fd524807495367fb
+
+	modified:   core/res/res/drawable/btn_borderless_rect.xml
+	modified:   core/res/res/drawable/popup_background_material.xml
+	modified:   core/res/res/values/config.xml
+	modified:   core/res/res/values/dimens.xml
+	modified:   core/res/res/values/dimens_material.xml
+	modified:   core/res/res/values/themes.xml
+	modified:   packages/SystemUI/res/values/dimens.xml
+---
+ core/res/res/drawable/btn_borderless_rect.xml       | 4 ++--
+ core/res/res/drawable/popup_background_material.xml | 2 +-
+ core/res/res/values/config.xml                      | 2 +-
+ core/res/res/values/dimens.xml                      | 4 ++--
+ core/res/res/values/dimens_material.xml             | 2 +-
+ core/res/res/values/themes.xml                      | 4 ++--
+ packages/SystemUI/res/values/dimens.xml             | 4 ++--
+ 7 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/core/res/res/drawable/btn_borderless_rect.xml b/core/res/res/drawable/btn_borderless_rect.xml
+index 9eaba8364f8..c15ddf76747 100644
+--- a/core/res/res/drawable/btn_borderless_rect.xml
++++ b/core/res/res/drawable/btn_borderless_rect.xml
+@@ -22,10 +22,10 @@
+ 
+         <item android:id="@android:id/mask">
+             <shape>
+-                <corners android:radius="2dp" />
++                <corners android:radius="4dp" />
+                 <solid android:color="@android:color/white" />
+             </shape>
+         </item>
+ 
+     </ripple>
+-</inset>
+\ No newline at end of file
++</inset>
+diff --git a/core/res/res/drawable/popup_background_material.xml b/core/res/res/drawable/popup_background_material.xml
+index 9ad7bfc6812..16c83babbfa 100644
+--- a/core/res/res/drawable/popup_background_material.xml
++++ b/core/res/res/drawable/popup_background_material.xml
+@@ -18,7 +18,7 @@
+        android:shape="rectangle">
+ 
+     <corners
+-            android:radius="2dp" />
++            android:radius="4dp" />
+     <solid
+             android:color="?attr/colorPopupBackground" />
+ 
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index 3c1eeb47f39..53ba942f459 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -3828,7 +3828,7 @@
+     <string name="config_mediaProjectionPermissionDialogComponent" translatable="false">com.android.systemui/com.android.systemui.media.MediaProjectionPermissionActivity</string>
+ 
+     <!-- Corner radius of system dialogs -->
+-    <dimen name="config_dialogCornerRadius">2dp</dimen>
++    <dimen name="config_dialogCornerRadius">4dp</dimen>
+     <!-- Corner radius of system buttons -->
+     <dimen name="config_buttonCornerRadius">@dimen/control_corner_material</dimen>
+     <!-- Corner radius for bottom sheet system dialogs -->
+diff --git a/core/res/res/values/dimens.xml b/core/res/res/values/dimens.xml
+index f11a0cdd48b..cf8f5fd9fff 100644
+--- a/core/res/res/values/dimens.xml
++++ b/core/res/res/values/dimens.xml
+@@ -636,7 +636,7 @@
+     <!-- Top/bottom padding of the tooltip text. -->
+     <dimen name="tooltip_vertical_padding">6.5dp</dimen>
+     <!-- Border corner radius of the tooltip window. -->
+-    <dimen name="tooltip_corner_radius">2dp</dimen>
++    <dimen name="tooltip_corner_radius">4dp</dimen>
+     <!-- View with the height equal or above this threshold will have a tooltip anchored
+     to the mouse/touch position -->
+     <dimen name="tooltip_precise_anchor_threshold">96dp</dimen>
+@@ -720,7 +720,7 @@
+     <dimen name="slice_padding">16dp</dimen>
+ 
+     <!-- Default dialog corner radius -->
+-    <dimen name="dialog_corner_radius">2dp</dimen>
++    <dimen name="dialog_corner_radius">4dp</dimen>
+ 
+     <!-- Size of thumbnail used in the cross profile apps animation -->
+     <dimen name="cross_profile_apps_thumbnail_size">72dp</dimen>
+diff --git a/core/res/res/values/dimens_material.xml b/core/res/res/values/dimens_material.xml
+index 500827f2af4..13e1d346efa 100644
+--- a/core/res/res/values/dimens_material.xml
++++ b/core/res/res/values/dimens_material.xml
+@@ -115,7 +115,7 @@
+     <!-- Default inner padding within controls -->
+     <dimen name="control_padding_material">4dp</dimen>
+     <!-- Default rounded corner for controls -->
+-    <dimen name="control_corner_material">2dp</dimen>
++    <dimen name="control_corner_material">4dp</dimen>
+ 
+     <!-- Size of icon shown beside a preference locked by admin -->
+     <dimen name="restricted_icon_size_material">16dp</dimen>
+diff --git a/core/res/res/values/themes.xml b/core/res/res/values/themes.xml
+index ad38f3d57c2..d4d33334262 100644
+--- a/core/res/res/values/themes.xml
++++ b/core/res/res/values/themes.xml
+@@ -114,7 +114,7 @@ please see themes_device_defaults.xml.
+         <item name="buttonStyleInset">@style/Widget.Button.Inset</item>
+ 
+         <item name="buttonStyleToggle">@style/Widget.Button.Toggle</item>
+-        <item name="buttonCornerRadius">0dp</item>
++        <item name="buttonCornerRadius">4dp</item>
+ 
+         <item name="switchStyle">@style/Widget.CompoundButton.Switch</item>
+         <item name="mediaRouteButtonStyle">@style/Widget.DeviceDefault.MediaRouteButton</item>
+@@ -204,7 +204,7 @@ please see themes_device_defaults.xml.
+         <item name="dialogCustomTitleDecorLayout">@layout/dialog_custom_title</item>
+         <item name="dialogTitleDecorLayout">@layout/dialog_title</item>
+         <item name="dialogPreferredPadding">@dimen/dialog_padding</item>
+-        <item name="dialogCornerRadius">0dp</item>
++        <item name="dialogCornerRadius">4dp</item>
+ 
+         <!-- AlertDialog attributes -->
+         <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
+diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
+index a1dffc4d9e5..e573ac8a664 100644
+--- a/packages/SystemUI/res/values/dimens.xml
++++ b/packages/SystemUI/res/values/dimens.xml
+@@ -522,7 +522,7 @@
+     <dimen name="qs_detail_icon_overlay_size">24dp</dimen>
+ 
+     <dimen name="segmented_button_spacing">0dp</dimen>
+-    <dimen name="borderless_button_radius">2dp</dimen>
++    <dimen name="borderless_button_radius">4dp</dimen>
+ 
+     <dimen name="restricted_padlock_pading">4dp</dimen>
+ 
+@@ -1054,7 +1054,7 @@
+     <dimen name="logout_button_layout_height">32dp</dimen>
+     <dimen name="logout_button_padding_horizontal">16dp</dimen>
+     <dimen name="logout_button_margin_bottom">12dp</dimen>
+-    <dimen name="logout_button_corner_radius">2dp</dimen>
++    <dimen name="logout_button_corner_radius">4dp</dimen>
+ 
+     <!-- How much into a DisplayCutout's bounds we can go, on each side -->
+     <dimen name="display_cutout_margin_consumption">0px</dimen>
+-- 
+2.17.1
+

@@ -1,12 +1,12 @@
 From 3ce8b5927043c107153d4c55243cb38c592f8416 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 14 Aug 2018 21:48:19 +0200
-Subject: [PATCH 1/8] Act as usb device when there is no hal, but we believe we
- are a device
+Subject: [PATCH 01/11] Act as usb device when there is no hal, but we believe
+ we are a device
 
 Change-Id: I036090738525fd8cc63534d52d02ab1852950a7d
 ---
- .../connecteddevice/usb/UsbConnectionBroadcastReceiver.java       | 8 ++++++++
+ .../usb/UsbConnectionBroadcastReceiver.java               | 8 ++++++++
  1 file changed, 8 insertions(+)
 
 diff --git a/src/com/android/settings/connecteddevice/usb/UsbConnectionBroadcastReceiver.java b/src/com/android/settings/connecteddevice/usb/UsbConnectionBroadcastReceiver.java
@@ -29,5 +29,5 @@ index 695a714..1f2b751 100644
          } else if (UsbManager.ACTION_USB_PORT_CHANGED.equals(intent.getAction())) {
              UsbPortStatus portStatus = intent.getExtras()
 -- 
-2.11.0
+2.17.1
 

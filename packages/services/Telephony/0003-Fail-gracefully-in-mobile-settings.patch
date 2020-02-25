@@ -1,7 +1,7 @@
 From 007a584b107aae899ab1441f106ac56b705d98c7 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 20 May 2019 23:45:56 +0200
-Subject: [PATCH 3/4] Fail gracefully in mobile settings
+Subject: [PATCH 3/5] Fail gracefully in mobile settings
 
 ---
  src/com/android/phone/DataUsagePreference.java | 8 ++++++--
@@ -27,5 +27,5 @@ index b6b26e2..ebd446d 100644
      }
  
 -- 
-2.11.0
+2.17.1
 

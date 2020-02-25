@@ -1,13 +1,13 @@
 From 9e380fe82b8ee5161142f85b2221c998c0a13aa2 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 14 Aug 2019 08:50:47 +0200
-Subject: [PATCH 36/62] Use Samsung power HAL
+Subject: [PATCH 036/105] Use Samsung power HAL
 
 Samsung likes to have two android.hardware.power@1.0 implementation
 side-by-side, one that works, one that doesn't.
 Pick the one that works.
 ---
- services/core/jni/com_android_server_power_PowerManagerService.cpp | 4 +++-
+ .../core/jni/com_android_server_power_PowerManagerService.cpp | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/jni/com_android_server_power_PowerManagerService.cpp b/services/core/jni/com_android_server_power_PowerManagerService.cpp
@@ -26,5 +26,5 @@ index 523f802141e..211ea50ddc9 100644
              ALOGI("Loaded power HAL 1.0 service");
              // Try cast to powerHAL V1_1
 -- 
-2.11.0
+2.17.1
 

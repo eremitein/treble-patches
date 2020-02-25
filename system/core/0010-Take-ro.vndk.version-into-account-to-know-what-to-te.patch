@@ -1,0 +1,44 @@
+From a836dec96d14a5c8588a0690917d1606d4d0e48f Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sat, 14 Sep 2019 21:53:35 +0200
+Subject: [PATCH 10/17] Take ro.vndk.version into account to know what to test
+
+Change-Id: Ia7c710941c39b7051b904032a13e5f443049cc05
+---
+ sdcard/sdcard.cpp | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/sdcard/sdcard.cpp b/sdcard/sdcard.cpp
+index 4420ebb..a6f2909 100644
+--- a/sdcard/sdcard.cpp
++++ b/sdcard/sdcard.cpp
+@@ -32,6 +32,7 @@
+ #include <android-base/file.h>
+ #include <android-base/logging.h>
+ #include <android-base/macros.h>
++#include <android-base/properties.h>
+ #include <android-base/stringprintf.h>
+ #include <android-base/strings.h>
+ 
+@@ -103,6 +104,7 @@ static bool sdcardfs_setup(const std::string& source_path, const std::string& de
+                            mode_t mask, bool derive_gid, bool default_normal, bool unshared_obb,
+                            bool use_esdfs) {
+     // Add new options at the end of the vector.
++    int vndk = android::base::GetIntProperty<int>("ro.vndk.version", 29);
+     std::vector<std::string> new_opts_list;
+     if (multi_user) new_opts_list.push_back("multiuser,");
+     if (derive_gid) new_opts_list.push_back("derive_gid,");
+@@ -110,7 +112,9 @@ static bool sdcardfs_setup(const std::string& source_path, const std::string& de
+     if (unshared_obb) new_opts_list.push_back("unshared_obb,");
+     // Try several attempts, each time with one less option, to gracefully
+     // handle older kernels that aren't updated yet.
+-    int first_option_to_try = property_get_bool("persist.sys.phh.modern_sdcard", false) ? 0 : 2;
++    int first_option_to_try = 0;
++    if(vndk == 26) first_option_to_try = 3;
++    if(vndk == 27) first_option_to_try = 2;
+     for (int i = first_option_to_try; i <= new_opts_list.size(); ++i) {
+         std::string new_opts;
+         for (int j = 0; j < new_opts_list.size() - i; ++j) {
+-- 
+2.17.1
+

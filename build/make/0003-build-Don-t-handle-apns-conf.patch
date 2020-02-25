@@ -1,7 +1,7 @@
 From 45a6382ef8cac648e2f147279fd11deff595858d Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Tue, 22 Oct 2019 12:36:03 +0000
-Subject: [PATCH 3/4] build: Don't handle apns-conf
+Subject: [PATCH 03/13] build: Don't handle apns-conf
 
 Leave it to vendor/lineage instead
 
@@ -58,5 +58,5 @@ index ca16fc6..70da48b 100644
 -PRODUCT_COPY_FILES += device/sample/etc/apns-full-conf.xml:$(TARGET_COPY_OUT_PRODUCT)/etc/apns-conf.xml
 -endif
 -- 
-2.11.0
+2.17.1
 

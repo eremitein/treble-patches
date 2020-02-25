@@ -1,0 +1,71 @@
+From 5044c187229fdce3ea1586ab4d8937a9100667f6 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 14 Aug 2018 20:56:54 +0200
+Subject: [PATCH 1/2] Don't set esdfs or exfat genfscon. Assume OEM does
+
+---
+ prebuilts/api/28.0/private/genfs_contexts | 4 ++--
+ prebuilts/api/29.0/private/genfs_contexts | 4 ++--
+ private/genfs_contexts                    | 4 ++--
+ 3 files changed, 6 insertions(+), 6 deletions(-)
+
+diff --git a/prebuilts/api/28.0/private/genfs_contexts b/prebuilts/api/28.0/private/genfs_contexts
+index 7e2ea509..56cd92da 100644
+--- a/prebuilts/api/28.0/private/genfs_contexts
++++ b/prebuilts/api/28.0/private/genfs_contexts
+@@ -231,12 +231,12 @@ genfscon debugfs /tracing/events/fence/
+ 
+ genfscon inotifyfs / u:object_r:inotify:s0
+ genfscon vfat / u:object_r:vfat:s0
+-genfscon exfat / u:object_r:exfat:s0
++#genfscon exfat / u:object_r:exfat:s0
+ genfscon debugfs / u:object_r:debugfs:s0
+ genfscon fuse / u:object_r:fuse:s0
+ genfscon configfs / u:object_r:configfs:s0
+ genfscon sdcardfs / u:object_r:sdcardfs:s0
+-genfscon esdfs / u:object_r:sdcardfs:s0
++#genfscon esdfs / u:object_r:sdcardfs:s0
+ genfscon pstore / u:object_r:pstorefs:s0
+ genfscon functionfs / u:object_r:functionfs:s0
+ genfscon usbfs / u:object_r:usbfs:s0
+diff --git a/prebuilts/api/29.0/private/genfs_contexts b/prebuilts/api/29.0/private/genfs_contexts
+index c7603a9a..0efdb0bf 100644
+--- a/prebuilts/api/29.0/private/genfs_contexts
++++ b/prebuilts/api/29.0/private/genfs_contexts
+@@ -290,12 +290,12 @@ genfscon debugfs /kcov								 u:object_r:debugfs_kcov:s0
+ 
+ genfscon inotifyfs / u:object_r:inotify:s0
+ genfscon vfat / u:object_r:vfat:s0
+-genfscon exfat / u:object_r:exfat:s0
++#genfscon exfat / u:object_r:exfat:s0
+ genfscon debugfs / u:object_r:debugfs:s0
+ genfscon fuse / u:object_r:fuse:s0
+ genfscon configfs / u:object_r:configfs:s0
+ genfscon sdcardfs / u:object_r:sdcardfs:s0
+-genfscon esdfs / u:object_r:sdcardfs:s0
++#genfscon esdfs / u:object_r:sdcardfs:s0
+ genfscon pstore / u:object_r:pstorefs:s0
+ genfscon functionfs / u:object_r:functionfs:s0
+ genfscon usbfs / u:object_r:usbfs:s0
+diff --git a/private/genfs_contexts b/private/genfs_contexts
+index c7603a9a..0efdb0bf 100644
+--- a/private/genfs_contexts
++++ b/private/genfs_contexts
+@@ -290,12 +290,12 @@ genfscon debugfs /kcov								 u:object_r:debugfs_kcov:s0
+ 
+ genfscon inotifyfs / u:object_r:inotify:s0
+ genfscon vfat / u:object_r:vfat:s0
+-genfscon exfat / u:object_r:exfat:s0
++#genfscon exfat / u:object_r:exfat:s0
+ genfscon debugfs / u:object_r:debugfs:s0
+ genfscon fuse / u:object_r:fuse:s0
+ genfscon configfs / u:object_r:configfs:s0
+ genfscon sdcardfs / u:object_r:sdcardfs:s0
+-genfscon esdfs / u:object_r:sdcardfs:s0
++#genfscon esdfs / u:object_r:sdcardfs:s0
+ genfscon pstore / u:object_r:pstorefs:s0
+ genfscon functionfs / u:object_r:functionfs:s0
+ genfscon usbfs / u:object_r:usbfs:s0
+-- 
+2.17.1
+

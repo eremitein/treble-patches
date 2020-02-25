@@ -1,10 +1,11 @@
 From 708af2b04739ef667edcc78a593a26cb817225e6 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 8 Nov 2018 23:04:03 +0100
-Subject: [PATCH 28/62] Re-order services so that it works even without qtaguid
+Subject: [PATCH 028/105] Re-order services so that it works even without
+ qtaguid
 
 ---
- .../java/com/android/server/net/NetworkPolicyManagerService.java    | 6 +++---
+ .../com/android/server/net/NetworkPolicyManagerService.java | 6 +++---
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/services/core/java/com/android/server/net/NetworkPolicyManagerService.java b/services/core/java/com/android/server/net/NetworkPolicyManagerService.java
@@ -32,5 +33,5 @@ index d3346cddf3d..f07a45118a2 100644
                  synchronized (mNetworkPoliciesSecondLock) {
                      updatePowerSaveWhitelistUL();
 -- 
-2.11.0
+2.17.1
 

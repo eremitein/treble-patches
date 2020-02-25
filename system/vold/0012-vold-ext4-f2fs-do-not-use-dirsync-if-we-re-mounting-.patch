@@ -1,0 +1,148 @@
+From 8ae27c024a2dfc3d3bed8a24cc1c7558ee4fec28 Mon Sep 17 00:00:00 2001
+From: Sam Mortimer <sam@mortimer.me.uk>
+Date: Fri, 27 Nov 2015 15:27:03 -0800
+Subject: [PATCH 12/15] vold ext4/f2fs: do not use dirsync if we're mounting
+ adopted storage
+
+Change-Id: I6f8ca75385c2d4080b1430c0b6545b61e6632e2c
+
+Fix mounting ext4 adopted storage
+
+Change-Id: I36cb858b96968a949632017874addb278679b3a4
+---
+ fs/Ext4.cpp             |  9 +++++++--
+ fs/Ext4.h               |  3 ++-
+ fs/F2fs.cpp             | 12 +++++++++---
+ fs/F2fs.h               |  4 +++-
+ model/PrivateVolume.cpp |  4 ++--
+ model/PublicVolume.cpp  |  5 +++--
+ 6 files changed, 26 insertions(+), 11 deletions(-)
+
+diff --git a/fs/Ext4.cpp b/fs/Ext4.cpp
+index 98bb5d7cb..efc193ee5 100644
+--- a/fs/Ext4.cpp
++++ b/fs/Ext4.cpp
+@@ -124,7 +124,7 @@ status_t Check(const std::string& source, const std::string& target, bool truste
+ }
+ 
+ status_t Mount(const std::string& source, const std::string& target, bool ro, bool remount,
+-               bool executable, const std::string& opts /* = "" */, bool portable) {
++               bool executable, const std::string& opts /* = "" */, bool trusted, bool portable) {
+     int rc;
+     unsigned long flags;
+ 
+@@ -140,7 +140,12 @@ status_t Mount(const std::string& source, const std::string& target, bool ro, bo
+     const char* c_target = target.c_str();
+     const char* c_data = data.c_str();
+ 
+-    flags = MS_NOATIME | MS_NODEV | MS_NOSUID | MS_DIRSYNC;
++    flags = MS_NOATIME | MS_NODEV | MS_NOSUID;
++
++    // Only use MS_DIRSYNC if we're not mounting adopted storage
++    if (!trusted) {
++        flags |= MS_DIRSYNC;
++    }
+ 
+     flags |= (executable ? 0 : MS_NOEXEC);
+     flags |= (ro ? MS_RDONLY : 0);
+diff --git a/fs/Ext4.h b/fs/Ext4.h
+index c1c14e859..ad2c96676 100644
+--- a/fs/Ext4.h
++++ b/fs/Ext4.h
+@@ -29,7 +29,8 @@ bool IsSupported();
+ 
+ status_t Check(const std::string& source, const std::string& target, bool trusted);
+ status_t Mount(const std::string& source, const std::string& target, bool ro, bool remount,
+-               bool executable, const std::string& opts = "", bool portable = false);
++               bool executable, const std::string& opts = "", bool trusted = false,
++               bool portable = false);
+ status_t Format(const std::string& source, unsigned long numSectors, const std::string& target);
+ status_t Resize(const std::string& source, unsigned long numSectors);
+ 
+diff --git a/fs/F2fs.cpp b/fs/F2fs.cpp
+index 50f45770d..3aa289e76 100644
+--- a/fs/F2fs.cpp
++++ b/fs/F2fs.cpp
+@@ -52,8 +52,8 @@ status_t Check(const std::string& source, bool trusted) {
+     return ForkExecvp(cmd, nullptr, trusted ? sFsckContext : sFsckUntrustedContext);
+ }
+ 
+-status_t Mount(const std::string& source, const std::string& target, const std::string& opts /* = "" */, bool portable) {
+-
++status_t Mount(const std::string& source, const std::string& target,
++        const std::string& opts /* = "" */, bool trusted, bool portable) {
+     std::string data(opts);
+ 
+     if (portable) {
+@@ -66,7 +66,13 @@ status_t Mount(const std::string& source, const std::string& target, const std::
+     const char* c_source = source.c_str();
+     const char* c_target = target.c_str();
+     const char* c_data = data.c_str();
+-    unsigned long flags = MS_NOATIME | MS_NODEV | MS_NOSUID | MS_DIRSYNC;
++
++    unsigned long flags = MS_NOATIME | MS_NODEV | MS_NOSUID;
++
++    // Only use MS_DIRSYNC if we're not mounting adopted storage
++    if (!trusted) {
++        flags |= MS_DIRSYNC;
++    }
+ 
+     int res = mount(c_source, c_target, "f2fs", flags, c_data);
+     if (portable && res == 0) {
+diff --git a/fs/F2fs.h b/fs/F2fs.h
+index 1ad8263d8..ecfc0c7e1 100644
+--- a/fs/F2fs.h
++++ b/fs/F2fs.h
+@@ -28,7 +28,9 @@ namespace f2fs {
+ bool IsSupported();
+ 
+ status_t Check(const std::string& source, bool trusted);
+-status_t Mount(const std::string& source, const std::string& target, const std::string& opts = "", bool portable = false);
++status_t Mount(const std::string& source, const std::string& target,
++        const std::string& opts = "", bool trusted = false,
++        bool portable = false);
+ status_t Format(const std::string& source);
+ 
+ }  // namespace f2fs
+diff --git a/model/PrivateVolume.cpp b/model/PrivateVolume.cpp
+index ce94ac584..f322e0326 100644
+--- a/model/PrivateVolume.cpp
++++ b/model/PrivateVolume.cpp
+@@ -162,7 +162,7 @@ status_t PrivateVolume::doMount() {
+             return -EIO;
+         }
+ 
+-        if (ext4::Mount(mDmDevPath, mPath, false, false, true)) {
++        if (ext4::Mount(mDmDevPath, mPath, false, false, true, "", true)) {
+             PLOG(ERROR) << getId() << " failed to mount";
+             return -EIO;
+         }
+@@ -176,7 +176,7 @@ status_t PrivateVolume::doMount() {
+             return -EIO;
+         }
+ 
+-        if (f2fs::Mount(mDmDevPath, mPath, "")) {
++        if (f2fs::Mount(mDmDevPath, mPath, "", true)) {
+             PLOG(ERROR) << getId() << " failed to mount";
+             return -EIO;
+         }
+diff --git a/model/PublicVolume.cpp b/model/PublicVolume.cpp
+index 19f3c2beb..5308724bb 100644
+--- a/model/PublicVolume.cpp
++++ b/model/PublicVolume.cpp
+@@ -153,9 +153,10 @@ status_t PublicVolume::doMount() {
+     if (mFsType == "exfat") {
+         ret = exfat::Mount(mDevPath, mRawPath, AID_MEDIA_RW, AID_MEDIA_RW, 0007);
+     } else if (mFsType == "ext4") {
+-        ret = ext4::Mount(mDevPath, mRawPath, false, false, true, mMntOpts, true);
++        ret = ext4::Mount(mDevPath, mRawPath, false, false, true, mMntOpts,
++                false, true);
+     } else if (mFsType == "f2fs") {
+-        ret = f2fs::Mount(mDevPath, mRawPath, mMntOpts, true);
++        ret = f2fs::Mount(mDevPath, mRawPath, mMntOpts, false, true);
+     } else if (mFsType == "ntfs") {
+         ret = ntfs::Mount(mDevPath, mRawPath, AID_MEDIA_RW, AID_MEDIA_RW, 0007);
+     } else if (mFsType == "vfat") {
+-- 
+2.17.1
+

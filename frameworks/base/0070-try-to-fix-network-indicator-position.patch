@@ -1,0 +1,26 @@
+From 32651147567dd2185f2ce9f42996e31051361c1d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 22 Feb 2020 11:00:22 +0200
+Subject: [PATCH 070/105] try to fix network indicator position
+
+	modified:   packages/SystemUI/res/layout/status_bar.xml
+---
+ packages/SystemUI/res/layout/status_bar.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/res/layout/status_bar.xml b/packages/SystemUI/res/layout/status_bar.xml
+index 7d7504d1b40..134f4e7b877 100644
+--- a/packages/SystemUI/res/layout/status_bar.xml
++++ b/packages/SystemUI/res/layout/status_bar.xml
+@@ -114,7 +114,7 @@
+             android:id="@+id/network_traffic_holder"
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+-            android:gravity="start|center_vertical"
++            android:gravity="right|center_vertical"
+             >
+ 
+             <org.lineageos.internal.statusbar.NetworkTraffic
+-- 
+2.17.1
+

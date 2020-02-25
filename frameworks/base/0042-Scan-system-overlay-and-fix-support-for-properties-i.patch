@@ -1,17 +1,17 @@
 From c6a1f4ebea1946aea49f5dd1b53b843f65ff95e9 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 14 Oct 2019 23:50:46 +0200
-Subject: [PATCH 42/62] Scan /system/overlay and fix support for properties in
- idmap2
+Subject: [PATCH 042/105] Scan /system/overlay and fix support for properties
+ in idmap2
 
 Change-Id: Ic04b5b1cc7b5d8cee67b1e2fdaa8aa793546b6d6
 ---
- cmds/idmap2/idmap2/Scan.cpp                        |  6 ++++-
- cmds/idmap2/include/idmap2/ResourceUtils.h         |  3 +++
- cmds/idmap2/libidmap2/ResourceUtils.cpp            | 26 ++++++++++++++++++++++
- core/java/android/content/pm/PackageParser.java    |  9 +++++++-
- core/jni/android_util_AssetManager.cpp             |  3 +++
- .../android/server/pm/PackageManagerService.java   |  6 +++++
+ cmds/idmap2/idmap2/Scan.cpp                   |  6 ++++-
+ cmds/idmap2/include/idmap2/ResourceUtils.h    |  3 +++
+ cmds/idmap2/libidmap2/ResourceUtils.cpp       | 26 +++++++++++++++++++
+ .../android/content/pm/PackageParser.java     |  9 ++++++-
+ core/jni/android_util_AssetManager.cpp        |  3 +++
+ .../server/pm/PackageManagerService.java      |  6 +++++
  6 files changed, 51 insertions(+), 2 deletions(-)
 
 diff --git a/cmds/idmap2/idmap2/Scan.cpp b/cmds/idmap2/idmap2/Scan.cpp
@@ -162,5 +162,5 @@ index 82a06202a79..a6d2e20af6d 100644
                      mDefParseFlags
                      | PackageParser.PARSE_IS_SYSTEM_DIR,
 -- 
-2.11.0
+2.17.1
 

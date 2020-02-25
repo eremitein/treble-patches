@@ -1,12 +1,12 @@
 From 0b6ce187353513d0843fb0aa3c9b16bf0e088214 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:26:02 +0200
-Subject: [PATCH 01/62] Revert "FODCircleView: disable touch detection on
+Subject: [PATCH 001/105] Revert "FODCircleView: disable touch detection on
  screen off"
 
 This reverts commit 99264bd8b5829d3dbd785a896b8559db14aba5f0.
 ---
- .../src/com/android/systemui/biometrics/FODCircleView.java | 14 +-------------
+ .../android/systemui/biometrics/FODCircleView.java | 14 +-------------
  1 file changed, 1 insertion(+), 13 deletions(-)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
@@ -42,5 +42,5 @@ index 782805cdccf..260cb49887a 100644
              // Ignore show calls when Keyguard pin screen is being shown
              return;
 -- 
-2.11.0
+2.17.1
 

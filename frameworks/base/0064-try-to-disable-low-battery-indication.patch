@@ -1,0 +1,26 @@
+From 719cc9f82a11e086b2830b9fcd8b8d2848c05655 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 18 Feb 2020 15:19:16 +0200
+Subject: [PATCH 064/105] try to disable low battery indication
+
+	modified:   services/core/java/com/android/server/BatteryService.java
+---
+ services/core/java/com/android/server/BatteryService.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/BatteryService.java b/services/core/java/com/android/server/BatteryService.java
+index 03626d92124..7330d0b1894 100644
+--- a/services/core/java/com/android/server/BatteryService.java
++++ b/services/core/java/com/android/server/BatteryService.java
+@@ -635,7 +635,7 @@ public final class BatteryService extends SystemService {
+             }
+ 
+             if (shouldSendBatteryLowLocked()) {
+-                mSentLowBatteryBroadcast = true;
++                mSentLowBatteryBroadcast = false;
+                 final Intent statusIntent = new Intent(Intent.ACTION_BATTERY_LOW);
+                 statusIntent.setFlags(Intent.FLAG_RECEIVER_REGISTERED_ONLY_BEFORE_BOOT);
+                 statusIntent.putExtra(BatteryManager.EXTRA_SEQUENCE, mSequence);
+-- 
+2.17.1
+

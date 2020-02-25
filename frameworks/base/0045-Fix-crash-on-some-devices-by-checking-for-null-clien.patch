@@ -1,7 +1,7 @@
 From dc1f166a3842a1aac0ac03eaa9f7bffe7ecbc4f6 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 27 Oct 2019 16:27:55 +0100
-Subject: [PATCH 45/62] Fix crash on some devices by checking for null client
+Subject: [PATCH 045/105] Fix crash on some devices by checking for null client
 
 Some device get the following system_server crash:
  *** FATAL EXCEPTION IN SYSTEM PROCESS: main
@@ -15,7 +15,7 @@ Fix it by checking for `null` client before acting on it
 
 Change-Id: If39d8c1b26c8c0a44b3d9292b646cb71ff258a95
 ---
- .../core/java/com/android/server/biometrics/BiometricServiceBase.java    | 1 +
+ .../java/com/android/server/biometrics/BiometricServiceBase.java | 1 +
  1 file changed, 1 insertion(+)
 
 diff --git a/services/core/java/com/android/server/biometrics/BiometricServiceBase.java b/services/core/java/com/android/server/biometrics/BiometricServiceBase.java
@@ -31,5 +31,5 @@ index 37a08de62fc..292798721c6 100644
  
          // All templates in the HAL for this user were enumerated
 -- 
-2.11.0
+2.17.1
 

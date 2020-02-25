@@ -1,7 +1,7 @@
 From 65a21c19f6d391868eada86bbd2bf37b83e9976d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 16:33:15 +0200
-Subject: [PATCH 8/8] rework info about security patch date
+Subject: [PATCH 08/11] rework info about security patch date
 
 	modified:   res/xml/firmware_version.xml
 	modified:   src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
@@ -9,9 +9,9 @@ Subject: [PATCH 8/8] rework info about security patch date
 
 Change-Id: Icf527265c090b22799d7c4ff3963020a81094e06
 ---
- res/xml/firmware_version.xml                       | 10 +--
- .../SecurityPatchLevelPreferenceController.java    | 60 +++++++++---------
- .../SecurityPatchVendorPreferenceController.java   | 73 ++++++++++++++++++++++
+ res/xml/firmware_version.xml                  | 10 +--
+ ...ecurityPatchLevelPreferenceController.java | 60 ++++++++-------
+ ...curityPatchVendorPreferenceController.java | 73 +++++++++++++++++++
  3 files changed, 103 insertions(+), 40 deletions(-)
  create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
 
@@ -209,5 +209,5 @@ index 0000000..7ed48b1
 +    }
 +}
 -- 
-2.11.0
+2.17.1
 

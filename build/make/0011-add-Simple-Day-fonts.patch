@@ -1,0 +1,25 @@
+From 76283dcc712bde4015f09d89c6a6fe281f504c7c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 08:40:08 +0200
+Subject: [PATCH 11/13] add Simple Day fonts
+
+	modified:   target/product/handheld_system.mk
+---
+ target/product/handheld_system.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/target/product/handheld_system.mk b/target/product/handheld_system.mk
+index c03dbbd..a8dbf4f 100644
+--- a/target/product/handheld_system.mk
++++ b/target/product/handheld_system.mk
+@@ -30,6 +30,7 @@ $(call inherit-product-if-exists, external/google-fonts/arvo/fonts.mk)
+ $(call inherit-product-if-exists, external/google-fonts/lato/fonts.mk)
+ $(call inherit-product-if-exists, external/google-fonts/rubik/fonts.mk)
+ $(call inherit-product-if-exists, external/google-fonts/zilla-slab/fonts.mk)
++$(call inherit-product-if-exists, external/simpleday-fonts/fonts.mk)
+ $(call inherit-product-if-exists, external/noto-fonts/fonts.mk)
+ $(call inherit-product-if-exists, external/roboto-fonts/fonts.mk)
+ $(call inherit-product-if-exists, external/hyphenation-patterns/patterns.mk)
+-- 
+2.17.1
+

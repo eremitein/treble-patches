@@ -1,14 +1,14 @@
 From ca32be65be9695f9a2e4e9fcd040a9128cb83c16 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:27:22 +0200
-Subject: [PATCH 03/62] Revert "FODCircleView: invert default icon path and add
- #20000000 bg"
+Subject: [PATCH 003/105] Revert "FODCircleView: invert default icon path and
+ add #20000000 bg"
 
 This reverts commit ec3e5fed334852d28d6f13fc39837e293a2e009f.
 ---
- packages/SystemUI/res/drawable/fod_icon_default.xml     | 13 +++++++------
- packages/SystemUI/res/values/lineage_config.xml         |  1 -
- .../com/android/systemui/biometrics/FODCircleView.java  | 17 +++++------------
+ .../SystemUI/res/drawable/fod_icon_default.xml  | 13 +++++++------
+ packages/SystemUI/res/values/lineage_config.xml |  1 -
+ .../systemui/biometrics/FODCircleView.java      | 17 +++++------------
  3 files changed, 12 insertions(+), 19 deletions(-)
 
 diff --git a/packages/SystemUI/res/drawable/fod_icon_default.xml b/packages/SystemUI/res/drawable/fod_icon_default.xml
@@ -112,5 +112,5 @@ index 14c24769588..8f0b352d318 100644
          invalidate();
  
 -- 
-2.11.0
+2.17.1
 

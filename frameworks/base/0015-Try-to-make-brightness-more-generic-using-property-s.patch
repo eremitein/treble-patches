@@ -1,11 +1,11 @@
 From af730fd94a269943eb30fc260b17d473ed813d74 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 10 Jun 2018 22:54:55 +0200
-Subject: [PATCH 15/62] Try to make brightness more generic using property set
- by rw-system
+Subject: [PATCH 015/105] Try to make brightness more generic using property
+ set by rw-system
 
 ---
- services/core/java/com/android/server/lights/LightsService.java | 6 ++++--
+ .../core/java/com/android/server/lights/LightsService.java  | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
@@ -27,5 +27,5 @@ index ca2bc5f5a18..7d4ee21dfed 100644
  
                      if(qcomExtendBrightness) {
 -- 
-2.11.0
+2.17.1
 

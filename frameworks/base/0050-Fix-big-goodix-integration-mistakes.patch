@@ -1,10 +1,10 @@
 From 10fc6429ddc5c9ceba5240a82bf0f7edd513f82f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 16 Dec 2019 19:31:12 +0100
-Subject: [PATCH 50/62] Fix (big) goodix integration mistakes
+Subject: [PATCH 050/105] Fix (big) goodix integration mistakes
 
 ---
- .../server/biometrics/fingerprint/FacolaView.java     | 19 ++++++++++++-------
+ .../biometrics/fingerprint/FacolaView.java    | 19 ++++++++++++-------
  1 file changed, 12 insertions(+), 7 deletions(-)
 
 diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
@@ -55,5 +55,5 @@ index 651cc97be39..b8ca25a48d2 100644
              Slog.d("PHH-Enroll", "Failed calling xiaomi fp extcmd");
          }
 -- 
-2.11.0
+2.17.1
 

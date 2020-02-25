@@ -1,11 +1,12 @@
 From f97c0a9c5dcde8a44009ea89cf1c8fcbaecccfc9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:30:07 +0200
-Subject: [PATCH 07/62] Revert "FODCircleView: defer removal to next re-layout"
+Subject: [PATCH 007/105] Revert "FODCircleView: defer removal to next
+ re-layout"
 
 This reverts commit 6ee0230af2bb4590ba302bb84631628a784b25d9.
 ---
- .../android/systemui/biometrics/FODCircleView.java | 79 +++++++---------------
+ .../systemui/biometrics/FODCircleView.java    | 79 ++++++-------------
  1 file changed, 23 insertions(+), 56 deletions(-)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
@@ -150,5 +151,5 @@ index 771d1f81e3d..f7fb54935bf 100644
  
      private void resetPosition() {
 -- 
-2.11.0
+2.17.1
 

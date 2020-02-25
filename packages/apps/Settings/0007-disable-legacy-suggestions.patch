@@ -1,7 +1,7 @@
 From b0bcdbe1533c3d4cf32ccf1455fb53edf7cffe33 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 2 Feb 2020 17:27:20 +0200
-Subject: [PATCH 7/8] disable legacy suggestions
+Subject: [PATCH 07/11] disable legacy suggestions
 
 	modified:   res/values/config.xml
 ---
@@ -22,5 +22,5 @@ index 03a8e5d..0a5a4d4 100755
      <!-- Whether or not homepage should display user's account avatar -->
      <bool name="config_show_avatar_in_homepage">false</bool>
 -- 
-2.11.0
+2.17.1
 

@@ -1,7 +1,7 @@
 From e33eef812a8051dea374945fe89ae990cdc6e13d Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Sun, 3 Nov 2019 03:32:02 +0000
-Subject: [PATCH 52/62] UI: Revive navbar layout tuning via sysui_nav_bar
+Subject: [PATCH 052/105] UI: Revive navbar layout tuning via sysui_nav_bar
  tunable
 
 Google keeps fixing what ain't broken.
@@ -9,7 +9,7 @@ This partially undoes https://github.com/LineageOS/android_frameworks_base/commi
 
 Change-Id: I7a0fcfc9c27a08100712200d50f295f4bd81494d
 ---
- .../android/systemui/statusbar/phone/NavigationBarInflaterView.java | 6 ++++--
+ .../systemui/statusbar/phone/NavigationBarInflaterView.java | 6 ++++--
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java
@@ -37,5 +37,5 @@ index 0439ce4b91c..98061ad251a 100644
              updateLayoutInversion();
          }
 -- 
-2.11.0
+2.17.1
 

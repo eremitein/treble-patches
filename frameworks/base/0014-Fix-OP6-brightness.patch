@@ -1,10 +1,10 @@
 From dd397fb25f21952b2e0f5c4c9dc315f7d06061dc Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <pierre-hugues.husson@softathome.com>
 Date: Thu, 7 Jun 2018 13:42:02 +0200
-Subject: [PATCH 14/62] Fix OP6 brightness
+Subject: [PATCH 014/105] Fix OP6 brightness
 
 ---
- .../core/java/com/android/server/lights/LightsService.java   | 12 ++++++++++++
+ .../com/android/server/lights/LightsService.java     | 12 ++++++++++++
  1 file changed, 12 insertions(+)
 
 diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
@@ -31,5 +31,5 @@ index 0f53ccb143a..ca2bc5f5a18 100644
  
                  int color = brightness & 0x000000ff;
 -- 
-2.11.0
+2.17.1
 

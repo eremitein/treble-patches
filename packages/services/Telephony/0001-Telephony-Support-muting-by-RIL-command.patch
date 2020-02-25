@@ -1,7 +1,7 @@
 From 9323111efe5e672b7dabf501d6c3c65c85e66da4 Mon Sep 17 00:00:00 2001
 From: Artem Borisov <dedsa2002@gmail.com>
 Date: Wed, 19 Sep 2018 17:02:06 +0300
-Subject: [PATCH 1/4] Telephony: Support muting by RIL command
+Subject: [PATCH 1/5] Telephony: Support muting by RIL command
 
 While almost everyone already moved to AudioManager years ago,
 some OEMs (cough Huawei) still use RIL for muting and don't
@@ -36,5 +36,5 @@ index 06dce16..be4b2c3 100644
      }
  
 -- 
-2.11.0
+2.17.1
 

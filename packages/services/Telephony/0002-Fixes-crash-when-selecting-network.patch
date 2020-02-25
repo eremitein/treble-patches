@@ -1,7 +1,7 @@
 From d3cec35925bc5e766707c7e7342011dd479248b7 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 6 May 2019 20:25:34 +0200
-Subject: [PATCH 2/4] Fixes crash when selecting network
+Subject: [PATCH 2/5] Fixes crash when selecting network
 
 Cf https://github.com/phhusson/treble_experimentations/issues/486
 ---
@@ -46,5 +46,5 @@ index e67582f..c622713 100644
              CellIdentityGsm cig = new CellIdentityGsm(
                      Integer.MAX_VALUE /* lac */,
 -- 
-2.11.0
+2.17.1
 

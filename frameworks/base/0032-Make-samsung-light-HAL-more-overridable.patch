@@ -1,10 +1,10 @@
 From 9f42d12c277aad6c5b9ca08bad5eb2fdfed74bc6 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 2 Jul 2019 21:15:07 +0200
-Subject: [PATCH 32/62] Make samsung light HAL more overridable
+Subject: [PATCH 032/105] Make samsung light HAL more overridable
 
 ---
- .../com/android/server/lights/LightsService.java   | 24 ++++++++++++++--------
+ .../android/server/lights/LightsService.java  | 24 ++++++++++++-------
  1 file changed, 15 insertions(+), 9 deletions(-)
 
 diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
@@ -44,5 +44,5 @@ index 5974396343c..ad0cf0c7142 100644
  
                      boolean qcomExtendBrightness = SystemProperties.getBoolean("persist.extend.brightness", false);
 -- 
-2.11.0
+2.17.1
 

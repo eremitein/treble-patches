@@ -1,0 +1,25 @@
+From fff76e1f8ae8fd9280ecda41b4472c6fa3116919 Mon Sep 17 00:00:00 2001
+From: jumper047 <jumper047@gmail.com>
+Date: Thu, 20 Feb 2020 07:50:02 +0300
+Subject: [PATCH 09/25] Fix begonia regexp
+
+---
+ rw-system.sh | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/rw-system.sh b/rw-system.sh
+index 1976531..4bfdaa9 100644
+--- a/rw-system.sh
++++ b/rw-system.sh
+@@ -209,7 +209,7 @@ fi
+ if getprop ro.vendor.build.fingerprint | grep -q -i \
+     -e xiaomi/clover -e xiaomi/wayne -e xiaomi/sakura \
+     -e xiaomi/nitrogen -e xiaomi/whyred -e xiaomi/platina \
+-    -e xiaomi/ysl -e nubia/nx60 -e nubia/nx61 -e xiaomi/tulip -e Redmi/*.begonia\
++    -e xiaomi/ysl -e nubia/nx60 -e nubia/nx61 -e xiaomi/tulip -e Redmi/*/begonia\
+     -e xiaomi/lavender -e xiaomi/olive -e xiaomi/olivelite -e xiaomi/pine; then
+     setprop persist.sys.qcom-brightness "$(cat /sys/class/leds/lcd-backlight/max_brightness)"
+ fi
+-- 
+2.17.1
+

@@ -1,7 +1,7 @@
 From afbfdf499a7fafc6479173504bca3c5e9ff42ad0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:29:31 +0200
-Subject: [PATCH 06/62] Revert "fw/b: Fix systemui tests with in-display
+Subject: [PATCH 006/105] Revert "fw/b: Fix systemui tests with in-display
  fingerprint"
 
 This reverts commit d4f2369d19f390a3d087b579a57615ba0583b318.
@@ -22,5 +22,5 @@ index 99f2e5b7301..ee030c330e9 100644
      libs: [
          "android.test.runner",
 -- 
-2.11.0
+2.17.1
 

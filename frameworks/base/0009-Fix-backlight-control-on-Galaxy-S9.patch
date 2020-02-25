@@ -1,11 +1,11 @@
 From e2ab214c1efc1905a304b57706f56824743f7d59 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 24 Mar 2018 08:01:48 +0100
-Subject: [PATCH 09/62] Fix backlight control on Galaxy S9(+)
+Subject: [PATCH 009/105] Fix backlight control on Galaxy S9(+)
 
 Change-Id: I1fbbb47939c377597ef8ad6b88b2acea5f4acaa6
 ---
- .../java/com/android/server/lights/LightsService.java   | 17 +++++++++++++----
+ .../android/server/lights/LightsService.java    | 17 +++++++++++++----
  1 file changed, 13 insertions(+), 4 deletions(-)
 
 diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
@@ -52,5 +52,5 @@ index 5e82ae896fc..bcd99f0a3c8 100644
          }
  
 -- 
-2.11.0
+2.17.1
 

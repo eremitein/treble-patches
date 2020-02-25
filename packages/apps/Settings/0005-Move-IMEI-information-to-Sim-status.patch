@@ -1,7 +1,7 @@
 From 2ce92ae201dc2970fbedaaca95e9f9cbd0a3c8f7 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 14:42:14 +0200
-Subject: [PATCH 5/8] Move IMEI information to Sim status
+Subject: [PATCH 05/11] Move IMEI information to Sim status
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/3741d37c0639883cdc6855bb371fce259ffc0775#diff-8e0314d48f88bb73a3b9ebce6165548d
@@ -12,11 +12,11 @@ Subject: [PATCH 5/8] Move IMEI information to Sim status
 	modified:   src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
 	modified:   src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java
 ---
- res/layout/dialog_sim_status.xml                   | 80 +++++++++++++++++++
- res/values/strings.xml                             |  2 +-
- res/xml/my_device_info.xml                         | 59 --------------
- .../aboutphone/MyDeviceInfoFragment.java           | 10 ---
- .../simstatus/SimStatusDialogController.java       | 89 ++++++++++++++++++++++
+ res/layout/dialog_sim_status.xml              | 80 +++++++++++++++++
+ res/values/strings.xml                        |  2 +-
+ res/xml/my_device_info.xml                    | 59 ------------
+ .../aboutphone/MyDeviceInfoFragment.java      | 10 ---
+ .../simstatus/SimStatusDialogController.java  | 89 +++++++++++++++++++
  5 files changed, 170 insertions(+), 70 deletions(-)
 
 diff --git a/res/layout/dialog_sim_status.xml b/res/layout/dialog_sim_status.xml
@@ -398,5 +398,5 @@ index 3fafd14..3978a72 100644
 +    }
  }
 -- 
-2.11.0
+2.17.1
 

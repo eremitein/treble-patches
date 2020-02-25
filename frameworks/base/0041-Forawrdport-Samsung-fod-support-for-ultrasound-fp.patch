@@ -1,11 +1,11 @@
 From 48d14cc06be8005cc1d8ceff1322226fcf96c96b Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 12 Sep 2019 20:39:50 +0200
-Subject: [PATCH 41/62] Forawrdport Samsung "fod" support for ultrasound fp
+Subject: [PATCH 041/105] Forawrdport Samsung "fod" support for ultrasound fp
 
 Change-Id: I9f787a01dab922cd94f9e552a6f3f53a00ca8448
 ---
- .../server/biometrics/fingerprint/FacolaView.java  | 61 ++++++++++++++++++++--
+ .../biometrics/fingerprint/FacolaView.java    | 61 ++++++++++++++++++-
  1 file changed, 58 insertions(+), 3 deletions(-)
 
 diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
@@ -117,5 +117,5 @@ index 8829bcb7e48..f61582990cf 100644
 +
  }
 -- 
-2.11.0
+2.17.1
 

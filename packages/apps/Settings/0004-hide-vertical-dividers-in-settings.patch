@@ -1,7 +1,7 @@
 From 9ff2b244a76ac58cb9c9b7191eeec148c96ad602 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 13:08:27 +0200
-Subject: [PATCH 4/8] hide vertical dividers in settings
+Subject: [PATCH 04/11] hide vertical dividers in settings
 
 	modified:   res/values/colors.xml
 ---
@@ -29,5 +29,5 @@ index 7114bb1..1ba7001 100644
 \ No newline at end of file
 +</resources>
 -- 
-2.11.0
+2.17.1
 

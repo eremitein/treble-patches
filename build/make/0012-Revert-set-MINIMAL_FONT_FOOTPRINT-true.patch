@@ -1,0 +1,25 @@
+From f2ce13d3895becde0efd8fd4bf634cdc5b1ede10 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 17:41:41 +0200
+Subject: [PATCH 12/13] Revert "set MINIMAL_FONT_FOOTPRINT true"
+
+This reverts commit 669fd7f88dc5769512b9c76baca677af4c44630d.
+
+	modified:   target/product/gsi_common.mk
+---
+ target/product/gsi_common.mk | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/target/product/gsi_common.mk b/target/product/gsi_common.mk
+index 975192e..d33db76 100644
+--- a/target/product/gsi_common.mk
++++ b/target/product/gsi_common.mk
+@@ -97,5 +97,3 @@ PRODUCT_PACKAGES += \
+ #   Provide a libnfc-nci.conf to GSI product
+ PRODUCT_COPY_FILES += \
+     device/generic/common/nfc/libnfc-nci.conf:$(TARGET_COPY_OUT_PRODUCT)/etc/libnfc-nci.conf
+-
+-MINIMAL_FONT_FOOTPRINT := true
+-- 
+2.17.1
+

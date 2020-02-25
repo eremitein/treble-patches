@@ -1,7 +1,7 @@
 From 7c7a5648ef60de7c5321f300c4a4cd7670b0da08 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 28 Nov 2017 18:28:04 +0100
-Subject: [PATCH 10/62] Relax requirement for visible flag to sdcards
+Subject: [PATCH 010/105] Relax requirement for visible flag to sdcards
 
 The vast majority of sdcard readers are stable enough to be declared by
 the API. (I see no counter-example)
@@ -9,7 +9,7 @@ FBE broke adoptable storage with SDCard, hence this need.
 
 Change-Id: Ia616671c03562d1eadaff5531a5c708a62d7ad3a
 ---
- services/core/java/com/android/server/StorageManagerService.java | 3 ++-
+ .../core/java/com/android/server/StorageManagerService.java    | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/StorageManagerService.java b/services/core/java/com/android/server/StorageManagerService.java
@@ -27,5 +27,5 @@ index 263efacb097..39a60e1778f 100644
              } else if (vol.disk.isSd()) {
                  vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
 -- 
-2.11.0
+2.17.1
 

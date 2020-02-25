@@ -1,7 +1,7 @@
-From 088686cf4106ed19f05784e6ef7bb2dd9684d772 Mon Sep 17 00:00:00 2001
+From 26a1618cd9348b650060a49b765445aa7de54662 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 9 Jan 2020 11:38:40 +0200
-Subject: [PATCH 2/2] update treble app
+Subject: [PATCH 2/3] update treble app
 
   * follow
   https://github.com/eremitein/treble_app_caos/commit/849342f72db7d522848db0430cfafa8c272ce47a
@@ -62496,5 +62496,5 @@ z=-WeR?CTgTw%Io48f!wx$Y@;2$(aAAK=r;50F*xv9RJXx%Z7L1w}YzTXW}gXL+Lzn
 l5UBq^5dQys|A-uZwEW-yz|n&s6k4GR6M$cm=_1tg{|DalIPL%d
 
 -- 
-2.11.0
+2.17.1
 

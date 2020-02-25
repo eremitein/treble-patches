@@ -1,11 +1,11 @@
 From 831c2f0e55b055a269489a247e772c6b8143a5b1 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 24 Apr 2019 20:09:53 +0200
-Subject: [PATCH 31/62] Fix backlight on S10*. Add an additional property to
+Subject: [PATCH 031/105] Fix backlight on S10*. Add an additional property to
  check, so testers can try it more easily
 
 ---
- services/core/java/com/android/server/lights/LightsService.java | 4 +++-
+ .../core/java/com/android/server/lights/LightsService.java    | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
@@ -24,5 +24,5 @@ index 9c510fb74b1..5974396343c 100644
                          int newBrightness = brightness * 100;
                          if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
 -- 
-2.11.0
+2.17.1
 

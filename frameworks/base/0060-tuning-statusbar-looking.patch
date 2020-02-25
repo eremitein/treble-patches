@@ -1,7 +1,7 @@
 From 7ddd38c0a3ef97231a4904a5b4955b95679bdbb6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 14:14:32 +0200
-Subject: [PATCH 60/62] tuning statusbar looking
+Subject: [PATCH 060/105] tuning statusbar looking
 
 	modified:   core/res/res/values/dimens.xml
 	modified:   packages/SystemUI/res/drawable/stat_sys_alarm.xml
@@ -28,27 +28,27 @@ Subject: [PATCH 60/62] tuning statusbar looking
 	modified:   packages/SystemUI/res/layout/system_icons.xml
 	modified:   packages/SystemUI/res/values/dimens.xml
 ---
- core/res/res/values/dimens.xml                     |    4 +-
- packages/SystemUI/res/drawable/stat_sys_alarm.xml  |    4 +-
- .../SystemUI/res/drawable/stat_sys_alarm_dim.xml   |    4 +-
- packages/SystemUI/res/drawable/stat_sys_camera.xml |    6 +-
- .../SystemUI/res/drawable/stat_sys_data_saver.xml  |    6 +-
- packages/SystemUI/res/drawable/stat_sys_dnd.xml    |    6 +-
- .../SystemUI/res/drawable/stat_sys_headset.xml     |    4 +-
- .../SystemUI/res/drawable/stat_sys_headset_mic.xml |    4 +-
- .../SystemUI/res/drawable/stat_sys_hotspot.xml     |    4 +-
- .../SystemUI/res/drawable/stat_sys_location.xml    |    4 +-
- .../SystemUI/res/drawable/stat_sys_mic_none.xml    |   28 +-
- .../res/drawable/stat_sys_ringer_silent.xml        |    8 +-
- .../res/drawable/stat_sys_ringer_vibrate.xml       |    6 +-
- .../res/drawable/stat_sys_rotate_landscape.xml     |    4 +-
- .../res/drawable/stat_sys_rotate_portrait.xml      |    4 +-
- .../SystemUI/res/drawable/stat_sys_sensors_off.xml |    4 +-
- .../SystemUI/res/layout/mobile_signal_group.xml    |    6 +-
- .../res/layout/status_bar_mobile_signal_group.xml  |   10 +-
- .../SystemUI/res/layout/status_bar_wifi_group.xml  |    6 +-
- packages/SystemUI/res/values/dimens.xml            |   32 +-
- packages/SystemUI/res/values/dimens.xml.orig       | 1168 ++++++++++++++++++++
+ core/res/res/values/dimens.xml                |    4 +-
+ .../SystemUI/res/drawable/stat_sys_alarm.xml  |    4 +-
+ .../res/drawable/stat_sys_alarm_dim.xml       |    4 +-
+ .../SystemUI/res/drawable/stat_sys_camera.xml |    6 +-
+ .../res/drawable/stat_sys_data_saver.xml      |    6 +-
+ .../SystemUI/res/drawable/stat_sys_dnd.xml    |    6 +-
+ .../res/drawable/stat_sys_headset.xml         |    4 +-
+ .../res/drawable/stat_sys_headset_mic.xml     |    4 +-
+ .../res/drawable/stat_sys_hotspot.xml         |    4 +-
+ .../res/drawable/stat_sys_location.xml        |    4 +-
+ .../res/drawable/stat_sys_mic_none.xml        |   28 +-
+ .../res/drawable/stat_sys_ringer_silent.xml   |    8 +-
+ .../res/drawable/stat_sys_ringer_vibrate.xml  |    6 +-
+ .../drawable/stat_sys_rotate_landscape.xml    |    4 +-
+ .../res/drawable/stat_sys_rotate_portrait.xml |    4 +-
+ .../res/drawable/stat_sys_sensors_off.xml     |    4 +-
+ .../res/layout/mobile_signal_group.xml        |    6 +-
+ .../layout/status_bar_mobile_signal_group.xml |   10 +-
+ .../res/layout/status_bar_wifi_group.xml      |    6 +-
+ packages/SystemUI/res/values/dimens.xml       |   32 +-
+ packages/SystemUI/res/values/dimens.xml.orig  | 1168 +++++++++++++++++
  21 files changed, 1247 insertions(+), 75 deletions(-)
  create mode 100644 packages/SystemUI/res/values/dimens.xml.orig
 
@@ -1695,5 +1695,5 @@ index 00000000000..27565cf05f7
 +    <dimen name="celltile_rat_type_size">10sp</dimen>
 +</resources>
 -- 
-2.11.0
+2.17.1
 

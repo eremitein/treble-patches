@@ -1,12 +1,12 @@
 From 6fa1f7befd282654cf186e3f96991f6c5f756fc3 Mon Sep 17 00:00:00 2001
 From: AndyCGYan <GeForce8800Ultra@gmail.com>
 Date: Mon, 15 Jul 2019 10:43:52 +0000
-Subject: [PATCH 03/14] treble: Add overlay-lineage
+Subject: [PATCH 03/25] treble: Add overlay-lineage
 
 Change-Id: I9d313b1488d98acc7cf37d23820946ee99745426
 ---
- base.mk                                            |  4 +-
- .../lineage-sdk/lineage/res/res/values/config.xml  | 81 ++++++++++++++++++++++
+ base.mk                                       |  4 +-
+ .../lineage/res/res/values/config.xml         | 81 +++++++++++++++++++
  2 files changed, 84 insertions(+), 1 deletion(-)
  create mode 100644 overlay-lineage/lineage-sdk/lineage/res/res/values/config.xml
 
@@ -113,5 +113,5 @@ index 0000000..8df673a
 +    <integer name="config_deviceHardwareWakeKeys">127</integer>
 +</resources>
 -- 
-2.11.0
+2.17.1
 

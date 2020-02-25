@@ -1,10 +1,10 @@
 From 1b14fe1a2d786a5b23b1d3655069333d9e320cf9 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 25 Jun 2018 22:43:32 +0200
-Subject: [PATCH 18/62] Add Qualcomm starlte
+Subject: [PATCH 018/105] Add Qualcomm starlte
 
 ---
- services/core/java/com/android/server/lights/LightsService.java | 4 +++-
+ .../core/java/com/android/server/lights/LightsService.java    | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
@@ -23,5 +23,5 @@ index 7d4ee21dfed..717427d40f2 100644
                          return;
                      }
 -- 
-2.11.0
+2.17.1
 

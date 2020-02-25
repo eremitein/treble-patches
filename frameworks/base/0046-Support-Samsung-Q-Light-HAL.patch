@@ -1,14 +1,14 @@
 From 87c000b374fd6d0877e047144387ba8b82694788 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 16:38:44 +0100
-Subject: [PATCH 46/62] Support Samsung Q Light HAL
+Subject: [PATCH 046/105] Support Samsung Q Light HAL
 
 Change-Id: Ic5745eb115a14de348391e69ed6bf3c2a24b157e
 ---
- services/core/jni/Android.bp                       |   1 +
- services/core/jni/Android.bp.orig                  | 165 ++++++++++++++++
- .../com_android_server_lights_LightsService.cpp    |  26 +++
- ...om_android_server_lights_LightsService.cpp.orig | 207 +++++++++++++++++++++
+ services/core/jni/Android.bp                  |   1 +
+ services/core/jni/Android.bp.orig             | 165 ++++++++++++++
+ ...om_android_server_lights_LightsService.cpp |  26 +++
+ ...droid_server_lights_LightsService.cpp.orig | 207 ++++++++++++++++++
  4 files changed, 399 insertions(+)
  create mode 100644 services/core/jni/Android.bp.orig
  create mode 100644 services/core/jni/com_android_server_lights_LightsService.cpp.orig
@@ -471,5 +471,5 @@ index 00000000000..a21c6e2c8ef
 +
 +};
 -- 
-2.11.0
+2.17.1
 

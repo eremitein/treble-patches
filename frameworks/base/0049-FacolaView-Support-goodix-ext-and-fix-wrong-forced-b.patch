@@ -1,12 +1,12 @@
 From bf3645ed6e620521ee27ce5d801533bfe387847a Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 23:19:32 +0100
-Subject: [PATCH 49/62] FacolaView: Support goodix ext and fix wrong forced
+Subject: [PATCH 049/105] FacolaView: Support goodix ext and fix wrong forced
  brightness
 
 ---
- services/core/Android.bp                           |  1 +
- .../server/biometrics/fingerprint/FacolaView.java  | 30 ++++++++++++++++------
+ services/core/Android.bp                      |  1 +
+ .../biometrics/fingerprint/FacolaView.java    | 30 ++++++++++++++-----
  2 files changed, 23 insertions(+), 8 deletions(-)
 
 diff --git a/services/core/Android.bp b/services/core/Android.bp
@@ -113,5 +113,5 @@ index 08436019bc9..651cc97be39 100644
          mParams.packageName = "android";
  
 -- 
-2.11.0
+2.17.1
 

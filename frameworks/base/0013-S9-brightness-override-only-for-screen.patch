@@ -1,11 +1,11 @@
 From 15615475171695e7cc4aa8936b18a015b9b2cb67 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <pierre-hugues.husson@softathome.com>
 Date: Thu, 7 Jun 2018 13:36:51 +0200
-Subject: [PATCH 13/62] S9 brightness override only for screen
+Subject: [PATCH 013/105] S9 brightness override only for screen
 
 Change-Id: Ie16a46336fa64850014b962429f7a20ff569222f
 ---
- .../core/java/com/android/server/lights/LightsService.java   | 12 +++++++-----
+ .../com/android/server/lights/LightsService.java     | 12 +++++++-----
  1 file changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
@@ -32,5 +32,5 @@ index bcd99f0a3c8..0f53ccb143a 100644
                  int color = brightness & 0x000000ff;
                  color = 0xff000000 | (color << 16) | (color << 8) | color;
 -- 
-2.11.0
+2.17.1
 

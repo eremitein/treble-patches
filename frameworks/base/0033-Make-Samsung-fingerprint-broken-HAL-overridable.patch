@@ -1,11 +1,11 @@
 From e25bb3507c05a15c923f991ad3ac973920529755 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 2 Jul 2019 21:19:29 +0200
-Subject: [PATCH 33/62] Make Samsung fingerprint broken HAL overridable
+Subject: [PATCH 033/105] Make Samsung fingerprint broken HAL overridable
 
 Change-Id: I8be38daa7c80fdb61e9209f12215e6daea171d03
 ---
- .../com/android/server/biometrics/fingerprint/FingerprintService.java | 4 +++-
+ .../server/biometrics/fingerprint/FingerprintService.java     | 4 +++-
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java b/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java
@@ -25,5 +25,5 @@ index 9789c49f069..f6e0742aa67 100644
  
                  FingerprintService.super.handleEnrollResult(fingerprint, remaining2);
 -- 
-2.11.0
+2.17.1
 

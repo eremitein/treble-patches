@@ -1,7 +1,7 @@
 From dc95b1bc29b2f4309bfd90693ce6a3b427af107c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 22:47:29 +0200
-Subject: [PATCH 3/5] delete AudioFX
+Subject: [PATCH 3/6] delete AudioFX
 
 	modified:   config/common.mk
 
@@ -23,5 +23,5 @@ index 3461d9b3..10a68ff4 100644
      LineageParts \
      LineageSettingsProvider \
 -- 
-2.11.0
+2.17.1
 

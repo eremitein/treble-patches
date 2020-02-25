@@ -1,0 +1,43 @@
+From e7cb673102052365dde9d90781fa9eb20bbab042 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 22 Feb 2020 18:36:11 +0200
+Subject: [PATCH 076/105] Revert "try to move right network indicator"
+
+This reverts commit 14095a39436c17d6dd5683a93b259645c1576858.
+---
+ packages/SystemUI/res/layout/status_bar.xml | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/packages/SystemUI/res/layout/status_bar.xml b/packages/SystemUI/res/layout/status_bar.xml
+index dd0b1ffc80e..134f4e7b877 100644
+--- a/packages/SystemUI/res/layout/status_bar.xml
++++ b/packages/SystemUI/res/layout/status_bar.xml
+@@ -110,12 +110,21 @@
+             android:clipChildren="false"
+             android:gravity="center_horizontal|center_vertical"/>
+ 
+-        <org.lineageos.internal.statusbar.NetworkTraffic
+-            android:id="@+id/network_traffic"
++        <com.android.systemui.statusbar.LineageStatusBarItemHolder
++            android:id="@+id/network_traffic_holder"
+             android:layout_width="wrap_content"
+             android:layout_height="match_parent"
+-            android:maxLines="2"
+-            android:gravity="center_vertical|start" />
++            android:gravity="right|center_vertical"
++            >
++
++            <org.lineageos.internal.statusbar.NetworkTraffic
++                android:id="@+id/network_traffic"
++                android:layout_width="wrap_content"
++                android:layout_height="match_parent"
++                android:maxLines="2"
++                android:gravity="center_vertical|start" />
++
++        </com.android.systemui.statusbar.LineageStatusBarItemHolder>
+ 
+         <com.android.keyguard.AlphaOptimizedLinearLayout android:id="@+id/system_icon_area"
+             android:layout_width="0dp"
+-- 
+2.17.1
+

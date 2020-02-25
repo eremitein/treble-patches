@@ -1,7 +1,7 @@
 From 159401a891d481ab4f6cc997e750c48e59e0a397 Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Wed, 4 Sep 2019 01:37:30 +0000
-Subject: [PATCH 05/14] Increase system partition size for arm_ab
+Subject: [PATCH 05/25] Increase system partition size for arm_ab
 
 Change-Id: I3ac099dd64624ec27c5fb64ce3fa3a9e500402e5
 ---
@@ -21,5 +21,5 @@ index a9a4fe3..2a34d28 100644
  endif
  TARGET_USES_64_BIT_BINDER := false
 -- 
-2.11.0
+2.17.1
 

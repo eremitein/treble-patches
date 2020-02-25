@@ -1,0 +1,42 @@
+From ee748eabda2f7ad6e5e8b86cca2d7cfb51ca0c87 Mon Sep 17 00:00:00 2001
+From: Jani Lusikka <jani.lusikka@gmail.com>
+Date: Fri, 25 Mar 2016 20:12:15 +0200
+Subject: [PATCH 13/15] Fix the group permissions of the sdcard root.
+
+If the root is not writable, we cannot create new files or folders there.
+
+Change-Id: I3edad81f105bbeabc9dcd1f5322acea6fbfc63bb
+---
+ fs/Ext4.cpp | 2 +-
+ fs/F2fs.cpp | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/fs/Ext4.cpp b/fs/Ext4.cpp
+index efc193ee5..14ac05621 100644
+--- a/fs/Ext4.cpp
++++ b/fs/Ext4.cpp
+@@ -154,7 +154,7 @@ status_t Mount(const std::string& source, const std::string& target, bool ro, bo
+     rc = mount(c_source, c_target, "ext4", flags, c_data);
+     if (portable && rc == 0) {
+         chown(c_target, AID_MEDIA_RW, AID_MEDIA_RW);
+-        chmod(c_target, 0755);
++        chmod(c_target, 0775);
+     }
+ 
+     if (rc && errno == EROFS) {
+diff --git a/fs/F2fs.cpp b/fs/F2fs.cpp
+index 3aa289e76..33cc4a27a 100644
+--- a/fs/F2fs.cpp
++++ b/fs/F2fs.cpp
+@@ -77,7 +77,7 @@ status_t Mount(const std::string& source, const std::string& target,
+     int res = mount(c_source, c_target, "f2fs", flags, c_data);
+     if (portable && res == 0) {
+         chown(c_target, AID_MEDIA_RW, AID_MEDIA_RW);
+-        chmod(c_target, 0755);
++        chmod(c_target, 0775);
+     }
+ 
+     if (res != 0) {
+-- 
+2.17.1
+

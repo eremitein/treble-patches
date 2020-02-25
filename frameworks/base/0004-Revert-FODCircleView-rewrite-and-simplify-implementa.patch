@@ -1,12 +1,12 @@
 From 11cbd1a2f761bcf70cda017cca3399c174f81479 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:28:13 +0200
-Subject: [PATCH 04/62] Revert "FODCircleView: rewrite and simplify
+Subject: [PATCH 004/105] Revert "FODCircleView: rewrite and simplify
  implementation"
 
 This reverts commit 9213b9f5aa79d25a9633df99a7922c4c7f72dfda.
 ---
- .../android/systemui/biometrics/FODCircleView.java | 419 ++++++++++++++-------
+ .../systemui/biometrics/FODCircleView.java    | 419 ++++++++++++------
  1 file changed, 276 insertions(+), 143 deletions(-)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
@@ -628,5 +628,5 @@ index 8f0b352d318..01205a9d134 100644
      };
  }
 -- 
-2.11.0
+2.17.1
 

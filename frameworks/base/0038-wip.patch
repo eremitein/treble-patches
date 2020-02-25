@@ -1,17 +1,17 @@
 From 1c71f09e30bc4cf0df6f97cdf67d5a56615ce59e Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 24 Mar 2019 22:48:39 +0100
-Subject: [PATCH 38/62] wip
+Subject: [PATCH 038/105] wip
 
 Change-Id: I50fa9a7a670cef5b93fc4a3a027f1587b1214831
 ---
- Android.bp                                         |   2 +
- services/core/Android.bp                           |   1 +
- .../server/biometrics/fingerprint/FacolaView.java  | 210 +++++++++++++++++++++
- .../biometrics/fingerprint/FingerprintService.java |  26 ++-
- .../server/testharness/TestHarnessModeService.java |   7 +-
- .../java/com/android/server/wm/ActivityRecord.java |   6 -
- .../com_android_server_lights_LightsService.cpp    |  15 +-
+ Android.bp                                    |   2 +
+ services/core/Android.bp                      |   1 +
+ .../biometrics/fingerprint/FacolaView.java    | 210 ++++++++++++++++++
+ .../fingerprint/FingerprintService.java       |  26 ++-
+ .../testharness/TestHarnessModeService.java   |   7 +-
+ .../com/android/server/wm/ActivityRecord.java |   6 -
+ ...om_android_server_lights_LightsService.cpp |  15 +-
  7 files changed, 255 insertions(+), 12 deletions(-)
  create mode 100644 services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
 
@@ -409,5 +409,5 @@ index 20de7985d1d..2b50d04233e 100644
  
      Type type = static_cast<Type>(light);
 -- 
-2.11.0
+2.17.1
 

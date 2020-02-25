@@ -1,0 +1,32 @@
+From 1c0b5f910d2451d1551511e46467d02f5c2367dc Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Feb 2020 18:53:49 +0200
+Subject: [PATCH 088/105] add missed Arvo font specs
+
+	modified:   data/fonts/fonts.xml
+---
+ data/fonts/fonts.xml | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index 21a9eccf6a8..fed3020c8c9 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -125,6 +125,14 @@
+     </family>
+     <alias name="arbutus-slab-medium" to="arbutus-slab" weight="500" />
+ 
++    <family name="arvo">
++        <font weight="400" style="normal">Arvo-Regular.ttf</font>
++        <font weight="400" style="italic">Arvo-Italic.ttf</font>
++        <font weight="700" style="normal">Arvo-Bold.ttf</font>
++        <font weight="700" style="italic">Arvo-BoldItalic.ttf</font>
++    </family>
++    <alias name="arvo-bold" to="arvo" weight="700" />
++
+     <family name="lato">
+         <font weight="400" style="normal">Lato-Regular.ttf</font>
+         <font weight="400" style="italic">Lato-Italic.ttf</font>
+-- 
+2.17.1
+

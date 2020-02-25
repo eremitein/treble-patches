@@ -1,7 +1,7 @@
 From f4ccc10034b03fec7fbb2e3181d5e70f306f67f2 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 7 Feb 2020 13:11:31 +0200
-Subject: [PATCH 4/4] USSD: Fix alert dialog theme
+Subject: [PATCH 4/5] USSD: Fix alert dialog theme
 
   * from
   https://github.com/Havoc-OS/android_packages_services_Telephony/commit/5044eaaade65aca046a6254fa83c3d0f7e25aa40
@@ -27,5 +27,5 @@ index 20c8276..986dcef 100644
      /** USSD information used to aggregate all USSD messages */
      private static AlertDialog sUssdDialog = null;
 -- 
-2.11.0
+2.17.1
 

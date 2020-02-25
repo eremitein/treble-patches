@@ -1,7 +1,7 @@
 From 574047358d848a6b66a3d33d29574ccee3cc0f81 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Fri, 6 Sep 2019 15:10:28 +0200
-Subject: [PATCH 1/4] Whitelist radio HALs (needed because they need to e in
+Subject: [PATCH 01/13] Whitelist radio HALs (needed because they need to e in
  framework because of weird jarjar issue)
 
 Change-Id: If1ccbedde92955bb86f4c6db6d68502784de1d8d
@@ -21,5 +21,5 @@ index 6103018..45266c5 100644
 +vendor\.samsung\.hardware\.radio\.V1_2
 +vendor\.mediatek\.hardware\.radio\.V2_0
 -- 
-2.11.0
+2.17.1
 

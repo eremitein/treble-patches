@@ -1,12 +1,12 @@
 From b08b34adb781c1d623409c33f5b688709e280864 Mon Sep 17 00:00:00 2001
 From: Peter Cai <peter@typeblog.net>
 Date: Thu, 2 Jan 2020 10:16:49 +0800
-Subject: [PATCH 51/62] fix crashing on devices with higher aspect ratio down
+Subject: [PATCH 051/105] fix crashing on devices with higher aspect ratio down
  to sw288dp
 
 * This is what the Qin 2 (Pro) is.
 ---
- packages/SystemUI/res/values-sw288dp/dimens.xml | 34 +++++++++++++++++++++++++
+ .../SystemUI/res/values-sw288dp/dimens.xml    | 34 +++++++++++++++++++
  1 file changed, 34 insertions(+)
  create mode 100644 packages/SystemUI/res/values-sw288dp/dimens.xml
 
@@ -51,5 +51,5 @@ index 00000000000..2774554ec64
 +</resources>
 +
 -- 
-2.11.0
+2.17.1
 

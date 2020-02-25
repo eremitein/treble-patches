@@ -1,10 +1,10 @@
 From f73696c4d15984513f62e1b09f8d97dfe6e97668 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 11 Aug 2019 10:30:37 +0200
-Subject: [PATCH 34/62] Add property to use linear brightness slider
+Subject: [PATCH 034/105] Add property to use linear brightness slider
 
 ---
- .../src/com/android/settingslib/display/BrightnessUtils.java        | 6 ++++++
+ .../com/android/settingslib/display/BrightnessUtils.java    | 6 ++++++
  1 file changed, 6 insertions(+)
 
 diff --git a/packages/SettingsLib/src/com/android/settingslib/display/BrightnessUtils.java b/packages/SettingsLib/src/com/android/settingslib/display/BrightnessUtils.java
@@ -33,5 +33,5 @@ index 55723f9d8ed..da8ce4a67e9 100644
          final float normalizedVal = MathUtils.norm(min, max, val) * 12;
          final float ret;
 -- 
-2.11.0
+2.17.1
 

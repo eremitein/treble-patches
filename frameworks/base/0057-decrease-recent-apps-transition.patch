@@ -1,15 +1,15 @@
 From 56c0ef1d5dc63bf3022eb0b5bbf0b91db49f1fa6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 30 Dec 2019 08:46:44 +0200
-Subject: [PATCH 57/62] decrease recent apps transition
+Subject: [PATCH 057/105] decrease recent apps transition
 
   * based on https://github.com/BlissRoms/platform_frameworks_base/commit/851ee116b8a7f6a6db3fcd0beccb05247fdbdb76
 
 	modified:   packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml
 	modified:   packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_exit.xml
 ---
- .../SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml    | 2 +-
- .../SystemUI/legacy/recents/res/anim/recents_from_launcher_exit.xml     | 2 +-
+ .../legacy/recents/res/anim/recents_from_launcher_enter.xml     | 2 +-
+ .../legacy/recents/res/anim/recents_from_launcher_exit.xml      | 2 +-
  2 files changed, 2 insertions(+), 2 deletions(-)
 
 diff --git a/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml b/packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml
@@ -35,5 +35,5 @@ index 33831b8c0a3..7c6f175430f 100644
 +         android:duration="30"/>
  </set>
 -- 
-2.11.0
+2.17.1
 

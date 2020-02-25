@@ -1,12 +1,12 @@
 From d6b8273638e3aefb8438e2d3f50634a52e55b011 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 22:14:12 +0100
-Subject: [PATCH 48/62] Add Samsung's Q power HAL to fix suspend
+Subject: [PATCH 048/105] Add Samsung's Q power HAL to fix suspend
 
 Change-Id: I1edd4de9932ab089b7051f1329f60c15b9d99aaa
 ---
- services/core/jni/Android.bp                           |  1 +
- .../com_android_server_power_PowerManagerService.cpp   | 18 ++++++++++++++++++
+ services/core/jni/Android.bp                   |  1 +
+ ...ndroid_server_power_PowerManagerService.cpp | 18 ++++++++++++++++++
  2 files changed, 19 insertions(+)
 
 diff --git a/services/core/jni/Android.bp b/services/core/jni/Android.bp
@@ -86,5 +86,5 @@ index 211ea50ddc9..bf0599fe18a 100644
  
  static void nativeSetAutoSuspend(JNIEnv* /* env */, jclass /* clazz */, jboolean enable) {
 -- 
-2.11.0
+2.17.1
 

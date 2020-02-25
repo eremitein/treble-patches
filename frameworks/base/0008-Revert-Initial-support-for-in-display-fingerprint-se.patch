@@ -1,7 +1,7 @@
 From 081f6c38c4b54daed7e204d6aafc4770cfefab0b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:35:39 +0200
-Subject: [PATCH 08/62] Revert "Initial support for in-display fingerprint
+Subject: [PATCH 008/105] Revert "Initial support for in-display fingerprint
  sensors"
 
 This reverts commit 782a3f805408147c8504f6071aa4f275c22b0167.
@@ -12,19 +12,19 @@ This reverts commit 782a3f805408147c8504f6071aa4f275c22b0167.
 	packages/SystemUI/src/com/android/systemui/statusbar/CommandQueue.java
 	services/core/java/com/android/server/statusbar/StatusBarManagerService.java
 ---
- .../com/android/internal/statusbar/IStatusBar.aidl |   3 -
- .../internal/statusbar/IStatusBarService.aidl      |   3 -
- packages/SystemUI/Android.bp                       |   1 -
- .../SystemUI/res/drawable/fod_icon_default.xml     |  26 --
- packages/SystemUI/res/values/config.xml            |   1 -
- packages/SystemUI/res/values/lineage_config.xml    |   3 -
- .../android/systemui/biometrics/FODCircleView.java | 498 ---------------------
- .../systemui/biometrics/FODCircleViewImpl.java     |  62 ---
- .../android/systemui/statusbar/CommandQueue.java   |  28 --
- services/core/Android.bp                           |   1 -
- .../server/biometrics/BiometricServiceBase.java    |   2 +-
- .../biometrics/fingerprint/FingerprintService.java | 112 -----
- .../server/statusbar/StatusBarManagerService.java  |  22 -
+ .../internal/statusbar/IStatusBar.aidl        |   3 -
+ .../internal/statusbar/IStatusBarService.aidl |   3 -
+ packages/SystemUI/Android.bp                  |   1 -
+ .../res/drawable/fod_icon_default.xml         |  26 -
+ packages/SystemUI/res/values/config.xml       |   1 -
+ .../SystemUI/res/values/lineage_config.xml    |   3 -
+ .../systemui/biometrics/FODCircleView.java    | 498 ------------------
+ .../biometrics/FODCircleViewImpl.java         |  62 ---
+ .../systemui/statusbar/CommandQueue.java      |  28 -
+ services/core/Android.bp                      |   1 -
+ .../biometrics/BiometricServiceBase.java      |   2 +-
+ .../fingerprint/FingerprintService.java       | 112 ----
+ .../statusbar/StatusBarManagerService.java    |  22 -
  13 files changed, 1 insertion(+), 761 deletions(-)
  delete mode 100644 packages/SystemUI/res/drawable/fod_icon_default.xml
  delete mode 100644 packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
@@ -722,10 +722,11 @@ index b99cb2e3116..655dae86303 100644
          default void setBlockedGesturalNavigation(boolean blocked) {}
  
          /**
-@@ -792,20 +788,6 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
+@@ -791,20 +787,6 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
+         }
      }
  
-     @Override
+-    @Override
 -    public void showInDisplayFingerprintView() {
 -        synchronized (mLock) {
 -            mHandler.obtainMessage(MSG_SHOW_IN_DISPLAY_FINGERPRINT_VIEW).sendToTarget();
@@ -739,10 +740,9 @@ index b99cb2e3116..655dae86303 100644
 -        }
 -    }
 -
--    @Override
+     @Override
      public void setBlockedGesturalNavigation(boolean blocked) {
          synchronized (mLock) {
-             mHandler.removeMessages(MSG_SET_BLOCKED_GESTURAL_NAVIGATION);
 @@ -1119,16 +1101,6 @@ public class CommandQueue extends IStatusBar.Stub implements CallbackController<
                          mCallbacks.get(i).onRecentsAnimationStateChanged(msg.arg1 > 0);
                      }
@@ -1000,10 +1000,11 @@ diff --git a/services/core/java/com/android/server/statusbar/StatusBarManagerSer
 index 81c57d75bbb..faeafc25f67 100644
 --- a/services/core/java/com/android/server/statusbar/StatusBarManagerService.java
 +++ b/services/core/java/com/android/server/statusbar/StatusBarManagerService.java
-@@ -665,28 +665,6 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
+@@ -664,28 +664,6 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
+         }
      }
  
-     @Override
+-    @Override
 -    public void showInDisplayFingerprintView() {
 -        if (mBar != null) {
 -            try {
@@ -1025,10 +1026,9 @@ index 81c57d75bbb..faeafc25f67 100644
 -        }
 -    }
 -
--    @Override
+     @Override
      public void setBlockedGesturalNavigation(boolean blocked) {
          if (mBar != null) {
-             try {
 -- 
-2.11.0
+2.17.1
 

@@ -1,11 +1,11 @@
 From 7cb34ecfd6f909e2dc13d135a9424a3573356c6f Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Thu, 5 Apr 2018 10:01:19 +0800
-Subject: [PATCH 53/62] Disable vendor mismatch warning
+Subject: [PATCH 053/105] Disable vendor mismatch warning
 
 Change-Id: Ieb8fe91e2f02462f074312ed0f4885d183e9780b
 ---
- .../android/server/wm/ActivityTaskManagerService.java    | 16 ++--------------
+ .../server/wm/ActivityTaskManagerService.java    | 16 ++--------------
  1 file changed, 2 insertions(+), 14 deletions(-)
 
 diff --git a/services/core/java/com/android/server/wm/ActivityTaskManagerService.java b/services/core/java/com/android/server/wm/ActivityTaskManagerService.java
@@ -36,5 +36,5 @@ index f6990d263a2..a5a10c29631 100644
              }
          }
 -- 
-2.11.0
+2.17.1
 

@@ -1,7 +1,7 @@
 From e38117776802d29955eca83305f5e1c254a91797 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 14:14:32 +0200
-Subject: [PATCH 56/62] tuning statusbar looking
+Subject: [PATCH 056/105] tuning statusbar looking
 
 	modified:   core/res/res/values/dimens.xml
 	modified:   packages/SystemUI/res/drawable/stat_sys_alarm.xml
@@ -43,5 +43,5 @@ index 4ee7242729b..3e638599031 100644
 \ No newline at end of file
 +</LinearLayout>
 -- 
-2.11.0
+2.17.1
 

@@ -1,11 +1,11 @@
 From 50f47d72e65d741967890c537791871e0779493c Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 29 Aug 2018 11:05:54 +0200
-Subject: [PATCH 26/62] Add a property to override pre-o max aspect ratio
+Subject: [PATCH 026/105] Add a property to override pre-o max aspect ratio
 
 Change-Id: Id001a19fab7680feda841202b6e91c490d0d5ffa
 ---
- services/core/java/com/android/server/wm/ActivityRecord.java | 8 +++++++-
+ .../core/java/com/android/server/wm/ActivityRecord.java   | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/services/core/java/com/android/server/wm/ActivityRecord.java b/services/core/java/com/android/server/wm/ActivityRecord.java
@@ -35,5 +35,5 @@ index 2d26108f964..d9c85c0ca50 100644
          final float minAspectRatio = info.minAspectRatio;
  
 -- 
-2.11.0
+2.17.1
 
