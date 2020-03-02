@@ -1,0 +1,26 @@
+From 903452eac39731f6830a303ec317aec8fe8deb3c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Feb 2020 09:48:42 +0200
+Subject: [PATCH] make app deactivable
+
+	modified:   Android.mk
+---
+ Android.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Android.mk b/Android.mk
+index 25d5a3b..ed54c2c 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -7,7 +7,7 @@ LOCAL_SRC_FILES := SimpleGallery.apk
+ LOCAL_MODULE_CLASS := APPS
+ LOCAL_MODULE_SUFFIX := .apk
+ LOCAL_BUILT_MODULE_STEM := package.apk
+-LOCAL_CERTIFICATE := platform
++LOCAL_CERTIFICATE := shared
+ LOCAL_PRIVILEGED_MODULE := true
+ LOCAL_PRODUCT_MODULE := true
+ LOCAL_MODULE_PATH := $(TARGET_OUT_PRODUCT_APPS)
+-- 
+2.11.0
+

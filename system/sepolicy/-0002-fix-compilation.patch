@@ -1,0 +1,143 @@
+From 074f321d989b4d1a8c452c22555de01266250d09 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 2 Mar 2020 09:45:10 +0200
+Subject: [PATCH 2/2] fix compilation
+
+	modified:   prebuilts/api/29.0/private/compat/26.0/26.0.ignore.cil
+	modified:   prebuilts/api/29.0/private/compat/27.0/27.0.ignore.cil
+	modified:   prebuilts/api/29.0/private/compat/28.0/28.0.ignore.cil
+	modified:   prebuilts/api/29.0/private/file_contexts
+	modified:   prebuilts/api/29.0/private/init.te
+	modified:   prebuilts/api/29.0/public/charger.te
+	modified:   private/file_contexts
+---
+ prebuilts/api/29.0/private/compat/26.0/26.0.ignore.cil | 1 -
+ prebuilts/api/29.0/private/compat/27.0/27.0.ignore.cil | 1 -
+ prebuilts/api/29.0/private/compat/28.0/28.0.ignore.cil | 1 -
+ prebuilts/api/29.0/private/file_contexts               | 3 +--
+ prebuilts/api/29.0/private/init.te                     | 4 +---
+ prebuilts/api/29.0/public/charger.te                   | 3 ++-
+ private/file_contexts                                  | 2 --
+ 7 files changed, 4 insertions(+), 11 deletions(-)
+
+diff --git a/prebuilts/api/29.0/private/compat/26.0/26.0.ignore.cil b/prebuilts/api/29.0/private/compat/26.0/26.0.ignore.cil
+index 45e1dd9e..a8bcb8a2 100644
+--- a/prebuilts/api/29.0/private/compat/26.0/26.0.ignore.cil
++++ b/prebuilts/api/29.0/private/compat/26.0/26.0.ignore.cil
+@@ -30,7 +30,6 @@
+     bpfloader_exec
+     broadcastradio_service
+     cgroup_bpf
+-    charger_exec
+     color_display_service
+     content_capture_service
+     crossprofileapps_service
+diff --git a/prebuilts/api/29.0/private/compat/27.0/27.0.ignore.cil b/prebuilts/api/29.0/private/compat/27.0/27.0.ignore.cil
+index 0e830f82..261f800a 100644
+--- a/prebuilts/api/29.0/private/compat/27.0/27.0.ignore.cil
++++ b/prebuilts/api/29.0/private/compat/27.0/27.0.ignore.cil
+@@ -28,7 +28,6 @@
+     bpfloader
+     bpfloader_exec
+     cgroup_bpf
+-    charger_exec
+     color_display_service
+     content_capture_service
+     crossprofileapps_service
+diff --git a/prebuilts/api/29.0/private/compat/28.0/28.0.ignore.cil b/prebuilts/api/29.0/private/compat/28.0/28.0.ignore.cil
+index 98c4b9c9..8fcdd0a9 100644
+--- a/prebuilts/api/29.0/private/compat/28.0/28.0.ignore.cil
++++ b/prebuilts/api/29.0/private/compat/28.0/28.0.ignore.cil
+@@ -29,7 +29,6 @@
+     bugreport_service
+     cgroup_desc_file
+     cgroup_rc_file
+-    charger_exec
+     content_capture_service
+     content_suggestions_service
+     cpu_variant_prop
+diff --git a/prebuilts/api/29.0/private/file_contexts b/prebuilts/api/29.0/private/file_contexts
+index 530bd45f..feb55496 100644
+--- a/prebuilts/api/29.0/private/file_contexts
++++ b/prebuilts/api/29.0/private/file_contexts
+@@ -14,6 +14,7 @@
+ /verity_key         u:object_r:rootfs:s0
+ 
+ # Executables
++/charger            u:object_r:rootfs:s0
+ /init               u:object_r:init_exec:s0
+ /sbin(/.*)?         u:object_r:rootfs:s0
+ 
+@@ -35,7 +36,6 @@
+ # Symlinks
+ /bin                u:object_r:rootfs:s0
+ /bugreports         u:object_r:rootfs:s0
+-/charger            u:object_r:rootfs:s0
+ /d                  u:object_r:rootfs:s0
+ /etc                u:object_r:rootfs:s0
+ /sdcard             u:object_r:rootfs:s0
+@@ -186,7 +186,6 @@
+ /system/bin/auditctl	u:object_r:auditctl_exec:s0
+ /system/bin/bcc                 u:object_r:rs_exec:s0
+ /system/bin/blank_screen	u:object_r:blank_screen_exec:s0
+-/system/bin/charger		u:object_r:charger_exec:s0
+ /system/bin/e2fsdroid		u:object_r:e2fs_exec:s0
+ /system/bin/mke2fs		u:object_r:e2fs_exec:s0
+ /system/bin/e2fsck	--	u:object_r:fsck_exec:s0
+diff --git a/prebuilts/api/29.0/private/init.te b/prebuilts/api/29.0/private/init.te
+index 374b2079..5b1ebc8c 100644
+--- a/prebuilts/api/29.0/private/init.te
++++ b/prebuilts/api/29.0/private/init.te
+@@ -3,16 +3,14 @@ typeattribute init coredomain;
+ tmpfs_domain(init)
+ 
+ # Transitions to seclabel processes in init.rc
++domain_trans(init, rootfs, charger)
+ domain_trans(init, rootfs, healthd)
+ domain_trans(init, rootfs, slideshow)
+-domain_auto_trans(init, charger_exec, charger)
+ domain_auto_trans(init, e2fs_exec, e2fs)
+ domain_auto_trans(init, bpfloader_exec, bpfloader)
+ 
+ recovery_only(`
+-  # Files in recovery image are labeled as rootfs.
+   domain_trans(init, rootfs, adbd)
+-  domain_trans(init, rootfs, charger)
+   domain_trans(init, rootfs, fastbootd)
+   domain_trans(init, rootfs, recovery)
+ ')
+diff --git a/prebuilts/api/29.0/public/charger.te b/prebuilts/api/29.0/public/charger.te
+index 238b4137..7145548a 100644
+--- a/prebuilts/api/29.0/public/charger.te
++++ b/prebuilts/api/29.0/public/charger.te
+@@ -1,5 +1,6 @@
++# charger seclabel is specified in init.rc since
++# it lives in the rootfs and has no unique file type.
+ type charger, domain;
+-type charger_exec, system_file_type, exec_type, file_type;
+ 
+ # Write to /dev/kmsg
+ allow charger kmsg_device:chr_file rw_file_perms;
+diff --git a/private/file_contexts b/private/file_contexts
+index 8cbcaf4c..feb55496 100644
+--- a/private/file_contexts
++++ b/private/file_contexts
+@@ -16,7 +16,6 @@
+ # Executables
+ /charger            u:object_r:rootfs:s0
+ /init               u:object_r:init_exec:s0
+-/system/bin/init    u:object_r:init_exec:s0
+ /sbin(/.*)?         u:object_r:rootfs:s0
+ 
+ # For kernel modules
+@@ -196,7 +195,6 @@
+ # TODO(/123600489): merge mini-keyctl into toybox
+ /system/bin/mini-keyctl	--	u:object_r:toolbox_exec:s0
+ /system/bin/fsverity_init	u:object_r:fsverity_init_exec:s0
+-/system/bin/mini-keyctl	--	u:object_r:mini-keyctl_exec:s0
+ /system/bin/sload_f2fs	--	u:object_r:e2fs_exec:s0
+ /system/bin/make_f2fs	--	u:object_r:e2fs_exec:s0
+ /system/bin/fsck_msdos	--	u:object_r:fsck_exec:s0
+-- 
+2.17.1
+
