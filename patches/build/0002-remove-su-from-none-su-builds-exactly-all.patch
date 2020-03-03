@@ -1,0 +1,27 @@
+From 5d1c71028dadf9975d99988f7584c2a9d3d1f6bd Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 14 Dec 2019 23:46:34 +0200
+Subject: [PATCH 02/11] remove 'su' from none-su builds (exactly, all)
+
+  * quickfix, need another way to implement checking
+
+	modified:   target/product/base_system.mk
+---
+ target/product/base_system.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/target/product/base_system.mk b/target/product/base_system.mk
+index e3e3fbf..41a3678 100644
+--- a/target/product/base_system.mk
++++ b/target/product/base_system.mk
+@@ -361,7 +361,6 @@ PRODUCT_PACKAGES_DEBUG := \
+     sqlite3 \
+     ss \
+     strace \
+-    su \
+     sanitizer-status \
+     tracepath \
+     tracepath6 \
+-- 
+2.17.1
+

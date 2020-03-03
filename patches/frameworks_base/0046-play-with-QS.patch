@@ -1,0 +1,63 @@
+From 501f3af8f30e7c7ba14f24aabfebac53a07f4815 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 8 Mar 2020 15:26:13 +0200
+Subject: [PATCH 46/50] play with QS
+
+	modified:   packages/SystemUI/res/values/config.xml
+	modified:   packages/SystemUI/res/values/dimens.xml
+---
+ packages/SystemUI/res/values/config.xml | 4 ++--
+ packages/SystemUI/res/values/dimens.xml | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index d8302809fa9..1487b723674 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -99,10 +99,10 @@
+     <bool name="quick_settings_wide">false</bool>
+ 
+     <!-- The number of columns in the QuickSettings -->
+-    <integer name="quick_settings_num_columns">3</integer>
++    <integer name="quick_settings_num_columns">4</integer>
+ 
+     <!-- The number of rows in the QuickSettings -->
+-    <integer name="quick_settings_max_rows">3</integer>
++    <integer name="quick_settings_max_rows">4</integer>
+ 
+     <!-- The number of columns that the top level tiles span in the QuickSettings -->
+     <integer name="quick_settings_user_time_settings_tile_span">1</integer>
+diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
+index ac396e573a0..5171051f196 100644
+--- a/packages/SystemUI/res/values/dimens.xml
++++ b/packages/SystemUI/res/values/dimens.xml
+@@ -440,7 +440,7 @@
+     <dimen name="qs_tile_height">106dp</dimen>
+     <dimen name="qs_tile_layout_margin_side">6dp</dimen>
+     <dimen name="qs_tile_margin_horizontal">18dp</dimen>
+-    <dimen name="qs_tile_margin_vertical">24dp</dimen>
++    <dimen name="qs_tile_margin_vertical">0dp</dimen>
+     <dimen name="qs_tile_margin_top_bottom">12dp</dimen>
+     <dimen name="qs_tile_margin_top_bottom_negative">-12dp</dimen>
+     <!-- The height of the qs customize header. Should be
+@@ -448,7 +448,7 @@
+          (Toolbar_minWidth (56dp) + qs_tile_margin_top_bottom (12dp))
+     -->
+     <dimen name="qs_customize_header_min_height">46dp</dimen>
+-    <dimen name="qs_tile_margin_top">18dp</dimen>
++    <dimen name="qs_tile_margin_top">8dp</dimen>
+     <dimen name="qs_tile_background_size">44dp</dimen>
+     <dimen name="qs_quick_tile_size">48dp</dimen>
+     <dimen name="qs_quick_tile_padding">12dp</dimen>
+@@ -480,7 +480,7 @@
+     <dimen name="qs_detail_item_primary_text_size">16sp</dimen>
+     <dimen name="qs_detail_item_secondary_text_size">14sp</dimen>
+     <dimen name="qs_detail_empty_text_size">14sp</dimen>
+-    <dimen name="qs_detail_margin_top">28dp</dimen>
++    <dimen name="qs_detail_margin_top">0dp</dimen>
+     <dimen name="qs_detail_back_margin_end">16dp</dimen>
+     <dimen name="qs_detail_header_text_padding">16dp</dimen>
+     <dimen name="qs_data_usage_text_size">14sp</dimen>
+-- 
+2.17.1
+

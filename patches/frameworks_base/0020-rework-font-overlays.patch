@@ -1,0 +1,1045 @@
+From 73c71d6d8b740a29ae7a8cca6d65fff7e7f63ae8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 22 Feb 2020 19:13:52 +0200
+Subject: [PATCH 20/50] rework font overlays
+
+	modified:   packages/overlays/Android.mk
+	renamed:    packages/overlays/FontArvoLatoOverlay/Android.mk -> packages/overlays/FontArbutusOverlay/Android.mk
+	renamed:    packages/overlays/FontArbutusSourceOverlay/AndroidManifest.xml -> packages/overlays/FontArbutusOverlay/AndroidManifest.xml
+	renamed:    packages/overlays/FontArbutusSourceOverlay/res/values/config.xml -> packages/overlays/FontArbutusOverlay/res/values/config.xml
+	renamed:    packages/overlays/FontArvoLatoOverlay/res/values/strings.xml -> packages/overlays/FontArbutusOverlay/res/values/strings.xml
+	renamed:    packages/overlays/FontZillaZillaOverlay/Android.mk -> packages/overlays/FontArvoOverlay/Android.mk
+	renamed:    packages/overlays/FontZillaZillaOverlay/AndroidManifest.xml -> packages/overlays/FontArvoOverlay/AndroidManifest.xml
+	new file:   packages/overlays/FontArvoOverlay/res/values/config.xml
+	renamed:    packages/overlays/FontZillaZillaOverlay/res/values/strings.xml -> packages/overlays/FontArvoOverlay/res/values/strings.xml
+	renamed:    packages/overlays/FontRubikRubikOverlay/Android.mk -> packages/overlays/FontLatoOverlay/Android.mk
+	new file:   packages/overlays/FontLatoOverlay/AndroidManifest.xml
+	renamed:    packages/overlays/FontArvoLatoOverlay/res/values/config.xml -> packages/overlays/FontLatoOverlay/res/values/config.xml
+	renamed:    packages/overlays/FontRubikRubikOverlay/res/values/strings.xml -> packages/overlays/FontLatoOverlay/res/values/strings.xml
+	renamed:    packages/overlays/FontArbutusSourceOverlay/Android.mk -> packages/overlays/FontNotoSerifOverlay/Android.mk
+	renamed:    packages/overlays/FontArvoLatoOverlay/AndroidManifest.xml -> packages/overlays/FontNotoSerifOverlay/AndroidManifest.xml
+	new file:   packages/overlays/FontNotoSerifOverlay/res/values/config.xml
+	renamed:    packages/overlays/FontNotoSerifSourceOverlay/res/values/strings.xml -> packages/overlays/FontNotoSerifOverlay/res/values/strings.xml
+	deleted:    packages/overlays/FontNotoSerifSourceOverlay/Android.mk
+	deleted:    packages/overlays/FontNotoSerifSourceOverlay/AndroidManifest.xml
+	new file:   packages/overlays/FontRobotoOverlay/Android.mk
+	new file:   packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+	new file:   packages/overlays/FontRobotoOverlay/res/values/config.xml
+	renamed:    packages/overlays/FontArbutusSourceOverlay/res/values/strings.xml -> packages/overlays/FontRobotoOverlay/res/values/strings.xml
+	new file:   packages/overlays/FontRubikOverlay/Android.mk
+	renamed:    packages/overlays/FontRubikRubikOverlay/AndroidManifest.xml -> packages/overlays/FontRubikOverlay/AndroidManifest.xml
+	renamed:    packages/overlays/FontRubikRubikOverlay/res/values/config.xml -> packages/overlays/FontRubikOverlay/res/values/config.xml
+	new file:   packages/overlays/FontRubikOverlay/res/values/strings.xml
+	new file:   packages/overlays/FontSourceOverlay/Android.mk
+	new file:   packages/overlays/FontSourceOverlay/AndroidManifest.xml
+	renamed:    packages/overlays/FontNotoSerifSourceOverlay/res/values/config.xml -> packages/overlays/FontSourceOverlay/res/values/config.xml
+	new file:   packages/overlays/FontSourceOverlay/res/values/strings.xml
+	new file:   packages/overlays/FontZillaOverlay/Android.mk
+	new file:   packages/overlays/FontZillaOverlay/AndroidManifest.xml
+	renamed:    packages/overlays/FontZillaZillaOverlay/res/values/config.xml -> packages/overlays/FontZillaOverlay/res/values/config.xml
+	new file:   packages/overlays/FontZillaOverlay/res/values/strings.xml
+---
+ packages/overlays/Android.mk                  | 13 +++++---
+ .../Android.mk                                |  4 +--
+ .../AndroidManifest.xml                       |  6 ++--
+ .../res/values/config.xml                     |  6 ++--
+ .../res/values/strings.xml                    |  2 +-
+ .../Android.mk                                |  4 +--
+ .../AndroidManifest.xml                       |  6 ++--
+ .../FontArvoOverlay/res/values/config.xml     | 27 ++++++++++++++++
+ .../res/values/strings.xml                    |  2 +-
+ .../Android.mk                                |  4 +--
+ .../FontLatoOverlay/AndroidManifest.xml       | 31 +++++++++++++++++++
+ .../res/values/config.xml                     |  4 +--
+ .../res/values/strings.xml                    |  2 +-
+ .../Android.mk                                |  4 +--
+ .../AndroidManifest.xml                       |  6 ++--
+ .../res/values/config.xml                     | 27 ++++++++++++++++
+ .../res/values/strings.xml                    |  2 +-
+ .../FontNotoSerifSourceOverlay/Android.mk     | 31 -------------------
+ .../AndroidManifest.xml                       | 31 -------------------
+ .../overlays/FontRobotoOverlay/Android.mk     | 31 +++++++++++++++++++
+ .../FontRobotoOverlay/AndroidManifest.xml     | 31 +++++++++++++++++++
+ .../FontRobotoOverlay/res/values/config.xml   | 27 ++++++++++++++++
+ .../res/values/strings.xml                    |  2 +-
+ packages/overlays/FontRubikOverlay/Android.mk | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       |  4 +--
+ .../res/values/config.xml                     |  0
+ .../FontRubikOverlay/res/values/strings.xml   | 20 ++++++++++++
+ .../overlays/FontSourceOverlay/Android.mk     | 31 +++++++++++++++++++
+ .../FontSourceOverlay/AndroidManifest.xml     | 31 +++++++++++++++++++
+ .../res/values/config.xml                     |  5 ++-
+ .../FontSourceOverlay/res/values/strings.xml  | 20 ++++++++++++
+ packages/overlays/FontZillaOverlay/Android.mk | 31 +++++++++++++++++++
+ .../FontZillaOverlay/AndroidManifest.xml      | 31 +++++++++++++++++++
+ .../res/values/config.xml                     |  8 ++---
+ .../FontZillaOverlay/res/values/strings.xml   | 20 ++++++++++++
+ 35 files changed, 432 insertions(+), 103 deletions(-)
+ rename packages/overlays/{FontArvoLatoOverlay => FontArbutusOverlay}/Android.mk (91%)
+ rename packages/overlays/{FontArbutusSourceOverlay => FontArbutusOverlay}/AndroidManifest.xml (81%)
+ rename packages/overlays/{FontArbutusSourceOverlay => FontArbutusOverlay}/res/values/config.xml (88%)
+ rename packages/overlays/{FontArvoLatoOverlay => FontArbutusOverlay}/res/values/strings.xml (89%)
+ rename packages/overlays/{FontZillaZillaOverlay => FontArvoOverlay}/Android.mk (91%)
+ rename packages/overlays/{FontZillaZillaOverlay => FontArvoOverlay}/AndroidManifest.xml (84%)
+ create mode 100644 packages/overlays/FontArvoOverlay/res/values/config.xml
+ rename packages/overlays/{FontZillaZillaOverlay => FontArvoOverlay}/res/values/strings.xml (88%)
+ rename packages/overlays/{FontRubikRubikOverlay => FontLatoOverlay}/Android.mk (91%)
+ create mode 100644 packages/overlays/FontLatoOverlay/AndroidManifest.xml
+ rename packages/overlays/{FontArvoLatoOverlay => FontLatoOverlay}/res/values/config.xml (96%)
+ rename packages/overlays/{FontRubikRubikOverlay => FontLatoOverlay}/res/values/strings.xml (88%)
+ rename packages/overlays/{FontArbutusSourceOverlay => FontNotoSerifOverlay}/Android.mk (90%)
+ rename packages/overlays/{FontArvoLatoOverlay => FontNotoSerifOverlay}/AndroidManifest.xml (85%)
+ create mode 100644 packages/overlays/FontNotoSerifOverlay/res/values/config.xml
+ rename packages/overlays/{FontNotoSerifSourceOverlay => FontNotoSerifOverlay}/res/values/strings.xml (87%)
+ delete mode 100644 packages/overlays/FontNotoSerifSourceOverlay/Android.mk
+ delete mode 100644 packages/overlays/FontNotoSerifSourceOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontRobotoOverlay/Android.mk
+ create mode 100644 packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontRobotoOverlay/res/values/config.xml
+ rename packages/overlays/{FontArbutusSourceOverlay => FontRobotoOverlay}/res/values/strings.xml (87%)
+ create mode 100644 packages/overlays/FontRubikOverlay/Android.mk
+ rename packages/overlays/{FontRubikRubikOverlay => FontRubikOverlay}/AndroidManifest.xml (88%)
+ rename packages/overlays/{FontRubikRubikOverlay => FontRubikOverlay}/res/values/config.xml (100%)
+ create mode 100644 packages/overlays/FontRubikOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontSourceOverlay/Android.mk
+ create mode 100644 packages/overlays/FontSourceOverlay/AndroidManifest.xml
+ rename packages/overlays/{FontNotoSerifSourceOverlay => FontSourceOverlay}/res/values/config.xml (95%)
+ create mode 100644 packages/overlays/FontSourceOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontZillaOverlay/Android.mk
+ create mode 100644 packages/overlays/FontZillaOverlay/AndroidManifest.xml
+ rename packages/overlays/{FontZillaZillaOverlay => FontZillaOverlay}/res/values/config.xml (92%)
+ create mode 100644 packages/overlays/FontZillaOverlay/res/values/strings.xml
+
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index e33ad896561..cb2afcb62a2 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -27,11 +27,14 @@ LOCAL_REQUIRED_MODULES := \
+ 	DisplayCutoutEmulationCornerOverlay \
+ 	DisplayCutoutEmulationDoubleOverlay \
+ 	DisplayCutoutEmulationTallOverlay \
+-	FontArbutusSourceOverlay \
+-	FontArvoLatoOverlay \
+-	FontNotoSerifSourceOverlay \
+-	FontRubikRubikOverlay \
+-	FontZillaZillaOverlay \
++	FontArbutusOverlay \
++	FontArvoOverlay \
++	FontLatoOverlay \
++	FontNotoSerifOverlay \
++	FontRobotoOverlay \
++	FontRubikOverlay \
++	FontSourceOverlay \
++	FontZillaOverlay \
+ 	IconPackCircularAndroidOverlay \
+ 	IconPackCircularLauncherOverlay \
+ 	IconPackCircularSettingsOverlay \
+diff --git a/packages/overlays/FontArvoLatoOverlay/Android.mk b/packages/overlays/FontArbutusOverlay/Android.mk
+similarity index 91%
+rename from packages/overlays/FontArvoLatoOverlay/Android.mk
+rename to packages/overlays/FontArbutusOverlay/Android.mk
+index 7df2da5c109..397f5b4bdd2 100644
+--- a/packages/overlays/FontArvoLatoOverlay/Android.mk
++++ b/packages/overlays/FontArbutusOverlay/Android.mk
+@@ -17,7 +17,7 @@
+ LOCAL_PATH:= $(call my-dir)
+ include $(CLEAR_VARS)
+ 
+-LOCAL_RRO_THEME := FontArvoLato
++LOCAL_RRO_THEME := FontArbutus
+ 
+ LOCAL_PRODUCT_MODULE := true
+ 
+@@ -25,7 +25,7 @@ LOCAL_SRC_FILES := $(call all-subdir-java-files)
+ 
+ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+ 
+-LOCAL_PACKAGE_NAME := FontArvoLatoOverlay
++LOCAL_PACKAGE_NAME := FontArbutusOverlay
+ LOCAL_SDK_VERSION := current
+ 
+ include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontArbutusSourceOverlay/AndroidManifest.xml b/packages/overlays/FontArbutusOverlay/AndroidManifest.xml
+similarity index 81%
+rename from packages/overlays/FontArbutusSourceOverlay/AndroidManifest.xml
+rename to packages/overlays/FontArbutusOverlay/AndroidManifest.xml
+index 4b48f07ac8f..7e362884243 100644
+--- a/packages/overlays/FontArbutusSourceOverlay/AndroidManifest.xml
++++ b/packages/overlays/FontArbutusOverlay/AndroidManifest.xml
+@@ -16,16 +16,16 @@
+  */
+ -->
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.android.theme.font.arbutussource"
++    package="com.android.theme.font.arbutus"
+     android:versionCode="1"
+     android:versionName="1.0">
+     <overlay android:targetPackage="android"
+         android:category="android.theme.customization.font"
+         android:priority="1"/>
+ 
+-    <application android:label="@string/font_arbutus_source_overlay" android:hasCode="false">
++    <application android:label="@string/font_arbutus_overlay" android:hasCode="false">
+         <meta-data
+             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+-            android:value="arbutus-slab,source-sans-pro,source-sans-pro-medium" />
++            android:value="arbutus-slab,arbutus-slab-medium" />
+     </application>
+ </manifest>
+diff --git a/packages/overlays/FontArbutusSourceOverlay/res/values/config.xml b/packages/overlays/FontArbutusOverlay/res/values/config.xml
+similarity index 88%
+rename from packages/overlays/FontArbutusSourceOverlay/res/values/config.xml
+rename to packages/overlays/FontArbutusOverlay/res/values/config.xml
+index 54a69349e42..3b5224e8ae8 100644
+--- a/packages/overlays/FontArbutusSourceOverlay/res/values/config.xml
++++ b/packages/overlays/FontArbutusOverlay/res/values/config.xml
+@@ -17,11 +17,11 @@
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+      <!-- Name of a font family to use for body text. -->
+-    <string name="config_bodyFontFamily" translatable="false">source-sans-pro</string>
++    <string name="config_bodyFontFamily" translatable="false">arbutus-slab</string>
+     <!-- Name of a font family to use for medium body text. -->
+-    <string name="config_bodyFontFamilyMedium" translatable="false">source-sans-pro-semi-bold</string>
++    <string name="config_bodyFontFamilyMedium" translatable="false">arbutus-slab-medium</string>
+     <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
+     <string name="config_headlineFontFamily" translatable="false">arbutus-slab</string>
+     <!-- Name of the font family used for system surfaces where the font should use medium weight -->
+-    <string name="config_headlineFontFamilyMedium" translatable="false">arbutus-slab</string>
++    <string name="config_headlineFontFamilyMedium" translatable="false">arbutus-slab-medium</string>
+ </resources>
+diff --git a/packages/overlays/FontArvoLatoOverlay/res/values/strings.xml b/packages/overlays/FontArbutusOverlay/res/values/strings.xml
+similarity index 89%
+rename from packages/overlays/FontArvoLatoOverlay/res/values/strings.xml
+rename to packages/overlays/FontArbutusOverlay/res/values/strings.xml
+index cb0b9b2d293..6779a604513 100644
+--- a/packages/overlays/FontArvoLatoOverlay/res/values/strings.xml
++++ b/packages/overlays/FontArbutusOverlay/res/values/strings.xml
+@@ -16,5 +16,5 @@
+  */
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="font_arvo_lato_overlay" translatable="false">Arvo / Lato</string>
++    <string name="font_arbutus_overlay" translatable="false">Arbutus Slab</string>
+ </resources>
+diff --git a/packages/overlays/FontZillaZillaOverlay/Android.mk b/packages/overlays/FontArvoOverlay/Android.mk
+similarity index 91%
+rename from packages/overlays/FontZillaZillaOverlay/Android.mk
+rename to packages/overlays/FontArvoOverlay/Android.mk
+index b4501a88b30..9bfb870a264 100644
+--- a/packages/overlays/FontZillaZillaOverlay/Android.mk
++++ b/packages/overlays/FontArvoOverlay/Android.mk
+@@ -17,7 +17,7 @@
+ LOCAL_PATH:= $(call my-dir)
+ include $(CLEAR_VARS)
+ 
+-LOCAL_RRO_THEME := FontZillaZilla
++LOCAL_RRO_THEME := FontArvo
+ 
+ LOCAL_PRODUCT_MODULE := true
+ 
+@@ -25,7 +25,7 @@ LOCAL_SRC_FILES := $(call all-subdir-java-files)
+ 
+ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+ 
+-LOCAL_PACKAGE_NAME := FontZillaZillaOverlay
++LOCAL_PACKAGE_NAME := FontArvoOverlay
+ LOCAL_SDK_VERSION := current
+ 
+ include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontZillaZillaOverlay/AndroidManifest.xml b/packages/overlays/FontArvoOverlay/AndroidManifest.xml
+similarity index 84%
+rename from packages/overlays/FontZillaZillaOverlay/AndroidManifest.xml
+rename to packages/overlays/FontArvoOverlay/AndroidManifest.xml
+index 133b6742b4c..bc4a0419be4 100644
+--- a/packages/overlays/FontZillaZillaOverlay/AndroidManifest.xml
++++ b/packages/overlays/FontArvoOverlay/AndroidManifest.xml
+@@ -16,16 +16,16 @@
+  */
+ -->
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.android.theme.font.zillazilla"
++    package="com.android.theme.font.arvo"
+     android:versionCode="1"
+     android:versionName="1.0">
+     <overlay android:targetPackage="android"
+         android:category="android.theme.customization.font"
+         android:priority="1"/>
+ 
+-    <application android:label="@string/font_zilla_zilla_overlay" android:hasCode="false">
++    <application android:label="@string/font_arvo_overlay" android:hasCode="false">
+         <meta-data
+             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+-            android:value="zilla,zilla-medium" />
++            android:value="arvo,arvo-bold" />
+     </application>
+ </manifest>
+diff --git a/packages/overlays/FontArvoOverlay/res/values/config.xml b/packages/overlays/FontArvoOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..a190dfcb5f7
+--- /dev/null
++++ b/packages/overlays/FontArvoOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">arvo</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">arvo-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">arvo</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">arvo-bold</string>
++</resources>
+diff --git a/packages/overlays/FontZillaZillaOverlay/res/values/strings.xml b/packages/overlays/FontArvoOverlay/res/values/strings.xml
+similarity index 88%
+rename from packages/overlays/FontZillaZillaOverlay/res/values/strings.xml
+rename to packages/overlays/FontArvoOverlay/res/values/strings.xml
+index a9352016763..8b3c23a89d3 100644
+--- a/packages/overlays/FontZillaZillaOverlay/res/values/strings.xml
++++ b/packages/overlays/FontArvoOverlay/res/values/strings.xml
+@@ -16,5 +16,5 @@
+  */
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="font_zilla_zilla_overlay" translatable="false">Zilla / Zilla</string>
++    <string name="font_arvo_overlay" translatable="false">Arvo</string>
+ </resources>
+diff --git a/packages/overlays/FontRubikRubikOverlay/Android.mk b/packages/overlays/FontLatoOverlay/Android.mk
+similarity index 91%
+rename from packages/overlays/FontRubikRubikOverlay/Android.mk
+rename to packages/overlays/FontLatoOverlay/Android.mk
+index 2b7a09a7287..9b147ce6133 100644
+--- a/packages/overlays/FontRubikRubikOverlay/Android.mk
++++ b/packages/overlays/FontLatoOverlay/Android.mk
+@@ -17,7 +17,7 @@
+ LOCAL_PATH:= $(call my-dir)
+ include $(CLEAR_VARS)
+ 
+-LOCAL_RRO_THEME := FontRubikRubik
++LOCAL_RRO_THEME := FontLato
+ 
+ LOCAL_PRODUCT_MODULE := true
+ 
+@@ -25,7 +25,7 @@ LOCAL_SRC_FILES := $(call all-subdir-java-files)
+ 
+ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+ 
+-LOCAL_PACKAGE_NAME := FontRubikRubikOverlay
++LOCAL_PACKAGE_NAME := FontLatoOverlay
+ LOCAL_SDK_VERSION := current
+ 
+ include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontLatoOverlay/AndroidManifest.xml b/packages/overlays/FontLatoOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..767d75a2abb
+--- /dev/null
++++ b/packages/overlays/FontLatoOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.lato"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_lato_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="lato,lato-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontArvoLatoOverlay/res/values/config.xml b/packages/overlays/FontLatoOverlay/res/values/config.xml
+similarity index 96%
+rename from packages/overlays/FontArvoLatoOverlay/res/values/config.xml
+rename to packages/overlays/FontLatoOverlay/res/values/config.xml
+index 741961f9c8b..5f953190c94 100644
+--- a/packages/overlays/FontArvoLatoOverlay/res/values/config.xml
++++ b/packages/overlays/FontLatoOverlay/res/values/config.xml
+@@ -21,7 +21,7 @@
+     <!-- Name of a font family to use for medium body text. -->
+     <string name="config_bodyFontFamilyMedium" translatable="false">lato-bold</string>
+     <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
+-    <string name="config_headlineFontFamily" translatable="false">arvo</string>
++    <string name="config_headlineFontFamily" translatable="false">lato</string>
+     <!-- Name of the font family used for system surfaces where the font should use medium weight -->
+-    <string name="config_headlineFontFamilyMedium" translatable="false">arvo-bold</string>
++    <string name="config_headlineFontFamilyMedium" translatable="false">lato-bold</string>
+ </resources>
+diff --git a/packages/overlays/FontRubikRubikOverlay/res/values/strings.xml b/packages/overlays/FontLatoOverlay/res/values/strings.xml
+similarity index 88%
+rename from packages/overlays/FontRubikRubikOverlay/res/values/strings.xml
+rename to packages/overlays/FontLatoOverlay/res/values/strings.xml
+index 8ac7ec9d462..fce79132899 100644
+--- a/packages/overlays/FontRubikRubikOverlay/res/values/strings.xml
++++ b/packages/overlays/FontLatoOverlay/res/values/strings.xml
+@@ -16,5 +16,5 @@
+  */
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="font_rubik_rubik_overlay" translatable="false">Rubik / Rubik</string>
++    <string name="font_lato_overlay" translatable="false">Lato</string>
+ </resources>
+diff --git a/packages/overlays/FontArbutusSourceOverlay/Android.mk b/packages/overlays/FontNotoSerifOverlay/Android.mk
+similarity index 90%
+rename from packages/overlays/FontArbutusSourceOverlay/Android.mk
+rename to packages/overlays/FontNotoSerifOverlay/Android.mk
+index 4be1be77aa5..737d6d6ce84 100644
+--- a/packages/overlays/FontArbutusSourceOverlay/Android.mk
++++ b/packages/overlays/FontNotoSerifOverlay/Android.mk
+@@ -17,7 +17,7 @@
+ LOCAL_PATH:= $(call my-dir)
+ include $(CLEAR_VARS)
+ 
+-LOCAL_RRO_THEME := FontArbutusSource
++LOCAL_RRO_THEME := FontNotoSerif
+ 
+ LOCAL_PRODUCT_MODULE := true
+ 
+@@ -25,7 +25,7 @@ LOCAL_SRC_FILES := $(call all-subdir-java-files)
+ 
+ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+ 
+-LOCAL_PACKAGE_NAME := FontArbutusSourceOverlay
++LOCAL_PACKAGE_NAME := FontNotoSerifOverlay
+ LOCAL_SDK_VERSION := current
+ 
+ include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontArvoLatoOverlay/AndroidManifest.xml b/packages/overlays/FontNotoSerifOverlay/AndroidManifest.xml
+similarity index 85%
+rename from packages/overlays/FontArvoLatoOverlay/AndroidManifest.xml
+rename to packages/overlays/FontNotoSerifOverlay/AndroidManifest.xml
+index b6ec54c2a44..adeae29b6ad 100644
+--- a/packages/overlays/FontArvoLatoOverlay/AndroidManifest.xml
++++ b/packages/overlays/FontNotoSerifOverlay/AndroidManifest.xml
+@@ -16,16 +16,16 @@
+  */
+ -->
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.android.theme.font.arvolato"
++    package="com.android.theme.font.notoserif"
+     android:versionCode="1"
+     android:versionName="1.0">
+     <overlay android:targetPackage="android"
+         android:category="android.theme.customization.font"
+         android:priority="1"/>
+ 
+-    <application android:label="@string/font_arvo_lato_overlay" android:hasCode="false">
++    <application android:label="@string/font_notoserif_overlay" android:hasCode="false">
+         <meta-data
+             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+-            android:value="arvo,arvo-bold,lato,lato-bold" />
++            android:value="serif,serif-bold" />
+     </application>
+ </manifest>
+diff --git a/packages/overlays/FontNotoSerifOverlay/res/values/config.xml b/packages/overlays/FontNotoSerifOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..a2e0f9f3342
+--- /dev/null
++++ b/packages/overlays/FontNotoSerifOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">serif</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">serif-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">serif</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">serif-bold</string>
++</resources>
+diff --git a/packages/overlays/FontNotoSerifSourceOverlay/res/values/strings.xml b/packages/overlays/FontNotoSerifOverlay/res/values/strings.xml
+similarity index 87%
+rename from packages/overlays/FontNotoSerifSourceOverlay/res/values/strings.xml
+rename to packages/overlays/FontNotoSerifOverlay/res/values/strings.xml
+index ab839c25be5..a8b8e8d959b 100644
+--- a/packages/overlays/FontNotoSerifSourceOverlay/res/values/strings.xml
++++ b/packages/overlays/FontNotoSerifOverlay/res/values/strings.xml
+@@ -17,5 +17,5 @@
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <!-- Headline / Body font Noto Serif / Source Sans Pro overlay -->
+-    <string name="font_notoserif_source_overlay" translatable="false">Noto Serif / Source Sans Pro</string>
++    <string name="font_notoserif_overlay" translatable="false">Noto Serif</string>
+ </resources>
+diff --git a/packages/overlays/FontNotoSerifSourceOverlay/Android.mk b/packages/overlays/FontNotoSerifSourceOverlay/Android.mk
+deleted file mode 100644
+index f4eedaf377f..00000000000
+--- a/packages/overlays/FontNotoSerifSourceOverlay/Android.mk
++++ /dev/null
+@@ -1,31 +0,0 @@
+-#
+-#  Copyright 2019, The Android Open Source Project
+-#
+-# Licensed under the Apache License, Version 2.0 (the "License");
+-# you may not use this file except in compliance with the License.
+-# You may obtain a copy of the License at
+-#
+-#     http://www.apache.org/licenses/LICENSE-2.0
+-#
+-# Unless required by applicable law or agreed to in writing, software
+-# distributed under the License is distributed on an "AS IS" BASIS,
+-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-# See the License for the specific language governing permissions and
+-# limitations under the License.
+-#
+-
+-LOCAL_PATH:= $(call my-dir)
+-include $(CLEAR_VARS)
+-
+-LOCAL_RRO_THEME := FontNotoSerifSource
+-
+-LOCAL_PRODUCT_MODULE := true
+-
+-LOCAL_SRC_FILES := $(call all-subdir-java-files)
+-
+-LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+-
+-LOCAL_PACKAGE_NAME := FontNotoSerifSourceOverlay
+-LOCAL_SDK_VERSION := current
+-
+-include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontNotoSerifSourceOverlay/AndroidManifest.xml b/packages/overlays/FontNotoSerifSourceOverlay/AndroidManifest.xml
+deleted file mode 100644
+index 54b8dbf70a6..00000000000
+--- a/packages/overlays/FontNotoSerifSourceOverlay/AndroidManifest.xml
++++ /dev/null
+@@ -1,31 +0,0 @@
+-<!--
+-/**
+- * Copyright (c) 2019, The Android Open Source Project
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+--->
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.android.theme.font.notoserifsource"
+-    android:versionCode="1"
+-    android:versionName="1.0">
+-    <overlay android:targetPackage="android"
+-        android:category="android.theme.customization.font"
+-        android:priority="1"/>
+-
+-    <application android:label="@string/font_notoserif_source_overlay" android:hasCode="false">
+-        <meta-data
+-            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+-            android:value="serif,serif-bold,source-sans-pro,source-sans-pro-medium" />
+-    </application>
+-</manifest>
+diff --git a/packages/overlays/FontRobotoOverlay/Android.mk b/packages/overlays/FontRobotoOverlay/Android.mk
+new file mode 100644
+index 00000000000..805be23da29
+--- /dev/null
++++ b/packages/overlays/FontRobotoOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontRoboto
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontRobotoOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontRobotoOverlay/AndroidManifest.xml b/packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..ba68a2c7cce
+--- /dev/null
++++ b/packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.roboto"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_roboto_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="roboto,roboto-medium" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontRobotoOverlay/res/values/config.xml b/packages/overlays/FontRobotoOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..a1c83b6f8eb
+--- /dev/null
++++ b/packages/overlays/FontRobotoOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">roboto</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">roboto-medium</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">roboto</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">roboto-medium</string>
++</resources>
+diff --git a/packages/overlays/FontArbutusSourceOverlay/res/values/strings.xml b/packages/overlays/FontRobotoOverlay/res/values/strings.xml
+similarity index 87%
+rename from packages/overlays/FontArbutusSourceOverlay/res/values/strings.xml
+rename to packages/overlays/FontRobotoOverlay/res/values/strings.xml
+index 8b96cbf3b3b..e35613d1bef 100644
+--- a/packages/overlays/FontArbutusSourceOverlay/res/values/strings.xml
++++ b/packages/overlays/FontRobotoOverlay/res/values/strings.xml
+@@ -16,5 +16,5 @@
+  */
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="font_arbutus_source_overlay" translatable="false">Arbutus / Source Sans Pro</string>
++    <string name="font_roboto_overlay" translatable="false">Roboto</string>
+ </resources>
+diff --git a/packages/overlays/FontRubikOverlay/Android.mk b/packages/overlays/FontRubikOverlay/Android.mk
+new file mode 100644
+index 00000000000..94f3c3df9ad
+--- /dev/null
++++ b/packages/overlays/FontRubikOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontRubik
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontRubikOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontRubikRubikOverlay/AndroidManifest.xml b/packages/overlays/FontRubikOverlay/AndroidManifest.xml
+similarity index 88%
+rename from packages/overlays/FontRubikRubikOverlay/AndroidManifest.xml
+rename to packages/overlays/FontRubikOverlay/AndroidManifest.xml
+index 2d6a7e2812a..14e3e411dc8 100644
+--- a/packages/overlays/FontRubikRubikOverlay/AndroidManifest.xml
++++ b/packages/overlays/FontRubikOverlay/AndroidManifest.xml
+@@ -16,14 +16,14 @@
+  */
+ -->
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.android.theme.font.rubikrubik"
++    package="com.android.theme.font.rubik"
+     android:versionCode="1"
+     android:versionName="1.0">
+     <overlay android:targetPackage="android"
+         android:category="android.theme.customization.font"
+         android:priority="1"/>
+ 
+-    <application android:label="@string/font_rubik_rubik_overlay" android:hasCode="false">
++    <application android:label="@string/font_rubik_overlay" android:hasCode="false">
+         <meta-data
+             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+             android:value="rubik,rubik-medium" />
+diff --git a/packages/overlays/FontRubikRubikOverlay/res/values/config.xml b/packages/overlays/FontRubikOverlay/res/values/config.xml
+similarity index 100%
+rename from packages/overlays/FontRubikRubikOverlay/res/values/config.xml
+rename to packages/overlays/FontRubikOverlay/res/values/config.xml
+diff --git a/packages/overlays/FontRubikOverlay/res/values/strings.xml b/packages/overlays/FontRubikOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..59fa186174f
+--- /dev/null
++++ b/packages/overlays/FontRubikOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_rubik_overlay" translatable="false">Rubik</string>
++</resources>
+diff --git a/packages/overlays/FontSourceOverlay/Android.mk b/packages/overlays/FontSourceOverlay/Android.mk
+new file mode 100644
+index 00000000000..3cf60f93386
+--- /dev/null
++++ b/packages/overlays/FontSourceOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontSource
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontSourceOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontSourceOverlay/AndroidManifest.xml b/packages/overlays/FontSourceOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..10b39ceb713
+--- /dev/null
++++ b/packages/overlays/FontSourceOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.source"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_source_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="source-sans-pro,source-sans-pro-medium" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontNotoSerifSourceOverlay/res/values/config.xml b/packages/overlays/FontSourceOverlay/res/values/config.xml
+similarity index 95%
+rename from packages/overlays/FontNotoSerifSourceOverlay/res/values/config.xml
+rename to packages/overlays/FontSourceOverlay/res/values/config.xml
+index e63bea0ba53..cbce705c9c2 100644
+--- a/packages/overlays/FontNotoSerifSourceOverlay/res/values/config.xml
++++ b/packages/overlays/FontSourceOverlay/res/values/config.xml
+@@ -21,8 +21,7 @@
+     <!-- Name of a font family to use for medium body text. -->
+     <string name="config_bodyFontFamilyMedium" translatable="false">source-sans-pro-semi-bold</string>
+     <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
+-    <string name="config_headlineFontFamily" translatable="false">serif</string>
++    <string name="config_headlineFontFamily" translatable="false">source-sans-pro</string>
+     <!-- Name of the font family used for system surfaces where the font should use medium weight -->
+-    <string name="config_headlineFontFamilyMedium" translatable="false">serif-bold</string>
++    <string name="config_headlineFontFamilyMedium" translatable="false">source-sans-pro-semi-bold</string>
+ </resources>
+-
+diff --git a/packages/overlays/FontSourceOverlay/res/values/strings.xml b/packages/overlays/FontSourceOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..1584e70df73
+--- /dev/null
++++ b/packages/overlays/FontSourceOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_source_overlay" translatable="false">Source Sans Pro</string>
++</resources>
+diff --git a/packages/overlays/FontZillaOverlay/Android.mk b/packages/overlays/FontZillaOverlay/Android.mk
+new file mode 100644
+index 00000000000..94d8569d339
+--- /dev/null
++++ b/packages/overlays/FontZillaOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontZilla
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontZillaOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontZillaOverlay/AndroidManifest.xml b/packages/overlays/FontZillaOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..994a87fb578
+--- /dev/null
++++ b/packages/overlays/FontZillaOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.zilla"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_zilla_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="zilla-slab,zilla-slab-medium" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontZillaZillaOverlay/res/values/config.xml b/packages/overlays/FontZillaOverlay/res/values/config.xml
+similarity index 92%
+rename from packages/overlays/FontZillaZillaOverlay/res/values/config.xml
+rename to packages/overlays/FontZillaOverlay/res/values/config.xml
+index a338dd5a511..a7308429fe2 100644
+--- a/packages/overlays/FontZillaZillaOverlay/res/values/config.xml
++++ b/packages/overlays/FontZillaOverlay/res/values/config.xml
+@@ -17,11 +17,11 @@
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+      <!-- Name of a font family to use for body text. -->
+-    <string name="config_bodyFontFamily" translatable="false">zilla</string>
++    <string name="config_bodyFontFamily" translatable="false">zilla-slab</string>
+     <!-- Name of a font family to use for medium body text. -->
+-    <string name="config_bodyFontFamilyMedium" translatable="false">zilla-medium</string>
++    <string name="config_bodyFontFamilyMedium" translatable="false">zilla-slab-medium</string>
+     <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
+-    <string name="config_headlineFontFamily" translatable="false">zilla</string>
++    <string name="config_headlineFontFamily" translatable="false">zilla-slab</string>
+     <!-- Name of the font family used for system surfaces where the font should use medium weight -->
+-    <string name="config_headlineFontFamilyMedium" translatable="false">zilla-medium</string>
++    <string name="config_headlineFontFamilyMedium" translatable="false">zilla-slab-medium</string>
+ </resources>
+diff --git a/packages/overlays/FontZillaOverlay/res/values/strings.xml b/packages/overlays/FontZillaOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..86abe2d96d3
+--- /dev/null
++++ b/packages/overlays/FontZillaOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_zilla_overlay" translatable="false">Zilla Slab</string>
++</resources>
+-- 
+2.17.1
+

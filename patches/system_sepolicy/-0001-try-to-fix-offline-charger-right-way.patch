@@ -1,0 +1,45 @@
+From 1ed6baac8cf004173360b04fa0ad71447501034d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 12 Mar 2020 23:03:38 +0200
+Subject: [PATCH] try to fix offline charger (right way)
+
+	modified:   prebuilts/api/29.0/public/healthd.te
+	modified:   public/healthd.te
+---
+ prebuilts/api/29.0/public/healthd.te | 4 ++++
+ public/healthd.te                    | 4 ++++
+ 2 files changed, 8 insertions(+)
+
+diff --git a/prebuilts/api/29.0/public/healthd.te b/prebuilts/api/29.0/public/healthd.te
+index 5fe4add..590a3ce 100644
+--- a/prebuilts/api/29.0/public/healthd.te
++++ b/prebuilts/api/29.0/public/healthd.te
+@@ -12,6 +12,10 @@ allow healthd sysfs:dir r_dir_perms;
+ r_dir_file(healthd, rootfs)
+ r_dir_file(healthd, cgroup)
+ 
++# Read access to system files for passthrough HALs in
++# /{system,vendor,odm}/lib[64]/hw/
++r_dir_file(healthd, system_file_type)
++
+ allow healthd self:global_capability_class_set { sys_tty_config };
+ allow healthd self:global_capability_class_set sys_boot;
+ dontaudit healthd self:global_capability_class_set sys_resource;
+diff --git a/public/healthd.te b/public/healthd.te
+index 5fe4add..590a3ce 100644
+--- a/public/healthd.te
++++ b/public/healthd.te
+@@ -12,6 +12,10 @@ allow healthd sysfs:dir r_dir_perms;
+ r_dir_file(healthd, rootfs)
+ r_dir_file(healthd, cgroup)
+ 
++# Read access to system files for passthrough HALs in
++# /{system,vendor,odm}/lib[64]/hw/
++r_dir_file(healthd, system_file_type)
++
+ allow healthd self:global_capability_class_set { sys_tty_config };
+ allow healthd self:global_capability_class_set sys_boot;
+ dontaudit healthd self:global_capability_class_set sys_resource;
+-- 
+2.17.1
+

@@ -1,0 +1,62 @@
+From 36ea27899ae3598743db6a154d0db856d9c7ee06 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 7 Dec 2019 16:38:50 +0200
+Subject: [PATCH 07/11] remove some apps
+
+	modified:   target/product/handheld_product.mk
+	modified:   target/product/mainline_arm64.mk
+---
+ target/product/handheld_product.mk | 3 ---
+ target/product/mainline_arm64.mk   | 4 ----
+ 2 files changed, 7 deletions(-)
+
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index 54dcaf2..0269afe 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -22,7 +22,6 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/media_product.mk)
+ 
+ # /product packages
+ PRODUCT_PACKAGES += \
+-    Browser2 \
+     Calendar \
+     Camera2 \
+     Contacts \
+@@ -30,10 +29,8 @@ PRODUCT_PACKAGES += \
+     Gallery2 \
+     LatinIME \
+     Launcher3QuickStep \
+-    Music \
+     OneTimeInitializer \
+     Provision \
+-    QuickSearchBox \
+     Settings \
+     SettingsIntelligence \
+     StorageManager \
+diff --git a/target/product/mainline_arm64.mk b/target/product/mainline_arm64.mk
+index f21fa89..63b9af2 100644
+--- a/target/product/mainline_arm64.mk
++++ b/target/product/mainline_arm64.mk
+@@ -31,19 +31,15 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST += \
+ 
+ # Modules that are to be moved to /product
+ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST += \
+-  system/app/Browser2/Browser2.apk \
+   system/app/Calendar/Calendar.apk \
+   system/app/Camera2/Camera2.apk \
+   system/app/DeskClock/DeskClock.apk \
+   system/app/DeskClock/oat/arm64/DeskClock.odex \
+   system/app/DeskClock/oat/arm64/DeskClock.vdex \
+-  system/app/Email/Email.apk \
+   system/app/Gallery2/Gallery2.apk \
+   system/app/LatinIME/LatinIME.apk \
+   system/app/LatinIME/oat/arm64/LatinIME.odex \
+   system/app/LatinIME/oat/arm64/LatinIME.vdex \
+-  system/app/Music/Music.apk \
+-  system/app/QuickSearchBox/QuickSearchBox.apk \
+   system/app/webview/webview.apk \
+   system/bin/healthd \
+   system/etc/init/healthd.rc \
+-- 
+2.17.1
+

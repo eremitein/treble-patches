@@ -1,0 +1,44 @@
+From ed1a88593ee81ef646de55df5ff3c6881e644be1 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 8 Dec 2019 03:51:08 +0200
+Subject: [PATCH 2/5] Fix searchbar wrong position after swiping from home
+
+  * from
+  https://github.com/Havoc-OS/android_packages_apps_Launcher3/commit/c5a12c51e13c678e0a10c4f4f0196ac18e7061b3
+
+	modified:   src/com/android/launcher3/allapps/search/AppsSearchContainerLayout.java
+
+Change-Id: I06f91913908522e30282312ecd620ce0c6830eb2
+---
+ .../launcher3/allapps/search/AppsSearchContainerLayout.java  | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/src/com/android/launcher3/allapps/search/AppsSearchContainerLayout.java b/src/com/android/launcher3/allapps/search/AppsSearchContainerLayout.java
+index 31fcc8c..be967ab 100644
+--- a/src/com/android/launcher3/allapps/search/AppsSearchContainerLayout.java
++++ b/src/com/android/launcher3/allapps/search/AppsSearchContainerLayout.java
+@@ -88,10 +88,12 @@ public class AppsSearchContainerLayout extends ExtendedEditText
+         mSearchQueryBuilder = new SpannableStringBuilder();
+         Selection.setSelection(mSearchQueryBuilder, 0);
+ 
+-        mFixedTranslationY = getTranslationY();
++        mFixedTranslationY = Math.round(getTranslationY());
+         mMarginTopAdjusting = mFixedTranslationY - getPaddingTop();
+ 
+         setHint(prefixTextWithIcon(getContext(), R.drawable.ic_allapps_search, getHint()));
++
++        setTranslationY(0);
+     }
+ 
+     @Override
+@@ -133,6 +135,7 @@ public class AppsSearchContainerLayout extends ExtendedEditText
+         int expectedLeft = parent.getPaddingLeft() + (availableWidth - myWidth) / 2;
+         int shift = expectedLeft - left;
+         setTranslationX(shift);
++        offsetTopAndBottom((int) mFixedTranslationY);
+     }
+ 
+     @Override
+-- 
+2.17.1
+

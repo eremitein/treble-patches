@@ -1,0 +1,54 @@
+From c74deb58876c037c5e1eadcf066649ba877a5024 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 8 Feb 2020 21:58:07 +0200
+Subject: [PATCH 7/8] base: add 7z, ntfs-3g & vim
+
+	modified:   base.mk
+---
+ base.mk | 19 ++++++++++++++-----
+ 1 file changed, 14 insertions(+), 5 deletions(-)
+
+diff --git a/base.mk b/base.mk
+index f82176d..a468d13 100644
+--- a/base.mk
++++ b/base.mk
+@@ -121,11 +121,11 @@ SELINUX_IGNORE_NEVERALLOWS := true
+ 
+ # Universal NoCutoutOverlay
+ PRODUCT_PACKAGES += \
+-    NoCutoutOverlay
++	NoCutoutOverlay
+ 
+ PRODUCT_PACKAGES += \
+-    lightsctl \
+-    uevent
++	lightsctl \
++	uevent
+ 
+ PRODUCT_COPY_FILES += \
+ 	device/phh/treble/files/adbd.rc:system/etc/init/adbd.rc
+@@ -150,10 +150,19 @@ PRODUCT_COPY_FILES += \
+ 	frameworks/native/data/etc/android.software.secure_lock_screen.xml:system/etc/permissions/android.software.secure_lock_screen.xml \
+ 
+ PRODUCT_COPY_FILES += \
+-        device/phh/treble/ld.config.26.txt:system/etc/ld.config.26.txt \
++	device/phh/treble/ld.config.26.txt:system/etc/ld.config.26.txt \
+ 
+ PRODUCT_PACKAGES += \
+-    asus-motor
++	asus-motor
++
++# additional utils
++PRODUCT_PACKAGES += \
++	7z \
++	lib7z \
++	fsck.ntfs \
++	mkfs.ntfs \
++	mount.ntfs \
++	vim
+ 
+ # Privapp-permissions whitelist for PhhTrebleApp
+ PRODUCT_COPY_FILES += \
+-- 
+2.17.1
+

@@ -1,0 +1,356 @@
+From 9ee95f8a76ea024d26192f4b395923ea8f2885f7 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 16 Dec 2019 09:03:53 +0200
+Subject: [PATCH 05/50] add recovery in power menu
+
+	modified:   core/java/android/os/IPowerManager.aidl
+	modified:   core/java/com/android/internal/statusbar/IStatusBarService.aidl
+	new file:   core/res/res/drawable/ic_recovery.xml
+	modified:   core/res/res/values/config.xml
+	modified:   core/res/res/values/strings.xml
+	modified:   core/res/res/values/symbols.xml
+	modified:   packages/SystemUI/plugin/src/com/android/systemui/plugins/GlobalActions.java
+	modified:   packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsComponent.java
+	modified:   packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+	modified:   services/core/java/com/android/server/policy/WindowManagerPolicy.java
+	modified:   services/core/java/com/android/server/power/PowerManagerService.java
+	modified:   services/core/java/com/android/server/power/ShutdownThread.java
+	modified:   services/core/java/com/android/server/statusbar/StatusBarManagerService.java
+	modified:   services/core/java/com/android/server/wm/WindowManagerService.java
+---
+ core/java/android/os/IPowerManager.aidl       |  1 +
+ .../internal/statusbar/IStatusBarService.aidl |  1 +
+ core/res/res/drawable/ic_recovery.xml         | 24 +++++++++++++++++
+ core/res/res/values/config.xml                |  1 +
+ core/res/res/values/strings.xml               |  3 +++
+ core/res/res/values/symbols.xml               |  2 ++
+ .../systemui/plugins/GlobalActions.java       |  1 +
+ .../globalactions/GlobalActionsComponent.java |  8 ++++++
+ .../globalactions/GlobalActionsDialog.java    | 26 +++++++++++++++++++
+ .../server/policy/WindowManagerPolicy.java    |  1 +
+ .../server/power/PowerManagerService.java     | 16 ++++++++++++
+ .../android/server/power/ShutdownThread.java  | 25 +++++++++++++++---
+ .../statusbar/StatusBarManagerService.java    | 18 +++++++++++++
+ .../server/wm/WindowManagerService.java       |  8 ++++++
+ 14 files changed, 131 insertions(+), 4 deletions(-)
+ create mode 100644 core/res/res/drawable/ic_recovery.xml
+
+diff --git a/core/java/android/os/IPowerManager.aidl b/core/java/android/os/IPowerManager.aidl
+index e1d605e1c99..7b56cc2c774 100644
+--- a/core/java/android/os/IPowerManager.aidl
++++ b/core/java/android/os/IPowerManager.aidl
+@@ -62,6 +62,7 @@ interface IPowerManager
+ 
+     @UnsupportedAppUsage
+     void reboot(boolean confirm, String reason, boolean wait);
++    void rebootRecovery(boolean confirm, String reason, boolean wait);
+     void rebootSafeMode(boolean confirm, boolean wait);
+     void shutdown(boolean confirm, String reason, boolean wait);
+     void crash(String message);
+diff --git a/core/java/com/android/internal/statusbar/IStatusBarService.aidl b/core/java/com/android/internal/statusbar/IStatusBarService.aidl
+index 598c3917bf9..31d93e2c23b 100644
+--- a/core/java/com/android/internal/statusbar/IStatusBarService.aidl
++++ b/core/java/com/android/internal/statusbar/IStatusBarService.aidl
+@@ -86,6 +86,7 @@ interface IStatusBarService
+      */
+     void shutdown();
+     void reboot(boolean safeMode);
++    void rebootRecovery(boolean safeMode, String reason);
+ 
+     void addTile(in ComponentName tile);
+     void remTile(in ComponentName tile);
+diff --git a/core/res/res/drawable/ic_recovery.xml b/core/res/res/drawable/ic_recovery.xml
+new file mode 100644
+index 00000000000..4021e11e267
+--- /dev/null
++++ b/core/res/res/drawable/ic_recovery.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2018 The LineageOS Project
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++          http://www.apache.org/licenses/LICENSE-2.0
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    android:tint="?android:attr/colorControlNormal">
++
++    <path
++        android:fillColor="#FF000000"
++        android:pathData="M19.43,12.98 C19.47,12.66,19.5,12.34,19.5,12 S19.47,11.34,19.43,11.02 L21.54,9.37 C21.73,9.22,21.78,8.95,21.66,8.73 L19.66,5.27 C19.54,5.05,19.269,4.97,19.05,5.05 L16.56,6.05 C16.04,5.65,15.481,5.32,14.871,5.07 L14.491,2.42 C14.46,2.18,14.25,2,14,2 L10,2 C9.75,2,9.54,2.18,9.51,2.42 L9.13,5.07 C8.52,5.32,7.96,5.66,7.44,6.05 L4.95,5.05 C4.72,4.96,4.46,5.05,4.34,5.27 L2.34,8.73 C2.21,8.95,2.27,9.22,2.46,9.37 L4.57,11.02 C4.53,11.34,4.5,11.67,4.5,12 S4.53,12.66,4.57,12.98 L2.46,14.63 C2.27,14.78,2.22,15.05,2.34,15.27 L4.34,18.731 C4.46,18.951,4.73,19.031,4.95,18.951 L7.44,17.951 C7.96,18.35,8.52,18.68,9.13,18.93 L9.51,21.58 C9.54,21.82,9.75,22,10,22 L14,22 C14.25,22,14.46,21.82,14.49,21.58 L14.87,18.93 C15.48,18.68,16.04,18.34,16.559,17.951 L19.049,18.951 C19.279,19.041,19.539,18.951,19.659,18.731 L21.659,15.27 C21.779,15.05,21.729,14.781,21.539,14.63 L19.43,12.98 Z M9.71,15.71 L8.29,14.29 L14.29,8.29 L15.71,9.71 L9.71,15.71 Z" />
++</vector>
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index 8331a57a341..8cf57543e61 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -2866,6 +2866,7 @@
+          -->
+     <string-array translatable="false" name="config_globalActionsList">
+         <item>power</item>
++        <item>recovery</item>
+         <item>restart</item>
+         <item>lockdown</item>
+         <item>logout</item>
+diff --git a/core/res/res/values/strings.xml b/core/res/res/values/strings.xml
+index a0d2d842000..02edb667d37 100644
+--- a/core/res/res/values/strings.xml
++++ b/core/res/res/values/strings.xml
+@@ -519,6 +519,9 @@
+     <!-- TODO: promote to separate string-->
+     <string name="global_action_restart" translatable="false">@string/sim_restart_button</string>
+ 
++    <!-- label for item that restarts phone to recovery in phone options dialog -->
++    <string name="global_action_recovery" translatable="false">Recovery</string>
++
+     <!-- label for item that starts emergency call -->
+     <string name="global_action_emergency">Emergency</string>
+ 
+diff --git a/core/res/res/values/symbols.xml b/core/res/res/values/symbols.xml
+index aff7f611f33..0052c495204 100644
+--- a/core/res/res/values/symbols.xml
++++ b/core/res/res/values/symbols.xml
+@@ -1841,6 +1841,7 @@
+   <java-symbol type="string" name="global_actions" />
+   <java-symbol type="string" name="global_action_power_off" />
+   <java-symbol type="string" name="global_action_restart" />
++  <java-symbol type="string" name="global_action_recovery" />
+   <java-symbol type="string" name="global_actions_airplane_mode_off_status" />
+   <java-symbol type="string" name="global_actions_airplane_mode_on_status" />
+   <java-symbol type="string" name="global_actions_toggle_airplane_mode" />
+@@ -3219,6 +3220,7 @@
+ 
+   <!-- Global actions icons -->
+   <java-symbol type="drawable" name="ic_restart" />
++  <java-symbol type="drawable" name="ic_recovery" />
+   <java-symbol type="drawable" name="ic_screenshot" />
+   <java-symbol type="drawable" name="ic_faster_emergency" />
+   <java-symbol type="drawable" name="ic_media_seamless" />
+diff --git a/packages/SystemUI/plugin/src/com/android/systemui/plugins/GlobalActions.java b/packages/SystemUI/plugin/src/com/android/systemui/plugins/GlobalActions.java
+index 95ff13b45fb..aa9ac28bc7e 100644
+--- a/packages/SystemUI/plugin/src/com/android/systemui/plugins/GlobalActions.java
++++ b/packages/SystemUI/plugin/src/com/android/systemui/plugins/GlobalActions.java
+@@ -41,5 +41,6 @@ public interface GlobalActions extends Plugin {
+ 
+         void shutdown();
+         void reboot(boolean safeMode);
++        void rebootRecovery(boolean safeMode, String reason);
+     }
+ }
+diff --git a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsComponent.java b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsComponent.java
+index e8ef454bd46..69923133b93 100644
+--- a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsComponent.java
++++ b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsComponent.java
+@@ -96,4 +96,12 @@ public class GlobalActionsComponent extends SystemUI implements Callbacks, Globa
+         } catch (RemoteException e) {
+         }
+     }
++
++    @Override
++    public void rebootRecovery(boolean safeMode, String reason) {
++        try {
++            mBarService.rebootRecovery(safeMode, reason);
++        } catch (RemoteException e) {
++        }
++    }
+ }
+diff --git a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+index a48b9e6caf4..79e030827c4 100644
+--- a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
++++ b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+@@ -43,6 +43,7 @@ import android.os.Binder;
+ import android.os.Handler;
+ import android.os.IBinder;
+ import android.os.Message;
++import android.os.PowerManager;
+ import android.os.RemoteException;
+ import android.os.ServiceManager;
+ import android.os.SystemProperties;
+@@ -133,6 +134,7 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+     private static final String GLOBAL_ACTION_KEY_LOCKDOWN = "lockdown";
+     private static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
+     private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
++    private static final String GLOBAL_ACTION_KEY_RECOVERY = "recovery";
+     private static final String GLOBAL_ACTION_KEY_RESTART = "restart";
+     private static final String GLOBAL_ACTION_KEY_LOGOUT = "logout";
+     private static final String GLOBAL_ACTION_KEY_EMERGENCY = "emergency";
+@@ -384,6 +386,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+                 mItems.add(getVoiceAssistAction());
+             } else if (GLOBAL_ACTION_KEY_ASSIST.equals(actionKey)) {
+                 mItems.add(getAssistAction());
++            } else if (GLOBAL_ACTION_KEY_RECOVERY.equals(actionKey)) {
++                mItems.add(new RecoveryAction());
+             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
+                 mItems.add(new RestartAction());
+             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
+@@ -570,6 +574,28 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+         }
+     }
+ 
++    private final class RecoveryAction extends SinglePressAction {
++        private RecoveryAction() {
++            super(R.drawable.ic_recovery, R.string.global_action_recovery);
++        }
++
++        @Override
++        public boolean showDuringKeyguard() {
++            return false;
++        }
++
++        @Override
++        public boolean showBeforeProvisioning() {
++            return true;
++        }
++
++        @Override
++        public void onPress() {
++            mWindowManagerFuncs.rebootRecovery(false, PowerManager.REBOOT_RECOVERY);
++        }
++    }
++
++
+     private final class RestartAction extends SinglePressAction implements LongPressAction {
+         private RestartAction() {
+             super(R.drawable.ic_restart, R.string.global_action_restart);
+diff --git a/services/core/java/com/android/server/policy/WindowManagerPolicy.java b/services/core/java/com/android/server/policy/WindowManagerPolicy.java
+index 6d9c71096cb..72e3f5ee37f 100644
+--- a/services/core/java/com/android/server/policy/WindowManagerPolicy.java
++++ b/services/core/java/com/android/server/policy/WindowManagerPolicy.java
+@@ -555,6 +555,7 @@ public interface WindowManagerPolicy extends WindowManagerPolicyConstants {
+ 
+         public void shutdown(boolean confirm);
+         public void reboot(boolean confirm);
++        public void rebootRecovery(boolean confirm, String reason);
+         public void rebootSafeMode(boolean confirm);
+ 
+         /**
+diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
+index cd649b4bc8b..53c8825334b 100644
+--- a/services/core/java/com/android/server/power/PowerManagerService.java
++++ b/services/core/java/com/android/server/power/PowerManagerService.java
+@@ -4682,6 +4682,22 @@ public final class PowerManagerService extends SystemService
+             }
+         }
+ 
++        @Override // Binder call
++        public void rebootRecovery(boolean confirm, String reason, boolean wait) {
++            mContext.enforceCallingOrSelfPermission(android.Manifest.permission.REBOOT, null);
++            if (PowerManager.REBOOT_RECOVERY.equals(reason)
++                    || PowerManager.REBOOT_RECOVERY_UPDATE.equals(reason)) {
++                mContext.enforceCallingOrSelfPermission(android.Manifest.permission.RECOVERY, null);
++            }
++
++            final long ident = Binder.clearCallingIdentity();
++            try {
++                shutdownOrRebootInternal(HALT_MODE_REBOOT, confirm, reason, wait);
++            } finally {
++                Binder.restoreCallingIdentity(ident);
++            }
++        }
++
+         /**
+          * Reboots the device into safe mode
+          *
+diff --git a/services/core/java/com/android/server/power/ShutdownThread.java b/services/core/java/com/android/server/power/ShutdownThread.java
+index 0a6b38fb2e9..0f28ff3bb6d 100644
+--- a/services/core/java/com/android/server/power/ShutdownThread.java
++++ b/services/core/java/com/android/server/power/ShutdownThread.java
+@@ -236,6 +236,24 @@ public final class ShutdownThread extends Thread {
+         shutdownInner(context, confirm);
+     }
+ 
++    /**
++     * Request a clean shutdown, waiting for subsystems to clean up their
++     * state etc.  Must be called from a Looper thread in which its UI
++     * is shown.
++     *
++     * @param context Context used to display the shutdown progress dialog. This must be a context
++     *                suitable for displaying UI (aka Themable).
++     * @param reason code to pass to the kernel (e.g. "recovery", "bootloader", "download"), or null.
++     * @param confirm true if user confirmation is needed before shutting down.
++     */
++    public static void rebootRecovery(final Context context, String reason, boolean confirm) {
++        mReboot = true;
++        mRebootSafeMode = false;
++        mRebootHasProgressBar = false;
++        mReason = reason;
++        shutdownInner(context, confirm);
++    }
++
+     /**
+      * Request a reboot into safe mode.  Must be called from a Looper thread in which its UI
+      * is shown.
+@@ -315,10 +333,9 @@ public final class ShutdownThread extends Thread {
+                 pd.setMessage(context.getText(com.android.internal.R.string.shutdown_progress));
+                 pd.setIndeterminate(true);
+             } else {
+-                // Factory reset path. Set the dialog message accordingly.
+-                pd.setTitle(context.getText(com.android.internal.R.string.reboot_to_reset_title));
+-                pd.setMessage(context.getText(
+-                            com.android.internal.R.string.reboot_to_reset_message));
++                // dirty hack, need find a normal variant
++                pd.setTitle(context.getText(com.android.internal.R.string.global_action_recovery));
++                pd.setMessage(context.getText(com.android.internal.R.string.reboot_to_reset_message));
+                 pd.setIndeterminate(true);
+             }
+         } else {
+diff --git a/services/core/java/com/android/server/statusbar/StatusBarManagerService.java b/services/core/java/com/android/server/statusbar/StatusBarManagerService.java
+index 828f79007b9..3b580f542e9 100644
+--- a/services/core/java/com/android/server/statusbar/StatusBarManagerService.java
++++ b/services/core/java/com/android/server/statusbar/StatusBarManagerService.java
+@@ -1144,6 +1144,24 @@ public class StatusBarManagerService extends IStatusBarService.Stub implements D
+         }
+     }
+ 
++    @Override
++    public void rebootRecovery(boolean safeMode, String reason) {
++        enforceStatusBarService();
++        long identity = Binder.clearCallingIdentity();
++        try {
++            mHandler.post(() -> {
++                // ShutdownThread displays UI, so give it a UI context.
++                if (safeMode) {
++                    ShutdownThread.rebootSafeMode(getUiContext(), true);
++                } else {
++                    ShutdownThread.reboot(getUiContext(), reason, false);
++                }
++            });
++        } finally {
++            Binder.restoreCallingIdentity(identity);
++        }
++    }
++
+     @Override
+     public void onGlobalActionsShown() {
+         enforceStatusBarService();
+diff --git a/services/core/java/com/android/server/wm/WindowManagerService.java b/services/core/java/com/android/server/wm/WindowManagerService.java
+index f67b4fe78f5..f4811d72d64 100644
+--- a/services/core/java/com/android/server/wm/WindowManagerService.java
++++ b/services/core/java/com/android/server/wm/WindowManagerService.java
+@@ -3156,6 +3156,14 @@ public class WindowManagerService extends IWindowManager.Stub
+                 PowerManager.SHUTDOWN_USER_REQUESTED, confirm);
+     }
+ 
++    // Called by window manager policy.  Not exposed externally.
++    @Override
++    public void rebootRecovery(boolean confirm, String reason) {
++        // Pass in the UI context, since ShutdownThread requires it (to show UI).
++        ShutdownThread.reboot(ActivityThread.currentActivityThread().getSystemUiContext(),
++                reason, confirm);
++    }
++
+     // Called by window manager policy.  Not exposed externally.
+     @Override
+     public void rebootSafeMode(boolean confirm) {
+-- 
+2.17.1
+

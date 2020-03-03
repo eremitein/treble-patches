@@ -1,0 +1,45 @@
+From 1f89d28f2f27dc7227f5a8b299c8e41d06303767 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 6 Feb 2020 15:05:04 +0200
+Subject: [PATCH 03/14] Fix crash of blocked participant list activity
+
+  * from
+  https://github.com/LineageOS/android_packages_apps_Messaging/commit/ae11110f113d255ab58b2dbc320ed28029668693
+
+	modified:   src/com/android/messaging/ui/BlockedParticipantsActivity.java
+---
+ .../android/messaging/ui/BlockedParticipantsActivity.java  | 7 -------
+ 1 file changed, 7 deletions(-)
+
+diff --git a/src/com/android/messaging/ui/BlockedParticipantsActivity.java b/src/com/android/messaging/ui/BlockedParticipantsActivity.java
+index b740264..8d79155 100644
+--- a/src/com/android/messaging/ui/BlockedParticipantsActivity.java
++++ b/src/com/android/messaging/ui/BlockedParticipantsActivity.java
+@@ -16,12 +16,10 @@
+ 
+ package com.android.messaging.ui;
+ 
+-import android.app.Fragment;
+ import android.os.Bundle;
+ import android.view.MenuItem;
+ 
+ import com.android.messaging.R;
+-import com.android.messaging.util.Assert;
+ 
+ /**
+  * Show a list of currently blocked participants.
+@@ -36,11 +34,6 @@ public class BlockedParticipantsActivity extends BugleActionBarActivity {
+         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+     }
+ 
+-    @Override
+-    public void onAttachFragment(final Fragment fragment) {
+-        Assert.isTrue(fragment instanceof BlockedParticipantsFragment);
+-    }
+-
+     @Override
+     public boolean onOptionsItemSelected(final MenuItem item) {
+         switch (item.getItemId()) {
+-- 
+2.17.1
+

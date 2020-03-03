@@ -1,0 +1,71 @@
+From 04315c8407d3518e15eda16ffec812a4400c996f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 09:35:09 +0200
+Subject: [PATCH 29/50] rework Simple Day font
+
+	modified:   data/fonts/fonts.xml
+	modified:   packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
+	modified:   packages/overlays/FontSimpleDayOverlay/res/values/config.xml
+---
+ data/fonts/fonts.xml                                      | 4 ++--
+ .../overlays/FontSimpleDayOverlay/AndroidManifest.xml     | 2 +-
+ .../overlays/FontSimpleDayOverlay/res/values/config.xml   | 8 ++++----
+ 3 files changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index 21150f6bf78..da249b27ded 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -150,7 +150,7 @@
+     <alias name="zilla-slab-bold" to="zilla-slab" weight="700" />
+     <alias name="zilla-slab-medium" to="zilla-slab" weight="600" />
+ 
+-    <family name="simpleday">
++    <family name="simple-day">
+         <font weight="400" style="normal">SimpleDay-Regular.ttf</font>
+         <font weight="400" style="italic">SimpleDay-Italic.ttf</font>
+         <font weight="500" style="normal">SimpleDay-Medium.ttf</font>
+@@ -158,7 +158,7 @@
+         <font weight="700" style="normal">SimpleDay-Bold.ttf</font>
+         <font weight="700" style="italic">SimpleDay-BoldItalic.ttf</font>
+     </family>
+-    <alias name="simpleday-medium" to="simpleday" weight="500" />
++    <alias name="simple-day-medium" to="simple-day" weight="500" />
+ 
+     <!-- fallback fonts -->
+     <family lang="und-Arab" variant="elegant">
+diff --git a/packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml b/packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
+index af654be7689..905bcb1c71b 100644
+--- a/packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
++++ b/packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
+@@ -26,6 +26,6 @@
+     <application android:label="@string/font_simpleday_overlay" android:hasCode="false">
+         <meta-data
+             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+-            android:value="simpleday,simpleday-medium" />
++            android:value="simple-day,simple-day-medium" />
+     </application>
+ </manifest>
+diff --git a/packages/overlays/FontSimpleDayOverlay/res/values/config.xml b/packages/overlays/FontSimpleDayOverlay/res/values/config.xml
+index ea227095ce0..ef1853ce3b9 100644
+--- a/packages/overlays/FontSimpleDayOverlay/res/values/config.xml
++++ b/packages/overlays/FontSimpleDayOverlay/res/values/config.xml
+@@ -17,11 +17,11 @@
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+      <!-- Name of a font family to use for body text. -->
+-    <string name="config_bodyFontFamily" translatable="false">simpleday</string>
++    <string name="config_bodyFontFamily" translatable="false">simple-day</string>
+     <!-- Name of a font family to use for medium body text. -->
+-    <string name="config_bodyFontFamilyMedium" translatable="false">simpleday-medium</string>
++    <string name="config_bodyFontFamilyMedium" translatable="false">simple-day-medium</string>
+     <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
+-    <string name="config_headlineFontFamily" translatable="false">simpleday</string>
++    <string name="config_headlineFontFamily" translatable="false">simple-day</string>
+     <!-- Name of the font family used for system surfaces where the font should use medium weight -->
+-    <string name="config_headlineFontFamilyMedium" translatable="false">simpleday-medium</string>
++    <string name="config_headlineFontFamilyMedium" translatable="false">simple-day-medium</string>
+ </resources>
+-- 
+2.17.1
+

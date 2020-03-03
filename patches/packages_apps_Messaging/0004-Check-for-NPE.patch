@@ -1,0 +1,31 @@
+From b3eb056fe7bc248d7874509016e3daefe36cc36a Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 6 Feb 2020 15:07:45 +0200
+Subject: [PATCH 04/14] Check for NPE
+
+  * from
+  https://github.com/LineageOS/android_packages_apps_Messaging/commit/89b641f11ab819b86bac7659280f5095a32fe8e0
+
+	modified:   src/com/android/messaging/ui/mediapicker/AudioMediaChooser.java
+---
+ .../android/messaging/ui/mediapicker/AudioMediaChooser.java   | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/com/android/messaging/ui/mediapicker/AudioMediaChooser.java b/src/com/android/messaging/ui/mediapicker/AudioMediaChooser.java
+index 5d79293..3553f10 100644
+--- a/src/com/android/messaging/ui/mediapicker/AudioMediaChooser.java
++++ b/src/com/android/messaging/ui/mediapicker/AudioMediaChooser.java
+@@ -123,6 +123,10 @@ class AudioMediaChooser extends MediaChooser implements
+             final int requestCode, final String permissions[], final int[] grantResults) {
+         if (requestCode == MediaPicker.RECORD_AUDIO_PERMISSION_REQUEST_CODE) {
+             final boolean permissionGranted = grantResults[0] == PackageManager.PERMISSION_GRANTED;
++            // onRequestPermissionsResult can sometimes get called before createView().
++            if (mEnabledView == null) {
++                return;
++            }
+             mEnabledView.setVisibility(permissionGranted ? View.VISIBLE : View.GONE);
+             mMissingPermissionView.setVisibility(permissionGranted ? View.GONE : View.VISIBLE);
+         }
+-- 
+2.17.1
+

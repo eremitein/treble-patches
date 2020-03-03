@@ -1,0 +1,50 @@
+From 4ae156f50a6cb3de89e6acefa2d420d1379a56db Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 29 Dec 2019 17:28:08 +0200
+Subject: [PATCH 08/11] replace Gallery2 app
+
+	modified:   target/product/handheld_product.mk
+	modified:   target/product/mainline_arm64.mk
+---
+ target/product/handheld_product.mk | 2 +-
+ target/product/mainline_arm64.mk   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index 0269afe..0fdb1b2 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -26,13 +26,13 @@ PRODUCT_PACKAGES += \
+     Camera2 \
+     Contacts \
+     DeskClock \
+-    Gallery2 \
+     LatinIME \
+     Launcher3QuickStep \
+     OneTimeInitializer \
+     Provision \
+     Settings \
+     SettingsIntelligence \
++    SimpleGallery \
+     StorageManager \
+     SystemUI \
+     WallpaperCropper \
+diff --git a/target/product/mainline_arm64.mk b/target/product/mainline_arm64.mk
+index 63b9af2..c19dda6 100644
+--- a/target/product/mainline_arm64.mk
++++ b/target/product/mainline_arm64.mk
+@@ -36,10 +36,10 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST += \
+   system/app/DeskClock/DeskClock.apk \
+   system/app/DeskClock/oat/arm64/DeskClock.odex \
+   system/app/DeskClock/oat/arm64/DeskClock.vdex \
+-  system/app/Gallery2/Gallery2.apk \
+   system/app/LatinIME/LatinIME.apk \
+   system/app/LatinIME/oat/arm64/LatinIME.odex \
+   system/app/LatinIME/oat/arm64/LatinIME.vdex \
++  system/app/SimpleGallery/SimpleGallery.apk \
+   system/app/webview/webview.apk \
+   system/bin/healthd \
+   system/etc/init/healthd.rc \
+-- 
+2.17.1
+

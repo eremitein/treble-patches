@@ -1,0 +1,29 @@
+From 955bda903405e5eda0e4f28446d2fd977b85221f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 6 Feb 2020 15:13:58 +0200
+Subject: [PATCH 05/14] Fix menu item highlight color
+
+  * from
+  https://github.com/LineageOS/android_packages_apps_Messaging/commit/aad9818684d0c9f18efa0cb421c767369796be56
+
+	modified:   res/values/styles.xml
+---
+ res/values/styles.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+index 582c755..48dd92f 100644
+--- a/res/values/styles.xml
++++ b/res/values/styles.xml
+@@ -352,7 +352,7 @@
+         <item name="android:background">@null</item>
+     </style>
+ 
+-    <style name="DropDownListViewStyle">
++    <style name="DropDownListViewStyle" parent="Widget.AppCompat.ListView.DropDown">
+       <item name="android:dividerHeight">0dp</item>
+     </style>
+ 
+-- 
+2.17.1
+

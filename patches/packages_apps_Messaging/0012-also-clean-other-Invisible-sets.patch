@@ -1,0 +1,35 @@
+From 22646310e2ca5351097509cff50e8884feb3961b Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 6 Feb 2020 16:06:27 +0200
+Subject: [PATCH 12/14] also clean other 'Invisible' sets
+
+	modified:   AndroidManifest.xml
+---
+ AndroidManifest.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index 1757415..3addf95 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -89,7 +89,7 @@
+             android:name=".ui.conversation.LaunchConversationActivity"
+             android:configChanges="orientation|screenSize|keyboardHidden"
+             android:screenOrientation="user"
+-            android:theme="@style/Invisible"
++            android:theme="@style/Translucent"
+             android:noHistory="true"
+             android:documentLaunchMode="always">
+             <intent-filter>
+@@ -266,7 +266,7 @@
+             android:configChanges="orientation|screenSize|keyboardHidden"
+             android:screenOrientation="user"
+             android:exported="false"
+-            android:theme="@style/Invisible">
++            android:theme="@style/Translucent">
+         </activity>
+ 
+         <!-- VCard details -->
+-- 
+2.17.1
+

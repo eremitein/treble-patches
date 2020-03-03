@@ -1,0 +1,259 @@
+From fc3c2ad8ac07d1f0efbe8975d5a38c10c39c2f63 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 22 Feb 2020 11:51:23 +0200
+Subject: [PATCH 12/21] navigation mode settings [2/2]
+
+  * from
+  https://github.com/Havoc-OS/android_packages_apps_Settings/commit/598a941efc26c1550d11737b0438584df57851ec
+
+	new file:   res/layout/dialog_back_gesture_options.xml
+	modified:   res/values/strings.xml
+	modified:   src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java
+	modified:   src/com/android/settings/gestures/SystemNavigationGestureSettings.java
+
+Change-Id: I90e0f3856d2d43528393ad691a488474b8894857
+---
+ res/layout/dialog_back_gesture_options.xml    | 120 ++++++++++++++++++
+ res/values/strings.xml                        |   6 +
+ ...estureNavigationBackSensitivityDialog.java |  21 ++-
+ .../SystemNavigationGestureSettings.java      |  18 ++-
+ 4 files changed, 157 insertions(+), 8 deletions(-)
+ create mode 100644 res/layout/dialog_back_gesture_options.xml
+
+diff --git a/res/layout/dialog_back_gesture_options.xml b/res/layout/dialog_back_gesture_options.xml
+new file mode 100644
+index 0000000000..328931f943
+--- /dev/null
++++ b/res/layout/dialog_back_gesture_options.xml
+@@ -0,0 +1,120 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2019 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++
++<LinearLayout
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:orientation="vertical"
++    android:padding="12dp">
++
++    <SeekBar
++        android:id="@+id/back_sensitivity_seekbar"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center"
++        android:min="0"
++        android:max="3"
++        style="@android:style/Widget.Material.SeekBar.Discrete"
++        android:theme="@*android:style/ThemeOverlay.DeviceDefault.Accent" />
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal"
++        android:layout_marginTop="2dp"
++        android:layout_marginBottom="8dp">
++
++        <TextView android:id="@+id/low_tick"
++                  android:layout_width="match_parent"
++                  android:layout_height="wrap_content"
++                  android:layout_weight="1"
++                  android:layout_marginBottom="2dp"
++                  android:layout_marginStart="12dp"
++                  android:gravity="start"
++                  android:text="@string/low_label"
++                  android:textAppearance="?android:attr/textAppearance"
++                  android:singleLine="true"
++                  android:ellipsize="marquee" />
++
++        <TextView android:id="@+id/high_tick"
++                  android:layout_width="match_parent"
++                  android:layout_height="wrap_content"
++                  android:layout_weight="1"
++                  android:layout_marginBottom="2dp"
++                  android:layout_marginEnd="12dp"
++                  android:gravity="end"
++                  android:text="@string/high_label"
++                  android:textAppearance="?android:attr/textAppearance"
++                  android:singleLine="true"
++                  android:ellipsize="marquee" />
++
++    </LinearLayout>
++
++    <TextView
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginTop="12dp"
++        android:layout_marginStart="12dp"
++        android:textAppearance="?android:attr/textAppearance"
++        android:text="@string/back_height_message"
++        style="@android:style/TextAppearance.Material.Subhead" />
++
++    <SeekBar
++        android:id="@+id/back_height_seekbar"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center"
++        android:min="0"
++        android:max="3"
++        style="@android:style/Widget.Material.SeekBar.Discrete"
++        android:theme="@*android:style/ThemeOverlay.DeviceDefault.Accent"
++        android:layout_marginTop="12dp" />
++
++    <LinearLayout
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:orientation="horizontal"
++        android:layout_marginTop="2dp"
++        android:layout_marginBottom="8dp">
++
++        <TextView android:id="@+id/back_height_low_tick"
++                  android:layout_width="match_parent"
++                  android:layout_height="wrap_content"
++                  android:layout_weight="1"
++                  android:layout_marginBottom="2dp"
++                  android:layout_marginStart="12dp"
++                  android:gravity="start"
++                  android:text="@string/back_height_low_label"
++                  android:textAppearance="?android:attr/textAppearance"
++                  android:singleLine="true"
++                  android:ellipsize="marquee" />
++
++        <TextView android:id="@+id/back_height_high_tick"
++                  android:layout_width="match_parent"
++                  android:layout_height="wrap_content"
++                  android:layout_weight="1"
++                  android:layout_marginBottom="2dp"
++                  android:layout_marginEnd="12dp"
++                  android:gravity="end"
++                  android:text="@string/back_height_high_label"
++                  android:textAppearance="?android:attr/textAppearance"
++                  android:singleLine="true"
++                  android:ellipsize="marquee" />
++
++    </LinearLayout>
++</LinearLayout>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 8cfbb42327..c0bfab69d2 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -11452,4 +11452,10 @@
+     <!-- Subtext for showing the option of RTT setting. [CHAR LIMIT=NONE] -->
+     <string name="rtt_settings_always_visible"></string>
+ 
++    <!-- Navigation settings -->
++    <string name="back_height_low_label">Full</string>
++    <string name="back_height_high_label">Bottom</string>
++    <string name="back_options_dialog_title">Options</string>
++    <string name="back_height_message">Amount of screen height used as touchable region for back gesture</string>
++
+ </resources>
+diff --git a/src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java b/src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java
+index e4f25ebb37..7fef247293 100644
+--- a/src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java
++++ b/src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java
+@@ -35,8 +35,9 @@ import com.android.settings.core.instrumentation.InstrumentedDialogFragment;
+ public class GestureNavigationBackSensitivityDialog extends InstrumentedDialogFragment {
+     private static final String TAG = "GestureNavigationBackSensitivityDialog";
+     private static final String KEY_BACK_SENSITIVITY = "back_sensitivity";
++    private static final String KEY_BACK_HEIGHT = "back_height";
+ 
+-    public static void show(SystemNavigationGestureSettings parent, int sensitivity) {
++    public static void show(SystemNavigationGestureSettings parent, int sensitivity, int height) {
+         if (!parent.isAdded()) {
+             return;
+         }
+@@ -45,6 +46,7 @@ public class GestureNavigationBackSensitivityDialog extends InstrumentedDialogFr
+                 new GestureNavigationBackSensitivityDialog();
+         final Bundle bundle = new Bundle();
+         bundle.putInt(KEY_BACK_SENSITIVITY, sensitivity);
++        bundle.putInt(KEY_BACK_HEIGHT, height);
+         dialog.setArguments(bundle);
+         dialog.setTargetFragment(parent, 0);
+         dialog.show(parent.getFragmentManager(), TAG);
+@@ -58,16 +60,21 @@ public class GestureNavigationBackSensitivityDialog extends InstrumentedDialogFr
+     @Override
+     public Dialog onCreateDialog(Bundle savedInstanceState) {
+         final View view = getActivity().getLayoutInflater().inflate(
+-                R.layout.dialog_back_gesture_sensitivity, null);
+-        final SeekBar seekBar = view.findViewById(R.id.back_sensitivity_seekbar);
+-        seekBar.setProgress(getArguments().getInt(KEY_BACK_SENSITIVITY));
++                R.layout.dialog_back_gesture_options, null);
++        final SeekBar seekBarSensitivity = view.findViewById(R.id.back_sensitivity_seekbar);
++        seekBarSensitivity.setProgress(getArguments().getInt(KEY_BACK_SENSITIVITY));
++        final SeekBar seekBarHeight = view.findViewById(R.id.back_height_seekbar);
++        seekBarHeight.setProgress(getArguments().getInt(KEY_BACK_HEIGHT));
+         return new AlertDialog.Builder(getContext())
+-                .setTitle(R.string.back_sensitivity_dialog_title)
++                .setTitle(R.string.back_options_dialog_title)
+                 .setMessage(R.string.back_sensitivity_dialog_message)
+                 .setView(view)
+                 .setPositiveButton(R.string.okay, (dialog, which) -> {
+-                    int sensitivity = seekBar.getProgress();
++                    int sensitivity = seekBarSensitivity.getProgress();
+                     getArguments().putInt(KEY_BACK_SENSITIVITY, sensitivity);
++                    int height = seekBarHeight.getProgress();
++                    getArguments().putInt(KEY_BACK_HEIGHT, height);
++                    SystemNavigationGestureSettings.setBackHeight(getActivity(), height);
+                     SystemNavigationGestureSettings.setBackSensitivity(getActivity(),
+                             getOverlayManager(), sensitivity);
+                 })
+@@ -77,4 +84,4 @@ public class GestureNavigationBackSensitivityDialog extends InstrumentedDialogFr
+     private IOverlayManager getOverlayManager() {
+         return IOverlayManager.Stub.asInterface(ServiceManager.getService(Context.OVERLAY_SERVICE));
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/src/com/android/settings/gestures/SystemNavigationGestureSettings.java b/src/com/android/settings/gestures/SystemNavigationGestureSettings.java
+index 9e35529801..3f720bd8c3 100644
+--- a/src/com/android/settings/gestures/SystemNavigationGestureSettings.java
++++ b/src/com/android/settings/gestures/SystemNavigationGestureSettings.java
+@@ -161,7 +161,8 @@ public class SystemNavigationGestureSettings extends RadioButtonPickerFragment {
+         if (info.getKey() == KEY_SYSTEM_NAV_GESTURAL) {
+             p.setExtraWidgetVisibility(EXTRA_WIDGET_VISIBILITY_SETTING);
+             p.setExtraWidgetOnClickListener((v) -> GestureNavigationBackSensitivityDialog
+-                    .show(this, getBackSensitivity(getContext(), mOverlayManager)));
++                        .show(this, getBackSensitivity(getContext(), mOverlayManager),
++                        getBackHeight(getContext())));
+         } else {
+             p.setExtraWidgetVisibility(EXTRA_WIDGET_VISIBILITY_GONE);
+         }
+@@ -252,6 +253,21 @@ public class SystemNavigationGestureSettings extends RadioButtonPickerFragment {
+                 .getInt(PREFS_BACK_SENSITIVITY_KEY, BACK_GESTURE_INSET_DEFAULT_OVERLAY);
+     }
+ 
++    static void setBackHeight(Context context, int height) {
++        // height cant be range 0 - 3
++        // 0 means full height
++        // 1 means half of the screen
++        // 2 means lower third of the screen
++        // 3 means lower sixth of the screen
++        Settings.System.putInt(context.getContentResolver(),
++                Settings.System.BACK_GESTURE_HEIGHT, height);
++    }
++
++    static int getBackHeight(Context context) {
++        return Settings.System.getInt(context.getContentResolver(),
++                Settings.System.BACK_GESTURE_HEIGHT, 0);
++    }
++
+     @VisibleForTesting
+     static String getCurrentSystemNavigationMode(Context context) {
+         if (SystemNavigationPreferenceController.isEdgeToEdgeEnabled(context)) {
+-- 
+2.17.1
+

@@ -1,0 +1,53 @@
+From 53c535be5763e8c60de80209aa19aab0ac501985 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 6 Feb 2020 15:40:48 +0200
+Subject: [PATCH 11/14] Fix generating id in android namespace
+
+  * from
+  https://github.com/LineageOS/android_packages_apps_Messaging/commit/f81441458a9a006bc0a2d217d62c877dfaa31a06
+
+	modified:   res/layout/apn_preference_layout.xml
+	modified:   src/com/android/messaging/ui/appsettings/ApnPreference.java
+---
+ res/layout/apn_preference_layout.xml                        | 4 ++--
+ src/com/android/messaging/ui/appsettings/ApnPreference.java | 2 +-
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/res/layout/apn_preference_layout.xml b/res/layout/apn_preference_layout.xml
+index 25a0323..015ae0b 100644
+--- a/res/layout/apn_preference_layout.xml
++++ b/res/layout/apn_preference_layout.xml
+@@ -38,7 +38,7 @@
+         android:background="?android:attr/selectableItemBackground">
+ 
+         <TextView
+-            android:id="@+android:id/title"
++            android:id="@+id/title"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:focusable="true"
+@@ -46,7 +46,7 @@
+             android:textAppearance="?android:attr/textAppearanceListItem" />
+ 
+         <TextView
+-            android:id="@+android:id/summary"
++            android:id="@+id/title"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:layout_below="@android:id/title"
+diff --git a/src/com/android/messaging/ui/appsettings/ApnPreference.java b/src/com/android/messaging/ui/appsettings/ApnPreference.java
+index 74c6a08..c5cc85a 100644
+--- a/src/com/android/messaging/ui/appsettings/ApnPreference.java
++++ b/src/com/android/messaging/ui/appsettings/ApnPreference.java
+@@ -94,7 +94,7 @@ public class ApnPreference extends Preference implements
+ 
+     public void setApnRadioButtonContentDescription(final CompoundButton buttonView) {
+         final View widget = (View) buttonView.getParent();
+-        final TextView tv = (TextView) widget.findViewById(android.R.id.title);
++        final TextView tv = (TextView) widget.findViewById(R.id.title);
+         final String apnTitle = tv.getText().toString();
+         buttonView.setContentDescription(apnTitle);
+     }
+-- 
+2.17.1
+

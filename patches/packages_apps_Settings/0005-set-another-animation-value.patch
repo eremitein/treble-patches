@@ -1,0 +1,41 @@
+From 776421125171df3ea3e12786b1afeb3f5a99e9be Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 25 Dec 2019 12:51:49 +0200
+Subject: [PATCH 05/21] set another animation value
+
+	modified:   src/com/android/settings/development/TransitionAnimationScalePreferenceController.java
+	modified:   src/com/android/settings/development/WindowAnimationScalePreferenceController.java
+---
+ .../TransitionAnimationScalePreferenceController.java           | 2 +-
+ .../development/WindowAnimationScalePreferenceController.java   | 2 +-
+ 2 files changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/com/android/settings/development/TransitionAnimationScalePreferenceController.java b/src/com/android/settings/development/TransitionAnimationScalePreferenceController.java
+index 0a8e941ea5..e8e95da183 100644
+--- a/src/com/android/settings/development/TransitionAnimationScalePreferenceController.java
++++ b/src/com/android/settings/development/TransitionAnimationScalePreferenceController.java
+@@ -38,7 +38,7 @@ public class TransitionAnimationScalePreferenceController extends
+     @VisibleForTesting
+     static final int TRANSITION_ANIMATION_SCALE_SELECTOR = 1;
+     @VisibleForTesting
+-    static final float DEFAULT_VALUE = 1;
++    static final float DEFAULT_VALUE = 0.2f;
+ 
+     private final IWindowManager mWindowManager;
+     private final String[] mListValues;
+diff --git a/src/com/android/settings/development/WindowAnimationScalePreferenceController.java b/src/com/android/settings/development/WindowAnimationScalePreferenceController.java
+index 70b2e2de18..dfa7b3cd42 100644
+--- a/src/com/android/settings/development/WindowAnimationScalePreferenceController.java
++++ b/src/com/android/settings/development/WindowAnimationScalePreferenceController.java
+@@ -38,7 +38,7 @@ public class WindowAnimationScalePreferenceController extends
+     @VisibleForTesting
+     static final int WINDOW_ANIMATION_SCALE_SELECTOR = 0;
+     @VisibleForTesting
+-    static final float DEFAULT_VALUE = 1;
++    static final float DEFAULT_VALUE = 0.2f;
+ 
+     private final IWindowManager mWindowManager;
+     private final String[] mListValues;
+-- 
+2.17.1
+
