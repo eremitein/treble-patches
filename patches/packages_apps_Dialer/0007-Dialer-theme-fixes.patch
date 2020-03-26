@@ -1,0 +1,73 @@
+From 909fc2c1fcb37bb332ffa864e505225443500ebb Mon Sep 17 00:00:00 2001
+From: Marko Man <darkobas@gmail.com>
+Date: Tue, 22 Oct 2019 22:40:43 +0200
+Subject: [PATCH 07/19] Dialer: theme fixes
+
+Change-Id: I40155526f232c0057505dbe60f229a49a99999db
+Signed-off-by: xyyx <xyyx@mail.ru>
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+---
+ .../base/res/values/theme_dialer_dark.xml     |  6 ++--
+ .../theme/res/values-night/colors.xml         | 28 +++++++++++++++++++
+ 2 files changed, 31 insertions(+), 3 deletions(-)
+ create mode 100644 java/com/android/incallui/theme/res/values-night/colors.xml
+
+diff --git a/java/com/android/dialer/theme/base/res/values/theme_dialer_dark.xml b/java/com/android/dialer/theme/base/res/values/theme_dialer_dark.xml
+index 142bb897b..9577cd9bb 100644
+--- a/java/com/android/dialer/theme/base/res/values/theme_dialer_dark.xml
++++ b/java/com/android/dialer/theme/base/res/values/theme_dialer_dark.xml
+@@ -47,8 +47,8 @@
+     <!-- These will be automatically used to color most Appcompat/Material widgets. -->
+     <item name="android:colorPrimary">@color/dialer_dark_theme_color</item>
+     <item name="colorPrimary">@color/dialer_dark_theme_color</item>
+-    <item name="android:colorPrimaryDark">@color/dialer_dark_theme_color_dark</item>
+-    <item name="colorPrimaryDark">@color/dialer_dark_theme_color_dark</item>
++    <item name="android:colorPrimaryDark">@color/dialer_dark_theme_color</item>
++    <item name="colorPrimaryDark">@color/dialer_dark_theme_color</item>
+     <item name="android:colorAccent">@color/dialer_dark_secondary_color</item>
+     <item name="colorAccent">@color/dialer_dark_secondary_color</item>
+ 
+@@ -62,4 +62,4 @@
+     <item name="colorIconOnUnthemedDarkBackground">@android:color/white</item>
+     <item name="colorPrimary20pct">@color/dialer_dark_theme_color_20pct</item>
+   </style>
+-</resources>
+\ No newline at end of file
++</resources>
+diff --git a/java/com/android/incallui/theme/res/values-night/colors.xml b/java/com/android/incallui/theme/res/values-night/colors.xml
+new file mode 100644
+index 000000000..c2b50f20f
+--- /dev/null
++++ b/java/com/android/incallui/theme/res/values-night/colors.xml
+@@ -0,0 +1,28 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2013 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++
++<resources>
++  <color name="conference_call_manager_caller_name_text_color">#4d4d4d</color>
++  <!-- Used with some smaller texts in manage conference screen. -->
++  <color name="conference_call_manager_secondary_text_color">#999999</color>
++
++  <color name="incall_dialpad_background">@*android:color/primary_dark_device_default_settings</color>
++
++  <!-- Background color for status bar. For portrait this will be ignored. -->
++  <color name="statusbar_background_color">?android:attr/colorPrimary</color>
++
++</resources>
+-- 
+2.17.1
+

@@ -1,0 +1,68 @@
+From 8b74503741e98f68b49a5434a0706ac0d01ea560 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 4 Apr 2020 00:39:14 +0300
+Subject: [PATCH 16/19] Incoming call screen & incall screen: contact name on 2
+ lines
+
+  * from
+  https://github.com/syberia-project/platform_packages_apps_Dialer/commit/cad4d5f219d4998e3f498e5ca50c221870ea67ab#diff-87c01bc5ec891fe03f23f1209501725a
+---
+ .../answer/impl/res/layout/fragment_incoming_call.xml        | 5 ++++-
+ .../com/android/incallui/contactgrid/ContactGridManager.java | 5 ++++-
+ .../incallui/incall/impl/res/layout/frag_incall_voice.xml    | 5 ++++-
+ 3 files changed, 12 insertions(+), 3 deletions(-)
+
+diff --git a/java/com/android/incallui/answer/impl/res/layout/fragment_incoming_call.xml b/java/com/android/incallui/answer/impl/res/layout/fragment_incoming_call.xml
+index 1672bf984..97f7c43f3 100644
+--- a/java/com/android/incallui/answer/impl/res/layout/fragment_incoming_call.xml
++++ b/java/com/android/incallui/answer/impl/res/layout/fragment_incoming_call.xml
+@@ -103,7 +103,10 @@
+           android:layout_marginBottom="8dp"
+           android:layout_marginStart="24dp"
+           android:layout_marginEnd="24dp"
+-          android:singleLine="true"
++          android:ellipsize="end"
++          android:gravity="center"
++          android:maxLines="2"
++          android:singleLine="false"
+           android:textAppearance="@style/Dialer.Incall.TextAppearance.Large"
+           android:textSize="@dimen/answer_contact_name_text_size"
+           app:autoResizeText_minTextSize="@dimen/answer_contact_name_min_size"
+diff --git a/java/com/android/incallui/contactgrid/ContactGridManager.java b/java/com/android/incallui/contactgrid/ContactGridManager.java
+index 189f6fef1..65c2b23f8 100644
+--- a/java/com/android/incallui/contactgrid/ContactGridManager.java
++++ b/java/com/android/incallui/contactgrid/ContactGridManager.java
+@@ -292,10 +292,13 @@ public class ContactGridManager {
+ 
+       // Set direction of the name field
+       int nameDirection = View.TEXT_DIRECTION_INHERIT;
+-      if (primaryInfo.nameIsNumber()) {
++      boolean singleLine = true;
++      if (primaryInfo.nameIsNumber) {
+         nameDirection = View.TEXT_DIRECTION_LTR;
++        singleLine = false;
+       }
+       contactNameTextView.setTextDirection(nameDirection);
++      contactNameTextView.setSingleLine(singleLine);
+     }
+ 
+     if (avatarImageView != null) {
+diff --git a/java/com/android/incallui/incall/impl/res/layout/frag_incall_voice.xml b/java/com/android/incallui/incall/impl/res/layout/frag_incall_voice.xml
+index 9cc599dc7..a78539674 100644
+--- a/java/com/android/incallui/incall/impl/res/layout/frag_incall_voice.xml
++++ b/java/com/android/incallui/incall/impl/res/layout/frag_incall_voice.xml
+@@ -60,7 +60,10 @@
+           android:layout_marginBottom="4dp"
+           android:layout_marginStart="@dimen/incall_window_margin_horizontal"
+           android:layout_marginEnd="@dimen/incall_window_margin_horizontal"
+-          android:singleLine="true"
++	  android:ellipsize="end"
++          android:gravity="center"
++          android:maxLines="2"
++          android:singleLine="false"
+           android:textAppearance="@style/Dialer.Incall.TextAppearance.Large"
+           app:autoResizeText_minTextSize="28sp"
+           tools:ignore="Deprecated"
+-- 
+2.17.1
+

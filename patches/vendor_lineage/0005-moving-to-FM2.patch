@@ -1,0 +1,49 @@
+From 5769d7666279e4ccd95b51cc32b75faedfc7bdc3 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 3 Apr 2020 09:11:01 +0300
+Subject: [PATCH] moving to FM2
+
+---
+ config/common.mk                                          | 8 ++++++--
+ config/permissions/privapp-permissions-lineage-system.xml | 6 ++++++
+ 2 files changed, 12 insertions(+), 2 deletions(-)
+
+diff --git a/config/common.mk b/config/common.mk
+index 66732064..614ed697 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -207,8 +207,12 @@ PRODUCT_PACKAGES += \
+ 
+ # FM-Radivo
+ PRODUCT_PACKAGES += \
+-    FMRadio \
+-    libfmjni
++    FM2 \
++    libqcomfm_jni \
++    qcom.fmradio
++
++PRODUCT_BOOT_JARS += \
++    qcom.fmradio
+ 
+ # Storage manager
+ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+diff --git a/config/permissions/privapp-permissions-lineage-system.xml b/config/permissions/privapp-permissions-lineage-system.xml
+index 77b6ca13..64542785 100644
+--- a/config/permissions/privapp-permissions-lineage-system.xml
++++ b/config/permissions/privapp-permissions-lineage-system.xml
+@@ -22,6 +22,12 @@
+         <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
+     </privapp-permissions>
+ 
++    <privapp-permissions package="com.caf.fmradio">
++        <permission name="android.permission.ACCESS_FM_RADIO"/>
++        <permission name="android.permission.MODIFY_AUDIO_ROUTING"/>
++        <permission name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
++    </privapp-permissions>
++
+     <privapp-permissions package="org.lineageos.audiofx">
+         <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
+         <permission name="android.permission.MEDIA_CONTENT_CONTROL"/>
+-- 
+2.17.1
+

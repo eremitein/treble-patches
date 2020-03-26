@@ -1,0 +1,2186 @@
+From 2043b744a060aab1523044ed1e72eff810e192b1 Mon Sep 17 00:00:00 2001
+From: Danny Baumann <dannybaumann@web.de>
+Date: Mon, 9 Jul 2018 11:19:24 +0200
+Subject: [PATCH 01/19] re-add call recording (crDroid)
+
+  * based on
+  https://github.com/ArrowOS/android_packages_apps_Dialer/commit/78e5944286a0af1551856e741b8ce82b21097d59
+---
+ Android.mk                                    |   2 +-
+ .../drawable/quantum_ic_record_white_36.xml   |   9 +
+ .../dialer/app/res/values-ru/strings.xml      |   2 +
+ .../android/dialer/app/res/values/arrays.xml  |  27 ++
+ .../android/dialer/app/res/values/colors.xml  |   2 +
+ .../android/dialer/app/res/values/strings.xml |   9 +
+ .../android/dialer/app/res/xml/file_paths.xml |   4 +
+ .../dialer/app/res/xml/sound_settings.xml     |  13 +
+ .../app/settings/SoundSettingsFragment.java   |   5 +
+ .../calldetails/CallDetailsActivity.java      |   7 +-
+ .../CallDetailsActivityCommon.java            |  16 +-
+ .../calldetails/CallDetailsAdapter.java       |   7 +-
+ .../calldetails/CallDetailsAdapterCommon.java |   7 +-
+ .../CallDetailsEntryViewHolder.java           |  76 +++++
+ .../calldetails/OldCallDetailsActivity.java   |   7 +-
+ .../calldetails/OldCallDetailsAdapter.java    |   7 +-
+ .../drawable/recording_playback_button.xml    |  26 ++
+ .../res/layout/call_details_entry.xml         |  23 +-
+ .../dialer/calldetails/res/values/strings.xml |   7 +
+ .../dialer/callrecord/AndroidManifest.xml     |  26 ++
+ .../dialer/callrecord/CallRecording.aidl      |   3 +
+ .../dialer/callrecord/CallRecording.java      |  84 ++++++
+ .../callrecord/CallRecordingDataStore.java    | 177 +++++++++++
+ .../callrecord/ICallRecorderService.aidl      |  37 +++
+ .../callrecord/impl/CallRecorderService.java  | 238 +++++++++++++++
+ .../dialer/callrecord/res/values/config.xml   |  21 ++
+ .../android/incallui/CallButtonPresenter.java |  66 +++++
+ .../android/incallui/InCallServiceImpl.java   |   2 +
+ java/com/android/incallui/call/CallList.java  |  10 +
+ .../android/incallui/call/CallRecorder.java   | 280 ++++++++++++++++++
+ .../callpending/CallPendingActivity.java      |   3 +
+ .../incall/impl/ButtonChooserFactory.java     |   7 +-
+ .../incall/impl/ButtonController.java         |  91 ++++++
+ .../incall/impl/CheckableLabeledButton.java   |   4 +
+ .../incallui/incall/impl/InCallFragment.java  |  40 ++-
+ .../incall/protocol/InCallButtonIds.java      |   4 +-
+ .../protocol/InCallButtonIdsExtension.java    |   2 +
+ .../incall/protocol/InCallButtonUi.java       |   6 +
+ .../protocol/InCallButtonUiDelegate.java      |   2 +
+ .../android/incallui/res/values/strings.xml   |   8 +
+ .../incallui/rtt/impl/RttChatFragment.java    |   9 +
+ .../impl/SurfaceViewVideoCallFragment.java    |  12 +
+ .../video/impl/VideoCallFragment.java         |  12 +
+ 43 files changed, 1379 insertions(+), 21 deletions(-)
+ create mode 100644 assets/quantum/res/drawable/quantum_ic_record_white_36.xml
+ create mode 100644 java/com/android/dialer/app/res/values/arrays.xml
+ create mode 100644 java/com/android/dialer/calldetails/res/drawable/recording_playback_button.xml
+ create mode 100644 java/com/android/dialer/callrecord/AndroidManifest.xml
+ create mode 100644 java/com/android/dialer/callrecord/CallRecording.aidl
+ create mode 100644 java/com/android/dialer/callrecord/CallRecording.java
+ create mode 100644 java/com/android/dialer/callrecord/CallRecordingDataStore.java
+ create mode 100644 java/com/android/dialer/callrecord/ICallRecorderService.aidl
+ create mode 100644 java/com/android/dialer/callrecord/impl/CallRecorderService.java
+ create mode 100644 java/com/android/dialer/callrecord/res/values/config.xml
+ create mode 100644 java/com/android/incallui/call/CallRecorder.java
+
+diff --git a/Android.mk b/Android.mk
+index 174ce6027..21229f561 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -79,7 +79,7 @@ LOCAL_SRC_FILES += $(call all-proto-files-under, $(BASE_DIR))
+ LOCAL_SRC_FILES += $(call all-Iaidl-files-under, $(BASE_DIR))
+ LOCAL_SRC_FILES := $(filter-out $(EXCLUDE_FILES),$(LOCAL_SRC_FILES))
+ 
+-LOCAL_AIDL_INCLUDES := $(call all-Iaidl-files-under, $(BASE_DIR))
++LOCAL_AIDL_INCLUDES := $(LOCAL_PATH)/java
+ 
+ LOCAL_PROTOC_FLAGS := --proto_path=$(LOCAL_PATH)
+ 
+diff --git a/assets/quantum/res/drawable/quantum_ic_record_white_36.xml b/assets/quantum/res/drawable/quantum_ic_record_white_36.xml
+new file mode 100644
+index 000000000..35aaa4134
+--- /dev/null
++++ b/assets/quantum/res/drawable/quantum_ic_record_white_36.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="36dp"
++    android:width="36dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++  <path
++      android:fillColor="@android:color/white"
++      android:pathData="M19,12C19,15.86 15.86,19 12,19C8.14,19 5,15.86 5,12C5,8.14 8.14,5 12,5C15.86,5 19,8.14 19,12Z" />
++</vector>
+diff --git a/java/com/android/dialer/app/res/values-ru/strings.xml b/java/com/android/dialer/app/res/values-ru/strings.xml
+index fec18a180..e5d3c9621 100644
+--- a/java/com/android/dialer/app/res/values-ru/strings.xml
++++ b/java/com/android/dialer/app/res/values-ru/strings.xml
+@@ -172,4 +172,6 @@
+   <string name="view_conversation">Посмотреть</string>
+   <string name="ec_data_deleted">Вызов удален. Посмотреть и удалить прикрепленные к нему файлы можно в приложении \"Сообщения\".</string>
+   <string name="multiple_ec_data_deleted">Вызовы удалены. Посмотреть и удалить прикрепленные к ним файлы можно в приложении \"Сообщения\".</string>
++  <string name="call_recording_category_title">Запись звонков</string>
++  <string name="call_recording_format">Формат аудио-кодека</string>
+ </resources>
+diff --git a/java/com/android/dialer/app/res/values/arrays.xml b/java/com/android/dialer/app/res/values/arrays.xml
+new file mode 100644
+index 000000000..ac8249a89
+--- /dev/null
++++ b/java/com/android/dialer/app/res/values/arrays.xml
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2018-2019 ArrowOS
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string-array name="call_recording_encoder_entries" translatable="false">
++        <item>@string/wb_amr_format</item>
++        <item>@string/aac_format</item>
++    </string-array>
++
++    <string-array name="call_recording_encoder_values" translatable="false">
++        <item>"0"</item>
++        <item>"1"</item>
++    </string-array>
++</resources>
+diff --git a/java/com/android/dialer/app/res/values/colors.xml b/java/com/android/dialer/app/res/values/colors.xml
+index a9713474d..16fb2d098 100644
+--- a/java/com/android/dialer/app/res/values/colors.xml
++++ b/java/com/android/dialer/app/res/values/colors.xml
+@@ -18,6 +18,8 @@
+   <color name="voicemail_icon_disabled_tint">#80000000</color>
+   <color name="voicemail_playpause_icon_tint">?colorIcon</color>
+ 
++  <color name="call_record_playback_icon_color">#8a000000</color>
++
+   <!-- Text color for the "Remove" text when a contact is dragged on top of the remove view -->
+   <color name="remove_highlighted_text_color">#FF3F3B</color>
+ 
+diff --git a/java/com/android/dialer/app/res/values/strings.xml b/java/com/android/dialer/app/res/values/strings.xml
+index e5092f001..31edd6f1b 100644
+--- a/java/com/android/dialer/app/res/values/strings.xml
++++ b/java/com/android/dialer/app/res/values/strings.xml
+@@ -718,4 +718,13 @@
+   <!-- If a user deletes a call that has attachments (photo, message, ect) bundled with it, they need
+         to be told that they need to go to the SMS app to delete the attachments. [CHAR LIMIT=NONE] -->
+   <string name="multiple_ec_data_deleted">Calls deleted. View and delete attachments shared during calls in Messages.</string>
++
++  <!-- Call recording -->
++  <string name="call_recording_category_key" translatable="false">call_recording_category</string>
++  <string name="call_recording_category_title">Call recording</string>
++  <string name="call_recording_format_key" translatable="false">call_recording_format</string>
++  <string name="call_recording_format">Audio format</string>
++  <string name="wb_amr_format" translatable="false">AMR-WB</string>
++  <string name="aac_format" translatable="false">AAC</string>
++
+ </resources>
+diff --git a/java/com/android/dialer/app/res/xml/file_paths.xml b/java/com/android/dialer/app/res/xml/file_paths.xml
+index 0dd41a085..b43f45093 100644
+--- a/java/com/android/dialer/app/res/xml/file_paths.xml
++++ b/java/com/android/dialer/app/res/xml/file_paths.xml
+@@ -22,4 +22,8 @@
+   <files-path
+     name="voicemails"
+     path="voicemails/"/>
++  <!-- Offer access to saved call recordings -->
++  <external-path
++    name="recordings"
++    path="CallRecordings/"/>
+ </paths>
+diff --git a/java/com/android/dialer/app/res/xml/sound_settings.xml b/java/com/android/dialer/app/res/xml/sound_settings.xml
+index 4da5c1514..2d434ce33 100644
+--- a/java/com/android/dialer/app/res/xml/sound_settings.xml
++++ b/java/com/android/dialer/app/res/xml/sound_settings.xml
+@@ -71,4 +71,17 @@
+ 
+   </PreferenceCategory>
+ 
++  <PreferenceCategory
++    android:key="@string/call_recording_category_key"
++    android:title="@string/call_recording_category_title">
++
++    <ListPreference
++      android:key="@string/call_recording_format_key"
++      android:title="@string/call_recording_format"
++      android:summary="%s"
++      android:entries="@array/call_recording_encoder_entries"
++      android:entryValues="@array/call_recording_encoder_values"
++      android:defaultValue="1" />
++
++  </PreferenceCategory>
+ </PreferenceScreen>
+diff --git a/java/com/android/dialer/app/settings/SoundSettingsFragment.java b/java/com/android/dialer/app/settings/SoundSettingsFragment.java
+index d9f24ab7e..f7fc0d0b6 100644
+--- a/java/com/android/dialer/app/settings/SoundSettingsFragment.java
++++ b/java/com/android/dialer/app/settings/SoundSettingsFragment.java
+@@ -37,6 +37,7 @@ import android.telephony.CarrierConfigManager;
+ import android.telephony.TelephonyManager;
+ import android.widget.Toast;
+ import com.android.dialer.app.R;
++import com.android.dialer.callrecord.impl.CallRecorderService;
+ import com.android.dialer.util.SettingsUtil;
+ 
+ public class SoundSettingsFragment extends PreferenceFragment
+@@ -140,6 +141,10 @@ public class SoundSettingsFragment extends PreferenceFragment
+       getPreferenceScreen().removePreference(dtmfToneLength);
+       dtmfToneLength = null;
+     }
++    if (!CallRecorderService.isEnabled(getActivity())) {
++      getPreferenceScreen().removePreference(
++          findPreference(context.getString(R.string.call_recording_category_key)));
++    }
+     notificationManager = context.getSystemService(NotificationManager.class);
+   }
+ 
+diff --git a/java/com/android/dialer/calldetails/CallDetailsActivity.java b/java/com/android/dialer/calldetails/CallDetailsActivity.java
+index 36b830851..c1acbc373 100644
+--- a/java/com/android/dialer/calldetails/CallDetailsActivity.java
++++ b/java/com/android/dialer/calldetails/CallDetailsActivity.java
+@@ -28,6 +28,7 @@ import com.android.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDeta
+ import com.android.dialer.calldetails.CallDetailsFooterViewHolder.ReportCallIdListener;
+ import com.android.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
+ import com.android.dialer.calllog.database.contract.AnnotatedCallLogContract.AnnotatedCallLog;
++import com.android.dialer.callrecord.CallRecordingDataStore;
+ import com.android.dialer.common.Assert;
+ import com.android.dialer.enrichedcall.EnrichedCallComponent;
+ import com.android.dialer.protos.ProtoParsers;
+@@ -93,7 +94,8 @@ public final class CallDetailsActivity extends CallDetailsActivityCommon {
+       CallDetailsEntryListener callDetailsEntryListener,
+       CallDetailsHeaderListener callDetailsHeaderListener,
+       ReportCallIdListener reportCallIdListener,
+-      DeleteCallDetailsListener deleteCallDetailsListener) {
++      DeleteCallDetailsListener deleteCallDetailsListener,
++      CallRecordingDataStore callRecordingDataStore) {
+     return new CallDetailsAdapter(
+         this,
+         headerInfo,
+@@ -101,7 +103,8 @@ public final class CallDetailsActivity extends CallDetailsActivityCommon {
+         callDetailsEntryListener,
+         callDetailsHeaderListener,
+         reportCallIdListener,
+-        deleteCallDetailsListener);
++        deleteCallDetailsListener,
++        callRecordingDataStore);
+   }
+ 
+   @Override
+diff --git a/java/com/android/dialer/calldetails/CallDetailsActivityCommon.java b/java/com/android/dialer/calldetails/CallDetailsActivityCommon.java
+index a26f322dd..79e761368 100644
+--- a/java/com/android/dialer/calldetails/CallDetailsActivityCommon.java
++++ b/java/com/android/dialer/calldetails/CallDetailsActivityCommon.java
+@@ -38,6 +38,7 @@ import com.android.dialer.assisteddialing.ui.AssistedDialingSettingActivity;
+ import com.android.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
+ import com.android.dialer.callintent.CallInitiationType;
+ import com.android.dialer.callintent.CallIntentBuilder;
++import com.android.dialer.callrecord.CallRecordingDataStore;
+ import com.android.dialer.common.Assert;
+ import com.android.dialer.common.LogUtil;
+ import com.android.dialer.common.concurrent.DialerExecutor.FailureListener;
+@@ -96,6 +97,7 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
+   private CallDetailsAdapterCommon adapter;
+   private CallDetailsEntries callDetailsEntries;
+   private UiListener<ImmutableSet<String>> checkRttTranscriptAvailabilityListener;
++  private CallRecordingDataStore callRecordingDataStore;
+ 
+   /**
+    * Handles the intent that launches {@link OldCallDetailsActivity} or {@link CallDetailsActivity},
+@@ -108,7 +110,8 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
+       CallDetailsEntryViewHolder.CallDetailsEntryListener callDetailsEntryListener,
+       CallDetailsHeaderViewHolder.CallDetailsHeaderListener callDetailsHeaderListener,
+       CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
+-      CallDetailsFooterViewHolder.DeleteCallDetailsListener deleteCallDetailsListener);
++      CallDetailsFooterViewHolder.DeleteCallDetailsListener deleteCallDetailsListener,
++      CallRecordingDataStore callRecordingDataStore);
+ 
+   /** Returns the phone number of the call details. */
+   protected abstract String getNumber();
+@@ -129,10 +132,18 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
+     checkRttTranscriptAvailabilityListener =
+         DialerExecutorComponent.get(this)
+             .createUiListener(getFragmentManager(), "Query RTT transcript availability");
++    callRecordingDataStore = new CallRecordingDataStore();
+     handleIntent(getIntent());
+     setupRecyclerViewForEntries();
+   }
+ 
++  @Override
++  @CallSuper
++  protected void onDestroy() {
++    super.onDestroy();
++    callRecordingDataStore.close();
++  }
++
+   @Override
+   @CallSuper
+   protected void onResume() {
+@@ -205,7 +216,8 @@ abstract class CallDetailsActivityCommon extends AppCompatActivity {
+             callDetailsEntryListener,
+             callDetailsHeaderListener,
+             reportCallIdListener,
+-            deleteCallDetailsListener);
++            deleteCallDetailsListener,
++            callRecordingDataStore);
+ 
+     RecyclerView recyclerView = findViewById(R.id.recycler_view);
+     recyclerView.setLayoutManager(new LinearLayoutManager(this));
+diff --git a/java/com/android/dialer/calldetails/CallDetailsAdapter.java b/java/com/android/dialer/calldetails/CallDetailsAdapter.java
+index 40d856fa7..7e5ebe170 100644
+--- a/java/com/android/dialer/calldetails/CallDetailsAdapter.java
++++ b/java/com/android/dialer/calldetails/CallDetailsAdapter.java
+@@ -23,6 +23,7 @@ import android.view.View;
+ import com.android.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntryListener;
+ import com.android.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
+ import com.android.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
++import com.android.dialer.callrecord.CallRecordingDataStore;
+ import com.android.dialer.glidephotomanager.PhotoInfo;
+ 
+ /**
+@@ -43,14 +44,16 @@ final class CallDetailsAdapter extends CallDetailsAdapterCommon {
+       CallDetailsEntryListener callDetailsEntryListener,
+       CallDetailsHeaderListener callDetailsHeaderListener,
+       CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
+-      DeleteCallDetailsListener deleteCallDetailsListener) {
++      DeleteCallDetailsListener deleteCallDetailsListener,
++      CallRecordingDataStore callRecordingDataStore) {
+     super(
+         context,
+         callDetailsEntries,
+         callDetailsEntryListener,
+         callDetailsHeaderListener,
+         reportCallIdListener,
+-        deleteCallDetailsListener);
++        deleteCallDetailsListener,
++        callRecordingDataStore);
+     this.headerInfo = calldetailsHeaderInfo;
+   }
+ 
+diff --git a/java/com/android/dialer/calldetails/CallDetailsAdapterCommon.java b/java/com/android/dialer/calldetails/CallDetailsAdapterCommon.java
+index ec9263f1f..d33fea816 100644
+--- a/java/com/android/dialer/calldetails/CallDetailsAdapterCommon.java
++++ b/java/com/android/dialer/calldetails/CallDetailsAdapterCommon.java
+@@ -32,6 +32,7 @@ import com.android.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHea
+ import com.android.dialer.calllogutils.CallTypeHelper;
+ import com.android.dialer.calllogutils.CallbackActionHelper;
+ import com.android.dialer.calllogutils.CallbackActionHelper.CallbackAction;
++import com.android.dialer.callrecord.CallRecordingDataStore;
+ import com.android.dialer.common.Assert;
+ import com.android.dialer.duo.DuoComponent;
+ import com.android.dialer.glidephotomanager.PhotoInfo;
+@@ -51,6 +52,7 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
+   private final ReportCallIdListener reportCallIdListener;
+   private final DeleteCallDetailsListener deleteCallDetailsListener;
+   private final CallTypeHelper callTypeHelper;
++  private final CallRecordingDataStore callRecordingDataStore;
+ 
+   private CallDetailsEntries callDetailsEntries;
+ 
+@@ -75,12 +77,14 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
+       CallDetailsEntryListener callDetailsEntryListener,
+       CallDetailsHeaderListener callDetailsHeaderListener,
+       ReportCallIdListener reportCallIdListener,
+-      DeleteCallDetailsListener deleteCallDetailsListener) {
++      DeleteCallDetailsListener deleteCallDetailsListener,
++      CallRecordingDataStore callRecordingDataStore) {
+     this.callDetailsEntries = callDetailsEntries;
+     this.callDetailsEntryListener = callDetailsEntryListener;
+     this.callDetailsHeaderListener = callDetailsHeaderListener;
+     this.reportCallIdListener = reportCallIdListener;
+     this.deleteCallDetailsListener = deleteCallDetailsListener;
++    this.callRecordingDataStore = callRecordingDataStore;
+     this.callTypeHelper =
+         new CallTypeHelper(context.getResources(), DuoComponent.get(context).getDuo());
+   }
+@@ -123,6 +127,7 @@ abstract class CallDetailsAdapterCommon extends RecyclerView.Adapter<RecyclerVie
+           getPhotoInfo(),
+           entry,
+           callTypeHelper,
++          callRecordingDataStore,
+           !entry.getHistoryResultsList().isEmpty() && position != getItemCount() - 2);
+     }
+   }
+diff --git a/java/com/android/dialer/calldetails/CallDetailsEntryViewHolder.java b/java/com/android/dialer/calldetails/CallDetailsEntryViewHolder.java
+index 05957ae80..f1a9d7b42 100644
+--- a/java/com/android/dialer/calldetails/CallDetailsEntryViewHolder.java
++++ b/java/com/android/dialer/calldetails/CallDetailsEntryViewHolder.java
+@@ -16,30 +16,47 @@
+ 
+ package com.android.dialer.calldetails;
+ 
++import android.content.ActivityNotFoundException;
+ import android.content.Context;
++import android.content.Intent;
+ import android.net.Uri;
+ import android.provider.CallLog.Calls;
+ import android.support.annotation.ColorInt;
+ import android.support.annotation.NonNull;
+ import android.support.v4.content.ContextCompat;
++import android.support.v4.content.FileProvider;
+ import android.support.v4.os.BuildCompat;
+ import android.support.v7.widget.RecyclerView.ViewHolder;
+ import android.text.TextUtils;
++import android.text.format.DateFormat;
++import android.view.Menu;
+ import android.view.View;
++import android.webkit.MimeTypeMap;
+ import android.widget.ImageView;
++import android.widget.PopupMenu;
+ import android.widget.TextView;
++import android.widget.Toast;
+ import com.android.dialer.calldetails.CallDetailsEntries.CallDetailsEntry;
+ import com.android.dialer.calllogutils.CallLogDates;
+ import com.android.dialer.calllogutils.CallLogDurations;
+ import com.android.dialer.calllogutils.CallTypeHelper;
+ import com.android.dialer.calllogutils.CallTypeIconsView;
++import com.android.dialer.callrecord.CallRecording;
++import com.android.dialer.callrecord.CallRecordingDataStore;
++import com.android.dialer.callrecord.impl.CallRecorderService;
+ import com.android.dialer.common.LogUtil;
++import com.android.dialer.constants.Constants;
+ import com.android.dialer.enrichedcall.historyquery.proto.HistoryResult;
+ import com.android.dialer.enrichedcall.historyquery.proto.HistoryResult.Type;
+ import com.android.dialer.glidephotomanager.PhotoInfo;
+ import com.android.dialer.oem.MotorolaUtils;
+ import com.android.dialer.util.DialerUtils;
+ import com.android.dialer.util.IntentUtil;
++import java.io.File;
++import java.text.SimpleDateFormat;
++import java.util.Date;
++import java.util.List;
++import java.util.Locale;
+ 
+ /** ViewHolder for call entries in {@link OldCallDetailsActivity} or {@link CallDetailsActivity}. */
+ public class CallDetailsEntryViewHolder extends ViewHolder {
+@@ -66,6 +83,7 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
+   private final TextView rttTranscript;
+ 
+   private final ImageView multimediaImage;
++  private final TextView playbackButton;
+ 
+   // TODO(maxwelb): Display this when location is stored - a bug
+   @SuppressWarnings("unused")
+@@ -83,6 +101,7 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
+     callTime = (TextView) container.findViewById(R.id.call_time);
+     callDuration = (TextView) container.findViewById(R.id.call_duration);
+ 
++    playbackButton = (TextView) container.findViewById(R.id.play_recordings);
+     multimediaImageContainer = container.findViewById(R.id.multimedia_image_container);
+     multimediaDetailsContainer = container.findViewById(R.id.ec_container);
+     multimediaDivider = container.findViewById(R.id.divider);
+@@ -101,6 +120,7 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
+       PhotoInfo photoInfo,
+       CallDetailsEntry entry,
+       CallTypeHelper callTypeHelper,
++      CallRecordingDataStore callRecordingDataStore,
+       boolean showMultimediaDivider) {
+     int callType = entry.getCallType();
+     boolean isVideoCall = (entry.getFeatures() & Calls.FEATURES_VIDEO) == Calls.FEATURES_VIDEO;
+@@ -139,6 +159,22 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
+           CallLogDurations.formatDurationAndDataUsageA11y(
+               context, entry.getDuration(), entry.getDataUsage()));
+     }
++
++    // do this synchronously to prevent recordings from "popping in" after detail item is displayed
++    final List<CallRecording> recordings;
++    if (CallRecorderService.isEnabled(context)) {
++      callRecordingDataStore.open(context); // opens unless already open
++      recordings = callRecordingDataStore.getRecordings(number, entry.getDate());
++    } else {
++      recordings = null;
++    }
++
++    int count = recordings != null ? recordings.size() : 0;
++    playbackButton.setOnClickListener(v -> handleRecordingClick(v, recordings));
++    playbackButton.setText(
++        context.getResources().getQuantityString(R.plurals.play_recordings, count, count));
++    playbackButton.setVisibility(count > 0 ? View.VISIBLE : View.GONE);
++
+     setMultimediaDetails(number, entry, showMultimediaDivider);
+     if (isRttCall) {
+       if (entry.getHasRttTranscript()) {
+@@ -209,6 +245,46 @@ public class CallDetailsEntryViewHolder extends ViewHolder {
+     DialerUtils.startActivityWithErrorToast(context, IntentUtil.getSendSmsIntent(number));
+   }
+ 
++  private void handleRecordingClick(View v, List<CallRecording> recordings) {
++    final Context context = v.getContext();
++    if (recordings.size() == 1) {
++      playRecording(context, recordings.get(0));
++    } else {
++      PopupMenu menu = new PopupMenu(context, v);
++      String pattern = DateFormat.getBestDateTimePattern(Locale.getDefault(),
++          DateFormat.is24HourFormat(context) ? "Hmss" : "hmssa");
++      SimpleDateFormat format = new SimpleDateFormat(pattern);
++
++      for (int i = 0; i < recordings.size(); i++) {
++        final long startTime = recordings.get(i).startRecordingTime;
++        final String formattedDate = format.format(new Date(startTime));
++        menu.getMenu().add(Menu.NONE, i, i, formattedDate);
++      }
++      menu.setOnMenuItemClickListener(item -> {
++        playRecording(context, recordings.get(item.getItemId()));
++        return true;
++      });
++      menu.show();
++    }
++ }
++
++  private void playRecording(Context context, CallRecording recording) {
++    Uri uri = FileProvider.getUriForFile(context,
++            Constants.get().getFileProviderAuthority(), recording.getFile());
++    String extension = MimeTypeMap.getFileExtensionFromUrl(uri.toString());
++    String mime = !TextUtils.isEmpty(extension)
++        ? MimeTypeMap.getSingleton().getMimeTypeFromExtension(extension) : "audio/*";
++    try {
++      Intent intent = new Intent(Intent.ACTION_VIEW)
++          .setDataAndType(uri, mime)
++          .addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
++      context.startActivity(intent);
++    } catch (ActivityNotFoundException e) {
++      Toast.makeText(context, R.string.call_playback_no_app_found_toast, Toast.LENGTH_LONG)
++          .show();
++    }
++  }
++
+   private static boolean isIncoming(@NonNull HistoryResult historyResult) {
+     return historyResult.getType() == Type.INCOMING_POST_CALL
+         || historyResult.getType() == Type.INCOMING_CALL_COMPOSER;
+diff --git a/java/com/android/dialer/calldetails/OldCallDetailsActivity.java b/java/com/android/dialer/calldetails/OldCallDetailsActivity.java
+index 26217ab8a..0f53d6908 100644
+--- a/java/com/android/dialer/calldetails/OldCallDetailsActivity.java
++++ b/java/com/android/dialer/calldetails/OldCallDetailsActivity.java
+@@ -22,6 +22,7 @@ import com.android.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntr
+ import com.android.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
+ import com.android.dialer.calldetails.CallDetailsFooterViewHolder.ReportCallIdListener;
+ import com.android.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
++import com.android.dialer.callrecord.CallRecordingDataStore;
+ import com.android.dialer.common.Assert;
+ import com.android.dialer.dialercontact.DialerContact;
+ import com.android.dialer.protos.ProtoParsers;
+@@ -80,7 +81,8 @@ public final class OldCallDetailsActivity extends CallDetailsActivityCommon {
+       CallDetailsEntryListener callDetailsEntryListener,
+       CallDetailsHeaderListener callDetailsHeaderListener,
+       ReportCallIdListener reportCallIdListener,
+-      DeleteCallDetailsListener deleteCallDetailsListener) {
++      DeleteCallDetailsListener deleteCallDetailsListener,
++      CallRecordingDataStore callRecordingDataStore) {
+     return new OldCallDetailsAdapter(
+         /* context = */ this,
+         contact,
+@@ -88,7 +90,8 @@ public final class OldCallDetailsActivity extends CallDetailsActivityCommon {
+         callDetailsEntryListener,
+         callDetailsHeaderListener,
+         reportCallIdListener,
+-        deleteCallDetailsListener);
++        deleteCallDetailsListener,
++        callRecordingDataStore);
+   }
+ 
+   @Override
+diff --git a/java/com/android/dialer/calldetails/OldCallDetailsAdapter.java b/java/com/android/dialer/calldetails/OldCallDetailsAdapter.java
+index 878803cc3..af54538db 100644
+--- a/java/com/android/dialer/calldetails/OldCallDetailsAdapter.java
++++ b/java/com/android/dialer/calldetails/OldCallDetailsAdapter.java
+@@ -23,6 +23,7 @@ import android.view.View;
+ import com.android.dialer.calldetails.CallDetailsEntryViewHolder.CallDetailsEntryListener;
+ import com.android.dialer.calldetails.CallDetailsFooterViewHolder.DeleteCallDetailsListener;
+ import com.android.dialer.calldetails.CallDetailsHeaderViewHolder.CallDetailsHeaderListener;
++import com.android.dialer.callrecord.CallRecordingDataStore;
+ import com.android.dialer.dialercontact.DialerContact;
+ import com.android.dialer.glidephotomanager.PhotoInfo;
+ import com.android.dialer.lettertile.LetterTileDrawable;
+@@ -45,14 +46,16 @@ final class OldCallDetailsAdapter extends CallDetailsAdapterCommon {
+       CallDetailsEntryListener callDetailsEntryListener,
+       CallDetailsHeaderListener callDetailsHeaderListener,
+       CallDetailsFooterViewHolder.ReportCallIdListener reportCallIdListener,
+-      DeleteCallDetailsListener deleteCallDetailsListener) {
++      DeleteCallDetailsListener deleteCallDetailsListener,
++      CallRecordingDataStore callRecordingDataStore) {
+     super(
+         context,
+         callDetailsEntries,
+         callDetailsEntryListener,
+         callDetailsHeaderListener,
+         reportCallIdListener,
+-        deleteCallDetailsListener);
++        deleteCallDetailsListener,
++        callRecordingDataStore);
+     this.contact = contact;
+   }
+ 
+diff --git a/java/com/android/dialer/calldetails/res/drawable/recording_playback_button.xml b/java/com/android/dialer/calldetails/res/drawable/recording_playback_button.xml
+new file mode 100644
+index 000000000..c6fb87f74
+--- /dev/null
++++ b/java/com/android/dialer/calldetails/res/drawable/recording_playback_button.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2016 The CyanogenMod Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:width="24dp"
++    android:height="24dp"
++    android:viewportWidth="48"
++    android:viewportHeight="48">
++
++    <path
++        android:fillColor="@color/call_record_playback_icon_color"
++        android:pathData="M 21,30.75 L 30,24 21,17.25 21,30.75 Z M 24,9 C 15.7125,9 9,15.7125 9,24 9,32.2875 15.7125,39 24,39 32.2875,39 39,32.2875 39,24 39,15.7125 32.2875,9 24,9 Z m 0,27 c -6.615,0 -12,-5.385 -12,-12 0,-6.615 5.385,-12 12,-12 6.615,0 12,5.385 12,12 0,6.615 -5.385,12 -12,12 z" />
++</vector>
++
+diff --git a/java/com/android/dialer/calldetails/res/layout/call_details_entry.xml b/java/com/android/dialer/calldetails/res/layout/call_details_entry.xml
+index bfbb4f8a9..ffe3ade5e 100644
+--- a/java/com/android/dialer/calldetails/res/layout/call_details_entry.xml
++++ b/java/com/android/dialer/calldetails/res/layout/call_details_entry.xml
+@@ -19,7 +19,8 @@
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+-    android:paddingTop="@dimen/call_entry_padding">
++    android:paddingTop="@dimen/call_entry_padding"
++    android:paddingBottom="@dimen/call_entry_bottom_padding">
+ 
+   <com.android.dialer.calllogutils.CallTypeIconsView
+       android:id="@+id/call_direction"
+@@ -43,7 +44,6 @@
+       style="@style/Dialer.TextAppearance.Secondary"
+       android:layout_width="wrap_content"
+       android:layout_height="wrap_content"
+-      android:layout_marginBottom="@dimen/call_entry_bottom_padding"
+       android:layout_marginStart="@dimen/call_entry_text_left_margin"
+       android:layout_marginEnd="16dp"
+       android:layout_below="@+id/call_type"/>
+@@ -56,12 +56,27 @@
+       android:layout_marginEnd="@dimen/call_entry_padding"
+       android:layout_alignParentEnd="true"/>
+ 
++  <TextView
++      android:id="@+id/play_recordings"
++      android:layout_width="match_parent"
++      android:layout_height="wrap_content"
++      android:layout_below="@id/call_time"
++      android:paddingStart="@dimen/call_entry_text_left_margin"
++      android:paddingTop="8dp"
++      android:paddingBottom="8dp"
++      android:gravity="center_vertical"
++      android:drawableStart="@drawable/recording_playback_button"
++      android:drawablePadding="4dp"
++      android:background="?attr/selectableItemBackground"
++      android:visibility="gone"
++      style="@style/Dialer.TextAppearance.Secondary"/>
++
+   <include
+       android:id="@+id/ec_container"
+       layout="@layout/ec_data_container"
+       android:layout_width="match_parent"
+       android:layout_height="@dimen/ec_container_height"
+-      android:layout_below="@+id/call_time"
++      android:layout_below="@id/play_recordings"
+       android:visibility="gone"/>
+ 
+   <TextView
+@@ -97,4 +112,4 @@
+       android:layout_below="@id/rtt_transcript"
+       android:background="@color/dialer_divider_line_color"
+       android:visibility="gone"/>
+-</RelativeLayout>
+\ No newline at end of file
++</RelativeLayout>
+diff --git a/java/com/android/dialer/calldetails/res/values/strings.xml b/java/com/android/dialer/calldetails/res/values/strings.xml
+index c3fff20bc..ecf078827 100644
+--- a/java/com/android/dialer/calldetails/res/values/strings.xml
++++ b/java/com/android/dialer/calldetails/res/values/strings.xml
+@@ -61,4 +61,11 @@
+ 
+   <!-- String shown when RTT transcript is available. [CHAR LIMIT=NONE] -->
+   <string name="rtt_transcript_link">See transcript</string>
++
++  <!-- Call recording -->
++  <plurals name="play_recordings">
++      <item quantity="one">Play recording</item>
++      <item quantity="other">Play recordings</item>
++  </plurals>
++  <string name="call_playback_no_app_found_toast">No app could be found for playback of the selected recording.</string>
+ </resources>
+diff --git a/java/com/android/dialer/callrecord/AndroidManifest.xml b/java/com/android/dialer/callrecord/AndroidManifest.xml
+new file mode 100644
+index 000000000..5e25c7351
+--- /dev/null
++++ b/java/com/android/dialer/callrecord/AndroidManifest.xml
+@@ -0,0 +1,26 @@
++<!-- Copyright (C) 2018 The LineageOS Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++  package="com.android.dialer">
++
++  <uses-permission android:name="android.permission.RECORD_AUDIO" />
++  <uses-permission android:name="android.permission.CAPTURE_AUDIO_OUTPUT" />
++
++  <application>
++    <service android:name="com.android.dialer.callrecord.impl.CallRecorderService"
++        android:process="com.android.incallui" />
++  </application>
++</manifest>
+diff --git a/java/com/android/dialer/callrecord/CallRecording.aidl b/java/com/android/dialer/callrecord/CallRecording.aidl
+new file mode 100644
+index 000000000..e8d65bef2
+--- /dev/null
++++ b/java/com/android/dialer/callrecord/CallRecording.aidl
+@@ -0,0 +1,3 @@
++package com.android.dialer.callrecord;
++
++parcelable CallRecording;
+diff --git a/java/com/android/dialer/callrecord/CallRecording.java b/java/com/android/dialer/callrecord/CallRecording.java
+new file mode 100644
+index 000000000..9fd77b46e
+--- /dev/null
++++ b/java/com/android/dialer/callrecord/CallRecording.java
+@@ -0,0 +1,84 @@
++/*
++ * Copyright (C) 2014 The CyanogenMod Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callrecord;
++
++import android.os.Environment;
++import android.os.Parcel;
++import android.os.Parcelable;
++
++import java.io.File;
++
++public final class CallRecording implements Parcelable {
++  public String phoneNumber;
++  public long creationTime;
++  public String fileName;
++  public long startRecordingTime;
++
++  private static final String PUBLIC_DIRECTORY_NAME = "CallRecordings";
++
++  public static final Parcelable.Creator<CallRecording> CREATOR =
++      new Parcelable.Creator<CallRecording>() {
++    @Override
++    public CallRecording createFromParcel(Parcel in) {
++      return new CallRecording(in);
++    }
++
++    @Override
++    public CallRecording[] newArray(int size) {
++      return new CallRecording[size];
++    }
++  };
++
++  public CallRecording(String phoneNumber, long creationTime,
++      String fileName, long startRecordingTime) {
++    this.phoneNumber = phoneNumber;
++    this.creationTime = creationTime;
++    this.fileName = fileName;
++    this.startRecordingTime = startRecordingTime;
++  }
++
++  public CallRecording(Parcel in) {
++    phoneNumber = in.readString();
++    creationTime = in.readLong();
++    fileName = in.readString();
++    startRecordingTime = in.readLong();
++  }
++
++  public File getFile() {
++    File dir = Environment.getExternalStoragePublicDirectory(PUBLIC_DIRECTORY_NAME);
++    return new File(dir, fileName);
++  }
++
++  @Override
++  public void writeToParcel(Parcel out, int flags) {
++    out.writeString(phoneNumber);
++    out.writeLong(creationTime);
++    out.writeString(fileName);
++    out.writeLong(startRecordingTime);
++  }
++
++  @Override
++  public int describeContents() {
++    return 0;
++  }
++
++  @Override
++  public String toString() {
++    return "phoneNumber=" + phoneNumber + ", creationTime=" + creationTime +
++        ", fileName=" + fileName + ", startRecordingTime=" + startRecordingTime;
++  }
++}
+diff --git a/java/com/android/dialer/callrecord/CallRecordingDataStore.java b/java/com/android/dialer/callrecord/CallRecordingDataStore.java
+new file mode 100644
+index 000000000..59020ff3a
+--- /dev/null
++++ b/java/com/android/dialer/callrecord/CallRecordingDataStore.java
+@@ -0,0 +1,177 @@
++/*
++ * Copyright (C) 2014 The CyanogenMod Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callrecord;
++
++import android.content.Context;
++import android.database.Cursor;
++import android.database.sqlite.SQLiteDatabase;
++import android.database.sqlite.SQLiteException;
++import android.database.sqlite.SQLiteOpenHelper;
++import android.database.sqlite.SQLiteStatement;
++import android.provider.BaseColumns;
++import android.util.Log;
++
++import java.util.ArrayList;
++import java.util.List;
++
++/**
++ * Persistent data store for call recordings.  Usage:
++ * open()
++ * read/write operations
++ * close()
++ */
++public class CallRecordingDataStore {
++  private static final String TAG = "CallRecordingStore";
++  private SQLiteOpenHelper mOpenHelper = null;
++  private SQLiteDatabase mDatabase = null;
++
++  /**
++   * Open before reading/writing.  Will not open handle if one is already open.
++   */
++  public void open(Context context) {
++    if (mDatabase == null) {
++      mOpenHelper = new CallRecordingSQLiteOpenHelper(context);
++      mDatabase = mOpenHelper.getWritableDatabase();
++    }
++  }
++
++  /**
++   * close when finished reading/writing
++   */
++  public void close() {
++    if (mDatabase != null) {
++      mDatabase.close();
++    }
++    if (mOpenHelper != null) {
++      mOpenHelper.close();
++    }
++    mDatabase = null;
++    mOpenHelper = null;
++  }
++
++  /**
++   * Save a recording in the data store
++   *
++   * @param recording the recording to store
++   */
++  public void putRecording(CallRecording recording) {
++    final String insertSql = "INSERT INTO " +
++        CallRecordingsContract.CallRecording.TABLE_NAME + " (" +
++        CallRecordingsContract.CallRecording.COLUMN_NAME_PHONE_NUMBER + ", " +
++        CallRecordingsContract.CallRecording.COLUMN_NAME_CALL_DATE + ", " +
++        CallRecordingsContract.CallRecording.COLUMN_NAME_RECORDING_FILENAME + ", " +
++        CallRecordingsContract.CallRecording.COLUMN_NAME_CREATION_DATE + ") " +
++        " VALUES (?, ?, ?, ?)";
++
++    try {
++      SQLiteStatement stmt = mDatabase.compileStatement(insertSql);
++      int idx = 1;
++      stmt.bindString(idx++, recording.phoneNumber);
++      stmt.bindLong(idx++, recording.creationTime);
++      stmt.bindString(idx++, recording.fileName);
++      stmt.bindLong(idx++, System.currentTimeMillis());
++      long id = stmt.executeInsert();
++      Log.i(TAG, "Saved recording " + recording + " with id " + id);
++    } catch (SQLiteException e) {
++      Log.w(TAG, "Failed to save recording " + recording, e);
++    }
++  }
++
++  /**
++   * Get all recordings associated with a phone call
++   *
++   * @param phoneNumber phone number no spaces
++   * @param callCreationDate time that the call was created
++   * @return list of recordings
++   */
++  public List<CallRecording> getRecordings(String phoneNumber, long callCreationDate) {
++    List<CallRecording> resultList = new ArrayList<CallRecording>();
++
++    final String query = "SELECT " +
++        CallRecordingsContract.CallRecording.COLUMN_NAME_RECORDING_FILENAME + "," +
++        CallRecordingsContract.CallRecording.COLUMN_NAME_CREATION_DATE +
++        " FROM " + CallRecordingsContract.CallRecording.TABLE_NAME +
++        " WHERE " + CallRecordingsContract.CallRecording.COLUMN_NAME_PHONE_NUMBER + " = ?" +
++        " AND " + CallRecordingsContract.CallRecording.COLUMN_NAME_CALL_DATE + " = ?" +
++        " ORDER BY " + CallRecordingsContract.CallRecording.COLUMN_NAME_CREATION_DATE;
++
++    String args[] = {
++      phoneNumber, String.valueOf(callCreationDate)
++    };
++
++    try {
++      Cursor cursor = mDatabase.rawQuery(query, args);
++      while (cursor.moveToNext()) {
++        String fileName = cursor.getString(0);
++        long creationDate = cursor.getLong(1);
++        CallRecording recording =
++                new CallRecording(phoneNumber, callCreationDate, fileName, creationDate);
++        if (recording.getFile().exists()) {
++            resultList.add(recording);
++        }
++      }
++      cursor.close();
++    } catch (SQLiteException e) {
++      Log.w(TAG, "Failed to fetch recordings for number " + phoneNumber +
++          ", date " + callCreationDate, e);
++    }
++
++    return resultList;
++  }
++
++  static class CallRecordingsContract {
++    static interface CallRecording extends BaseColumns {
++      static final String TABLE_NAME = "call_recordings";
++      static final String COLUMN_NAME_PHONE_NUMBER = "phone_number";
++      static final String COLUMN_NAME_CALL_DATE = "call_date";
++      static final String COLUMN_NAME_RECORDING_FILENAME = "recording_filename";
++      static final String COLUMN_NAME_CREATION_DATE = "creation_date";
++    }
++  }
++
++  static class CallRecordingSQLiteOpenHelper extends SQLiteOpenHelper {
++    private static final int VERSION = 1;
++    private static final String DB_NAME = "callrecordings.db";
++
++    public CallRecordingSQLiteOpenHelper(Context context) {
++      super(context, DB_NAME, null, VERSION);
++    }
++
++    @Override
++    public void onCreate(SQLiteDatabase db) {
++      db.execSQL("CREATE TABLE " + CallRecordingsContract.CallRecording.TABLE_NAME + " (" +
++          CallRecordingsContract.CallRecording._ID + " INTEGER PRIMARY KEY AUTOINCREMENT," +
++          CallRecordingsContract.CallRecording.COLUMN_NAME_PHONE_NUMBER + " TEXT," +
++          CallRecordingsContract.CallRecording.COLUMN_NAME_CALL_DATE + " LONG," +
++          CallRecordingsContract.CallRecording.COLUMN_NAME_RECORDING_FILENAME + " TEXT, " +
++          CallRecordingsContract.CallRecording.COLUMN_NAME_CREATION_DATE + " LONG" +
++          ");"
++      );
++
++      db.execSQL("CREATE INDEX IF NOT EXISTS phone_number_call_date_index ON " +
++          CallRecordingsContract.CallRecording.TABLE_NAME + " (" +
++          CallRecordingsContract.CallRecording.COLUMN_NAME_PHONE_NUMBER + ", " +
++          CallRecordingsContract.CallRecording.COLUMN_NAME_CALL_DATE + ");"
++      );
++    }
++
++    @Override
++    public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
++        // implement if we change the schema
++    }
++  }
++}
+diff --git a/java/com/android/dialer/callrecord/ICallRecorderService.aidl b/java/com/android/dialer/callrecord/ICallRecorderService.aidl
+new file mode 100644
+index 000000000..acbd5f8bb
+--- /dev/null
++++ b/java/com/android/dialer/callrecord/ICallRecorderService.aidl
+@@ -0,0 +1,37 @@
++package com.android.dialer.callrecord;
++
++import com.android.dialer.callrecord.CallRecording;
++
++/**
++ * Service for recording phone calls.  Only one recording may be active at a time
++ * (i.e. every call to startRecording should be followed by a call to stopRecording).
++ */
++interface ICallRecorderService {
++  /**
++   * Start a recording.
++   *
++   * @return true if recording started successfully
++   */
++  boolean startRecording(String phoneNumber, long creationTime);
++
++  /**
++   * stops the current recording
++   *
++   * @return call recording data including the output filename
++   */
++  CallRecording stopRecording();
++
++  /**
++   * Recording status
++   *
++   * @return true if there is an active recording
++   */
++  boolean isRecording();
++
++  /**
++   * Get recording currently in progress
++   *
++   * @return call recording object
++   */
++  CallRecording getActiveRecording();
++}
+diff --git a/java/com/android/dialer/callrecord/impl/CallRecorderService.java b/java/com/android/dialer/callrecord/impl/CallRecorderService.java
+new file mode 100644
+index 000000000..1d4c9b34c
+--- /dev/null
++++ b/java/com/android/dialer/callrecord/impl/CallRecorderService.java
+@@ -0,0 +1,238 @@
++/*
++ * Copyright (C) 2014 The CyanogenMod Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callrecord.impl;
++
++import android.app.Service;
++import android.content.Context;
++import android.content.Intent;
++import android.content.SharedPreferences;
++import android.content.pm.PackageManager;
++import android.media.MediaRecorder;
++import android.media.MediaScannerConnection;
++import android.os.IBinder;
++import android.os.RemoteException;
++import android.os.SystemProperties;
++import android.text.TextUtils;
++import android.provider.Settings;
++import android.util.Log;
++
++import com.android.dialer.callrecord.CallRecording;
++import com.android.dialer.callrecord.ICallRecorderService;
++
++import java.io.File;
++import java.io.IOException;
++import java.text.SimpleDateFormat;
++import java.util.Date;
++
++import com.android.dialer.R;
++
++public class CallRecorderService extends Service {
++  private static final String TAG = "CallRecorderService";
++  private static final boolean DBG = false;
++
++  private static enum RecorderState {
++    IDLE,
++    RECORDING
++  };
++
++  private MediaRecorder mMediaRecorder = null;
++  private RecorderState mState = RecorderState.IDLE;
++  private CallRecording mCurrentRecording = null;
++
++  private static final String AUDIO_SOURCE_PROPERTY = "persist.call_recording.src";
++
++  private SimpleDateFormat DATE_FORMAT = new SimpleDateFormat("yyMMdd_HHmmssSSS");
++
++  private final ICallRecorderService.Stub mBinder = new ICallRecorderService.Stub() {
++    @Override
++    public CallRecording stopRecording() {
++      if (getState() == RecorderState.RECORDING) {
++        stopRecordingInternal();
++        return mCurrentRecording;
++      }
++      return null;
++    }
++
++    @Override
++    public boolean startRecording(String phoneNumber, long creationTime) throws RemoteException {
++      String fileName = generateFilename(phoneNumber);
++      mCurrentRecording = new CallRecording(phoneNumber, creationTime,
++          fileName, System.currentTimeMillis());
++      return startRecordingInternal(mCurrentRecording.getFile());
++    }
++
++    @Override
++    public boolean isRecording() throws RemoteException {
++      return getState() == RecorderState.RECORDING;
++    }
++
++    @Override
++    public CallRecording getActiveRecording() throws RemoteException {
++      return mCurrentRecording;
++    }
++  };
++
++  @Override
++  public void onCreate() {
++    if (DBG) Log.d(TAG, "Creating CallRecorderService");
++  }
++
++  @Override
++  public IBinder onBind(Intent intent) {
++    return mBinder;
++  }
++
++  private int getAudioSource() {
++    int defaultValue = getResources().getInteger(R.integer.call_recording_audio_source);
++    return SystemProperties.getInt(AUDIO_SOURCE_PROPERTY, defaultValue);
++  }
++
++  private int getAudioFormatChoice() {
++    // This replicates PreferenceManager.getDefaultSharedPreferences, except
++    // that we need multi process preferences, as the pref is written in a separate
++    // process (com.android.dialer vs. com.android.incallui)
++    final String prefName = getPackageName() + "_preferences";
++    final SharedPreferences prefs = getSharedPreferences(prefName, MODE_MULTI_PROCESS);
++
++    try {
++      String value = prefs.getString(getString(R.string.call_recording_format_key), null);
++      if (value != null) {
++        return Integer.parseInt(value);
++      }
++    } catch (NumberFormatException e) {
++      // ignore and fall through
++    }
++    return 1;
++  }
++
++  private synchronized boolean startRecordingInternal(File file) {
++    if (mMediaRecorder != null) {
++      if (DBG) {
++        Log.d(TAG, "Start called with recording in progress, stopping  current recording");
++      }
++      stopRecordingInternal();
++    }
++
++    if (checkSelfPermission(android.Manifest.permission.RECORD_AUDIO)
++        != PackageManager.PERMISSION_GRANTED) {
++      Log.w(TAG, "Record audio permission not granted, can't record call");
++      return false;
++    }
++    if (checkSelfPermission(android.Manifest.permission.WRITE_EXTERNAL_STORAGE)
++        != PackageManager.PERMISSION_GRANTED) {
++      Log.w(TAG, "External storage permission not granted, can't save recorded call");
++      return false;
++    }
++
++    if (DBG) Log.d(TAG, "Starting recording");
++
++    mMediaRecorder = new MediaRecorder();
++    try {
++      int audioSource = getAudioSource();
++      int formatChoice = getAudioFormatChoice();
++      if (DBG) Log.d(TAG, "Creating media recorder with audio source " + audioSource);
++      mMediaRecorder.setAudioSource(audioSource);
++      mMediaRecorder.setOutputFormat(formatChoice == 0
++          ? MediaRecorder.OutputFormat.AMR_WB : MediaRecorder.OutputFormat.MPEG_4);
++      mMediaRecorder.setAudioEncoder(formatChoice == 0
++          ? MediaRecorder.AudioEncoder.AMR_WB : MediaRecorder.AudioEncoder.AAC);
++    } catch (IllegalStateException e) {
++      Log.w(TAG, "Error initializing media recorder", e);
++      return false;
++    }
++
++    file.getParentFile().mkdirs();
++    String outputPath = file.getAbsolutePath();
++    if (DBG) Log.d(TAG, "Writing output to file " + outputPath);
++
++    try {
++      mMediaRecorder.setOutputFile(outputPath);
++      mMediaRecorder.prepare();
++      mMediaRecorder.start();
++      mState = RecorderState.RECORDING;
++      return true;
++    } catch (IOException e) {
++      Log.w(TAG, "Could not start recording for file " + outputPath, e);
++      Log.w(TAG, "Deleting failed recording " + outputPath);
++      file.delete();
++    } catch (IllegalStateException e) {
++      Log.w(TAG, "Could not start recording for file " + outputPath, e);
++      Log.w(TAG, "Deleting failed recording " + outputPath);
++      file.delete();
++    } catch (RuntimeException e) {
++      // only catch exceptions thrown by the MediaRecorder JNI code
++      if (e.getMessage().indexOf("start failed") >= 0) {
++        Log.w(TAG, "Could not start recording for file " + outputPath, e);
++        Log.w(TAG, "Deleting failed recording " + outputPath);
++        file.delete();
++      } else {
++        throw e;
++      }
++    }
++
++    mMediaRecorder.reset();
++    mMediaRecorder.release();
++    mMediaRecorder = null;
++
++    return false;
++  }
++
++  private synchronized void stopRecordingInternal() {
++    if (DBG) Log.d(TAG, "Stopping current recording");
++    if (mMediaRecorder != null) {
++      try {
++        if (getState() == RecorderState.RECORDING) {
++          mMediaRecorder.stop();
++          mMediaRecorder.reset();
++          mMediaRecorder.release();
++        }
++      } catch (IllegalStateException e) {
++        Log.e(TAG, "Exception closing media recorder", e);
++      }
++      MediaScannerConnection.scanFile(this,
++          new String[] { mCurrentRecording.fileName }, null, null);
++      mMediaRecorder = null;
++      mState = RecorderState.IDLE;
++    }
++  }
++
++  @Override
++  public void onDestroy() {
++    super.onDestroy();
++    if (DBG) Log.d(TAG, "Destroying CallRecorderService");
++  }
++
++  private synchronized RecorderState getState() {
++    return mState;
++  }
++
++  private String generateFilename(String number) {
++    String timestamp = DATE_FORMAT.format(new Date());
++
++    if (TextUtils.isEmpty(number)) {
++      number = "unknown";
++    }
++
++    int formatChoice = getAudioFormatChoice();
++    String extension = formatChoice == 0 ? ".amr" : ".m4a";
++    return number + "_" + timestamp + extension;
++  }
++
++  public static boolean isEnabled(Context context) {
++    return context.getResources().getBoolean(R.bool.call_recording_enabled);
++  }
++}
+diff --git a/java/com/android/dialer/callrecord/res/values/config.xml b/java/com/android/dialer/callrecord/res/values/config.xml
+new file mode 100644
+index 000000000..6162ffc13
+--- /dev/null
++++ b/java/com/android/dialer/callrecord/res/values/config.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="UTF-8"?>
++<!--
++     Copyright (C) 2015 The CyanogenMod Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<resources>
++    <bool name="call_recording_enabled">true</bool>
++    <integer name="call_recording_audio_source">1</integer>
++</resources>
+diff --git a/java/com/android/incallui/CallButtonPresenter.java b/java/com/android/incallui/CallButtonPresenter.java
+index 7d12d5281..3c608c3a4 100644
+--- a/java/com/android/incallui/CallButtonPresenter.java
++++ b/java/com/android/incallui/CallButtonPresenter.java
+@@ -16,9 +16,13 @@
+ 
+ package com.android.incallui;
+ 
++import android.app.AlertDialog;
+ import android.content.Context;
++import android.content.SharedPreferences;
++import android.content.pm.PackageManager;
+ import android.os.Bundle;
+ import android.os.Trace;
++import android.preference.PreferenceManager;
+ import android.support.v4.app.Fragment;
+ import android.support.v4.os.UserManagerCompat;
+ import android.telecom.CallAudioState;
+@@ -40,6 +44,7 @@ import com.android.incallui.InCallPresenter.IncomingCallListener;
+ import com.android.incallui.audiomode.AudioModeProvider;
+ import com.android.incallui.audiomode.AudioModeProvider.AudioModeListener;
+ import com.android.incallui.call.CallList;
++import com.android.incallui.call.CallRecorder;
+ import com.android.incallui.call.DialerCall;
+ import com.android.incallui.call.DialerCall.CameraDirection;
+ import com.android.incallui.call.TelecomAdapter;
+@@ -72,6 +77,25 @@ public class CallButtonPresenter
+   private boolean isInCallButtonUiReady;
+   private PhoneAccountHandle otherAccount;
+ 
++  private CallRecorder.RecordingProgressListener recordingProgressListener =
++      new CallRecorder.RecordingProgressListener() {
++    @Override
++    public void onStartRecording() {
++      inCallButtonUi.setCallRecordingState(true);
++      inCallButtonUi.setCallRecordingDuration(0);
++    }
++
++    @Override
++    public void onStopRecording() {
++      inCallButtonUi.setCallRecordingState(false);
++    }
++
++    @Override
++    public void onRecordingTimeProgress(final long elapsedTimeMs) {
++      inCallButtonUi.setCallRecordingDuration(elapsedTimeMs);
++    }
++  };
++
+   public CallButtonPresenter(Context context) {
+     this.context = context.getApplicationContext();
+   }
+@@ -90,6 +114,9 @@ public class CallButtonPresenter
+     inCallPresenter.addCanAddCallListener(this);
+     inCallPresenter.getInCallCameraManager().addCameraSelectionListener(this);
+ 
++    CallRecorder recorder = CallRecorder.getInstance();
++    recorder.addRecordingProgressListener(recordingProgressListener);
++
+     // Update the buttons state immediately for the current call
+     onStateChange(InCallState.NO_CALLS, inCallPresenter.getInCallState(), CallList.getInstance());
+     isInCallButtonUiReady = true;
+@@ -105,6 +132,10 @@ public class CallButtonPresenter
+     InCallPresenter.getInstance().removeDetailsListener(this);
+     InCallPresenter.getInstance().getInCallCameraManager().removeCameraSelectionListener(this);
+     InCallPresenter.getInstance().removeCanAddCallListener(this);
++
++    CallRecorder recorder = CallRecorder.getInstance();
++    recorder.removeRecordingProgressListener(recordingProgressListener);
++
+     isInCallButtonUiReady = false;
+   }
+ 
+@@ -300,6 +331,36 @@ public class CallButtonPresenter
+     getActivity().showDialpadFragment(checked /* show */, true /* animate */);
+   }
+ 
++  @Override
++  public void callRecordClicked(boolean checked) {
++    CallRecorder recorder = CallRecorder.getInstance();
++    if (checked) {
++        startCallRecordingOrAskForPermission();
++    } else {
++      if (recorder.isRecording()) {
++        recorder.finishRecording();
++      }
++    }
++  }
++
++  private void startCallRecordingOrAskForPermission() {
++    if (hasAllPermissions(CallRecorder.REQUIRED_PERMISSIONS)) {
++      CallRecorder recorder = CallRecorder.getInstance();
++      recorder.startRecording(call.getNumber(), call.getCreationTimeMillis());
++    } else {
++      inCallButtonUi.requestCallRecordingPermissions(CallRecorder.REQUIRED_PERMISSIONS);
++    }
++  }
++
++  private boolean hasAllPermissions(String[] permissions) {
++    for (String p : permissions) {
++      if (context.checkSelfPermission(p) != PackageManager.PERMISSION_GRANTED) {
++        return false;
++      }
++    }
++    return true;
++  }
++
+   @Override
+   public void changeToVideoClicked() {
+     LogUtil.enterBlock("CallButtonPresenter.changeToVideoClicked");
+@@ -487,6 +548,10 @@ public class CallButtonPresenter
+             && call.getState() != DialerCallState.DIALING
+             && call.getState() != DialerCallState.CONNECTING;
+ 
++    final CallRecorder recorder = CallRecorder.getInstance();
++    final boolean showCallRecordOption = recorder.isEnabled()
++        && !isVideo && call.getState() == DialerCallState.ACTIVE;
++
+     otherAccount = TelecomUtil.getOtherAccount(getContext(), call.getAccountHandle());
+     boolean showSwapSim =
+         !call.isEmergencyCall()
+@@ -520,6 +585,7 @@ public class CallButtonPresenter
+     }
+     inCallButtonUi.showButton(InCallButtonIds.BUTTON_DIALPAD, true);
+     inCallButtonUi.showButton(InCallButtonIds.BUTTON_MERGE, showMerge);
++    inCallButtonUi.showButton(InCallButtonIds.BUTTON_RECORD_CALL, showCallRecordOption);
+ 
+     inCallButtonUi.updateButtonStates();
+   }
+diff --git a/java/com/android/incallui/InCallServiceImpl.java b/java/com/android/incallui/InCallServiceImpl.java
+index b9d0eccba..b2d318f5d 100644
+--- a/java/com/android/incallui/InCallServiceImpl.java
++++ b/java/com/android/incallui/InCallServiceImpl.java
+@@ -27,6 +27,7 @@ import com.android.dialer.blocking.FilteredNumberAsyncQueryHandler;
+ import com.android.dialer.feedback.FeedbackComponent;
+ import com.android.incallui.audiomode.AudioModeProvider;
+ import com.android.incallui.call.CallList;
++import com.android.incallui.call.CallRecorder;
+ import com.android.incallui.call.ExternalCallList;
+ import com.android.incallui.call.TelecomAdapter;
+ import com.android.incallui.speakeasy.SpeakEasyCallManager;
+@@ -112,6 +113,7 @@ public class InCallServiceImpl extends InCallService {
+     InCallPresenter.getInstance().onServiceBind();
+     InCallPresenter.getInstance().maybeStartRevealAnimation(intent);
+     TelecomAdapter.getInstance().setInCallService(this);
++    CallRecorder.getInstance().setUp(context);
+     returnToCallController =
+         new ReturnToCallController(this, ContactInfoCache.getInstance(context));
+     feedbackListener = FeedbackComponent.get(context).getCallFeedbackListener();
+diff --git a/java/com/android/incallui/call/CallList.java b/java/com/android/incallui/call/CallList.java
+index 634a302a2..8428c8484 100644
+--- a/java/com/android/incallui/call/CallList.java
++++ b/java/com/android/incallui/call/CallList.java
+@@ -26,6 +26,7 @@ import android.support.annotation.VisibleForTesting;
+ import android.telecom.Call;
+ import android.telecom.DisconnectCause;
+ import android.telecom.PhoneAccount;
++import android.text.TextUtils;
+ import android.util.ArrayMap;
+ import com.android.dialer.blocking.FilteredNumberAsyncQueryHandler;
+ import com.android.dialer.common.Assert;
+@@ -535,6 +536,15 @@ public class CallList implements DialerCallDelegate {
+     return retval;
+   }
+ 
++  public DialerCall getCallWithStateAndNumber(int state, String number) {
++    for (DialerCall call : callById.values()) {
++      if (TextUtils.equals(call.getNumber(), number) && call.getState() == state) {
++        return call;
++      }
++    }
++    return null;
++  }
++
+   /**
+    * Return if there is any active or background call which was not a parent call (never had a child
+    * call)
+diff --git a/java/com/android/incallui/call/CallRecorder.java b/java/com/android/incallui/call/CallRecorder.java
+new file mode 100644
+index 000000000..0525c40b2
+--- /dev/null
++++ b/java/com/android/incallui/call/CallRecorder.java
+@@ -0,0 +1,280 @@
++/*
++ * Copyright (C) 2014 The CyanogenMod Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.incallui.call;
++
++import android.content.ComponentName;
++import android.content.Context;
++import android.content.Intent;
++import android.content.ServiceConnection;
++import android.os.Handler;
++import android.os.IBinder;
++import android.os.Looper;
++import android.os.RemoteException;
++import android.os.SystemProperties;
++import android.text.TextUtils;
++import android.util.Log;
++import android.widget.Toast;
++
++import com.android.dialer.R;
++import com.android.dialer.callrecord.CallRecordingDataStore;
++import com.android.dialer.callrecord.CallRecording;
++import com.android.dialer.callrecord.ICallRecorderService;
++import com.android.dialer.callrecord.impl.CallRecorderService;
++import com.android.incallui.call.state.DialerCallState;
++
++import java.util.Date;
++import java.util.HashSet;
++
++/**
++ * InCall UI's interface to the call recorder
++ *
++ * Manages the call recorder service lifecycle.  We bind to the service whenever an active call
++ * is established, and unbind when all calls have been disconnected.
++ */
++public class CallRecorder implements CallList.Listener {
++  public static final String TAG = "CallRecorder";
++
++  public static final String[] REQUIRED_PERMISSIONS = new String[] {
++    android.Manifest.permission.RECORD_AUDIO,
++    android.Manifest.permission.WRITE_EXTERNAL_STORAGE
++  };
++
++  private static CallRecorder instance = null;
++
++  private Context context;
++  private boolean initialized = false;
++  private ICallRecorderService service = null;
++
++  private HashSet<RecordingProgressListener> progressListeners =
++      new HashSet<RecordingProgressListener>();
++  private Handler handler = new Handler();
++
++  private ServiceConnection connection = new ServiceConnection() {
++    @Override
++    public void onServiceConnected(ComponentName name, IBinder service) {
++      CallRecorder.this.service = ICallRecorderService.Stub.asInterface(service);
++    }
++
++    @Override
++    public void onServiceDisconnected(ComponentName name) {
++      CallRecorder.this.service = null;
++    }
++  };
++
++  public static CallRecorder getInstance() {
++    if (instance == null) {
++      instance = new CallRecorder();
++    }
++    return instance;
++  }
++
++  public boolean isEnabled() {
++    return CallRecorderService.isEnabled(context);
++  }
++
++  private CallRecorder() {
++    CallList.getInstance().addListener(this);
++  }
++
++  public void setUp(Context context) {
++    this.context = context.getApplicationContext();
++  }
++
++  private void initialize() {
++    if (isEnabled() && !initialized) {
++      Intent serviceIntent = new Intent(context, CallRecorderService.class);
++      context.bindService(serviceIntent, connection, Context.BIND_AUTO_CREATE);
++      initialized = true;
++    }
++  }
++
++  private void uninitialize() {
++    if (initialized) {
++      context.unbindService(connection);
++      initialized = false;
++    }
++  }
++
++  public boolean startRecording(final String phoneNumber, final long creationTime) {
++    if (service == null) {
++      return false;
++    }
++
++    try {
++      if (service.startRecording(phoneNumber, creationTime)) {
++        for (RecordingProgressListener l : progressListeners) {
++          l.onStartRecording();
++        }
++        updateRecordingProgressTask.run();
++        return true;
++      } else {
++        Toast.makeText(context, R.string.call_recording_failed_message, Toast.LENGTH_SHORT)
++            .show();
++      }
++    } catch (RemoteException e) {
++      Log.w(TAG, "Failed to start recording " + phoneNumber + ", " + new Date(creationTime), e);
++    }
++
++    return false;
++  }
++
++  public boolean isRecording() {
++    if (service == null) {
++      return false;
++    }
++
++    try {
++      return service.isRecording();
++    } catch (RemoteException e) {
++      Log.w(TAG, "Exception checking recording status", e);
++    }
++    return false;
++  }
++
++  public CallRecording getActiveRecording() {
++    if (service == null) {
++      return null;
++    }
++
++    try {
++      return service.getActiveRecording();
++    } catch (RemoteException e) {
++      Log.w("Exception getting active recording", e);
++    }
++    return null;
++  }
++
++  public void finishRecording() {
++    if (service != null) {
++      try {
++        final CallRecording recording = service.stopRecording();
++        if (recording != null) {
++          if (!TextUtils.isEmpty(recording.phoneNumber)) {
++            new Thread(() -> {
++              CallRecordingDataStore dataStore = new CallRecordingDataStore();
++              dataStore.open(context);
++              dataStore.putRecording(recording);
++              dataStore.close();
++            }).start();
++          } else {
++            // Data store is an index by number so that we can link recordings in the
++            // call detail page.  If phone number is not available (conference call or
++            // unknown number) then just display a toast.
++            String msg = context.getResources().getString(
++                R.string.call_recording_file_location, recording.fileName);
++            Toast.makeText(context, msg, Toast.LENGTH_SHORT).show();
++          }
++        }
++      } catch (RemoteException e) {
++        Log.w(TAG, "Failed to stop recording", e);
++      }
++    }
++
++    for (RecordingProgressListener l : progressListeners) {
++      l.onStopRecording();
++    }
++    handler.removeCallbacks(updateRecordingProgressTask);
++  }
++
++  //
++  // Call list listener methods.
++  //
++  @Override
++  public void onIncomingCall(DialerCall call) {
++    // do nothing
++  }
++
++  @Override
++  public void onCallListChange(final CallList callList) {
++    if (!initialized && callList.getActiveCall() != null) {
++      // we'll come here if this is the first active call
++      initialize();
++    } else {
++      // we can come down this branch to resume a call that was on hold
++      CallRecording active = getActiveRecording();
++      if (active != null) {
++        DialerCall call =
++            callList.getCallWithStateAndNumber(DialerCallState.ONHOLD, active.phoneNumber);
++        if (call != null) {
++          // The call associated with the active recording has been placed
++          // on hold, so stop the recording.
++          finishRecording();
++        }
++      }
++    }
++  }
++
++  @Override
++  public void onDisconnect(final DialerCall call) {
++    CallRecording active = getActiveRecording();
++    if (active != null && TextUtils.equals(call.getNumber(), active.phoneNumber)) {
++      // finish the current recording if the call gets disconnected
++      finishRecording();
++    }
++
++    // tear down the service if there are no more active calls
++    if (CallList.getInstance().getActiveCall() == null) {
++      uninitialize();
++    }
++  }
++
++  @Override
++  public void onUpgradeToVideo(DialerCall call) {}
++
++  @Override
++  public void onSessionModificationStateChange(DialerCall call) {}
++
++  @Override
++  public void onWiFiToLteHandover(DialerCall call) {}
++
++  @Override
++  public void onHandoverToWifiFailed(DialerCall call) {}
++
++  @Override
++  public void onInternationalCallOnWifi(DialerCall call) {}
++
++  // allow clients to listen for recording progress updates
++  public interface RecordingProgressListener {
++    void onStartRecording();
++    void onStopRecording();
++    void onRecordingTimeProgress(long elapsedTimeMs);
++  }
++
++  public void addRecordingProgressListener(RecordingProgressListener listener) {
++    progressListeners.add(listener);
++  }
++
++  public void removeRecordingProgressListener(RecordingProgressListener listener) {
++    progressListeners.remove(listener);
++  }
++
++  private static final int UPDATE_INTERVAL = 500;
++
++  private Runnable updateRecordingProgressTask = new Runnable() {
++    @Override
++    public void run() {
++      CallRecording active = getActiveRecording();
++      if (active != null) {
++        long elapsed = System.currentTimeMillis() - active.startRecordingTime;
++        for (RecordingProgressListener l : progressListeners) {
++          l.onRecordingTimeProgress(elapsed);
++        }
++      }
++      handler.postDelayed(this, UPDATE_INTERVAL);
++    }
++  };
++}
+diff --git a/java/com/android/incallui/callpending/CallPendingActivity.java b/java/com/android/incallui/callpending/CallPendingActivity.java
+index a686308c2..e98b2d4da 100644
+--- a/java/com/android/incallui/callpending/CallPendingActivity.java
++++ b/java/com/android/incallui/callpending/CallPendingActivity.java
+@@ -287,6 +287,9 @@ public class CallPendingActivity extends FragmentActivity
+           @Override
+           public void swapSimClicked() {}
+ 
++          @Override
++          public void callRecordClicked(boolean checked) {}
++
+           @Override
+           public Context getContext() {
+             return CallPendingActivity.this;
+diff --git a/java/com/android/incallui/incall/impl/ButtonChooserFactory.java b/java/com/android/incallui/incall/impl/ButtonChooserFactory.java
+index 757d81352..733dcf96d 100644
+--- a/java/com/android/incallui/incall/impl/ButtonChooserFactory.java
++++ b/java/com/android/incallui/incall/impl/ButtonChooserFactory.java
+@@ -117,9 +117,10 @@ class ButtonChooserFactory {
+     mapping.put(InCallButtonIds.BUTTON_MUTE, MappingInfo.builder(0).build());
+     mapping.put(InCallButtonIds.BUTTON_DIALPAD, MappingInfo.builder(1).build());
+     mapping.put(InCallButtonIds.BUTTON_AUDIO, MappingInfo.builder(2).build());
+-    mapping.put(InCallButtonIds.BUTTON_MERGE, MappingInfo.builder(3).setSlotOrder(5).build());
+-    mapping.put(InCallButtonIds.BUTTON_ADD_CALL, MappingInfo.builder(3).build());
+-    mapping.put(InCallButtonIds.BUTTON_SWAP_SIM, MappingInfo.builder(4).build());
++    mapping.put(InCallButtonIds.BUTTON_RECORD_CALL, MappingInfo.builder(3).build());
++    mapping.put(InCallButtonIds.BUTTON_MERGE, MappingInfo.builder(4).setSlotOrder(5).build());
++    mapping.put(InCallButtonIds.BUTTON_ADD_CALL, MappingInfo.builder(4).build());
++    mapping.put(InCallButtonIds.BUTTON_SWAP_SIM, MappingInfo.builder(5).build());
+     return mapping;
+   }
+ }
+diff --git a/java/com/android/incallui/incall/impl/ButtonController.java b/java/com/android/incallui/incall/impl/ButtonController.java
+index 328ebbe67..2ad3d3e6d 100644
+--- a/java/com/android/incallui/incall/impl/ButtonController.java
++++ b/java/com/android/incallui/incall/impl/ButtonController.java
+@@ -16,6 +16,7 @@
+ 
+ package com.android.incallui.incall.impl;
+ 
++import android.content.res.Resources;
+ import android.graphics.drawable.AnimationDrawable;
+ import android.support.annotation.CallSuper;
+ import android.support.annotation.DrawableRes;
+@@ -23,6 +24,7 @@ import android.support.annotation.NonNull;
+ import android.support.annotation.StringRes;
+ import android.telecom.CallAudioState;
+ import android.text.TextUtils;
++import android.text.format.DateUtils;
+ import android.view.View;
+ import android.view.View.OnClickListener;
+ import com.android.dialer.common.Assert;
+@@ -411,6 +413,95 @@ interface ButtonController {
+     }
+   }
+ 
++  class CallRecordButtonController implements ButtonController, OnClickListener {
++    @NonNull private final InCallButtonUiDelegate delegate;
++    private boolean isEnabled;
++    private boolean isAllowed;
++    private boolean isChecked;
++    private long recordingSeconds;
++    private CheckableLabeledButton button;
++
++    public CallRecordButtonController(@NonNull InCallButtonUiDelegate delegate) {
++      this.delegate = delegate;
++    }
++
++    @Override
++    public boolean isEnabled() {
++      return isEnabled;
++    }
++
++    @Override
++    public void setEnabled(boolean isEnabled) {
++      this.isEnabled = isEnabled;
++      if (button != null) {
++        button.setEnabled(isEnabled);
++      }
++    }
++
++    @Override
++    public boolean isAllowed() {
++      return isAllowed;
++    }
++
++    @Override
++    public void setAllowed(boolean isAllowed) {
++      this.isAllowed = isAllowed;
++      if (button != null) {
++        button.setVisibility(isAllowed ? View.VISIBLE : View.INVISIBLE);
++      }
++    }
++
++    @Override
++    public void setChecked(boolean isChecked) {
++      this.isChecked = isChecked;
++      if (button != null) {
++        button.setChecked(isChecked);
++      }
++    }
++
++    @Override
++    public int getInCallButtonId() {
++      return InCallButtonIds.BUTTON_RECORD_CALL;
++    }
++
++    @Override
++    public void setButton(CheckableLabeledButton button) {
++      this.button = button;
++      if (button != null) {
++        final Resources res = button.getContext().getResources();
++        if (isChecked) {
++          CharSequence duration = DateUtils.formatElapsedTime(recordingSeconds);
++          button.setLabelText(res.getString(R.string.onscreenCallRecordingText, duration));
++        } else {
++          button.setLabelText(R.string.onscreenCallRecordText);
++        }
++        button.setEnabled(isEnabled);
++        button.setVisibility(isAllowed ? View.VISIBLE : View.INVISIBLE);
++        button.setChecked(isChecked);
++        button.setOnClickListener(this);
++        button.setIconDrawable(R.drawable.quantum_ic_record_white_36);
++        button.setContentDescription(res.getText(
++            isChecked ? R.string.onscreenStopCallRecordText : R.string.onscreenCallRecordText));
++        button.setShouldShowMoreIndicator(false);
++      }
++    }
++
++    public void setRecordingState(boolean recording) {
++      isChecked = recording;
++      setButton(button);
++    }
++
++    public void setRecordingDuration(long durationMs) {
++      recordingSeconds = (durationMs + 500) / 1000;
++      setButton(button);
++    }
++
++    @Override
++    public void onClick(View v) {
++      delegate.callRecordClicked(!isChecked);
++    }
++  }
++
+   class DialpadButtonController extends SimpleCheckableButtonController {
+ 
+     public DialpadButtonController(@NonNull InCallButtonUiDelegate delegate) {
+diff --git a/java/com/android/incallui/incall/impl/CheckableLabeledButton.java b/java/com/android/incallui/incall/impl/CheckableLabeledButton.java
+index bfc2781a9..ec932b9dc 100644
+--- a/java/com/android/incallui/incall/impl/CheckableLabeledButton.java
++++ b/java/com/android/incallui/incall/impl/CheckableLabeledButton.java
+@@ -156,6 +156,10 @@ public class CheckableLabeledButton extends LinearLayout implements Checkable {
+     labelView.setText(stringRes);
+   }
+ 
++  public void setLabelText(CharSequence label) {
++    labelView.setText(label);
++  }
++
+   /** Shows or hides a little down arrow to indicate that the button will pop up a menu. */
+   public void setShouldShowMoreIndicator(boolean shouldShow) {
+     iconView.setBackground(shouldShow ? backgroundMore : background);
+diff --git a/java/com/android/incallui/incall/impl/InCallFragment.java b/java/com/android/incallui/incall/impl/InCallFragment.java
+index 7f20b407f..f5cd38d67 100644
+--- a/java/com/android/incallui/incall/impl/InCallFragment.java
++++ b/java/com/android/incallui/incall/impl/InCallFragment.java
+@@ -54,6 +54,7 @@ import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment;
+ import com.android.incallui.audioroute.AudioRouteSelectorDialogFragment.AudioRouteSelectorPresenter;
+ import com.android.incallui.contactgrid.ContactGridManager;
+ import com.android.incallui.hold.OnHoldFragment;
++import com.android.incallui.incall.impl.ButtonController.CallRecordButtonController;
+ import com.android.incallui.incall.impl.ButtonController.SpeakerButtonController;
+ import com.android.incallui.incall.impl.ButtonController.UpgradeToRttButtonController;
+ import com.android.incallui.incall.impl.InCallButtonGridFragment.OnButtonGridCreatedListener;
+@@ -95,6 +96,8 @@ public class InCallFragment extends Fragment
+   private int phoneType;
+   private boolean stateRestored;
+ 
++  private static final int REQUEST_CODE_CALL_RECORD_PERMISSION = 1000;
++
+   // Add animation to educate users. If a call has enriched calling attachments then we'll
+   // initially show the attachment page. After a delay seconds we'll animate to the button grid.
+   private final Handler handler = new Handler();
+@@ -117,7 +120,8 @@ public class InCallFragment extends Fragment
+         || id == InCallButtonIds.BUTTON_MERGE
+         || id == InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE
+         || id == InCallButtonIds.BUTTON_SWAP_SIM
+-        || id == InCallButtonIds.BUTTON_UPGRADE_TO_RTT;
++        || id == InCallButtonIds.BUTTON_UPGRADE_TO_RTT
++        || id == InCallButtonIds.BUTTON_RECORD_CALL;
+   }
+ 
+   @Override
+@@ -233,6 +237,7 @@ public class InCallFragment extends Fragment
+         new ButtonController.ManageConferenceButtonController(inCallScreenDelegate));
+     buttonControllers.add(
+         new ButtonController.SwitchToSecondaryButtonController(inCallScreenDelegate));
++    buttonControllers.add(new ButtonController.CallRecordButtonController(inCallButtonUiDelegate));
+ 
+     inCallScreenDelegate.onInCallScreenDelegateInit(this);
+     inCallScreenDelegate.onInCallScreenReady();
+@@ -467,6 +472,39 @@ public class InCallFragment extends Fragment
+     getButtonController(InCallButtonIds.BUTTON_MUTE).setChecked(audioState.isMuted());
+   }
+ 
++  @Override
++  public void setCallRecordingState(boolean isRecording) {
++    ((CallRecordButtonController) getButtonController(InCallButtonIds.BUTTON_RECORD_CALL))
++        .setRecordingState(isRecording);
++  }
++
++  @Override
++  public void setCallRecordingDuration(long durationMs) {
++    ((CallRecordButtonController) getButtonController(InCallButtonIds.BUTTON_RECORD_CALL))
++        .setRecordingDuration(durationMs);
++  }
++
++  @Override
++  public void requestCallRecordingPermissions(String[] permissions) {
++    requestPermissions(permissions, REQUEST_CODE_CALL_RECORD_PERMISSION);
++  }
++
++  @Override
++  public void onRequestPermissionsResult(int requestCode,
++      @NonNull String[] permissions, @NonNull int[] grantResults) {
++    if (requestCode == REQUEST_CODE_CALL_RECORD_PERMISSION) {
++      boolean allGranted = grantResults.length > 0;
++      for (int i = 0; i < grantResults.length; i++) {
++        allGranted &= grantResults[i] == PackageManager.PERMISSION_GRANTED;
++      }
++      if (allGranted) {
++        inCallButtonUiDelegate.callRecordClicked(true);
++      }
++    } else {
++      super.onRequestPermissionsResult(requestCode, permissions, grantResults);
++    }
++  }
++
+   @Override
+   public void updateButtonStates() {
+     // When the incall screen is ready, this method is called from #setSecondary, even though the
+diff --git a/java/com/android/incallui/incall/protocol/InCallButtonIds.java b/java/com/android/incallui/incall/protocol/InCallButtonIds.java
+index 80ea75e99..2c956c8be 100644
+--- a/java/com/android/incallui/incall/protocol/InCallButtonIds.java
++++ b/java/com/android/incallui/incall/protocol/InCallButtonIds.java
+@@ -38,6 +38,7 @@ import java.lang.annotation.RetentionPolicy;
+   InCallButtonIds.BUTTON_MANAGE_VOICE_CONFERENCE,
+   InCallButtonIds.BUTTON_SWITCH_TO_SECONDARY,
+   InCallButtonIds.BUTTON_SWAP_SIM,
++  InCallButtonIds.BUTTON_RECORD_CALL,
+   InCallButtonIds.BUTTON_COUNT,
+   InCallButtonIds.BUTTON_UPGRADE_TO_RTT
+ })
+@@ -58,6 +59,7 @@ public @interface InCallButtonIds {
+   int BUTTON_MANAGE_VOICE_CONFERENCE = 12;
+   int BUTTON_SWITCH_TO_SECONDARY = 13;
+   int BUTTON_SWAP_SIM = 14;
+-  int BUTTON_COUNT = 15;
++  int BUTTON_RECORD_CALL = 15;
+   int BUTTON_UPGRADE_TO_RTT = 16;
++  int BUTTON_COUNT = 17;
+ }
+diff --git a/java/com/android/incallui/incall/protocol/InCallButtonIdsExtension.java b/java/com/android/incallui/incall/protocol/InCallButtonIdsExtension.java
+index 5239d9d34..ee03c3d41 100644
+--- a/java/com/android/incallui/incall/protocol/InCallButtonIdsExtension.java
++++ b/java/com/android/incallui/incall/protocol/InCallButtonIdsExtension.java
+@@ -58,6 +58,8 @@ public class InCallButtonIdsExtension {
+       return "SWAP_SIM";
+     } else if (id == InCallButtonIds.BUTTON_UPGRADE_TO_RTT) {
+       return "UPGRADE_TO_RTT";
++    } else if (id == InCallButtonIds.BUTTON_RECORD_CALL) {
++      return "RECORD_CALL";
+     } else {
+       return "INVALID_BUTTON: " + id;
+     }
+diff --git a/java/com/android/incallui/incall/protocol/InCallButtonUi.java b/java/com/android/incallui/incall/protocol/InCallButtonUi.java
+index 28dd84c42..f22efeb2b 100644
+--- a/java/com/android/incallui/incall/protocol/InCallButtonUi.java
++++ b/java/com/android/incallui/incall/protocol/InCallButtonUi.java
+@@ -37,6 +37,12 @@ public interface InCallButtonUi {
+ 
+   void setAudioState(CallAudioState audioState);
+ 
++  void setCallRecordingState(boolean isRecording);
++
++  void setCallRecordingDuration(long durationMs);
++
++  void requestCallRecordingPermissions(String[] permissions);
++
+   /**
+    * Once showButton() has been called on each of the individual buttons in the UI, call this to
+    * configure the overflow menu appropriately.
+diff --git a/java/com/android/incallui/incall/protocol/InCallButtonUiDelegate.java b/java/com/android/incallui/incall/protocol/InCallButtonUiDelegate.java
+index b0e23efcd..8b3c59b7c 100644
+--- a/java/com/android/incallui/incall/protocol/InCallButtonUiDelegate.java
++++ b/java/com/android/incallui/incall/protocol/InCallButtonUiDelegate.java
+@@ -67,5 +67,7 @@ public interface InCallButtonUiDelegate {
+ 
+   void swapSimClicked();
+ 
++  void callRecordClicked(boolean checked);
++
+   Context getContext();
+ }
+diff --git a/java/com/android/incallui/res/values/strings.xml b/java/com/android/incallui/res/values/strings.xml
+index c18ee495e..b22d6280f 100644
+--- a/java/com/android/incallui/res/values/strings.xml
++++ b/java/com/android/incallui/res/values/strings.xml
+@@ -212,4 +212,12 @@
+   <!-- Text for button to accept RTT request. [CHAR LIMIT=20] -->
+   <string name="rtt_button_accept_request">Join RTT</string>
+ 
++  <!-- Call recording -->
++  <string name="call_recording_failed_message">Failed to start call recording</string>
++  <string name="call_recording_file_location">Saved call recording to <xliff:g id="filename">%s</xliff:g></string>
++  <string name="onscreenCallRecordText">Record call</string>
++  <string name="onscreenCallRecordingText">Recording call - <xliff:g id="duration" example="00:10">%1$s</xliff:g></string>
++  <string name="onscreenStopCallRecordText">Stop recording</string>
++  <string name="recording_time_text">Recording</string>
++
+ </resources>
+diff --git a/java/com/android/incallui/rtt/impl/RttChatFragment.java b/java/com/android/incallui/rtt/impl/RttChatFragment.java
+index 988f20c2c..6567dff27 100644
+--- a/java/com/android/incallui/rtt/impl/RttChatFragment.java
++++ b/java/com/android/incallui/rtt/impl/RttChatFragment.java
+@@ -596,4 +596,13 @@ public class RttChatFragment extends Fragment
+ 
+   @Override
+   public void onAudioRouteSelectorDismiss() {}
++
++  @Override
++  public void requestCallRecordingPermissions(String[] permissions) {}
++
++  @Override
++  public void setCallRecordingDuration(long duration) {}
++
++  @Override
++  public void setCallRecordingState(boolean isRecording) {}
+ }
+diff --git a/java/com/android/incallui/video/impl/SurfaceViewVideoCallFragment.java b/java/com/android/incallui/video/impl/SurfaceViewVideoCallFragment.java
+index f270edab9..e8ec22146 100644
+--- a/java/com/android/incallui/video/impl/SurfaceViewVideoCallFragment.java
++++ b/java/com/android/incallui/video/impl/SurfaceViewVideoCallFragment.java
+@@ -797,6 +797,18 @@ public class SurfaceViewVideoCallFragment extends Fragment
+     updateMutePreviewOverlayVisibility();
+   }
+ 
++  @Override
++  public void setCallRecordingState(boolean isRecording) {
++  }
++
++  @Override
++  public void setCallRecordingDuration(long durationMs) {
++  }
++
++  @Override
++  public void requestCallRecordingPermissions(String[] permissions) {
++  }
++
+   @Override
+   public void updateButtonStates() {
+     LogUtil.i("SurfaceViewVideoCallFragment.updateButtonState", null);
+diff --git a/java/com/android/incallui/video/impl/VideoCallFragment.java b/java/com/android/incallui/video/impl/VideoCallFragment.java
+index 11b80ceb9..634af2b81 100644
+--- a/java/com/android/incallui/video/impl/VideoCallFragment.java
++++ b/java/com/android/incallui/video/impl/VideoCallFragment.java
+@@ -864,6 +864,18 @@ public class VideoCallFragment extends Fragment
+     updateMutePreviewOverlayVisibility();
+   }
+ 
++  @Override
++  public void setCallRecordingState(boolean isRecording) {
++  }
++
++  @Override
++  public void setCallRecordingDuration(long durationMs) {
++  }
++
++  @Override
++  public void requestCallRecordingPermissions(String[] permissions) {
++  }
++
+   @Override
+   public void updateButtonStates() {
+     LogUtil.i("VideoCallFragment.updateButtonState", null);
+-- 
+2.17.1
+

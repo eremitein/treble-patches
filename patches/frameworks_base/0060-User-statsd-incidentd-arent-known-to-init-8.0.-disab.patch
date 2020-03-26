@@ -1,0 +1,65 @@
+From 59a3d9725461b4b713ff0784049270ddc81a0c4e Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 12 Aug 2019 23:10:21 +0200
+Subject: [PATCH 060/100] User statsd/incidentd arent known to init 8.0.
+ disable those services
+
+Change-Id: I074654e194f764ffbc6961ff0ae304e36a9b5d1e
+---
+ cmds/incidentd/incidentd.rc | 10 +++++-----
+ cmds/statsd/statsd.rc       | 18 +++++++++---------
+ 2 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/cmds/incidentd/incidentd.rc b/cmds/incidentd/incidentd.rc
+index 9c16a1c52e8..cc20c936fda 100644
+--- a/cmds/incidentd/incidentd.rc
++++ b/cmds/incidentd/incidentd.rc
+@@ -12,11 +12,11 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-service incidentd /system/bin/incidentd
+-    class main
+-    user incidentd
+-    group incidentd log readproc
+-    capabilities KILL SYS_PTRACE
++#service incidentd /system/bin/incidentd
++#    class main
++#    user incidentd
++#    group incidentd log readproc
++#    capabilities KILL SYS_PTRACE
+ 
+ on post-fs-data
+     # Create directory for incidentd
+diff --git a/cmds/statsd/statsd.rc b/cmds/statsd/statsd.rc
+index a98ecd586b4..564cf98d0a9 100644
+--- a/cmds/statsd/statsd.rc
++++ b/cmds/statsd/statsd.rc
+@@ -12,15 +12,15 @@
+ # See the License for the specific language governing permissions and
+ # limitations under the License.
+ 
+-service statsd /system/bin/statsd
+-    class main
+-    socket statsdw dgram+passcred 0222 statsd statsd
+-    user statsd
+-    group statsd log
+-    writepid /dev/cpuset/system-background/tasks
+-
+-on property:ro.statsd.enable=false
+-    stop statsd
++#service statsd /system/bin/statsd
++#    class main
++#    socket statsdw dgram+passcred 0222 statsd statsd
++#    user statsd
++#    group statsd log
++#    writepid /dev/cpuset/system-background/tasks
++#
++#on property:ro.statsd.enable=false
++#    stop statsd
+ 
+ on post-fs-data
+     # Create directory for statsd
+-- 
+2.17.1
+

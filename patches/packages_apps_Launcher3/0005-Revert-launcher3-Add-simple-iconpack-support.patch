@@ -1,0 +1,886 @@
+From 8a5985764b7a2c2988245eb5095cdfb2e61cf50a Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 31 Mar 2020 10:06:31 +0300
+Subject: [PATCH 5/5] Revert "launcher3: Add simple iconpack support"
+
+This reverts commit dbe55befef994f86908f6f939a6563c2c30d051a.
+---
+ res/layout/iconpack_dialog.xml                |  35 ---
+ res/layout/preference_iconpack.xml            |  82 -------
+ res/values/config.xml                         |   2 +-
+ res/values/cr_strings.xml                     |   5 -
+ res/xml/icons_preferences.xml                 |   6 -
+ .../android/launcher3/CustomIconProvider.java |  33 ---
+ src/com/android/launcher3/IconPack.java       | 203 ------------------
+ .../android/launcher3/IconPackProvider.java   | 151 -------------
+ .../launcher3/InvariantDeviceProfile.java     |   5 +-
+ .../settings/IconPackPreference.java          | 176 ---------------
+ .../android/launcher3/util/ConfigMonitor.java |  17 +-
+ 11 files changed, 3 insertions(+), 712 deletions(-)
+ delete mode 100644 res/layout/iconpack_dialog.xml
+ delete mode 100644 res/layout/preference_iconpack.xml
+ delete mode 100644 src/com/android/launcher3/CustomIconProvider.java
+ delete mode 100644 src/com/android/launcher3/IconPack.java
+ delete mode 100644 src/com/android/launcher3/IconPackProvider.java
+ delete mode 100644 src/com/android/launcher3/settings/IconPackPreference.java
+
+diff --git a/res/layout/iconpack_dialog.xml b/res/layout/iconpack_dialog.xml
+deleted file mode 100644
+index 0b1bb8121..000000000
+--- a/res/layout/iconpack_dialog.xml
++++ /dev/null
+@@ -1,35 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:layout_width="wrap_content"
+-    android:layout_height="match_parent"
+-    android:orientation="horizontal">
+-
+-    <ImageView
+-        android:id="@+id/icon"
+-        android:layout_width="@android:dimen/app_icon_size"
+-        android:layout_height="@android:dimen/app_icon_size"
+-        android:layout_gravity="center_vertical"
+-        android:layout_margin="8dp"
+-        android:contentDescription="@null" />
+-
+-    <TextView
+-        android:id="@+id/title"
+-        android:layout_width="0dp"
+-        android:layout_height="wrap_content"
+-        android:layout_gravity="center_vertical"
+-        android:layout_weight="1"
+-        android:paddingEnd="8dip"
+-        android:paddingStart="8dip"
+-        android:textAppearance="?android:attr/textAppearanceLarge"
+-        android:textSize="19sp" />
+-
+-    <RadioButton
+-        android:id="@+id/radio"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_gravity="center_vertical"
+-        android:clickable="false"
+-        android:duplicateParentState="true"
+-        android:focusable="false"
+-        android:paddingEnd="8dip" />
+-</LinearLayout>
+diff --git a/res/layout/preference_iconpack.xml b/res/layout/preference_iconpack.xml
+deleted file mode 100644
+index c2f432aef..000000000
+--- a/res/layout/preference_iconpack.xml
++++ /dev/null
+@@ -1,82 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-  ~ Copyright (C) 2015 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License
+-  -->
+-
+-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:app="http://schemas.android.com/apk/res-auto"
+-    android:layout_width="match_parent"
+-    android:layout_height="wrap_content"
+-    android:minHeight="?android:attr/listPreferredItemHeightSmall"
+-    android:gravity="center_vertical"
+-    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
+-    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+-    android:background="?android:attr/selectableItemBackground"
+-    android:clipToPadding="false"
+-    android:focusable="true" >
+-
+-    <LinearLayout
+-        android:id="@+id/icon_frame"
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:minWidth="56dp"
+-        android:gravity="start|center_vertical"
+-        android:orientation="horizontal"
+-        android:paddingEnd="8dp"
+-        android:paddingTop="4dp"
+-        android:paddingBottom="4dp">
+-        <androidx.preference.internal.PreferenceImageView
+-            android:id="@android:id/icon"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            app:maxWidth="48dp"
+-            app:maxHeight="48dp" />
+-    </LinearLayout>
+-
+-    <RelativeLayout
+-        android:layout_width="wrap_content"
+-        android:layout_height="wrap_content"
+-        android:layout_weight="1"
+-        android:paddingTop="16dp"
+-        android:paddingBottom="16dp">
+-
+-        <TextView android:id="@android:id/title"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:singleLine="true"
+-            android:textAppearance="?android:attr/textAppearanceListItem"
+-            android:ellipsize="marquee" />
+-
+-        <TextView android:id="@android:id/summary"
+-            android:layout_width="wrap_content"
+-            android:layout_height="wrap_content"
+-            android:layout_below="@android:id/title"
+-            android:layout_alignStart="@android:id/title"
+-            android:textAppearance="?android:attr/textAppearanceListItemSecondary"
+-            android:textAlignment="viewStart"
+-            android:textColor="?android:attr/textColorSecondary"
+-            android:maxLines="10" />
+-
+-    </RelativeLayout>
+-
+-    <!-- Preference should place its actual preference widget here. -->
+-    <LinearLayout android:id="@android:id/widget_frame"
+-        android:layout_width="wrap_content"
+-        android:layout_height="match_parent"
+-        android:gravity="end|center_vertical"
+-        android:paddingStart="16dp"
+-        android:orientation="vertical" />
+-
+-</LinearLayout>
+diff --git a/res/values/config.xml b/res/values/config.xml
+index d4afbd4ec..091e78ecd 100644
+--- a/res/values/config.xml
++++ b/res/values/config.xml
+@@ -62,7 +62,7 @@
+ 
+     <!-- Various classes overriden by projects/build flavors. -->
+     <string name="app_filter_class" translatable="false">com.android.launcher3.lineage.trust.HiddenAppsFilter</string>
+-    <string name="icon_provider_class" translatable="false">com.android.launcher3.CustomIconProvider</string>
++    <string name="icon_provider_class" translatable="false"></string>
+     <string name="drawable_factory_class" translatable="false"></string>
+     <string name="user_event_dispatcher_class" translatable="false"></string>
+     <string name="stats_log_manager_class" translatable="false"></string>
+diff --git a/res/values/cr_strings.xml b/res/values/cr_strings.xml
+index df09cfe25..93f558a87 100644
+--- a/res/values/cr_strings.xml
++++ b/res/values/cr_strings.xml
+@@ -63,9 +63,4 @@
+     <!-- Google Feed -->
+     <string name="google_feed_title">Display Google app</string>
+     <string name="google_feed_summary">To the left of the main home screen</string>
+-
+-    <!-- Icon packs -->
+-    <string name="iconPackPackageDefault" translatable="false">""</string>
+-    <string name="icon_pack">Icon pack</string>
+-    <string name="icon_pack_summary">Select a custom icon pack</string>
+ </resources>
+diff --git a/res/xml/icons_preferences.xml b/res/xml/icons_preferences.xml
+index d90501ee7..2ffbf05c8 100644
+--- a/res/xml/icons_preferences.xml
++++ b/res/xml/icons_preferences.xml
+@@ -8,12 +8,6 @@
+         android:defaultValue="true"
+         android:persistent="true" />
+ 
+-    <com.android.launcher3.settings.IconPackPreference
+-        android:key="pref_iconPackPackage"
+-        android:title="@string/icon_pack"
+-        android:summary="@string/icon_pack_summary"
+-        android:persistent="true" />
+-
+     <com.android.launcher3.settings.NotificationDotsPreference
+         android:key="pref_icon_badging"
+         android:title="@string/notification_dots_title"
+diff --git a/src/com/android/launcher3/CustomIconProvider.java b/src/com/android/launcher3/CustomIconProvider.java
+deleted file mode 100644
+index 9b8bcd759..000000000
+--- a/src/com/android/launcher3/CustomIconProvider.java
++++ /dev/null
+@@ -1,33 +0,0 @@
+-package com.android.launcher3;
+-
+-import android.content.Context;
+-import android.content.pm.LauncherActivityInfo;
+-import android.graphics.drawable.Drawable;
+-
+-import androidx.annotation.Keep;
+-
+-@Keep
+-public class CustomIconProvider extends IconProvider {
+-
+-    private Context mContext;
+-
+-    public CustomIconProvider(Context context) {
+-        mContext = context;
+-    }
+-
+-    @Override
+-    public Drawable getIcon(LauncherActivityInfo info, int iconDpi, boolean flattenDrawable) {
+-        Drawable icon = super.getIcon(info, iconDpi, flattenDrawable);
+-        IconPack iconPack = IconPackProvider.loadAndGetIconPack(mContext);
+-        if (iconPack != null) {
+-            Drawable iconMask = iconPack.getIcon(info, null, info.getLabel());
+-            if (iconMask != null) {
+-                return iconMask;
+-            } else {
+-                return icon;
+-            }
+-        } else {
+-            return icon;
+-        }
+-    }
+-}
+diff --git a/src/com/android/launcher3/IconPack.java b/src/com/android/launcher3/IconPack.java
+deleted file mode 100644
+index bddb64564..000000000
+--- a/src/com/android/launcher3/IconPack.java
++++ /dev/null
+@@ -1,203 +0,0 @@
+-package com.android.launcher3;
+-
+-import android.content.ComponentName;
+-import android.content.Context;
+-import android.content.pm.ActivityInfo;
+-import android.content.pm.LauncherActivityInfo;
+-import android.content.pm.PackageManager;
+-import android.content.res.Resources;
+-import android.graphics.Bitmap;
+-import android.graphics.BlurMaskFilter;
+-import android.graphics.Canvas;
+-import android.graphics.Color;
+-import android.graphics.Paint;
+-import android.graphics.PaintFlagsDrawFilter;
+-import android.graphics.PorterDuff;
+-import android.graphics.PorterDuff.Mode;
+-import android.graphics.PorterDuffXfermode;
+-import android.graphics.Rect;
+-import android.graphics.drawable.BitmapDrawable;
+-import android.graphics.drawable.Drawable;
+-import android.text.TextUtils;
+-import android.util.ArrayMap;
+-import android.util.Log;
+-import android.widget.Toast;
+-
+-import java.util.ArrayList;
+-import java.util.List;
+-import java.util.Map;
+-
+-public class IconPack {
+-    /*
+-    Useful Links:
+-    https://github.com/teslacoil/Example_NovaTheme
+-    http://stackoverflow.com/questions/7205415/getting-resources-of-another-application
+-    http://stackoverflow.com/questions/3890012/how-to-access-string-resource-from-another-application
+-     */
+-    private String packageName;
+-    private Context mContext;
+-    private Map<String, String> mIconPackResources;
+-    private List<String> mIconBackStrings;
+-    private List<Drawable> mIconBackList;
+-    private Drawable mIconUpon, mIconMask;
+-    private Resources mLoadedIconPackResource;
+-    private float mIconScale;
+-
+-    public IconPack(Context context, String packageName){
+-        this.packageName = packageName;
+-        mContext = context;
+-    }
+-
+-    public void setIcons(Map<String, String> iconPackResources, List<String> iconBackStrings) {
+-        mIconPackResources = iconPackResources;
+-        mIconBackStrings = iconBackStrings;
+-        mIconBackList = new ArrayList<Drawable>();
+-        try {
+-            mLoadedIconPackResource = mContext.getPackageManager().getResourcesForApplication(packageName);
+-        } catch (PackageManager.NameNotFoundException e) {
+-            // must never happen cause itys checked already in the provider
+-            return;
+-        }
+-        mIconMask = getDrawableForName(IconPackProvider.ICON_MASK_TAG);
+-        mIconUpon = getDrawableForName(IconPackProvider.ICON_UPON_TAG);
+-        for (int i = 0; i < mIconBackStrings.size(); i++) {
+-            String backIconString = mIconBackStrings.get(i);
+-            Drawable backIcon = getDrawableWithName(backIconString);
+-            if (backIcon != null) {
+-                mIconBackList.add(backIcon);
+-            }
+-        }
+-        String scale = mIconPackResources.get(IconPackProvider.ICON_SCALE_TAG);
+-        if (scale != null) {
+-            try {
+-                mIconScale = Float.valueOf(scale);
+-            } catch (NumberFormatException e) {
+-            }
+-        }
+-    }
+-
+-    public Drawable getIcon(LauncherActivityInfo info, Drawable appIcon, CharSequence appLabel) {
+-        return getIcon(info.getComponentName(), appIcon, appLabel);
+-    }
+-
+-    public Drawable getIcon(ActivityInfo info, Drawable appIcon, CharSequence appLabel) {
+-        return getIcon(new ComponentName(info.packageName, info.name), appIcon, appLabel);
+-    }
+-
+-    public Drawable getIcon(ComponentName name, Drawable appIcon, CharSequence appLabel) {
+-        return getDrawable(name.flattenToString(), appIcon, appLabel);
+-    }
+-
+-    public Drawable getIcon(String packageName, Drawable appIcon, CharSequence appLabel) {
+-        return getDrawable(packageName, appIcon, appLabel);
+-    }
+-
+-    private Drawable getDrawable(String name, Drawable appIcon, CharSequence appLabel) {
+-        Drawable d = getDrawableForName(name);
+-        if (d == null && appIcon != null) {
+-            d = compose(name, appIcon, appLabel);
+-        }
+-        return d;
+-    }
+-
+-    private Drawable getIconBackFor(CharSequence tag) {
+-        if (mIconBackList != null && mIconBackList.size() != 0) {
+-            if (mIconBackList.size() == 1) {
+-                return mIconBackList.get(0);
+-            }
+-            try {
+-                Drawable back = mIconBackList.get((tag.hashCode() & 0x7fffffff) % mIconBackList.size());
+-                return back;
+-            } catch (ArrayIndexOutOfBoundsException e) {
+-                return mIconBackList.get(0);
+-            }
+-        }
+-        return null;
+-    }
+-
+-    private int getResourceIdForDrawable(String resource) {
+-        int resId = mLoadedIconPackResource.getIdentifier(resource, "drawable", packageName);
+-        return resId;
+-    }
+-
+-    private Drawable getDrawableForName(String name) {
+-        String item = mIconPackResources.get(name);
+-        if (!TextUtils.isEmpty(item)) {
+-            int id = getResourceIdForDrawable(item);
+-            if (id != 0) {
+-                return mLoadedIconPackResource.getDrawable(id);
+-            }
+-        }
+-        return null;
+-    }
+-
+-    private Drawable getDrawableWithName(String name) {
+-        int id = getResourceIdForDrawable(name);
+-        if (id != 0) {
+-            return mLoadedIconPackResource.getDrawable(id);
+-        }
+-        return null;
+-    }
+-
+-    private BitmapDrawable getBitmapDrawable(Drawable image) {
+-        if (image instanceof BitmapDrawable) {
+-            return (BitmapDrawable) image;
+-        }
+-        final Canvas canvas = new Canvas();
+-        canvas.setDrawFilter(new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG,
+-                Paint.FILTER_BITMAP_FLAG));
+-
+-        Bitmap bmResult = Bitmap.createBitmap(image.getIntrinsicWidth(), image.getIntrinsicHeight(),
+-                Bitmap.Config.ARGB_8888);
+-        canvas.setBitmap(bmResult);
+-        image.setBounds(0, 0, canvas.getWidth(), canvas.getHeight());
+-        image.draw(canvas);
+-        return new BitmapDrawable(mLoadedIconPackResource, bmResult);
+-    }
+-
+-    private Drawable compose(String name, Drawable appIcon, CharSequence appLabel) {
+-        final Canvas canvas = new Canvas();
+-        canvas.setDrawFilter(new PaintFlagsDrawFilter(Paint.ANTI_ALIAS_FLAG,
+-                Paint.FILTER_BITMAP_FLAG));
+-
+-        BitmapDrawable appIconBitmap = getBitmapDrawable(appIcon);
+-        int width = appIconBitmap.getBitmap().getWidth();
+-        int height = appIconBitmap.getBitmap().getHeight();
+-        float scale = mIconScale;
+-
+-        Drawable iconBack = getIconBackFor(appLabel);
+-        if (iconBack == null && mIconMask == null && mIconUpon == null){
+-            scale = 1.0f;
+-        }
+-
+-        Bitmap bitmap = Bitmap.createBitmap(width, height,
+-                Bitmap.Config.ARGB_8888);
+-        canvas.setBitmap(bitmap);
+-
+-        int scaledWidth = (int) (width * scale);
+-        int scaledHeight = (int) (height * scale);
+-        if (scaledWidth != width || scaledHeight != height) {
+-            Bitmap scaledBitmap = Bitmap.createScaledBitmap(appIconBitmap.getBitmap(), scaledWidth, scaledHeight, true);
+-            canvas.drawBitmap(scaledBitmap, (width - scaledWidth) / 2, (height - scaledHeight) / 2, null);
+-        } else {
+-            canvas.drawBitmap(appIconBitmap.getBitmap(), 0, 0, null);
+-        }
+-        if (mIconMask != null) {
+-            mIconMask.setBounds(0, 0, width, height);
+-            BitmapDrawable  b = getBitmapDrawable(mIconMask);
+-            b.getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OUT));
+-            b.draw(canvas);
+-        }
+-        if (iconBack != null) {
+-            iconBack.setBounds(0, 0, width, height);
+-            BitmapDrawable  b = getBitmapDrawable(iconBack);
+-            b.getPaint().setXfermode(new PorterDuffXfermode(PorterDuff.Mode.DST_OVER));
+-            b.draw(canvas);
+-        }
+-        if (mIconUpon != null) {
+-            mIconUpon.setBounds(0, 0, width, height);
+-            mIconUpon.draw(canvas);
+-        }
+-        return new BitmapDrawable(mLoadedIconPackResource, bitmap);
+-    }
+-}
+diff --git a/src/com/android/launcher3/IconPackProvider.java b/src/com/android/launcher3/IconPackProvider.java
+deleted file mode 100644
+index c621a8fcb..000000000
+--- a/src/com/android/launcher3/IconPackProvider.java
++++ /dev/null
+@@ -1,151 +0,0 @@
+-package com.android.launcher3;
+-
+-import android.content.Context;
+-import android.content.ComponentName;
+-import android.content.pm.PackageManager;
+-import android.content.res.Resources;
+-import android.text.TextUtils;
+-import android.util.ArrayMap;
+-import android.widget.Toast;
+-
+-import org.xmlpull.v1.XmlPullParser;
+-
+-import java.util.ArrayList;
+-import java.util.HashMap;
+-import java.util.List;
+-import java.util.Map;
+-
+-public class IconPackProvider {
+-    public static final String PREF_ICON_PACK = "pref_iconPackPackage";
+-
+-    private static Map<String, IconPack> iconPacks = new ArrayMap<>();
+-    public static final String ICON_MASK_TAG = "iconmask";
+-    public static final String ICON_BACK_TAG = "iconback";
+-    public static final String ICON_UPON_TAG = "iconupon";
+-    public static final String ICON_SCALE_TAG = "scale";
+-
+-    public static IconPack getIconPack(String packageName){
+-        return iconPacks.get(packageName);
+-    }
+-
+-    public static String getCurrentIconPack(Context context) {
+-        return Utilities.getPrefs(context).getString(PREF_ICON_PACK, "");
+-    }
+-
+-    public static IconPack loadAndGetIconPack(Context context) {
+-        String packageName = getCurrentIconPack(context);
+-        if ("".equals(packageName)){
+-            return null;
+-        }
+-        if (!iconPacks.containsKey(packageName)){
+-            loadIconPack(context, packageName);
+-        }
+-        return getIconPack(packageName);
+-    }
+-
+-    public static void loadIconPack(Context context, String packageName) {
+-        if ("".equals(packageName)){
+-            iconPacks.put("", null);
+-        }
+-        try {
+-            XmlPullParser appFilter = getAppFilter(context, packageName);
+-            if (appFilter != null) {
+-                IconPack pack = new IconPack(context, packageName);
+-                parseAppFilter(packageName, appFilter, pack);
+-                iconPacks.put(packageName, pack);
+-            }
+-        } catch (Exception e) {
+-            Toast.makeText(context, "Invalid IconPack", Toast.LENGTH_SHORT).show();
+-            return;
+-        }
+-    }
+-
+-    private static void parseAppFilter(String packageName, XmlPullParser parser, IconPack pack) throws Exception {
+-        Map<String, String> iconPackResources = new HashMap<>();
+-        List<String> iconBackStrings = new ArrayList<>();
+-
+-        while (parser.next() != XmlPullParser.END_DOCUMENT) {
+-            if (parser.getEventType() != XmlPullParser.START_TAG) {
+-                continue;
+-            }
+-            String name = parser.getName();
+-            if (name.equals("item")) {
+-                String component = parser.getAttributeValue(null, "component");
+-                String drawable = parser.getAttributeValue(null, "drawable");
+-                // Validate component/drawable exist
+-
+-                if (TextUtils.isEmpty(component) || TextUtils.isEmpty(drawable)) {
+-                    continue;
+-                }
+-
+-                // Validate format/length of component
+-                if (!component.startsWith("ComponentInfo{") || !component.endsWith("}")
+-                        || component.length() < 16) {
+-                    continue;
+-                }
+-
+-                // Sanitize stored value
+-                component = component.substring(14, component.length() - 1);
+-
+-                if (!component.contains("/")) {
+-                    // Package icon reference
+-                    iconPackResources.put(component, drawable);
+-                } else {
+-                    ComponentName componentName = ComponentName.unflattenFromString(component);
+-                    if (componentName != null) {
+-                        iconPackResources.put(componentName.getPackageName(), drawable);
+-                        iconPackResources.put(component, drawable);
+-                    }
+-                }
+-                continue;
+-            }
+-
+-            if (name.equalsIgnoreCase(ICON_BACK_TAG)) {
+-                String icon = parser.getAttributeValue(null, "img");
+-                if (icon == null) {
+-                    for (int i = 0; i < parser.getAttributeCount(); i++) {
+-                        iconBackStrings.add(parser.getAttributeValue(i));
+-                    }
+-                }
+-                continue;
+-            }
+-
+-            if (name.equalsIgnoreCase(ICON_MASK_TAG) ||
+-                    name.equalsIgnoreCase(ICON_UPON_TAG)) {
+-                String icon = parser.getAttributeValue(null, "img");
+-                if (icon == null) {
+-                    if (parser.getAttributeCount() > 0) {
+-                        icon = parser.getAttributeValue(0);
+-                    }
+-                }
+-                iconPackResources.put(parser.getName().toLowerCase(), icon);
+-                continue;
+-            }
+-
+-            if (name.equalsIgnoreCase(ICON_SCALE_TAG)) {
+-                String factor = parser.getAttributeValue(null, "factor");
+-                if (factor == null) {
+-                    if (parser.getAttributeCount() > 0) {
+-                        factor = parser.getAttributeValue(0);
+-                    }
+-                }
+-                iconPackResources.put(parser.getName().toLowerCase(), factor);
+-                continue;
+-            }
+-        }
+-        pack.setIcons(iconPackResources, iconBackStrings);
+-    }
+-
+-    private static XmlPullParser getAppFilter(Context context, String packageName) {
+-        try {
+-            Resources res = context.getPackageManager().getResourcesForApplication(packageName);
+-            int resourceId = res.getIdentifier("appfilter", "xml", packageName);
+-            if (0 != resourceId) {
+-                return context.getPackageManager().getXml(packageName, resourceId, null);
+-            }
+-        } catch (PackageManager.NameNotFoundException e) {
+-            Toast.makeText(context, "Failed to get AppFilter", Toast.LENGTH_SHORT).show();
+-        }
+-        return null;
+-    }
+-}
+diff --git a/src/com/android/launcher3/InvariantDeviceProfile.java b/src/com/android/launcher3/InvariantDeviceProfile.java
+index 297181211..eda679f11 100644
+--- a/src/com/android/launcher3/InvariantDeviceProfile.java
++++ b/src/com/android/launcher3/InvariantDeviceProfile.java
+@@ -104,7 +104,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
+     public int numFolderColumns;
+     public float iconSize;
+     public String iconShapePath;
+-    public String iconPack;
+     public float landscapeIconSize;
+     public int iconBitmapSize;
+     public int fillResIconDpi;
+@@ -149,7 +148,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
+         numFolderColumns = p.numFolderColumns;
+         iconSize = p.iconSize;
+         iconShapePath = p.iconShapePath;
+-        iconPack = p.iconPack;
+         landscapeIconSize = p.landscapeIconSize;
+         iconTextSize = p.iconTextSize;
+         numHotseatIcons = p.numHotseatIcons;
+@@ -313,7 +311,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
+ 
+         iconSize = displayOption.iconSize;
+         iconShapePath = getIconShapePath(context);
+-        iconPack = IconPackProvider.getCurrentIconPack(context);
+         landscapeIconSize = displayOption.landscapeIconSize;
+         iconBitmapSize = ResourceUtils.pxFromDp(iconSize, metrics);
+         iconTextSize = displayOption.iconTextSize;
+@@ -380,7 +377,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
+         }
+ 
+         if (iconSize != oldProfile.iconSize || iconBitmapSize != oldProfile.iconBitmapSize ||
+-                !iconShapePath.equals(oldProfile.iconShapePath) || !iconPack.equals(oldProfile.iconPack)) {
++                !iconShapePath.equals(oldProfile.iconShapePath)) {
+             changeFlags |= CHANGE_FLAG_ICON_PARAMS;
+         }
+         if (!iconShapePath.equals(oldProfile.iconShapePath)) {
+diff --git a/src/com/android/launcher3/settings/IconPackPreference.java b/src/com/android/launcher3/settings/IconPackPreference.java
+deleted file mode 100644
+index 9b53f7812..000000000
+--- a/src/com/android/launcher3/settings/IconPackPreference.java
++++ /dev/null
+@@ -1,176 +0,0 @@
+-package com.android.launcher3.settings;
+-
+-import android.app.AlertDialog;
+-import android.content.Context;
+-import android.content.DialogInterface;
+-import android.content.Intent;
+-import android.content.pm.ApplicationInfo;
+-import android.content.pm.PackageManager;
+-import android.content.pm.ResolveInfo;
+-import android.content.res.Resources;
+-import android.graphics.drawable.Drawable;
+-import android.util.AttributeSet;
+-import android.view.LayoutInflater;
+-import android.view.View;
+-import android.view.ViewGroup;
+-import android.widget.BaseAdapter;
+-import android.widget.ImageView;
+-import android.widget.RadioButton;
+-import android.widget.TextView;
+-
+-import androidx.preference.Preference;
+-
+-import java.util.ArrayList;
+-import java.util.Collections;
+-import java.util.HashMap;
+-import java.util.List;
+-import java.util.Map;
+-
+-import com.android.launcher3.IconPackProvider;
+-import com.android.launcher3.R;
+-
+-
+-public class IconPackPreference extends Preference {
+-
+-    private final PackageManager pm;
+-
+-    public IconPackPreference(Context context) {
+-        this(context, null);
+-    }
+-
+-    public IconPackPreference(Context context, AttributeSet attrs) {
+-        this(context, attrs, 0);
+-    }
+-
+-    public IconPackPreference(Context context, AttributeSet attrs, int defStyleAttr) {
+-        super(context, attrs, defStyleAttr);
+-        setLayoutResource(R.layout.preference_iconpack);
+-        pm = context.getPackageManager();
+-        init();
+-    }
+-
+-    private void init() {
+-        String currentPack = IconPackProvider.getCurrentIconPack(getContext());
+-        if (currentPack.isEmpty()) {
+-            setNone();
+-        } else {
+-            try {
+-                ApplicationInfo info = pm.getApplicationInfo(currentPack, 0);
+-                setIcon(info.loadIcon(pm));
+-                setSummary(info.loadLabel(pm));
+-            } catch (PackageManager.NameNotFoundException e) {
+-                setNone();
+-                persistString("");
+-            }
+-        }
+-    }
+-
+-    private void setNone() {
+-        setIcon(getContext().getResources().getDrawable(R.mipmap.ic_launcher_home));
+-        setSummary("None");
+-    }
+-
+-    @Override
+-    protected void onClick() {
+-        super.onClick();
+-        showDialog();
+-    }
+-
+-    protected void showDialog() {
+-        final Map<String, IconPackInfo> packages = loadAvailableIconPacks();
+-        final IconAdapter adapter = new IconAdapter(getContext(), packages, getPersistedString(""));
+-        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+-        builder.setAdapter(adapter, (dialog, position) -> {
+-            String item = adapter.getItem(position);
+-            persistString(item);
+-            if (!item.isEmpty()) {
+-                IconPackInfo packInfo = packages.get(item);
+-                setIcon(packInfo.icon);
+-                setSummary(packInfo.label);
+-            } else {
+-                setNone();
+-            }
+-        });
+-        builder.show();
+-    }
+-
+-    private Map<String, IconPackInfo> loadAvailableIconPacks() {
+-        Map<String, IconPackInfo> iconPacks = new HashMap<>();
+-        List<ResolveInfo> list;
+-        list = pm.queryIntentActivities(new Intent("com.novalauncher.THEME"), 0);
+-        list.addAll(pm.queryIntentActivities(new Intent("org.adw.launcher.icons.ACTION_PICK_ICON"), 0));
+-        list.addAll(pm.queryIntentActivities(new Intent("com.dlto.atom.launcher.THEME"), 0));
+-        list.addAll(pm.queryIntentActivities(new Intent("android.intent.action.MAIN").addCategory("com.anddoes.launcher.THEME"), 0));
+-        for (ResolveInfo info : list) {
+-            iconPacks.put(info.activityInfo.packageName, new IconPackInfo(info, pm));
+-        }
+-        return iconPacks;
+-    }
+-
+-    private static class IconPackInfo {
+-        String packageName;
+-        CharSequence label;
+-        Drawable icon;
+-
+-        IconPackInfo(ResolveInfo r, PackageManager packageManager) {
+-            packageName = r.activityInfo.packageName;
+-            icon = r.loadIcon(packageManager);
+-            label = r.loadLabel(packageManager);
+-        }
+-
+-        public IconPackInfo(String label, Drawable icon, String packageName) {
+-            this.label = label;
+-            this.icon = icon;
+-            this.packageName = packageName;
+-        }
+-    }
+-
+-    private static class IconAdapter extends BaseAdapter {
+-        ArrayList<IconPackInfo> mSupportedPackages;
+-        LayoutInflater mLayoutInflater;
+-        String mCurrentIconPack;
+-
+-        IconAdapter(Context context, Map<String, IconPackInfo> supportedPackages, String currentPack) {
+-            mLayoutInflater = LayoutInflater.from(context);
+-            mSupportedPackages = new ArrayList<>(supportedPackages.values());
+-            Collections.sort(mSupportedPackages, (lhs, rhs) -> lhs.label.toString().compareToIgnoreCase(rhs.label.toString()));
+-
+-            Resources res = context.getResources();
+-            String defaultLabel = "None";
+-            Drawable icon = res.getDrawable(R.mipmap.ic_launcher_home);
+-            mSupportedPackages.add(0, new IconPackInfo(defaultLabel, icon, ""));
+-            mCurrentIconPack = currentPack;
+-        }
+-
+-        @Override
+-        public int getCount() {
+-            return mSupportedPackages.size();
+-        }
+-
+-        @Override
+-        public String getItem(int position) {
+-            return mSupportedPackages.get(position).packageName;
+-        }
+-
+-        @Override
+-        public long getItemId(int position) {
+-            return 0;
+-        }
+-
+-        @Override
+-        public View getView(int position, View convertView, ViewGroup parent) {
+-            if (convertView == null) {
+-                convertView = mLayoutInflater.inflate(R.layout.iconpack_dialog, null);
+-            }
+-            IconPackInfo info = mSupportedPackages.get(position);
+-            TextView txtView = convertView.findViewById(R.id.title);
+-            txtView.setText(info.label);
+-            ImageView imgView = convertView.findViewById(R.id.icon);
+-            imgView.setImageDrawable(info.icon);
+-            RadioButton radioButton = convertView.findViewById(R.id.radio);
+-            radioButton.setChecked(info.packageName.equals(mCurrentIconPack));
+-            return convertView;
+-        }
+-    }
+-
+-}
+diff --git a/src/com/android/launcher3/util/ConfigMonitor.java b/src/com/android/launcher3/util/ConfigMonitor.java
+index 7ee2c5614..0f8152057 100644
+--- a/src/com/android/launcher3/util/ConfigMonitor.java
++++ b/src/com/android/launcher3/util/ConfigMonitor.java
+@@ -22,23 +22,18 @@ import android.content.BroadcastReceiver;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.IntentFilter;
+-import android.content.SharedPreferences;
+ import android.content.res.Configuration;
+ import android.graphics.Point;
+ import android.util.Log;
+ 
+-import com.android.launcher3.Utilities;
+-
+ import java.util.function.Consumer;
+ 
+-import static com.android.launcher3.IconPackProvider.PREF_ICON_PACK;
+-
+ /**
+  * {@link BroadcastReceiver} which watches configuration changes and
+  * notifies the callback in case changes which affect the device profile occur.
+  */
+ public class ConfigMonitor extends BroadcastReceiver implements
+-        DefaultDisplay.DisplayInfoChangeListener, SharedPreferences.OnSharedPreferenceChangeListener {
++        DefaultDisplay.DisplayInfoChangeListener {
+ 
+     private static final String TAG = "ConfigMonitor";
+ 
+@@ -75,8 +70,6 @@ public class ConfigMonitor extends BroadcastReceiver implements
+ 
+         // Listen for configuration change
+         mContext.registerReceiver(this, new IntentFilter(Intent.ACTION_CONFIGURATION_CHANGED));
+-
+-        Utilities.getPrefs(mContext).registerOnSharedPreferenceChangeListener(this);
+     }
+ 
+     @Override
+@@ -109,13 +102,6 @@ public class ConfigMonitor extends BroadcastReceiver implements
+         }
+     }
+ 
+-    @Override
+-    public void onSharedPreferenceChanged(SharedPreferences sharedPreferences, String key) {
+-        if (PREF_ICON_PACK.equals(key)) {
+-            notifyChange();
+-        }
+-    }
+-
+     private synchronized void notifyChange() {
+         if (mCallback != null) {
+             Consumer<Context> callback = mCallback;
+@@ -129,7 +115,6 @@ public class ConfigMonitor extends BroadcastReceiver implements
+             mContext.unregisterReceiver(this);
+             DefaultDisplay display = DefaultDisplay.INSTANCE.get(mContext);
+             display.removeChangeListener(this);
+-            Utilities.getPrefs(mContext).unregisterOnSharedPreferenceChangeListener(this);
+         } catch (Exception e) {
+             Log.e(TAG, "Failed to unregister config monitor", e);
+         }
+-- 
+2.17.1
+

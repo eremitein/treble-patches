@@ -1,0 +1,25 @@
+From c3f30a846049067cba55a9180c856b67de2bf5fb Mon Sep 17 00:00:00 2001
+From: Hikari-no-Tenshi <kyryljan.serhij@gmail.com>
+Date: Thu, 6 Feb 2020 13:03:33 +0200
+Subject: [PATCH 11/19] Dialer: Fix dark dialogs on light theme
+
+---
+ java/com/android/dialer/theme/hidden/res/values/styles.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/java/com/android/dialer/theme/hidden/res/values/styles.xml b/java/com/android/dialer/theme/hidden/res/values/styles.xml
+index fe8b330e6..97190b027 100644
+--- a/java/com/android/dialer/theme/hidden/res/values/styles.xml
++++ b/java/com/android/dialer/theme/hidden/res/values/styles.xml
+@@ -50,7 +50,7 @@
+ 
+   <!-- Used to style all Dialer's AlertDialogs. Every button is awarded this for free if the parent
+      activity's theme extends from Dialer.ThemeBase(.NoActionBar) or doesn't specify a theme. -->
+-  <style name="AlertDialogTheme" parent="@android:style/Theme.DeviceDefault.Dialog.Alert">
++  <style name="AlertDialogTheme" parent="@android:style/Theme.DeviceDefault.Light.Dialog.Alert">
+     <item name="android:textColorPrimary">@color/dialer_primary_text_color</item>
+     <!-- TODO(a bug): figure out why ?android:attr/colorPrimary doesn't work here -->
+     <item name="android:colorAccent">@color/dialer_theme_color</item>
+-- 
+2.17.1
+

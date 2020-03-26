@@ -1,0 +1,26 @@
+From 12c492adf99edb38fc81c65bf066e969ec34e4d9 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 27 Mar 2020 06:53:23 +0200
+Subject: [PATCH 086/100] fix issue
+
+	modified:   packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java
+---
+ .../systemui/statusbar/KeyguardIndicationController.java        | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java b/packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java
+index aa08803ccfa..f4d366e3a09 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/KeyguardIndicationController.java
+@@ -104,7 +104,7 @@ public class KeyguardIndicationController implements StateListener,
+     private KeyguardIndicationTextView mTextView;
+     private KeyguardIndicationTextView mDisclosure;
+     private LottieAnimationView mChargingIndicationView;
+-    private boolean mChargingIndication = true;
++    private int mChargingIndication = 1;
+     private final UserManager mUserManager;
+     private final IBatteryStats mBatteryInfo;
+     private final SettableWakeLock mWakeLock;
+-- 
+2.17.1
+

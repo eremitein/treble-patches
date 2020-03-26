@@ -1,0 +1,290 @@
+From afa35cd3e58564b150cfc03266557e30470b50be Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 31 Mar 2020 10:06:28 +0300
+Subject: [PATCH 3/5] Revert "launcher3: Rewrite IconPack for ListPreference."
+
+This reverts commit e3def87460214072a22027e5034657e8c7963787.
+---
+ res/layout/iconpack_dialog.xml                | 35 +++++++
+ res/layout/preference_iconpack.xml            | 27 +++++-
+ res/xml/icons_preferences.xml                 |  2 +-
+ .../settings/IconPackPreference.java          | 91 +++++++++++++++----
+ 4 files changed, 134 insertions(+), 21 deletions(-)
+ create mode 100644 res/layout/iconpack_dialog.xml
+
+diff --git a/res/layout/iconpack_dialog.xml b/res/layout/iconpack_dialog.xml
+new file mode 100644
+index 000000000..0b1bb8121
+--- /dev/null
++++ b/res/layout/iconpack_dialog.xml
+@@ -0,0 +1,35 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="wrap_content"
++    android:layout_height="match_parent"
++    android:orientation="horizontal">
++
++    <ImageView
++        android:id="@+id/icon"
++        android:layout_width="@android:dimen/app_icon_size"
++        android:layout_height="@android:dimen/app_icon_size"
++        android:layout_gravity="center_vertical"
++        android:layout_margin="8dp"
++        android:contentDescription="@null" />
++
++    <TextView
++        android:id="@+id/title"
++        android:layout_width="0dp"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center_vertical"
++        android:layout_weight="1"
++        android:paddingEnd="8dip"
++        android:paddingStart="8dip"
++        android:textAppearance="?android:attr/textAppearanceLarge"
++        android:textSize="19sp" />
++
++    <RadioButton
++        android:id="@+id/radio"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_gravity="center_vertical"
++        android:clickable="false"
++        android:duplicateParentState="true"
++        android:focusable="false"
++        android:paddingEnd="8dip" />
++</LinearLayout>
+diff --git a/res/layout/preference_iconpack.xml b/res/layout/preference_iconpack.xml
+index c0d137408..c2f432aef 100644
+--- a/res/layout/preference_iconpack.xml
++++ b/res/layout/preference_iconpack.xml
+@@ -14,30 +14,51 @@
+   ~ See the License for the specific language governing permissions and
+   ~ limitations under the License
+   -->
++
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+     android:minHeight="?android:attr/listPreferredItemHeightSmall"
+     android:gravity="center_vertical"
+-    android:paddingStart="72dp"
+-    android:paddingEnd="16dp"
++    android:paddingStart="?android:attr/listPreferredItemPaddingStart"
++    android:paddingEnd="?android:attr/listPreferredItemPaddingEnd"
+     android:background="?android:attr/selectableItemBackground"
+     android:clipToPadding="false"
+     android:focusable="true" >
+ 
++    <LinearLayout
++        android:id="@+id/icon_frame"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:minWidth="56dp"
++        android:gravity="start|center_vertical"
++        android:orientation="horizontal"
++        android:paddingEnd="8dp"
++        android:paddingTop="4dp"
++        android:paddingBottom="4dp">
++        <androidx.preference.internal.PreferenceImageView
++            android:id="@android:id/icon"
++            android:layout_width="wrap_content"
++            android:layout_height="wrap_content"
++            app:maxWidth="48dp"
++            app:maxHeight="48dp" />
++    </LinearLayout>
++
+     <RelativeLayout
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_weight="1"
+         android:paddingTop="16dp"
+         android:paddingBottom="16dp">
++
+         <TextView android:id="@android:id/title"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:singleLine="true"
+             android:textAppearance="?android:attr/textAppearanceListItem"
+             android:ellipsize="marquee" />
++
+         <TextView android:id="@android:id/summary"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+@@ -47,6 +68,7 @@
+             android:textAlignment="viewStart"
+             android:textColor="?android:attr/textColorSecondary"
+             android:maxLines="10" />
++
+     </RelativeLayout>
+ 
+     <!-- Preference should place its actual preference widget here. -->
+@@ -56,4 +78,5 @@
+         android:gravity="end|center_vertical"
+         android:paddingStart="16dp"
+         android:orientation="vertical" />
++
+ </LinearLayout>
+diff --git a/res/xml/icons_preferences.xml b/res/xml/icons_preferences.xml
+index 0dddf0ad6..d90501ee7 100644
+--- a/res/xml/icons_preferences.xml
++++ b/res/xml/icons_preferences.xml
+@@ -11,7 +11,7 @@
+     <com.android.launcher3.settings.IconPackPreference
+         android:key="pref_iconPackPackage"
+         android:title="@string/icon_pack"
+-        android:summary="%s"
++        android:summary="@string/icon_pack_summary"
+         android:persistent="true" />
+ 
+     <com.android.launcher3.settings.NotificationDotsPreference
+diff --git a/src/com/android/launcher3/settings/IconPackPreference.java b/src/com/android/launcher3/settings/IconPackPreference.java
+index 46abd0b2a..9b53f7812 100644
+--- a/src/com/android/launcher3/settings/IconPackPreference.java
++++ b/src/com/android/launcher3/settings/IconPackPreference.java
+@@ -18,7 +18,7 @@ import android.widget.ImageView;
+ import android.widget.RadioButton;
+ import android.widget.TextView;
+ 
+-import androidx.preference.ListPreference;
++import androidx.preference.Preference;
+ 
+ import java.util.ArrayList;
+ import java.util.Collections;
+@@ -30,7 +30,7 @@ import com.android.launcher3.IconPackProvider;
+ import com.android.launcher3.R;
+ 
+ 
+-public class IconPackPreference extends ListPreference {
++public class IconPackPreference extends Preference {
+ 
+     private final PackageManager pm;
+ 
+@@ -56,6 +56,7 @@ public class IconPackPreference extends ListPreference {
+         } else {
+             try {
+                 ApplicationInfo info = pm.getApplicationInfo(currentPack, 0);
++                setIcon(info.loadIcon(pm));
+                 setSummary(info.loadLabel(pm));
+             } catch (PackageManager.NameNotFoundException e) {
+                 setNone();
+@@ -65,30 +66,32 @@ public class IconPackPreference extends ListPreference {
+     }
+ 
+     private void setNone() {
++        setIcon(getContext().getResources().getDrawable(R.mipmap.ic_launcher_home));
+         setSummary("None");
+     }
+ 
+     @Override
+     protected void onClick() {
+-        load();
+         super.onClick();
++        showDialog();
+     }
+ 
+-    protected void load() {
++    protected void showDialog() {
+         final Map<String, IconPackInfo> packages = loadAvailableIconPacks();
+-        String[] packageNames = new String[packages.size()+1];
+-        CharSequence[] labels = new CharSequence[packages.size()+1];
+-        String defaultLabel = "None";
+-        packageNames[0] = "";
+-        labels[0] = defaultLabel;
+-        int i = 1;
+-        for (Map.Entry<String, IconPackInfo> entry : packages.entrySet()) {
+-            packageNames[i] = entry.getKey();
+-            labels[i] = entry.getValue().label;
+-            i++;
+-        }
+-        setEntries(labels);
+-        setEntryValues(packageNames);
++        final IconAdapter adapter = new IconAdapter(getContext(), packages, getPersistedString(""));
++        AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
++        builder.setAdapter(adapter, (dialog, position) -> {
++            String item = adapter.getItem(position);
++            persistString(item);
++            if (!item.isEmpty()) {
++                IconPackInfo packInfo = packages.get(item);
++                setIcon(packInfo.icon);
++                setSummary(packInfo.label);
++            } else {
++                setNone();
++            }
++        });
++        builder.show();
+     }
+ 
+     private Map<String, IconPackInfo> loadAvailableIconPacks() {
+@@ -107,15 +110,67 @@ public class IconPackPreference extends ListPreference {
+     private static class IconPackInfo {
+         String packageName;
+         CharSequence label;
++        Drawable icon;
+ 
+         IconPackInfo(ResolveInfo r, PackageManager packageManager) {
+             packageName = r.activityInfo.packageName;
++            icon = r.loadIcon(packageManager);
+             label = r.loadLabel(packageManager);
+         }
+ 
+-        public IconPackInfo(String label, String packageName) {
++        public IconPackInfo(String label, Drawable icon, String packageName) {
+             this.label = label;
++            this.icon = icon;
+             this.packageName = packageName;
+         }
+     }
++
++    private static class IconAdapter extends BaseAdapter {
++        ArrayList<IconPackInfo> mSupportedPackages;
++        LayoutInflater mLayoutInflater;
++        String mCurrentIconPack;
++
++        IconAdapter(Context context, Map<String, IconPackInfo> supportedPackages, String currentPack) {
++            mLayoutInflater = LayoutInflater.from(context);
++            mSupportedPackages = new ArrayList<>(supportedPackages.values());
++            Collections.sort(mSupportedPackages, (lhs, rhs) -> lhs.label.toString().compareToIgnoreCase(rhs.label.toString()));
++
++            Resources res = context.getResources();
++            String defaultLabel = "None";
++            Drawable icon = res.getDrawable(R.mipmap.ic_launcher_home);
++            mSupportedPackages.add(0, new IconPackInfo(defaultLabel, icon, ""));
++            mCurrentIconPack = currentPack;
++        }
++
++        @Override
++        public int getCount() {
++            return mSupportedPackages.size();
++        }
++
++        @Override
++        public String getItem(int position) {
++            return mSupportedPackages.get(position).packageName;
++        }
++
++        @Override
++        public long getItemId(int position) {
++            return 0;
++        }
++
++        @Override
++        public View getView(int position, View convertView, ViewGroup parent) {
++            if (convertView == null) {
++                convertView = mLayoutInflater.inflate(R.layout.iconpack_dialog, null);
++            }
++            IconPackInfo info = mSupportedPackages.get(position);
++            TextView txtView = convertView.findViewById(R.id.title);
++            txtView.setText(info.label);
++            ImageView imgView = convertView.findViewById(R.id.icon);
++            imgView.setImageDrawable(info.icon);
++            RadioButton radioButton = convertView.findViewById(R.id.radio);
++            radioButton.setChecked(info.packageName.equals(mCurrentIconPack));
++            return convertView;
++        }
++    }
++
+ }
+-- 
+2.17.1
+

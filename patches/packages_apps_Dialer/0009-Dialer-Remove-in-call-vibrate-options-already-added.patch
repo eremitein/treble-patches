@@ -1,0 +1,57 @@
+From caf76e3183f2b0eb3f5059dd8fda1e470792dc0a Mon Sep 17 00:00:00 2001
+From: Pranav Vashi <neobuddy89@gmail.com>
+Date: Sat, 4 Jan 2020 23:05:10 +0530
+Subject: [PATCH 09/19] Dialer: Remove in call vibrate options already added
+
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+---
+ .../app/settings/SoundSettingsFragment.java   | 24 ++++++++++---------
+ 1 file changed, 13 insertions(+), 11 deletions(-)
+
+diff --git a/java/com/android/dialer/app/settings/SoundSettingsFragment.java b/java/com/android/dialer/app/settings/SoundSettingsFragment.java
+index f7fc0d0b6..ce0332262 100644
+--- a/java/com/android/dialer/app/settings/SoundSettingsFragment.java
++++ b/java/com/android/dialer/app/settings/SoundSettingsFragment.java
+@@ -102,26 +102,28 @@ public class SoundSettingsFragment extends PreferenceFragment
+             findPreference(context.getString(R.string.dtmf_tone_length_preference_key));
+     enableDndInCall = (SwitchPreference) findPreference("incall_enable_dnd");
+ 
++    PreferenceScreen ps = getPreferenceScreen();
++
+     if (hasVibrator()) {
+       vibrateWhenRinging.setOnPreferenceChangeListener(this);
+     } else {
+-      PreferenceScreen ps = getPreferenceScreen();
+-      Preference inCallVibrateOutgoing = findPreference(
+-          context.getString(R.string.incall_vibrate_outgoing_key));
+-      Preference inCallVibrateCallWaiting = findPreference(
+-          context.getString(R.string.incall_vibrate_call_waiting_key));
+-      Preference inCallVibrateHangup = findPreference(
+-          context.getString(R.string.incall_vibrate_hangup_key));
+       Preference inCallVibrate45Secs = findPreference(
+           context.getString(R.string.incall_vibrate_45_key));
+-      ps.removePreference(vibrateWhenRinging);
+-      ps.removePreference(inCallVibrateOutgoing);
+-      ps.removePreference(inCallVibrateCallWaiting);
+-      ps.removePreference(inCallVibrateHangup);
+       ps.removePreference(inCallVibrate45Secs);
++      ps.removePreference(vibrateWhenRinging);
+       vibrateWhenRinging = null;
+     }
+ 
++    Preference inCallVibrateOutgoing = findPreference(
++        context.getString(R.string.incall_vibrate_outgoing_key));
++    Preference inCallVibrateCallWaiting = findPreference(
++        context.getString(R.string.incall_vibrate_call_waiting_key));
++    Preference inCallVibrateHangup = findPreference(
++        context.getString(R.string.incall_vibrate_hangup_key));
++    ps.removePreference(inCallVibrateOutgoing);
++    ps.removePreference(inCallVibrateCallWaiting);
++    ps.removePreference(inCallVibrateHangup);
++
+     playDtmfTone.setOnPreferenceChangeListener(this);
+     playDtmfTone.setChecked(shouldPlayDtmfTone());
+ 
+-- 
+2.17.1
+

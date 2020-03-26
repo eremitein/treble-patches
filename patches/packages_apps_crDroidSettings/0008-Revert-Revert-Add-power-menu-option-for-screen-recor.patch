@@ -1,0 +1,156 @@
+From 48d6e1878d00464294c2135e03c7f244a9871eef Mon Sep 17 00:00:00 2001
+From: Pranav Vashi <neobuddy89@gmail.com>
+Date: Mon, 30 Mar 2020 23:02:20 +0530
+Subject: [PATCH 08/10] Revert "Revert "Add power menu option for screen record
+ [3/3]""
+
+This reverts commit 5b9d711c751d202d832937bef687f9a57a58801b.
+---
+ res/drawable/ic_screenrecord.xml              | 26 +++++++++++++++++++
+ res/drawable/ic_screenshot.xml                | 10 +++++--
+ res/values/cr_strings.xml                     |  1 +
+ res/xml/power_menu_settings.xml               |  8 +++++-
+ .../fragments/buttons/PowerMenuActions.java   | 11 ++++++++
+ 5 files changed, 53 insertions(+), 3 deletions(-)
+ create mode 100644 res/drawable/ic_screenrecord.xml
+
+diff --git a/res/drawable/ic_screenrecord.xml b/res/drawable/ic_screenrecord.xml
+new file mode 100644
+index 00000000..124f1a5a
+--- /dev/null
++++ b/res/drawable/ic_screenrecord.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2019 crDroid Android Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++        android:width="24.0dp"
++        android:height="24.0dp"
++        android:viewportWidth="24.0"
++        android:viewportHeight="24.0"
++        android:tint="?android:attr/colorControlNormal">
++    <path
++        android:fillColor="#FF000000"
++        android:pathData="m 15.87904,15.475197 a 1.6031721,1.6031721 0 0 1 -1.603173,1.603172 1.6031721,1.6031721 0 0 1 -1.603172,-1.603172 1.6031721,1.6031721 0 0 1 1.603172,-1.603172 1.6031721,1.6031721 0 0 1 1.603173,1.603172 z M 17,1.01 7,1 C 5.9,1 5,1.9 5,3 v 18 c 0,1.1 0.9,2 2,2 h 10 c 1.1,0 2,-0.9 2,-2 V 3 C 19,1.9 18.1,1.01 17,1.01 Z M 17,21 H 7 v -1 h 10 z m 0,-3 H 7 V 6 H 17 Z M 17,4 H 7 V 3 h 10 z" />
++</vector>
+diff --git a/res/drawable/ic_screenshot.xml b/res/drawable/ic_screenshot.xml
+index 0f0925c0..f752646c 100644
+--- a/res/drawable/ic_screenshot.xml
++++ b/res/drawable/ic_screenshot.xml
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <!--
+-     Copyright (C) 2017 crDroid Android Project
++     Copyright (C) 2017-2019 crDroid Android Project
+ 
+      Licensed under the Apache License, Version 2.0 (the "License");
+      you may not use this file except in compliance with the License.
+@@ -22,5 +22,11 @@
+         android:tint="?android:attr/colorControlNormal">
+     <path
+         android:fillColor="#FF000000"
+-        android:pathData="M17,19H7V5H17M17,1H7C5.89,1 5,1.89 5,3V21A2,2 0 0,0 7,23H17A2,2 0 0,0 19,21V3C19,1.89 18.1,1 17,1Z" />
++        android:pathData="M17,1.01L7,1C5.9,1 5,1.9 5,3v18c0,1.1 0.9,2 2,2h10c1.1,0 2,-0.9 2,-2V3C19,1.9 18.1,1.01 17,1.01zM17,21H7l0,-1h10V21zM17,18H7V6h10V18zM17,4H7V3h10V4z"/>
++    <path
++        android:fillColor="#FF000000"
++        android:pathData="M9.5,8.5l2.5,0l0,-1.5l-2.5,0l-1.5,0l0,1.5l0,2.5l1.5,0z"/>
++    <path
++        android:fillColor="#FF000000"
++        android:pathData="M12,17l2.5,0l1.5,0l0,-1.5l0,-2.5l-1.5,0l0,2.5l-2.5,0z"/>
+ </vector>
+diff --git a/res/values/cr_strings.xml b/res/values/cr_strings.xml
+index a2dad23c..c27379c3 100644
+--- a/res/values/cr_strings.xml
++++ b/res/values/cr_strings.xml
+@@ -1216,6 +1216,7 @@
+     <string name="power_menu_reboot_title">Restart menu</string>
+     <string name="power_menu_screenshot_title">Screenshot</string>
+     <string name="power_menu_screenshot_summary">Long-press for partial screenshot</string>
++    <string name="power_menu_screenrecord_title">Screenrecord</string>
+     <string name="power_menu_onthego_title">On-The-Go mode</string>
+     <string name="power_menu_airplane_title">Airplane mode</string>
+     <string name="power_menu_users_title">User switcher</string>
+diff --git a/res/xml/power_menu_settings.xml b/res/xml/power_menu_settings.xml
+index 239efed3..64777711 100644
+--- a/res/xml/power_menu_settings.xml
++++ b/res/xml/power_menu_settings.xml
+@@ -1,6 +1,6 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <!--
+-     Copyright (C) 2016-2018 crDroid Android Project
++     Copyright (C) 2016-2019 crDroid Android Project
+ 
+      Licensed under the Apache License, Version 2.0 (the "License");
+      you may not use this file except in compliance with the License.
+@@ -33,6 +33,12 @@
+         android:summary="@string/power_menu_screenshot_summary"
+         android:defaultValue="false" />
+ 
++    <SwitchPreference
++        android:key="screenrecord"
++        android:icon="@drawable/ic_screenrecord"
++        android:title="@string/power_menu_screenrecord_title"
++        android:defaultValue="false" />
++
+     <!--<SwitchPreference
+         android:key="onthego"
+         android:icon="@drawable/ic_onthego"
+diff --git a/src/com/crdroid/settings/fragments/buttons/PowerMenuActions.java b/src/com/crdroid/settings/fragments/buttons/PowerMenuActions.java
+index 1336a975..716f3b1f 100644
+--- a/src/com/crdroid/settings/fragments/buttons/PowerMenuActions.java
++++ b/src/com/crdroid/settings/fragments/buttons/PowerMenuActions.java
+@@ -46,6 +46,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+     final static String TAG = "PowerMenuActions";
+ 
+     private SwitchPreference mScreenshotPref;
++    private SwitchPreference mScreenrecordPref;
+     private SwitchPreference mAirplanePref;
+     private SwitchPreference mUsersPref;
+     private SwitchPreference mLockDownPref;
+@@ -66,6 +67,8 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+         for (String action : mAllActions) {
+             if (action.equals(GLOBAL_ACTION_KEY_SCREENSHOT)) {
+                 mScreenshotPref = (SwitchPreference) findPreference(GLOBAL_ACTION_KEY_SCREENSHOT);
++            } else if (action.equals(GLOBAL_ACTION_KEY_SCREENRECORD)) {
++                mScreenrecordPref = (SwitchPreference) findPreference(GLOBAL_ACTION_KEY_SCREENRECORD);
+             } else if (action.equals(GLOBAL_ACTION_KEY_AIRPLANE)) {
+                 mAirplanePref = (SwitchPreference) findPreference(GLOBAL_ACTION_KEY_AIRPLANE);
+             } else if (action.equals(GLOBAL_ACTION_KEY_USERS)) {
+@@ -86,6 +89,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+             mScreenshotPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SCREENSHOT));
+         }
+ 
++        if (mScreenrecordPref != null) {
++            mScreenrecordPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SCREENRECORD));
++        }
++
+         if (mAirplanePref != null) {
+             mAirplanePref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_AIRPLANE));
+         }
+@@ -112,6 +119,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+             value = mScreenshotPref.isChecked();
+             updateUserConfig(value, GLOBAL_ACTION_KEY_SCREENSHOT);
+ 
++        } else if (preference == mScreenrecordPref) {
++            value = mScreenrecordPref.isChecked();
++            updateUserConfig(value, GLOBAL_ACTION_KEY_SCREENRECORD);
++
+         } else if (preference == mAirplanePref) {
+             value = mAirplanePref.isChecked();
+             updateUserConfig(value, GLOBAL_ACTION_KEY_AIRPLANE);
+-- 
+2.17.1
+

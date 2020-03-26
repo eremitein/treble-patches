@@ -1,0 +1,50 @@
+From 0b5652bdab45a76fb0400334d12bb2791069e725 Mon Sep 17 00:00:00 2001
+From: Pranav Vashi <neobuddy89@gmail.com>
+Date: Mon, 30 Mar 2020 23:02:35 +0530
+Subject: [PATCH 09/10] Revert "Revert "crdroid: Remove ScreenRecord preference
+ if not supported""
+
+This reverts commit af37e1fba5e5c78863eb6a32ea445caee0f160a2.
+---
+ .../settings/fragments/buttons/PowerMenuActions.java  | 11 ++++++++++-
+ 1 file changed, 10 insertions(+), 1 deletion(-)
+
+diff --git a/src/com/crdroid/settings/fragments/buttons/PowerMenuActions.java b/src/com/crdroid/settings/fragments/buttons/PowerMenuActions.java
+index 716f3b1f..7e8b31f5 100644
+--- a/src/com/crdroid/settings/fragments/buttons/PowerMenuActions.java
++++ b/src/com/crdroid/settings/fragments/buttons/PowerMenuActions.java
+@@ -51,6 +51,8 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+     private SwitchPreference mUsersPref;
+     private SwitchPreference mLockDownPref;
+ 
++    private boolean mScreenRecordAvailable;
++
+     Context mContext;
+     private ArrayList<String> mLocalUserConfig = new ArrayList<String>();
+     private String[] mAllActions;
+@@ -62,6 +64,9 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+         addPreferencesFromResource(R.xml.power_menu_settings);
+         mContext = getActivity().getApplicationContext();
+ 
++        mScreenRecordAvailable = mContext.getResources().getBoolean(
++                com.android.internal.R.bool.config_showScreenRecord);
++
+         mAllActions = PowerMenuConstants.getAllActions();
+ 
+         for (String action : mAllActions) {
+@@ -90,7 +95,11 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+         }
+ 
+         if (mScreenrecordPref != null) {
+-            mScreenrecordPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SCREENRECORD));
++            if (!mScreenRecordAvailable) {
++                getPreferenceScreen().removePreference(mScreenrecordPref);
++            } else {
++                mScreenrecordPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_SCREENRECORD));
++            }
+         }
+ 
+         if (mAirplanePref != null) {
+-- 
+2.17.1
+

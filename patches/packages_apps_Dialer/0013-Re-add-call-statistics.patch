@@ -1,0 +1,3945 @@
+From d1b81754167268a20ae8427b6a9a0f197c18f384 Mon Sep 17 00:00:00 2001
+From: Danny Baumann <dannybaumann@web.de>
+Date: Wed, 27 Jun 2018 15:53:56 +0200
+Subject: [PATCH 13/19] Re-add call statistics.
+
+Change-Id: I9f2b6e912ca69a5aa7a1790bed06304ee953e752
+---
+ .../dialer/app/calllog/CallLogActivity.java   |  33 +-
+ .../ExpirableCacheHeadlessFragment.java       |   4 +-
+ .../dialer/app/res/values/cm_attrs.xml        |  26 ++
+ .../dialer/app/res/values/cm_strings.xml      |   2 +
+ .../calllogutils/CallTypeIconsView.java       |   6 +-
+ .../calllogutils/FilterSpinnerHelper.java     | 149 +++++++
+ .../calllogutils/PhoneNumberDisplayUtil.java  |   2 +-
+ .../layout/call_log_filter_spinner_item.xml   |  39 ++
+ .../res/layout/call_log_filter_spinners.xml   |  22 ++
+ .../calllogutils/res/values/cm_strings.xml    |  26 ++
+ .../dialer/calllogutils/res/values/colors.xml |  10 +-
+ .../dialer/callstats/AndroidManifest.xml      |  31 ++
+ .../dialer/callstats/CallStatsAdapter.java    | 248 ++++++++++++
+ .../callstats/CallStatsDetailActivity.java    | 363 ++++++++++++++++++
+ .../dialer/callstats/CallStatsDetails.java    | 260 +++++++++++++
+ .../dialer/callstats/CallStatsFragment.java   | 339 ++++++++++++++++
+ .../CallStatsListItemViewHolder.java          | 245 ++++++++++++
+ .../dialer/callstats/CallStatsQuery.java      |  64 +++
+ .../callstats/CallStatsQueryHandler.java      | 297 ++++++++++++++
+ .../callstats/DoubleDatePickerDialog.java     | 334 ++++++++++++++++
+ .../res/layout/call_stats_detail.xml          | 127 ++++++
+ .../res/layout/call_stats_detail_info.xml     | 230 +++++++++++
+ .../res/layout/call_stats_detail_line.xml     |  43 +++
+ .../res/layout/call_stats_fragment.xml        |  80 ++++
+ .../res/layout/call_stats_list_item.xml       |  85 ++++
+ .../res/layout/double_date_picker_dialog.xml  |  67 ++++
+ .../callstats/res/menu/call_stats_options.xml |  40 ++
+ .../dialer/callstats/res/values/cm_arrays.xml |  37 ++
+ .../callstats/res/values/cm_plurals.xml       |  36 ++
+ .../callstats/res/values/cm_strings.xml       |  54 +++
+ .../dialer/callstats/res/values/colors.xml    |  20 +
+ .../dialer/callstats/res/values/styles.xml    |  29 ++
+ .../dialer/proguard/proguard_base.flags       |   5 +
+ .../android/dialer/widget/LinearColorBar.java | 221 +++++++++++
+ 34 files changed, 3562 insertions(+), 12 deletions(-)
+ create mode 100644 java/com/android/dialer/app/res/values/cm_attrs.xml
+ create mode 100644 java/com/android/dialer/calllogutils/FilterSpinnerHelper.java
+ create mode 100644 java/com/android/dialer/calllogutils/res/layout/call_log_filter_spinner_item.xml
+ create mode 100644 java/com/android/dialer/calllogutils/res/layout/call_log_filter_spinners.xml
+ create mode 100644 java/com/android/dialer/calllogutils/res/values/cm_strings.xml
+ create mode 100644 java/com/android/dialer/callstats/AndroidManifest.xml
+ create mode 100644 java/com/android/dialer/callstats/CallStatsAdapter.java
+ create mode 100644 java/com/android/dialer/callstats/CallStatsDetailActivity.java
+ create mode 100644 java/com/android/dialer/callstats/CallStatsDetails.java
+ create mode 100644 java/com/android/dialer/callstats/CallStatsFragment.java
+ create mode 100644 java/com/android/dialer/callstats/CallStatsListItemViewHolder.java
+ create mode 100644 java/com/android/dialer/callstats/CallStatsQuery.java
+ create mode 100644 java/com/android/dialer/callstats/CallStatsQueryHandler.java
+ create mode 100644 java/com/android/dialer/callstats/DoubleDatePickerDialog.java
+ create mode 100644 java/com/android/dialer/callstats/res/layout/call_stats_detail.xml
+ create mode 100644 java/com/android/dialer/callstats/res/layout/call_stats_detail_info.xml
+ create mode 100644 java/com/android/dialer/callstats/res/layout/call_stats_detail_line.xml
+ create mode 100644 java/com/android/dialer/callstats/res/layout/call_stats_fragment.xml
+ create mode 100644 java/com/android/dialer/callstats/res/layout/call_stats_list_item.xml
+ create mode 100644 java/com/android/dialer/callstats/res/layout/double_date_picker_dialog.xml
+ create mode 100644 java/com/android/dialer/callstats/res/menu/call_stats_options.xml
+ create mode 100644 java/com/android/dialer/callstats/res/values/cm_arrays.xml
+ create mode 100644 java/com/android/dialer/callstats/res/values/cm_plurals.xml
+ create mode 100644 java/com/android/dialer/callstats/res/values/cm_strings.xml
+ create mode 100644 java/com/android/dialer/callstats/res/values/colors.xml
+ create mode 100644 java/com/android/dialer/callstats/res/values/styles.xml
+ create mode 100644 java/com/android/dialer/widget/LinearColorBar.java
+
+diff --git a/java/com/android/dialer/app/calllog/CallLogActivity.java b/java/com/android/dialer/app/calllog/CallLogActivity.java
+index f28aa0fc7..ff3ff558a 100644
+--- a/java/com/android/dialer/app/calllog/CallLogActivity.java
++++ b/java/com/android/dialer/app/calllog/CallLogActivity.java
+@@ -33,6 +33,8 @@ import android.view.ViewGroup;
+ import com.android.contacts.common.list.ViewPagerTabs;
+ import com.android.dialer.app.R;
+ import com.android.dialer.calldetails.OldCallDetailsActivity;
++import com.android.dialer.callstats.CallStatsFragment;
++import com.android.dialer.callstats.DoubleDatePickerDialog;
+ import com.android.dialer.common.Assert;
+ import com.android.dialer.constants.ActivityRequestCodes;
+ import com.android.dialer.database.CallLogQueryHandler;
+@@ -45,17 +47,19 @@ import com.android.dialer.util.TransactionSafeActivity;
+ import com.android.dialer.util.ViewUtil;
+ 
+ /** Activity for viewing call history. */
+-public class CallLogActivity extends TransactionSafeActivity
+-    implements ViewPager.OnPageChangeListener {
++public class CallLogActivity extends TransactionSafeActivity implements
++    ViewPager.OnPageChangeListener, DoubleDatePickerDialog.OnDateSetListener {
+ 
+   @VisibleForTesting static final int TAB_INDEX_ALL = 0;
+   @VisibleForTesting static final int TAB_INDEX_MISSED = 1;
+-  private static final int TAB_INDEX_COUNT = 2;
++  private static final int TAB_INDEX_STATS = 2;
++  private static final int TAB_INDEX_COUNT = 3;
+   private ViewPager viewPager;
+   private ViewPagerTabs viewPagerTabs;
+   private ViewPagerAdapter viewPagerAdapter;
+   private CallLogFragment allCallsFragment;
+   private CallLogFragment missedCallsFragment;
++  private CallStatsFragment statsFragment;
+   private String[] tabTitles;
+   private boolean isResumed;
+   private int selectedPageIndex;
+@@ -86,6 +90,7 @@ public class CallLogActivity extends TransactionSafeActivity
+     tabTitles = new String[TAB_INDEX_COUNT];
+     tabTitles[0] = getString(R.string.call_log_all_title);
+     tabTitles[1] = getString(R.string.call_log_missed_title);
++    tabTitles[2] = getString(R.string.call_log_stats_title);
+ 
+     viewPager = (ViewPager) findViewById(R.id.call_log_pager);
+ 
+@@ -187,6 +192,15 @@ public class CallLogActivity extends TransactionSafeActivity
+     viewPagerTabs.onPageScrollStateChanged(state);
+   }
+ 
++  @Override
++  public void onDateSet(long from, long to) {
++    switch (viewPager.getCurrentItem()) {
++      case TAB_INDEX_STATS:
++        statsFragment.onDateSet(from, to);
++        break;
++    }
++  }
++
+   private void sendScreenViewForChildFragment() {
+     Logger.get(this).logScreenView(ScreenEvent.Type.CALL_LOG_FILTER, this);
+   }
+@@ -213,6 +227,8 @@ public class CallLogActivity extends TransactionSafeActivity
+           missedCallsFragment.markMissedCallsAsReadAndRemoveNotifications();
+         }
+         break;
++      case TAB_INDEX_STATS:
++        break;
+       default:
+         throw Assert.createIllegalStateFailException("Invalid position: " + position);
+     }
+@@ -244,6 +260,8 @@ public class CallLogActivity extends TransactionSafeActivity
+               CallLogQueryHandler.CALL_TYPE_ALL, true /* isCallLogActivity */);
+         case TAB_INDEX_MISSED:
+           return new CallLogFragment(Calls.MISSED_TYPE, true /* isCallLogActivity */);
++        case TAB_INDEX_STATS:
++          return new CallStatsFragment();
+         default:
+           throw new IllegalStateException("No fragment at position " + position);
+       }
+@@ -251,13 +269,16 @@ public class CallLogActivity extends TransactionSafeActivity
+ 
+     @Override
+     public Object instantiateItem(ViewGroup container, int position) {
+-      final CallLogFragment fragment = (CallLogFragment) super.instantiateItem(container, position);
++      final Object fragment = super.instantiateItem(container, position);
+       switch (getRtlPosition(position)) {
+         case TAB_INDEX_ALL:
+-          allCallsFragment = fragment;
++          allCallsFragment = (CallLogFragment) fragment;
+           break;
+         case TAB_INDEX_MISSED:
+-          missedCallsFragment = fragment;
++          missedCallsFragment = (CallLogFragment) fragment;
++          break;
++        case TAB_INDEX_STATS:
++          statsFragment = (CallStatsFragment) fragment;
+           break;
+         default:
+           throw Assert.createIllegalStateFailException("Invalid position: " + position);
+diff --git a/java/com/android/dialer/app/contactinfo/ExpirableCacheHeadlessFragment.java b/java/com/android/dialer/app/contactinfo/ExpirableCacheHeadlessFragment.java
+index aed51b507..267dc6250 100644
+--- a/java/com/android/dialer/app/contactinfo/ExpirableCacheHeadlessFragment.java
++++ b/java/com/android/dialer/app/contactinfo/ExpirableCacheHeadlessFragment.java
+@@ -34,7 +34,8 @@ public class ExpirableCacheHeadlessFragment extends Fragment {
+   private static final String FRAGMENT_TAG = "ExpirableCacheHeadlessFragment";
+   private static final int CONTACT_INFO_CACHE_SIZE = 100;
+ 
+-  private ExpirableCache<NumberWithCountryIso, ContactInfo> retainedCache;
++  private ExpirableCache<NumberWithCountryIso, ContactInfo> retainedCache =
++      ExpirableCache.create(CONTACT_INFO_CACHE_SIZE);
+ 
+   @NonNull
+   public static ExpirableCacheHeadlessFragment attach(@NonNull AppCompatActivity parentActivity) {
+@@ -57,7 +58,6 @@ public class ExpirableCacheHeadlessFragment extends Fragment {
+   @Override
+   public void onCreate(Bundle savedInstanceState) {
+     super.onCreate(savedInstanceState);
+-    retainedCache = ExpirableCache.create(CONTACT_INFO_CACHE_SIZE);
+     setRetainInstance(true);
+   }
+ 
+diff --git a/java/com/android/dialer/app/res/values/cm_attrs.xml b/java/com/android/dialer/app/res/values/cm_attrs.xml
+new file mode 100644
+index 000000000..3155845c5
+--- /dev/null
++++ b/java/com/android/dialer/app/res/values/cm_attrs.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2013-2014 The CyanogenMod Project
++     Copyright (C) 2018 The LineageOS Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources>
++    <declare-styleable name="LinearColorBar">
++        <attr name="redColor" format="color" />
++        <attr name="greenColor" format="color" />
++        <attr name="blueColor" format="color" />
++        <attr name="orangeColor" format="color" />
++        <attr name="backgroundColor" format="color" />
++    </declare-styleable>
++</resources>
+diff --git a/java/com/android/dialer/app/res/values/cm_strings.xml b/java/com/android/dialer/app/res/values/cm_strings.xml
+index b4aacec50..3f7602d44 100644
+--- a/java/com/android/dialer/app/res/values/cm_strings.xml
++++ b/java/com/android/dialer/app/res/values/cm_strings.xml
+@@ -43,4 +43,6 @@
+ 
+     <string name="call_via">Call via</string>
+     <string name="call_via_dialog_title">Call via\u2026</string>
++
++    <string name="call_log_stats_title">Statistics</string>
+ </resources>
+diff --git a/java/com/android/dialer/calllogutils/CallTypeIconsView.java b/java/com/android/dialer/calllogutils/CallTypeIconsView.java
+index 19c30c575..79d1e6e58 100644
+--- a/java/com/android/dialer/calllogutils/CallTypeIconsView.java
++++ b/java/com/android/dialer/calllogutils/CallTypeIconsView.java
+@@ -290,13 +290,15 @@ public class CallTypeIconsView extends View {
+       int iconId = R.drawable.quantum_ic_call_received_white_24;
+       Drawable drawable = largeIcons ? r.getDrawable(iconId) : getScaledBitmap(context, iconId);
+       incoming = drawable.mutate();
+-      incoming.setColorFilter(r.getColor(R.color.dialer_call_green), PorterDuff.Mode.MULTIPLY);
++      incoming.setColorFilter(r.getColor(R.color.answered_incoming_call),
++          PorterDuff.Mode.MULTIPLY);
+ 
+       // Create a rotated instance of the call arrow for outgoing calls.
+       iconId = R.drawable.quantum_ic_call_made_white_24;
+       drawable = largeIcons ? r.getDrawable(iconId) : getScaledBitmap(context, iconId);
+       outgoing = drawable.mutate();
+-      outgoing.setColorFilter(r.getColor(R.color.dialer_call_green), PorterDuff.Mode.MULTIPLY);
++      outgoing.setColorFilter(r.getColor(R.color.answered_outgoing_call),
++          PorterDuff.Mode.MULTIPLY);
+ 
+       // Need to make a copy of the arrow drawable, otherwise the same instance colored
+       // above will be recolored here.
+diff --git a/java/com/android/dialer/calllogutils/FilterSpinnerHelper.java b/java/com/android/dialer/calllogutils/FilterSpinnerHelper.java
+new file mode 100644
+index 000000000..a6ae5528b
+--- /dev/null
++++ b/java/com/android/dialer/calllogutils/FilterSpinnerHelper.java
+@@ -0,0 +1,149 @@
++/*
++ * Copyright (C) 2014 The CyanogenMod Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License
++ */
++package com.android.dialer.calllogutils;
++
++import android.content.Context;
++import android.provider.CallLog;
++import android.telecom.PhoneAccountHandle;
++import android.telecom.TelecomManager;
++import android.text.TextUtils;
++import android.util.Log;
++import android.view.View;
++import android.widget.AdapterView;
++import android.widget.ArrayAdapter;
++import android.widget.Spinner;
++
++import com.android.dialer.R;
++import com.android.dialer.util.PermissionsUtil;
++import java.util.ArrayList;
++import java.util.List;
++
++public class FilterSpinnerHelper implements AdapterView.OnItemSelectedListener {
++  private static String TAG = FilterSpinnerHelper.class.getSimpleName();
++
++  public interface OnFilterChangedListener {
++    void onFilterChanged(PhoneAccountHandle account, int callType);
++  }
++
++  private OnFilterChangedListener mListener;
++  private Spinner mAccountSpinner;
++  private ArrayAdapter<AccountItem> mAccountAdapter;
++  private Spinner mTypeSpinner;
++  private ArrayAdapter<TypeItem> mTypeAdapter;
++
++  public FilterSpinnerHelper(View rootView, boolean includeVoicemailType,
++      OnFilterChangedListener listener) {
++    mListener = listener;
++
++    mAccountAdapter = createAccountAdapter(rootView.getContext());
++    mAccountSpinner = initSpinner(rootView, R.id.filter_account_spinner, mAccountAdapter);
++
++    mTypeAdapter = createTypeAdapter(rootView.getContext(), includeVoicemailType);
++    mTypeSpinner = initSpinner(rootView, R.id.filter_status_spinner, mTypeAdapter);
++  }
++
++  @Override
++  public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
++    int selectedAccountPos = Math.max(mAccountSpinner.getSelectedItemPosition(), 0);
++    int selectedTypePos = Math.max(mTypeSpinner.getSelectedItemPosition(), 0);
++    PhoneAccountHandle selectedAccount = mAccountAdapter.getItem(selectedAccountPos).account;
++    int selectedType = mTypeAdapter.getItem(selectedTypePos).value;
++    mListener.onFilterChanged(selectedAccount, selectedType);
++  }
++
++  @Override
++  public void onNothingSelected(AdapterView<?> parent) {
++  }
++
++  private Spinner initSpinner(View rootView, int spinnerResId, ArrayAdapter<?> adapter) {
++    Spinner spinner = rootView.findViewById(spinnerResId);
++    if (spinner == null) {
++      throw new IllegalArgumentException("Could not find spinner "
++          + rootView.getContext().getResources().getResourceName(spinnerResId));
++    }
++    spinner.setAdapter(adapter);
++    spinner.setOnItemSelectedListener(this);
++    if (adapter.getCount() <= 1) {
++      spinner.setVisibility(View.GONE);
++    }
++    return spinner;
++  }
++
++  private ArrayAdapter<AccountItem> createAccountAdapter(Context context) {
++    ArrayList<AccountItem> items = new ArrayList<>();
++    items.add(new AccountItem(null, context.getString(R.string.call_log_show_all_accounts)));
++    if (PermissionsUtil.hasPermission(context, android.Manifest.permission.READ_PHONE_STATE)) {
++      TelecomManager tm = (TelecomManager) context.getSystemService(Context.TELECOM_SERVICE);
++      for (PhoneAccountHandle account : tm.getCallCapablePhoneAccounts()) {
++        String displayName = PhoneAccountUtils.getAccountLabel(context, account);
++        if (!TextUtils.isEmpty(displayName)) {
++          items.add(new AccountItem(account, displayName));
++        }
++      }
++    }
++
++    return new ArrayAdapter<AccountItem>(context, R.layout.call_log_filter_spinner_item, items);
++  }
++
++  private ArrayAdapter<TypeItem> createTypeAdapter(Context context, boolean includeVoicemail) {
++    ArrayList<TypeItem> items = new ArrayList<>();
++    items.add(new TypeItem(-1, context.getString(R.string.call_log_all_calls_header)));
++    items.add(new TypeItem(CallLog.Calls.INCOMING_TYPE,
++        context.getString(R.string.call_log_incoming_header)));
++    items.add(new TypeItem(CallLog.Calls.OUTGOING_TYPE,
++        context.getString(R.string.call_log_outgoing_header)));
++    items.add(new TypeItem(CallLog.Calls.MISSED_TYPE,
++        context.getString(R.string.call_log_missed_header)));
++    items.add(new TypeItem(CallLog.Calls.BLOCKED_TYPE,
++        context.getString(R.string.call_log_blacklist_header)));
++    if (includeVoicemail) {
++      items.add(new TypeItem(CallLog.Calls.VOICEMAIL_TYPE,
++          context.getString(R.string.call_log_voicemail_header)));
++    }
++
++    return new ArrayAdapter<TypeItem>(context, R.layout.call_log_filter_spinner_item, items);
++  }
++
++  private final class AccountItem {
++    public final PhoneAccountHandle account;
++    public final String label;
++
++    private AccountItem(PhoneAccountHandle account, String label) {
++      this.account = account;
++      this.label = label;
++    }
++
++    @Override
++    public String toString() {
++      return label;
++    }
++  }
++
++  private final class TypeItem {
++    public final int value;
++    public final String label;
++
++    private TypeItem(int value, String label) {
++      this.value = value;
++      this.label = label;
++    }
++
++    @Override
++    public String toString() {
++      return label;
++    }
++  }
++}
+diff --git a/java/com/android/dialer/calllogutils/PhoneNumberDisplayUtil.java b/java/com/android/dialer/calllogutils/PhoneNumberDisplayUtil.java
+index 6fe3a82c8..6509af3e1 100644
+--- a/java/com/android/dialer/calllogutils/PhoneNumberDisplayUtil.java
++++ b/java/com/android/dialer/calllogutils/PhoneNumberDisplayUtil.java
+@@ -64,7 +64,7 @@ public class PhoneNumberDisplayUtil {
+    * @param number the number to display
+    * @param formattedNumber the formatted number if available, may be null
+    */
+-  static CharSequence getDisplayNumber(
++  public static CharSequence getDisplayNumber(
+       Context context,
+       CharSequence number,
+       int presentation,
+diff --git a/java/com/android/dialer/calllogutils/res/layout/call_log_filter_spinner_item.xml b/java/com/android/dialer/calllogutils/res/layout/call_log_filter_spinner_item.xml
+new file mode 100644
+index 000000000..d7fdb4654
+--- /dev/null
++++ b/java/com/android/dialer/calllogutils/res/layout/call_log_filter_spinner_item.xml
+@@ -0,0 +1,39 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++Copyright (c) 2013-2014, The Linux Foundation. All rights reserved.
++Redistribution and use in source and binary forms, with or without
++modification, are permitted provided that the following conditions are
++met:
++    * Redistributions of source code must retain the above copyright
++      notice, this list of conditions and the following disclaimer.
++    * Redistributions in binary form must reproduce the above
++      copyright notice, this list of conditions and the following
++      disclaimer in the documentation and/or other materials provided
++      with the distribution.
++    * Neither the name of The Linux Foundation, Inc. nor the names of its
++      contributors may be used to endorse or promote products derived
++      from this software without specific prior written permission.
++
++THIS SOFTWARE IS PROVIDED "AS IS" AND ANY EXPRESS OR IMPLIED
++WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF
++MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT
++ARE DISCLAIMED.  IN NO EVENT SHALL THE COPYRIGHT OWNER OR CONTRIBUTORS
++BE LIABLE FOR ANY DIRECT, INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR
++CONSEQUENTIAL DAMAGES (INCLUDING, BUT NOT LIMITED TO, PROCUREMENT OF
++SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR PROFITS; OR
++BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
++WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE
++OR OTHERWISE) ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN
++IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
++-->
++<TextView xmlns:android="http://schemas.android.com/apk/res/android"
++  style="@style/Dialer.TextAppearance.Primary"
++  android:layout_width="match_parent"
++  android:layout_height="40dip"
++  android:paddingLeft="8dip"
++  android:paddingRight="8dip"
++  android:textSize="14sp"
++  android:textStyle="bold"
++  android:gravity="center_vertical"
++  android:singleLine="true"
++  android:textAllCaps="true" />
+diff --git a/java/com/android/dialer/calllogutils/res/layout/call_log_filter_spinners.xml b/java/com/android/dialer/calllogutils/res/layout/call_log_filter_spinners.xml
+new file mode 100644
+index 000000000..ecaf1d10c
+--- /dev/null
++++ b/java/com/android/dialer/calllogutils/res/layout/call_log_filter_spinners.xml
+@@ -0,0 +1,22 @@
++<?xml version="1.0" encoding="utf-8"?>
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++  android:layout_width="match_parent"
++  android:layout_height="wrap_content"
++  android:orientation="horizontal"
++  android:paddingStart="@dimen/call_log_outer_margin"
++  android:paddingEnd="@dimen/call_log_outer_margin">
++  <Spinner
++    android:id="@+id/filter_account_spinner"
++    android:layout_width="0dip"
++    android:layout_height="@dimen/list_section_divider_min_height"
++    android:layout_weight="1.2"
++    android:layout_marginTop="6dip"
++    android:layout_marginBottom="6dip" />
++  <Spinner
++    android:id="@+id/filter_status_spinner"
++    android:layout_width="0dip"
++    android:layout_height="@dimen/list_section_divider_min_height"
++    android:layout_weight="1.8"
++    android:layout_marginTop="6dip"
++    android:layout_marginBottom="6dip" />
++</LinearLayout>
+diff --git a/java/com/android/dialer/calllogutils/res/values/cm_strings.xml b/java/com/android/dialer/calllogutils/res/values/cm_strings.xml
+new file mode 100644
+index 000000000..d30aa1774
+--- /dev/null
++++ b/java/com/android/dialer/calllogutils/res/values/cm_strings.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2013-2014 The CyanogenMod Project
++     Copyright (C) 2018 The LineageOS Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="call_log_show_all_accounts">All accounts</string>
++    <string name="call_log_all_calls_header">All calls</string>
++    <string name="call_log_incoming_header">Incoming calls only</string>
++    <string name="call_log_outgoing_header">Outgoing calls only</string>
++    <string name="call_log_missed_header">Missed calls only</string>
++    <string name="call_log_voicemail_header">Calls with voicemail only</string>
++    <string name="call_log_blacklist_header">Blocked calls only</string>
++</resources>
+diff --git a/java/com/android/dialer/calllogutils/res/values/colors.xml b/java/com/android/dialer/calllogutils/res/values/colors.xml
+index 3a9e3ae8a..40a522b56 100644
+--- a/java/com/android/dialer/calllogutils/res/values/colors.xml
++++ b/java/com/android/dialer/calllogutils/res/values/colors.xml
+@@ -15,4 +15,12 @@
+  ~ limitations under the License
+  -->
+ <resources>
+-</resources>
+\ No newline at end of file
++  <!-- Color for missed call icons. -->
++  <color name="missed_call">#C53929</color>
++  <!-- Color for answered call icons. -->
++  <color name="answered_incoming_call">#00a8ff</color>
++  <!-- Color for outgoing call icons. -->
++  <color name="answered_outgoing_call">#00c853</color>
++  <!-- Color for blocked call icons. -->
++  <color name="blocked_call">@color/dialer_secondary_text_color</color>
++</resources>
+diff --git a/java/com/android/dialer/callstats/AndroidManifest.xml b/java/com/android/dialer/callstats/AndroidManifest.xml
+new file mode 100644
+index 000000000..6cfcab62b
+--- /dev/null
++++ b/java/com/android/dialer/callstats/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!-- Copyright (C) 2018 The LineageOS Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++  package="com.android.dialer">
++
++  <application>
++
++    <activity android:name=".callstats.CallStatsDetailActivity"
++      android:label="@string/call_stats_detail_title"
++      android:theme="@style/Dialer.ThemeBase.NoActionBar"
++      android:screenOrientation="portrait">
++      <intent-filter>
++        <action android:name="android.intent.action.VIEW" />
++        <category android:name="android.intent.category.DEFAULT" />
++      </intent-filter>
++    </activity>
++  </application>
++</manifest>
+diff --git a/java/com/android/dialer/callstats/CallStatsAdapter.java b/java/com/android/dialer/callstats/CallStatsAdapter.java
+new file mode 100644
+index 000000000..1d673fc05
+--- /dev/null
++++ b/java/com/android/dialer/callstats/CallStatsAdapter.java
+@@ -0,0 +1,248 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ * Copyright (C) 2013 Android Open Kang Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callstats;
++
++import android.content.Context;
++import android.content.Intent;
++import android.support.v7.widget.RecyclerView;
++import android.text.TextUtils;
++import android.view.ContextMenu;
++import android.view.LayoutInflater;
++import android.view.MenuItem;
++import android.view.View;
++import android.view.ViewGroup;
++
++import com.android.dialer.R;
++import com.android.dialer.app.DialtactsActivity;
++import com.android.dialer.app.contactinfo.ContactInfoCache;
++import com.android.dialer.app.contactinfo.NumberWithCountryIso;
++import com.android.dialer.clipboard.ClipboardUtils;
++import com.android.dialer.contacts.displaypreference.ContactDisplayPreferences;
++import com.android.dialer.location.GeoUtil;
++import com.android.dialer.phonenumbercache.ContactInfo;
++import com.android.dialer.phonenumbercache.ContactInfoHelper;
++import com.android.dialer.phonenumberutil.PhoneNumberHelper;
++import com.android.dialer.util.CallUtil;
++import com.android.dialer.util.DialerUtils;
++import com.android.dialer.util.ExpirableCache;
++import com.android.dialer.util.PermissionsUtil;
++
++import java.util.ArrayList;
++import java.util.Collections;
++import java.util.Comparator;
++import java.util.Map;
++import java.util.concurrent.ConcurrentHashMap;
++
++/**
++ * Adapter class to hold and handle call stat entries
++ */
++class CallStatsAdapter extends RecyclerView.Adapter {
++  private final Context mContext;
++  private final ContactInfoHelper mContactInfoHelper;
++  private final ContactInfoCache mContactInfoCache;
++  private final ContactDisplayPreferences mContactDisplayPreferences;
++
++  private ArrayList<CallStatsDetails> mAllItems;
++  private ArrayList<CallStatsDetails> mShownItems;
++  private CallStatsDetails mTotalItem;
++  private Map<CallStatsDetails, ContactInfo> mInfoLookup;
++
++  private int mType = -1;
++  private long mFilterFrom;
++  private long mFilterTo;
++  private boolean mSortByDuration;
++
++  /**
++   * Listener that is triggered to populate the context menu with actions to perform on the call's
++   * number, when the call log entry is long pressed.
++   */
++  private final View.OnCreateContextMenuListener mContextMenuListener = (menu, v, menuInfo) -> {
++    final CallStatsListItemViewHolder vh = (CallStatsListItemViewHolder) v.getTag();
++    if (TextUtils.isEmpty(vh.details.number)) {
++      return;
++    }
++
++    menu.setHeaderTitle(vh.details.number);
++
++    final MenuItem copyItem = menu.add(ContextMenu.NONE, R.id.context_menu_copy_to_clipboard,
++        ContextMenu.NONE, R.string.action_copy_number_text);
++
++    copyItem.setOnMenuItemClickListener(item -> {
++      ClipboardUtils.copyText(CallStatsAdapter.this.mContext, null, vh.details.number, true);
++      return true;
++    });
++
++    // The edit number before call does not show up if any of the conditions apply:
++    // 1) Number cannot be called
++    // 2) Number is the voicemail number
++    // 3) Number is a SIP address
++
++    boolean canPlaceCallsTo = PhoneNumberHelper.canPlaceCallsTo(vh.details.number,
++        vh.details.numberPresentation);
++    if (!canPlaceCallsTo || PhoneNumberHelper.isSipNumber(vh.details.number)) {
++      return;
++    }
++
++    final MenuItem editItem = menu.add(ContextMenu.NONE, R.id.context_menu_edit_before_call,
++        ContextMenu.NONE, R.string.action_edit_number_before_call);
++
++    editItem.setOnMenuItemClickListener(item -> {
++      final Intent intent = new Intent(Intent.ACTION_DIAL, CallUtil.getCallUri(vh.details.number));
++      DialerUtils.startActivityWithErrorToast(v.getContext(), intent);
++      return true;
++    });
++  };
++
++  private final Comparator<CallStatsDetails> mDurationComparator = (o1, o2) -> {
++    Long duration1 = o1.getRequestedDuration(mType);
++    Long duration2 = o2.getRequestedDuration(mType);
++    // sort descending
++    return duration2.compareTo(duration1);
++  };
++  private final Comparator<CallStatsDetails> mCountComparator = (o1, o2) -> {
++    Integer count1 = o1.getRequestedCount(mType);
++    Integer count2 = o2.getRequestedCount(mType);
++    // sort descending
++    return count2.compareTo(count1);
++  };
++
++  CallStatsAdapter(Context context, ContactDisplayPreferences prefs,
++      ExpirableCache<NumberWithCountryIso,ContactInfo> cache) {
++    mContext = context;
++    mContactDisplayPreferences = prefs;
++
++    final String currentCountryIso = GeoUtil.getCurrentCountryIso(mContext);
++    mContactInfoHelper = new ContactInfoHelper(mContext, currentCountryIso);
++
++    mAllItems = new ArrayList<CallStatsDetails>();
++    mShownItems = new ArrayList<CallStatsDetails>();
++    mTotalItem = new CallStatsDetails(null, 0, null, null, null, null, null, 0);
++    mInfoLookup = new ConcurrentHashMap<>();
++
++    mContactInfoCache = new ContactInfoCache(cache,
++        mContactInfoHelper, () -> notifyDataSetChanged());
++    if (!PermissionsUtil.hasContactsReadPermissions(context)) {
++      mContactInfoCache.disableRequestProcessing();
++    }
++  }
++
++  public void updateData(Map<ContactInfo, CallStatsDetails> calls, long from, long to) {
++    mInfoLookup.clear();
++    mFilterFrom = from;
++    mFilterTo = to;
++
++    mAllItems.clear();
++    mTotalItem.reset();
++
++    for (Map.Entry<ContactInfo, CallStatsDetails> entry : calls.entrySet()) {
++      final CallStatsDetails call = entry.getValue();
++      mAllItems.add(call);
++      mTotalItem.mergeWith(call);
++      mInfoLookup.put(call, entry.getKey());
++    }
++  }
++
++  public void updateDisplayedData(int type, boolean sortByDuration) {
++    mType = type;
++    mSortByDuration = sortByDuration;
++
++    mShownItems.clear();
++
++    for (CallStatsDetails call : mAllItems) {
++      if (sortByDuration && call.getRequestedDuration(type) > 0) {
++          mShownItems.add(call);
++      } else if (!sortByDuration && call.getRequestedCount(type) > 0) {
++          mShownItems.add(call);
++      }
++    }
++
++    Collections.sort(mShownItems, sortByDuration ? mDurationComparator : mCountComparator);
++    notifyDataSetChanged();
++  }
++
++  public void invalidateCache() {
++    mContactInfoCache.invalidate();
++  }
++
++  public void startCache() {
++    if (PermissionsUtil.hasPermission(mContext, android.Manifest.permission.READ_CONTACTS)) {
++      mContactInfoCache.start();
++    }
++  }
++
++  public void pauseCache() {
++    mContactInfoCache.stop();
++  }
++
++  @Override
++  public int getItemCount() {
++    return mShownItems.size();
++  }
++
++  @Override
++  public RecyclerView.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
++    LayoutInflater inflater = LayoutInflater.from(mContext);
++    View view = inflater.inflate(R.layout.call_stats_list_item, parent, false);
++    CallStatsListItemViewHolder viewHolder = CallStatsListItemViewHolder.create(view,
++        mContactInfoHelper);
++
++    viewHolder.mPrimaryActionView.setOnCreateContextMenuListener(mContextMenuListener);
++    viewHolder.mPrimaryActionView.setTag(viewHolder);
++
++    return viewHolder;
++  }
++
++  @Override
++  public void onBindViewHolder(RecyclerView.ViewHolder viewHolder, int position) {
++    CallStatsDetails details = mShownItems.get(position);
++    CallStatsDetails first = mShownItems.get(0);
++    CallStatsListItemViewHolder views = (CallStatsListItemViewHolder) viewHolder;
++
++    if (PhoneNumberHelper.canPlaceCallsTo(details.number, details.numberPresentation)
++        && !details.isVoicemailNumber) {
++      ContactInfo info = mContactInfoCache.getValue(details.number + details.postDialDigits,
++          details.countryIso, mInfoLookup.get(details), false);
++      if (info != null) {
++        details.updateFromInfo(info);
++      }
++    }
++    views.setDetails(details, first, mTotalItem, mType,
++        mSortByDuration, mContactDisplayPreferences.getDisplayOrder());
++    views.clickIntent = getItemClickIntent(details);
++  }
++
++  private Intent getItemClickIntent(CallStatsDetails details) {
++    Intent intent = new Intent(mContext, CallStatsDetailActivity.class);
++    intent.putExtra(CallStatsDetailActivity.EXTRA_DETAILS, details);
++    intent.putExtra(CallStatsDetailActivity.EXTRA_TOTAL, mTotalItem);
++    intent.putExtra(CallStatsDetailActivity.EXTRA_FROM, mFilterFrom);
++    intent.putExtra(CallStatsDetailActivity.EXTRA_TO, mFilterTo);
++    return intent;
++  }
++
++  public String getTotalCallCountString() {
++    return CallStatsListItemViewHolder.getCallCountString(
++        mContext, mTotalItem.getRequestedCount(mType));
++  }
++
++  public String getFullDurationString(boolean withSeconds) {
++    final long duration = mTotalItem.getRequestedDuration(mType);
++    return CallStatsListItemViewHolder.getDurationString(
++        mContext, duration, withSeconds);
++  }
++}
+diff --git a/java/com/android/dialer/callstats/CallStatsDetailActivity.java b/java/com/android/dialer/callstats/CallStatsDetailActivity.java
+new file mode 100644
+index 000000000..d25e24b7d
+--- /dev/null
++++ b/java/com/android/dialer/callstats/CallStatsDetailActivity.java
+@@ -0,0 +1,363 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ * Copyright (C) 2013 Android Open Kang Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callstats;
++
++import android.app.DialogFragment;
++import android.content.Intent;
++import android.content.res.Resources;
++import android.net.Uri;
++import android.os.AsyncTask;
++import android.os.Bundle;
++import android.provider.CallLog.Calls;
++import android.provider.ContactsContract.CommonDataKinds.Phone;
++import android.support.v7.app.AppCompatActivity;
++import android.support.v7.widget.Toolbar;
++import android.text.TextUtils;
++import android.text.format.DateUtils;
++import android.view.View;
++import android.widget.QuickContactBadge;
++import android.widget.TextView;
++
++import com.android.dialer.R;
++import com.android.dialer.app.AccountSelectionActivity;
++import com.android.dialer.callintent.CallInitiationType;
++import com.android.dialer.callintent.CallIntentBuilder;
++import com.android.dialer.calllogutils.CallTypeIconsView;
++import com.android.dialer.clipboard.ClipboardUtils;
++import com.android.dialer.contactphoto.ContactPhotoManager;
++import com.android.dialer.contacts.ContactsComponent;
++import com.android.dialer.contacts.displaypreference.ContactDisplayPreferences;
++import com.android.dialer.lettertile.LetterTileDrawable;
++import com.android.dialer.location.GeoUtil;
++import com.android.dialer.phonenumbercache.ContactInfo;
++import com.android.dialer.phonenumbercache.ContactInfoHelper;
++import com.android.dialer.phonenumberutil.PhoneNumberHelper;
++import com.android.dialer.util.CallUtil;
++import com.android.dialer.widget.LinearColorBar;
++
++/**
++ * Activity to display detailed information about a callstat item
++ */
++public class CallStatsDetailActivity extends AppCompatActivity implements
++    View.OnClickListener, View.OnLongClickListener {
++  private static final String TAG = "CallStatsDetailActivity";
++
++  public static final String EXTRA_DETAILS = "details";
++  public static final String EXTRA_TOTAL = "total";
++  public static final String EXTRA_FROM = "from";
++  public static final String EXTRA_TO = "to";
++
++  private ContactInfoHelper mContactInfoHelper;
++  private ContactDisplayPreferences mContactDisplayPreferences;
++  private Resources mResources;
++
++  private QuickContactBadge mQuickContactBadge;
++  private TextView mCallerName;
++  private TextView mCallerNumber;
++  private View mCallButton;
++  private View mSeparator;
++  private View mCopyButton;
++  private View mEditNumberButton;
++
++  private TextView mTotalDuration, mTotalCount;
++  private TextView mTotalTotalDuration, mTotalTotalCount;
++
++  private DetailLine mInDuration, mOutDuration;
++  private DetailLine mInCount, mOutCount;
++  private DetailLine mMissedCount, mBlockedCount;
++  private DetailLine mInAverage, mOutAverage;
++
++  private LinearColorBar mDurationBar, mCountBar;
++  private LinearColorBar mTotalDurationBar, mTotalCountBar;
++
++  private CallStatsDetails mData;
++  private CallStatsDetails mTotalData;
++  private String mNumber = null;
++
++  private class UpdateContactTask extends AsyncTask<String, Void, ContactInfo> {
++    @Override
++    protected ContactInfo doInBackground(String... strings) {
++      return mContactInfoHelper.lookupNumber(strings[0], strings[1]);
++    }
++
++    @Override
++    protected void onPostExecute(ContactInfo info) {
++      if (info != null) {
++        mData.updateFromInfo(info);
++        updateData();
++      }
++    }
++  }
++
++  @Override
++  protected void onCreate(Bundle icicle) {
++    super.onCreate(icicle);
++
++    setContentView(R.layout.call_stats_detail);
++
++    Toolbar toolbar = findViewById(R.id.toolbar);
++    toolbar.setNavigationOnClickListener(v -> finish());
++    toolbar.setTitle(R.string.call_stats_detail_title);
++
++    mResources = getResources();
++    mContactInfoHelper = new ContactInfoHelper(this, GeoUtil.getCurrentCountryIso(this));
++    mContactDisplayPreferences = ContactsComponent.get(this).contactDisplayPreferences();
++
++    mQuickContactBadge = (QuickContactBadge) findViewById(R.id.quick_contact_photo);
++    mQuickContactBadge.setOverlay(null);
++    mQuickContactBadge.setPrioritizedMimeType(Phone.CONTENT_ITEM_TYPE);
++    mCallerName = (TextView) findViewById(R.id.caller_name);
++    mCallerNumber = (TextView) findViewById(R.id.caller_number);
++
++    mCallButton = findViewById(R.id.call_back_button);
++    mCallButton.setOnClickListener(this);
++    mCallButton.setOnLongClickListener(this);
++
++    mSeparator = findViewById(R.id.separator);
++    mEditNumberButton = findViewById(R.id.call_detail_action_edit_before_call);
++    mEditNumberButton.setOnClickListener(this);
++    mCopyButton = findViewById(R.id.call_detail_action_copy);
++    mCopyButton.setOnClickListener(this);
++
++    mDurationBar = (LinearColorBar) findViewById(R.id.duration_number_percent_bar);
++    mTotalDurationBar = (LinearColorBar) findViewById(R.id.duration_total_percent_bar);
++    mTotalDuration = (TextView) findViewById(R.id.total_duration_number);
++    mTotalTotalDuration = (TextView) findViewById(R.id.total_duration_total);
++    mInDuration = new DetailLine(R.id.in_duration,
++        R.string.call_stats_incoming, Calls.INCOMING_TYPE);
++    mOutDuration = new DetailLine(R.id.out_duration,
++        R.string.call_stats_outgoing, Calls.OUTGOING_TYPE);
++
++    mCountBar = (LinearColorBar) findViewById(R.id.count_number_percent_bar);
++    mTotalCountBar = (LinearColorBar) findViewById(R.id.count_total_percent_bar);
++    mTotalCount = (TextView) findViewById(R.id.total_count_number);
++    mTotalTotalCount = (TextView) findViewById(R.id.total_count_total);
++    mInCount = new DetailLine(R.id.in_count, R.string.call_stats_incoming, Calls.INCOMING_TYPE);
++    mOutCount = new DetailLine(R.id.out_count, R.string.call_stats_outgoing, Calls.OUTGOING_TYPE);
++    mMissedCount = new DetailLine(R.id.missed_count,
++        R.string.call_stats_missed, Calls.MISSED_TYPE);
++    mBlockedCount = new DetailLine(R.id.blocked_count,
++        R.string.call_stats_blocked, Calls.BLOCKED_TYPE);
++
++    mInAverage = new DetailLine(R.id.in_average,
++        R.string.call_stats_incoming, Calls.INCOMING_TYPE);
++    mOutAverage = new DetailLine(R.id.out_average,
++        R.string.call_stats_outgoing, Calls.OUTGOING_TYPE);
++
++    Intent launchIntent = getIntent();
++    mData = (CallStatsDetails) launchIntent.getParcelableExtra(EXTRA_DETAILS);
++    mTotalData = (CallStatsDetails) launchIntent.getParcelableExtra(EXTRA_TOTAL);
++    updateData();
++
++    TextView dateFilterView = (TextView) findViewById(R.id.date_filter);
++    long filterFrom = launchIntent.getLongExtra(EXTRA_FROM, -1);
++    if (filterFrom == -1) {
++      dateFilterView.setVisibility(View.GONE);
++    } else {
++      long filterTo = launchIntent.getLongExtra(EXTRA_TO, -1);
++      dateFilterView.setText(DateUtils.formatDateRange(this, filterFrom, filterTo, 0));
++    }
++  }
++
++  @Override
++  public void onResume() {
++    super.onResume();
++    new UpdateContactTask().execute(mData.number.toString(), mData.countryIso);
++  }
++
++  private void updateData() {
++    mNumber = mData.number.toString();
++
++    // Cache the details about the phone number.
++    boolean canPlaceCallsTo = PhoneNumberHelper.canPlaceCallsTo(mNumber, mData.numberPresentation);
++    final CharSequence callLocationOrType = !TextUtils.isEmpty(mData.displayName)
++        ? Phone.getTypeLabel(mResources, mData.numberType, mData.numberLabel)
++        : mData.geocode;
++
++    mData.updateDisplayProperties(this, mContactDisplayPreferences.getDisplayOrder());
++
++    final boolean isSipNumber = PhoneNumberHelper.isSipNumber(mNumber);
++    boolean hasEditNumberBeforeCallOption =
++        canPlaceCallsTo && !isSipNumber && !mData.isVoicemailNumber;
++
++    if (!TextUtils.isEmpty(mData.displayName)) {
++      mCallerName.setText(mData.displayName);
++      mCallerNumber.setText(callLocationOrType + " " + mData.displayNumber);
++    } else {
++      mCallerName.setText(mData.displayNumber);
++      if (!TextUtils.isEmpty(callLocationOrType)) {
++        mCallerNumber.setText(callLocationOrType);
++        mCallerNumber.setVisibility(View.VISIBLE);
++      } else {
++        mCallerNumber.setVisibility(View.GONE);
++      }
++    }
++
++    mCallButton.setVisibility(canPlaceCallsTo ? View.VISIBLE : View.GONE);
++    mCopyButton.setVisibility(canPlaceCallsTo ? View.VISIBLE : View.GONE);
++    mEditNumberButton.setVisibility(hasEditNumberBeforeCallOption ? View.VISIBLE : View.GONE);
++    mSeparator.setVisibility(canPlaceCallsTo || hasEditNumberBeforeCallOption
++        ? View.VISIBLE : View.GONE);
++
++    final boolean isBusiness = mContactInfoHelper.isBusiness(mData.sourceType);
++    final int contactType =
++        mData.isVoicemailNumber ? LetterTileDrawable.TYPE_VOICEMAIL :
++        isBusiness ? LetterTileDrawable.TYPE_BUSINESS :
++        LetterTileDrawable.TYPE_DEFAULT;
++    final String nameForDefaultImage = TextUtils.isEmpty(mData.name)
++        ? mData.displayNumber : mData.name;
++
++    ContactPhotoManager.getInstance(this).loadDialerThumbnailOrPhoto(mQuickContactBadge,
++        mData.contactUri, mData.photoId, mData.photoUri, nameForDefaultImage, contactType);
++
++    invalidateOptionsMenu();
++
++    long totalDuration = mData.getFullDuration();
++    mInDuration.updateFromDurations(mData.inDuration, totalDuration);
++    mOutDuration.updateFromDurations(mData.outDuration, totalDuration);
++    if (totalDuration != 0) {
++      mTotalDuration.setText(CallStatsListItemViewHolder.getDurationString(this,
++          totalDuration, true));
++      mTotalTotalDuration.setText(CallStatsListItemViewHolder.getDurationString(this,
++          mTotalData.getFullDuration(), true));
++      updateBar(mDurationBar, mData.inDuration, mData.outDuration, 0, 0, totalDuration);
++      updateBar(mTotalDurationBar, mData.inDuration, mData.outDuration,
++          0, 0, mTotalData.getFullDuration());
++      findViewById(R.id.duration_container).setVisibility(View.VISIBLE);
++    } else {
++      findViewById(R.id.duration_container).setVisibility(View.GONE);
++    }
++
++    mInAverage.updateAsAverage(mData.inDuration, mData.incomingCount);
++    mOutAverage.updateAsAverage(mData.outDuration, mData.outgoingCount);
++
++    int totalCount = mData.getTotalCount();
++    mTotalCount.setText(CallStatsListItemViewHolder.getCallCountString(this, totalCount));
++    mTotalTotalCount.setText(
++        CallStatsListItemViewHolder.getCallCountString(this, mTotalData.getTotalCount()));
++    mInCount.updateFromCounts(mData.incomingCount, totalCount);
++    mOutCount.updateFromCounts(mData.outgoingCount, totalCount);
++    mMissedCount.updateFromCounts(mData.missedCount, totalCount);
++    mBlockedCount.updateFromCounts(mData.blockedCount, totalCount);
++    updateBar(mCountBar, mData.incomingCount, mData.outgoingCount,
++        mData.missedCount, mData.blockedCount, totalCount);
++    updateBar(mTotalCountBar, mData.incomingCount, mData.outgoingCount,
++        mData.missedCount, mData.blockedCount, mTotalData.getTotalCount());
++  }
++
++  private void updateBar(LinearColorBar bar,
++      long value1, long value2, long value3, long value4, long total) {
++    bar.setRatios((float) value1 / total, (float) value2 / total,
++        (float) value3 / total, (float) value4 / total);
++  }
++
++  @Override
++  public void onClick(View view) {
++    if (view == mCallButton) {
++      Intent intent = new CallIntentBuilder(mNumber, CallInitiationType.Type.CALL_LOG).build();
++      startActivity(intent);
++    } else if (view == mCopyButton) {
++      ClipboardUtils.copyText(this, null, mNumber, true);
++    } else if (view == mEditNumberButton) {
++      startActivity(new Intent(Intent.ACTION_DIAL, CallUtil.getCallUri(mNumber)));
++    }
++  }
++
++  @Override
++  public boolean onLongClick(View view) {
++    if (view == mCallButton) {
++      Intent intent = AccountSelectionActivity.createIntent(
++          CallStatsDetailActivity.this, mNumber, CallInitiationType.Type.CALL_LOG);
++      if (intent != null) {
++        startActivity(intent);
++        return true;
++      }
++    }
++    return false;
++  }
++
++  private void onHomeSelected() {
++    Intent intent = new Intent(Intent.ACTION_VIEW, Calls.CONTENT_URI);
++    // This will open the call log even if the detail view has been opened directly.
++    intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
++    startActivity(intent);
++    finish();
++  }
++
++  private class DetailLine {
++    private int mValueTemplateResId;
++    private View mRootView;
++    private TextView mTextView;
++    private TextView mPercentView;
++
++    public DetailLine(int rootViewId, int valueTemplateResId, int iconType) {
++      mValueTemplateResId = valueTemplateResId;
++      mRootView = findViewById(rootViewId);
++      mTextView = (TextView) mRootView.findViewById(R.id.value);
++      mPercentView = (TextView) mRootView.findViewById(R.id.percent);
++
++      CallTypeIconsView icon = (CallTypeIconsView) mRootView.findViewById(R.id.icon);
++      icon.add(iconType);
++    }
++
++    public void updateFromCounts(int count, int totalCount) {
++      if (count == 0 && totalCount > 0) {
++        mRootView.setVisibility(View.GONE);
++        return;
++      }
++
++      mRootView.setVisibility(View.VISIBLE);
++      String value = CallStatsListItemViewHolder.getCallCountString(mTextView.getContext(), count);
++      mTextView.setText(getString(mValueTemplateResId, value));
++      updatePercent(count, totalCount);
++    }
++
++    public void updateFromDurations(long duration, long totalDuration) {
++      if (duration == 0 && totalDuration >= 0) {
++        mRootView.setVisibility(View.GONE);
++        return;
++      }
++
++      mRootView.setVisibility(View.VISIBLE);
++      String value = CallStatsListItemViewHolder.getDurationString(
++          mTextView.getContext(), duration, true);
++      mTextView.setText(getString(mValueTemplateResId, value));
++      updatePercent(duration, totalDuration);
++    }
++
++    public void updateAsAverage(long duration, int count) {
++      if (count == 0) {
++        mRootView.setVisibility(View.GONE);
++        return;
++      }
++
++      mRootView.setVisibility(View.VISIBLE);
++      mPercentView.setVisibility(View.GONE);
++
++      long averageDuration = (long) Math.round((float) duration / (float) count);
++      String value = CallStatsListItemViewHolder.getDurationString(
++          mTextView.getContext(), averageDuration, true);
++      mTextView.setText(getString(mValueTemplateResId, value));
++    }
++
++    private void updatePercent(long value, long total) {
++      int percent = (int) Math.round(100F * value / total);
++      mPercentView.setText(getString(R.string.call_stats_percent, percent));
++    }
++  }
++}
+diff --git a/java/com/android/dialer/callstats/CallStatsDetails.java b/java/com/android/dialer/callstats/CallStatsDetails.java
+new file mode 100644
+index 000000000..cfa6dfa2a
+--- /dev/null
++++ b/java/com/android/dialer/callstats/CallStatsDetails.java
+@@ -0,0 +1,260 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ * Copyright (C) 2013 Android Open Kang Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callstats;
++
++import android.content.Context;
++import android.net.Uri;
++import android.os.Parcel;
++import android.os.Parcelable;
++import android.provider.CallLog.Calls;
++import android.telecom.PhoneAccountHandle;
++import android.text.BidiFormatter;
++import android.text.TextDirectionHeuristics;
++import android.text.TextUtils;
++
++import com.android.dialer.calllogutils.PhoneNumberDisplayUtil;
++import com.android.dialer.contacts.displaypreference.ContactDisplayPreferences.DisplayOrder;
++import com.android.dialer.logging.ContactSource;
++import com.android.dialer.phonenumbercache.ContactInfo;
++import com.android.dialer.phonenumberutil.PhoneNumberHelper;
++
++/**
++ * Class to store statistical details for a given contact/number.
++ */
++public class CallStatsDetails implements Parcelable {
++  public final String number;
++  public final String postDialDigits;
++  public final int numberPresentation;
++  public String formattedNumber;
++  public final String countryIso;
++  public final String geocode;
++  public final long date;
++  public String name;
++  public String nameAlternative;
++  public int numberType;
++  public String numberLabel;
++  public Uri contactUri;
++  public Uri photoUri;
++  public long photoId;
++  public long inDuration;
++  public long outDuration;
++  public int incomingCount;
++  public int outgoingCount;
++  public int missedCount;
++  public int blockedCount;
++  public PhoneAccountHandle accountHandle;
++  public ContactSource.Type sourceType = ContactSource.Type.UNKNOWN_SOURCE_TYPE;
++
++  public boolean isVoicemailNumber;
++  public String displayNumber;
++  public String displayName;
++
++  public CallStatsDetails(CharSequence number, int numberPresentation,
++      String postDialDigits, PhoneAccountHandle accountHandle,
++      ContactInfo info, String countryIso, String geocode, long date) {
++    this.number = number != null ? number.toString() : null;
++    this.numberPresentation = numberPresentation;
++    this.postDialDigits = postDialDigits;
++    this.countryIso = countryIso;
++    this.geocode = geocode;
++    this.date = date;
++
++    reset();
++
++    if (info != null) {
++      updateFromInfo(info);
++    }
++  }
++
++  public void updateFromInfo(ContactInfo info) {
++    this.displayName = info.name;
++    this.nameAlternative = info.nameAlternative;
++    this.name = info.name;
++    this.numberType = info.type;
++    this.numberLabel = info.label;
++    this.photoId = info.photoId;
++    this.photoUri = info.photoUri;
++    this.formattedNumber = info.formattedNumber;
++    this.contactUri = info.lookupUri;
++    this.photoUri = info.photoUri;
++    this.photoId = info.photoId;
++    this.sourceType = info.sourceType;
++    this.displayNumber = null;
++  }
++
++
++  public void updateDisplayProperties(Context context, DisplayOrder nameDisplayOrder) {
++    if (nameDisplayOrder == DisplayOrder.PRIMARY || TextUtils.isEmpty(nameAlternative)) {
++      this.displayName = this.name;
++    } else {
++      this.displayName = this.nameAlternative;
++    }
++
++    if (displayNumber == null) {
++      isVoicemailNumber = PhoneNumberHelper.isVoicemailNumber(context, accountHandle, number);
++      final CharSequence displayNumber = PhoneNumberDisplayUtil.getDisplayNumber(context,
++          number, numberPresentation, formattedNumber, postDialDigits, isVoicemailNumber);
++      this.displayNumber = BidiFormatter.getInstance().unicodeWrap(
++          displayNumber.toString(), TextDirectionHeuristics.LTR);
++    }
++  }
++
++  public long getFullDuration() {
++    return inDuration + outDuration;
++  }
++
++  public int getTotalCount() {
++    return incomingCount + outgoingCount + missedCount + blockedCount;
++  }
++
++  public void addTimeOrMissed(int type, long time) {
++    switch (type) {
++      case Calls.INCOMING_TYPE:
++        incomingCount++;
++        inDuration += time;
++        break;
++      case Calls.OUTGOING_TYPE:
++        outgoingCount++;
++        outDuration += time;
++        break;
++      case Calls.MISSED_TYPE:
++        missedCount++;
++        break;
++      case Calls.BLOCKED_TYPE:
++        blockedCount++;
++        break;
++    }
++  }
++
++  public int getDurationPercentage(int type) {
++    long duration = getRequestedDuration(type);
++    return Math.round((float) duration * 100F / getFullDuration());
++  }
++
++  public int getCountPercentage(int type) {
++    int count = getRequestedCount(type);
++    return Math.round((float) count * 100F / getTotalCount());
++  }
++
++  public long getRequestedDuration(int type) {
++    switch (type) {
++      case Calls.INCOMING_TYPE:
++        return inDuration;
++      case Calls.OUTGOING_TYPE:
++        return outDuration;
++      case Calls.MISSED_TYPE:
++        return (long) missedCount;
++      case Calls.BLOCKED_TYPE:
++        return (long) blockedCount;
++      default:
++        return getFullDuration();
++    }
++  }
++
++  public int getRequestedCount(int type) {
++    switch (type) {
++      case Calls.INCOMING_TYPE:
++        return incomingCount;
++      case Calls.OUTGOING_TYPE:
++        return outgoingCount;
++      case Calls.MISSED_TYPE:
++        return missedCount;
++      case Calls.BLOCKED_TYPE:
++        return blockedCount;
++      default:
++        return getTotalCount();
++    }
++  }
++
++  public void mergeWith(CallStatsDetails other) {
++    this.inDuration += other.inDuration;
++    this.outDuration += other.outDuration;
++    this.incomingCount += other.incomingCount;
++    this.outgoingCount += other.outgoingCount;
++    this.missedCount += other.missedCount;
++    this.blockedCount += other.blockedCount;
++  }
++
++  public void reset() {
++    this.inDuration = this.outDuration = 0;
++    this.incomingCount = this.outgoingCount = this.missedCount = this.blockedCount = 0;
++  }
++
++  /* Parcelable interface */
++
++  @Override
++  public int describeContents() {
++    return 0;
++  }
++
++  @Override
++  public void writeToParcel(Parcel out, int flags) {
++    out.writeString(number);
++    out.writeInt(numberPresentation);
++    out.writeString(postDialDigits);
++    out.writeString(formattedNumber);
++    out.writeString(countryIso);
++    out.writeString(geocode);
++    out.writeLong(date);
++    out.writeString(name);
++    out.writeInt(numberType);
++    out.writeString(numberLabel);
++    out.writeParcelable(contactUri, flags);
++    out.writeParcelable(photoUri, flags);
++    out.writeLong(photoId);
++    out.writeLong(inDuration);
++    out.writeLong(outDuration);
++    out.writeInt(incomingCount);
++    out.writeInt(outgoingCount);
++    out.writeInt(missedCount);
++    out.writeInt(blockedCount);
++  }
++
++  public static final Parcelable.Creator<CallStatsDetails> CREATOR =
++      new Parcelable.Creator<CallStatsDetails>() {
++    public CallStatsDetails createFromParcel(Parcel in) {
++      return new CallStatsDetails(in);
++    }
++
++    public CallStatsDetails[] newArray(int size) {
++      return new CallStatsDetails[size];
++    }
++  };
++
++  private CallStatsDetails (Parcel in) {
++    number = in.readString();
++    numberPresentation = in.readInt();
++    postDialDigits = in.readString();
++    formattedNumber = in.readString();
++    countryIso = in.readString();
++    geocode = in.readString();
++    date = in.readLong();
++    name = in.readString();
++    numberType = in.readInt();
++    numberLabel = in.readString();
++    contactUri = in.readParcelable(null);
++    photoUri = in.readParcelable(null);
++    photoId = in.readLong();
++    inDuration = in.readLong();
++    outDuration = in.readLong();
++    incomingCount = in.readInt();
++    outgoingCount = in.readInt();
++    missedCount = in.readInt();
++    blockedCount = in.readInt();
++  }
++}
+diff --git a/java/com/android/dialer/callstats/CallStatsFragment.java b/java/com/android/dialer/callstats/CallStatsFragment.java
+new file mode 100644
+index 000000000..3a90d9330
+--- /dev/null
++++ b/java/com/android/dialer/callstats/CallStatsFragment.java
+@@ -0,0 +1,339 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ * Copyright (C) 2013 Android Open Kang Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callstats;
++
++import android.app.Fragment;
++import android.content.ContentResolver;
++import android.content.Context;
++import android.content.pm.PackageManager;
++import android.database.ContentObserver;
++import android.os.Bundle;
++import android.os.Handler;
++import android.provider.CallLog;
++import android.provider.ContactsContract;
++import android.support.v7.app.AppCompatActivity;
++import android.support.v7.widget.RecyclerView;
++import android.support.v7.widget.LinearLayoutManager;
++import android.telecom.PhoneAccountHandle;
++import android.text.format.DateUtils;
++import android.util.Log;
++import android.view.LayoutInflater;
++import android.view.Menu;
++import android.view.MenuInflater;
++import android.view.MenuItem;
++import android.view.View;
++import android.view.ViewGroup;
++import android.widget.TextView;
++
++import com.android.dialer.R;
++import com.android.dialer.app.contactinfo.ExpirableCacheHeadlessFragment;
++import com.android.dialer.calllogutils.FilterSpinnerHelper;
++import com.android.dialer.contacts.ContactsComponent;
++import com.android.dialer.phonenumbercache.ContactInfo;
++import com.android.dialer.util.PermissionsUtil;
++import com.android.dialer.widget.EmptyContentView;
++
++import java.util.Map;
++
++import static android.Manifest.permission.READ_CALL_LOG;
++
++public class CallStatsFragment extends Fragment implements
++    CallStatsQueryHandler.Listener, FilterSpinnerHelper.OnFilterChangedListener,
++    EmptyContentView.OnEmptyViewActionButtonClickedListener,
++    DoubleDatePickerDialog.OnDateSetListener {
++  private static final String TAG = "CallStatsFragment";
++
++  private static final int READ_CALL_LOG_PERMISSION_REQUEST_CODE = 1;
++
++  private PhoneAccountHandle mAccountFilter = null;
++  private int mCallTypeFilter = -1;
++  private long mFilterFrom = -1;
++  private long mFilterTo = -1;
++  private boolean mSortByDuration = true;
++  private boolean mDataLoaded = false;
++
++  private RecyclerView mRecyclerView;
++  private EmptyContentView mEmptyListView;
++  private LinearLayoutManager mLayoutManager;
++  private CallStatsAdapter mAdapter;
++  private CallStatsQueryHandler mCallStatsQueryHandler;
++  private FilterSpinnerHelper mFilterHelper;
++
++  private TextView mSumHeaderView;
++  private TextView mDateFilterView;
++
++  private boolean mHasReadCallLogPermission = false;
++
++  private boolean mRefreshDataRequired = true;
++  private final ContentObserver mObserver = new ContentObserver(new Handler()) {
++    @Override
++    public void onChange(boolean selfChange) {
++      mRefreshDataRequired = true;
++    }
++  };
++
++  @Override
++  public void onCreate(Bundle state) {
++    super.onCreate(state);
++
++    final ContentResolver cr = getActivity().getContentResolver();
++    mCallStatsQueryHandler = new CallStatsQueryHandler(cr, this);
++    cr.registerContentObserver(CallLog.CONTENT_URI, true, mObserver);
++    cr.registerContentObserver(ContactsContract.Contacts.CONTENT_URI, true, mObserver);
++
++    setHasOptionsMenu(true);
++
++    ExpirableCacheHeadlessFragment cacheFragment =
++        ExpirableCacheHeadlessFragment.attach((AppCompatActivity) getActivity());
++    mAdapter = new CallStatsAdapter(getActivity(),
++        ContactsComponent.get(getActivity()).contactDisplayPreferences(),
++        cacheFragment.getRetainedCache());
++  }
++
++  @Override
++  public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedState) {
++    View view = inflater.inflate(R.layout.call_stats_fragment, container, false);
++
++    mRecyclerView = (RecyclerView) view.findViewById(R.id.recycler_view);
++    mRecyclerView.setHasFixedSize(true);
++    mLayoutManager = new LinearLayoutManager(getActivity());
++    mRecyclerView.setLayoutManager(mLayoutManager);
++    mEmptyListView = (EmptyContentView) view.findViewById(R.id.empty_list_view);
++    mEmptyListView.setImage(R.drawable.empty_call_log);
++    mEmptyListView.setActionClickedListener(this);
++
++    mSumHeaderView = (TextView) view.findViewById(R.id.sum_header);
++    mDateFilterView = (TextView) view.findViewById(R.id.date_filter);
++
++    return view;
++  }
++
++  @Override
++  public void onViewCreated(View view, Bundle savedInstanceState) {
++    super.onViewCreated(view, savedInstanceState);
++    mRecyclerView.setAdapter(mAdapter);
++    mFilterHelper = new FilterSpinnerHelper(view, false, this);
++    updateEmptyVisibilityAndMessage();
++  }
++
++  @Override
++  public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
++    if (getUserVisibleHint() && PermissionsUtil.hasPermission(getActivity(), READ_CALL_LOG)) {
++      inflater.inflate(R.menu.call_stats_options, menu);
++
++      final MenuItem resetItem = menu.findItem(R.id.reset_date_filter);
++      final MenuItem sortDurationItem = menu.findItem(R.id.sort_by_duration);
++      final MenuItem sortCountItem = menu.findItem(R.id.sort_by_count);
++
++      resetItem.setVisible(mFilterFrom != -1);
++      sortDurationItem.setVisible(!mSortByDuration);
++      sortCountItem.setVisible(mSortByDuration);
++    }
++
++    super.onCreateOptionsMenu(menu, inflater);
++  }
++
++  @Override
++  public boolean onOptionsItemSelected(MenuItem item) {
++    final int itemId = item.getItemId();
++    switch (itemId) {
++      case R.id.date_filter: {
++        final DoubleDatePickerDialog.Fragment fragment =
++            new DoubleDatePickerDialog.Fragment();
++        fragment.setArguments(
++            DoubleDatePickerDialog.Fragment.createArguments(mFilterFrom, mFilterTo));
++        fragment.show(getFragmentManager(), "filter");
++        break;
++      }
++      case R.id.reset_date_filter: {
++        mFilterFrom = -1;
++        mFilterTo = -1;
++        fetchCalls();
++        updateEmptyVisibilityAndMessage();
++        getActivity().invalidateOptionsMenu();
++        break;
++      }
++      case R.id.sort_by_duration:
++      case R.id.sort_by_count: {
++        mSortByDuration = itemId == R.id.sort_by_duration;
++        mAdapter.updateDisplayedData(mCallTypeFilter, mSortByDuration);
++        getActivity().invalidateOptionsMenu();
++        break;
++      }
++    }
++    return true;
++  }
++
++  @Override
++  public void onFilterChanged(PhoneAccountHandle account, int callType) {
++    if (account != mAccountFilter) {
++      mAccountFilter = account;
++      fetchCalls();
++    }
++    if (callType != mCallTypeFilter) {
++      mCallTypeFilter = callType;
++      mAdapter.updateDisplayedData(mCallTypeFilter, mSortByDuration);
++      if (mDataLoaded) {
++        updateHeader();
++        updateEmptyVisibilityAndMessage();
++      }
++    }
++  }
++
++  @Override
++  public void onEmptyViewActionButtonClicked() {
++    if (!PermissionsUtil.hasPermission(getActivity(), READ_CALL_LOG)) {
++      requestPermissions(new String[] { READ_CALL_LOG },
++          READ_CALL_LOG_PERMISSION_REQUEST_CODE);
++    }
++  }
++
++  @Override
++  public void onRequestPermissionsResult(int requestCode, String[] permissions,
++      int[] grantResults) {
++    if (requestCode == READ_CALL_LOG_PERMISSION_REQUEST_CODE) {
++      if (grantResults.length >= 1 && PackageManager.PERMISSION_GRANTED == grantResults[0]) {
++        // Force a refresh of the data since we were missing the permission before this.
++        mRefreshDataRequired = true;
++        getActivity().invalidateOptionsMenu();
++      }
++    }
++  }
++
++  @Override
++  public void onDateSet(long from, long to) {
++    mFilterFrom = from;
++    mFilterTo = to;
++    getActivity().invalidateOptionsMenu();
++    fetchCalls();
++    updateEmptyVisibilityAndMessage();
++  }
++
++  /**
++   * Called by the CallStatsQueryHandler when the list of calls has been
++   * fetched or updated.
++   */
++  @Override
++  public void onCallsFetched(Map<ContactInfo, CallStatsDetails> calls) {
++    if (getActivity() == null || getActivity().isFinishing()) {
++      return;
++    }
++
++    mDataLoaded = true;
++    mAdapter.updateData(calls, mFilterFrom, mFilterTo);
++    mAdapter.updateDisplayedData(mCallTypeFilter, mSortByDuration);
++    updateHeader();
++    updateEmptyVisibilityAndMessage();
++  }
++
++  @Override
++  public void onResume() {
++    super.onResume();
++    final boolean hasReadCallLogPermission =
++        PermissionsUtil.hasPermission(getActivity(), READ_CALL_LOG);
++    if (!mHasReadCallLogPermission && hasReadCallLogPermission) {
++      // We didn't have the permission before, and now we do. Force a refresh of the call log.
++      // Note that this code path always happens on a fresh start, but mRefreshDataRequired
++      // is already true in that case anyway.
++      mRefreshDataRequired = true;
++      mDataLoaded = false;
++      updateEmptyVisibilityAndMessage();
++      getActivity().invalidateOptionsMenu();
++    }
++    mHasReadCallLogPermission = hasReadCallLogPermission;
++    refreshData();
++    mAdapter.startCache();
++  }
++
++  @Override
++  public void onPause() {
++    super.onPause();
++    mAdapter.pauseCache();
++  }
++
++  @Override
++  public void onDestroy() {
++    super.onDestroy();
++    mAdapter.pauseCache();
++    getActivity().getContentResolver().unregisterContentObserver(mObserver);
++  }
++
++  private void fetchCalls() {
++    mCallStatsQueryHandler.fetchCalls(mFilterFrom, mFilterTo, mAccountFilter);
++  }
++
++  private void updateHeader() {
++    final String callCount = mAdapter.getTotalCallCountString();
++    final String duration = mAdapter.getFullDurationString(false);
++
++    if (duration != null) {
++      mSumHeaderView.setText(getString(R.string.call_stats_header_total, callCount, duration));
++    } else {
++      mSumHeaderView.setText(getString(R.string.call_stats_header_total_callsonly, callCount));
++    }
++    mSumHeaderView.setVisibility(isListEmpty() ? View.GONE : View.VISIBLE);
++
++    if (mFilterFrom == -1) {
++      mDateFilterView.setVisibility(View.GONE);
++    } else {
++      mDateFilterView.setText(
++          DateUtils.formatDateRange(getActivity(), mFilterFrom, mFilterTo, 0));
++      mDateFilterView.setVisibility(View.VISIBLE);
++    }
++  }
++
++  /** Requests updates to the data to be shown. */
++  private void refreshData() {
++    // Prevent unnecessary refresh.
++    if (mRefreshDataRequired) {
++      // Mark all entries in the contact info cache as out of date, so
++      // they will be looked up again once being shown.
++      mAdapter.invalidateCache();
++      fetchCalls();
++      mRefreshDataRequired = false;
++    }
++  }
++
++  private boolean isListEmpty() {
++    return mDataLoaded && mAdapter.getItemCount() == 0;
++  }
++
++  private void updateEmptyVisibilityAndMessage() {
++    final Context context = getActivity();
++    if (context == null) {
++      return;
++    }
++
++    boolean showListView = !isListEmpty();
++
++    if (!PermissionsUtil.hasPermission(context, READ_CALL_LOG)) {
++      mEmptyListView.setDescription(R.string.permission_no_calllog);
++      mEmptyListView.setActionLabel(R.string.permission_single_turn_on);
++      showListView = false;
++    } else if (mFilterFrom > 0 || mFilterTo > 0) {
++      mEmptyListView.setDescription(R.string.recent_calls_no_items_in_range);
++      mEmptyListView.setActionLabel(EmptyContentView.NO_LABEL);
++    } else {
++      mEmptyListView.setDescription(R.string.call_log_all_empty);
++      mEmptyListView.setActionLabel(EmptyContentView.NO_LABEL);
++    }
++
++    mRecyclerView.setVisibility(showListView ? View.VISIBLE : View.GONE);
++    mEmptyListView.setVisibility(!showListView ? View.VISIBLE : View.GONE);
++  }
++}
+diff --git a/java/com/android/dialer/callstats/CallStatsListItemViewHolder.java b/java/com/android/dialer/callstats/CallStatsListItemViewHolder.java
+new file mode 100644
+index 000000000..bda6b3e3a
+--- /dev/null
++++ b/java/com/android/dialer/callstats/CallStatsListItemViewHolder.java
+@@ -0,0 +1,245 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callstats;
++
++import android.content.Context;
++import android.content.res.Resources;
++import android.content.Intent;
++import android.net.Uri;
++import android.provider.CallLog.Calls;
++import android.provider.ContactsContract.CommonDataKinds.Phone;
++import android.support.v7.widget.RecyclerView;
++import android.text.TextUtils;
++import android.view.View;
++import android.widget.QuickContactBadge;
++import android.widget.TextView;
++
++import com.android.dialer.R;
++import com.android.dialer.contactphoto.ContactPhotoManager;
++import com.android.dialer.contacts.displaypreference.ContactDisplayPreferences;
++import com.android.dialer.lettertile.LetterTileDrawable;
++import com.android.dialer.location.GeoUtil;
++import com.android.dialer.phonenumbercache.ContactInfoHelper;
++import com.android.dialer.phonenumberutil.PhoneNumberHelper;
++import com.android.dialer.util.DialerUtils;
++import com.android.dialer.widget.LinearColorBar;
++
++/**
++ * This is an object containing references to views contained by the call log list item. This
++ * improves performance by reducing the frequency with which we need to find views by IDs.
++ *
++ * This object also contains UI logic pertaining to the view, to isolate it from the CallLogAdapter.
++ */
++public final class CallStatsListItemViewHolder extends RecyclerView.ViewHolder
++    implements View.OnClickListener {
++
++  public CallStatsDetails details;
++  public Intent clickIntent;
++
++  public final View mRootView;
++  public final QuickContactBadge mQuickContactView;
++  public final View mPrimaryActionView;
++  public final TextView mNameView;
++  public final TextView mNumberView;
++  public final TextView mLabelView;
++  public final TextView mPercentView;
++  public final LinearColorBar mBarView;
++
++  private Context mContext;
++  private ContactInfoHelper mContactInfoHelper;
++  private final int mPhotoSize;
++
++  private CallStatsListItemViewHolder(View rootView,
++      QuickContactBadge quickContactView,
++      View primaryActionView,
++      TextView nameView,
++      TextView numberView,
++      TextView labelView,
++      TextView percentView,
++      LinearColorBar barView,
++      ContactInfoHelper contactInfoHelper) {
++    super(rootView);
++
++    mRootView = rootView;
++    mQuickContactView = quickContactView;
++    mPrimaryActionView = primaryActionView;
++    mNameView = nameView;
++    mNumberView = numberView;
++    mLabelView = labelView;
++    mPercentView = percentView;
++    mBarView = barView;
++
++    mPrimaryActionView.setOnClickListener(this);
++
++    quickContactView.setPrioritizedMimeType(Phone.CONTENT_ITEM_TYPE);
++
++    mContext = rootView.getContext();
++    mPhotoSize = mContext.getResources().getDimensionPixelSize(R.dimen.contact_photo_size);
++    mContactInfoHelper = contactInfoHelper;
++  }
++
++  public static CallStatsListItemViewHolder create(View view,
++      ContactInfoHelper contactInfoHelper) {
++    return new CallStatsListItemViewHolder(view,
++        (QuickContactBadge) view.findViewById(R.id.quick_contact_photo),
++        view.findViewById(R.id.primary_action_view),
++        (TextView) view.findViewById(R.id.name),
++        (TextView) view.findViewById(R.id.number),
++        (TextView) view.findViewById(R.id.label),
++        (TextView) view.findViewById(R.id.percent),
++        (LinearColorBar) view.findViewById(R.id.percent_bar),
++        contactInfoHelper);
++  }
++
++  @Override
++  public void onClick(View v) {
++    if (clickIntent != null) {
++      DialerUtils.startActivityWithErrorToast(mContext, clickIntent);
++    }
++  }
++
++  public void setDetails(CallStatsDetails details, CallStatsDetails first,
++      CallStatsDetails total, int type, boolean byDuration,
++      ContactDisplayPreferences.DisplayOrder nameDisplayOrder) {
++    this.details = details;
++    details.updateDisplayProperties(mContext, nameDisplayOrder);
++
++    CharSequence numberFormattedLabel = null;
++    // Only show a label if the number is shown and it is not a SIP address.
++    if (!TextUtils.isEmpty(details.number)
++        && !PhoneNumberHelper.isUriNumber(details.number.toString())) {
++      numberFormattedLabel = Phone.getTypeLabel(mContext.getResources(),
++          details.numberType, details.numberLabel);
++    }
++
++    final CharSequence nameText;
++    final CharSequence numberText;
++    final CharSequence labelText;
++
++    if (TextUtils.isEmpty(details.displayName)) {
++      nameText = details.displayNumber;
++      if (TextUtils.isEmpty(details.geocode) || details.isVoicemailNumber) {
++          numberText = null;
++      } else {
++          numberText = details.geocode;
++      }
++      labelText = null;
++    } else {
++      nameText = details.displayName;
++      numberText = details.displayNumber;
++      labelText = numberFormattedLabel;
++    }
++
++    float in = 0, out = 0, missed = 0, blocked = 0;
++    float ratio = getDetailValue(details, type, byDuration) /
++                  getDetailValue(first, type, byDuration);
++
++    if (type == Calls.INCOMING_TYPE) {
++      in = ratio;
++    } else if (type == Calls.OUTGOING_TYPE) {
++      out = ratio;
++    } else if (type == Calls.MISSED_TYPE) {
++      missed = ratio;
++    } else if (type == Calls.BLOCKED_TYPE) {
++      blocked = ratio;
++    } else {
++      float full = getDetailValue(details, type, byDuration);
++      in = getDetailValue(details, Calls.INCOMING_TYPE, byDuration) * ratio / full;
++      out = getDetailValue(details, Calls.OUTGOING_TYPE, byDuration) * ratio / full;
++      if (!byDuration) {
++          missed = getDetailValue(details, Calls.MISSED_TYPE, byDuration) * ratio / full;
++          blocked = getDetailValue(details, Calls.BLOCKED_TYPE, byDuration) * ratio / full;
++      }
++    }
++
++    mBarView.setRatios(in, out, missed, blocked);
++    mNameView.setText(nameText);
++    mNumberView.setText(numberText);
++    mLabelView.setText(labelText);
++    mLabelView.setVisibility(TextUtils.isEmpty(labelText) ? View.GONE : View.VISIBLE);
++
++    if (byDuration && type == Calls.MISSED_TYPE) {
++      mPercentView.setText(getCallCountString(mContext, details.missedCount));
++    } else if (byDuration && type == Calls.BLOCKED_TYPE) {
++      mPercentView.setText(getCallCountString(mContext, details.blockedCount));
++    } else {
++      float percent = getDetailValue(details, type, byDuration) * 100F /
++                      getDetailValue(total, type, byDuration);
++      mPercentView.setText(String.format("%.1f%%", percent));
++    }
++
++    final String nameForDefaultImage = TextUtils.isEmpty(details.name)
++        ? details.displayNumber : details.name;
++
++    int contactType = LetterTileDrawable.TYPE_DEFAULT;
++    if (details.isVoicemailNumber) {
++      contactType = LetterTileDrawable.TYPE_VOICEMAIL;
++    } else if (mContactInfoHelper.isBusiness(details.sourceType)) {
++      contactType = LetterTileDrawable.TYPE_BUSINESS;
++    }
++
++    ContactPhotoManager.getInstance(mContext).loadDialerThumbnailOrPhoto(mQuickContactView,
++        details.contactUri, details.photoId, details.photoUri, nameForDefaultImage, contactType);
++  }
++
++  private float getDetailValue(CallStatsDetails details, int type, boolean byDuration) {
++    if (byDuration) {
++        return (float) details.getRequestedDuration(type);
++    } else {
++        return (float) details.getRequestedCount(type);
++    }
++  }
++
++  public static String getCallCountString(Context context, long count) {
++    return context.getResources().getQuantityString(R.plurals.call, (int) count, (int) count);
++  }
++
++  public static String getDurationString(Context context, long duration, boolean includeSeconds) {
++    int hours, minutes, seconds;
++
++    hours = (int) (duration / 3600);
++    duration -= (long) hours * 3600;
++    minutes = (int) (duration / 60);
++    duration -= (long) minutes * 60;
++    seconds = (int) duration;
++
++    if (!includeSeconds) {
++      if (seconds >= 30) {
++        minutes++;
++      }
++      if (minutes >= 60) {
++        hours++;
++      }
++    }
++
++    boolean dispHours = hours > 0;
++    boolean dispMinutes = minutes > 0 || (!includeSeconds && hours == 0);
++    boolean dispSeconds = includeSeconds && (seconds > 0 || (hours == 0 && minutes == 0));
++
++    final Resources res = context.getResources();
++    final String hourString = dispHours ?
++        res.getQuantityString(R.plurals.hour, hours, hours) : null;
++    final String minuteString = dispMinutes ?
++        res.getQuantityString(R.plurals.minute, minutes, minutes) : null;
++    final String secondString = dispSeconds ?
++        res.getQuantityString(R.plurals.second, seconds, seconds) : null;
++
++    int index = ((dispHours ? 4 : 0) | (dispMinutes ? 2 : 0) | (dispSeconds ? 1 : 0)) - 1;
++    String[] formats = res.getStringArray(R.array.call_stats_duration);
++    return String.format(formats[index], hourString, minuteString, secondString);
++  }
++}
+diff --git a/java/com/android/dialer/callstats/CallStatsQuery.java b/java/com/android/dialer/callstats/CallStatsQuery.java
+new file mode 100644
+index 000000000..92bd9c70e
+--- /dev/null
++++ b/java/com/android/dialer/callstats/CallStatsQuery.java
+@@ -0,0 +1,64 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ * Copyright (C) 2013 Android Open Kang Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callstats;
++
++import android.provider.CallLog.Calls;
++
++public class CallStatsQuery {
++  public static final String[] _PROJECTION = new String[] {
++    Calls._ID, // 0
++    Calls.NUMBER, // 1
++    Calls.DATE, // 2
++    Calls.DURATION, // 3
++    Calls.TYPE, // 4
++    Calls.COUNTRY_ISO, // 5
++    Calls.GEOCODED_LOCATION, // 6
++    Calls.CACHED_NAME, // 7
++    Calls.CACHED_NUMBER_TYPE, // 8
++    Calls.CACHED_NUMBER_LABEL, // 9
++    Calls.CACHED_LOOKUP_URI, // 10
++    Calls.CACHED_MATCHED_NUMBER, // 11
++    Calls.CACHED_NORMALIZED_NUMBER, // 12
++    Calls.CACHED_PHOTO_ID, // 13
++    Calls.CACHED_FORMATTED_NUMBER, // 14
++    Calls.NUMBER_PRESENTATION, // 15
++    Calls.PHONE_ACCOUNT_COMPONENT_NAME, // 16
++    Calls.PHONE_ACCOUNT_ID,             // 17
++    Calls.POST_DIAL_DIGITS, // 18
++  };
++
++  public static final int ID = 0;
++  public static final int NUMBER = 1;
++  public static final int DATE = 2;
++  public static final int DURATION = 3;
++  public static final int CALL_TYPE = 4;
++  public static final int COUNTRY_ISO = 5;
++  public static final int GEOCODED_LOCATION = 6;
++  public static final int CACHED_NAME = 7;
++  public static final int CACHED_NUMBER_TYPE = 8;
++  public static final int CACHED_NUMBER_LABEL = 9;
++  public static final int CACHED_LOOKUP_URI = 10;
++  public static final int CACHED_MATCHED_NUMBER = 11;
++  public static final int CACHED_NORMALIZED_NUMBER = 12;
++  public static final int CACHED_PHOTO_ID = 13;
++  public static final int CACHED_FORMATTED_NUMBER = 14;
++  public static final int NUMBER_PRESENTATION = 15;
++  public static final int ACCOUNT_COMPONENT_NAME = 16;
++  public static final int ACCOUNT_ID = 17;
++  public static final int POST_DIAL_DIGITS = 18;
++}
+diff --git a/java/com/android/dialer/callstats/CallStatsQueryHandler.java b/java/com/android/dialer/callstats/CallStatsQueryHandler.java
+new file mode 100644
+index 000000000..3c93be004
+--- /dev/null
++++ b/java/com/android/dialer/callstats/CallStatsQueryHandler.java
+@@ -0,0 +1,297 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ * Copyright (C) 2013 Android Open Kang Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callstats;
++
++import android.content.AsyncQueryHandler;
++import android.content.ContentResolver;
++import android.database.Cursor;
++import android.database.sqlite.SQLiteDatabaseCorruptException;
++import android.database.sqlite.SQLiteDiskIOException;
++import android.database.sqlite.SQLiteFullException;
++import android.net.Uri;
++import android.os.Handler;
++import android.os.Looper;
++import android.os.Message;
++import android.provider.CallLog.Calls;
++import android.telecom.PhoneAccountHandle;
++import android.telephony.PhoneNumberUtils;
++import android.util.Log;
++
++import com.android.dialer.phonenumbercache.ContactInfo;
++import com.android.dialer.telecom.TelecomUtil;
++import com.android.dialer.util.UriUtils;
++
++import com.google.common.collect.Lists;
++
++import java.lang.ref.WeakReference;
++import java.util.ArrayList;
++import java.util.HashMap;
++import java.util.List;
++import java.util.Map;
++
++/**
++ * Class to handle call-log queries, optionally with a date-range filter
++ */
++public class CallStatsQueryHandler extends AsyncQueryHandler {
++  private static final String[] EMPTY_STRING_ARRAY = new String[0];
++
++  private static final int EVENT_PROCESS_DATA = 10;
++
++  private static final int QUERY_CALLS_TOKEN = 100;
++
++  private static final String TAG = "CallStatsQueryHandler";
++
++  private final WeakReference<Listener> mListener;
++  private Handler mWorkerThreadHandler;
++
++  /**
++   * Simple handler that wraps background calls to catch
++   * {@link SQLiteException}, such as when the disk is full.
++   */
++  protected class CatchingWorkerHandler extends AsyncQueryHandler.WorkerHandler {
++    public CatchingWorkerHandler(Looper looper) {
++      super(looper);
++    }
++
++    @Override
++    public void handleMessage(Message msg) {
++      if (msg.arg1 == EVENT_PROCESS_DATA) {
++        Cursor cursor = (Cursor) msg.obj;
++        Message reply = CallStatsQueryHandler.this.obtainMessage(msg.what);
++        reply.obj = processData(cursor);
++        reply.arg1 = msg.arg1;
++        reply.sendToTarget();
++        return;
++      }
++
++      try {
++        // Perform same query while catching any exceptions
++        super.handleMessage(msg);
++      } catch (SQLiteDiskIOException e) {
++        Log.w(TAG, "Exception on background worker thread", e);
++      } catch (SQLiteFullException e) {
++        Log.w(TAG, "Exception on background worker thread", e);
++      } catch (SQLiteDatabaseCorruptException e) {
++        Log.w(TAG, "Exception on background worker thread", e);
++      }
++    }
++  }
++
++  @Override
++  protected Handler createHandler(Looper looper) {
++    // Provide our special handler that catches exceptions
++    mWorkerThreadHandler = new CatchingWorkerHandler(looper);
++    return mWorkerThreadHandler;
++  }
++
++  public CallStatsQueryHandler(ContentResolver contentResolver, Listener listener) {
++    super(contentResolver);
++    mListener = new WeakReference<Listener>(listener);
++  }
++
++  public void fetchCalls(long from, long to, PhoneAccountHandle account) {
++    cancelOperation(QUERY_CALLS_TOKEN);
++
++    StringBuilder selection = new StringBuilder();
++    List<String> selectionArgs = Lists.newArrayList();
++
++    if (from != -1) {
++      selection.append(String.format("(%s > ?)", Calls.DATE));
++      selectionArgs.add(String.valueOf(from));
++    }
++    if (to != -1) {
++      if (selection.length() > 0) {
++        selection.append(" AND ");
++      }
++      selection.append(String.format("(%s < ?)", Calls.DATE));
++      selectionArgs.add(String.valueOf(to));
++    }
++    if (account != null) {
++      if (selection.length() > 0) {
++        selection.append(" AND ");
++      }
++      selection.append(String.format("(%s = ?)", Calls.PHONE_ACCOUNT_ID));
++      selectionArgs.add(account.getId());
++    }
++
++    startQuery(QUERY_CALLS_TOKEN, null, Calls.CONTENT_URI_WITH_VOICEMAIL,
++        CallStatsQuery._PROJECTION, selection.toString(),
++        selectionArgs.toArray(EMPTY_STRING_ARRAY), Calls.NUMBER + " ASC");
++  }
++
++  @Override
++  protected synchronized void onQueryComplete(int token, Object cookie, Cursor cursor) {
++    if (token == QUERY_CALLS_TOKEN) {
++      Message msg = mWorkerThreadHandler.obtainMessage(token);
++      msg.arg1 = EVENT_PROCESS_DATA;
++      msg.obj = cursor;
++
++      mWorkerThreadHandler.sendMessage(msg);
++    }
++  }
++
++  @Override
++  public void handleMessage(Message msg) {
++    if (msg.arg1 == EVENT_PROCESS_DATA) {
++      final Map<ContactInfo, CallStatsDetails> calls =
++          (Map<ContactInfo, CallStatsDetails>) msg.obj;
++      final Listener listener = mListener.get();
++      if (listener != null) {
++        listener.onCallsFetched(calls);
++      }
++    } else {
++      super.handleMessage(msg);
++    }
++  }
++
++  private Map<ContactInfo, CallStatsDetails> processData(Cursor cursor) {
++    final Map<ContactInfo, CallStatsDetails> result = new HashMap<ContactInfo, CallStatsDetails>();
++    final ArrayList<ContactInfo> infos = new ArrayList<ContactInfo>();
++    final ArrayList<CallStatsDetails> calls = new ArrayList<CallStatsDetails>();
++    CallStatsDetails pending = null;
++
++    cursor.moveToFirst();
++
++    while (!cursor.isAfterLast()) {
++      final String number = cursor.getString(CallStatsQuery.NUMBER);
++      final long duration = cursor.getLong(CallStatsQuery.DURATION);
++      final int callType = cursor.getInt(CallStatsQuery.CALL_TYPE);
++
++      if (pending == null || !phoneNumbersEqual(pending.number.toString(), number)) {
++        final long date = cursor.getLong(CallStatsQuery.DATE);
++        final int numberPresentation = cursor.getInt(CallStatsQuery.NUMBER_PRESENTATION);
++        final String countryIso = cursor.getString(CallStatsQuery.COUNTRY_ISO);
++        final String geocode = cursor.getString(CallStatsQuery.GEOCODED_LOCATION);
++        final String postDialDigits = cursor.getString(CallStatsQuery.POST_DIAL_DIGITS);
++        final ContactInfo info = getContactInfoFromCallStats(cursor);
++        final PhoneAccountHandle accountHandle = TelecomUtil.composePhoneAccountHandle(
++            cursor.getString(CallStatsQuery.ACCOUNT_COMPONENT_NAME),
++            cursor.getString(CallStatsQuery.ACCOUNT_ID));
++
++        pending = new CallStatsDetails(number, numberPresentation, postDialDigits,
++            accountHandle, info, countryIso, geocode, date);
++        infos.add(info);
++        calls.add(pending);
++      }
++
++      pending.addTimeOrMissed(callType, duration);
++      cursor.moveToNext();
++    }
++
++    cursor.close();
++    mergeItemsByNumber(calls, infos);
++
++    for (int i = 0; i < calls.size(); i++) {
++      result.put(infos.get(i), calls.get(i));
++    }
++
++    return result;
++  }
++
++  private void mergeItemsByNumber(List<CallStatsDetails> calls, List<ContactInfo> infos) {
++    // temporarily store items marked for removal
++    final ArrayList<CallStatsDetails> callsToRemove = new ArrayList<CallStatsDetails>();
++    final ArrayList<ContactInfo> infosToRemove = new ArrayList<ContactInfo>();
++
++    for (int i = 0; i < calls.size(); i++) {
++      final CallStatsDetails outerItem = calls.get(i);
++      final String currentFormattedNumber = outerItem.number.toString();
++
++      for (int j = calls.size() - 1; j > i; j--) {
++        final CallStatsDetails innerItem = calls.get(j);
++        final String innerNumber = innerItem.number.toString();
++
++        if (phoneNumbersEqual(currentFormattedNumber, innerNumber)) {
++          outerItem.mergeWith(innerItem);
++          //make sure we're not counting twice in case we're dealing with
++          //multiple different formats
++          innerItem.reset();
++          callsToRemove.add(innerItem);
++          infosToRemove.add(infos.get(j));
++        }
++      }
++    }
++
++    for (CallStatsDetails call : callsToRemove) {
++      calls.remove(call);
++    }
++    for (ContactInfo info : infosToRemove) {
++      infos.remove(info);
++    }
++  }
++
++  private ContactInfo getContactInfoFromCallStats(Cursor c) {
++    ContactInfo info = new ContactInfo();
++    info.lookupUri = UriUtils.parseUriOrNull(c.getString(CallStatsQuery.CACHED_LOOKUP_URI));
++    info.name = c.getString(CallStatsQuery.CACHED_NAME);
++    info.type = c.getInt(CallStatsQuery.CACHED_NUMBER_TYPE);
++    info.label = c.getString(CallStatsQuery.CACHED_NUMBER_LABEL);
++
++    final String matchedNumber = c.getString(CallStatsQuery.CACHED_MATCHED_NUMBER);
++    info.number = matchedNumber == null ? c.getString(CallStatsQuery.NUMBER) : matchedNumber;
++    info.normalizedNumber = c.getString(CallStatsQuery.CACHED_NORMALIZED_NUMBER);
++    info.formattedNumber = c.getString(CallStatsQuery.CACHED_FORMATTED_NUMBER);
++
++    info.photoId = c.getLong(CallStatsQuery.CACHED_PHOTO_ID);
++    info.photoUri = null; // We do not cache the photo URI.
++
++    return info;
++  }
++
++  private static boolean phoneNumbersEqual(String number1, String number2) {
++    if (PhoneNumberUtils.isUriNumber(number1) || PhoneNumberUtils.isUriNumber(number2)) {
++      return sipAddressesEqual(number1, number2);
++    } else {
++      return PhoneNumberUtils.compare(number1, number2);
++    }
++  }
++
++  private static boolean sipAddressesEqual(String number1, String number2) {
++    if (number1 == null || number2 == null) {
++      return number1 == number2;
++    }
++
++    int index1 = number1.indexOf('@');
++    final String userinfo1;
++    final String rest1;
++    if (index1 != -1) {
++      userinfo1 = number1.substring(0, index1);
++      rest1 = number1.substring(index1);
++    } else {
++      userinfo1 = number1;
++      rest1 = "";
++    }
++
++    int index2 = number2.indexOf('@');
++    final String userinfo2;
++    final String rest2;
++    if (index2 != -1) {
++      userinfo2 = number2.substring(0, index2);
++      rest2 = number2.substring(index2);
++    } else {
++      userinfo2 = number2;
++      rest2 = "";
++    }
++
++    return userinfo1.equals(userinfo2) && rest1.equalsIgnoreCase(rest2);
++  }
++
++  public interface Listener {
++    void onCallsFetched(Map<ContactInfo, CallStatsDetails> calls);
++  }
++}
+diff --git a/java/com/android/dialer/callstats/DoubleDatePickerDialog.java b/java/com/android/dialer/callstats/DoubleDatePickerDialog.java
+new file mode 100644
+index 000000000..5d11bec48
+--- /dev/null
++++ b/java/com/android/dialer/callstats/DoubleDatePickerDialog.java
+@@ -0,0 +1,334 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ * Copyright (C) 2013 Android Open Kang Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.callstats;
++
++import android.app.AlertDialog;
++import android.app.Dialog;
++import android.app.DialogFragment;
++import android.content.Context;
++import android.content.DialogInterface;
++import android.content.DialogInterface.OnClickListener;
++import android.os.Bundle;
++import android.text.format.DateUtils;
++import android.util.Log;
++import android.view.LayoutInflater;
++import android.view.View;
++import android.widget.AdapterView;
++import android.widget.AdapterView.OnItemSelectedListener;
++import android.widget.ArrayAdapter;
++import android.widget.Button;
++import android.widget.DatePicker;
++import android.widget.DatePicker.OnDateChangedListener;
++import android.widget.Spinner;
++import android.widget.TextView;
++
++import java.util.ArrayList;
++import java.util.Calendar;
++
++import com.android.dialer.R;
++
++/**
++ * Alertdialog with two date pickers - one for a start and one for an end date.
++ * Used to filter the callstats query.
++ */
++public class DoubleDatePickerDialog extends AlertDialog
++    implements OnClickListener, OnDateChangedListener, OnItemSelectedListener {
++
++  private static final String TAG = "DoubleDatePickerDialog";
++
++  public interface OnDateSetListener {
++    void onDateSet(long from, long to);
++  }
++
++  public static class Fragment extends DialogFragment implements OnDateSetListener {
++    private DoubleDatePickerDialog mDialog;
++
++    @Override
++    public Dialog onCreateDialog(Bundle savedInstanceState) {
++      mDialog = new DoubleDatePickerDialog(getActivity(), this);
++      return mDialog;
++    }
++
++    @Override
++    public void onStart() {
++      final Bundle args = getArguments();
++      final long from = args.getLong("from", -1);
++      final long to = args.getLong("to", -1);
++
++      if (from != -1) {
++          mDialog.setValues(from, to);
++      } else {
++          mDialog.resetPickers();
++      }
++      super.onStart();
++    }
++
++    @Override
++    public void onDateSet(long from, long to) {
++      ((DoubleDatePickerDialog.OnDateSetListener) getActivity()).onDateSet(from, to);
++    }
++
++    public static Bundle createArguments(long from, long to) {
++      final Bundle args = new Bundle();
++      args.putLong("from", from);
++      args.putLong("to", to);
++      return args;
++    }
++  }
++
++  private interface QuickSelection {
++    void adjustStartDate(Calendar date);
++  }
++
++  private static final int[] QUICKSELECTION_ENTRIES = new int[] {
++    R.string.date_qs_currentmonth,
++    R.string.date_qs_currentquarter,
++    R.string.date_qs_currentyear,
++    R.string.date_qs_lastweek,
++    R.string.date_qs_lastmonth,
++    R.string.date_qs_lastquarter,
++    R.string.date_qs_lastyear
++  };
++
++  private static final QuickSelection[] QUICKSELECTIONS = new QuickSelection[] {
++    new QuickSelection() {
++      @Override
++      public void adjustStartDate(Calendar date) {
++          date.set(Calendar.DAY_OF_MONTH, 1);
++      }
++    },
++    new QuickSelection() {
++      @Override
++      public void adjustStartDate(Calendar date) {
++        final int currentMonth = date.get(Calendar.MONTH);
++        date.set(Calendar.MONTH, currentMonth - (currentMonth % 3));
++        date.set(Calendar.DAY_OF_MONTH, 1);
++      }
++    },
++    new QuickSelection() {
++      @Override
++      public void adjustStartDate(Calendar date) {
++        date.set(Calendar.MONTH, 0);
++        date.set(Calendar.DAY_OF_MONTH, 1);
++      }
++    },
++    new QuickSelection() {
++      @Override
++      public void adjustStartDate(Calendar date) {
++        date.add(Calendar.WEEK_OF_YEAR, -1);
++      }
++    },
++    new QuickSelection() {
++      @Override
++      public void adjustStartDate(Calendar date) {
++        date.add(Calendar.MONTH, -1);
++      }
++    },
++    new QuickSelection() {
++      @Override
++      public void adjustStartDate(Calendar date) {
++        date.add(Calendar.MONTH, -3);
++      }
++    },
++    new QuickSelection() {
++      @Override
++      public void adjustStartDate(Calendar date) {
++        date.add(Calendar.YEAR, -1);
++      }
++    },
++  };
++
++  private static final String YEAR = "year";
++  private static final String MONTH = "month";
++  private static final String DAY = "day";
++
++  private final Spinner mQuickSelSpinner;
++  private final DatePicker mDatePickerFrom;
++  private final DatePicker mDatePickerTo;
++  private final OnDateSetListener mCallBack;
++  private Button mOkButton;
++  private int mQuickSelSelection = -1;
++
++  public DoubleDatePickerDialog(final Context context, OnDateSetListener callBack) {
++    super(context);
++
++    mCallBack = callBack;
++
++    setTitle(R.string.call_stats_filter_picker_title);
++    setButton(BUTTON_NEGATIVE, context.getString(android.R.string.cancel), this);
++    setButton(BUTTON_POSITIVE, context.getString(android.R.string.ok), this);
++    setIcon(0);
++
++    LayoutInflater inflater =
++        (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
++    View view = inflater.inflate(R.layout.double_date_picker_dialog, null);
++    setView(view);
++
++    mDatePickerFrom = (DatePicker) view.findViewById(R.id.date_picker_from);
++    mDatePickerTo = (DatePicker) view.findViewById(R.id.date_picker_to);
++
++    ArrayList<CharSequence> quickSelEntries = new ArrayList<CharSequence>();
++    for (int entryId : QUICKSELECTION_ENTRIES) {
++      quickSelEntries.add(context.getString(entryId));
++    }
++    ArrayAdapter<CharSequence> quickSelAdapter = new ArrayAdapter<CharSequence>(
++        context, android.R.layout.simple_spinner_item, android.R.id.text1, quickSelEntries) {
++      @Override
++      public View getView(int position, View convertView, android.view.ViewGroup parent) {
++        final TextView v = (TextView) super.getView(position, convertView, parent);
++        v.setText(context.getString(R.string.date_quick_selection));
++        return v;
++      }
++    };
++    quickSelAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
++
++    mQuickSelSpinner = (Spinner) view.findViewById(R.id.date_quick_selection);
++    mQuickSelSpinner.setOnItemSelectedListener(this);
++    mQuickSelSpinner.setAdapter(quickSelAdapter);
++
++    resetPickers();
++  }
++
++  @Override
++  protected void onStart() {
++    super.onStart();
++    mOkButton = getButton(DialogInterface.BUTTON_POSITIVE);
++    updateOkButtonState();
++  }
++
++  @Override
++  public void onClick(DialogInterface dialog, int which) {
++    switch (which) {
++      case BUTTON_POSITIVE:
++        tryNotifyDateSet();
++        break;
++      case BUTTON_NEGATIVE:
++        break;
++    }
++  }
++
++  @Override
++  public void onItemSelected(AdapterView<?> parent, View view, int pos, long id) {
++    if (mQuickSelSelection >= 0) {
++      QuickSelection sel = QUICKSELECTIONS[pos];
++      Calendar from = Calendar.getInstance();
++      long millisTo = from.getTimeInMillis();
++      sel.adjustStartDate(from);
++      long millisFrom = from.getTimeInMillis();
++
++      setValues(millisFrom, millisTo);
++    }
++    mQuickSelSelection = pos;
++  }
++
++  @Override
++  public void onNothingSelected(AdapterView<?> parent) {
++  }
++
++  public void onDateChanged(DatePicker view, int year, int month, int day) {
++    view.init(year, month, day, this);
++    updateOkButtonState();
++  }
++
++  public void setValues(long millisFrom, long millisTo) {
++    setPicker(mDatePickerFrom, millisFrom);
++    setPicker(mDatePickerTo, millisTo);
++    updateOkButtonState();
++  }
++
++  public void resetPickers() {
++    long millis = System.currentTimeMillis();
++    setPicker(mDatePickerFrom, millis);
++    setPicker(mDatePickerTo, millis);
++    updateOkButtonState();
++  }
++
++  private void setPicker(DatePicker picker, long millis) {
++    Calendar c = Calendar.getInstance();
++    c.setTimeInMillis(millis);
++
++    int year = c.get(Calendar.YEAR);
++    int month = c.get(Calendar.MONTH);
++    int day = c.get(Calendar.DAY_OF_MONTH);
++
++    picker.init(year, month, day, this);
++  }
++
++  private long getMillisForPicker(DatePicker picker, boolean endOfDay) {
++    Calendar c = Calendar.getInstance();
++    c.set(Calendar.YEAR, picker.getYear());
++    c.set(Calendar.MONTH, picker.getMonth());
++    c.set(Calendar.DAY_OF_MONTH, picker.getDayOfMonth());
++    c.set(Calendar.HOUR_OF_DAY, 0);
++    c.set(Calendar.MINUTE, 0);
++    c.set(Calendar.SECOND, 0);
++
++    long millis = c.getTimeInMillis();
++    if (endOfDay) {
++      millis += 24L * 60L * 60L * 1000L - 1L;
++    }
++
++    return millis;
++  }
++
++  private void updateOkButtonState() {
++    if (mOkButton != null) {
++      long millisFrom = getMillisForPicker(mDatePickerFrom, false);
++      long millisTo = getMillisForPicker(mDatePickerTo, true);
++      mOkButton.setEnabled(millisFrom < millisTo);
++    }
++  }
++
++  private void tryNotifyDateSet() {
++    if (mCallBack != null) {
++      mDatePickerFrom.clearFocus();
++      mDatePickerTo.clearFocus();
++
++      long millisFrom = getMillisForPicker(mDatePickerFrom, false);
++      long millisTo = getMillisForPicker(mDatePickerTo, true);
++
++      mCallBack.onDateSet(millisFrom, millisTo);
++    }
++  }
++
++  // users like to play with it, so save the state and don't reset each time
++  @Override
++  public Bundle onSaveInstanceState() {
++    Bundle state = super.onSaveInstanceState();
++    state.putInt("F_" + YEAR, mDatePickerFrom.getYear());
++    state.putInt("F_" + MONTH, mDatePickerFrom.getMonth());
++    state.putInt("F_" + DAY, mDatePickerFrom.getDayOfMonth());
++    state.putInt("T_" + YEAR, mDatePickerTo.getYear());
++    state.putInt("T_" + MONTH, mDatePickerTo.getMonth());
++    state.putInt("T_" + DAY, mDatePickerTo.getDayOfMonth());
++    return state;
++  }
++
++  @Override
++  public void onRestoreInstanceState(Bundle savedInstanceState) {
++    super.onRestoreInstanceState(savedInstanceState);
++    int fyear = savedInstanceState.getInt("F_" + YEAR);
++    int fmonth = savedInstanceState.getInt("F_" + MONTH);
++    int fday = savedInstanceState.getInt("F_" + DAY);
++    int tyear = savedInstanceState.getInt("T_" + YEAR);
++    int tmonth = savedInstanceState.getInt("T_" + MONTH);
++    int tday = savedInstanceState.getInt("T_" + DAY);
++    mDatePickerFrom.init(fyear, fmonth, fday, this);
++    mDatePickerTo.init(tyear, tmonth, tday, this);
++  }
++}
+diff --git a/java/com/android/dialer/callstats/res/layout/call_stats_detail.xml b/java/com/android/dialer/callstats/res/layout/call_stats_detail.xml
+new file mode 100644
+index 000000000..c12dbfa67
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/layout/call_stats_detail.xml
+@@ -0,0 +1,127 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2009 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++  android:id="@+id/call_stats_detail"
++  android:layout_width="match_parent"
++  android:layout_height="match_parent"
++  android:orientation="vertical"
++  android:layout_alignParentStart="true"
++  android:layout_alignParentTop="true"
++  android:background="?android:attr/colorBackground">
++
++  <com.android.dialer.widget.DialerToolbar
++    android:id="@+id/toolbar"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"/>
++
++  <!-- Caller information "card" -->
++  <LinearLayout
++    android:id="@+id/caller_information"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_marginTop="@dimen/call_details_top_margin"
++    android:paddingStart="@dimen/contact_container_padding_top_start"
++    android:paddingEnd="@dimen/contact_container_padding_bottom_end"
++    android:paddingTop="@dimen/contact_container_padding_top_start"
++    android:paddingBottom="@dimen/contact_container_padding_bottom_end"
++    android:baselineAligned="false"
++    android:orientation="horizontal"
++    android:focusable="true">
++
++    <QuickContactBadge
++      android:id="@+id/quick_contact_photo"
++      android:layout_width="@dimen/contact_photo_size"
++      android:layout_height="@dimen/contact_photo_size"
++      android:layout_gravity="center_vertical"
++      android:focusable="true" />
++
++    <LinearLayout
++      android:layout_width="0dp"
++      android:layout_height="wrap_content"
++      android:layout_weight="1"
++      android:layout_gravity="center_vertical"
++      android:orientation="vertical"
++      android:layout_marginStart="@dimen/photo_text_margin">
++
++      <TextView
++        android:id="@+id/caller_name"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        style="@style/Dialer.TextAppearance.Primary" />
++
++      <TextView
++        android:id="@+id/caller_number"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        style="@style/Dialer.TextAppearance.Secondary" />
++
++    </LinearLayout>
++
++    <ImageView
++      android:id="@+id/call_back_button"
++      android:layout_width="@dimen/call_back_button_size"
++      android:layout_height="@dimen/call_back_button_size"
++      android:background="?android:attr/selectableItemBackgroundBorderless"
++      android:src="@drawable/quantum_ic_call_white_24"
++      android:scaleType="center"
++      android:tint="?android:attr/textColorSecondary"
++      android:contentDescription="@string/call"
++      android:visibility="gone" />
++
++  </LinearLayout>
++
++  <ScrollView
++    android:layout_width="match_parent"
++    android:layout_height="match_parent">
++
++    <LinearLayout
++      android:layout_width="match_parent"
++      android:layout_height="wrap_content"
++      android:orientation="vertical">
++
++      <!-- The actual details -->
++      <include layout="@layout/call_stats_detail_info" />
++
++      <View
++        android:id="@+id/separator"
++        android:layout_width="match_parent"
++        android:layout_height="1dp"
++        android:layout_below="@id/out_average"
++        android:layout_marginTop="@dimen/ec_divider_top_bottom_margin"
++        android:layout_marginBottom="@dimen/ec_divider_top_bottom_margin"
++        android:background="#12000000" />
++
++      <TextView
++        android:id="@+id/call_detail_action_copy"
++        style="@style/CallDetailsActionItemStyle"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:drawableStart="@drawable/quantum_ic_content_copy_grey600_24"
++        android:text="@string/call_details_copy_number"/>
++
++      <TextView
++        android:id="@+id/call_detail_action_edit_before_call"
++        style="@style/CallDetailsActionItemStyle"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:drawableStart="@drawable/quantum_ic_edit_grey600_24"
++        android:text="@string/call_details_edit_number"/>
++
++    </LinearLayout>
++
++  </ScrollView>
++
++</LinearLayout>
+diff --git a/java/com/android/dialer/callstats/res/layout/call_stats_detail_info.xml b/java/com/android/dialer/callstats/res/layout/call_stats_detail_info.xml
+new file mode 100644
+index 000000000..810a5bf45
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/layout/call_stats_detail_info.xml
+@@ -0,0 +1,230 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2011 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
++  xmlns:ex="http://schemas.android.com/apk/res/com.android.dialer"
++  android:id="@+id/call_stats_info"
++  android:layout_width="match_parent"
++  android:layout_height="wrap_content"
++  android:orientation="vertical"
++  android:paddingStart="@dimen/call_log_list_item_info_margin_start"
++  android:paddingEnd="@dimen/call_log_list_item_info_margin_start"
++  android:paddingTop="@dimen/call_log_outer_margin"
++  android:paddingBottom="@dimen/call_log_outer_margin">
++
++  <TextView
++    android:id="@+id/date_filter"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    style="@style/Dialer.TextAppearance.Secondary" />
++
++  <RelativeLayout
++    android:id="@+id/duration_container"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/date_filter">
++
++    <TextView
++      android:id="@+id/durations_header"
++      android:layout_width="match_parent"
++      android:layout_height="wrap_content"
++      android:text="@string/call_stats_title_durations"
++      android:layout_marginBottom="@dimen/call_log_vertical_padding"
++      android:textColor="?android:attr/colorAccent"
++      style="@android:style/TextAppearance.Material.Subhead" />
++
++    <TextView
++      android:id="@+id/total_duration_total"
++      android:layout_width="wrap_content"
++      android:layout_height="wrap_content"
++      android:layout_alignParentEnd="true"
++      android:layout_below="@id/durations_header"
++      style="@style/Dialer.TextAppearance.Primary" />
++
++    <TextView
++      android:layout_width="wrap_content"
++      android:layout_height="wrap_content"
++      android:layout_alignParentStart="true"
++      android:layout_toStartOf="@id/total_duration_total"
++      android:layout_alignBaseline="@id/total_duration_total"
++      android:text="@string/call_stats_title_of_total"
++      style="@style/Dialer.TextAppearance.Primary" />
++
++    <com.android.dialer.widget.LinearColorBar
++      android:id="@+id/duration_total_percent_bar"
++      android:layout_width="match_parent"
++      android:layout_below="@id/total_duration_total"
++      style="@style/CallStatsBarStyle" />
++
++    <TextView
++      android:id="@+id/total_duration_number"
++      android:layout_width="wrap_content"
++      android:layout_height="wrap_content"
++      android:layout_alignParentEnd="true"
++      android:layout_below="@id/duration_total_percent_bar"
++      style="@style/Dialer.TextAppearance.Primary" />
++
++    <TextView
++      android:layout_width="wrap_content"
++      android:layout_height="wrap_content"
++      android:layout_alignParentStart="true"
++      android:layout_toStartOf="@id/total_duration_number"
++      android:layout_alignBaseline="@id/total_duration_number"
++      android:text="@string/call_stats_title_for_number"
++      style="@style/Dialer.TextAppearance.Primary" />
++
++    <com.android.dialer.widget.LinearColorBar
++      android:id="@+id/duration_number_percent_bar"
++      android:layout_width="match_parent"
++      android:layout_below="@id/total_duration_number"
++      style="@style/CallStatsBarStyle" />
++
++    <include
++      android:id="@+id/in_duration"
++      android:layout_width="match_parent"
++      android:layout_height="wrap_content"
++      android:layout_below="@id/duration_number_percent_bar"
++      android:layout_marginBottom="@dimen/call_log_icon_margin"
++      layout="@layout/call_stats_detail_line" />
++
++    <include
++      android:id="@+id/out_duration"
++      android:layout_width="match_parent"
++      android:layout_height="wrap_content"
++      android:layout_below="@id/in_duration"
++      android:layout_marginBottom="@dimen/call_log_icon_margin"
++      layout="@layout/call_stats_detail_line" />
++
++  </RelativeLayout>
++
++  <TextView
++    android:id="@+id/count_header"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/duration_container"
++    android:layout_marginTop="16dp"
++    android:layout_marginBottom="@dimen/call_log_vertical_padding"
++    android:text="@string/call_stats_title_count"
++    android:textColor="?android:attr/colorAccent"
++    style="@android:style/TextAppearance.Material.Subhead" />
++
++  <TextView
++    android:id="@+id/total_count_total"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_alignParentEnd="true"
++    android:layout_below="@id/count_header"
++    style="@style/Dialer.TextAppearance.Primary" />
++
++  <TextView
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_alignParentStart="true"
++    android:layout_toStartOf="@id/total_count_total"
++    android:layout_alignBaseline="@id/total_count_total"
++    android:text="@string/call_stats_title_of_total"
++    style="@style/Dialer.TextAppearance.Primary" />
++
++  <com.android.dialer.widget.LinearColorBar
++    android:id="@+id/count_total_percent_bar"
++    android:layout_width="match_parent"
++    android:layout_below="@id/total_count_total"
++    style="@style/CallStatsBarStyle" />
++
++  <TextView
++    android:id="@+id/total_count_number"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_alignParentEnd="true"
++    android:layout_below="@id/count_total_percent_bar"
++    style="@style/Dialer.TextAppearance.Primary" />
++
++  <TextView
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_alignParentStart="true"
++    android:layout_toStartOf="@id/total_count_number"
++    android:layout_alignBaseline="@id/total_count_number"
++    android:text="@string/call_stats_title_for_number"
++    style="@style/Dialer.TextAppearance.Primary" />
++
++  <com.android.dialer.widget.LinearColorBar
++    android:id="@+id/count_number_percent_bar"
++    android:layout_width="match_parent"
++    android:layout_below="@id/total_count_number"
++    style="@style/CallStatsBarStyle" />
++
++  <include
++    android:id="@+id/in_count"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/count_number_percent_bar"
++    android:layout_marginBottom="@dimen/call_log_icon_margin"
++    layout="@layout/call_stats_detail_line" />
++
++  <include
++    android:id="@+id/out_count"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/in_count"
++    android:layout_marginBottom="@dimen/call_log_icon_margin"
++    layout="@layout/call_stats_detail_line" />
++
++  <include
++    android:id="@+id/missed_count"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/out_count"
++    android:layout_marginBottom="@dimen/call_log_icon_margin"
++    layout="@layout/call_stats_detail_line" />
++
++  <include
++    android:id="@+id/blocked_count"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/missed_count"
++    android:layout_marginBottom="@dimen/call_log_icon_margin"
++    layout="@layout/call_stats_detail_line" />
++
++  <TextView
++    android:id="@+id/average_header"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/blocked_count"
++    android:layout_marginTop="16dp"
++    android:layout_marginBottom="@dimen/call_log_vertical_padding"
++    android:text="@string/call_stats_title_average_duration"
++    android:textColor="?android:attr/colorAccent"
++    style="@android:style/TextAppearance.Material.Subhead" />
++
++  <include
++    android:id="@+id/in_average"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/average_header"
++    android:layout_marginBottom="@dimen/call_log_icon_margin"
++    layout="@layout/call_stats_detail_line" />
++
++  <include
++    android:id="@+id/out_average"
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/in_average"
++    android:layout_marginBottom="@dimen/call_log_icon_margin"
++    layout="@layout/call_stats_detail_line" />
++
++</RelativeLayout>
+diff --git a/java/com/android/dialer/callstats/res/layout/call_stats_detail_line.xml b/java/com/android/dialer/callstats/res/layout/call_stats_detail_line.xml
+new file mode 100644
+index 000000000..5219f07d4
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/layout/call_stats_detail_line.xml
+@@ -0,0 +1,43 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2011 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++  android:layout_width="match_parent"
++  android:layout_height="wrap_content">
++
++  <com.android.dialer.calllogutils.CallTypeIconsView
++    android:id="@+id/icon"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_gravity="center_vertical" />
++
++  <TextView
++    android:id="@+id/value"
++    android:layout_width="0dp"
++    android:layout_height="wrap_content"
++    android:layout_weight="1"
++    android:layout_marginStart="@dimen/call_log_icon_margin"
++    style="@style/Dialer.TextAppearance.Primary" />
++
++  <TextView
++    android:id="@+id/percent"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_marginStart="@dimen/call_log_icon_margin"
++    style="@style/Dialer.TextAppearance.Secondary" />
++
++</LinearLayout>
+diff --git a/java/com/android/dialer/callstats/res/layout/call_stats_fragment.xml b/java/com/android/dialer/callstats/res/layout/call_stats_fragment.xml
+new file mode 100644
+index 000000000..017c3a4ad
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/layout/call_stats_fragment.xml
+@@ -0,0 +1,80 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2011 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<!-- Layout parameters are set programmatically. -->
++<android.support.design.widget.CoordinatorLayout
++  xmlns:android="http://schemas.android.com/apk/res/android"
++  xmlns:design="http://schemas.android.com/apk/res-auto"
++  android:layout_width="match_parent"
++  android:layout_height="match_parent"
++  design:statusBarBackground="@null" >
++
++  <android.support.design.widget.AppBarLayout
++    android:layout_width="match_parent"
++    android:layout_height="wrap_content"
++    android:stateListAnimator="@null"
++    android:background="?android:attr/colorBackground"
++    android:elevation="2dp">
++
++    <LinearLayout
++      android:layout_width="match_parent"
++      android:layout_height="wrap_content"
++      android:orientation="vertical"
++      design:layout_scrollFlags="scroll|enterAlways">
++
++      <include layout="@layout/call_log_filter_spinners" />
++
++      <TextView
++        android:id="@+id/date_filter"
++        style="@style/ContactListSeparatorTextViewStyle"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="@dimen/call_log_outer_margin"
++        android:layout_marginEnd="@dimen/call_log_outer_margin"
++        android:visibility="gone" />
++
++      <TextView
++        android:id="@+id/sum_header"
++        style="@style/ContactListSeparatorTextViewStyle"
++        android:layout_width="match_parent"
++        android:layout_height="wrap_content"
++        android:layout_marginStart="@dimen/call_log_outer_margin"
++        android:layout_marginEnd="@dimen/call_log_outer_margin"
++        android:paddingBottom="@dimen/call_log_outer_margin"
++        android:visibility="gone" />
++    </LinearLayout>
++
++  </android.support.design.widget.AppBarLayout>
++
++  <android.support.v7.widget.RecyclerView
++    android:id="@+id/recycler_view"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:paddingStart="@dimen/call_log_horizontal_margin"
++    android:paddingEnd="@dimen/call_log_horizontal_margin"
++    android:background="?android:attr/colorBackground"
++    design:layout_behavior="@string/appbar_scrolling_view_behavior" />
++
++  <com.android.dialer.widget.EmptyContentView
++    android:id="@+id/empty_list_view"
++    android:layout_width="match_parent"
++    android:layout_height="match_parent"
++    android:gravity="center_vertical"
++    android:background="?android:attr/colorBackground"
++    android:visibility="gone" />
++
++</android.support.design.widget.CoordinatorLayout>
+diff --git a/java/com/android/dialer/callstats/res/layout/call_stats_list_item.xml b/java/com/android/dialer/callstats/res/layout/call_stats_list_item.xml
+new file mode 100644
+index 000000000..18600f456
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/layout/call_stats_list_item.xml
+@@ -0,0 +1,85 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2007 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<RelativeLayout
++  xmlns:android="http://schemas.android.com/apk/res/android"
++  xmlns:ex="http://schemas.android.com/apk/res/com.android.dialer"
++  android:id="@+id/primary_action_view"
++  android:layout_width="match_parent"
++  android:layout_height="wrap_content"
++  android:paddingStart="@dimen/call_log_start_margin"
++  android:paddingEnd="@dimen/call_log_outer_margin"
++  android:paddingTop="@dimen/call_log_vertical_padding"
++  android:paddingBottom="@dimen/call_log_vertical_padding"
++  android:background="?android:attr/selectableItemBackground">
++
++  <QuickContactBadge
++    android:id="@+id/quick_contact_photo"
++    android:layout_width="@dimen/contact_photo_size"
++    android:layout_height="@dimen/contact_photo_size"
++    android:layout_marginEnd="@dimen/call_log_start_margin"
++    android:paddingTop="2dp" />
++
++  <TextView
++    android:id="@+id/name"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_toEndOf="@id/quick_contact_photo"
++    android:ellipsize="marquee"
++    android:singleLine="true"
++    style="@style/Dialer.TextAppearance.Primary" />
++
++  <TextView
++    android:id="@+id/percent"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_toEndOf="@id/name"
++    android:layout_alignBaseline="@id/name"
++    android:layout_alignParentEnd="true"
++    android:gravity="end"
++      style="@style/Dialer.TextAppearance.Secondary" />
++
++  <com.android.dialer.widget.LinearColorBar
++    android:id="@+id/percent_bar"
++    android:layout_width="wrap_content"
++    android:layout_below="@id/name"
++    android:layout_toEndOf="@id/quick_contact_photo"
++    android:layout_alignParentEnd="true"
++    style="@style/CallStatsBarStyle" />
++
++  <TextView
++    android:id="@+id/label"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/percent_bar"
++    android:layout_toEndOf="@id/quick_contact_photo"
++    android:layout_marginEnd="8dp"
++    android:singleLine="true"
++    style="@style/Dialer.TextAppearance.Secondary" />
++
++  <TextView
++    android:id="@+id/number"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:layout_below="@id/percent_bar"
++    android:layout_toEndOf="@id/label"
++    android:layout_alignBaseline="@id/label"
++    android:singleLine="true"
++    android:textSize="12sp"
++    style="@style/Dialer.TextAppearance.Secondary" />
++
++</RelativeLayout>
+diff --git a/java/com/android/dialer/callstats/res/layout/double_date_picker_dialog.xml b/java/com/android/dialer/callstats/res/layout/double_date_picker_dialog.xml
+new file mode 100644
+index 000000000..ec4a1f25b
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/layout/double_date_picker_dialog.xml
+@@ -0,0 +1,67 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++**
++** Copyright 2007, The Android Open Source Project
++**
++** Licensed under the Apache License, Version 2.0 (the "License");
++** you may not use this file except in compliance with the License.
++** You may obtain a copy of the License at
++**
++**     http://www.apache.org/licenses/LICENSE-2.0
++**
++** Unless required by applicable law or agreed to in writing, software
++** distributed under the License is distributed on an "AS IS" BASIS,
++** WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++** See the License for the specific language governing permissions and
++** limitations under the License.
++*/
++-->
++<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
++    android:layout_width="wrap_content"
++    android:layout_height="wrap_content"
++    android:gravity="center"
++    android:orientation="vertical" >
++
++    <Spinner
++        android:id="@+id/date_quick_selection"
++        android:layout_marginTop="3dp"
++        android:layout_marginBottom="3dp"
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content" />
++
++    <TextView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginBottom="-12dp"
++        android:layout_marginRight="3dp"
++        android:layout_marginTop="3dp"
++        android:text="@string/call_stats_filter_from"
++        android:textAppearance="?android:attr/textAppearanceMedium" />
++
++    <DatePicker
++        android:id="@+id/date_picker_from"
++        android:datePickerMode="spinner"
++        android:layout_width="wrap_content"
++        android:layout_height="0dp"
++        android:layout_weight="1"
++        android:calendarViewShown="false"
++        android:spinnersShown="true" />
++
++    <TextView
++        android:layout_width="wrap_content"
++        android:layout_height="wrap_content"
++        android:layout_marginBottom="-12dp"
++        android:layout_marginRight="4dp"
++        android:text="@string/call_stats_filter_to"
++        android:textAppearance="?android:attr/textAppearanceMedium" />
++
++    <DatePicker
++        android:id="@+id/date_picker_to"
++        android:datePickerMode="spinner"
++        android:layout_width="wrap_content"
++        android:layout_height="0dp"
++        android:layout_weight="1"
++        android:calendarViewShown="false"
++        android:spinnersShown="true" />
++
++</LinearLayout>
+diff --git a/java/com/android/dialer/callstats/res/menu/call_stats_options.xml b/java/com/android/dialer/callstats/res/menu/call_stats_options.xml
+new file mode 100644
+index 000000000..ae4b7eb82
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/menu/call_stats_options.xml
+@@ -0,0 +1,40 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2011 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<menu xmlns:android="http://schemas.android.com/apk/res/android" >
++  <item
++    android:id="@+id/date_filter"
++    android:showAsAction="never"
++    android:title="@string/call_stats_date_filter" />
++
++  <item
++    android:id="@+id/reset_date_filter"
++    android:showAsAction="never"
++    android:visible="false"
++    android:title="@string/call_stats_reset_filter" />
++
++  <item
++    android:id="@+id/sort_by_duration"
++    android:showAsAction="never"
++    android:visible="false"
++    android:title="@string/call_stats_sort_by_duration" />
++
++  <item
++    android:id="@+id/sort_by_count"
++    android:showAsAction="never"
++    android:title="@string/call_stats_sort_by_count" />
++
++</menu>
+diff --git a/java/com/android/dialer/callstats/res/values/cm_arrays.xml b/java/com/android/dialer/callstats/res/values/cm_arrays.xml
+new file mode 100644
+index 000000000..ee498650a
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/values/cm_arrays.xml
+@@ -0,0 +1,37 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2013-2014 The CyanogenMod Project
++     Copyright (C) 2018 The LineageOS Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- 0:           sec
++         1:      min
++         2:      min  sec
++         3: hour
++         4: hour      sec
++         5: hour min
++         6: hour min  sec -->
++
++    <string-array name="call_stats_duration">
++        <item><xliff:g id="seconds" example="2 secs">%3$s</xliff:g></item>
++        <item><xliff:g id="minutes" example="2 mins">%2$s</xliff:g></item>
++        <item><xliff:g id="minutes" example="2 mins">%2$s</xliff:g> <xliff:g id="seconds" example="2 secs">%3$s</xliff:g></item>
++        <item><xliff:g id="hours" example="2 hrs">%1$s</xliff:g></item>
++        <item><xliff:g id="hours" example="2 hrs">%1$s</xliff:g> <xliff:g id="seconds" example="2 secs">%3$s</xliff:g></item>
++        <item><xliff:g id="hours" example="2 hrs">%1$s</xliff:g> <xliff:g id="minutes" example="2 mins">%2$s</xliff:g></item>
++        <item><xliff:g id="hours" example="2 hrs">%1$s</xliff:g> <xliff:g id="minutes" example="2 mins">%2$s</xliff:g> <xliff:g id="seconds" example="2 secs">%3$s</xliff:g></item>
++    </string-array>
++
++</resources>
+diff --git a/java/com/android/dialer/callstats/res/values/cm_plurals.xml b/java/com/android/dialer/callstats/res/values/cm_plurals.xml
+new file mode 100644
+index 000000000..536e3f8e8
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/values/cm_plurals.xml
+@@ -0,0 +1,36 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2013 The CyanogenMod Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <plurals name="hour">
++        <item quantity="one">1 hr</item>
++        <item quantity="other">%d hrs</item>
++    </plurals>
++    <plurals name="minute">
++        <item quantity="one">1 min</item>
++        <item quantity="other">%d mins</item>
++    </plurals>
++    <plurals name="second">
++        <item quantity="one">1 sec</item>
++        <item quantity="other">%d secs</item>
++    </plurals>
++
++    <plurals name="call">
++        <item quantity="one">1 call</item>
++        <item quantity="other">%d calls</item>
++    </plurals>
++</resources>
++
+diff --git a/java/com/android/dialer/callstats/res/values/cm_strings.xml b/java/com/android/dialer/callstats/res/values/cm_strings.xml
+new file mode 100644
+index 000000000..0e3fd9177
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/values/cm_strings.xml
+@@ -0,0 +1,54 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2013-2014 The CyanogenMod Project
++     Copyright (C) 2018 The LineageOS Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="call_stats_detail_title">Contact statistics details</string>
++
++    <string name="call_stats_incoming">Incoming: <xliff:g id="value">%s</xliff:g></string>
++    <string name="call_stats_outgoing">Outgoing: <xliff:g id="value">%s</xliff:g></string>
++    <string name="call_stats_missed">Missed: <xliff:g id="value">%s</xliff:g></string>
++    <string name="call_stats_blocked">Blocked: <xliff:g id="value">%s</xliff:g></string>
++    <string name="call_stats_percent"><xliff:g id="percent">%d</xliff:g>%%</string>
++    <string name="call_stats_header_total">Total: <xliff:g id="call_count">%1$s</xliff:g>, <xliff:g id="duration">%2$s</xliff:g></string>
++    <string name="call_stats_header_total_callsonly">Total: <xliff:g id="call_count">%s</xliff:g></string>
++    <string name="call_stats_filter_from">Start date</string>
++    <string name="call_stats_filter_to">End date</string>
++    <string name="call_stats_filter_picker_title">Filter range</string>
++
++    <string name="date_quick_selection">Quick selection</string>
++    <string name="date_qs_currentmonth">Current month</string>
++    <string name="date_qs_currentquarter">Current quarter</string>
++    <string name="date_qs_currentyear">Current year</string>
++    <string name="date_qs_lastweek">Last week</string>
++    <string name="date_qs_lastmonth">Last month</string>
++    <string name="date_qs_lastquarter">Last quarter</string>
++    <string name="date_qs_lastyear">Last year</string>
++
++    <string name="call_stats_date_filter">Adjust time range</string>
++    <string name="call_stats_reset_filter">Reset time range</string>
++    <string name="call_stats_sort_by_duration">Sort by call duration</string>
++    <string name="call_stats_sort_by_count">Sort by call count</string>
++
++    <string name="call_stats_title_for_number">This number</string>
++    <string name="call_stats_title_of_total">Of total</string>
++    <string name="call_stats_title_durations">Call durations</string>
++    <string name="call_stats_title_count">Call count</string>
++    <string name="call_stats_title_average_duration">Average call duration</string>
++
++    <!-- Text displayed when there are no call log entries in the selected time range. -->
++    <string name="recent_calls_no_items_in_range">Your call log does not contain any calls in the selected time range.</string>
++</resources>
+diff --git a/java/com/android/dialer/callstats/res/values/colors.xml b/java/com/android/dialer/callstats/res/values/colors.xml
+new file mode 100644
+index 000000000..40472cf78
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/values/colors.xml
+@@ -0,0 +1,20 @@
++<!--
++  ~ Copyright (C) 2018 The LineageOS Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++-->
++
++<resources>
++  <!-- Colors for incoming and outgoing calls in the call statistics -->
++  <color name="call_stats_bar_background">#88888888</color>
++</resources>
+diff --git a/java/com/android/dialer/callstats/res/values/styles.xml b/java/com/android/dialer/callstats/res/values/styles.xml
+new file mode 100644
+index 000000000..7a4bc453d
+--- /dev/null
++++ b/java/com/android/dialer/callstats/res/values/styles.xml
+@@ -0,0 +1,29 @@
++<!--
++  ~ Copyright (C) 2018 The LineageOS Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++
++<resources>
++  <style name="CallStatsBarStyle">
++    <item name="android:layout_height">4dp</item>
++    <item name="android:layout_marginTop">6dp</item>
++    <item name="android:layout_marginBottom">6dp</item>
++    <item name="android:orientation">horizontal</item>
++    <item name="backgroundColor">@color/call_stats_bar_background</item>
++    <item name="blueColor">@color/answered_incoming_call</item>
++    <item name="greenColor">@color/answered_outgoing_call</item>
++    <item name="redColor">@color/missed_call</item>
++    <item name="orangeColor">@color/blocked_call</item>
++  </style>
++</resources>
+diff --git a/java/com/android/dialer/proguard/proguard_base.flags b/java/com/android/dialer/proguard/proguard_base.flags
+index 6d5d373fd..3b8fe2cbc 100644
+--- a/java/com/android/dialer/proguard/proguard_base.flags
++++ b/java/com/android/dialer/proguard/proguard_base.flags
+@@ -71,3 +71,8 @@
+ 
+ # AOSP support library:  Handle classes that use reflection.
+ -dontnote android.support.v4.app.NotificationCompatJellybean
++
++-keep class android.support.design.widget.AppBarLayout$ScrollingViewBehavior {
++    public <init>(android.content.Context, android.util.AttributeSet);
++    public <init>();
++}
+diff --git a/java/com/android/dialer/widget/LinearColorBar.java b/java/com/android/dialer/widget/LinearColorBar.java
+new file mode 100644
+index 000000000..71cfcaafd
+--- /dev/null
++++ b/java/com/android/dialer/widget/LinearColorBar.java
+@@ -0,0 +1,221 @@
++/*
++ * Copyright (C) 2011 The Android Open Source Project
++ * Copyright (C) 2013 Android Open Kang Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.dialer.widget;
++
++import android.content.Context;
++import android.content.res.TypedArray;
++import android.graphics.Canvas;
++import android.graphics.LinearGradient;
++import android.graphics.Paint;
++import android.graphics.Path;
++import android.graphics.Rect;
++import android.graphics.Shader;
++import android.util.AttributeSet;
++import android.util.DisplayMetrics;
++import android.widget.LinearLayout;
++
++import com.android.dialer.R;
++
++public class LinearColorBar extends LinearLayout {
++  private float mFirstRatio;
++  private float mSecondRatio;
++  private float mThirdRatio;
++  private float mFourthRatio;
++
++  private int mBackgroundColor;
++  private int mBlueColor;
++  private int mGreenColor;
++  private int mRedColor;
++  private int mOrangeColor;
++
++  final Rect mRect = new Rect();
++  final Paint mPaint = new Paint();
++
++  int mLastInterestingLeft, mLastInterestingRight;
++  int mLineWidth;
++
++  final Path mColorPath = new Path();
++  final Path mEdgePath = new Path();
++  final Paint mColorGradientPaint = new Paint();
++  final Paint mEdgeGradientPaint = new Paint();
++
++  public LinearColorBar(Context context, AttributeSet attrs) {
++    super(context, attrs);
++    setWillNotDraw(false);
++
++    TypedArray a = context.obtainStyledAttributes(
++            attrs, R.styleable.LinearColorBar, 0, 0);
++    int n = a.getIndexCount();
++
++    for (int i = 0; i < n; i++) {
++      int attr = a.getIndex(i);
++
++      switch (attr) {
++        case R.styleable.LinearColorBar_backgroundColor:
++          mBackgroundColor = a.getInt(attr, 0);
++          break;
++        case R.styleable.LinearColorBar_redColor:
++          mRedColor = a.getInt(attr, 0);
++          break;
++        case R.styleable.LinearColorBar_greenColor:
++          mGreenColor = a.getInt(attr, 0);
++          break;
++        case R.styleable.LinearColorBar_blueColor:
++          mBlueColor = a.getInt(attr, 0);
++          break;
++        case R.styleable.LinearColorBar_orangeColor:
++          mOrangeColor = a.getInt(attr, 0);
++          break;
++      }
++    }
++
++    a.recycle();
++
++    mPaint.setStyle(Paint.Style.FILL);
++    mColorGradientPaint.setStyle(Paint.Style.FILL);
++    mColorGradientPaint.setAntiAlias(true);
++    mEdgeGradientPaint.setStyle(Paint.Style.STROKE);
++    mLineWidth = getResources().getDisplayMetrics().densityDpi >= DisplayMetrics.DENSITY_HIGH
++        ? 2 : 1;
++    mEdgeGradientPaint.setStrokeWidth(mLineWidth);
++    mEdgeGradientPaint.setAntiAlias(true);
++  }
++
++  public void setRatios(float blue, float green, float red, float orange) {
++    mFirstRatio = blue;
++    mSecondRatio = green;
++    mThirdRatio = red;
++    mFourthRatio = orange;
++    invalidate();
++  }
++
++  private void updateIndicator() {
++    int off = Math.max(0, getPaddingTop() - getPaddingBottom());
++    mRect.top = off;
++    mRect.bottom = getHeight();
++
++    mColorGradientPaint.setShader(new LinearGradient(
++        0, 0, 0, off - 2, mBackgroundColor & 0xffffff,
++        mBackgroundColor, Shader.TileMode.CLAMP));
++    mEdgeGradientPaint.setShader(new LinearGradient(
++        0, 0, 0, off / 2, 0x00a0a0a0, 0xffa0a0a0, Shader.TileMode.CLAMP));
++  }
++
++  @Override
++  protected void onSizeChanged(int w, int h, int oldw, int oldh) {
++    super.onSizeChanged(w, h, oldw, oldh);
++    updateIndicator();
++  }
++
++  @Override
++  protected void onDraw(Canvas canvas) {
++    super.onDraw(canvas);
++
++    int width = getWidth();
++
++    int left = 0;
++
++    int right = left + (int) (width * mFirstRatio);
++    int right2 = right + (int) (width * mSecondRatio);
++    int right3 = right2 + (int) (width * mThirdRatio);
++    int right4 = right3 + (int) (width * mFourthRatio);
++
++    int indicatorLeft = right4;
++    int indicatorRight = width;
++
++    if (mLastInterestingLeft != indicatorLeft || mLastInterestingRight != indicatorRight) {
++      mColorPath.reset();
++      mEdgePath.reset();
++      if (indicatorLeft < indicatorRight) {
++        final int midTopY = mRect.top;
++        final int midBottomY = 0;
++        final int xoff = 2;
++        mColorPath.moveTo(indicatorLeft, mRect.top);
++        mColorPath.cubicTo(indicatorLeft, midBottomY, -xoff, midTopY, -xoff, 0);
++        mColorPath.lineTo(width + xoff - 1, 0);
++        mColorPath.cubicTo(width + xoff - 1, midTopY,
++            indicatorRight, midBottomY, indicatorRight, mRect.top);
++        mColorPath.close();
++        final float lineOffset = mLineWidth + .5f;
++        mEdgePath.moveTo(-xoff + lineOffset, 0);
++        mEdgePath.cubicTo(-xoff + lineOffset, midTopY,
++            indicatorLeft + lineOffset, midBottomY, indicatorLeft + lineOffset, mRect.top);
++        mEdgePath.moveTo(width + xoff - 1 - lineOffset, 0);
++        mEdgePath.cubicTo(width + xoff - 1 - lineOffset, midTopY,
++            indicatorRight - lineOffset, midBottomY, indicatorRight - lineOffset, mRect.top);
++      }
++      mLastInterestingLeft = indicatorLeft;
++      mLastInterestingRight = indicatorRight;
++    }
++
++    if (!mEdgePath.isEmpty()) {
++      canvas.drawPath(mEdgePath, mEdgeGradientPaint);
++      canvas.drawPath(mColorPath, mColorGradientPaint);
++    }
++
++    if (left < right) {
++      mRect.left = left;
++      mRect.right = right;
++      mPaint.setColor(mBlueColor);
++      canvas.drawRect(mRect, mPaint);
++      width -= (right - left);
++      left = right;
++    }
++
++    right = right2;
++
++    if (left < right) {
++      mRect.left = left;
++      mRect.right = right;
++      mPaint.setColor(mGreenColor);
++      canvas.drawRect(mRect, mPaint);
++      width -= (right - left);
++      left = right;
++    }
++
++    right = right3;
++
++    if (left < right) {
++      mRect.left = left;
++      mRect.right = right;
++      mPaint.setColor(mRedColor);
++      canvas.drawRect(mRect, mPaint);
++      width -= (right - left);
++      left = right;
++    }
++
++    right = right4;
++
++    if (left < right) {
++      mRect.left = left;
++      mRect.right = right;
++      mPaint.setColor(mOrangeColor);
++      canvas.drawRect(mRect, mPaint);
++      width -= (right - left);
++      left = right;
++    }
++
++    right = left + width;
++    if (left < right) {
++      mRect.left = left;
++      mRect.right = right;
++      mPaint.setColor(mBackgroundColor);
++      canvas.drawRect(mRect, mPaint);
++    }
++  }
++}
+-- 
+2.17.1
+

@@ -1,0 +1,25 @@
+From b3a62c68018a046f3c6ff3f830ebdddab9c8f2fc Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 27 Mar 2020 19:41:28 +0200
+Subject: [PATCH 1/5] make crDroid Music deactivable
+
+---
+ prebuilt/system/priv-app/Android.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/prebuilt/system/priv-app/Android.mk b/prebuilt/system/priv-app/Android.mk
+index 79e6c91..a0f590a 100644
+--- a/prebuilt/system/priv-app/Android.mk
++++ b/prebuilt/system/priv-app/Android.mk
+@@ -17,7 +17,7 @@ include $(CLEAR_VARS)
+ LOCAL_MODULE := crDroidMusic
+ LOCAL_MODULE_TAGS := optional
+ LOCAL_SRC_FILES := $(LOCAL_MODULE).apk
+-LOCAL_CERTIFICATE := platform
++LOCAL_CERTIFICATE := shared
+ LOCAL_MODULE_CLASS := APPS
+ LOCAL_PRIVILEGED_MODULE := true
+ LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
+-- 
+2.17.1
+

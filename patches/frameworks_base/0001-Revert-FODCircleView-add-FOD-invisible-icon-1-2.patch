@@ -1,0 +1,42 @@
+From 5598c877f12e0d6fba04f5d2ed64a534e0cfc473 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 26 Mar 2020 18:27:36 +0200
+Subject: [PATCH 001/100] Revert "FODCircleView: add FOD invisible icon [1/2]"
+
+This reverts commit 9b92612cb0fada4d5cda9568f150a4f7af30c2cd.
+---
+ .../SystemUI/res/drawable/fod_icon_invisible.png | Bin 4194 -> 0 bytes
+ .../systemui/biometrics/FODCircleView.java       |   3 +--
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+ delete mode 100644 packages/SystemUI/res/drawable/fod_icon_invisible.png
+
+diff --git a/packages/SystemUI/res/drawable/fod_icon_invisible.png b/packages/SystemUI/res/drawable/fod_icon_invisible.png
+deleted file mode 100644
+index 7d65255a0ec117a099a03c2f25dd05b56ad58bf2..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 4194
+zcmeAS@N?(olHy`uVBq!ia0y~yU;#2&7&zE~RK2WrGmv5|4sv&5Sa(k5B}gjW(btiI
+zVPik{pF~z5pR>RtvY3H^?=T269?xHq!oa})-P6S}q$2L^K}JTPk|u@!>+?JufUHq4
+z8UmvsFd71*Aut*OqaiRF0;3@?8UmvsFd71*Aut*OqaiTVLtuIq`vC?<(E}ysAfI@;
+L`njxgN@xNAetaL6
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 1bd61eee6d1..efc0bd3d746 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -121,8 +121,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         R.drawable.fod_icon_shooky,
+         R.drawable.fod_icon_spiral_blue,
+         R.drawable.fod_icon_sun_metro,
+-        R.drawable.fod_icon_default_1,
+-        R.drawable.fod_icon_invisible
++        R.drawable.fod_icon_default_1
+     };
+ 
+     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
+-- 
+2.17.1
+

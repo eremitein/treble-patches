@@ -1,0 +1,51 @@
+From 906e7ab79d9826266b1b976850be29eaf69cb295 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 6 Mar 2020 08:19:32 +0200
+Subject: [PATCH] fix arm_*vN build
+
+	modified:   interfaces/wifi_ext/Android.bp
+---
+ interfaces/wifi_ext/Android.bp | 30 ------------------------------
+ 1 file changed, 30 deletions(-)
+
+diff --git a/interfaces/wifi_ext/Android.bp b/interfaces/wifi_ext/Android.bp
+index c18774e..eb7f802 100644
+--- a/interfaces/wifi_ext/Android.bp
++++ b/interfaces/wifi_ext/Android.bp
+@@ -29,33 +29,3 @@ cc_prebuilt_library_shared {
+         prefer: true,
+         soc_specific: true,
+ }
+-
+-cc_prebuilt_library_shared {
+-        name: "libwifi-pex",
+-        owner: "google",
+-        strip: {
+-                none: true,
+-        },
+-        target: {
+-                android_arm64: {
+-                        srcs: ["libs/libwifi-pex.so"],
+-                },
+-        },
+-        compile_multilib: "64",
+-        prefer: true,
+-        soc_specific: true,
+-}
+-
+-cc_prebuilt_binary {
+-        name: "vendor.google.wifi_ext@1.0-service-vendor",
+-        owner: "google",
+-        srcs: ["vendor.google.wifi_ext@1.0-service-vendor"],
+-        init_rc: ["vendor.google.wifi_ext@1.0-service.rc"],
+-        relative_install_path: "hw",
+-        shared_libs: [
+-                "vendor.google.wifi_ext@1.0",
+-                "libwifi-pex",
+-        ],
+-        overrides: ["android.hardware.wifi@1.0-service"],
+-        vendor: true,
+-}
+-- 
+2.17.1
+

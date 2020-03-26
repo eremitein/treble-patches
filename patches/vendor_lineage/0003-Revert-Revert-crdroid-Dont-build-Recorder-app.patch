@@ -1,0 +1,25 @@
+From b706e4b2047befd09f803f4f2a472ead7b479ebc Mon Sep 17 00:00:00 2001
+From: Pranav Vashi <neobuddy89@gmail.com>
+Date: Mon, 30 Mar 2020 22:45:49 +0530
+Subject: [PATCH 3/3] Revert "Revert "crdroid: Dont build Recorder app""
+
+This reverts commit df8d6571cdffb1d92043be8f357cd4d8ba5e7fe2.
+---
+ config/common_full.mk | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/config/common_full.mk b/config/common_full.mk
+index 8a2b02ee..3b9b8de4 100644
+--- a/config/common_full.mk
++++ b/config/common_full.mk
+@@ -2,7 +2,3 @@
+ $(call inherit-product, vendor/lineage/config/common.mk)
+ 
+ PRODUCT_SIZE := full
+-
+-# Recorder
+-PRODUCT_PACKAGES += \
+-    Recorder
+-- 
+2.17.1
+

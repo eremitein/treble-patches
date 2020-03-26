@@ -1,0 +1,137 @@
+From d43796c2423ac8fdb9b0ff9d75e00c6427f3caab Mon Sep 17 00:00:00 2001
+From: DennySPB <dennyspb@gmail.com>
+Date: Tue, 10 Jul 2018 16:01:27 +0300
+Subject: [PATCH 04/19] Add autorecord feature
+
+forwarport to Q
+
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+---
+ .../dialer/app/res/values-ru/strings.xml      |  1 +
+ .../dialer/app/res/values/cm_strings.xml      |  2 ++
+ .../dialer/app/res/xml/sound_settings.xml     |  5 ++++
+ .../android/incallui/CallButtonPresenter.java | 24 +++++++++++++++++++
+ 4 files changed, 32 insertions(+)
+
+diff --git a/java/com/android/dialer/app/res/values-ru/strings.xml b/java/com/android/dialer/app/res/values-ru/strings.xml
+index e5d3c9621..1519bddce 100644
+--- a/java/com/android/dialer/app/res/values-ru/strings.xml
++++ b/java/com/android/dialer/app/res/values-ru/strings.xml
+@@ -174,4 +174,5 @@
+   <string name="multiple_ec_data_deleted">Вызовы удалены. Посмотреть и удалить прикрепленные к ним файлы можно в приложении \"Сообщения\".</string>
+   <string name="call_recording_category_title">Запись звонков</string>
+   <string name="call_recording_format">Формат аудио-кодека</string>
++  <string name="auto_call_recording_title">Автоматическая запись</string>
+ </resources>
+diff --git a/java/com/android/dialer/app/res/values/cm_strings.xml b/java/com/android/dialer/app/res/values/cm_strings.xml
+index 1e872c4a0..b4aacec50 100644
+--- a/java/com/android/dialer/app/res/values/cm_strings.xml
++++ b/java/com/android/dialer/app/res/values/cm_strings.xml
+@@ -38,6 +38,8 @@
+     <string name="call_recording_format">Audio format</string>
+     <string name="wb_amr_format" translatable="false">AMR-WB</string>
+     <string name="aac_format" translatable="false">AAC</string>
++    <string name="auto_call_recording_title">Auto call recording</string>
++    <string name="auto_call_recording_key" translatable="false">auto_call_recording</string>
+ 
+     <string name="call_via">Call via</string>
+     <string name="call_via_dialog_title">Call via\u2026</string>
+diff --git a/java/com/android/dialer/app/res/xml/sound_settings.xml b/java/com/android/dialer/app/res/xml/sound_settings.xml
+index 2d434ce33..23485b452 100644
+--- a/java/com/android/dialer/app/res/xml/sound_settings.xml
++++ b/java/com/android/dialer/app/res/xml/sound_settings.xml
+@@ -83,5 +83,10 @@
+       android:entryValues="@array/call_recording_encoder_values"
+       android:defaultValue="1" />
+ 
++  <SwitchPreference
++    android:defaultValue="false"
++    android:key="@string/auto_call_recording_key"
++    android:title="@string/auto_call_recording_title"/>
++
+   </PreferenceCategory>
+ </PreferenceScreen>
+diff --git a/java/com/android/incallui/CallButtonPresenter.java b/java/com/android/incallui/CallButtonPresenter.java
+index 3c608c3a4..56a68fcb4 100644
+--- a/java/com/android/incallui/CallButtonPresenter.java
++++ b/java/com/android/incallui/CallButtonPresenter.java
+@@ -22,6 +22,7 @@ import android.content.SharedPreferences;
+ import android.content.pm.PackageManager;
+ import android.os.Bundle;
+ import android.os.Trace;
++import android.os.Handler;
+ import android.preference.PreferenceManager;
+ import android.support.v4.app.Fragment;
+ import android.support.v4.os.UserManagerCompat;
+@@ -76,6 +77,7 @@ public class CallButtonPresenter
+   private boolean previousMuteState = false;
+   private boolean isInCallButtonUiReady;
+   private PhoneAccountHandle otherAccount;
++  private boolean isRecording = false;
+ 
+   private CallRecorder.RecordingProgressListener recordingProgressListener =
+       new CallRecorder.RecordingProgressListener() {
+@@ -116,6 +118,11 @@ public class CallButtonPresenter
+ 
+     CallRecorder recorder = CallRecorder.getInstance();
+     recorder.addRecordingProgressListener(recordingProgressListener);
++    if(recorder.isRecording()){
++      inCallButtonUi.setCallRecordingState(true);
++    } else {
++      inCallButtonUi.setCallRecordingState(false);
++    }
+ 
+     // Update the buttons state immediately for the current call
+     onStateChange(InCallState.NO_CALLS, inCallPresenter.getInCallState(), CallList.getInstance());
+@@ -142,11 +149,23 @@ public class CallButtonPresenter
+   @Override
+   public void onStateChange(InCallState oldState, InCallState newState, CallList callList) {
+     Trace.beginSection("CallButtonPresenter.onStateChange");
++    CallRecorder recorder = CallRecorder.getInstance();
++    boolean isEnabled = PreferenceManager.getDefaultSharedPreferences(context).getBoolean(context.getString(R.string.auto_call_recording_key), false);
++
+     if (newState == InCallState.OUTGOING) {
+       call = callList.getOutgoingCall();
+     } else if (newState == InCallState.INCALL) {
+       call = callList.getActiveOrBackgroundCall();
+ 
++    if (!isRecording && isEnabled && call != null) {
++                isRecording = true;
++                new Handler().postDelayed(new Runnable() {
++                    @Override
++                    public void run() {
++                        callRecordClicked(true);
++                    }
++                }, 500);
++    }
+       // When connected to voice mail, automatically shows the dialpad.
+       // (On previous releases we showed it when in-call shows up, before waiting for
+       // OUTGOING.  We may want to do that once we start showing "Voice mail" label on
+@@ -162,6 +181,9 @@ public class CallButtonPresenter
+       }
+       call = callList.getIncomingCall();
+     } else {
++      if (isEnabled && recorder.isRecording()) {
++         recorder.finishRecording();
++      }
+       call = null;
+     }
+     updateUi(newState, call);
+@@ -335,12 +357,14 @@ public class CallButtonPresenter
+   public void callRecordClicked(boolean checked) {
+     CallRecorder recorder = CallRecorder.getInstance();
+     if (checked) {
++       if(!recorder.isRecording()) {
+         startCallRecordingOrAskForPermission();
+     } else {
+       if (recorder.isRecording()) {
+         recorder.finishRecording();
+       }
+     }
++    }
+   }
+ 
+   private void startCallRecordingOrAskForPermission() {
+-- 
+2.17.1
+

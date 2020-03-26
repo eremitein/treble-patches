@@ -1,0 +1,47 @@
+From 1ace1363b2bab3e7d9901950bbe2b90822ee8f7b Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 8 Dec 2019 13:19:38 +0200
+Subject: [PATCH 04/10] rename to Messaging
+
+	modified:   target/product/aosp_base_telephony.mk
+	modified:   target/product/gsi_common.mk
+---
+ target/product/aosp_base_telephony.mk | 2 +-
+ target/product/gsi_common.mk          | 4 ++--
+ 2 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/target/product/aosp_base_telephony.mk b/target/product/aosp_base_telephony.mk
+index 0d4e33356..17bbd5532 100644
+--- a/target/product/aosp_base_telephony.mk
++++ b/target/product/aosp_base_telephony.mk
+@@ -16,4 +16,4 @@
+ $(call inherit-product, $(SRC_TARGET_DIR)/product/full_base_telephony.mk)
+ 
+ PRODUCT_PACKAGES += \
+-    messaging
++    Messaging
+diff --git a/target/product/gsi_common.mk b/target/product/gsi_common.mk
+index ff19f1d3c..7824a3cbb 100644
+--- a/target/product/gsi_common.mk
++++ b/target/product/gsi_common.mk
+@@ -42,7 +42,7 @@ endif
+ 
+ # The mainline checking whitelist, should be clean up
+ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST += \
+-    system/app/messaging/messaging.apk \
++    system/app/Messaging/Messaging.apk \
+     system/app/WAPPushManager/WAPPushManager.apk \
+     system/bin/healthd \
+     system/etc/init/healthd.rc \
+@@ -87,7 +87,7 @@ PRODUCT_EXTRA_VNDK_VERSIONS := 28
+ 
+ # More AOSP packages
+ PRODUCT_PACKAGES += \
+-    messaging \
++    Messaging \
+     PhotoTable \
+     WAPPushManager \
+     WallpaperPicker \
+-- 
+2.17.1
+

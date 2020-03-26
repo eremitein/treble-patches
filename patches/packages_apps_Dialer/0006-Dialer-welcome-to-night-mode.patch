@@ -1,0 +1,1047 @@
+From 8e9ed8991cc801ea084240107671350f2fb3596d Mon Sep 17 00:00:00 2001
+From: Marko Man <darkobas@gmail.com>
+Date: Fri, 11 Oct 2019 02:00:09 +0200
+Subject: [PATCH 06/19] Dialer: welcome to night mode
+
+Change-Id: Iff0d1a5308e7a0c75e11c88d0f1b3c9b3456f3cc
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+---
+ .../dialer/app/res/values-night/colors.xml    |  27 +++
+ .../dialer/app/res/values-night/styles.xml    | 171 ++++++++++++++++++
+ .../res/values-night/colors.xml               |  21 +++
+ .../calldetails/res/values-night/styles.xml   |  30 +++
+ .../calllog/ui/res/values-night/colors.xml    |  25 +++
+ .../resources/res/values-night/colors.xml     |  51 ++++++
+ .../theme/res/values-night/styles.xml         |  41 +++++
+ .../res/layout/phone_disambig_item.xml        |   5 +-
+ .../res/layout/set_primary_checkbox.xml       |   1 +
+ .../res/layout/bottom_nav_bar_layout.xml      |   3 +-
+ .../main/impl/bottomnav/res/values/styles.xml |  21 +++
+ .../main/impl/res/values-night/styles.xml     |  54 ++++++
+ .../drawable-night/search_bar_background.xml  |  20 ++
+ .../search_bar_background_rounded_corners.xml |  21 +++
+ .../main/impl/toolbar/res/values/dimens.xml   |   4 +-
+ .../dialer/rtt/res/values-night/colors.xml    |  21 +++
+ .../shortcuts/res/values-night/colors.xml     |  20 ++
+ .../base/res/values/theme_dialer_light.xml    |   4 +-
+ .../theme/common/res/values-night/colors.xml  |  20 ++
+ .../theme/common/res/values-night/styles.xml  |  34 ++++
+ .../dialer_secondary_text_color.xml           |  21 +++
+ .../res/values-night/colors_dialer_dark.xml   |  22 +++
+ .../res/values-night/colors_dialer_light.xml  |  23 +++
+ .../hidden/res/values-night/colors_pallet.xml |  35 ++++
+ .../theme/hidden/res/values-night/styles.xml  |  60 ++++++
+ .../dialer/theme/hidden/res/values/styles.xml |   2 +-
+ .../listui/res/values-night/colors.xml        |  19 ++
+ .../incallui/theme/res/values/styles.xml      |   4 +-
+ 28 files changed, 770 insertions(+), 10 deletions(-)
+ create mode 100644 java/com/android/dialer/app/res/values-night/colors.xml
+ create mode 100644 java/com/android/dialer/app/res/values-night/styles.xml
+ create mode 100644 java/com/android/dialer/blockreportspam/res/values-night/colors.xml
+ create mode 100644 java/com/android/dialer/calldetails/res/values-night/styles.xml
+ create mode 100644 java/com/android/dialer/calllog/ui/res/values-night/colors.xml
+ create mode 100644 java/com/android/dialer/contacts/resources/res/values-night/colors.xml
+ create mode 100644 java/com/android/dialer/dialpadview/theme/res/values-night/styles.xml
+ create mode 100644 java/com/android/dialer/main/impl/bottomnav/res/values/styles.xml
+ create mode 100644 java/com/android/dialer/main/impl/res/values-night/styles.xml
+ create mode 100644 java/com/android/dialer/main/impl/toolbar/res/drawable-night/search_bar_background.xml
+ create mode 100644 java/com/android/dialer/main/impl/toolbar/res/drawable-night/search_bar_background_rounded_corners.xml
+ create mode 100644 java/com/android/dialer/rtt/res/values-night/colors.xml
+ create mode 100644 java/com/android/dialer/shortcuts/res/values-night/colors.xml
+ create mode 100644 java/com/android/dialer/theme/common/res/values-night/colors.xml
+ create mode 100644 java/com/android/dialer/theme/common/res/values-night/styles.xml
+ create mode 100644 java/com/android/dialer/theme/hidden/res/color-night/dialer_secondary_text_color.xml
+ create mode 100644 java/com/android/dialer/theme/hidden/res/values-night/colors_dialer_dark.xml
+ create mode 100644 java/com/android/dialer/theme/hidden/res/values-night/colors_dialer_light.xml
+ create mode 100644 java/com/android/dialer/theme/hidden/res/values-night/colors_pallet.xml
+ create mode 100644 java/com/android/dialer/theme/hidden/res/values-night/styles.xml
+ create mode 100644 java/com/android/dialer/voicemail/listui/res/values-night/colors.xml
+
+diff --git a/java/com/android/dialer/app/res/values-night/colors.xml b/java/com/android/dialer/app/res/values-night/colors.xml
+new file mode 100644
+index 000000000..ae050c6ca
+--- /dev/null
++++ b/java/com/android/dialer/app/res/values-night/colors.xml
+@@ -0,0 +1,27 @@
++<!--
++  ~ Copyright (C) 2012 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++-->
++
++<resources>
++  <color name="voicemail_icon_disabled_tint">#80ffffff</color>
++
++  <!-- Text color for the "Remove" text when a contact is dragged on top of the remove view -->
++  <color name="remove_highlighted_text_color">#FF3F3B</color>
++
++  <!--  Colors for blocked numbers list -->
++  <color name="blocked_number_block_color">#F44336</color>
++
++  <color name="ic_launcher_background">@color/dialer_theme_color</color>
++</resources>
+diff --git a/java/com/android/dialer/app/res/values-night/styles.xml b/java/com/android/dialer/app/res/values-night/styles.xml
+new file mode 100644
+index 000000000..0d02e413c
+--- /dev/null
++++ b/java/com/android/dialer/app/res/values-night/styles.xml
+@@ -0,0 +1,171 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2012 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <style name="DialtactsTheme" parent="Dialer.ThemeBase.ActionBar">
++    <!-- todo(calderwoodra): fill this in with dialpad theme and call log card theme -->
++  </style>
++
++  <style name="DialpadTheme" parent="DialtactsTheme">
++    <item name="android:textColorPrimary">?android:attr/textColorPrimaryInverse</item>
++  </style>
++
++  <style name="ActionModeStyle" parent="Widget.AppCompat.ActionMode">
++    <item name="android:background">?android:attr/colorPrimary</item>
++    <item name="background">?android:attr/colorPrimary</item>
++    <item name="closeItemLayout">@layout/action_mode_close_button</item>
++  </style>
++
++  <style name="DialtactsSearchBarThemeOverlay" parent="ThemeOverlay.AppCompat">
++      <item name="android:background">@*android:color/primary_dark_device_default_settings</item>
++  </style>
++
++  <!-- Text in the action bar at the top of the screen -->
++  <style name="DialtactsActionBarTitleText" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
++    <item name="android:textColor">?colorTextOnUnthemedDarkBackground</item>
++  </style>
++
++  <!-- Text style for tabs. -->
++  <style name="DialtactsActionBarTabTextStyle"
++    parent="android:style/Widget.Material.ActionBar.TabText">
++    <item name="android:textColor">?colorTextOnUnthemedDarkBackground</item>
++    <item name="android:textSize">@dimen/tab_text_size</item>
++    <item name="android:fontFamily">"sans-serif-medium"</item>
++  </style>
++
++  <style name="CallLogActionStyle">
++    <item name="android:layout_width">match_parent</item>
++    <item name="android:layout_height">@dimen/call_log_action_height</item>
++    <item name="android:background">@*android:color/primary_device_default_settings</item>
++    <item name="android:orientation">horizontal</item>
++    <item name="android:gravity">center_vertical</item>
++  </style>
++
++  <style name="CallLogActionTextStyle" parent="Dialer.TextAppearance.Primary.Ellipsize">
++    <item name="android:layout_width">match_parent</item>
++    <item name="android:layout_height">wrap_content</item>
++    <item name="android:paddingStart">@dimen/call_log_action_horizontal_padding</item>
++    <item name="android:paddingEnd">@dimen/call_log_action_horizontal_padding</item>
++    <item name="android:focusable">true</item>
++    <item name="android:importantForAccessibility">no</item>
++  </style>
++
++  <style name="CallLogActionSupportTextStyle" parent="Dialer.TextAppearance.Secondary.Ellipsize">
++    <item name="android:layout_width">match_parent</item>
++    <item name="android:layout_height">wrap_content</item>
++    <item name="android:paddingStart">@dimen/call_log_action_horizontal_padding</item>
++    <item name="android:paddingEnd">@dimen/call_log_action_horizontal_padding</item>
++    <item name="android:focusable">true</item>
++    <item name="android:importantForAccessibility">no</item>
++  </style>
++
++  <style name="CallLogActionIconStyle">
++    <item name="android:layout_width">@dimen/call_log_action_icon_dimen</item>
++    <item name="android:layout_height">@dimen/call_log_action_icon_dimen</item>
++    <item name="android:layout_marginStart">@dimen/call_log_action_icon_margin_start</item>
++    <item name="android:tint">?colorIcon</item>
++    <item name="android:importantForAccessibility">no</item>
++  </style>
++
++  <style name="ManageBlockedNumbersStyle" parent="SettingsStyle">
++    <!-- Styles that require AppCompat compatibility, remember to update both sets -->
++    <item name="android:windowActionBarOverlay">true</item>
++    <item name="windowActionBarOverlay">true</item>
++    <item name="android:actionBarStyle">@style/ManageBlockedNumbersActionBarStyle</item>
++    <item name="android:fastScrollTrackDrawable">@null</item>
++  </style>
++
++  <style name="ManageBlockedNumbersActionBarStyle" parent="DialerActionBarBaseStyle">
++    <!-- Styles that require AppCompat compatibility, remember to update both sets -->
++    <item name="android:height">@dimen/action_bar_height</item>
++    <item name="height">@dimen/action_bar_height</item>
++
++    <!-- Styles that require AppCompat compatibility, remember to update both sets -->
++    <item name="android:displayOptions"></item>
++    <item name="displayOptions"></item>
++    <!-- Override ActionBar title offset to keep search box aligned left -->
++    <item name="android:contentInsetStart">0dp</item>
++    <item name="contentInsetStart">0dp</item>
++    <item name="android:contentInsetEnd">0dp</item>
++    <item name="contentInsetEnd">0dp</item>
++
++    <!-- Styles that require AppCompat compatibility, remember to update both sets -->
++    <item name="android:background">?android:attr/colorPrimary</item>
++    <item name="background">?android:attr/colorPrimary</item>
++    <item name="android:titleTextStyle">@style/DialtactsActionBarTitleText</item>
++    <item name="titleTextStyle">@style/DialtactsActionBarTitleText</item>
++    <item name="android:elevation">@dimen/action_bar_elevation</item>
++    <item name="elevation">@dimen/action_bar_elevation</item>
++    <!-- Empty icon -->
++    <item name="android:icon">@android:color/transparent</item>
++    <item name="icon">@android:color/transparent</item>
++  </style>
++
++  <style name="VoicemailPlaybackLayoutButtonStyle">
++    <item name="android:layout_width">56dp</item>
++    <item name="android:layout_height">56dp</item>
++    <item name="android:background">@drawable/oval_ripple</item>
++    <item name="android:padding">8dp</item>
++  </style>
++
++  <style name="DialerFlatButtonStyle" parent="@android:style/Widget.Material.Button">
++    <item name="android:background">?android:attr/selectableItemBackground</item>
++    <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
++    <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
++    <item name="android:textColor">?android:attr/colorPrimary</item>
++  </style>
++
++  <!-- Style for the 'primary' button in a view. Unlike the DialerFlatButtonStyle, this button -->
++  <!-- is not colored white, to draw more attention to it. -->
++  <style name="DialerPrimaryFlatButtonStyle" parent="@android:style/Widget.Material.Button">
++    <item name="android:background">@drawable/selectable_primary_flat_button</item>
++    <item name="android:paddingEnd">@dimen/button_horizontal_padding</item>
++    <item name="android:paddingStart">@dimen/button_horizontal_padding</item>
++    <item name="android:textColor">@android:color/white</item>
++  </style>
++
++  <style name="BlockedNumbersDescriptionTextStyle">
++    <item name="android:lineSpacingMultiplier">1.43</item>
++    <item name="android:paddingTop">8dp</item>
++    <item name="android:paddingBottom">8dp</item>
++    <item name="android:textSize">@dimen/blocked_number_settings_description_text_size</item>
++  </style>
++
++  <style name="FullWidthDivider">
++    <item name="android:layout_width">match_parent</item>
++    <item name="android:layout_height">1dp</item>
++    <item name="android:background">?android:attr/listDivider</item>
++  </style>
++
++  <style name="TranscriptionQualityRating" parent="Dialer.TextAppearance.Secondary">
++    <item name="android:textStyle">italic</item>
++    <item name="android:paddingRight">20dp</item>
++    <item name="android:minHeight">56dp</item>
++  </style>
++
++  <style name="TranscriptionQualityRatingIcon">
++    <item name="android:paddingTop">8dp</item>
++    <item name="android:paddingBottom">8dp</item>
++    <item name="android:paddingLeft">16dp</item>
++    <item name="android:paddingRight">16dp</item>
++    <item name="android:minHeight">56dp</item>
++  </style>
++
++  <style name="PromoLinkStyle">
++    <item name="android:textColor">?android:attr/colorPrimary</item>
++    <item name="android:fontFamily">"sans-serif-medium"</item>
++  </style>
++</resources>
+diff --git a/java/com/android/dialer/blockreportspam/res/values-night/colors.xml b/java/com/android/dialer/blockreportspam/res/values-night/colors.xml
+new file mode 100644
+index 000000000..15a5c0a28
+--- /dev/null
++++ b/java/com/android/dialer/blockreportspam/res/values-night/colors.xml
+@@ -0,0 +1,21 @@
++<!--
++  ~ Copyright (C) 2012 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++-->
++<resources>
++
++  <!-- 87% white -->
++  <color name="block_report_spam_primary_text_color">#deffffff</color>
++
++</resources>
+diff --git a/java/com/android/dialer/calldetails/res/values-night/styles.xml b/java/com/android/dialer/calldetails/res/values-night/styles.xml
+new file mode 100644
+index 000000000..8b98735cf
+--- /dev/null
++++ b/java/com/android/dialer/calldetails/res/values-night/styles.xml
+@@ -0,0 +1,30 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2017 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <style name="CallDetailsActionItemStyle" parent="Dialer.TextAppearance.Secondary.Ellipsize">
++    <item name="android:foreground">?android:attr/selectableItemBackground</item>
++    <item name="android:clickable">true</item>
++    <item name="android:drawablePadding">28dp</item>
++    <item name="android:gravity">center_vertical</item>
++    <item name="android:paddingStart">28dp</item>
++    <item name="android:paddingEnd">28dp</item>
++    <item name="android:paddingTop">16dp</item>
++    <item name="android:textColor">#ffffff</item>
++    <item name="android:paddingBottom">16dp</item>
++  </style>
++
++</resources>
+diff --git a/java/com/android/dialer/calllog/ui/res/values-night/colors.xml b/java/com/android/dialer/calllog/ui/res/values-night/colors.xml
+new file mode 100644
+index 000000000..d7e987d35
+--- /dev/null
++++ b/java/com/android/dialer/calllog/ui/res/values-night/colors.xml
+@@ -0,0 +1,25 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++
++<resources>
++  <!-- TODO(a bug): remove these? -->
++  <color name="feature_icon_read_color">#9E9E9E</color>
++  <color name="feature_icon_unread_color">#777777</color>
++
++  <color name="call_type_icon_read_color">#757575</color>
++  <color name="call_type_icon_unread_color">#D32F2F</color>
++</resources>
+diff --git a/java/com/android/dialer/contacts/resources/res/values-night/colors.xml b/java/com/android/dialer/contacts/resources/res/values-night/colors.xml
+new file mode 100644
+index 000000000..a2a4f1ff1
+--- /dev/null
++++ b/java/com/android/dialer/contacts/resources/res/values-night/colors.xml
+@@ -0,0 +1,51 @@
++<!--
++  ~ Copyright (C) 2012 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++
++<resources>
++  <!-- Color of the theme of the People app -->
++  <color name="people_app_theme_color">@*android:color/primary_dark_device_default_settings</color>
++
++  <!-- Darker versions of letter_tile_colors, two shades darker. These colors are used
++      for settings secondary activity colors. -->
++  <array name="letter_tile_colors_dark">
++    <item>#C53929</item>
++    <item>#C2185B</item>
++    <item>#7B1FA2</item>
++    <item>#512DA8</item>
++    <item>#303F9F</item>
++    <item>#3367D6</item>
++    <item>#0277BD</item>
++    <item>#006064</item>
++    <item>#00796B</item>
++    <item>#0B8043</item>
++    <item>#33691E</item>
++    <item>#E65100</item>
++    <item>#E64A19</item>
++    <item>#424242</item>
++  </array>
++
++  <!-- Text color used for character counter when the max limit has been exceeded -->
++  <color name="call_subject_limit_exceeded">#d1041c</color>
++
++  <!-- Tint color for the call subject history icon. -->
++  <color name="call_subject_history_icon">#ffffff</color>
++
++  <!-- Divider line on the call subject dialog. -->
++  <color name="call_subject_divider">#282828</color>
++
++  <!-- Text color for the SEND & CALL button on the call subject dialog. -->
++  <color name="call_subject_button">#00c853</color>
++</resources>
+diff --git a/java/com/android/dialer/dialpadview/theme/res/values-night/styles.xml b/java/com/android/dialer/dialpadview/theme/res/values-night/styles.xml
+new file mode 100644
+index 000000000..a37be2dd6
+--- /dev/null
++++ b/java/com/android/dialer/dialpadview/theme/res/values-night/styles.xml
+@@ -0,0 +1,41 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <style name="Dialpad">
++    <item name="dialpad_digits_adjustable_height">@dimen/dialpad_digits_height</item>
++    <item name="dialpad_digits_adjustable_text_size">@dimen/dialpad_digits_text_size</item>
++    <item name="dialpad_key_letters_size_for_dual_alphabets">
++      @dimen/dialpad_key_letters_default_size_for_dual_alphabets
++    </item>
++    <item name="dialpad_key_letters_size_for_single_alphabet">
++      @dimen/dialpad_key_letters_default_size_for_single_alphabet
++    </item>
++    <item name="dialpad_key_numbers_size">@dimen/dialpad_key_numbers_default_size</item>
++    <item name="dialpad_key_number_margin_bottom">
++      @dimen/dialpad_key_number_default_margin_bottom
++    </item>
++    <item name="dialpad_end_key_spacing">@dimen/dialpad_bottom_space_height</item>
++    <item name="dialpad_elevation">0dp</item>
++  </style>
++
++  <style name="Dialpad.Themed">
++    <item name="dialpad_text_color">?android:attr/textColorSecondary</item>
++    <item name="dialpad_text_color_primary">?android:attr/colorPrimary</item>
++    <item name="dialpad_text_color_secondary">?android:attr/textColorSecondary</item>
++    <item name="dialpad_background">@*android:color/primary_device_default_settings</item>
++  </style>
++</resources>
+diff --git a/java/com/android/dialer/interactions/res/layout/phone_disambig_item.xml b/java/com/android/dialer/interactions/res/layout/phone_disambig_item.xml
+index 879ea0e96..4544d8d06 100755
+--- a/java/com/android/dialer/interactions/res/layout/phone_disambig_item.xml
++++ b/java/com/android/dialer/interactions/res/layout/phone_disambig_item.xml
+@@ -36,8 +36,9 @@
+     android:id="@android:id/text2"
+     android:layout_width="wrap_content"
+     android:layout_height="wrap_content"
+-    android:layout_marginTop="-4dip"
+-    android:textAppearance="?android:attr/textAppearanceSmall"
++    android:layout_marginTop="-2dip"
++    android:textColor="?android:attr/textColorSecondary"
++    android:textAppearance="@style/TextAppearanceSmall"
+     android:textDirection="ltr"/>
+ 
+ </view>
+diff --git a/java/com/android/dialer/interactions/res/layout/set_primary_checkbox.xml b/java/com/android/dialer/interactions/res/layout/set_primary_checkbox.xml
+index 62ef4b76f..fa4639a29 100644
+--- a/java/com/android/dialer/interactions/res/layout/set_primary_checkbox.xml
++++ b/java/com/android/dialer/interactions/res/layout/set_primary_checkbox.xml
+@@ -28,5 +28,6 @@
+     android:layout_height="wrap_content"
+     android:clickable="true"
+     android:focusable="true"
++    android:textColor="?android:attr/textColorSecondary"
+     android:text="@string/make_primary"/>
+ </LinearLayout>
+diff --git a/java/com/android/dialer/main/impl/bottomnav/res/layout/bottom_nav_bar_layout.xml b/java/com/android/dialer/main/impl/bottomnav/res/layout/bottom_nav_bar_layout.xml
+index 1dd60d8db..da97600a1 100644
+--- a/java/com/android/dialer/main/impl/bottomnav/res/layout/bottom_nav_bar_layout.xml
++++ b/java/com/android/dialer/main/impl/bottomnav/res/layout/bottom_nav_bar_layout.xml
+@@ -19,7 +19,6 @@
+     android:orientation="horizontal"
+     android:layout_width="match_parent"
+     android:layout_height="wrap_content"
+-    android:background="?android:attr/colorBackgroundFloating"
+     android:elevation="8dp">
+ 
+   <include
+@@ -49,4 +48,4 @@
+       android:layout_height="wrap_content"
+       android:layout_weight="1"
+       layout="@layout/bottom_nav_item"/>
+-</com.android.dialer.main.impl.bottomnav.BottomNavBar>
+\ No newline at end of file
++</com.android.dialer.main.impl.bottomnav.BottomNavBar>
+diff --git a/java/com/android/dialer/main/impl/bottomnav/res/values/styles.xml b/java/com/android/dialer/main/impl/bottomnav/res/values/styles.xml
+new file mode 100644
+index 000000000..dafbaa5ae
+--- /dev/null
++++ b/java/com/android/dialer/main/impl/bottomnav/res/values/styles.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2017 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <style name="BottomNavigationBarStyle" parent="@style/Widget.MaterialComponents.BottomNavigationView">
++    <item name="background">?android:attr/colorBackgroundFloating</item>
++  </style>
++</resources>
+diff --git a/java/com/android/dialer/main/impl/res/values-night/styles.xml b/java/com/android/dialer/main/impl/res/values-night/styles.xml
+new file mode 100644
+index 000000000..1b09d98af
+--- /dev/null
++++ b/java/com/android/dialer/main/impl/res/values-night/styles.xml
+@@ -0,0 +1,54 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2017 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++
++  <!-- Activities should use this theme as their style -->
++  <style name="MainActivityTheme" parent="MainActivityThemeBase"/>
++
++  <style name="MainActivityTheme.Dark" parent="MainActivityTheme.Dark"/>
++
++  <!-- Used as a procy for values-v27/styles.xml -->
++  <style name="MainActivityThemeBase" parent="Dialer.ThemeBase.NoActionBar">
++    <!-- Required for actionmode/multiselect to render properly. -->
++    <!-- TODO(a bug): Check to see if we can remove this after NewVoicemailFragment launches -->
++    <item name="actionModeStyle">@style/MainActionModeStyle</item>
++    <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
++    <item name="dialpad_style">@style/Dialpad.Themed</item>
++  </style>
++
++  <style name="MainActivityThemeBase.Dark" parent="Dialer.Dark.ThemeBase.NoActionBar">
++    <!-- Required for actionmode/multiselect to render properly. -->
++    <!-- TODO(a bug): Check to see if we can remove this after NewVoicemailFragment launches -->
++    <item name="actionModeStyle">@style/MainActionModeStyle</item>
++    <item name="actionBarTheme">@style/ThemeOverlay.AppCompat.Dark.ActionBar</item>
++    <item name="dialpad_style">@style/Dialpad.Themed</item>
++  </style>
++
++  <!-- Colors our actionbar in action mode to dialer theme color. -->
++  <style name="MainActionModeStyle" parent="@style/Widget.AppCompat.ActionMode">
++    <item name="background">?android:attr/colorPrimary</item>
++    <item name="titleTextStyle">@style/ActionModeTitleTextStyle</item>
++  </style>
++
++  <!-- Colors our actionbar text in action mode to dialer white text color. -->
++  <style name="ActionModeTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionMode.Title">
++    <item name="android:textColor">?android:attr/textColorPrimary</item>
++  </style>
++  <style name="BottomNavigationBarStyle" parent="@style/Widget.MaterialComponents.BottomNavigationView">
++    <item name="background">@*android:color/background_floating_device_default_dark</item>
++  </style>
++</resources>
+diff --git a/java/com/android/dialer/main/impl/toolbar/res/drawable-night/search_bar_background.xml b/java/com/android/dialer/main/impl/toolbar/res/drawable-night/search_bar_background.xml
+new file mode 100644
+index 000000000..e4e51a7b0
+--- /dev/null
++++ b/java/com/android/dialer/main/impl/toolbar/res/drawable-night/search_bar_background.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++  android:shape="rectangle">
++  <solid android:color="@*android:color/primary_device_default_settings"/>
++</shape>
+diff --git a/java/com/android/dialer/main/impl/toolbar/res/drawable-night/search_bar_background_rounded_corners.xml b/java/com/android/dialer/main/impl/toolbar/res/drawable-night/search_bar_background_rounded_corners.xml
+new file mode 100644
+index 000000000..1ed81e0ea
+--- /dev/null
++++ b/java/com/android/dialer/main/impl/toolbar/res/drawable-night/search_bar_background_rounded_corners.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++  android:shape="rectangle">
++  <solid android:color="@*android:color/primary_device_default_settings"/>
++  <corners android:radius="@dimen/search_bar_corner_radius"/>
++</shape>
+diff --git a/java/com/android/dialer/main/impl/toolbar/res/values/dimens.xml b/java/com/android/dialer/main/impl/toolbar/res/values/dimens.xml
+index ed6f197fa..558a5c06d 100644
+--- a/java/com/android/dialer/main/impl/toolbar/res/values/dimens.xml
++++ b/java/com/android/dialer/main/impl/toolbar/res/values/dimens.xml
+@@ -19,4 +19,6 @@
+   <dimen name="collapsed_search_bar_height">48dp</dimen>
+   <!-- collapsed + margin * 2 -->
+   <dimen name="expanded_search_bar_height">64dp</dimen>
+-</resources>
+\ No newline at end of file
++
++  <dimen name="search_bar_corner_radius">@*android:dimen/config_dialogCornerRadius</dimen>
++</resources>
+diff --git a/java/com/android/dialer/rtt/res/values-night/colors.xml b/java/com/android/dialer/rtt/res/values-night/colors.xml
+new file mode 100644
+index 000000000..960fe6087
+--- /dev/null
++++ b/java/com/android/dialer/rtt/res/values-night/colors.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <color name="rtt_transcript_primary_color">#92bcd1</color>
++  <color name="rtt_transcript_primary_color_dark">#576f7a</color>
++  <color name="rtt_transcript_background_color">#232324</color>
++</resources>
+diff --git a/java/com/android/dialer/shortcuts/res/values-night/colors.xml b/java/com/android/dialer/shortcuts/res/values-night/colors.xml
+new file mode 100644
+index 000000000..ad8aa8046
+--- /dev/null
++++ b/java/com/android/dialer/shortcuts/res/values-night/colors.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2016 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <color name="shortcut_add_contact_foreground_color">@*android:color/accent_device_default_light</color>
++  <color name="shortcut_add_contact_background_color">@*android:color/primary_dark_device_default_settings</color>
++</resources>
+diff --git a/java/com/android/dialer/theme/base/res/values/theme_dialer_light.xml b/java/com/android/dialer/theme/base/res/values/theme_dialer_light.xml
+index db06df4bd..6c1aac5ee 100644
+--- a/java/com/android/dialer/theme/base/res/values/theme_dialer_light.xml
++++ b/java/com/android/dialer/theme/base/res/values/theme_dialer_light.xml
+@@ -52,8 +52,8 @@
+     <!-- These will be automatically used to color most Appcompat/Material widgets. -->
+     <item name="android:colorPrimary">@color/dialer_theme_color</item>
+     <item name="colorPrimary">@color/dialer_theme_color</item>
+-    <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
+-    <item name="colorPrimaryDark">@color/dialer_theme_color_dark</item>
++    <item name="android:colorPrimaryDark">@color/dialer_theme_color</item>
++    <item name="colorPrimaryDark">@color/dialer_theme_color</item>
+     <item name="android:colorAccent">@color/dialer_secondary_color</item>
+     <item name="colorAccent">@color/dialer_secondary_color</item>
+ 
+diff --git a/java/com/android/dialer/theme/common/res/values-night/colors.xml b/java/com/android/dialer/theme/common/res/values-night/colors.xml
+new file mode 100644
+index 000000000..68c48cd7f
+--- /dev/null
++++ b/java/com/android/dialer/theme/common/res/values-night/colors.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2012 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<!-- The colors in this file aren't configured at the theme level. -->
++<resources>
++  <color name="dialer_divider_line_color">#282828</color>
++</resources>
+diff --git a/java/com/android/dialer/theme/common/res/values-night/styles.xml b/java/com/android/dialer/theme/common/res/values-night/styles.xml
+new file mode 100644
+index 000000000..f313bdf68
+--- /dev/null
++++ b/java/com/android/dialer/theme/common/res/values-night/styles.xml
+@@ -0,0 +1,34 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <!-- TODO(calderwoodra): Delete this once new call log and new voicemail ship. -->
++  <!-- Ideally we would make a callLogCardStyle attribute but we don't want to expand dialer/app -->
++  <style name="CallLogCardStyle" parent="CardView">
++    <item name="android:layout_width">match_parent</item>
++    <item name="android:layout_height">wrap_content</item>
++    <item name="android:layout_margin">4dp</item>
++    <item name="android:baselineAligned">false</item>
++    <item name="cardCornerRadius">2dp</item>
++    <item name="cardBackgroundColor">@*android:color/primary_device_default_settings</item>
++  </style>
++
++  <!-- This Checkbox style helps align checkboxes with the common list element layout(Image + text) -->
++  <style name="DialerCheckboxStyle" parent="Widget.AppCompat.CompoundButton.CheckBox">
++    <item name="android:layout_marginStart">20dp</item>
++    <item name="android:paddingLeft">12dp</item>
++  </style>
++</resources>
+diff --git a/java/com/android/dialer/theme/hidden/res/color-night/dialer_secondary_text_color.xml b/java/com/android/dialer/theme/hidden/res/color-night/dialer_secondary_text_color.xml
+new file mode 100644
+index 000000000..6a9591766
+--- /dev/null
++++ b/java/com/android/dialer/theme/hidden/res/color-night/dialer_secondary_text_color.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<!-- Secondary text color in the Phone app -->
++<selector xmlns:android="http://schemas.android.com/apk/res/android">
++  <item android:state_enabled="false" android:color="#ffffff"/>
++  <item android:color="#eeeeee"/>
++</selector>
+diff --git a/java/com/android/dialer/theme/hidden/res/values-night/colors_dialer_dark.xml b/java/com/android/dialer/theme/hidden/res/values-night/colors_dialer_dark.xml
+new file mode 100644
+index 000000000..7cd016e16
+--- /dev/null
++++ b/java/com/android/dialer/theme/hidden/res/values-night/colors_dialer_dark.xml
+@@ -0,0 +1,22 @@
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <!-- Essential theme colors -->
++  <color name="dialer_dark_theme_color">@*android:color/accent_device_default_light</color>
++  <color name="dialer_dark_theme_color_20pct">@*android:color/accent_device_default_light</color>
++  <color name="dialer_dark_theme_color_dark">@*android:color/accent_device_default_dark</color>
++  <color name="dialer_dark_secondary_color">@*android:color/accent_device_default_light</color>
++</resources>
+diff --git a/java/com/android/dialer/theme/hidden/res/values-night/colors_dialer_light.xml b/java/com/android/dialer/theme/hidden/res/values-night/colors_dialer_light.xml
+new file mode 100644
+index 000000000..7cc4081b0
+--- /dev/null
++++ b/java/com/android/dialer/theme/hidden/res/values-night/colors_dialer_light.xml
+@@ -0,0 +1,23 @@
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <!-- Essential theme colors -->
++  <color name="dialer_theme_color">@*android:color/accent_device_default_light</color>
++  <color name="dialer_theme_color_20pct">@*android:color/accent_device_default_light</color>
++  <color name="dialer_theme_color_dark">@*android:color/accent_device_default_dark</color>
++  <color name="dialer_secondary_color">#F50057</color>
++  <color name="dialer_background_color">@*android:color/primary_dark_device_default_settings</color>
++</resources>
+diff --git a/java/com/android/dialer/theme/hidden/res/values-night/colors_pallet.xml b/java/com/android/dialer/theme/hidden/res/values-night/colors_pallet.xml
+new file mode 100644
+index 000000000..49699e7f5
+--- /dev/null
++++ b/java/com/android/dialer/theme/hidden/res/values-night/colors_pallet.xml
+@@ -0,0 +1,35 @@
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <color name="google_blue_900">#174EA6</color>
++  <color name="google_blue_800">#185ABC</color>
++  <color name="google_blue_700">#1967D2</color>
++  <color name="google_blue_600">#1A73E8</color>
++  <color name="google_blue_500">#4285F4</color>
++  <color name="google_blue_100">#D2E3FC</color>
++  <color name="google_blue_50">#E8F0FE</color>
++
++  <color name="google_grey_50">#202124</color>
++  <color name="google_grey_100">#3C4043</color>
++  <color name="google_grey_200">#5F6368</color>
++  <color name="google_grey_300">#80868B</color>
++  <color name="google_grey_400">#9AA0A6</color>
++  <color name="google_grey_500">#BDC1C6</color>
++  <color name="google_grey_600">#DADCE0</color>
++  <color name="google_grey_700">#E8EAED</color>
++  <color name="google_grey_800">#F1F3F4</color>
++  <color name="google_grey_900">#F8F9FA</color>
++</resources>
+diff --git a/java/com/android/dialer/theme/hidden/res/values-night/styles.xml b/java/com/android/dialer/theme/hidden/res/values-night/styles.xml
+new file mode 100644
+index 000000000..e857e686a
+--- /dev/null
++++ b/java/com/android/dialer/theme/hidden/res/values-night/styles.xml
+@@ -0,0 +1,60 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <!-- Update to Theme.AppCompat.Light.NoActionBar once we no longer depend on ActionBars. -->
++  <style name="Dialer" parent="Theme.AppCompat.Light">
++    <!-- Used to automatically style all buttons in Dialer -->
++    <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
++    <item name="android:colorButtonNormal">?android:attr/colorPrimary</item>
++
++    <!-- Used to style link text -->
++    <item name="android:textColorLink">@color/dialer_theme_color</item>
++
++    <!-- Used to automatically style AlertDialogs -->
++    <item name="alertDialogTheme">@style/AlertDialogTheme</item>
++    <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
++  </style>
++
++  <style name="Dialer.Dark" parent="Theme.AppCompat">
++    <!-- Used to automatically style all buttons in Dialer -->
++    <item name="android:textAppearanceButton">@style/DialerButtonTextStyle</item>
++    <item name="android:colorButtonNormal">?android:attr/colorPrimary</item>
++
++    <!-- Used to style link text -->
++    <item name="android:textColorLink">@color/dialer_theme_color</item>
++
++    <!-- Used to automatically style AlertDialogs -->
++    <item name="alertDialogTheme">@style/AlertDialogTheme</item>
++    <item name="android:alertDialogTheme">@style/AlertDialogTheme</item>
++  </style>
++
++  <!-- Used to style all Dialer's button's text. Every button is awarded this for free if the parent
++     activity's theme extends from Dialer.ThemeBase(.NoActionBar) or doesn't specify a theme. -->
++  <style name="DialerButtonTextStyle" parent="@android:style/TextAppearance.DeviceDefault.Widget.Button">
++    <item name="android:textColor">?android:attr/textColorPrimaryInverse</item>
++  </style>
++
++  <!-- Used to style all Dialer's AlertDialogs. Every button is awarded this for free if the parent
++     activity's theme extends from Dialer.ThemeBase(.NoActionBar) or doesn't specify a theme. -->
++  <style name="AlertDialogTheme" parent="@android:style/Theme.DeviceDefault.Dialog.Alert">
++    <item name="android:textColorPrimary">@color/dialer_primary_text_color</item>
++    <!-- TODO(a bug): figure out why ?android:attr/colorPrimary doesn't work here -->
++    <item name="android:colorAccent">@color/dialer_theme_color</item>
++    <item name="colorAccent">@color/dialer_theme_color</item>
++    <item name="android:textColorSecondary">@color/dialer_secondary_text_color</item>
++  </style>
++</resources>
+diff --git a/java/com/android/dialer/theme/hidden/res/values/styles.xml b/java/com/android/dialer/theme/hidden/res/values/styles.xml
+index 44a35f8a2..fe8b330e6 100644
+--- a/java/com/android/dialer/theme/hidden/res/values/styles.xml
++++ b/java/com/android/dialer/theme/hidden/res/values/styles.xml
+@@ -50,7 +50,7 @@
+ 
+   <!-- Used to style all Dialer's AlertDialogs. Every button is awarded this for free if the parent
+      activity's theme extends from Dialer.ThemeBase(.NoActionBar) or doesn't specify a theme. -->
+-  <style name="AlertDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
++  <style name="AlertDialogTheme" parent="@android:style/Theme.DeviceDefault.Dialog.Alert">
+     <item name="android:textColorPrimary">@color/dialer_primary_text_color</item>
+     <!-- TODO(a bug): figure out why ?android:attr/colorPrimary doesn't work here -->
+     <item name="android:colorAccent">@color/dialer_theme_color</item>
+diff --git a/java/com/android/dialer/voicemail/listui/res/values-night/colors.xml b/java/com/android/dialer/voicemail/listui/res/values-night/colors.xml
+new file mode 100644
+index 000000000..2e400b052
+--- /dev/null
++++ b/java/com/android/dialer/voicemail/listui/res/values-night/colors.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++  ~ Copyright (C) 2018 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++<resources>
++  <color name="voicemail_icon_disabled_tint">#80ffffff</color>
++</resources>
+diff --git a/java/com/android/incallui/theme/res/values/styles.xml b/java/com/android/incallui/theme/res/values/styles.xml
+index 5b65cc3d9..63c752a15 100644
+--- a/java/com/android/incallui/theme/res/values/styles.xml
++++ b/java/com/android/incallui/theme/res/values/styles.xml
+@@ -39,8 +39,8 @@
+     <item name="android:statusBarColor">@android:color/transparent</item>
+     <item name="android:navigationBarColor">@android:color/transparent</item>
+     <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+-    <item name="android:colorPrimaryDark">@color/dialer_theme_color_dark</item>
+-    <item name="colorPrimaryDark">@color/dialer_theme_color_dark</item>
++    <item name="android:colorPrimaryDark">@color/dialer_theme_color</item>
++    <item name="colorPrimaryDark">@color/dialer_theme_color</item>
+ 
+     <item name="dialpad_key_button_touch_tint">?attr/colorPrimary20pct</item>
+     <item name="dialpad_style">@style/InCallDialpad</item>
+-- 
+2.17.1
+

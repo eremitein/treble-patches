@@ -1,0 +1,32 @@
+From ece6a1c4f9907b13358e09f1f3987bb85e0a7c16 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 4 Apr 2020 01:50:17 +0300
+Subject: [PATCH 19/19] small translations fix
+
+---
+ .../android/dialer/main/impl/toolbar/res/menu/main_menu.xml   | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/java/com/android/dialer/main/impl/toolbar/res/menu/main_menu.xml b/java/com/android/dialer/main/impl/toolbar/res/menu/main_menu.xml
+index ab25aa451..347f4849f 100644
+--- a/java/com/android/dialer/main/impl/toolbar/res/menu/main_menu.xml
++++ b/java/com/android/dialer/main/impl/toolbar/res/menu/main_menu.xml
+@@ -19,7 +19,7 @@
+ 
+   <item
+       android:id="@+id/menu_call_history"
+-      android:title="@string/main_menu_call_history"
++      android:title="@string/action_menu_call_history_description"
+       app:showAsAction="collapseActionView"/>
+ 
+   <item
+@@ -38,4 +38,4 @@
+     android:title="@string/nui_simulator_submenu_label"
+     app:showAsAction="collapseActionView"
+     android:visible="false"/>
+-</menu>
+\ No newline at end of file
++</menu>
+-- 
+2.17.1
+

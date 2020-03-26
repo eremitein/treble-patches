@@ -1,0 +1,50 @@
+From a0485811196143fd474703c13e40544485be4b45 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 31 Mar 2020 10:06:29 +0300
+Subject: [PATCH 4/5] Revert "Launcher3: Workaround the Icon pack issue on
+ adaptive apps"
+
+This reverts commit 07e3e603bb655abaf966fb215bdc23c1d7178bd6.
+---
+ .../launcher3/icons/BaseIconFactory.java      | 25 ++++++++++++++++++-
+ 1 file changed, 24 insertions(+), 1 deletion(-)
+
+diff --git a/iconloaderlib/src/com/android/launcher3/icons/BaseIconFactory.java b/iconloaderlib/src/com/android/launcher3/icons/BaseIconFactory.java
+index 0b5788802..5c4f37ca9 100644
+--- a/iconloaderlib/src/com/android/launcher3/icons/BaseIconFactory.java
++++ b/iconloaderlib/src/com/android/launcher3/icons/BaseIconFactory.java
+@@ -213,7 +213,30 @@ public class BaseIconFactory implements AutoCloseable {
+         if (icon == null) {
+             return null;
+         }
+-        float scale = getNormalizer().getScale(icon, outIconBounds, null, null);
++        float scale = 1f;
++
++        if (shrinkNonAdaptiveIcons && ATLEAST_OREO) {
++            if (mWrapperIcon == null) {
++                mWrapperIcon = mContext.getDrawable(R.drawable.adaptive_icon_drawable_wrapper)
++                        .mutate();
++            }
++            AdaptiveIconDrawable dr = (AdaptiveIconDrawable) mWrapperIcon;
++            dr.setBounds(0, 0, 1, 1);
++            boolean[] outShape = new boolean[1];
++            scale = getNormalizer().getScale(icon, outIconBounds, dr.getIconMask(), outShape);
++            if (!(icon instanceof AdaptiveIconDrawable) && !outShape[0]) {
++                FixedScaleDrawable fsd = ((FixedScaleDrawable) dr.getForeground());
++                fsd.setDrawable(icon);
++                fsd.setScale(scale);
++                icon = dr;
++                scale = getNormalizer().getScale(icon, outIconBounds, null, null);
++
++                ((ColorDrawable) dr.getBackground()).setColor(mWrapperBackgroundColor);
++            }
++        } else {
++            scale = getNormalizer().getScale(icon, outIconBounds, null, null);
++        }
++
+         outScale[0] = scale;
+         return icon;
+     }
+-- 
+2.17.1
+

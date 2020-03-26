@@ -1,0 +1,53 @@
+From a250d8e6b2751c407491959ae2162391b409fae7 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 26 Mar 2020 18:36:38 +0200
+Subject: [PATCH 009/100] Revert "FODCircleView: Disable Wallpaper color filter
+ when showing circle"
+
+This reverts commit 691beded4527c5ee2669d16210496b40c886adc5.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java | 7 +++----
+ 1 file changed, 3 insertions(+), 4 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 67b204a09e7..0fb5db385d2 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -353,7 +353,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             mWakeLock.acquire(300);
+         }
+ 
+-        setFODIcon(false);
+         setDim(true);
+         updateAlpha();
+ 
+@@ -364,7 +363,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     public void hideCircle() {
+         mIsCircleShowing = false;
+ 
+-        setFODIcon(true);
++        setFODIcon();
+         invalidate();
+ 
+         setDim(false);
+@@ -383,7 +382,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+                 Settings.System.FOD_ICON, 0);
+     }
+ 
+-    private void setFODIcon(boolean applyColor) {
++    private void setFODIcon() {
+         int fodicon = getFODIcon();
+ 
+         if (fodicon == 0) {
+@@ -432,7 +431,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             this.setImageResource(R.drawable.fod_icon_default_1);
+         }
+ 
+-        if (useWallpaperColor() && applyColor) {
++        if (useWallpaperColor()) {
+             try {
+                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
+                 Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+-- 
+2.17.1
+

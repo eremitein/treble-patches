@@ -1,0 +1,49 @@
+From 49f4b28e3e43ed7f6031adf3c3fddd58e843960d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 28 Dec 2019 19:08:14 +0200
+Subject: [PATCH] Match Settings Pixel style (crDroid)
+
+  * from
+  https://github.com/Havoc-OS/android_packages_apps_SettingsIntelligence/commit/eaad8c26fd2d098c6aa38bc667c1d55d80294538
+
+	modified:   res/layout/search_panel.xml
+
+Change-Id: I61ff47149bfcb6a3511441427360b06821d15c84
+---
+ res/layout/search_panel.xml | 9 +++++----
+ 1 file changed, 5 insertions(+), 4 deletions(-)
+
+diff --git a/res/layout/search_panel.xml b/res/layout/search_panel.xml
+index 82b1e11..4e9d152 100644
+--- a/res/layout/search_panel.xml
++++ b/res/layout/search_panel.xml
+@@ -25,15 +25,16 @@
+         android:id="@+id/search_bar_container"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
+-        android:background="?android:attr/colorPrimary"
++        android:background="?android:attr/colorBackground"
+         android:elevation="4dp">
+         <androidx.cardview.widget.CardView
+             android:id="@+id/search_bar"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="@dimen/search_bar_margin"
+-            app:cardCornerRadius="@*android:dimen/config_dialogCornerRadius"
+-            app:cardElevation="3dp">
++            app:cardBackgroundColor="@color/search_panel_background"
++            app:cardCornerRadius="24dp"
++            app:cardElevation="2dp">
+             <Toolbar
+                 android:id="@+id/search_toolbar"
+                 android:layout_width="match_parent"
+@@ -104,4 +105,4 @@
+ 
+     <include layout="@layout/search_feedback"/>
+ 
+-</LinearLayout>
+\ No newline at end of file
++</LinearLayout>
+-- 
+2.17.1
+

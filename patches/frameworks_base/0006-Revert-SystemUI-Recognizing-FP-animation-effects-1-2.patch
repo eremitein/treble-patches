@@ -1,0 +1,363 @@
+From c604f976bd87a05da4724975cc841bf90b6001df Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 26 Mar 2020 18:29:36 +0200
+Subject: [PATCH 006/100] Revert "SystemUI: Recognizing FP animation effects
+ [1/2]"
+
+This reverts commit d364235cc169e26807c9df9b5b7bee295446d746.
+---
+ core/java/android/provider/Settings.java      |   6 ---
+ .../fod_miui_pulse_recognizing_white_anim.xml |  43 ---------------
+ ...1.png => fod_recognizing_anim_white_1.png} | Bin
+ ....png => fod_recognizing_anim_white_10.png} | Bin
+ ....png => fod_recognizing_anim_white_11.png} | Bin
+ ....png => fod_recognizing_anim_white_12.png} | Bin
+ ....png => fod_recognizing_anim_white_13.png} | Bin
+ ....png => fod_recognizing_anim_white_14.png} | Bin
+ ....png => fod_recognizing_anim_white_15.png} | Bin
+ ....png => fod_recognizing_anim_white_16.png} | Bin
+ ....png => fod_recognizing_anim_white_17.png} | Bin
+ ....png => fod_recognizing_anim_white_18.png} | Bin
+ ....png => fod_recognizing_anim_white_19.png} | Bin
+ ...2.png => fod_recognizing_anim_white_2.png} | Bin
+ ....png => fod_recognizing_anim_white_20.png} | Bin
+ ....png => fod_recognizing_anim_white_21.png} | Bin
+ ....png => fod_recognizing_anim_white_22.png} | Bin
+ ....png => fod_recognizing_anim_white_23.png} | Bin
+ ....png => fod_recognizing_anim_white_24.png} | Bin
+ ....png => fod_recognizing_anim_white_25.png} | Bin
+ ...3.png => fod_recognizing_anim_white_3.png} | Bin
+ ...4.png => fod_recognizing_anim_white_4.png} | Bin
+ ...5.png => fod_recognizing_anim_white_5.png} | Bin
+ ...6.png => fod_recognizing_anim_white_6.png} | Bin
+ ...7.png => fod_recognizing_anim_white_7.png} | Bin
+ ...8.png => fod_recognizing_anim_white_8.png} | Bin
+ ...9.png => fod_recognizing_anim_white_9.png} | Bin
+ .../SystemUI/res/drawable/fodunlockanim.xml   |  43 +++++++++++++++
+ .../systemui/biometrics/FODCircleView.java    |  49 +-----------------
+ 29 files changed, 45 insertions(+), 96 deletions(-)
+ delete mode 100644 packages/SystemUI/res/drawable/fod_miui_pulse_recognizing_white_anim.xml
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_1.png => fod_recognizing_anim_white_1.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_10.png => fod_recognizing_anim_white_10.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_11.png => fod_recognizing_anim_white_11.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_12.png => fod_recognizing_anim_white_12.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_13.png => fod_recognizing_anim_white_13.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_14.png => fod_recognizing_anim_white_14.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_15.png => fod_recognizing_anim_white_15.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_16.png => fod_recognizing_anim_white_16.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_17.png => fod_recognizing_anim_white_17.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_18.png => fod_recognizing_anim_white_18.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_19.png => fod_recognizing_anim_white_19.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_2.png => fod_recognizing_anim_white_2.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_20.png => fod_recognizing_anim_white_20.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_21.png => fod_recognizing_anim_white_21.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_22.png => fod_recognizing_anim_white_22.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_23.png => fod_recognizing_anim_white_23.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_24.png => fod_recognizing_anim_white_24.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_25.png => fod_recognizing_anim_white_25.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_3.png => fod_recognizing_anim_white_3.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_4.png => fod_recognizing_anim_white_4.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_5.png => fod_recognizing_anim_white_5.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_6.png => fod_recognizing_anim_white_6.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_7.png => fod_recognizing_anim_white_7.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_8.png => fod_recognizing_anim_white_8.png} (100%)
+ rename packages/SystemUI/res/drawable/{gxzw_pulse_recognizing_anim_white_9.png => fod_recognizing_anim_white_9.png} (100%)
+ create mode 100644 packages/SystemUI/res/drawable/fodunlockanim.xml
+
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index 83b41129a2a..312210f7564 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -5134,12 +5134,6 @@ public final class Settings {
+          */
+         public static final String FOD_ICON_WALLPAPER_COLOR = "fod_icon_wallpaper_color";
+ 
+-        /**
+-         * FOD recognizing animation picker
+-         * @hide
+-         */
+-        public static final String FOD_ANIM = "fod_anim";
+-
+         /**
+          * FOD recognizing animation
+          * @hide
+diff --git a/packages/SystemUI/res/drawable/fod_miui_pulse_recognizing_white_anim.xml b/packages/SystemUI/res/drawable/fod_miui_pulse_recognizing_white_anim.xml
+deleted file mode 100644
+index ea98ebcd6f7..00000000000
+--- a/packages/SystemUI/res/drawable/fod_miui_pulse_recognizing_white_anim.xml
++++ /dev/null
+@@ -1,43 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Copyright (C) 2019 Extended-UI
+-
+-     Licensed under the Apache License, Version 2.0 (the "License");
+-     you may not use this file except in compliance with the License.
+-     You may obtain a copy of the License at
+-
+-          http://www.apache.org/licenses/LICENSE-2.0
+-
+-     Unless required by applicable law or agreed to in writing, software
+-     distributed under the License is distributed on an "AS IS" BASIS,
+-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-     See the License for the specific language governing permissions and
+-     limitations under the License.
+--->
+-<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:oneshot="false">
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_1" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_2" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_3" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_4" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_5" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_6" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_7" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_8" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_9" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_10" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_11" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_12" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_13" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_14" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_15" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_16" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_17" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_18" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_19" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_20" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_21" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_22" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_23" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_24" android:duration="12" />
+-    <item android:drawable="@drawable/gxzw_pulse_recognizing_anim_white_25" android:duration="12" />
+-</animation-list>
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_1.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_1.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_1.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_1.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_10.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_10.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_10.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_10.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_11.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_11.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_11.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_11.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_12.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_12.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_12.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_12.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_13.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_13.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_13.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_13.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_14.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_14.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_14.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_14.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_15.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_15.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_15.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_15.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_16.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_16.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_16.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_16.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_17.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_17.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_17.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_17.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_18.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_18.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_18.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_18.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_19.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_19.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_19.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_19.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_2.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_2.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_2.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_2.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_20.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_20.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_20.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_20.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_21.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_21.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_21.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_21.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_22.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_22.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_22.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_22.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_23.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_23.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_23.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_23.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_24.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_24.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_24.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_24.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_25.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_25.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_25.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_25.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_3.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_3.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_3.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_3.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_4.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_4.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_4.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_4.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_5.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_5.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_5.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_5.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_6.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_6.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_6.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_6.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_7.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_7.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_7.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_7.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_8.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_8.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_8.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_8.png
+diff --git a/packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_9.png b/packages/SystemUI/res/drawable/fod_recognizing_anim_white_9.png
+similarity index 100%
+rename from packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_9.png
+rename to packages/SystemUI/res/drawable/fod_recognizing_anim_white_9.png
+diff --git a/packages/SystemUI/res/drawable/fodunlockanim.xml b/packages/SystemUI/res/drawable/fodunlockanim.xml
+new file mode 100644
+index 00000000000..f73b5653804
+--- /dev/null
++++ b/packages/SystemUI/res/drawable/fodunlockanim.xml
+@@ -0,0 +1,43 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2019 Extended-UI
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<animation-list xmlns:android="http://schemas.android.com/apk/res/android"
++    android:oneshot="false">
++    <item android:drawable="@drawable/fod_recognizing_anim_white_1" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_2" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_3" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_4" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_5" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_6" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_7" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_8" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_9" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_10" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_11" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_12" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_13" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_14" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_15" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_16" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_17" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_18" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_19" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_20" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_21" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_22" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_23" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_24" android:duration="12" />
++    <item android:drawable="@drawable/fod_recognizing_anim_white_25" android:duration="12" />
++</animation-list>
+\ No newline at end of file
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 731b632a2af..6af4054a79d 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -379,9 +379,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         mIsCircleShowing = false;
+ 
+         setFODIcon(true);
+-        if (mFODAnimation != null) {
+-            mFODAnimation.setFODAnim();
+-        }
+         invalidate();
+ 
+         setDim(false);
+@@ -629,7 +626,7 @@ class FODAnimation extends ImageView {
+     private WindowManager mWindowManager;
+     private boolean mShowing = false;
+     private boolean mIsKeyguard;
+-    private AnimationDrawable recognizingAnim;
++    private final AnimationDrawable recognizingAnim;
+     private final WindowManager.LayoutParams mAnimParams = new WindowManager.LayoutParams();
+ 
+     public FODAnimation(Context context, int mPositionX, int mPositionY) {
+@@ -652,53 +649,11 @@ class FODAnimation extends ImageView {
+         mAnimParams.y = mAnimationPositionY;
+ 
+         this.setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+-        setFODAnim();
++        this.setBackgroundResource(R.drawable.fodunlockanim);
+         recognizingAnim = (AnimationDrawable) this.getBackground();
+ 
+     }
+ 
+-    public int getFODAnim() {
+-        return Settings.System.getInt(mContext.getContentResolver(),
+-                Settings.System.FOD_ANIM, 0);
+-    }
+-
+-    public void setFODAnim() {
+-        int fodanim = getFODAnim();
+-
+-        if (fodanim == 0) {
+-            this.setBackgroundResource(R.drawable.fod_miui_normal_recognizing_anim);
+-        } else if (fodanim == 1) {
+-            this.setBackgroundResource(R.drawable.fod_miui_aod_recognizing_anim);
+-        } else if (fodanim == 2) {
+-            this.setBackgroundResource(R.drawable.fod_miui_light_recognizing_anim);
+-        } else if (fodanim == 3) {
+-            this.setBackgroundResource(R.drawable.fod_miui_pop_recognizing_anim);
+-        } else if (fodanim == 4) {
+-            this.setBackgroundResource(R.drawable.fod_miui_pulse_recognizing_anim);
+-        } else if (fodanim == 5) {
+-            this.setBackgroundResource(R.drawable.fod_miui_pulse_recognizing_white_anim);
+-        } else if (fodanim == 6) {
+-            this.setBackgroundResource(R.drawable.fod_miui_rhythm_recognizing_anim);
+-        } else if (fodanim == 7) {
+-            this.setBackgroundResource(R.drawable.fod_op_cosmos_recognizing_anim);
+-        } else if (fodanim == 8) {
+-            this.setBackgroundResource(R.drawable.fod_op_mclaren_recognizing_anim);
+-        } else if (fodanim == 9) {
+-            this.setBackgroundResource(R.drawable.fod_op_stripe_recognizing_anim);
+-        } else if (fodanim == 10) {
+-            this.setBackgroundResource(R.drawable.fod_op_wave_recognizing_anim);
+-        } else if (fodanim == 11) {
+-            this.setBackgroundResource(R.drawable.fod_pureview_dna_recognizing_anim);
+-        } else if (fodanim == 12) {
+-            this.setBackgroundResource(R.drawable.fod_pureview_future_recognizing_anim);
+-        } else if (fodanim == 13) {
+-            this.setBackgroundResource(R.drawable.fod_pureview_halo_ring_recognizing_anim);
+-        } else if (fodanim == 14) {
+-            this.setBackgroundResource(R.drawable.fod_pureview_molecular_recognizing_anim);
+-        }
+-        recognizingAnim = (AnimationDrawable) this.getBackground();
+-    }
+-
+     public void updateParams(int mDreamingOffsetY) {
+         mAnimationPositionY = (int) Math.round(mDreamingOffsetY - (mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_size) / 2));
+         mAnimParams.y = mAnimationPositionY;
+-- 
+2.17.1
+

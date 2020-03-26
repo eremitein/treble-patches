@@ -1,0 +1,28 @@
+From 55a5163daffb1186cf181ca70b190b0c2dd6f472 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Thu, 23 Aug 2018 23:39:16 +0200
+Subject: [PATCH 045/100] Switch samsung light fingerprint match to regexp, to
+ include Note9
+
+---
+ .../core/java/com/android/server/lights/LightsService.java    | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 7550957b361..37a33da237f 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -96,9 +96,7 @@ public class LightsService extends SystemService {
+                 }
+                 if(mId == 0) {
+                     String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
+-                    if(
+-                      fp.contains("starlte") || fp.contains("star2lte") ||
+-                      fp.contains("starqlte") || fp.contains("star2qlte")) {
++                    if(fp.matches(".*(crown|star)[q2]*lte.*")) {
+                         setLightLocked(brightness*100, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
+                         return;
+                     }
+-- 
+2.17.1
+

@@ -1,0 +1,28 @@
+From 919603ad68c3b3ae8c1449478cbb5e70c96f4acf Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Feb 2020 00:34:12 +0200
+Subject: [PATCH 2/5] try to disable low battery led pulsing
+
+	modified:   sdk/src/java/org/lineageos/internal/notification/LineageBatteryLights.java
+---
+ .../lineageos/internal/notification/LineageBatteryLights.java | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/sdk/src/java/org/lineageos/internal/notification/LineageBatteryLights.java b/sdk/src/java/org/lineageos/internal/notification/LineageBatteryLights.java
+index 2af0d075..c6926696 100644
+--- a/sdk/src/java/org/lineageos/internal/notification/LineageBatteryLights.java
++++ b/sdk/src/java/org/lineageos/internal/notification/LineageBatteryLights.java
+@@ -156,10 +156,6 @@ public final class LineageBatteryLights {
+                 // Battery is charging and low.
+                 ledValues.setColor(mBatteryLowARGB);
+                 ledValues.setSolid();
+-            } else if (mLedPulseEnabled) {
+-                // Battery is low, not charging and pulse is enabled
+-                // (pulsing values are set by frameworks BatteryService).
+-                ledValues.setColor(mBatteryLowARGB);
+             }
+         } else if (status == BatteryManager.BATTERY_STATUS_CHARGING
+                 || status == BatteryManager.BATTERY_STATUS_FULL) {
+-- 
+2.17.1
+
