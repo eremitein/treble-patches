@@ -1,0 +1,117 @@
+From 02f3d3f8adf75a6c7282b80ecfeff7d190d8d43b Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 15 Dec 2019 23:19:32 +0100
+Subject: [PATCH 049/108] FacolaView: Support goodix ext and fix wrong forced
+ brightness
+
+---
+ services/core/Android.bp                      |  1 +
+ .../biometrics/fingerprint/FacolaView.java    | 30 ++++++++++++++-----
+ 2 files changed, 23 insertions(+), 8 deletions(-)
+
+diff --git a/services/core/Android.bp b/services/core/Android.bp
+index 2e7118da..ccf1ca99 100644
+--- a/services/core/Android.bp
++++ b/services/core/Android.bp
+@@ -55,6 +55,7 @@ java_library_static {
+         "dnsresolver_aidl_interface-V2-java",
+         "netd_aidl_interface-V2-java",
+         "netd_event_listener_interface-java",
++        "vendor.goodix.extend.service-V2.0-java",
+         "vendor.xiaomi.hardware.fingerprintextension-V1.0-java",
+     ],
+ }
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+index 08436019..651cc97b 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+@@ -36,6 +36,7 @@ import java.io.FileReader;
+ import java.io.PrintWriter;
+ 
+ import vendor.xiaomi.hardware.fingerprintextension.V1_0.IXiaomiFingerprint;
++import vendor.goodix.extend.service.V2_0.IGoodixFPExtendService;
+ 
+ import android.os.Handler;
+ import android.os.HandlerThread;
+@@ -46,6 +47,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+     private final Paint mPaintFingerprint = new Paint();
+     private final Paint mPaintShow = new Paint();
+     private IXiaomiFingerprint mXiaomiFingerprint = null;
++    private IGoodixFPExtendService mGoodixFingerprint = null;
+     private boolean mInsideCircle = false;
+     private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
+ 
+@@ -94,11 +96,17 @@ public class FacolaView extends ImageView implements OnTouchListener {
+         setOnTouchListener(this);
+         mWM = (WindowManager) getContext().getSystemService(Context.WINDOW_SERVICE);
+         Slog.d("PHH-Enroll", "Created facola...");
+-        try {
+-            if(mW != -1)
++        if(mW != -1) {
++            try {
+                 mXiaomiFingerprint = IXiaomiFingerprint.getService();
+-        } catch(Exception e) {
+-            Slog.d("PHH-Enroll", "Failed getting xiaomi fingerprint service", e);
++            } catch(Exception e) {
++                Slog.d("PHH-Enroll", "Failed getting xiaomi fingerprint service", e);
++            }
++            try {
++                mGoodixFingerprint = IGoodixFPExtendService.getService();
++            } catch(Exception e) {
++                Slog.d("PHH-Enroll", "Failed getting goodix fingerprint service", e);
++            }
+         }
+     }
+ 
+@@ -113,6 +121,8 @@ public class FacolaView extends ImageView implements OnTouchListener {
+                 int nitValue = 2;
+                 if(mXiaomiFingerprint != null)
+                     mXiaomiFingerprint.extCmd(0xa, nitValue);
++                if(mGoodixFingerprint != null)
++                    mXiaomiFingerprint.extCmd(10, 1);
+             } catch(Exception e) {
+                 Slog.d("PHH-Enroll", "Failed calling xiaomi fp extcmd");
+             }
+@@ -122,6 +132,8 @@ public class FacolaView extends ImageView implements OnTouchListener {
+             try {
+                 if(mXiaomiFingerprint != null)
+                     mXiaomiFingerprint.extCmd(0xa, 0);
++                if(mGoodixFingerprint != null)
++                    mXiaomiFingerprint.extCmd(10, 0);
+             } catch(Exception e) {
+                 Slog.d("PHH-Enroll", "Failed calling xiaomi fp extcmd");
+             }
+@@ -151,10 +163,10 @@ public class FacolaView extends ImageView implements OnTouchListener {
+             return false;
+         }
+ 
+-	if(!noDim) {
+-		mParams.dimAmount = TOUCHED_DIM;
+-		mParams.screenBrightness = 1.0f;
+-	}
++        if(!noDim) {
++            mParams.dimAmount = TOUCHED_DIM;
++            mParams.screenBrightness = 1.0f;
++        }
+         mWM.updateViewLayout(this, mParams);
+ 
+         return true;
+@@ -164,6 +176,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+         Slog.d("PHH-Enroll", "Show", new Exception());
+         if(!mHidden) return;
+         mHidden = false;
++        mInsideCircle = false;
+         if(samsungFod) {
+             samsungCmd("fod_enable,1,1");
+         }
+@@ -191,6 +204,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+             WindowManager.LayoutParams.FLAG_DIM_BEHIND |
+             WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+         mParams.dimAmount = UNTOUCHED_DIM;
++        mParams.screenBrightness = .0f;
+ 
+         mParams.packageName = "android";
+ 
+-- 
+2.17.1
+

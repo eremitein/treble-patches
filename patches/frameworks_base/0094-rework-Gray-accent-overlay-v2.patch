@@ -1,0 +1,26 @@
+From 9eacdc0718a6ba880969484077eb9ff460458943 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 21:14:52 +0200
+Subject: [PATCH 094/108] rework Gray accent overlay v2
+
+	modified:   packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+---
+ .../res/values/colors_device_defaults.xml                     | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+index 77e57e86..2d0df98b 100644
+--- a/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
++++ b/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+@@ -17,6 +17,6 @@
+  */
+ -->
+ <resources>
+-    <color name="accent_device_default_light">#424242</color>
+-    <color name="accent_device_default_dark">#e0e0e0</color>
++    <color name="accent_device_default_light">#808080</color>
++    <color name="accent_device_default_dark">#808080</color>
+ </resources>
+-- 
+2.17.1
+

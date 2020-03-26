@@ -1,0 +1,37 @@
+From 02a995dd67dc3e82565fc61d65d23521a839aa33 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 15 Mar 2020 09:51:59 +0200
+Subject: [PATCH 2/2] disable dividers
+
+	modified:   res/values/styles.xml
+
+Change-Id: Ide2acc74cff9289f1b5c08b0cf0c07f47603183c
+---
+ res/values/styles.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+index c9c5cdb..9e82f53 100644
+--- a/res/values/styles.xml
++++ b/res/values/styles.xml
+@@ -36,7 +36,7 @@
+ 
+     <style name="DialogPreferenceStyle" parent="@*android:style/Preference.DeviceDefault.DialogPreference">
+         <item name="allowDividerAbove">false</item>
+-        <item name="allowDividerBelow">true</item>
++        <item name="allowDividerBelow">false</item>
+         <item name="singleLineTitle">false</item>
+         <item name="android:iconSpaceReserved">true</item>
+     </style>
+@@ -56,7 +56,7 @@
+ 
+     <style name="PreferenceStyle" parent="@*android:style/Preference.DeviceDefault">
+         <item name="allowDividerAbove">false</item>
+-        <item name="allowDividerBelow">true</item>
++        <item name="allowDividerBelow">false</item>
+         <item name="singleLineTitle">false</item>
+         <item name="android:layout">@layout/preference_material_settings</item>
+     </style>
+-- 
+2.17.1
+

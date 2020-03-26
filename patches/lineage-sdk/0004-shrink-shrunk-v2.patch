@@ -1,0 +1,34 @@
+From f9712293bcf2c10b112c3672a251a556f4198bde Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 22 Feb 2020 23:18:16 +0200
+Subject: [PATCH 4/4] shrink-shrunk v2
+
+	modified:   lineage/res/res/values/strings.xml
+
+Change-Id: I8814805ae8e8383e304f00214b0b67948f26d247
+---
+ lineage/res/res/values/strings.xml | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/lineage/res/res/values/strings.xml b/lineage/res/res/values/strings.xml
+index c632f42..0d603cd 100644
+--- a/lineage/res/res/values/strings.xml
++++ b/lineage/res/res/values/strings.xml
+@@ -152,10 +152,10 @@
+     <string name="app_killed_message">Application killed</string>
+ 
+     <!-- Status bar network traffic monitor strings -->
+-    <string name="kilobitspersecond_short">kb/s</string>
+-    <string name="megabitspersecond_short">Mb/s</string>
+-    <string name="kilobytespersecond_short">kB/s</string>
+-    <string name="megabytespersecond_short">MB/s</string>
++    <string name="kilobitspersecond_short">k</string>
++    <string name="megabitspersecond_short">m</string>
++    <string name="kilobytespersecond_short">K</string>
++    <string name="megabytespersecond_short">M</string>
+ 
+     <!-- Trust interface -->
+     <!-- This string will be referenced from other apps when they're referring to the Trust interface.
+-- 
+2.17.1
+

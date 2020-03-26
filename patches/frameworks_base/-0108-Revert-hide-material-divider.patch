@@ -1,0 +1,28 @@
+From b8ddaf34d8bb80842bb51102b1c0b56731fbce51 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 19 Mar 2020 19:07:00 +0200
+Subject: [PATCH 108/108] Revert "hide material divider"
+
+This reverts commit 6c5eb56033ffe1e63a7da129352fc63f8ada66af.
+
+	modified:   core/res/res/drawable/list_divider_material.xml
+---
+ core/res/res/drawable/list_divider_material.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/res/res/drawable/list_divider_material.xml b/core/res/res/drawable/list_divider_material.xml
+index ca295116..658a59d5 100644
+--- a/core/res/res/drawable/list_divider_material.xml
++++ b/core/res/res/drawable/list_divider_material.xml
+@@ -16,7 +16,7 @@
+ 
+ <shape xmlns:android="http://schemas.android.com/apk/res/android"
+        android:tint="?attr/colorForeground">
+-    <solid android:color="#00ffffff" />
++    <solid android:color="#1f000000" />
+     <size
+         android:height="1dp"
+         android:width="1dp" />
+-- 
+2.17.1
+

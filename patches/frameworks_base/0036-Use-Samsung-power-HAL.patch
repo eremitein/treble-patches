@@ -1,0 +1,30 @@
+From 55db6a871bed1c112b80035fc27b2dc3915d859c Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 14 Aug 2019 08:50:47 +0200
+Subject: [PATCH 036/108] Use Samsung power HAL
+
+Samsung likes to have two android.hardware.power@1.0 implementation
+side-by-side, one that works, one that doesn't.
+Pick the one that works.
+---
+ .../core/jni/com_android_server_power_PowerManagerService.cpp | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/jni/com_android_server_power_PowerManagerService.cpp b/services/core/jni/com_android_server_power_PowerManagerService.cpp
+index 523f8021..211ea50d 100644
+--- a/services/core/jni/com_android_server_power_PowerManagerService.cpp
++++ b/services/core/jni/com_android_server_power_PowerManagerService.cpp
+@@ -98,7 +98,9 @@ static bool checkAndClearExceptionFromCallback(JNIEnv* env, const char* methodNa
+ // The caller must be holding gPowerHalMutex.
+ static void connectPowerHalLocked() {
+     if (gPowerHalExists && gPowerHalV1_0_ == nullptr) {
+-        gPowerHalV1_0_ = IPowerV1_0::getService();
++        gPowerHalV1_0_ = IPowerV1_0::getService("miscpower");
++	if(gPowerHalV1_0_ == nullptr)
++	    gPowerHalV1_0_ = IPowerV1_0::getService();
+         if (gPowerHalV1_0_ != nullptr) {
+             ALOGI("Loaded power HAL 1.0 service");
+             // Try cast to powerHAL V1_1
+-- 
+2.17.1
+

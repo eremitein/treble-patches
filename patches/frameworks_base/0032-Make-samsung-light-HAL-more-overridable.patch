@@ -1,0 +1,48 @@
+From f2a73ed6ce367df8ab98241543290b42bb5145de Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 2 Jul 2019 21:15:07 +0200
+Subject: [PATCH 032/108] Make samsung light HAL more overridable
+
+---
+ .../android/server/lights/LightsService.java  | 24 ++++++++++++-------
+ 1 file changed, 15 insertions(+), 9 deletions(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 59743963..ad0cf0c7 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -103,16 +103,22 @@ public class LightsService extends SystemService {
+                         return;
+                     }
+ 
+-                    if(SystemProperties.getInt("persist.sys.phh.samsung_backlight", 0) == 1 ||
+-			            fp.matches(".*beyond.*lte.*") ||
+-			            fp.matches(".*(crown|star)[q2]*lte.*") ||
+-				    fp.matches(".*(SC-0[23]K|SCV3[89]).*")) {
+-                        int newBrightness = brightness * 100;
+-                        if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
+-                            newBrightness = (int) (brightness * 40960.0 / 255.0);
++                    int useSamsungBacklight = SystemProperties.getInt("persist.sys.phh.samsung_backlight", -1);
++                    if(useSamsungBacklight != 0) {
++                        if(useSamsungBacklight > 0 ||
++                                       fp.matches(".*beyond.*lte.*") ||
++                                       fp.matches(".*(crown|star)[q2]*lte.*") ||
++                                       fp.matches(".*(SC-0[23]K|SCV3[89]).*")) {
++                           int ratio = 100;
++                           if(useSamsungBacklight > 1)
++                                   ratio = useSamsungBacklight;
++                           int newBrightness = brightness * ratio;
++                           if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
++                               newBrightness = (int) (brightness * 40960.0 / 255.0);
++                           }
++                            setLightLocked(newBrightness, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
++                            return;
+                         }
+-                        setLightLocked(newBrightness, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
+-                        return;
+                     }
+ 
+                     boolean qcomExtendBrightness = SystemProperties.getBoolean("persist.extend.brightness", false);
+-- 
+2.17.1
+

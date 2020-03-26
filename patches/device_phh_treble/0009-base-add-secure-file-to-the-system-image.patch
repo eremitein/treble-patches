@@ -1,0 +1,25 @@
+From a60453485a6be6ac7bc3a1af99646caad1df28bc Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 25 Dec 2019 12:34:05 +0200
+Subject: [PATCH 09/13] base: add "secure" file to the system image
+
+	modified:   base.mk
+---
+ base.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/base.mk b/base.mk
+index c468c82..8db8348 100644
+--- a/base.mk
++++ b/base.mk
+@@ -62,6 +62,7 @@ PRODUCT_COPY_FILES += \
+ 
+ PRODUCT_COPY_FILES += \
+ 	device/phh/treble/empty:system/phh/empty \
++	device/phh/treble/empty:system/phh/secure \
+ 	device/phh/treble/phh-on-boot.sh:system/bin/phh-on-boot.sh
+ 
+ PRODUCT_PACKAGES += \
+-- 
+2.17.1
+

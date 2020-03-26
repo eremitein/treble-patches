@@ -1,0 +1,135 @@
+From d34e1571de9be3f81df5d9eb122a5778c7076971 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 08:30:58 +0200
+Subject: [PATCH 083/108] add Simple Day font, remove Roboto legacy
+
+	modified:   data/fonts/fonts.xml
+	renamed:    packages/overlays/FontRobotoOverlay/Android.mk -> packages/overlays/FontSimpleDayOverlay/Android.mk
+	renamed:    packages/overlays/FontRobotoOverlay/AndroidManifest.xml -> packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
+	renamed:    packages/overlays/FontRobotoOverlay/res/values/config.xml -> packages/overlays/FontSimpleDayOverlay/res/values/config.xml
+	renamed:    packages/overlays/FontRobotoOverlay/res/values/strings.xml -> packages/overlays/FontSimpleDayOverlay/res/values/strings.xml
+---
+ data/fonts/fonts.xml                                   | 10 ++++++++++
+ .../Android.mk                                         |  4 ++--
+ .../AndroidManifest.xml                                |  6 +++---
+ .../res/values/config.xml                              |  8 ++++----
+ .../res/values/strings.xml                             |  2 +-
+ 5 files changed, 20 insertions(+), 10 deletions(-)
+ rename packages/overlays/{FontRobotoOverlay => FontSimpleDayOverlay}/Android.mk (91%)
+ rename packages/overlays/{FontRobotoOverlay => FontSimpleDayOverlay}/AndroidManifest.xml (84%)
+ rename packages/overlays/{FontRobotoOverlay => FontSimpleDayOverlay}/res/values/config.xml (88%)
+ rename packages/overlays/{FontRobotoOverlay => FontSimpleDayOverlay}/res/values/strings.xml (89%)
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index 87b52c43..3bb6e1c5 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -149,6 +149,16 @@
+     </family>
+     <alias name="zilla-slab-bold" to="zilla-slab" weight="700" />
+ 
++    <family name="simpleday">
++        <font weight="400" style="normal">SimpleDay-Regular.ttf</font>
++        <font weight="400" style="italic">SimpleDay-Italic.ttf</font>
++        <font weight="500" style="normal">SimpleDay-Medium.ttf</font>
++        <font weight="500" style="italic">SimpleDay-MediumItalic.ttf</font>
++        <font weight="700" style="normal">SimpleDay-Bold.ttf</font>
++        <font weight="700" style="italic">SimpleDay-BoldItalic.ttf</font>
++    </family>
++    <alias name="simpleday-medium" to="simpleday" weight="500" />
++
+     <!-- fallback fonts -->
+     <family lang="und-Arab" variant="elegant">
+         <font weight="400" style="normal">NotoNaskhArabic-Regular.ttf</font>
+diff --git a/packages/overlays/FontRobotoOverlay/Android.mk b/packages/overlays/FontSimpleDayOverlay/Android.mk
+similarity index 91%
+rename from packages/overlays/FontRobotoOverlay/Android.mk
+rename to packages/overlays/FontSimpleDayOverlay/Android.mk
+index 805be23d..b498d181 100644
+--- a/packages/overlays/FontRobotoOverlay/Android.mk
++++ b/packages/overlays/FontSimpleDayOverlay/Android.mk
+@@ -17,7 +17,7 @@
+ LOCAL_PATH:= $(call my-dir)
+ include $(CLEAR_VARS)
+ 
+-LOCAL_RRO_THEME := FontRoboto
++LOCAL_RRO_THEME := FontSimpleDay
+ 
+ LOCAL_PRODUCT_MODULE := true
+ 
+@@ -25,7 +25,7 @@ LOCAL_SRC_FILES := $(call all-subdir-java-files)
+ 
+ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+ 
+-LOCAL_PACKAGE_NAME := FontRobotoOverlay
++LOCAL_PACKAGE_NAME := FontSimpleDayOverlay
+ LOCAL_SDK_VERSION := current
+ 
+ include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontRobotoOverlay/AndroidManifest.xml b/packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
+similarity index 84%
+rename from packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+rename to packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
+index ba68a2c7..af654be7 100644
+--- a/packages/overlays/FontRobotoOverlay/AndroidManifest.xml
++++ b/packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
+@@ -16,16 +16,16 @@
+  */
+ -->
+ <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="com.android.theme.font.roboto"
++    package="com.android.theme.font.simpleday"
+     android:versionCode="1"
+     android:versionName="1.0">
+     <overlay android:targetPackage="android"
+         android:category="android.theme.customization.font"
+         android:priority="1"/>
+ 
+-    <application android:label="@string/font_roboto_overlay" android:hasCode="false">
++    <application android:label="@string/font_simpleday_overlay" android:hasCode="false">
+         <meta-data
+             android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+-            android:value="roboto,roboto-medium" />
++            android:value="simpleday,simpleday-medium" />
+     </application>
+ </manifest>
+diff --git a/packages/overlays/FontRobotoOverlay/res/values/config.xml b/packages/overlays/FontSimpleDayOverlay/res/values/config.xml
+similarity index 88%
+rename from packages/overlays/FontRobotoOverlay/res/values/config.xml
+rename to packages/overlays/FontSimpleDayOverlay/res/values/config.xml
+index a1c83b6f..ea227095 100644
+--- a/packages/overlays/FontRobotoOverlay/res/values/config.xml
++++ b/packages/overlays/FontSimpleDayOverlay/res/values/config.xml
+@@ -17,11 +17,11 @@
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+      <!-- Name of a font family to use for body text. -->
+-    <string name="config_bodyFontFamily" translatable="false">roboto</string>
++    <string name="config_bodyFontFamily" translatable="false">simpleday</string>
+     <!-- Name of a font family to use for medium body text. -->
+-    <string name="config_bodyFontFamilyMedium" translatable="false">roboto-medium</string>
++    <string name="config_bodyFontFamilyMedium" translatable="false">simpleday-medium</string>
+     <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
+-    <string name="config_headlineFontFamily" translatable="false">roboto</string>
++    <string name="config_headlineFontFamily" translatable="false">simpleday</string>
+     <!-- Name of the font family used for system surfaces where the font should use medium weight -->
+-    <string name="config_headlineFontFamilyMedium" translatable="false">roboto-medium</string>
++    <string name="config_headlineFontFamilyMedium" translatable="false">simpleday-medium</string>
+ </resources>
+diff --git a/packages/overlays/FontRobotoOverlay/res/values/strings.xml b/packages/overlays/FontSimpleDayOverlay/res/values/strings.xml
+similarity index 89%
+rename from packages/overlays/FontRobotoOverlay/res/values/strings.xml
+rename to packages/overlays/FontSimpleDayOverlay/res/values/strings.xml
+index e35613d1..fa5aabcd 100644
+--- a/packages/overlays/FontRobotoOverlay/res/values/strings.xml
++++ b/packages/overlays/FontSimpleDayOverlay/res/values/strings.xml
+@@ -16,5 +16,5 @@
+  */
+ -->
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="font_roboto_overlay" translatable="false">Roboto</string>
++    <string name="font_simpleday_overlay" translatable="false">Simple Day</string>
+ </resources>
+-- 
+2.17.1
+

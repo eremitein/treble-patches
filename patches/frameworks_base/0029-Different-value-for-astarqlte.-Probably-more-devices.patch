@@ -1,0 +1,33 @@
+From d3674310194f849592d08d44cec6419e67089dbe Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 10 Mar 2019 19:35:06 +0100
+Subject: [PATCH 029/108] Different value for astarqlte. Probably more devices
+ to add later
+
+---
+ .../java/com/android/server/lights/LightsService.java    | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index b2d74ca9..9c510fb7 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -94,6 +94,15 @@ public class LightsService extends SystemService {
+ 
+                 if(mId == 0) {
+                     String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
++                    if(fp.matches(".*astarqlte.*")) {
++                        int newBrightness = brightness;
++                        if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
++                            newBrightness = (int) (brightness * 365.0 / 255.0);
++                        }
++                        setLightLocked(newBrightness, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
++                        return;
++                    }
++
+                     if(fp.matches(".*(crown|star)[q2]*lte.*") ||
+ 				    fp.matches(".*(SC-0[23]K|SCV3[89]).*")) {
+                         int newBrightness = brightness * 100;
+-- 
+2.17.1
+
