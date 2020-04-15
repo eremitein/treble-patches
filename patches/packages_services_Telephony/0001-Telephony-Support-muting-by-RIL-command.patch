@@ -1,7 +1,7 @@
-From 774f30fa86dc09e2837e670dc62732c12be4ea00 Mon Sep 17 00:00:00 2001
+From f1295a05269ea4e656b093eba3ae5c059f6c7a89 Mon Sep 17 00:00:00 2001
 From: Artem Borisov <dedsa2002@gmail.com>
 Date: Wed, 19 Sep 2018 17:02:06 +0300
-Subject: [PATCH 1/4] Telephony: Support muting by RIL command
+Subject: [PATCH 1/3] Telephony: Support muting by RIL command
 
 While almost everyone already moved to AudioManager years ago,
 some OEMs (cough Huawei) still use RIL for muting and don't
@@ -14,7 +14,7 @@ Change-Id: Id916dec2574d6e57b6f809fbaf2b0959c0cc7256
  1 file changed, 4 insertions(+)
 
 diff --git a/src/com/android/services/telephony/TelephonyConnection.java b/src/com/android/services/telephony/TelephonyConnection.java
-index 05c3f211f..189f86ec7 100644
+index 4f77661be..2191d7dde 100644
 --- a/src/com/android/services/telephony/TelephonyConnection.java
 +++ b/src/com/android/services/telephony/TelephonyConnection.java
 @@ -25,6 +25,7 @@ import android.os.Handler;
@@ -22,10 +22,10 @@ index 05c3f211f..189f86ec7 100644
  import android.os.Message;
  import android.os.PersistableBundle;
 +import android.os.SystemProperties;
+ import android.widget.Toast;
  import android.telecom.CallAudioState;
  import android.telecom.ConferenceParticipant;
- import android.telecom.Connection;
-@@ -747,6 +748,9 @@ abstract class TelephonyConnection extends Connection implements Holdable {
+@@ -809,6 +810,9 @@ abstract class TelephonyConnection extends Connection implements Holdable,
              if (!mSendMicMuteToAudioManager) {
                  getPhone().setMute(audioState.isMuted());
              }

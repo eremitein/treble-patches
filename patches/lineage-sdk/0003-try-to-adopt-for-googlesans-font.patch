@@ -1,7 +1,7 @@
 From b4d81c50d07d8a98d715e1d80f069c75846f09f0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 13:27:46 +0200
-Subject: [PATCH 3/5] try to adopt for googlesans font
+Subject: [PATCH 3/5] adopt for googlesans font
 
 ---
  lineage/res/res/values/dimens.xml | 4 ++--

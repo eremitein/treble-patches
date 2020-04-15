@@ -1,4 +1,4 @@
-From 2fe46da79d5eb0c70b9b53bc38207aca0a36a7eb Mon Sep 17 00:00:00 2001
+From a2ba43348c84f1399d4280913f66859099ace488 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 07:23:44 +0200
 Subject: [PATCH 17/17] fix offline charger v5

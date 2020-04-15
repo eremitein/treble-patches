@@ -1,4 +1,4 @@
-From 5cf7877d38511763d38ea0f29e29cf791c79fc99 Mon Sep 17 00:00:00 2001
+From 4bb5a357ef5ab26f2117ef0a2d37ebf26a70e73e Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 5 Dec 2019 16:01:26 +0100
 Subject: [PATCH 16/17] Revert "HACK XXX Never check adb key"

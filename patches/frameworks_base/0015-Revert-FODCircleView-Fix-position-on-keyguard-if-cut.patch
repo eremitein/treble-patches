@@ -1,0 +1,27 @@
+From d3a4e2664365108e0503c1aadf42dc9846444a5d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 26 Mar 2020 18:41:30 +0200
+Subject: [PATCH 015/113] Revert "FODCircleView: Fix position on keyguard if
+ cutout is hidden"
+
+This reverts commit 9bf0988d26599ea2bd495c0b2622db1034dda6e2.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java      | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 8ba46743341..927a5486d9e 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -536,7 +536,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+ 
+         if (mIsKeyguard) {
+             mParams.x = mPositionX;
+-            mParams.y = mPositionY - cutoutMaskedExtra;
++            mParams.y = mPositionY;
+         }
+ 
+         if (mIsDreaming) {
+-- 
+2.17.1
+

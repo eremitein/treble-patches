@@ -1,7 +1,7 @@
-From 2a1f0eb277e9271be74c1300c7ba075139d6a20f Mon Sep 17 00:00:00 2001
+From 10bde9076f0f291fcd07adf536689b6e8819fe3e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 4 Mar 2020 18:09:47 +0200
-Subject: [PATCH 06/13] Revert "Update the behavior of the Dark theme slice"
+Subject: [PATCH 06/14] Revert "Update the behavior of the Dark theme slice"
 
 This reverts commit 5f42f2f7a7589fed30caae1d11d0e9757639caf1.
 

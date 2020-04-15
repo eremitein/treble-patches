@@ -1,7 +1,7 @@
-From a5d489031a83b010fe4f5798ca0346c485c43aec Mon Sep 17 00:00:00 2001
+From dfb05605bc176d14b2e87fec5638f83fd677d5fd Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 9 Dec 2018 15:56:59 +0100
-Subject: [PATCH 06/13] Revert "Set rlimit rtprio for cameraserver"
+Subject: [PATCH 06/14] Revert "Set rlimit rtprio for cameraserver"
 
 This reverts commit 4ae244cab4fe715fc2729e906b7dda3075fbbac3.
 
@@ -12,7 +12,7 @@ like this instruction at all (read: this prevents boot)
  1 file changed, 1 deletion(-)
 
 diff --git a/camera/cameraserver/cameraserver.rc b/camera/cameraserver/cameraserver.rc
-index a9aae0b15..fea5a1d5c 100644
+index a9aae0b15c..fea5a1d5c6 100644
 --- a/camera/cameraserver/cameraserver.rc
 +++ b/camera/cameraserver/cameraserver.rc
 @@ -4,4 +4,3 @@ service cameraserver /system/bin/cameraserver

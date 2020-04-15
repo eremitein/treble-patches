@@ -1,7 +1,7 @@
-From 8347d74e09fe238feae6ac9665f022bb21315441 Mon Sep 17 00:00:00 2001
+From 5231bc81f66e5b2c6bf685729444babb3389b7f4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 9 Jan 2020 11:33:14 +0200
-Subject: [PATCH 1/5] update 'daisy' overlay (fixed)
+Subject: [PATCH 1/4] update 'daisy' overlay (fixed)
 
 	modified:   Xiaomi/MiA2Lite/res/values/config.xml
 	modified:   Xiaomi/MiA2Lite/res/values/notch.xml

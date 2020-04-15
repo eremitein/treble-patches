@@ -1,0 +1,28 @@
+From 1d2c41026baa675062cc6a2b0cc056ba410dd32f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 21:51:35 +0200
+Subject: [PATCH 102/113] fix DroidSans compilation
+
+	modified:   data/fonts/Android.mk
+---
+ data/fonts/Android.mk | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/data/fonts/Android.mk b/data/fonts/Android.mk
+index 454dceb9c82..f2166e3100e 100644
+--- a/data/fonts/Android.mk
++++ b/data/fonts/Android.mk
+@@ -35,8 +35,8 @@ endef
+ ##########################################
+ # The following fonts are just symlinks, for backward compatibility.
+ ##########################################
+-$(eval $(call create-font-symlink,DroidSans.ttf,Roboto-Regular.ttf))
+-$(eval $(call create-font-symlink,DroidSans-Bold.ttf,Roboto-Bold.ttf))
++$(eval $(call create-font-symlink,DroidSans.ttf,GoogleSans-Regular.ttf))
++$(eval $(call create-font-symlink,DroidSans-Bold.ttf,GoogleSans-Bold.ttf))
+ $(eval $(call create-font-symlink,DroidSerif-Regular.ttf,NotoSerif-Regular.ttf))
+ $(eval $(call create-font-symlink,DroidSerif-Bold.ttf,NotoSerif-Bold.ttf))
+ $(eval $(call create-font-symlink,DroidSerif-Italic.ttf,NotoSerif-Italic.ttf))
+-- 
+2.17.1
+

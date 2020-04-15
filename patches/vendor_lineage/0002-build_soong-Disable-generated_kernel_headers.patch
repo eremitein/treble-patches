@@ -1,18 +1,18 @@
-From 1b264a8d9b4d906bb2f5348eadec1f95bb2becf4 Mon Sep 17 00:00:00 2001
+From c98452ea57b6a11696dbfe7918bc7341362c83ec Mon Sep 17 00:00:00 2001
 From: AndyCGYan <GeForce8800Ultra@gmail.com>
 Date: Sun, 3 Mar 2019 14:07:33 +0800
-Subject: [PATCH 2/3] build_soong: Disable generated_kernel_headers
+Subject: [PATCH 2/4] build_soong: Disable generated_kernel_headers
 
 Change-Id: I630857cec208f1830e776bf5031d7bb9bc4435d0
 ---
- build/soong/Android.bp | 22 ----------------------
- 1 file changed, 22 deletions(-)
+ build/soong/Android.bp | 26 --------------------------
+ 1 file changed, 26 deletions(-)
 
 diff --git a/build/soong/Android.bp b/build/soong/Android.bp
-index 3e98349b..108c52f7 100644
+index cbea01f3..108c52f7 100644
 --- a/build/soong/Android.bp
 +++ b/build/soong/Android.bp
-@@ -22,25 +22,3 @@ bootstrap_go_package {
+@@ -22,29 +22,3 @@ bootstrap_go_package {
      ],
      pluginFor: ["soong_build"],
  }
@@ -24,7 +24,11 @@ index 3e98349b..108c52f7 100644
 -    cmd: "$(PATH_OVERRIDE_SOONG) $(KERNEL_MAKE_CMD) $(KERNEL_MAKE_FLAGS) -C $(TARGET_KERNEL_SOURCE) O=$(KERNEL_BUILD_OUT_PREFIX)$(genDir) ARCH=$(KERNEL_ARCH) $(KERNEL_CROSS_COMPILE) headers_install",
 -
 -    // Directories that can be imported by a cc_* module generated_headers property
--    export_include_dirs: ["usr/include", "usr/techpack/audio/include"],
+-    export_include_dirs: [
+-        "usr/include",
+-        "usr/include/audio/include/uapi",
+-        "usr/techpack/audio/include"
+-    ],
 -
 -    // Sources for dependency tracking
 -    dep_root: "$(TARGET_KERNEL_SOURCE)",

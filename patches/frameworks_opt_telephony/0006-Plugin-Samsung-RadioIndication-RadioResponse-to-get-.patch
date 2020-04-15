@@ -1,4 +1,4 @@
-From d26ecd8b044fafe9b430f5de632df76d1a960e0e Mon Sep 17 00:00:00 2001
+From 02f4d0591444259c1632062c9dd890ccb2dd1bfa Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 12 Aug 2019 23:49:56 +0200
 Subject: [PATCH 6/9] Plugin Samsung RadioIndication/RadioResponse to get
@@ -15,7 +15,7 @@ Change-Id: Ic3d5801627bf3dd72d2e7b6bb3741b9d368d1f07
  create mode 100644 src/java/com/android/internal/telephony/SamsungRadioResponse.java
 
 diff --git a/Android.bp b/Android.bp
-index ae678cb54..bb9925beb 100644
+index 536ed1416..8762f8fd7 100644
 --- a/Android.bp
 +++ b/Android.bp
 @@ -56,6 +56,7 @@ java_library {
@@ -25,9 +25,9 @@ index ae678cb54..bb9925beb 100644
 +        "vendor.samsung.hardware.radio-V1.2-java",
          "voip-common",
          "ims-common",
-         "services",
+         "telephony-ext",
 diff --git a/src/java/com/android/internal/telephony/RIL.java b/src/java/com/android/internal/telephony/RIL.java
-index 65d007f74..66954dcd8 100644
+index 1e111ac3a..7b242b807 100644
 --- a/src/java/com/android/internal/telephony/RIL.java
 +++ b/src/java/com/android/internal/telephony/RIL.java
 @@ -248,6 +248,7 @@ public class RIL extends BaseCommands implements CommandsInterface {

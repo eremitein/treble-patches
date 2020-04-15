@@ -1,7 +1,7 @@
-From f1ea075fdb2ac66469531bb794f837972bd3dbce Mon Sep 17 00:00:00 2001
+From f425af8c942937a3ceb5a7eb12d9710a3ab75819 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 19 Mar 2020 23:08:47 +0200
-Subject: [PATCH 12/12] try to add fm-radio [1/2]
+Subject: [PATCH 12/13] try to add fm-radio [1/2]
 
 	modified:   target/board/BoardConfigGsiCommon.mk
 
@@ -11,7 +11,7 @@ Change-Id: I83860d54579cccc68be528ca7a81c3595fd92e68
  1 file changed, 4 insertions(+)
 
 diff --git a/target/board/BoardConfigGsiCommon.mk b/target/board/BoardConfigGsiCommon.mk
-index 702ef3c..f3c878e 100644
+index 702ef3c66..f3c878e76 100644
 --- a/target/board/BoardConfigGsiCommon.mk
 +++ b/target/board/BoardConfigGsiCommon.mk
 @@ -59,3 +59,7 @@ TARGET_ENABLE_MEDIADRM_64 :=

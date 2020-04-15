@@ -1,0 +1,62 @@
+From 536131cc484623f0948ed6f1a4ecd3e9d944ea86 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 15 Apr 2020 04:39:38 +0300
+Subject: [PATCH 1/7] Revert "Revert "QS Header data usage info [2/2]""
+
+This reverts commit 3e66510f3ba927e899bd4292ac7ee6ebf6053e00.
+---
+ res/values/cr_strings.xml                             | 4 ++++
+ res/xml/crdroid_settings_quicksettings.xml            | 8 ++++++++
+ src/com/crdroid/settings/fragments/QuickSettings.java | 2 ++
+ 3 files changed, 14 insertions(+)
+
+diff --git a/res/values/cr_strings.xml b/res/values/cr_strings.xml
+index d9d982db..f2fc23d2 100644
+--- a/res/values/cr_strings.xml
++++ b/res/values/cr_strings.xml
+@@ -2519,6 +2519,10 @@
+     <string name="pattern_da_da_dzzz">da-da-dzzz</string>
+     <string name="pattern_da_dzzz_da">da-dzzz-da</string>
+ 
++    <!-- QS data usage -->
++    <string name="qs_datausage_title">Show data usage in qs header</string>
++    <string name="qs_datausage_subtitle">Shows data usage in quick settings header of sim used for data</string>
++
+     <!-- Sound: Title for the option defining the phone ringtone for slot1 on Muilti SIM device. [CHAR LIMIT=50] -->
+     <string name="ringtone1_title">Phone ringtone - SIM 1</string>
+ 
+diff --git a/res/xml/crdroid_settings_quicksettings.xml b/res/xml/crdroid_settings_quicksettings.xml
+index 7970fd41..dd2cdc51 100644
+--- a/res/xml/crdroid_settings_quicksettings.xml
++++ b/res/xml/crdroid_settings_quicksettings.xml
+@@ -205,6 +205,14 @@
+             android:title="@string/qs_blur_title"
+             android:summary="@string/qs_blur_summary" />
+ 
++        <!-- QS data usage  -->
++        <com.crdroid.settings.preferences.SystemSettingSwitchPreference
++            android:key="qs_datausage"
++            android:title="@string/qs_datausage_title"
++            android:icon="@drawable/ic_traffic"
++            android:summary="@string/qs_datausage_subtitle"
++            android:defaultValue="false" />
++
+         <!-- QS clock -->
+         <com.crdroid.settings.preferences.SystemSettingSwitchPreference
+             android:key="show_qs_clock"
+diff --git a/src/com/crdroid/settings/fragments/QuickSettings.java b/src/com/crdroid/settings/fragments/QuickSettings.java
+index a57c33f8..762c30de 100644
+--- a/src/com/crdroid/settings/fragments/QuickSettings.java
++++ b/src/com/crdroid/settings/fragments/QuickSettings.java
+@@ -88,6 +88,8 @@ public class QuickSettings extends SettingsPreferenceFragment implements Indexab
+                 Settings.System.QS_BATTERY_LOCATION, 0, UserHandle.USER_CURRENT);
+         Settings.System.putIntForUser(resolver,
+                 Settings.System.QS_BATTERY_STYLE, -1, UserHandle.USER_CURRENT);
++        Settings.System.putIntForUser(resolver,
++                Settings.System.QS_DATAUSAGE, 0, UserHandle.USER_CURRENT);
+         Settings.System.putIntForUser(resolver,
+                 Settings.System.QS_SHOW_BATTERY_PERCENT, 2, UserHandle.USER_CURRENT);
+         Settings.System.putIntForUser(resolver,
+-- 
+2.17.1
+

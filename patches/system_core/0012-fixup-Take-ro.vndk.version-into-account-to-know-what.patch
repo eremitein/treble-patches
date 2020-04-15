@@ -1,4 +1,4 @@
-From 88e6ca351dcff29423b88fe35d67d75e18e18fbd Mon Sep 17 00:00:00 2001
+From 487eab841d5b14ff517c476242cc13d979e70547 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 1 Oct 2019 13:34:35 +0200
 Subject: [PATCH 12/17] fixup! Take ro.vndk.version into account to know what

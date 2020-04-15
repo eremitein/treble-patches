@@ -1,0 +1,60 @@
+From 1b1a86c7b53a60501ad3769cbc5b8ee3543d095f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 26 Mar 2020 18:47:21 +0200
+Subject: [PATCH 025/113] Revert "FODCircleView: Add partial wakelock on aod"
+
+This reverts commit f01eb66540efe295b0334b10a69d706a1c3f359d.
+---
+ .../android/systemui/biometrics/FODCircleView.java  | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 0f2a25cf3bb..569cbf75d64 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -26,7 +26,6 @@ import android.graphics.PixelFormat;
+ import android.graphics.Point;
+ import android.os.Handler;
+ import android.os.Looper;
+-import android.os.PowerManager;
+ import android.os.RemoteException;
+ import android.provider.Settings;
+ import android.view.Display;
+@@ -75,9 +74,6 @@ public class FODCircleView extends ImageView {
+ 
+     private Handler mHandler;
+ 
+-    private PowerManager mPowerManager;
+-    private PowerManager.WakeLock mWakeLock;
+-
+     private Timer mBurnInProtectionTimer;
+ 
+     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
+@@ -104,14 +100,8 @@ public class FODCircleView extends ImageView {
+             if (dreaming) {
+                 mBurnInProtectionTimer = new Timer();
+                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
+-                if (!mWakeLock.isHeld()) {
+-                    mWakeLock.acquire();
+-                }
+             } else if (mBurnInProtectionTimer != null) {
+                 mBurnInProtectionTimer.cancel();
+-                if (mWakeLock.isHeld()) {
+-                    mWakeLock.release();
+-                }
+             }
+         }
+ 
+@@ -203,9 +193,6 @@ public class FODCircleView extends ImageView {
+                 mCurrentDimAmount = drawingDimAmount;
+             }
+         });
+-
+-        mPowerManager = context.getSystemService(PowerManager.class);
+-        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK, "FODCircleView");
+     }
+ 
+     @Override
+-- 
+2.17.1
+

@@ -1,0 +1,26 @@
+From 4c9232582363c6cbedba2fec9d94f99466d2ab12 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 28 Mar 2020 07:54:22 +0200
+Subject: [PATCH 12/14] move down from searchbar
+
+	modified:   res/values/dimens.xml
+---
+ res/values/dimens.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/res/values/dimens.xml b/res/values/dimens.xml
+index fc0d03a869..fe4d5e04e4 100755
+--- a/res/values/dimens.xml
++++ b/res/values/dimens.xml
+@@ -112,7 +112,7 @@
+     <dimen name="switchbar_subsettings_margin_start">72dp</dimen>
+     <dimen name="switchbar_subsettings_margin_end">16dp</dimen>
+ 
+-    <dimen name="search_bar_margin">8dp</dimen>
++    <dimen name="search_bar_margin">16dp</dimen>
+ 
+     <dimen name="search_bar_height">48dp</dimen>
+     <dimen name="search_bar_corner_radius">24dp</dimen>
+-- 
+2.17.1
+

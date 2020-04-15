@@ -1,7 +1,7 @@
-From 471e6d627c77c368439b8a7b144033b58402bb88 Mon Sep 17 00:00:00 2001
+From 2d768d3c2bfddf1b0f16734391724f978a63e894 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 24 Apr 2018 00:14:28 +0200
-Subject: [PATCH 01/13] FIH devices: Fix "Earpiece" audio output
+Subject: [PATCH 01/14] FIH devices: Fix "Earpiece" audio output
 
 On some FIH devices (confirmed on Razer, and probably on Aquos SS2),
 Earpiece is not listed in attachedDevices, and devicePort's profile
@@ -16,7 +16,7 @@ Change-Id: I4a88ba6d34d0fcd346eeea2ca903772f0271040a
  1 file changed, 24 insertions(+), 3 deletions(-)
 
 diff --git a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
-index 5f820c214..0b561320b 100644
+index 5f820c2145..0b561320b8 100644
 --- a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
 +++ b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
 @@ -395,14 +395,22 @@ Return<AudioGainTraits::Element> AudioGainTraits::deserialize(const xmlNode *cur

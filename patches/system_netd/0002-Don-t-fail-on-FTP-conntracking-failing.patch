@@ -1,4 +1,4 @@
-From d6d0fc839241444412d9c5ce11bef7c5c7f2582b Mon Sep 17 00:00:00 2001
+From 107c7e3fbff713065def6e10f11e7210929726fe Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 29 Jul 2019 18:09:12 +0200
 Subject: [PATCH 2/2] Don't fail on FTP conntracking failing
@@ -10,18 +10,19 @@ Thanks @zamrih for pin-pointing the issue and validating fix
 
 Change-Id: I3d9c865eb5a4b421f9983210c2ceae62b4906234
 ---
- server/TetherController.cpp | 12 +++++++++---
- 1 file changed, 9 insertions(+), 3 deletions(-)
+ server/TetherController.cpp | 14 +++++++++-----
+ 1 file changed, 9 insertions(+), 5 deletions(-)
 
 diff --git a/server/TetherController.cpp b/server/TetherController.cpp
-index d9439be6..2fa4a0c9 100644
+index 64ff80b0..2fa4a0c9 100644
 --- a/server/TetherController.cpp
 +++ b/server/TetherController.cpp
-@@ -700,13 +700,19 @@ int TetherController::setForwardRules(bool add, const char *intIface, const char
+@@ -700,15 +700,19 @@ int TetherController::setForwardRules(bool add, const char *intIface, const char
          return -EREMOTEIO;
      }
  
 -    std::vector<std::string> v4 = {
+-#ifndef IGNORES_FTP_PPTP_CONNTRACK_FAILURE
 +    std::vector<std::string> v4Ftp = {
              "*raw",
 -            StringPrintf("%s %s -p tcp --dport 21 -i %s -j CT --helper ftp", op,
@@ -31,6 +32,7 @@ index d9439be6..2fa4a0c9 100644
              StringPrintf("%s %s -p tcp --dport 1723 -i %s -j CT --helper pptp", op,
                           LOCAL_RAW_PREROUTING, intIface),
              "COMMIT",
+-#endif
 +    };
 +    if(iptablesRestoreFunction(V4, Join(v4Ftp, '\n'), nullptr) == -1) {
 +            ALOGE("Failed adding iptables CT target on FTP.");

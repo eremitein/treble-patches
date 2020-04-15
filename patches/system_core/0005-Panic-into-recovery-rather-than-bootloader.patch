@@ -1,4 +1,4 @@
-From 08706f65f7112de7755b2db9a4ec61736dfb0126 Mon Sep 17 00:00:00 2001
+From 0e4639523028cbb30455554a485c5358a47137b6 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 4 Sep 2019 21:11:48 +0200
 Subject: [PATCH 05/17] Panic into recovery rather than bootloader
@@ -8,19 +8,22 @@ than the OEM, but we have TWRP to access last_kmsg/pstore
 
 Change-Id: If04bb6572dc66677d7b44f7d302b2d69ce526200
 ---
- init/reboot_utils.cpp | 2 +-
- 1 file changed, 1 insertion(+), 1 deletion(-)
+ init/reboot_utils.cpp | 4 ----
+ 1 file changed, 4 deletions(-)
 
 diff --git a/init/reboot_utils.cpp b/init/reboot_utils.cpp
-index de085cc9b..36d39b50d 100644
+index 9ab83de93..36d39b50d 100644
 --- a/init/reboot_utils.cpp
 +++ b/init/reboot_utils.cpp
-@@ -33,7 +33,7 @@
+@@ -33,11 +33,7 @@
  namespace android {
  namespace init {
  
+-#ifdef REBOOT_RECOVERY_ON_PANIC
+ static std::string init_fatal_reboot_target = "recovery";
+-#else
 -static std::string init_fatal_reboot_target = "bootloader";
-+static std::string init_fatal_reboot_target = "recovery";
+-#endif
  
  void SetFatalRebootTarget() {
      std::string cmdline;

@@ -1,7 +1,7 @@
-From 418d5524be6b0d8c4cdd6e8e2de32c4562ed3e39 Mon Sep 17 00:00:00 2001
+From 6719a82a26e0a1b29aaa3c35cdb9fea61377415a Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 12 Aug 2019 23:48:37 +0200
-Subject: [PATCH 4/7] Some Samsung devices requires lying colorspace
+Subject: [PATCH 4/8] Some Samsung devices requires lying colorspace
 
 Change-Id: I4153b8e7abc10c519565e4e4386c6388621477b2
 ---

@@ -1,4 +1,4 @@
-From 48ed6352e36f9ff219d977d907dafd231b20ba54 Mon Sep 17 00:00:00 2001
+From 8ffc2b743bc51dcdad5fa9db92b2ec49667a4682 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Fri, 6 Sep 2019 15:09:45 +0200
 Subject: [PATCH 06/17] HACK XXX Never check adb key

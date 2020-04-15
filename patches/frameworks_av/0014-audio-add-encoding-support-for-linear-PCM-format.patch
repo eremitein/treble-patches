@@ -1,0 +1,151 @@
+From 5e4e96147d7ba7c83ee9c8f8401d6db2a56462df Mon Sep 17 00:00:00 2001
+From: Mingming Yin <mingming@codeaurora.org>
+Date: Wed, 19 Aug 2015 20:32:33 -0700
+Subject: [PATCH 14/14] audio: add encoding support for linear PCM format
+
+- add encoding support for linear PCM format.
+
+Change-Id: Iecf402064d67d35d5057b814c842d79af92756d0
+---
+ media/libmedia/MediaProfiles.cpp              | 11 +++++++-
+ media/libmedia/include/media/MediaProfiles.h  |  1 +
+ media/libmedia/include/media/mediarecorder.h  |  1 +
+ .../StagefrightRecorder.cpp                   | 26 +++++++++++++------
+ .../StagefrightRecorder.h                     |  2 ++
+ 5 files changed, 32 insertions(+), 9 deletions(-)
+
+diff --git a/media/libmedia/MediaProfiles.cpp b/media/libmedia/MediaProfiles.cpp
+index 98c54971ad..86b4807018 100644
+--- a/media/libmedia/MediaProfiles.cpp
++++ b/media/libmedia/MediaProfiles.cpp
+@@ -49,7 +49,8 @@ const MediaProfiles::NameToTagMap MediaProfiles::sAudioEncoderNameMap[] = {
+     {"aac",    AUDIO_ENCODER_AAC},
+     {"heaac",  AUDIO_ENCODER_HE_AAC},
+     {"aaceld", AUDIO_ENCODER_AAC_ELD}, 
+-    {"opus",   AUDIO_ENCODER_OPUS}
++    {"opus",   AUDIO_ENCODER_OPUS},
++    {"lpcm",  AUDIO_ENCODER_LPCM},
+ };
+ 
+ const MediaProfiles::NameToTagMap MediaProfiles::sFileFormatMap[] = {
+@@ -800,6 +801,7 @@ MediaProfiles::createDefaultCamcorderProfiles(MediaProfiles *profiles)
+ MediaProfiles::createDefaultAudioEncoders(MediaProfiles *profiles)
+ {
+     profiles->mAudioEncoders.add(createDefaultAmrNBEncoderCap());
++    profiles->mAudioEncoders.add(createDefaultLpcmEncoderCap());
+ }
+ 
+ /*static*/ void
+@@ -834,6 +836,13 @@ MediaProfiles::createDefaultAmrNBEncoderCap()
+         AUDIO_ENCODER_AMR_NB, 5525, 12200, 8000, 8000, 1, 1);
+ }
+ 
++/*static*/ MediaProfiles::AudioEncoderCap*
++MediaProfiles::createDefaultLpcmEncoderCap()
++{
++    return new MediaProfiles::AudioEncoderCap(
++        AUDIO_ENCODER_LPCM, 768000, 4608000, 8000, 48000, 1, 6);
++}
++
+ /*static*/ void
+ MediaProfiles::createDefaultImageEncodingQualityLevels(MediaProfiles *profiles)
+ {
+diff --git a/media/libmedia/include/media/MediaProfiles.h b/media/libmedia/include/media/MediaProfiles.h
+index 3e8e7c854e..90a1aaaddc 100644
+--- a/media/libmedia/include/media/MediaProfiles.h
++++ b/media/libmedia/include/media/MediaProfiles.h
+@@ -433,6 +433,7 @@ private:
+     static VideoEncoderCap* createDefaultH263VideoEncoderCap();
+     static VideoEncoderCap* createDefaultM4vVideoEncoderCap();
+     static AudioEncoderCap* createDefaultAmrNBEncoderCap();
++    static AudioEncoderCap* createDefaultLpcmEncoderCap();
+ 
+     static int findTagForName(const NameToTagMap *map, size_t nMappings, const char *name);
+ 
+diff --git a/media/libmedia/include/media/mediarecorder.h b/media/libmedia/include/media/mediarecorder.h
+index 2dd4b7f807..22593ab0b0 100644
+--- a/media/libmedia/include/media/mediarecorder.h
++++ b/media/libmedia/include/media/mediarecorder.h
+@@ -96,6 +96,7 @@ enum audio_encoder {
+     AUDIO_ENCODER_AAC_ELD = 5,
+     AUDIO_ENCODER_VORBIS = 6,
+     AUDIO_ENCODER_OPUS = 7,
++    AUDIO_ENCODER_LPCM = 8,
+ 
+     AUDIO_ENCODER_LIST_END // must be the last - used to validate the audio encoder type
+ };
+diff --git a/media/libmediaplayerservice/StagefrightRecorder.cpp b/media/libmediaplayerservice/StagefrightRecorder.cpp
+index 71c79720fe..6fb34273f6 100644
+--- a/media/libmediaplayerservice/StagefrightRecorder.cpp
++++ b/media/libmediaplayerservice/StagefrightRecorder.cpp
+@@ -1160,14 +1160,15 @@ sp<MediaCodecSource> StagefrightRecorder::createAudioSource() {
+ 
+     sp<MediaCodecSource> audioEncoder =
+             MediaCodecSource::Create(mLooper, format, audioSource);
+-    sp<AudioSystem::AudioDeviceCallback> callback = mAudioDeviceCallback.promote();
++    if (audioEncoder == NULL) {
++        ALOGE("Failed to create audio encoder");
++    } else {
++        sp<AudioSystem::AudioDeviceCallback> callback = mAudioDeviceCallback.promote();
+     if (mDeviceCallbackEnabled && callback != 0) {
+         audioSource->addAudioDeviceCallback(callback);
+     }
+     mAudioSourceNode = audioSource;
+ 
+-    if (audioEncoder == NULL) {
+-        ALOGE("Failed to create audio encoder");
+     }
+ 
+     return audioEncoder;
+@@ -1229,14 +1230,23 @@ status_t StagefrightRecorder::setupRawAudioRecording() {
+     }
+ 
+     sp<MediaCodecSource> audioEncoder = createAudioSource();
+-    if (audioEncoder == NULL) {
++    if (audioEncoder != NULL) {
++        CHECK(mWriter != 0);
++        mWriter->addSource(audioEncoder);
++        mAudioEncoderSource = audioEncoder;
++    } else if (audioEncoder == NULL && mAudioEncoder == AUDIO_ENCODER_LPCM) {
++        CHECK(mWriter != 0);
++        sp<MediaSource> src = setPCMRecording();
++        if (src == NULL) {
++            ALOGE("Recording source is null");
++            return UNKNOWN_ERROR;
++        }
++        mAudioSourceNode =  reinterpret_cast<AudioSource* > (src.get());
++        mWriter->addSource(src);
++    } else if (audioEncoder == NULL) {
+         return UNKNOWN_ERROR;
+     }
+ 
+-    CHECK(mWriter != 0);
+-    mWriter->addSource(audioEncoder);
+-    mAudioEncoderSource = audioEncoder;
+-
+     if (mMaxFileDurationUs != 0) {
+         mWriter->setMaxFileDuration(mMaxFileDurationUs);
+     }
+diff --git a/media/libmediaplayerservice/StagefrightRecorder.h b/media/libmediaplayerservice/StagefrightRecorder.h
+index 8bf083a11e..98d6a8e3ed 100644
+--- a/media/libmediaplayerservice/StagefrightRecorder.h
++++ b/media/libmediaplayerservice/StagefrightRecorder.h
+@@ -23,6 +23,7 @@
+ #include <camera/CameraParameters.h>
+ #include <utils/String8.h>
+ 
++#include <media/MediaSource.h>
+ #include <system/audio.h>
+ 
+ #include <media/hardware/MetadataBufferType.h>
+@@ -218,6 +219,7 @@ private:
+     void clipNumberOfAudioChannels();
+     void setDefaultProfileIfNecessary();
+     void setDefaultVideoEncoderIfNecessary();
++    virtual sp<MediaSource> setPCMRecording() {return NULL;}
+ 
+ 
+     StagefrightRecorder(const StagefrightRecorder &);
+-- 
+2.17.1
+

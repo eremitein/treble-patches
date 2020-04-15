@@ -1,0 +1,105 @@
+From e879a1ac7936943e3625a8e161d99faefaeabd3f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 8 Feb 2020 16:39:09 +0200
+Subject: [PATCH 07/13] replace to Q Google sounds
+
+  * from
+  https://github.com/Havoc-OS/android_build/commit/8c8e17dce8164fa7e4bea0e2e4787e22bc62c1c9
+
+	modified:   target/product/full_base.mk
+	modified:   target/product/gsi_common.mk
+	modified:   target/product/handheld_system.mk
+	modified:   target/product/mainline.mk
+---
+ target/product/full_base.mk       | 6 +++---
+ target/product/gsi_common.mk      | 7 ++++---
+ target/product/handheld_system.mk | 4 ++--
+ target/product/mainline.mk        | 4 ++--
+ 4 files changed, 11 insertions(+), 10 deletions(-)
+
+diff --git a/target/product/full_base.mk b/target/product/full_base.mk
+index f3fb8c306..7f83c69f7 100644
+--- a/target/product/full_base.mk
++++ b/target/product/full_base.mk
+@@ -44,8 +44,8 @@ PRODUCT_PACKAGES += \
+ ifeq ($(LINEAGE_BUILD),)
+ # Additional settings used in all AOSP builds
+ PRODUCT_PROPERTY_OVERRIDES := \
+-    ro.config.ringtone=Ring_Synth_04.ogg \
+-    ro.config.notification_sound=pixiedust.ogg
++    ro.config.ringtone=The_big_adventure.ogg \
++    ro.config.notification_sound=Popcorn.ogg
+ endif
+ 
+ # Put en_US first in the list, so make it default.
+@@ -53,7 +53,7 @@ PRODUCT_LOCALES := en_US
+ 
+ # Get some sounds
+ ifeq ($(LINEAGE_BUILD),)
+-$(call inherit-product-if-exists, frameworks/base/data/sounds/AllAudio.mk)
++$(call inherit-product-if-exists, frameworks/base/data/sounds/Google.mk)
+ else
+ $(call inherit-product-if-exists, frameworks/base/data/sounds/AudioPackage14.mk)
+ endif
+diff --git a/target/product/gsi_common.mk b/target/product/gsi_common.mk
+index 7824a3cbb..d33db7638 100644
+--- a/target/product/gsi_common.mk
++++ b/target/product/gsi_common.mk
+@@ -22,7 +22,7 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_product.mk)
+ 
+ # Default AOSP sounds
+ ifeq ($(LINEAGE_BUILD),)
+-$(call inherit-product-if-exists, frameworks/base/data/sounds/AllAudio.mk)
++$(call inherit-product-if-exists, frameworks/base/data/sounds/Google.mk)
+ else
+ $(call inherit-product-if-exists, frameworks/base/data/sounds/AudioPackage14.mk)
+ endif
+@@ -35,8 +35,9 @@ PRODUCT_PRODUCT_PROPERTIES += \
+ ifeq ($(LINEAGE_BUILD),)
+ # Additional settings used in all AOSP builds
+ PRODUCT_PRODUCT_PROPERTIES += \
+-    ro.config.ringtone=Ring_Synth_04.ogg \
+-    ro.config.notification_sound=pixiedust.ogg \
++    ro.config.ringtone=The_big_adventure.ogg \
++    ro.config.notification_sound=Popcorn.ogg \
++    ro.config.alarm_alert=Bright_morning.ogg \
+ 
+ endif
+ 
+diff --git a/target/product/handheld_system.mk b/target/product/handheld_system.mk
+index e5771cc94..947ad4c09 100644
+--- a/target/product/handheld_system.mk
++++ b/target/product/handheld_system.mk
+@@ -88,6 +88,6 @@ PRODUCT_PROPERTY_OVERRIDES += \
+ 
+ ifeq ($(LINEAGE_BUILD),)
+ PRODUCT_PROPERTY_OVERRIDES += \
+-    ro.config.notification_sound=OnTheHunt.ogg \
+-    ro.config.alarm_alert=Alarm_Classic.ogg
++    ro.config.notification_sound=Popcorn.ogg \
++    ro.config.alarm_alert=Bright_morning.ogg
+ endif
+diff --git a/target/product/mainline.mk b/target/product/mainline.mk
+index 70da48b25..20039b90e 100644
+--- a/target/product/mainline.mk
++++ b/target/product/mainline.mk
+@@ -25,14 +25,14 @@ $(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_vendor.mk)
+ $(call inherit-product, $(SRC_TARGET_DIR)/product/telephony_product.mk)
+ 
+ ifeq ($(LINEAGE_BUILD),)
+-$(call inherit-product, frameworks/base/data/sounds/AllAudio.mk)
++$(call inherit-product, frameworks/base/data/sounds/Google.mk)
+ else
+ $(call inherit-product, frameworks/base/data/sounds/AudioPackage14.mk)
+ endif
+ 
+ ifeq ($(LINEAGE_BUILD),)
+ PRODUCT_PROPERTY_OVERRIDES += \
+-    ro.config.ringtone=Ring_Synth_04.ogg \
++    ro.config.ringtone=The_big_adventure.ogg \
+     ro.com.android.dataroaming=true \
+ 
+ endif
+-- 
+2.17.1
+

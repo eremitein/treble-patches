@@ -1,0 +1,34 @@
+From 6f92e42b4a7e0f0e0faadbbd1fe3cf4458a34bf8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 20:59:43 +0200
+Subject: [PATCH 108/113] add Roboto minimal font pack
+
+	modified:   data/fonts/fonts.xml
+---
+ data/fonts/fonts.xml | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index 5fe70463878..bfe68ed72ca 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -59,6 +59,16 @@
+     <alias name="sans-serif-condensed-light" to="sans-serif-condensed" weight="300" />
+     <alias name="sans-serif-condensed-medium" to="sans-serif-condensed" weight="500" />
+ 
++    <family name="roboto-mini">
++        <font weight="400" style="normal">RobotoMini-Regular.ttf</font>
++        <font weight="400" style="italic">RobotoMini-Italic.ttf</font>
++        <font weight="500" style="normal">RobotoMini-Medium.ttf</font>
++        <font weight="500" style="italic">RobotoMini-MediumItalic.ttf</font>
++        <font weight="700" style="normal">RobotoMini-Bold.ttf</font>
++        <font weight="700" style="italic">RobotoMini-BoldItalic.ttf</font>
++    </family>
++    <alias name="roboto-mini-bold" to="roboto-mini" weight="700" />
++
+     <family name="serif">
+         <font weight="400" style="normal">NotoSerif-Regular.ttf</font>
+         <font weight="700" style="normal">NotoSerif-Bold.ttf</font>
+-- 
+2.17.1
+

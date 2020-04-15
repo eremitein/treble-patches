@@ -1,0 +1,489 @@
+From f36a356d23922792f8b31077155f7c2b5fb16985 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 14 Dec 2019 14:14:32 +0200
+Subject: [PATCH 093/113] tuning statusbar looking
+
+	modified:   core/res/res/values/dimens.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_alarm.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_alarm_dim.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_camera.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_data_saver.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_dnd.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_headset.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_headset_mic.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_hotspot.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_nfc.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_ringer_silent.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_ringer_vibrate.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_rotate_landscape.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_rotate_portrait.xml
+	modified:   packages/SystemUI/res/drawable/stat_sys_sensors_off.xml
+	modified:   packages/SystemUI/res/layout/mobile_signal_group.xml
+	modified:   packages/SystemUI/res/layout/status_bar_mobile_signal_group.xml
+	modified:   packages/SystemUI/res/layout/status_bar_wifi_group.xml
+	modified:   packages/SystemUI/res/values/dimens.xml
+---
+ core/res/res/values/dimens.xml                |  4 +--
+ .../SystemUI/res/drawable/stat_sys_alarm.xml  |  4 +--
+ .../res/drawable/stat_sys_alarm_dim.xml       |  4 +--
+ .../SystemUI/res/drawable/stat_sys_camera.xml |  6 ++--
+ .../res/drawable/stat_sys_data_saver.xml      |  6 ++--
+ .../SystemUI/res/drawable/stat_sys_dnd.xml    |  4 +--
+ .../res/drawable/stat_sys_headset.xml         |  4 +--
+ .../res/drawable/stat_sys_headset_mic.xml     |  4 +--
+ .../res/drawable/stat_sys_hotspot.xml         |  4 +--
+ .../SystemUI/res/drawable/stat_sys_nfc.xml    |  4 +--
+ .../res/drawable/stat_sys_ringer_silent.xml   |  8 ++---
+ .../res/drawable/stat_sys_ringer_vibrate.xml  |  6 ++--
+ .../drawable/stat_sys_rotate_landscape.xml    |  4 +--
+ .../res/drawable/stat_sys_rotate_portrait.xml |  4 +--
+ .../res/drawable/stat_sys_sensors_off.xml     |  4 +--
+ .../res/layout/mobile_signal_group.xml        |  6 ++--
+ .../layout/status_bar_mobile_signal_group.xml | 10 +++---
+ .../res/layout/status_bar_wifi_group.xml      |  6 ++--
+ packages/SystemUI/res/values/dimens.xml       | 32 +++++++++----------
+ 19 files changed, 62 insertions(+), 62 deletions(-)
+
+diff --git a/core/res/res/values/dimens.xml b/core/res/res/values/dimens.xml
+index 4fdb498451a..593e9f92b4b 100644
+--- a/core/res/res/values/dimens.xml
++++ b/core/res/res/values/dimens.xml
+@@ -70,12 +70,12 @@
+     <!-- Width of the navigation bar when it is placed vertically on the screen in car mode -->
+     <dimen name="navigation_bar_width_car_mode">96dp</dimen>
+     <!-- Height of notification icons in the status bar -->
+-    <dimen name="status_bar_icon_size">22dip</dimen>
++    <dimen name="status_bar_icon_size">17dip</dimen>
+     <!-- Desired size of system icons in status bar. -->
+     <dimen name="status_bar_system_icon_size">15dp</dimen>
+     <!-- Intrinsic size of most system icons in status bar. This is the default value that
+          is used if a Drawable reports an intrinsic size of 0. -->
+-    <dimen name="status_bar_system_icon_intrinsic_size">17dp</dimen>
++    <dimen name="status_bar_system_icon_intrinsic_size">15dp</dimen>
+     <!-- Size of the giant number (unread count) in the notifications -->
+     <dimen name="status_bar_content_number_size">48sp</dimen>
+     <!-- Margin at the edge of the screen to ignore touch events for in the windowshade. -->
+diff --git a/packages/SystemUI/res/drawable/stat_sys_alarm.xml b/packages/SystemUI/res/drawable/stat_sys_alarm.xml
+index 6b311da5a48..855320cbbc7 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_alarm.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_alarm.xml
+@@ -16,6 +16,6 @@
+ */
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp"
++    android:insetLeft="0dp"
++    android:insetRight="0dp"
+     android:drawable="@drawable/ic_alarm" />
+diff --git a/packages/SystemUI/res/drawable/stat_sys_alarm_dim.xml b/packages/SystemUI/res/drawable/stat_sys_alarm_dim.xml
+index 2c2854cd473..364d483707f 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_alarm_dim.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_alarm_dim.xml
+@@ -14,6 +14,6 @@
+     limitations under the License.
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp"
++    android:insetLeft="0dp"
++    android:insetRight="0dp"
+     android:drawable="@drawable/ic_alarm_dim" />
+diff --git a/packages/SystemUI/res/drawable/stat_sys_camera.xml b/packages/SystemUI/res/drawable/stat_sys_camera.xml
+index c914262571e..baf3f3206ee 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_camera.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_camera.xml
+@@ -17,6 +17,6 @@
+ */
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="3dp"
+-    android:insetRight="3dp"
+-    android:drawable="@drawable/ic_camera" />
+\ No newline at end of file
++    android:insetLeft="0dp"
++    android:insetRight="0dp"
++    android:drawable="@drawable/ic_camera" />
+diff --git a/packages/SystemUI/res/drawable/stat_sys_data_saver.xml b/packages/SystemUI/res/drawable/stat_sys_data_saver.xml
+index f72ca86309f..98febea2a1a 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_data_saver.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_data_saver.xml
+@@ -17,6 +17,6 @@
+ */
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp"
+-    android:drawable="@drawable/ic_data_saver" />
+\ No newline at end of file
++    android:insetLeft="0dp"
++    android:insetRight="0dp"
++    android:drawable="@drawable/ic_data_saver" />
+diff --git a/packages/SystemUI/res/drawable/stat_sys_dnd.xml b/packages/SystemUI/res/drawable/stat_sys_dnd.xml
+index 3ef1b17142a..da861eb7284 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_dnd.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_dnd.xml
+@@ -17,6 +17,6 @@
+ */
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp"
++    android:insetLeft="0dp"
++    android:insetRight="0dp"
+     android:drawable="@*android:drawable/ic_qs_dnd" />
+\ No newline at end of file
+diff --git a/packages/SystemUI/res/drawable/stat_sys_headset.xml b/packages/SystemUI/res/drawable/stat_sys_headset.xml
+index 8a0534f9445..975b5487b47 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_headset.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_headset.xml
+@@ -14,6 +14,6 @@
+     limitations under the License.
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp"
++    android:insetLeft="0dp"
++    android:insetRight="0dp"
+     android:drawable="@drawable/ic_headset" />
+diff --git a/packages/SystemUI/res/drawable/stat_sys_headset_mic.xml b/packages/SystemUI/res/drawable/stat_sys_headset_mic.xml
+index a7d496b6d7d..790e23af8d4 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_headset_mic.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_headset_mic.xml
+@@ -14,6 +14,6 @@
+     limitations under the License.
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp"
++    android:insetLeft="0dp"
++    android:insetRight="0dp"
+     android:drawable="@drawable/ic_headset_mic" />
+diff --git a/packages/SystemUI/res/drawable/stat_sys_hotspot.xml b/packages/SystemUI/res/drawable/stat_sys_hotspot.xml
+index 344ddabdb42..1b774910f50 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_hotspot.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_hotspot.xml
+@@ -14,6 +14,6 @@ Copyright (C) 2017 The Android Open Source Project
+     limitations under the License.
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp"
++    android:insetLeft="0dp"
++    android:insetRight="0dp"
+     android:drawable="@drawable/ic_hotspot" />
+diff --git a/packages/SystemUI/res/drawable/stat_sys_nfc.xml b/packages/SystemUI/res/drawable/stat_sys_nfc.xml
+index 3ec09438cdf..79c97d92286 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_nfc.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_nfc.xml
+@@ -14,8 +14,8 @@
+      limitations under the License.
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp">
++    android:insetLeft="0dp"
++    android:insetRight="0dp">
+ <vector
+     android:width="17dp"
+     android:height="17dp"
+diff --git a/packages/SystemUI/res/drawable/stat_sys_ringer_silent.xml b/packages/SystemUI/res/drawable/stat_sys_ringer_silent.xml
+index 868fc61e628..41a9eebd7ac 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_ringer_silent.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_ringer_silent.xml
+@@ -14,10 +14,10 @@ Copyright (C) 2015 The Android Open Source Project
+     limitations under the License.
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-        android:insetLeft="2.5dp"
+-        android:insetRight="2.5dp">
+-    <vector android:width="18dp"
+-            android:height="18dp"
++        android:insetLeft="0dp"
++        android:insetRight="0dp">
++    <vector android:width="17dp"
++            android:height="17dp"
+             android:viewportWidth="24.0"
+             android:viewportHeight="24.0">
+         <path
+diff --git a/packages/SystemUI/res/drawable/stat_sys_ringer_vibrate.xml b/packages/SystemUI/res/drawable/stat_sys_ringer_vibrate.xml
+index 6a8584cae4c..e13277ba80d 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_ringer_vibrate.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_ringer_vibrate.xml
+@@ -17,8 +17,8 @@
+ */
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2.5dp">
++    android:insetLeft="0dp"
++    android:insetRight="0dp">
+     <vector
+         android:width="20dp"
+         android:height="20dp"
+@@ -33,4 +33,4 @@
+ 
+         </group>
+     </vector>
+-</inset>
+\ No newline at end of file
++</inset>
+diff --git a/packages/SystemUI/res/drawable/stat_sys_rotate_landscape.xml b/packages/SystemUI/res/drawable/stat_sys_rotate_landscape.xml
+index 86c884d67c7..5954b5d0ba6 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_rotate_landscape.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_rotate_landscape.xml
+@@ -15,8 +15,8 @@
+      limitations under the License.
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp">
++    android:insetLeft="0dp"
++    android:insetRight="0dp">
+     <vector
+         android:height="17dp"
+         android:width="17dp"
+diff --git a/packages/SystemUI/res/drawable/stat_sys_rotate_portrait.xml b/packages/SystemUI/res/drawable/stat_sys_rotate_portrait.xml
+index ffab0cbf4ae..12f2d01c3d1 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_rotate_portrait.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_rotate_portrait.xml
+@@ -15,8 +15,8 @@
+      limitations under the License.
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:insetLeft="2dp"
+-    android:insetRight="2dp">
++    android:insetLeft="0dp"
++    android:insetRight="0dp">
+     <vector
+         android:height="17dp"
+         android:width="17dp"
+diff --git a/packages/SystemUI/res/drawable/stat_sys_sensors_off.xml b/packages/SystemUI/res/drawable/stat_sys_sensors_off.xml
+index 9ef468ca208..a01027f3eaf 100644
+--- a/packages/SystemUI/res/drawable/stat_sys_sensors_off.xml
++++ b/packages/SystemUI/res/drawable/stat_sys_sensors_off.xml
+@@ -15,8 +15,8 @@
+ -->
+ 
+ <vector xmlns:android="http://schemas.android.com/apk/res/android"
+-        android:insetLeft="2.5dp"
+-        android:insetRight="2.5dp"
++        android:insetLeft="0dp"
++        android:insetRight="0dp"
+         android:width="17dp"
+         android:height="17dp"
+         android:viewportWidth="24.0"
+diff --git a/packages/SystemUI/res/layout/mobile_signal_group.xml b/packages/SystemUI/res/layout/mobile_signal_group.xml
+index bfd079b5905..54731b9a127 100644
+--- a/packages/SystemUI/res/layout/mobile_signal_group.xml
++++ b/packages/SystemUI/res/layout/mobile_signal_group.xml
+@@ -34,14 +34,14 @@
+             android:layout_width="wrap_content"
+             android:src="@drawable/ic_activity_down"
+             android:visibility="gone"
+-            android:paddingEnd="2dp"
++            android:paddingEnd="0dp"
+             />
+         <ImageView
+             android:id="@+id/mobile_out"
+             android:layout_height="wrap_content"
+             android:layout_width="wrap_content"
+             android:src="@drawable/ic_activity_up"
+-            android:paddingEnd="2dp"
++            android:paddingEnd="0dp"
+             android:visibility="gone"
+             />
+     </FrameLayout>
+@@ -51,7 +51,7 @@
+         android:layout_width="wrap_content"
+         android:layout_gravity="center_vertical"
+         android:paddingStart="1dp"
+-        android:paddingEnd="2dp"
++        android:paddingEnd="0dp"
+         android:visibility="gone" />
+     <Space
+         android:id="@+id/mobile_roaming_space"
+diff --git a/packages/SystemUI/res/layout/status_bar_mobile_signal_group.xml b/packages/SystemUI/res/layout/status_bar_mobile_signal_group.xml
+index 9c6508538ad..81c4bf4f120 100644
+--- a/packages/SystemUI/res/layout/status_bar_mobile_signal_group.xml
++++ b/packages/SystemUI/res/layout/status_bar_mobile_signal_group.xml
+@@ -50,25 +50,25 @@
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:src="@drawable/ic_activity_down"
++                android:paddingEnd="0dp"
+                 android:visibility="gone"
+-                android:paddingEnd="2dp"
+             />
+             <ImageView
+                 android:id="@+id/mobile_out"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:src="@drawable/ic_activity_up"
+-                android:paddingEnd="2dp"
++                android:paddingEnd="0dp"
+                 android:visibility="gone"
+             />
+         </FrameLayout>
+         <ImageView
+             android:id="@+id/mobile_type"
+             android:layout_height="wrap_content"
+-            android:layout_width="wrap_content"
++            android:layout_width="12dp"
+             android:layout_gravity="center_vertical"
+-            android:paddingStart="2.5dp"
+-            android:paddingEnd="1dp"
++            android:paddingStart="1dp"
++            android:paddingEnd="0dp"
+             android:visibility="gone" />
+         <Space
+             android:id="@+id/mobile_roaming_space"
+diff --git a/packages/SystemUI/res/layout/status_bar_wifi_group.xml b/packages/SystemUI/res/layout/status_bar_wifi_group.xml
+index 35cce25d45a..8f9e57199c3 100644
+--- a/packages/SystemUI/res/layout/status_bar_wifi_group.xml
++++ b/packages/SystemUI/res/layout/status_bar_wifi_group.xml
+@@ -29,7 +29,7 @@
+         android:layout_width="wrap_content"
+         android:layout_height="match_parent"
+         android:gravity="center_vertical"
+-        android:layout_marginStart="2.5dp"
++        android:layout_marginStart="0dp"
+     >
+         <FrameLayout
+                 android:id="@+id/inout_container"
+@@ -41,15 +41,15 @@
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:src="@drawable/ic_activity_down"
++                android:paddingEnd="0dp"
+                 android:visibility="gone"
+-                android:paddingEnd="2dp"
+             />
+             <ImageView
+                 android:id="@+id/wifi_out"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
+                 android:src="@drawable/ic_activity_up"
+-                android:paddingEnd="2dp"
++                android:paddingEnd="0dp"
+                 android:visibility="gone"
+             />
+         </FrameLayout>
+diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
+index 1ca1ad49bc8..a1dffc4d9e5 100644
+--- a/packages/SystemUI/res/values/dimens.xml
++++ b/packages/SystemUI/res/values/dimens.xml
+@@ -63,7 +63,7 @@
+     <dimen name="status_bar_icon_size">@*android:dimen/status_bar_icon_size</dimen>
+ 
+     <!-- Default horizontal drawable padding for status bar icons. -->
+-    <dimen name="status_bar_horizontal_padding">2.5dp</dimen>
++    <dimen name="status_bar_horizontal_padding">0dp</dimen>
+ 
+     <!-- Height of the battery icon in the status bar. -->
+     <dimen name="status_bar_battery_icon_height">13.0dp</dimen>
+@@ -76,7 +76,7 @@
+     <dimen name="status_bar_clock_size">14sp</dimen>
+ 
+     <!-- The starting padding for the clock in the status bar. -->
+-    <dimen name="status_bar_clock_starting_padding">7dp</dimen>
++    <dimen name="status_bar_clock_starting_padding">1dp</dimen>
+ 
+     <!-- The end padding for the clock in the status bar. -->
+     <dimen name="status_bar_clock_end_padding">0dp</dimen>
+@@ -85,16 +85,16 @@
+     <dimen name="status_bar_left_clock_starting_padding">0dp</dimen>
+ 
+     <!-- End padding for left-aligned status bar clock -->
+-    <dimen name="status_bar_left_clock_end_padding">4dp</dimen>
++    <dimen name="status_bar_left_clock_end_padding">1dp</dimen>
+ 
+     <!-- Spacing after the wifi signals that is present if there are any icons following it. -->
+-    <dimen name="status_bar_wifi_signal_spacer_width">2.5dp</dimen>
++    <dimen name="status_bar_wifi_signal_spacer_width">0dp</dimen>
+ 
+     <!-- Size of the view displaying the wifi signal icon in the status bar. -->
+     <dimen name="status_bar_wifi_signal_size">@*android:dimen/status_bar_system_icon_size</dimen>
+ 
+     <!-- Spacing before the airplane mode icon if there are any icons preceding it. -->
+-    <dimen name="status_bar_airplane_spacer_width">4dp</dimen>
++    <dimen name="status_bar_airplane_spacer_width">0dp</dimen>
+ 
+     <!-- The amount to scale each of the status bar icons by. A value of 1 means no scaling. -->
+     <item name="status_bar_icon_scale_factor" format="float" type="dimen">1.0</item>
+@@ -283,7 +283,7 @@
+     <dimen name="overflow_dot_radius">2dp</dimen>
+ 
+     <!-- the padding between dots in the icon overflow -->
+-    <dimen name="overflow_icon_dot_padding">3dp</dimen>
++    <dimen name="overflow_icon_dot_padding">0dp</dimen>
+ 
+     <!-- The padding on the global screenshot background image -->
+     <dimen name="global_screenshot_bg_padding">20dp</dimen>
+@@ -706,7 +706,7 @@
+     <dimen name="qs_date_time_translation">8dp</dimen>
+ 
+     <!-- Padding before battery level text in status bar, QS, and Keyguard -->
+-    <dimen name="battery_level_padding_start">4dp</dimen>
++    <dimen name="battery_level_padding_start">2dp</dimen>
+ 
+     <!-- The top padding of the clear all button -->
+     <dimen name="clear_all_padding_top">12dp</dimen>
+@@ -725,10 +725,10 @@
+     <dimen name="keyguard_carrier_text_margin">16dp</dimen>
+ 
+     <!-- Margin on the left side of the battery % in the header. -->
+-    <dimen name="header_battery_margin_expanded">6dp</dimen>
++    <dimen name="header_battery_margin_expanded">3dp</dimen>
+ 
+     <!-- Margin on the left side of the battery % when on Keyguard. -->
+-    <dimen name="header_battery_margin_keyguard">6dp</dimen>
++    <dimen name="header_battery_margin_keyguard">3dp</dimen>
+ 
+     <!-- Margin on the right side of the system icon group on Keyguard. -->
+     <dimen name="system_icons_keyguard_padding_end">4dp</dimen>
+@@ -795,20 +795,20 @@
+ 
+     <!-- Extra padding between the mobile data type icon and the strength indicator when the data
+          type icon is wide. -->
+-    <dimen name="wide_type_icon_start_padding">2dp</dimen>
++    <dimen name="wide_type_icon_start_padding">0dp</dimen>
+ 
+     <!-- Padding between the mobile signal indicator and the start icon when the roaming icon
+          is displayed in the upper left corner. -->
+-    <dimen name="roaming_icon_start_padding">2dp</dimen>
++    <dimen name="roaming_icon_start_padding">0dp</dimen>
+ 
+     <!-- Extra padding between multiple phone signal icons. -->
+-    <dimen name="secondary_telephony_padding">2dp</dimen>
++    <dimen name="secondary_telephony_padding">0dp</dimen>
+ 
+     <!-- Extra padding between the mobile data type icon and the strength indicator when the data
+          type icon is wide for the tile in quick settings. -->
+     <dimen name="wide_type_icon_start_padding_qs">3dp</dimen>
+ 
+-    <dimen name="signal_indicator_to_icon_frame_spacing">3dp</dimen>
++    <dimen name="signal_indicator_to_icon_frame_spacing">0dp</dimen>
+ 
+     <!-- The maximum width of the navigation bar ripples. -->
+     <dimen name="key_button_ripple_max_width">95dp</dimen>
+@@ -820,13 +820,13 @@
+     <dimen name="fake_shadow_size">8dp</dimen>
+ 
+     <!-- Starting margin before the signal cluster -->
+-    <dimen name="signal_cluster_margin_start">2.5dp</dimen>
++    <dimen name="signal_cluster_margin_start">0dp</dimen>
+ 
+     <!-- Padding between signal cluster and battery icon -->
+-    <dimen name="signal_cluster_battery_padding">6dp</dimen>
++    <dimen name="signal_cluster_battery_padding">2dp</dimen>
+ 
+     <!-- Padding for signal cluster and battery icon when there are not icons in signal cluster -->
+-    <dimen name="no_signal_cluster_battery_padding">3dp</dimen>
++    <dimen name="no_signal_cluster_battery_padding">2dp</dimen>
+ 
+     <!-- Screen pinning request width -->
+     <dimen name="screen_pinning_request_width">@dimen/match_parent</dimen>
+-- 
+2.17.1
+

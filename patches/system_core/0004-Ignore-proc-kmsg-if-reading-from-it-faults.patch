@@ -1,4 +1,4 @@
-From daf6ad1b5b26a32977cb29f4025c1801af117808 Mon Sep 17 00:00:00 2001
+From 287706805994a8e929e37062cf77c2653738375a Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 2 Jan 2019 17:17:20 +0100
 Subject: [PATCH 04/17] Ignore /proc/kmsg if reading from it faults

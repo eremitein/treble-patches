@@ -1,7 +1,7 @@
-From b55e3ab2173a6b47caa2609731f53aadbec7d0b5 Mon Sep 17 00:00:00 2001
+From 08b89be18cffc3bc20361485edbcc5bb5e747df4 Mon Sep 17 00:00:00 2001
 From: Michael Cheah <michael@cheah.xyz>
 Date: Sat, 11 Jan 2020 13:19:04 +0800
-Subject: [PATCH 02/13] Fix operatorNumeric parsing in CellInfoUtil & support
+Subject: [PATCH 02/14] Fix operatorNumeric parsing in CellInfoUtil & support
  old mnc format
 
 ---

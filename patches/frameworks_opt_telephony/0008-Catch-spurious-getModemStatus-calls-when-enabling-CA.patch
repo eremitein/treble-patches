@@ -1,4 +1,4 @@
-From d0e0e747d223333bec13ff57362889c4147f76eb Mon Sep 17 00:00:00 2001
+From 5534cbe2193715ebaaada486dad3d31e8a30d257 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 3 Feb 2020 23:35:23 +0100
 Subject: [PATCH 8/9] Catch spurious getModemStatus calls when enabling CAF IMS
@@ -8,10 +8,10 @@ Subject: [PATCH 8/9] Catch spurious getModemStatus calls when enabling CAF IMS
  1 file changed, 5 insertions(+), 1 deletion(-)
 
 diff --git a/src/java/com/android/internal/telephony/RIL.java b/src/java/com/android/internal/telephony/RIL.java
-index 6518a5550..373eb864c 100644
+index a6c4258bf..69ea837fa 100644
 --- a/src/java/com/android/internal/telephony/RIL.java
 +++ b/src/java/com/android/internal/telephony/RIL.java
-@@ -978,7 +978,11 @@ public class RIL extends BaseCommands implements CommandsInterface {
+@@ -970,7 +970,11 @@ public class RIL extends BaseCommands implements CommandsInterface {
              if (result != null) {
                  AsyncResult.forMessage(result, null,
                          CommandException.fromRilErrno(REQUEST_NOT_SUPPORTED));

@@ -1,7 +1,7 @@
-From ef4c264259796ee07652ea984e260ae7da13d1bf Mon Sep 17 00:00:00 2001
+From e8bf100e35948f05afb7ce3dad33fa6b6dd01b72 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 16:45:25 +0200
-Subject: [PATCH 09/12] add GoogleSans font normally
+Subject: [PATCH 11/13] add GoogleSans font normally
 
 	modified:   target/product/handheld_system.mk
 
@@ -11,7 +11,7 @@ Change-Id: Ie29f6aff0727700e698c4278c0e2202a3e9c1986
  1 file changed, 1 insertion(+)
 
 diff --git a/target/product/handheld_system.mk b/target/product/handheld_system.mk
-index a8dbf4f..486b388 100644
+index d42d5c3cc..28fbbf2f8 100644
 --- a/target/product/handheld_system.mk
 +++ b/target/product/handheld_system.mk
 @@ -20,6 +20,7 @@

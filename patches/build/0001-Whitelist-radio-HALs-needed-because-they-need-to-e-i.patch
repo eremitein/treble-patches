@@ -1,7 +1,7 @@
-From 2a77479901d2c5975c2eb25b732e33bffd0b8e8a Mon Sep 17 00:00:00 2001
+From 83013e9349d58f58a65edb8754e4c833da2ea780 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Fri, 6 Sep 2019 15:10:28 +0200
-Subject: [PATCH 01/10] Whitelist radio HALs (needed because they need to e in
+Subject: [PATCH 01/13] Whitelist radio HALs (needed because they need to e in
  framework because of weird jarjar issue)
 
 Change-Id: If1ccbedde92955bb86f4c6db6d68502784de1d8d

@@ -1,0 +1,44 @@
+From d72469db5d2c5be36d8c637822f0a67d5531c9f5 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 15 Apr 2020 04:43:05 +0300
+Subject: [PATCH 003/113] Revert "FODCircleView: Hide circle and animation when
+ auth fails"
+
+This reverts commit c9d9d04c10d8e32810e8c0c39296fcc8f8fb7235.
+---
+ .../android/systemui/biometrics/FODCircleView.java   | 12 +-----------
+ 1 file changed, 1 insertion(+), 11 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 39b60e4e9cb..d16388f75e2 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -192,16 +192,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+                 show();
+             }
+         }
+-
+-        @Override
+-        public void onBiometricHelp(int msgId, String helpString,
+-                BiometricSourceType biometricSourceType) {
+-            if (biometricSourceType == BiometricSourceType.FINGERPRINT &&
+-                    msgId == -1) { // Auth error
+-                hideCircle();
+-                mHandler.post(() -> mFODAnimation.hideFODanimation());
+-            }
+-        }
+     };
+ 
+     private boolean mCutoutMasked;
+@@ -645,7 +635,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+                 com.android.internal.R.dimen.status_bar_height_portrait);
+         boolean cutoutMasked = getContext().getResources().getBoolean(
+                 com.android.internal.R.bool.config_maskMainBuiltInDisplayCutout);
+-        if (mCutoutMasked != cutoutMasked) {
++        if (mCutoutMasked != cutoutMasked){
+             mCutoutMasked = cutoutMasked;
+             updatePosition();
+         }
+-- 
+2.17.1
+

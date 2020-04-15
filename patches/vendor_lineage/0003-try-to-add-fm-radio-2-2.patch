@@ -1,0 +1,33 @@
+From 76375b992038d60674b06b6e8f1a6d39c0fcf9f4 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 19 Mar 2020 20:14:42 +0200
+Subject: [PATCH 3/4] try to add fm-radio [2/2]
+
+Change-Id: I502ab8e7383b14bf00ffef272e8a42f575edf544
+
+	modified:   config/common.mk
+
+Change-Id: Iad0d672aa52f6b9bf68353a8965dcd10ac932885
+---
+ config/common.mk | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/config/common.mk b/config/common.mk
+index faf651cc..972aabdb 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -205,6 +205,11 @@ PRODUCT_PACKAGES += \
+ PRODUCT_PACKAGES += \
+     rsync
+ 
++# FM-Radivo
++PRODUCT_PACKAGES += \
++    FMRadio \
++    libfmjni
++
+ # Storage manager
+ PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
+     ro.storage_manager.enabled=true
+-- 
+2.17.1
+

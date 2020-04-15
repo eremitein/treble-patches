@@ -1,7 +1,7 @@
-From 099be184e34ed887715e8494dd8d7da90f9b98b9 Mon Sep 17 00:00:00 2001
+From 5c79b4b56e6ee83caf643df7191ad09a63f3dff9 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 14 Sep 2019 21:25:07 +0200
-Subject: [PATCH 02/10] Add BOARD_SYSTEMIMAGE_AS_SYSTEM parameter to build SaS
+Subject: [PATCH 02/13] Add BOARD_SYSTEMIMAGE_AS_SYSTEM parameter to build SaS
  GSI
 
 Change-Id: I764f0ef4e3be9a338fbe93944445cedc29d2bb81
@@ -11,7 +11,7 @@ Change-Id: I764f0ef4e3be9a338fbe93944445cedc29d2bb81
  2 files changed, 5 insertions(+)
 
 diff --git a/core/Makefile b/core/Makefile
-index d31c03d91..bb68c6b15 100644
+index 2648bd3cd..b329c64bd 100644
 --- a/core/Makefile
 +++ b/core/Makefile
 @@ -1384,6 +1384,7 @@ endif # PRODUCT_USE_DYNAMIC_PARTITIONS
