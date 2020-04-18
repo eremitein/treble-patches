@@ -1,7 +1,7 @@
-From 8c72ca5ce0cbe6538f4c101031419f3d64e191ce Mon Sep 17 00:00:00 2001
+From 28a829026c3d53b8948f1a9f5ff2c92d57d6a1e7 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 14 Aug 2018 21:01:35 +0200
-Subject: [PATCH 1/7] AOSP 8.0/8.1 didn't use presentOrValidate, so it's
+Subject: [PATCH 1/8] AOSP 8.0/8.1 didn't use presentOrValidate, so it's
  broken. Don't use it
 
 Change-Id: If86793dba3738680280f9dc0f7e7c802c0836690
@@ -10,7 +10,7 @@ Change-Id: If86793dba3738680280f9dc0f7e7c802c0836690
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/services/surfaceflinger/DisplayHardware/HWComposer.cpp b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
-index 1099041..2021c26 100644
+index 1099041b4..2021c26b0 100644
 --- a/services/surfaceflinger/DisplayHardware/HWComposer.cpp
 +++ b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
 @@ -424,7 +424,7 @@ status_t HWComposer::prepare(DisplayId displayId, const compositionengine::Outpu

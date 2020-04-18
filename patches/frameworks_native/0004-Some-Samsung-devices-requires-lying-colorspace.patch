@@ -1,7 +1,7 @@
-From a0aad17b647e2c177bc69d032b8854f8141a778a Mon Sep 17 00:00:00 2001
+From 6719a82a26e0a1b29aaa3c35cdb9fea61377415a Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 12 Aug 2019 23:48:37 +0200
-Subject: [PATCH 4/7] Some Samsung devices requires lying colorspace
+Subject: [PATCH 4/8] Some Samsung devices requires lying colorspace
 
 Change-Id: I4153b8e7abc10c519565e4e4386c6388621477b2
 ---
@@ -9,7 +9,7 @@ Change-Id: I4153b8e7abc10c519565e4e4386c6388621477b2
  1 file changed, 6 insertions(+)
 
 diff --git a/opengl/libs/EGL/egl_platform_entries.cpp b/opengl/libs/EGL/egl_platform_entries.cpp
-index a3bb6de..bfa4a9b 100644
+index a3bb6debe..bfa4a9bb2 100644
 --- a/opengl/libs/EGL/egl_platform_entries.cpp
 +++ b/opengl/libs/EGL/egl_platform_entries.cpp
 @@ -459,8 +459,14 @@ EGLBoolean eglGetConfigAttribImpl(EGLDisplay dpy, EGLConfig config,

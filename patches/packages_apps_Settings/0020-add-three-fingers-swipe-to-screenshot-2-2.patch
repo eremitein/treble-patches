@@ -1,7 +1,7 @@
-From 78c1b7c159cfcb24920b13a11895c6bb2a9979a7 Mon Sep 17 00:00:00 2001
+From e05a786be8efb714b14f7271c23afc21a1099578 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 11 Mar 2020 20:20:05 +0200
-Subject: [PATCH 20/20] add three-fingers-swipe to screenshot [2/2]
+Subject: [PATCH 20/26] add three-fingers-swipe to screenshot [2/2]
 
   * based on
   https://github.com/Evolution-X/packages_apps_Evolver/commit/1b64fadf5debcda66382763312d77867bbb8be78
@@ -21,7 +21,7 @@ Subject: [PATCH 20/20] add three-fingers-swipe to screenshot [2/2]
  create mode 100644 src/com/caos/settings/preference/SystemSettingSwitchPreference.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 94e9eb8..ba45775 100644
+index f8b5530ad2..74ffdb77fc 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -11451,4 +11451,8 @@
@@ -34,7 +34,7 @@ index 94e9eb8..ba45775 100644
 +
  </resources>
 diff --git a/res/xml/gestures.xml b/res/xml/gestures.xml
-index 9b5659b..e0000ba 100644
+index 9b5659bf60..e0000ba4b4 100644
 --- a/res/xml/gestures.xml
 +++ b/res/xml/gestures.xml
 @@ -95,4 +95,10 @@
@@ -50,7 +50,7 @@ index 9b5659b..e0000ba 100644
  </PreferenceScreen>
 diff --git a/src/com/caos/settings/preference/SystemSettingSwitchPreference.java b/src/com/caos/settings/preference/SystemSettingSwitchPreference.java
 new file mode 100644
-index 0000000..0e1a4a9
+index 0000000000..0e1a4a9bde
 --- /dev/null
 +++ b/src/com/caos/settings/preference/SystemSettingSwitchPreference.java
 @@ -0,0 +1,64 @@

@@ -1,7 +1,7 @@
-From 1fd16de60d14fa3b7d018672cb18dd76614b025c Mon Sep 17 00:00:00 2001
+From 68c45a8e72bdcf5c49ecb17f99f2db4e152605dc Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 16 Sep 2019 13:49:05 +0200
-Subject: [PATCH 06/18] Check needsCheckpoint only if checkpoint is supported
+Subject: [PATCH 6/9] Check needsCheckpoint only if checkpoint is supported
 
 This is needed because some devices (Xiaomi MiPad 4, uncertified)
 declares a bootctrl HAL in manifest, but doesn't have it.
@@ -13,7 +13,7 @@ Change-Id: I2dafcbca7e994d7a3ac36ef3698590db2ab482fa
  1 file changed, 3 insertions(+), 1 deletion(-)
 
 diff --git a/cryptfs.cpp b/cryptfs.cpp
-index ed9a53ea8..d2971ff02 100644
+index ed9a53e..d2971ff 100644
 --- a/cryptfs.cpp
 +++ b/cryptfs.cpp
 @@ -1888,7 +1888,9 @@ static int cryptfs_restart_internal(int restart_main) {

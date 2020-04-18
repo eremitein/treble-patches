@@ -1,4 +1,4 @@
-From 8ddf3f4598c0ce5c91bbd1ec49734775b4d36c91 Mon Sep 17 00:00:00 2001
+From 683890c83c2114172ecb8cafb06eea437d0b89cf Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 23:05:23 +0200
 Subject: [PATCH 3/4] remove up+down network icon shows
@@ -9,10 +9,10 @@ Subject: [PATCH 3/4] remove up+down network icon shows
  1 file changed, 1 insertion(+), 3 deletions(-)
 
 diff --git a/sdk/src/java/org/lineageos/internal/statusbar/NetworkTraffic.java b/sdk/src/java/org/lineageos/internal/statusbar/NetworkTraffic.java
-index f03b96e..71803d6 100644
+index d42484c7..6082e235 100644
 --- a/sdk/src/java/org/lineageos/internal/statusbar/NetworkTraffic.java
 +++ b/sdk/src/java/org/lineageos/internal/statusbar/NetworkTraffic.java
-@@ -400,9 +400,7 @@ public class NetworkTraffic extends TextView {
+@@ -465,9 +465,7 @@ public class NetworkTraffic extends TextView {
  
      private void updateTrafficDrawable() {
          final int drawableResId;

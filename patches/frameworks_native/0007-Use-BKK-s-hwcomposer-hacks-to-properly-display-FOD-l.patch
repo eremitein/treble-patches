@@ -1,7 +1,7 @@
-From 9d1337b7807eced5765d29dd59964e70e9fdd319 Mon Sep 17 00:00:00 2001
+From 4f7a2c9fc175b6485fb2dfab94ffc930a67405a3 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 10 Mar 2020 23:26:55 +0100
-Subject: [PATCH 7/7] Use BKK's hwcomposer hacks to properly display FOD layers
+Subject: [PATCH 7/8] Use BKK's hwcomposer hacks to properly display FOD layers
 
 Insecure hack: Set FOD layers to magical Z values to trigger
 OPPO/Realme/Oneplus' whole blitter behaviours:
@@ -12,7 +12,7 @@ OPPO/Realme/Oneplus' whole blitter behaviours:
  1 file changed, 12 insertions(+), 1 deletion(-)
 
 diff --git a/services/surfaceflinger/CompositionEngine/src/OutputLayer.cpp b/services/surfaceflinger/CompositionEngine/src/OutputLayer.cpp
-index 5ce72b0..23b29d6 100644
+index 5ce72b087..23b29d6fd 100644
 --- a/services/surfaceflinger/CompositionEngine/src/OutputLayer.cpp
 +++ b/services/surfaceflinger/CompositionEngine/src/OutputLayer.cpp
 @@ -335,7 +335,18 @@ void OutputLayer::writeStateToHWC(bool includeGeometry) const {

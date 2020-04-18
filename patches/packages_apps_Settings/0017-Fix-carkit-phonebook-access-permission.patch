@@ -1,7 +1,7 @@
-From f38b018a210605963a678cd8600fdbc6d7402fc3 Mon Sep 17 00:00:00 2001
+From 4081f018afdc233f8f528889e55812e0c47f0650 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 9 Mar 2020 22:29:35 +0200
-Subject: [PATCH 17/20] Fix carkit phonebook access permission
+Subject: [PATCH 17/26] Fix carkit phonebook access permission
 
   * from
   https://github.com/i-o-n/packages_apps_Settings/commit/31c53b7c1e3d0d0132a93e80a0d9b149ddcefd34
@@ -12,7 +12,7 @@ Subject: [PATCH 17/20] Fix carkit phonebook access permission
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java b/src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java
-index d38302d..f9c26c1 100644
+index d38302d883..f9c26c1c1f 100644
 --- a/src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java
 +++ b/src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java
 @@ -334,8 +334,8 @@ public class BluetoothPairingDialogFragment extends InstrumentedDialogFragment i

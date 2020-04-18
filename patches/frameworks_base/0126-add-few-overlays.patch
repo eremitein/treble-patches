@@ -1,0 +1,256 @@
+From 436fa86a41523d0a16e990b26e3a40beb85f1d65 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 12 Apr 2020 19:24:05 +0300
+Subject: [PATCH 126/133] add few overlays
+
+	modified:   packages/overlays/Android.mk
+	new file:   packages/overlays/GrayDimDarkUIOverlay/Android.mk
+	new file:   packages/overlays/GrayDimDarkUIOverlay/AndroidManifest.xml
+	new file:   packages/overlays/GrayDimDarkUIOverlay/res/values-night/colors.xml
+	new file:   packages/overlays/QSPanelAlpha95Overlay/Android.mk
+	new file:   packages/overlays/QSPanelAlpha95Overlay/AndroidManifest.xml
+	new file:   packages/overlays/QSPanelAlpha95Overlay/res/values/dimens.xml
+---
+ packages/overlays/Android.mk                  |  2 +
+ .../overlays/GrayDimDarkUIOverlay/Android.mk  | 30 +++++++++++++
+ .../GrayDimDarkUIOverlay/AndroidManifest.xml  | 24 +++++++++++
+ .../res/values-night/colors.xml               | 42 +++++++++++++++++++
+ .../overlays/QSPanelAlpha95Overlay/Android.mk | 30 +++++++++++++
+ .../QSPanelAlpha95Overlay/AndroidManifest.xml | 24 +++++++++++
+ .../res/values/dimens.xml                     | 21 ++++++++++
+ 7 files changed, 173 insertions(+)
+ create mode 100644 packages/overlays/GrayDimDarkUIOverlay/Android.mk
+ create mode 100644 packages/overlays/GrayDimDarkUIOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/GrayDimDarkUIOverlay/res/values-night/colors.xml
+ create mode 100644 packages/overlays/QSPanelAlpha95Overlay/Android.mk
+ create mode 100644 packages/overlays/QSPanelAlpha95Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/QSPanelAlpha95Overlay/res/values/dimens.xml
+
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 7793be94d67..aaf61bf8950 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -82,11 +82,13 @@ LOCAL_REQUIRED_MODULES := \
+ 	QSPanel43Overlay \
+ 	QSPanel55Overlay \
+ 	CharcoalDarkUIOverlay \
++	GrayDimDarkUIOverlay \
+ 	MidnightDarkUIOverlay \
+ 	QSPanelAlpha55Overlay \
+ 	QSPanelAlpha65Overlay \
+ 	QSPanelAlpha75Overlay \
+ 	QSPanelAlpha85Overlay \
++	QSPanelAlpha95Overlay \
+ 	NavigationBarMode3ButtonOverlay \
+ 	NavigationBarMode2ButtonOverlay \
+ 	NavigationBarModeGesturalOverlay \
+diff --git a/packages/overlays/GrayDimDarkUIOverlay/Android.mk b/packages/overlays/GrayDimDarkUIOverlay/Android.mk
+new file mode 100644
+index 00000000000..bd42b691d78
+--- /dev/null
++++ b/packages/overlays/GrayDimDarkUIOverlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := GrayDimDarkUI
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := GrayDimDarkUIOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/GrayDimDarkUIOverlay/AndroidManifest.xml b/packages/overlays/GrayDimDarkUIOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..c723dded8d6
+--- /dev/null
++++ b/packages/overlays/GrayDimDarkUIOverlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.darkui.graydim"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.darkui" android:priority="1"/>
++    <application android:label="Gray Dim" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/GrayDimDarkUIOverlay/res/values-night/colors.xml b/packages/overlays/GrayDimDarkUIOverlay/res/values-night/colors.xml
+new file mode 100644
+index 00000000000..9919d5b774f
+--- /dev/null
++++ b/packages/overlays/GrayDimDarkUIOverlay/res/values-night/colors.xml
+@@ -0,0 +1,42 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <color name="notification_primary_text_color_dark">#ffe5e5e5</color>
++    <color name="notification_secondary_text_color_dark">#b3e5e5e5</color>
++    <color name="notification_default_color_dark">#ffe5e5e5</color>
++    <color name="notification_material_background_color">#ff2d2d2d</color> <!-- material_grey_900 -->
++    <color name="primary_material_dark">#ff202124</color> <!-- material_grey_900 -->
++    <color name="primary_material_settings">#ff202124</color> <!-- material_grey_900 -->
++    <color name="primary_dark_material_dark">#ff2d2d2d</color>
++    <color name="primary_dark_material_settings">#ff2d2d2d</color> <!-- material_grey_850 -->
++    <color name="primary_dark_device_default_dark">#ff2d2d2d</color> <!-- material_grey_850 -->
++    <color name="primary_dark_device_default_settings">#ff202124</color> <!-- main settings bg -->
++    <color name="background_floating_device_default_dark">#ff2d2d2d</color>
++    <color name="secondary_material_settings">#ff303133</color> <!-- material_grey_800 -->
++    <color name="tertiary_material_settings">#ff3a3a3a</color> <!-- material_grey_600 -->
++    <color name="quaternary_material_settings">#ffdadce0</color> <!-- material_grey_200 -->
++    <color name="material_grey_900">#ff2d2d2d</color>
++    <color name="material_grey_850">#ff2d2d2d</color>
++    <color name="material_grey_800">#ff303133</color>
++    <color name="material_grey_600">#ff3a3a3a</color>
++    <color name="material_grey_300">#ff3c4043</color>
++    <color name="material_grey_200">#ffdadce0</color>
++    <color name="material_grey_100">#ffeeeeee</color>
++    <color name="material_grey_50">#ffe8eaed</color>
++</resources>
+diff --git a/packages/overlays/QSPanelAlpha95Overlay/Android.mk b/packages/overlays/QSPanelAlpha95Overlay/Android.mk
+new file mode 100644
+index 00000000000..11f3002530a
+--- /dev/null
++++ b/packages/overlays/QSPanelAlpha95Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := QSPanelAlpha95
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := QSPanelAlpha95Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/QSPanelAlpha95Overlay/AndroidManifest.xml b/packages/overlays/QSPanelAlpha95Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..88d751c5c6a
+--- /dev/null
++++ b/packages/overlays/QSPanelAlpha95Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.qsalpha95"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.qsalpha" android:priority="1"/>
++    <application android:label=".95" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/QSPanelAlpha95Overlay/res/values/dimens.xml b/packages/overlays/QSPanelAlpha95Overlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..fc78b8da8e6
+--- /dev/null
++++ b/packages/overlays/QSPanelAlpha95Overlay/res/values/dimens.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <item name="qs_panel_background_alpha" format="float" type="dimen">0.95</item>
++</resources>
+-- 
+2.17.1
+

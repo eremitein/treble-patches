@@ -1,7 +1,7 @@
-From 8f770fa02cf35b082bd44238a442e580e8dcbcf0 Mon Sep 17 00:00:00 2001
+From d28309bda174c2be1a7aaf52cf0a7e290f99271f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 14 Aug 2018 20:53:12 +0200
-Subject: [PATCH 02/18] Don't set reserved_disk group, it panics old inits
+Subject: [PATCH 2/9] Don't set reserved_disk group, it panics old inits
 
 Change-Id: Ic4893136c188059d40d3e97099f7990dfa7432a8
 ---
@@ -9,7 +9,7 @@ Change-Id: Ic4893136c188059d40d3e97099f7990dfa7432a8
  1 file changed, 1 deletion(-)
 
 diff --git a/vold.rc b/vold.rc
-index 93d878663..c27aedaaa 100644
+index 93d8786..c27aeda 100644
 --- a/vold.rc
 +++ b/vold.rc
 @@ -5,4 +5,3 @@ service vold /system/bin/vold \

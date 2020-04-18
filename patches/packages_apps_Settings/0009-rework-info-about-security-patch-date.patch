@@ -1,7 +1,7 @@
-From 4b91f1fb2ee0ea3e5ea485abf92341afdd230a3f Mon Sep 17 00:00:00 2001
+From 5554d936dd018a0f73a7e32026aaa5df1f959850 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 16:33:15 +0200
-Subject: [PATCH 09/20] rework info about security patch date
+Subject: [PATCH 09/26] rework info about security patch date
 
 	modified:   res/xml/firmware_version.xml
 	modified:   src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
@@ -16,7 +16,7 @@ Change-Id: Icf527265c090b22799d7c4ff3963020a81094e06
  create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
 
 diff --git a/res/xml/firmware_version.xml b/res/xml/firmware_version.xml
-index 7a456c7..825a46b 100644
+index 7a456c7884..825a46b1d3 100644
 --- a/res/xml/firmware_version.xml
 +++ b/res/xml/firmware_version.xml
 @@ -58,15 +58,7 @@
@@ -37,7 +37,7 @@ index 7a456c7..825a46b 100644
      <!-- Baseband -->
      <Preference
 diff --git a/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
-index 1df78a8..029e850 100644
+index 1df78a8081..029e850a51 100644
 --- a/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
 +++ b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
 @@ -17,59 +17,57 @@
@@ -131,7 +131,7 @@ index 1df78a8..029e850 100644
  }
 diff --git a/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
 new file mode 100644
-index 0000000..7ed48b1
+index 0000000000..7ed48b1aa6
 --- /dev/null
 +++ b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
 @@ -0,0 +1,73 @@

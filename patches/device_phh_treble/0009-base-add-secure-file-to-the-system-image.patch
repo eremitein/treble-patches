@@ -1,7 +1,7 @@
-From a60453485a6be6ac7bc3a1af99646caad1df28bc Mon Sep 17 00:00:00 2001
+From a84a5e5cc5510bbf8f8a67340e1f89b78fedf601 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 25 Dec 2019 12:34:05 +0200
-Subject: [PATCH 09/13] base: add "secure" file to the system image
+Subject: [PATCH 09/12] base: add "secure" file to the system image
 
 	modified:   base.mk
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 09/13] base: add "secure" file to the system image
  1 file changed, 1 insertion(+)
 
 diff --git a/base.mk b/base.mk
-index c468c82..8db8348 100644
+index ce318bb..02cb65c 100644
 --- a/base.mk
 +++ b/base.mk
-@@ -62,6 +62,7 @@ PRODUCT_COPY_FILES += \
+@@ -64,6 +64,7 @@ PRODUCT_COPY_FILES += \
  
  PRODUCT_COPY_FILES += \
  	device/phh/treble/empty:system/phh/empty \

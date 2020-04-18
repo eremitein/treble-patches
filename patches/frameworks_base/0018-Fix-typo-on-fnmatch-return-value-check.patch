@@ -1,0 +1,25 @@
+From eb901a1578a4cb25702c3d2d80723dcb54d70e6e Mon Sep 17 00:00:00 2001
+From: Song Fuchang <song.fc@gmail.com>
+Date: Sun, 17 Jun 2018 22:39:37 +0800
+Subject: [PATCH 018/133] Fix typo on fnmatch return value check
+
+---
+ cmds/idmap/scan.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/cmds/idmap/scan.cpp b/cmds/idmap/scan.cpp
+index 2be6d23ac78..0acff23d031 100644
+--- a/cmds/idmap/scan.cpp
++++ b/cmds/idmap/scan.cpp
+@@ -94,7 +94,7 @@ namespace {
+         val = strndup16to8(value.string(), value.size());
+ 
+ 	if(val[0]=='+') {
+-            return fnmatch(val+1, propBuf, 0) != 0;
++            return fnmatch(val+1, propBuf, 0) == 0;
+ 	}
+ 
+         return (strcmp(propBuf, val) == 0);
+-- 
+2.17.1
+

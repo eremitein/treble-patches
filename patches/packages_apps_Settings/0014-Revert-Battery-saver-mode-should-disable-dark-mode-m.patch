@@ -1,7 +1,7 @@
-From c11afda8c3de1098f3ae52c9257a48df60ec7a10 Mon Sep 17 00:00:00 2001
+From 87e8888f06ace7729786cd8268ea45a07e53b9de Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 5 Mar 2020 04:10:22 +0200
-Subject: [PATCH 14/20] Revert "Battery saver mode should disable dark mode
+Subject: [PATCH 14/26] Revert "Battery saver mode should disable dark mode
  modification"
 
 	modified:   src/com/android/settings/display/DarkUIPreferenceController.java
@@ -22,7 +22,7 @@ Subject: [PATCH 14/20] Revert "Battery saver mode should disable dark mode
  7 files changed, 14 insertions(+), 85 deletions(-)
 
 diff --git a/src/com/android/settings/display/DarkUIPreferenceController.java b/src/com/android/settings/display/DarkUIPreferenceController.java
-index e93f7a4..4816b21 100644
+index e93f7a49bd..4816b21dca 100644
 --- a/src/com/android/settings/display/DarkUIPreferenceController.java
 +++ b/src/com/android/settings/display/DarkUIPreferenceController.java
 @@ -32,6 +32,7 @@ import androidx.preference.PreferenceScreen;
@@ -42,7 +42,7 @@ index e93f7a4..4816b21 100644
          return mUiModeManager.setNightModeActivated(isChecked);
      }
 diff --git a/src/com/android/settings/display/darkmode/DarkModeActivationPreferenceController.java b/src/com/android/settings/display/darkmode/DarkModeActivationPreferenceController.java
-index 23f625f..98d4b14 100644
+index 23f625f289..98d4b14cd9 100644
 --- a/src/com/android/settings/display/darkmode/DarkModeActivationPreferenceController.java
 +++ b/src/com/android/settings/display/darkmode/DarkModeActivationPreferenceController.java
 @@ -17,7 +17,6 @@ package com.android.settings.display.darkmode;
@@ -83,7 +83,7 @@ index 23f625f..98d4b14 100644
                  & Configuration.UI_MODE_NIGHT_YES) != 0;
          updateNightMode(active);
 diff --git a/src/com/android/settings/display/darkmode/DarkModeObserver.java b/src/com/android/settings/display/darkmode/DarkModeObserver.java
-index 4d0d7c5..1c076f7 100644
+index 4d0d7c58f1..1c076f7dc9 100644
 --- a/src/com/android/settings/display/darkmode/DarkModeObserver.java
 +++ b/src/com/android/settings/display/darkmode/DarkModeObserver.java
 @@ -14,30 +14,18 @@
@@ -143,7 +143,7 @@ index 4d0d7c5..1c076f7 100644
      }
  
 diff --git a/src/com/android/settings/display/darkmode/DarkModePreference.java b/src/com/android/settings/display/darkmode/DarkModePreference.java
-index c5fbded..2a8909f 100644
+index c5fbdedf57..2a8909f9c2 100644
 --- a/src/com/android/settings/display/darkmode/DarkModePreference.java
 +++ b/src/com/android/settings/display/darkmode/DarkModePreference.java
 @@ -17,7 +17,6 @@ package com.android.settings.display.darkmode;
@@ -194,7 +194,7 @@ index c5fbded..2a8909f 100644
  
          String detail;
 diff --git a/src/com/android/settings/display/darkmode/DarkModeScheduleSelectorController.java b/src/com/android/settings/display/darkmode/DarkModeScheduleSelectorController.java
-index d99c7bf..ab7ea92 100644
+index d99c7bf59e..ab7ea92343 100644
 --- a/src/com/android/settings/display/darkmode/DarkModeScheduleSelectorController.java
 +++ b/src/com/android/settings/display/darkmode/DarkModeScheduleSelectorController.java
 @@ -17,7 +17,6 @@ package com.android.settings.display.darkmode;
@@ -231,7 +231,7 @@ index d99c7bf..ab7ea92 100644
                  mUiModeManager.getNightMode() == UiModeManager.MODE_NIGHT_AUTO
                  ? mContext.getString(R.string.dark_ui_auto_mode_auto)
 diff --git a/tests/robotests/src/com/android/settings/display/darkmode/DarkModeActivationPreferenceControllerTest.java b/tests/robotests/src/com/android/settings/display/darkmode/DarkModeActivationPreferenceControllerTest.java
-index cd20ea2..24cbd07 100644
+index cd20ea230a..24cbd0707c 100644
 --- a/tests/robotests/src/com/android/settings/display/darkmode/DarkModeActivationPreferenceControllerTest.java
 +++ b/tests/robotests/src/com/android/settings/display/darkmode/DarkModeActivationPreferenceControllerTest.java
 @@ -19,7 +19,6 @@ import android.app.UiModeManager;
@@ -273,7 +273,7 @@ index cd20ea2..24cbd07 100644
 -    }
  }
 diff --git a/tests/robotests/src/com/android/settings/display/darkmode/DarkModeScheduleSelectorControllerTest.java b/tests/robotests/src/com/android/settings/display/darkmode/DarkModeScheduleSelectorControllerTest.java
-index 53be42c..a844fec 100644
+index 53be42cadd..a844fec095 100644
 --- a/tests/robotests/src/com/android/settings/display/darkmode/DarkModeScheduleSelectorControllerTest.java
 +++ b/tests/robotests/src/com/android/settings/display/darkmode/DarkModeScheduleSelectorControllerTest.java
 @@ -16,7 +16,6 @@ package com.android.settings.display.darkmode;

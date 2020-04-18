@@ -1,7 +1,7 @@
-From 9db75b4b1c3c0eef9e48fe2be90cba7bb4a685c4 Mon Sep 17 00:00:00 2001
+From 94b0bb84f54a4030c8aa3a1a873713a2a54d09c3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 12:51:06 +0200
-Subject: [PATCH 04/20] Show me more than 4 items in the menus!
+Subject: [PATCH 04/26] Show me more than 4 items in the menus!
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/6641ccb92ad01c7dbaaa31c45ca9aedc0e73be28
@@ -12,7 +12,7 @@ Subject: [PATCH 04/20] Show me more than 4 items in the menus!
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/com/android/settings/SettingsPreferenceFragment.java b/src/com/android/settings/SettingsPreferenceFragment.java
-index 6b29b2e..7eaeea8 100644
+index 6b29b2e1e4..7eaeea82e6 100644
 --- a/src/com/android/settings/SettingsPreferenceFragment.java
 +++ b/src/com/android/settings/SettingsPreferenceFragment.java
 @@ -261,7 +261,7 @@ public abstract class SettingsPreferenceFragment extends InstrumentedPreferenceF

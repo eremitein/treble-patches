@@ -1,7 +1,7 @@
-From a499742a3a005c8e3affa9c3731cbf68e55af64d Mon Sep 17 00:00:00 2001
+From bc654bf737b7e7280c1f0ffdd996c88dfaff5448 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 25 Dec 2019 09:26:37 +0200
-Subject: [PATCH 08/13] rw-system: add 'daisy' stock keylayout files
+Subject: [PATCH 08/12] rw-system: add 'daisy' stock keylayout files
 
 	modified:   base.mk
 	new file:   files/daisy-buttonJack.kl
@@ -20,10 +20,10 @@ Subject: [PATCH 08/13] rw-system: add 'daisy' stock keylayout files
  create mode 100644 files/daisy-uinput-goodix.kl
 
 diff --git a/base.mk b/base.mk
-index b2aa31e..c468c82 100644
+index 895b9c9..ce318bb 100644
 --- a/base.mk
 +++ b/base.mk
-@@ -114,6 +114,9 @@ PRODUCT_COPY_FILES += \
+@@ -116,6 +116,9 @@ PRODUCT_COPY_FILES += \
  	device/phh/treble/files/lenovo-synaptics_dsx.kl:system/phh/lenovo-synaptics_dsx.kl \
  	device/phh/treble/files/oppo-touchpanel.kl:system/phh/oppo-touchpanel.kl \
  	device/phh/treble/files/google-uinput-fpc.kl:system/phh/google-uinput-fpc.kl \
@@ -104,11 +104,20 @@ index 0000000..c0b0089
 +key 198 SYSTEM_NAVIGATION_RIGHT
 +key 353 DPAD_CENTER
 diff --git a/rw-system.sh b/rw-system.sh
-index 629f943..63eec37 100644
+index 93e0fac..df534ab 100644
 --- a/rw-system.sh
 +++ b/rw-system.sh
-@@ -82,11 +82,26 @@ changeKeylayout() {
-         chmod 0644 /mnt/phh/keylayout/gpio_keys.kl /mnt/phh/keylayout/sec_touchscreen.kl
+@@ -87,7 +87,7 @@ changeKeylayout() {
+         -e xiaomi/polaris -e xiaomi/sirius -e xiaomi/dipper \
+         -e xiaomi/wayne -e xiaomi/jasmine -e xiaomi/jasmine_sprout \
+         -e xiaomi/platina -e iaomi/perseus -e xiaomi/ysl -e Redmi/begonia\
+-        -e xiaomi/nitrogen -e xiaomi/daisy -e xiaomi/sakura -e xiaomi/andromeda \
++        -e xiaomi/nitrogen -e xiaomi/sakura -e xiaomi/andromeda \
+         -e xiaomi/whyred -e xiaomi/tulip -e xiaomi/onc; then
+         if [ ! -f /mnt/phh/keylayout/uinput-goodix.kl ]; then
+           cp /system/phh/empty /mnt/phh/keylayout/uinput-goodix.kl
+@@ -101,6 +101,21 @@ changeKeylayout() {
+         fi
      fi
  
 +    if getprop ro.vendor.build.fingerprint | grep -iq -e xiaomi/daisy; then
@@ -126,15 +135,9 @@ index 629f943..63eec37 100644
 +        chmod 0644 ${mpk}/uinput* ${mpk}/msm8953*
 +    fi
 +
-     if getprop ro.vendor.build.fingerprint | grep -iq \
-         -e xiaomi/polaris -e xiaomi/sirius -e xiaomi/dipper \
-         -e xiaomi/wayne -e xiaomi/jasmine -e xiaomi/jasmine_sprout \
-         -e xiaomi/platina -e iaomi/perseus -e xiaomi/ysl -e Redmi/begonia\
--        -e xiaomi/nitrogen -e xiaomi/daisy -e xiaomi/sakura \
-+        -e xiaomi/nitrogen -e xiaomi/sakura \
-         -e xiaomi/whyred -e xiaomi/tulip -e xiaomi/onc; then
-         if [ ! -f /mnt/phh/keylayout/uinput-goodix.kl ]; then
-           cp /system/phh/empty /mnt/phh/keylayout/uinput-goodix.kl
+     if getprop ro.vendor.build.fingerprint | grep -qi oneplus/oneplus6/oneplus6; then
+         cp /system/phh/oneplus6-synaptics_s3320.kl /mnt/phh/keylayout/synaptics_s3320.kl
+         chmod 0644 /mnt/phh/keylayout/synaptics_s3320.kl
 -- 
 2.17.1
 

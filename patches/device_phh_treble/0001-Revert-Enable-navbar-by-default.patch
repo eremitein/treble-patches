@@ -1,0 +1,25 @@
+From 22f5d0caf6ac289f8bc64db0de598f1d27e12175 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 18 Apr 2020 04:14:32 +0300
+Subject: [PATCH 01/12] Revert "Enable navbar by default"
+
+This reverts commit 09a49059a98a8302a794351c659f51d3e42863db.
+---
+ system.prop | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/system.prop b/system.prop
+index 7094634..606b4f6 100644
+--- a/system.prop
++++ b/system.prop
+@@ -6,7 +6,6 @@ persist.sys.overlay.nightmode=true
+ 
+ #Disable debugging strict mode toasts
+ persist.sys.strictmode.disable=true
+-persist.sys.phh.mainkeys=0
+ 
+ fw.max_users=10
+ persist.sys.max_profiles=10
+-- 
+2.17.1
+

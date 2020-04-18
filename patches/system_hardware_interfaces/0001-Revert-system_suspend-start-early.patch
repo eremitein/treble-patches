@@ -1,0 +1,27 @@
+From 12edce33895d202324e2b0837354246bab24647c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 5 Apr 2020 00:58:21 +0300
+Subject: [PATCH] Revert "system_suspend: start early"
+
+This reverts commit 5c145c49cc83bfe37c740bcfd3f82715ee051122.
+
+  try to fix "deep sleep" issue
+  based on patch by Hamido
+---
+ suspend/1.0/default/android.system.suspend@1.0-service.rc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/suspend/1.0/default/android.system.suspend@1.0-service.rc b/suspend/1.0/default/android.system.suspend@1.0-service.rc
+index 965ca16..c5d3869 100644
+--- a/suspend/1.0/default/android.system.suspend@1.0-service.rc
++++ b/suspend/1.0/default/android.system.suspend@1.0-service.rc
+@@ -1,5 +1,5 @@
+ service system_suspend /system/bin/hw/android.system.suspend@1.0-service
+-    class early_hal
++    class hal
+     user system
+     group system wakelock
+     capabilities BLOCK_SUSPEND
+-- 
+2.17.1
+

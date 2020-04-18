@@ -1,0 +1,191 @@
+From 119079d5cb7e6f16f60290b779896a49729c27ee Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 8 Apr 2020 20:12:23 +0300
+Subject: [PATCH 115/133] add Arsenal font
+
+	modified:   data/fonts/fonts.xml
+	modified:   packages/overlays/Android.mk
+	new file:   packages/overlays/FontArsenalOverlay/Android.mk
+	new file:   packages/overlays/FontArsenalOverlay/AndroidManifest.xml
+	new file:   packages/overlays/FontArsenalOverlay/res/values/config.xml
+	new file:   packages/overlays/FontArsenalOverlay/res/values/strings.xml
+---
+ data/fonts/fonts.xml                          |  8 +++++
+ packages/overlays/Android.mk                  |  1 +
+ .../overlays/FontArsenalOverlay/Android.mk    | 31 +++++++++++++++++++
+ .../FontArsenalOverlay/AndroidManifest.xml    | 31 +++++++++++++++++++
+ .../FontArsenalOverlay/res/values/config.xml  | 27 ++++++++++++++++
+ .../FontArsenalOverlay/res/values/strings.xml | 20 ++++++++++++
+ 6 files changed, 118 insertions(+)
+ create mode 100644 packages/overlays/FontArsenalOverlay/Android.mk
+ create mode 100644 packages/overlays/FontArsenalOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontArsenalOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontArsenalOverlay/res/values/strings.xml
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index 693b98ee163..b6227c8072b 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -174,6 +174,14 @@
+     <alias name="simple-day-bold" to="simple-day" weight="700" />
+     <alias name="simple-day-medium" to="simple-day" weight="500" />
+ 
++    <family name="arsenal">
++        <font weight="400" style="normal">Arsenal-Regular.ttf</font>
++        <font weight="400" style="italic">Arsenal-Italic.ttf</font>
++        <font weight="700" style="normal">Arsenal-Bold.ttf</font>
++        <font weight="700" style="italic">Arsenal-BoldItalic.ttf</font>
++    </family>
++    <alias name="arsenal-bold" to="arsenal" weight="700" />
++
+     <!-- fallback fonts -->
+     <family lang="und-Arab" variant="elegant">
+         <font weight="400" style="normal">NotoNaskhArabic-Regular.ttf</font>
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 84ed4f14319..b4dad1e4658 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -31,6 +31,7 @@ LOCAL_REQUIRED_MODULES := \
+ 	DisplayCutoutEmulationTallOverlay \
+ 	FontArbutusOverlay \
+ 	FontArvoOverlay \
++	FontArsenalOverlay \
+ 	FontLatoOverlay \
+ 	FontNotoSerifOverlay \
+ 	FontRobotoOverlay \
+diff --git a/packages/overlays/FontArsenalOverlay/Android.mk b/packages/overlays/FontArsenalOverlay/Android.mk
+new file mode 100644
+index 00000000000..1dda361b08a
+--- /dev/null
++++ b/packages/overlays/FontArsenalOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontArsenal
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontArsenalOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontArsenalOverlay/AndroidManifest.xml b/packages/overlays/FontArsenalOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..38e8bcb0180
+--- /dev/null
++++ b/packages/overlays/FontArsenalOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.arsenal"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_arsenal_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="arsenal,arsenal-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontArsenalOverlay/res/values/config.xml b/packages/overlays/FontArsenalOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..12eab151e89
+--- /dev/null
++++ b/packages/overlays/FontArsenalOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">arsenal</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">arsenal-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">arsenal</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">arsenal-bold</string>
++</resources>
+diff --git a/packages/overlays/FontArsenalOverlay/res/values/strings.xml b/packages/overlays/FontArsenalOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..c52d5497336
+--- /dev/null
++++ b/packages/overlays/FontArsenalOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_arsenal_overlay" translatable="false">Arsenal</string>
++</resources>
+-- 
+2.17.1
+

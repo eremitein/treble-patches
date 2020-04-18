@@ -1,7 +1,7 @@
-From 36d73ddfc958078b04c36e13f841397197ea28c9 Mon Sep 17 00:00:00 2001
+From b027283b3af9280e40fec84d4537dcfc455ec372 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 14:42:14 +0200
-Subject: [PATCH 06/20] Move IMEI information to Sim status
+Subject: [PATCH 06/26] Move IMEI information to Sim status
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/3741d37c0639883cdc6855bb371fce259ffc0775#diff-8e0314d48f88bb73a3b9ebce6165548d
@@ -20,7 +20,7 @@ Subject: [PATCH 06/20] Move IMEI information to Sim status
  5 files changed, 170 insertions(+), 70 deletions(-)
 
 diff --git a/res/layout/dialog_sim_status.xml b/res/layout/dialog_sim_status.xml
-index 27d12a8..9383499 100644
+index 27d12a8cb1..9383499689 100644
 --- a/res/layout/dialog_sim_status.xml
 +++ b/res/layout/dialog_sim_status.xml
 @@ -180,5 +180,85 @@
@@ -110,7 +110,7 @@ index 27d12a8..9383499 100644
      </LinearLayout>
  </ScrollView>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 77377c9..7363d85 100644
+index 3a84ed1651..0c706ad5de 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -7277,7 +7277,7 @@
@@ -123,7 +123,7 @@ index 77377c9..7363d85 100644
      <string name="sim_call_back_title">Call back from default SIM</string>
      <!-- Title for outgoing back. [CHAR LIMIT=60] -->
 diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
-index 9a6047c..aa653dd 100644
+index 9a6047c791..aa653ddded 100644
 --- a/res/xml/my_device_info.xml
 +++ b/res/xml/my_device_info.xml
 @@ -45,16 +45,6 @@
@@ -214,7 +214,7 @@ index 9a6047c..aa653dd 100644
      <Preference
          android:key="fcc_equipment_id"
 diff --git a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
-index e6afb7b..a84defb 100644
+index e6afb7b821..a84defbe56 100644
 --- a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
 +++ b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
 @@ -33,14 +33,9 @@ import com.android.settings.deviceinfo.BluetoothAddressPreferenceController;
@@ -252,7 +252,7 @@ index e6afb7b..a84defb 100644
          controllers.add(new UptimePreferenceController(context, lifecycle));
          return controllers;
 diff --git a/src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java b/src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java
-index 3fafd14..3978a72 100644
+index 3fafd14f62..3978a7238a 100644
 --- a/src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java
 +++ b/src/com/android/settings/deviceinfo/simstatus/SimStatusDialogController.java
 @@ -41,12 +41,18 @@ import android.telephony.SubscriptionManager.OnSubscriptionsChangedListener;

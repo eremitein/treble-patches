@@ -1,7 +1,7 @@
-From 4c30ca41acb8eb81d8621a420f60ac2112da886f Mon Sep 17 00:00:00 2001
+From 6d41c463a88588c013102deda2871c542bd65c2c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:35:49 +0200
-Subject: [PATCH 10/20] Pixel UI
+Subject: [PATCH 10/26] Pixel UI
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/fe6ec9d5978149a5652c70a665d914e389e40890
@@ -18,7 +18,7 @@ Subject: [PATCH 10/20] Pixel UI
  4 files changed, 7 insertions(+), 5 deletions(-)
 
 diff --git a/res/layout/search_bar.xml b/res/layout/search_bar.xml
-index 420c965..5017837 100644
+index 420c965a19..50178370ac 100644
 --- a/res/layout/search_bar.xml
 +++ b/res/layout/search_bar.xml
 @@ -22,12 +22,13 @@
@@ -38,7 +38,7 @@ index 420c965..5017837 100644
          android:contentInsetStartWithNavigation="@dimen/search_bar_content_inset"
          android:navigationIcon="@drawable/ic_homepage_search">
 diff --git a/res/values-night/colors.xml b/res/values-night/colors.xml
-index b1f9dfb..7d9fe61 100644
+index b1f9dfbd67..7d9fe61cca 100644
 --- a/res/values-night/colors.xml
 +++ b/res/values-night/colors.xml
 @@ -21,7 +21,7 @@
@@ -51,7 +51,7 @@ index b1f9dfb..7d9fe61 100644
      <color name="dialog_background">@*android:color/material_grey_800</color>
      <color name="notification_importance_selection_bg">@*android:color/material_grey_800</color>
 diff --git a/res/values/dimens.xml b/res/values/dimens.xml
-index 31a1592..fe4d5e0 100755
+index 31a159220e..fe4d5e04e4 100755
 --- a/res/values/dimens.xml
 +++ b/res/values/dimens.xml
 @@ -115,7 +115,7 @@
@@ -73,7 +73,7 @@ index 31a1592..fe4d5e0 100755
      <!-- CryptKeeper top margin for password/pin screen -->
      <dimen name="crypt_keeper_password_top_margin">88dip</dimen>
 diff --git a/res/values/styles.xml b/res/values/styles.xml
-index d3d3199..41a7ff3 100644
+index d3d3199f62..41a7ff3b28 100644
 --- a/res/values/styles.xml
 +++ b/res/values/styles.xml
 @@ -274,6 +274,7 @@

@@ -1,0 +1,33 @@
+From b20d4074b085180040268e5c71a8e1bb078d8095 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 20 Mar 2020 14:07:06 +0200
+Subject: [PATCH 5/5] replace FMRadio to Qualcomm FM
+
+	modified:   config/common.mk
+
+Change-Id: I8f422912d02673c86fe2457d7f66a591c13f58ce
+---
+ config/common.mk | 7 +++++--
+ 1 file changed, 5 insertions(+), 2 deletions(-)
+
+diff --git a/config/common.mk b/config/common.mk
+index 6b19747a..8007c9e3 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -169,8 +169,11 @@ PRODUCT_PACKAGES += \
+ 
+ # FM-Radivo
+ PRODUCT_PACKAGES += \
+-    FMRadio \
+-    libfmjni
++    FM2 \
++    libqcomfm_jni \
++    qcom.fmradio
++
++PRODUCT_BOOT_JARS += qcom.fmradio
+ 
+ # Extra tools in Lineage
+ PRODUCT_PACKAGES += \
+-- 
+2.17.1
+

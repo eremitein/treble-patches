@@ -1,7 +1,7 @@
-From a38e52bf9738666ca62994619cf5a5c4a530c86f Mon Sep 17 00:00:00 2001
+From 30b7e62941d825be7230ce13693864642600c73f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 4 Mar 2020 18:09:47 +0200
-Subject: [PATCH 13/20] Revert "Update the behavior of the Dark theme slice"
+Subject: [PATCH 13/26] Revert "Update the behavior of the Dark theme slice"
 
 This reverts commit 5f42f2f7a7589fed30caae1d11d0e9757639caf1.
 
@@ -13,7 +13,7 @@ This reverts commit 5f42f2f7a7589fed30caae1d11d0e9757639caf1.
  2 files changed, 21 insertions(+), 93 deletions(-)
 
 diff --git a/src/com/android/settings/homepage/contextualcards/slices/DarkThemeSlice.java b/src/com/android/settings/homepage/contextualcards/slices/DarkThemeSlice.java
-index 1b7f003..36a3980 100644
+index 1b7f003ac8..36a3980294 100644
 --- a/src/com/android/settings/homepage/contextualcards/slices/DarkThemeSlice.java
 +++ b/src/com/android/settings/homepage/contextualcards/slices/DarkThemeSlice.java
 @@ -17,21 +17,15 @@ package com.android.settings.homepage.contextualcards.slices;
@@ -169,7 +169,7 @@ index 1b7f003..36a3980 100644
      }
  }
 diff --git a/tests/robotests/src/com/android/settings/homepage/contextualcards/slices/DarkThemeSliceTest.java b/tests/robotests/src/com/android/settings/homepage/contextualcards/slices/DarkThemeSliceTest.java
-index 1af7b2b..bb21332 100644
+index 1af7b2bfac..bb213329b7 100644
 --- a/tests/robotests/src/com/android/settings/homepage/contextualcards/slices/DarkThemeSliceTest.java
 +++ b/tests/robotests/src/com/android/settings/homepage/contextualcards/slices/DarkThemeSliceTest.java
 @@ -22,10 +22,10 @@ import static org.mockito.Mockito.doReturn;

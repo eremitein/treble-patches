@@ -1,0 +1,45 @@
+From 0b22bdd971d187f1825224c44cf69f60d15f771e Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 9 Apr 2020 05:07:13 +0300
+Subject: [PATCH 118/133] clear fonts config
+
+	modified:   data/fonts/fonts.xml
+---
+ data/fonts/fonts.xml | 8 --------
+ 1 file changed, 8 deletions(-)
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index 5acc0064fef..42b8f545188 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -183,18 +183,12 @@
+     <alias name="arsenal-bold" to="arsenal" weight="700" />
+ 
+     <family name="ubuntu">
+-        <font weight="100" style="normal">Ubuntu-Light.ttf</font>
+-        <font weight="100" style="italic">Ubuntu-LightItalic.ttf</font>
+-        <font weight="300" style="normal">Ubuntu-Light.ttf</font>
+-        <font weight="300" style="italic">Ubuntu-LightItalic.ttf</font>
+         <font weight="400" style="normal">Ubuntu-Regular.ttf</font>
+         <font weight="400" style="italic">Ubuntu-Italic.ttf</font>
+         <font weight="500" style="normal">Ubuntu-Medium.ttf</font>
+         <font weight="500" style="italic">Ubuntu-MediumItalic.ttf</font>
+         <font weight="700" style="normal">Ubuntu-Medium.ttf</font>
+         <font weight="700" style="italic">Ubuntu-MediumItalic.ttf</font>
+-        <font weight="900" style="normal">Ubuntu-Bold.ttf</font>
+-        <font weight="900" style="italic">Ubuntu-BoldItalic.ttf</font>
+     </family>
+     <alias name="ubuntu-bold" to="ubuntu" weight="700" />
+ 
+@@ -205,8 +199,6 @@
+         <font weight="500" style="italic">AlegreyaSans-MediumItalic.ttf</font>
+         <font weight="700" style="normal">AlegreyaSans-Medium.ttf</font>
+         <font weight="700" style="italic">AlegreyaSans-MediumItalic.ttf</font>
+-        <font weight="900" style="normal">AlegreyaSans-Bold.ttf</font>
+-        <font weight="900" style="italic">AlegreyaSans-BoldItalic.ttf</font>
+     </family>
+     <alias name="alegreya-sans-bold" to="alegreya-sans" weight="700" />
+ 
+-- 
+2.17.1
+

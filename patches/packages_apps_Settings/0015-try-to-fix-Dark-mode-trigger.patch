@@ -1,7 +1,7 @@
-From 09ac07388b31ef3204948399587908875228f0da Mon Sep 17 00:00:00 2001
+From a03a30fde9f945ca5e641032283048d82dfadd99 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Mar 2020 14:34:56 +0200
-Subject: [PATCH 15/20] try to fix Dark mode trigger
+Subject: [PATCH 15/26] try to fix Dark mode trigger
 
 	modified:   src/com/android/settings/display/DarkUIPreferenceController.java
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 15/20] try to fix Dark mode trigger
  1 file changed, 1 deletion(-)
 
 diff --git a/src/com/android/settings/display/DarkUIPreferenceController.java b/src/com/android/settings/display/DarkUIPreferenceController.java
-index 4816b21..7d02462 100644
+index 4816b21dca..7d02462473 100644
 --- a/src/com/android/settings/display/DarkUIPreferenceController.java
 +++ b/src/com/android/settings/display/DarkUIPreferenceController.java
 @@ -92,7 +92,6 @@ public class DarkUIPreferenceController extends TogglePreferenceController imple

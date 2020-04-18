@@ -1,7 +1,7 @@
-From 1dea8f0ba293a6367d8270bbe71316bf330d0584 Mon Sep 17 00:00:00 2001
+From 2409737631214bc29407ea77951e171193a53427 Mon Sep 17 00:00:00 2001
 From: Michael Cheah <michael@cheah.xyz>
 Date: Sat, 11 Jan 2020 13:19:04 +0800
-Subject: [PATCH 02/20] Fix operatorNumeric parsing in CellInfoUtil & support
+Subject: [PATCH 02/26] Fix operatorNumeric parsing in CellInfoUtil & support
  old mnc format
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 02/20] Fix operatorNumeric parsing in CellInfoUtil & support
  1 file changed, 23 insertions(+), 3 deletions(-)
 
 diff --git a/src/com/android/settings/network/telephony/CellInfoUtil.java b/src/com/android/settings/network/telephony/CellInfoUtil.java
-index def81a1..6e6586a 100644
+index def81a10c6..6e6586a4cb 100644
 --- a/src/com/android/settings/network/telephony/CellInfoUtil.java
 +++ b/src/com/android/settings/network/telephony/CellInfoUtil.java
 @@ -16,6 +16,7 @@

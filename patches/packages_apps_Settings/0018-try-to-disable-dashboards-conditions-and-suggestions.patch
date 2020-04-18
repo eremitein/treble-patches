@@ -1,7 +1,7 @@
-From 32c1dfa9bd00ab6c917c2d6d067078c80a57b4e1 Mon Sep 17 00:00:00 2001
+From f27779b7e330ffdf13102d6a5a12748c10249588 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 9 Mar 2020 23:31:14 +0200
-Subject: [PATCH 18/20] try to disable dashboards conditions and suggestions
+Subject: [PATCH 18/26] try to disable dashboards conditions and suggestions
 
   * based on
   https://github.com/i-o-n/packages_apps_Settings/commit/b40fd09b2051e0a5d55615f163ad8d2ab2686ee6
@@ -14,7 +14,7 @@ Subject: [PATCH 18/20] try to disable dashboards conditions and suggestions
  2 files changed, 2 insertions(+), 20 deletions(-)
 
 diff --git a/src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java b/src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java
-index 3590554..79bd52f 100644
+index 35905546a0..79bd52fcb8 100644
 --- a/src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java
 +++ b/src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java
 @@ -60,25 +60,7 @@ public class SuggestionFeatureProviderImpl implements SuggestionFeatureProvider
@@ -45,7 +45,7 @@ index 3590554..79bd52f 100644
  
      @Override
 diff --git a/src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java b/src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java
-index 1beac9b..8d2db64 100644
+index 1beac9b87b..8d2db6484d 100644
 --- a/src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java
 +++ b/src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java
 @@ -175,7 +175,7 @@ public class ConditionManager {

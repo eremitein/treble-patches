@@ -1,0 +1,497 @@
+From da8834c1dd482ba817bf672a8473c605c0edca80 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 9 Apr 2020 23:32:22 +0300
+Subject: [PATCH 113/133] add QS Panel overlays
+
+	modified:   packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+	modified:   packages/overlays/Android.mk
+	new file:   packages/overlays/QSPanel33Overlay/Android.mk
+	new file:   packages/overlays/QSPanel33Overlay/AndroidManifest.xml
+	new file:   packages/overlays/QSPanel33Overlay/res/values/config.xml
+	new file:   packages/overlays/QSPanel34Overlay/Android.mk
+	new file:   packages/overlays/QSPanel34Overlay/AndroidManifest.xml
+	new file:   packages/overlays/QSPanel34Overlay/res/values/config.xml
+	new file:   packages/overlays/QSPanel43Overlay/Android.mk
+	new file:   packages/overlays/QSPanel43Overlay/AndroidManifest.xml
+	new file:   packages/overlays/QSPanel43Overlay/res/values/config.xml
+	new file:   packages/overlays/QSPanel55Overlay/Android.mk
+	new file:   packages/overlays/QSPanel55Overlay/AndroidManifest.xml
+	new file:   packages/overlays/QSPanel55Overlay/res/values/config.xml
+---
+ .../systemui/theme/ThemeOverlayManager.java   |  8 ++++-
+ packages/overlays/Android.mk                  |  4 +++
+ packages/overlays/QSPanel33Overlay/Android.mk | 30 +++++++++++++++++++
+ .../QSPanel33Overlay/AndroidManifest.xml      | 24 +++++++++++++++
+ .../QSPanel33Overlay/res/values/config.xml    | 24 +++++++++++++++
+ packages/overlays/QSPanel34Overlay/Android.mk | 30 +++++++++++++++++++
+ .../QSPanel34Overlay/AndroidManifest.xml      | 24 +++++++++++++++
+ .../QSPanel34Overlay/res/values/config.xml    | 24 +++++++++++++++
+ packages/overlays/QSPanel43Overlay/Android.mk | 30 +++++++++++++++++++
+ .../QSPanel43Overlay/AndroidManifest.xml      | 24 +++++++++++++++
+ .../QSPanel43Overlay/res/values/config.xml    | 24 +++++++++++++++
+ packages/overlays/QSPanel55Overlay/Android.mk | 30 +++++++++++++++++++
+ .../QSPanel55Overlay/AndroidManifest.xml      | 24 +++++++++++++++
+ .../QSPanel55Overlay/res/values/config.xml    | 24 +++++++++++++++
+ 14 files changed, 323 insertions(+), 1 deletion(-)
+ create mode 100644 packages/overlays/QSPanel33Overlay/Android.mk
+ create mode 100644 packages/overlays/QSPanel33Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/QSPanel33Overlay/res/values/config.xml
+ create mode 100644 packages/overlays/QSPanel34Overlay/Android.mk
+ create mode 100644 packages/overlays/QSPanel34Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/QSPanel34Overlay/res/values/config.xml
+ create mode 100644 packages/overlays/QSPanel43Overlay/Android.mk
+ create mode 100644 packages/overlays/QSPanel43Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/QSPanel43Overlay/res/values/config.xml
+ create mode 100644 packages/overlays/QSPanel55Overlay/Android.mk
+ create mode 100644 packages/overlays/QSPanel55Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/QSPanel55Overlay/res/values/config.xml
+
+diff --git a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+index 5ae3c6a1679..693903e5aeb 100644
+--- a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
++++ b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+@@ -70,6 +70,9 @@ class ThemeOverlayManager {
+     @VisibleForTesting
+     static final String OVERLAY_CATEGORY_STATUSBAR =
+             "android.theme.customization.statusbar";
++    @VisibleForTesting
++    static final String OVERLAY_CATEGORY_QSPANEL =
++            "android.theme.customization.qspanel";
+ 
+     /*
+      * All theme customization categories used by the system, in order that they should be applied,
+@@ -81,6 +84,7 @@ class ThemeOverlayManager {
+             OVERLAY_CATEGORY_FONT,
+             OVERLAY_CATEGORY_COLOR,
+             OVERLAY_CATEGORY_STATUSBAR,
++            OVERLAY_CATEGORY_QSPANEL,
+             OVERLAY_CATEGORY_ICON_ANDROID,
+             OVERLAY_CATEGORY_ICON_SYSUI,
+             OVERLAY_CATEGORY_ICON_SETTINGS,
+@@ -92,6 +96,7 @@ class ThemeOverlayManager {
+             OVERLAY_CATEGORY_COLOR,
+             OVERLAY_CATEGORY_FONT,
+             OVERLAY_CATEGORY_SHAPE,
++            OVERLAY_CATEGORY_QSPANEL,
+             OVERLAY_CATEGORY_STATUSBAR,
+             OVERLAY_CATEGORY_ICON_ANDROID,
+             OVERLAY_CATEGORY_ICON_SYSUI);
+@@ -115,7 +120,7 @@ class ThemeOverlayManager {
+                 OVERLAY_CATEGORY_COLOR, OVERLAY_CATEGORY_FONT, OVERLAY_CATEGORY_STATUSBAR,
+                 OVERLAY_CATEGORY_SHAPE, OVERLAY_CATEGORY_ICON_ANDROID));
+         mTargetPackageToCategories.put(SYSUI_PACKAGE,
+-                Sets.newHashSet(OVERLAY_CATEGORY_ICON_SYSUI));
++                Sets.newHashSet(OVERLAY_CATEGORY_ICON_SYSUI, OVERLAY_CATEGORY_QSPANEL));
+         mTargetPackageToCategories.put(SETTINGS_PACKAGE,
+                 Sets.newHashSet(OVERLAY_CATEGORY_ICON_SETTINGS));
+         mTargetPackageToCategories.put(mLauncherPackage,
+@@ -127,6 +132,7 @@ class ThemeOverlayManager {
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_SHAPE, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_STATUSBAR, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_ANDROID, ANDROID_PACKAGE);
++        mCategoryToTargetPackage.put(OVERLAY_CATEGORY_QSPANEL, SYSUI_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SYSUI, SYSUI_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SETTINGS, SETTINGS_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_LAUNCHER, mLauncherPackage);
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 400eb331126..d16e72a9030 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -59,6 +59,10 @@ LOCAL_REQUIRED_MODULES := \
+ 	StatusBar1Overlay \
+ 	StatusBar2Overlay \
+ 	StatusBar3Overlay \
++	QSPanel33Overlay \
++	QSPanel34Overlay \
++	QSPanel43Overlay \
++	QSPanel55Overlay \
+ 	NavigationBarMode3ButtonOverlay \
+ 	NavigationBarMode2ButtonOverlay \
+ 	NavigationBarModeGesturalOverlay \
+diff --git a/packages/overlays/QSPanel33Overlay/Android.mk b/packages/overlays/QSPanel33Overlay/Android.mk
+new file mode 100644
+index 00000000000..4825fa5dcb8
+--- /dev/null
++++ b/packages/overlays/QSPanel33Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := QSPanel33
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := QSPanel33Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/QSPanel33Overlay/AndroidManifest.xml b/packages/overlays/QSPanel33Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..44d5e500869
+--- /dev/null
++++ b/packages/overlays/QSPanel33Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.qspanel33"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.qspanel" android:priority="1"/>
++    <application android:label="3x3" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/QSPanel33Overlay/res/values/config.xml b/packages/overlays/QSPanel33Overlay/res/values/config.xml
+new file mode 100644
+index 00000000000..fa884ed94fc
+--- /dev/null
++++ b/packages/overlays/QSPanel33Overlay/res/values/config.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- The number of columns in the QuickSettings -->
++    <integer name="quick_settings_num_columns">3</integer>
++    <!-- The number of rows in the QuickSettings -->
++    <integer name="quick_settings_max_rows">3</integer>
++</resources>
+diff --git a/packages/overlays/QSPanel34Overlay/Android.mk b/packages/overlays/QSPanel34Overlay/Android.mk
+new file mode 100644
+index 00000000000..fd7e6fca6c5
+--- /dev/null
++++ b/packages/overlays/QSPanel34Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := QSPanel34
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := QSPanel34Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/QSPanel34Overlay/AndroidManifest.xml b/packages/overlays/QSPanel34Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..98bf5a6c761
+--- /dev/null
++++ b/packages/overlays/QSPanel34Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.qspanel34"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.qspanel" android:priority="1"/>
++    <application android:label="3x4" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/QSPanel34Overlay/res/values/config.xml b/packages/overlays/QSPanel34Overlay/res/values/config.xml
+new file mode 100644
+index 00000000000..e1299efba8b
+--- /dev/null
++++ b/packages/overlays/QSPanel34Overlay/res/values/config.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- The number of columns in the QuickSettings -->
++    <integer name="quick_settings_num_columns">3</integer>
++    <!-- The number of rows in the QuickSettings -->
++    <integer name="quick_settings_max_rows">4</integer>
++</resources>
+diff --git a/packages/overlays/QSPanel43Overlay/Android.mk b/packages/overlays/QSPanel43Overlay/Android.mk
+new file mode 100644
+index 00000000000..6d509234463
+--- /dev/null
++++ b/packages/overlays/QSPanel43Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := QSPanel43
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := QSPanel43Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/QSPanel43Overlay/AndroidManifest.xml b/packages/overlays/QSPanel43Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..9eb8aeb13bb
+--- /dev/null
++++ b/packages/overlays/QSPanel43Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.qspanel43"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.qspanel" android:priority="1"/>
++    <application android:label="4x3" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/QSPanel43Overlay/res/values/config.xml b/packages/overlays/QSPanel43Overlay/res/values/config.xml
+new file mode 100644
+index 00000000000..7af31cf685e
+--- /dev/null
++++ b/packages/overlays/QSPanel43Overlay/res/values/config.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- The number of columns in the QuickSettings -->
++    <integer name="quick_settings_num_columns">4</integer>
++    <!-- The number of rows in the QuickSettings -->
++    <integer name="quick_settings_max_rows">3</integer>
++</resources>
+diff --git a/packages/overlays/QSPanel55Overlay/Android.mk b/packages/overlays/QSPanel55Overlay/Android.mk
+new file mode 100644
+index 00000000000..ef9ca566eb6
+--- /dev/null
++++ b/packages/overlays/QSPanel55Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := QSPanel55
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := QSPanel55Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/QSPanel55Overlay/AndroidManifest.xml b/packages/overlays/QSPanel55Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..d37c215aec1
+--- /dev/null
++++ b/packages/overlays/QSPanel55Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.qspanel55"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.qspanel" android:priority="1"/>
++    <application android:label="5x5" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/QSPanel55Overlay/res/values/config.xml b/packages/overlays/QSPanel55Overlay/res/values/config.xml
+new file mode 100644
+index 00000000000..d6c037675e3
+--- /dev/null
++++ b/packages/overlays/QSPanel55Overlay/res/values/config.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- The number of columns in the QuickSettings -->
++    <integer name="quick_settings_num_columns">5</integer>
++    <!-- The number of rows in the QuickSettings -->
++    <integer name="quick_settings_max_rows">5</integer>
++</resources>
+-- 
+2.17.1
+

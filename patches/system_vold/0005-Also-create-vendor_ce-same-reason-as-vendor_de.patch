@@ -1,14 +1,14 @@
-From 000528bd11120a74ddef25eb45acfce13790323d Mon Sep 17 00:00:00 2001
+From 6e8c0892f775712195a1582ab2ec8172293c2d04 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 20 Aug 2018 22:38:08 +0200
-Subject: [PATCH 05/18] Also create vendor_ce (same reason as vendor_de)
+Subject: [PATCH 5/9] Also create vendor_ce (same reason as vendor_de)
 
 ---
  FsCrypt.cpp | 2 ++
  1 file changed, 2 insertions(+)
 
 diff --git a/FsCrypt.cpp b/FsCrypt.cpp
-index c5816b13a..92f31ea5a 100644
+index c5816b1..92f31ea 100644
 --- a/FsCrypt.cpp
 +++ b/FsCrypt.cpp
 @@ -876,6 +876,8 @@ bool fscrypt_prepare_user_storage(const std::string& volume_uuid, userid_t user_

@@ -1,18 +1,18 @@
-From 4d09ea670dfe61b5d9076df6e9112eeca53fd8ca Mon Sep 17 00:00:00 2001
+From 5ed8859a0701c6b5e47f423055594e9c4d927bc7 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 11 Mar 2020 14:02:35 +0100
-Subject: [PATCH 09/18] Every voldmanaged storage is adoptable
+Subject: [PATCH 9/9] Every voldmanaged storage is adoptable
 
 ---
  main.cpp | 2 +-
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/main.cpp b/main.cpp
-index 27a701bd5..cd1d6dd51 100644
+index 4d61110..6f6e803 100644
 --- a/main.cpp
 +++ b/main.cpp
-@@ -249,7 +249,7 @@ static int process_config(VolumeManager* vm, bool* has_adoptable, bool* has_quot
-             std::string nickname(entry.label);
+@@ -255,7 +255,7 @@ static int process_config(VolumeManager* vm, bool* has_adoptable, bool* has_quot
+             int partnum = entry.partnum;
              int flags = 0;
  
 -            if (entry.is_encryptable()) {

@@ -1,7 +1,7 @@
-From 18369161864195d74ff7f5cbdefd16198d007e5e Mon Sep 17 00:00:00 2001
+From 23434930e4ae0e827617262a4ed6f7a83bba35fe Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 2 Feb 2020 17:27:20 +0200
-Subject: [PATCH 08/20] disable legacy suggestions
+Subject: [PATCH 08/26] disable legacy suggestions
 
 	modified:   res/values/config.xml
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 08/20] disable legacy suggestions
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/res/values/config.xml b/res/values/config.xml
-index a003f78..6943f4c 100755
+index a003f7885f..6943f4c14c 100755
 --- a/res/values/config.xml
 +++ b/res/values/config.xml
 @@ -184,7 +184,7 @@

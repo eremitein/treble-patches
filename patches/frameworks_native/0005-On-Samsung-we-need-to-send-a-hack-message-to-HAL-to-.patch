@@ -1,7 +1,7 @@
-From 831168e61a899b73eec8b1c7a66a698ea1b3fdf4 Mon Sep 17 00:00:00 2001
+From 4ff5609a7cab2c768b295a3a7be7e31b6b4ab3d9 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 14 Aug 2019 23:37:10 +0200
-Subject: [PATCH 5/7] On Samsung, we need to send a hack-message to HAL to get
+Subject: [PATCH 5/8] On Samsung, we need to send a hack-message to HAL to get
  all Sensors
 
 Change-Id: Id6a1fa48340de61c418493668e9abd22c2599376
@@ -10,7 +10,7 @@ Change-Id: Id6a1fa48340de61c418493668e9abd22c2599376
  1 file changed, 4 insertions(+)
 
 diff --git a/services/sensorservice/SensorDevice.cpp b/services/sensorservice/SensorDevice.cpp
-index 717f317..45d6c67 100644
+index 717f31769..45d6c679b 100644
 --- a/services/sensorservice/SensorDevice.cpp
 +++ b/services/sensorservice/SensorDevice.cpp
 @@ -30,7 +30,9 @@

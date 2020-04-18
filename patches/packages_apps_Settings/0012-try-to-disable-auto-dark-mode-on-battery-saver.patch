@@ -1,7 +1,7 @@
-From e03d1e5e4a5b78095a427e800a0720dae1b4fb68 Mon Sep 17 00:00:00 2001
+From adbba0fb1e6c637a8368626e29c4dad81deb2e58 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 2 Mar 2020 13:42:28 +0200
-Subject: [PATCH 12/20] try to disable auto dark mode on battery saver
+Subject: [PATCH 12/26] try to disable auto dark mode on battery saver
 
 	modified:   src/com/android/settings/display/DarkUIPreferenceController.java
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 12/20] try to disable auto dark mode on battery saver
  1 file changed, 1 insertion(+), 12 deletions(-)
 
 diff --git a/src/com/android/settings/display/DarkUIPreferenceController.java b/src/com/android/settings/display/DarkUIPreferenceController.java
-index 98d9a69..e93f7a4 100644
+index 98d9a69ea7..e93f7a49bd 100644
 --- a/src/com/android/settings/display/DarkUIPreferenceController.java
 +++ b/src/com/android/settings/display/DarkUIPreferenceController.java
 @@ -107,19 +107,8 @@ public class DarkUIPreferenceController extends TogglePreferenceController imple

@@ -1,7 +1,7 @@
-From 691220fdd55f12ad4d919a94d43a8be4cc5d59ce Mon Sep 17 00:00:00 2001
+From ae6d5fd54089999e0ca3730362cb2000188fa4cd Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 10 Mar 2020 19:59:04 +0200
-Subject: [PATCH 19/20] Add screenshot sounds settings
+Subject: [PATCH 19/26] Add screenshot sounds settings
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/52730f137e12910589cb3074bd2c6587e5bbb96a
@@ -19,7 +19,7 @@ Subject: [PATCH 19/20] Add screenshot sounds settings
  create mode 100644 src/com/android/settings/notification/ScreenshotSoundPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 4b1eaef..94e9eb8 100644
+index 535339d669..f8b5530ad2 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -11448,4 +11448,7 @@
@@ -31,7 +31,7 @@ index 4b1eaef..94e9eb8 100644
 +
  </resources>
 diff --git a/res/xml/sound_settings.xml b/res/xml/sound_settings.xml
-index 9123469..10bbba9 100644
+index 9123469b76..10bbba94d6 100644
 --- a/res/xml/sound_settings.xml
 +++ b/res/xml/sound_settings.xml
 @@ -175,6 +175,11 @@
@@ -48,7 +48,7 @@ index 9123469..10bbba9 100644
            android:key="screen_locking_sounds"
 diff --git a/src/com/android/settings/notification/ScreenshotSoundPreferenceController.java b/src/com/android/settings/notification/ScreenshotSoundPreferenceController.java
 new file mode 100644
-index 0000000..18ce39f
+index 0000000000..18ce39fc78
 --- /dev/null
 +++ b/src/com/android/settings/notification/ScreenshotSoundPreferenceController.java
 @@ -0,0 +1,37 @@
@@ -90,7 +90,7 @@ index 0000000..18ce39f
 +    }
 +}
 diff --git a/src/com/android/settings/notification/SoundSettings.java b/src/com/android/settings/notification/SoundSettings.java
-index 68c0e11..6fc1ecd 100644
+index 68c0e1103e..6fc1ecdd9a 100644
 --- a/src/com/android/settings/notification/SoundSettings.java
 +++ b/src/com/android/settings/notification/SoundSettings.java
 @@ -290,6 +290,8 @@ public class SoundSettings extends DashboardFragment implements OnActivityResult

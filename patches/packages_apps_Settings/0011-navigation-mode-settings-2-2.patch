@@ -1,7 +1,7 @@
-From bcc552dbcea22c738af05f1e71cd5c88d64f6f71 Mon Sep 17 00:00:00 2001
+From ecf86e52e9bee473666620071554bfca5fad7f47 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 11:51:23 +0200
-Subject: [PATCH 11/20] navigation mode settings [2/2]
+Subject: [PATCH 11/26] navigation mode settings [2/2]
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/598a941efc26c1550d11737b0438584df57851ec
@@ -22,7 +22,7 @@ Change-Id: I90e0f3856d2d43528393ad691a488474b8894857
 
 diff --git a/res/layout/dialog_back_gesture_options.xml b/res/layout/dialog_back_gesture_options.xml
 new file mode 100644
-index 0000000..328931f
+index 0000000000..328931f943
 --- /dev/null
 +++ b/res/layout/dialog_back_gesture_options.xml
 @@ -0,0 +1,120 @@
@@ -147,7 +147,7 @@ index 0000000..328931f
 +    </LinearLayout>
 +</LinearLayout>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index e23643d..4b1eaef 100644
+index 6ee26abad5..535339d669 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -11442,4 +11442,10 @@
@@ -162,7 +162,7 @@ index e23643d..4b1eaef 100644
 +
  </resources>
 diff --git a/src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java b/src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java
-index e4f25eb..7fef247 100644
+index e4f25ebb37..7fef247293 100644
 --- a/src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java
 +++ b/src/com/android/settings/gestures/GestureNavigationBackSensitivityDialog.java
 @@ -35,8 +35,9 @@ import com.android.settings.core.instrumentation.InstrumentedDialogFragment;
@@ -219,7 +219,7 @@ index e4f25eb..7fef247 100644
 \ No newline at end of file
 +}
 diff --git a/src/com/android/settings/gestures/SystemNavigationGestureSettings.java b/src/com/android/settings/gestures/SystemNavigationGestureSettings.java
-index 9e35529..3f720bd 100644
+index 9e35529801..3f720bd8c3 100644
 --- a/src/com/android/settings/gestures/SystemNavigationGestureSettings.java
 +++ b/src/com/android/settings/gestures/SystemNavigationGestureSettings.java
 @@ -161,7 +161,8 @@ public class SystemNavigationGestureSettings extends RadioButtonPickerFragment {

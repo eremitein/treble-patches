@@ -1,14 +1,14 @@
-From 4c5431aac62a70ec23feaea9d1684addc64f9365 Mon Sep 17 00:00:00 2001
+From 05b0763cf7fbe66384940c172f614fb6864b76b8 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 28 Jan 2020 00:27:17 +0100
-Subject: [PATCH 07/18] Sony has `texfat` exfat fs
+Subject: [PATCH 7/9] Sony has `texfat` exfat fs
 
 ---
  fs/Exfat.cpp | 8 +++++++-
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/fs/Exfat.cpp b/fs/Exfat.cpp
-index b9844a54c..e6f8450d3 100644
+index b9844a5..e6f8450 100644
 --- a/fs/Exfat.cpp
 +++ b/fs/Exfat.cpp
 @@ -35,7 +35,11 @@ static const char* kFsckPath = "/system/bin/fsck.exfat";

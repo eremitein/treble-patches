@@ -1,0 +1,59 @@
+From e2edbc40c9034f532add31e5398545faebda9159 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 13 Mar 2020 01:15:06 +0200
+Subject: [PATCH 12/17] LOSQ speed up
+
+	modified:   target/product/base_system.mk
+
+Change-Id: Ie02d3e70f8eb9620613f7c1c1afc64687aed2ee2
+---
+ target/product/base_system.mk | 33 +++++++++++++++++++++++++++++++++
+ 1 file changed, 33 insertions(+)
+
+diff --git a/target/product/base_system.mk b/target/product/base_system.mk
+index 41a367898..013c4694c 100644
+--- a/target/product/base_system.mk
++++ b/target/product/base_system.mk
+@@ -374,6 +374,39 @@ PRODUCT_SYSTEM_SERVER_APPS += \
+     SettingsProvider \
+     WallpaperBackup
+ 
++PRODUCT_DEXPREOPT_SPEED_APPS += \
++    Bluetooth \
++    BluetoothMidiService \
++    Messaging \
++    ExactCalculator \
++    PackageInstaller \
++    NetworkStack \
++    DocumentsUI \
++    ContactsProvider \
++    CalendarProvider \
++    BlockedNumberProvider \
++    TrebleApp \
++    TeleService \
++    Shell \
++    MtpDocumentsProvider \
++    ManagedProvisioning \
++    TrebuchetQuickStep \
++    AudioFX \
++    SystemUI \
++    Settings \
++    Dialer \
++    StorageManager \
++    Contacts \
++    LatinIME \
++    LineageParts \
++    DeskClock \
++    PermissionController \
++    Recorder \
++    SimpleGallery \
++    Camera2 \
++    Calendar \
++    webview \
++
+ # Packages included only for eng/userdebug builds, when building with SANITIZE_TARGET=address
+ PRODUCT_PACKAGES_DEBUG_ASAN := \
+     fuzz \
+-- 
+2.17.1
+

@@ -1,7 +1,7 @@
-From db865fa10aa1ae3803dbb5d5f8443ea024f0b950 Mon Sep 17 00:00:00 2001
+From 85c461bf9ad2fa6ba1a7a666feeb5acb704ddd35 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 14 Aug 2018 20:54:08 +0200
-Subject: [PATCH 03/18] Create vendor_de. This is done by /init.rc on
+Subject: [PATCH 3/9] Create vendor_de. This is done by /init.rc on
  system-as-root device
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 03/18] Create vendor_de. This is done by /init.rc on
  1 file changed, 2 insertions(+)
 
 diff --git a/FsCrypt.cpp b/FsCrypt.cpp
-index 5f95338bc..c5816b13a 100644
+index 5f95338..c5816b1 100644
 --- a/FsCrypt.cpp
 +++ b/FsCrypt.cpp
 @@ -836,6 +836,8 @@ bool fscrypt_prepare_user_storage(const std::string& volume_uuid, userid_t user_

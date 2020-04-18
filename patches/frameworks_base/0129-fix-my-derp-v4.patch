@@ -1,0 +1,35 @@
+From be5dcd87489e2ec6a68d69d79d61ae79a77dba3c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 12 Apr 2020 22:25:05 +0300
+Subject: [PATCH 129/133] fix my derp v4
+
+	modified:   packages/SystemUI/res/values-night/colors.xml
+---
+ packages/SystemUI/res/values-night/colors.xml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/packages/SystemUI/res/values-night/colors.xml b/packages/SystemUI/res/values-night/colors.xml
+index cb9c1c50938..c78ec5de0b8 100644
+--- a/packages/SystemUI/res/values-night/colors.xml
++++ b/packages/SystemUI/res/values-night/colors.xml
+@@ -18,14 +18,14 @@
+   -->
+ <resources>
+     <!-- The color of the material notification background -->
+-    <color name="notification_material_background_color">@*android:color/notification_material_background_color</color>
++    <color name="notification_material_background_color">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- The color of the legacy notifications with customs backgrounds (gingerbread and lollipop.)
+     It's fine to override this color since at that point the shade was dark. -->
+-    <color name="notification_legacy_background_color">@color/notification_material_background_color</color>
++    <color name="notification_legacy_background_color">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- The color of the material notification background when dimmed -->
+-    <color name="notification_material_background_dimmed_color">@color/notification_material_background_color</color>
++    <color name="notification_material_background_dimmed_color">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- The color of the dividing line between grouped notifications while . -->
+     <color name="notification_divider_color">#212121</color>
+-- 
+2.17.1
+

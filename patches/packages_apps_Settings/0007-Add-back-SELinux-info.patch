@@ -1,7 +1,7 @@
-From b019a618d37e0c8171877d916b5e1bb88f30e880 Mon Sep 17 00:00:00 2001
+From 9524b48259d176eedf410292df7733aa7ee1e644 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 20:49:53 +0200
-Subject: [PATCH 07/20] Add back SELinux info
+Subject: [PATCH 07/26] Add back SELinux info
 
   * based on https://github.com/Evolution-X/packages_apps_Settings/commit/d1dc320beb1b6d0c8d5c04f69951f903d841a183
 
@@ -16,7 +16,7 @@ Subject: [PATCH 07/20] Add back SELinux info
  create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 7363d85..e23643d 100644
+index 0c706ad5de..6ee26abad5 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -3143,6 +3143,8 @@
@@ -41,7 +41,7 @@ index 7363d85..e23643d 100644
      <!-- Notification of installed CA Certs --> <skip/>
  
 diff --git a/res/xml/firmware_version.xml b/res/xml/firmware_version.xml
-index eb8a82c..7a456c7 100644
+index eb8a82c7aa..7a456c7884 100644
 --- a/res/xml/firmware_version.xml
 +++ b/res/xml/firmware_version.xml
 @@ -100,4 +100,12 @@
@@ -61,7 +61,7 @@ index eb8a82c..7a456c7 100644
 +</PreferenceScreen>
 diff --git a/src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java b/src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
 new file mode 100644
-index 0000000..df642d6
+index 0000000000..df642d6352
 --- /dev/null
 +++ b/src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
 @@ -0,0 +1,70 @@

@@ -1,0 +1,31 @@
+From aa8369f7883fae7b135a5351f9693dfaf7f25403 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 22 Feb 2020 12:06:03 +0200
+Subject: [PATCH 08/17] add few Google's fonts
+
+	modified:   target/product/handheld_system.mk
+
+Change-Id: I762837d03e6c2b8a0bbfdb3035b36c2bdebe2420
+---
+ target/product/handheld_system.mk | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/target/product/handheld_system.mk b/target/product/handheld_system.mk
+index 947ad4c09..c03dbbdae 100644
+--- a/target/product/handheld_system.mk
++++ b/target/product/handheld_system.mk
+@@ -25,6 +25,11 @@ $(call inherit-product-if-exists, external/google-fonts/carrois-gothic-sc/fonts.
+ $(call inherit-product-if-exists, external/google-fonts/coming-soon/fonts.mk)
+ $(call inherit-product-if-exists, external/google-fonts/cutive-mono/fonts.mk)
+ $(call inherit-product-if-exists, external/google-fonts/source-sans-pro/fonts.mk)
++$(call inherit-product-if-exists, external/google-fonts/arbutus-slab/fonts.mk)
++$(call inherit-product-if-exists, external/google-fonts/arvo/fonts.mk)
++$(call inherit-product-if-exists, external/google-fonts/lato/fonts.mk)
++$(call inherit-product-if-exists, external/google-fonts/rubik/fonts.mk)
++$(call inherit-product-if-exists, external/google-fonts/zilla-slab/fonts.mk)
+ $(call inherit-product-if-exists, external/noto-fonts/fonts.mk)
+ $(call inherit-product-if-exists, external/roboto-fonts/fonts.mk)
+ $(call inherit-product-if-exists, external/hyphenation-patterns/patterns.mk)
+-- 
+2.17.1
+

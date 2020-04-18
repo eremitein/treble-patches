@@ -1,0 +1,54 @@
+From 4955fd544b1a226495a9405b7e444c4b4a57bad0 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 11 Apr 2020 19:40:56 +0300
+Subject: [PATCH 122/133] try to fix QS Panel background
+
+	modified:   packages/SystemUI/res/color/qs_background_dark.xml
+	modified:   packages/SystemUI/res/drawable/qs_background_primary.xml
+	modified:   packages/SystemUI/res/layout/qs_panel.xml
+---
+ packages/SystemUI/res/color/qs_background_dark.xml       | 2 +-
+ packages/SystemUI/res/drawable/qs_background_primary.xml | 2 +-
+ packages/SystemUI/res/layout/qs_panel.xml                | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/packages/SystemUI/res/color/qs_background_dark.xml b/packages/SystemUI/res/color/qs_background_dark.xml
+index 24afebde046..aa05cd8fa03 100644
+--- a/packages/SystemUI/res/color/qs_background_dark.xml
++++ b/packages/SystemUI/res/color/qs_background_dark.xml
+@@ -16,5 +16,5 @@
+ 
+ <selector xmlns:android="http://schemas.android.com/apk/res/android">
+     <item android:alpha="1"
+-          android:color="?android:attr/colorBackgroundFloating"/>
++          android:color="@android:color/primary_device_default_settings"/>
+ </selector>
+diff --git a/packages/SystemUI/res/drawable/qs_background_primary.xml b/packages/SystemUI/res/drawable/qs_background_primary.xml
+index dd74cadd095..e501224db3c 100644
+--- a/packages/SystemUI/res/drawable/qs_background_primary.xml
++++ b/packages/SystemUI/res/drawable/qs_background_primary.xml
+@@ -15,7 +15,7 @@
+ -->
+ <inset xmlns:android="http://schemas.android.com/apk/res/android">
+     <shape>
+-        <solid android:color="@color/qs_background_dark"/>
++        <solid android:color="@android:color/primary_device_default_settings"/>
+         <corners android:radius="?android:attr/dialogCornerRadius" />
+     </shape>
+ </inset>
+diff --git a/packages/SystemUI/res/layout/qs_panel.xml b/packages/SystemUI/res/layout/qs_panel.xml
+index 01dfeb281e1..e81c2da74bb 100644
+--- a/packages/SystemUI/res/layout/qs_panel.xml
++++ b/packages/SystemUI/res/layout/qs_panel.xml
+@@ -36,7 +36,7 @@
+         android:layout_height="@*android:dimen/quick_qs_offset_height"
+         android:clipToPadding="false"
+         android:clipChildren="false"
+-        android:background="#ff000000" />
++        android:background="#f0000000" />
+ 
+     <!-- Gradient view behind QS -->
+     <View
+-- 
+2.17.1
+

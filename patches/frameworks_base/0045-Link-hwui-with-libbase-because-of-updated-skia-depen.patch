@@ -1,0 +1,26 @@
+From c9a7ddae64d25bbd4ae56278c81da14964982f2f Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 22 Oct 2019 15:31:54 +0200
+Subject: [PATCH 045/133] Link hwui with libbase, because of updated skia
+ dependency
+
+Change-Id: I201df2cd8f66674948b56fb6d5be5e8c3cb48bd1
+---
+ libs/hwui/Android.bp | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/libs/hwui/Android.bp b/libs/hwui/Android.bp
+index ebba4cb79df..b9808751130 100644
+--- a/libs/hwui/Android.bp
++++ b/libs/hwui/Android.bp
+@@ -70,6 +70,7 @@ cc_defaults {
+         "libandroidfw",
+         "libcrypto",
+         "libsync",
++        "libbase",
+     ],
+     static_libs: [
+         "libEGL_blobCache",
+-- 
+2.17.1
+
