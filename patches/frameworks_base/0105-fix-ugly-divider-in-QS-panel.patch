@@ -1,0 +1,25 @@
+From 681249b004364b5e6ad4f0771132dae4fec0b182 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 28 Mar 2020 08:28:53 +0200
+Subject: [PATCH 105/115] fix ugly divider in QS panel
+
+	modified:   packages/SystemUI/res/layout/qs_divider.xml
+---
+ packages/SystemUI/res/layout/qs_divider.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/res/layout/qs_divider.xml b/packages/SystemUI/res/layout/qs_divider.xml
+index 39d48ea4746..b747e4a3876 100644
+--- a/packages/SystemUI/res/layout/qs_divider.xml
++++ b/packages/SystemUI/res/layout/qs_divider.xml
+@@ -15,6 +15,6 @@
+ -->
+ <View xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+-    android:layout_height="1dp"
++    android:layout_height="0dp"
+     android:alpha=".12"
+     android:background="?android:attr/colorForeground" />
+-- 
+2.20.1
+

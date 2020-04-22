@@ -1,0 +1,26 @@
+From 23edbadfd20e2c36811eef3c0b27e1c9afed3b42 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 1 Apr 2020 17:13:30 +0300
+Subject: [PATCH 108/115] turn on general doze by default
+
+	modified:   core/res/res/values/cr_config.xml
+---
+ core/res/res/values/cr_config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/res/res/values/cr_config.xml b/core/res/res/values/cr_config.xml
+index e2ef23667f6..5475bbdc52b 100644
+--- a/core/res/res/values/cr_config.xml
++++ b/core/res/res/values/cr_config.xml
+@@ -42,7 +42,7 @@
+     <bool name="config_deviceHaveWakeUpProximity">false</bool>
+ 
+     <!-- Whether doze feature is enabled by default in settings -->
+-    <bool name="config_doze_enabled_by_default">false</bool>
++    <bool name="config_doze_enabled_by_default">true</bool>
+     
+     <string-array translatable="false" name="config_customPermissionsList">
+         <item>com.google.android.apps.wellbeing</item>
+-- 
+2.20.1
+

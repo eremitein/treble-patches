@@ -1,7 +1,7 @@
-From ee5582c053f2aa8338a186e97437c5d9580a0e7e Mon Sep 17 00:00:00 2001
+From 2cdff45e7fadace9f0221f9a06bf71d6555308e4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 3 Apr 2020 09:11:01 +0300
-Subject: [PATCH 4/4] moving to FM2
+Subject: [PATCH 4/5] moving to FM2
 
 ---
  config/common.mk                                          | 8 ++++++--
@@ -45,5 +45,5 @@ index 77b6ca13..64542785 100644
          <permission name="android.permission.CHANGE_COMPONENT_ENABLED_STATE"/>
          <permission name="android.permission.MEDIA_CONTENT_CONTROL"/>
 -- 
-2.17.1
+2.20.1
 

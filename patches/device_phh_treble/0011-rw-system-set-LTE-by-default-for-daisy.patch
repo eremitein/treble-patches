@@ -1,4 +1,4 @@
-From e35c0423bfedce26b5414d3b19bad3909af9a66f Mon Sep 17 00:00:00 2001
+From c072fe21cefe17fc19d63c75f45b18577483f26a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 11 Jan 2020 17:31:17 +0200
 Subject: [PATCH 11/12] rw-system: set LTE by default for 'daisy'
@@ -23,5 +23,5 @@ index df534ab..f170919 100644
  
  if getprop ro.vendor.build.fingerprint | grep -iq -E -e 'huawei|honor' || getprop persist.sys.overlay.huawei | grep -iq -E -e 'true'; then
 -- 
-2.17.1
+2.20.1
 

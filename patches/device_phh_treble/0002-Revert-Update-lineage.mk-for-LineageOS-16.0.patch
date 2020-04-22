@@ -1,4 +1,4 @@
-From aa233453954dc5ea37d16625700ea781436515db Mon Sep 17 00:00:00 2001
+From c9938da9884c74bd367b36dc037884a6447c9318 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 26 Mar 2020 20:18:34 +0200
 Subject: [PATCH 02/12] Revert "Update lineage.mk for LineageOS 16.0"
@@ -18,5 +18,5 @@ index 172bb01..f6315b9 100644
  -include vendor/lineage/build/core/config.mk
  -include vendor/lineage/build/core/apicheck.mk
 -- 
-2.17.1
+2.20.1
 

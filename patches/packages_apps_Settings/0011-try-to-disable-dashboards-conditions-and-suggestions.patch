@@ -1,4 +1,4 @@
-From cd99c0060ea34dfd753073f9d5621af819b98667 Mon Sep 17 00:00:00 2001
+From f4615e8a07b22bc06249408d423118b90fa45feb Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 9 Mar 2020 23:31:14 +0200
 Subject: [PATCH 11/14] try to disable dashboards conditions and suggestions
@@ -58,5 +58,5 @@ index 1beac9b87b..8d2db6484d 100644
      }
  }
 -- 
-2.17.1
+2.20.1
 

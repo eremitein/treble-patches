@@ -1,4 +1,4 @@
-From 83869309e0a317651ae03f20bc48c5b4e62501ed Mon Sep 17 00:00:00 2001
+From 76d1bdec97f3af2a9f6a1aaa7f69da13132fecdc Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 16 Sep 2019 13:49:05 +0200
 Subject: [PATCH 6/9] Check needsCheckpoint only if checkpoint is supported
@@ -28,5 +28,5 @@ index ed9a53e..d2971ff 100644
          while ((mount_rc = fs_mgr_do_mount(&fstab_default, DATA_MNT_POINT, blkdev.data(), 0,
                                             needs_cp)) != 0) {
 -- 
-2.17.1
+2.20.1
 

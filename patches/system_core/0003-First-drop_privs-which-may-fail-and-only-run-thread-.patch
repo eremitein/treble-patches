@@ -1,4 +1,4 @@
-From 0ffc39687f0678cfd184536e03623246353ad408 Mon Sep 17 00:00:00 2001
+From 18b8263556edd3874237ea5e0e6f94741bb593c3 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 14 Aug 2018 19:33:23 +0200
 Subject: [PATCH 03/17] First drop_privs (which may fail) and only run thread
@@ -40,5 +40,5 @@ index fd3cdf877..4057347b8 100644
      // socket connection, and as a reader lock on a range of log
      // entries.
 -- 
-2.17.1
+2.20.1
 

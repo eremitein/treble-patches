@@ -1,4 +1,4 @@
-From 91094fe297da1bf1665a54ab6010c11b1586c1c8 Mon Sep 17 00:00:00 2001
+From 307127983dd4c4c8579f59db17576877875fbd19 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 3 Dec 2018 20:54:54 +0100
 Subject: [PATCH 3/7] Kirin:: Workaround some conflicting Kirin tether SELinux
@@ -36,5 +36,5 @@ index eaca5947..ab92985b 100644
  					errno = EINVAL;
  					selinux_log
 -- 
-2.17.1
+2.20.1
 

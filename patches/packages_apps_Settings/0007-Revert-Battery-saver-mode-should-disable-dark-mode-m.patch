@@ -1,4 +1,4 @@
-From afc259cad72d40bb6f8635e0e31d9b6b477bdeb6 Mon Sep 17 00:00:00 2001
+From ddd5c33f9a5be36e1b34f8d26eb14cb5e73785f8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 5 Mar 2020 04:10:22 +0200
 Subject: [PATCH 07/14] Revert "Battery saver mode should disable dark mode
@@ -353,5 +353,5 @@ index 53be42cadd..a844fec095 100644
 -    }
  }
 -- 
-2.17.1
+2.20.1
 

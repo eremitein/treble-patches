@@ -1,4 +1,4 @@
-From 10bde9076f0f291fcd07adf536689b6e8819fe3e Mon Sep 17 00:00:00 2001
+From eabef6f341771efa1af6a87750b828b5748a28d0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 4 Mar 2020 18:09:47 +0200
 Subject: [PATCH 06/14] Revert "Update the behavior of the Dark theme slice"
@@ -273,5 +273,5 @@ index 1af7b2bfac..bb213329b7 100644
          when(mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY))
                  .thenReturn(power_level);
 -- 
-2.17.1
+2.20.1
 

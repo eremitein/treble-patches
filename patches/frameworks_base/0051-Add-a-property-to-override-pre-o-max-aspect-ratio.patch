@@ -1,0 +1,39 @@
+From 57c70ac21c585666d1c975178a5ab194f5a36044 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 29 Aug 2018 11:05:54 +0200
+Subject: [PATCH 051/115] Add a property to override pre-o max aspect ratio
+
+Change-Id: Id001a19fab7680feda841202b6e91c490d0d5ffa
+---
+ .../core/java/com/android/server/wm/ActivityRecord.java   | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/wm/ActivityRecord.java b/services/core/java/com/android/server/wm/ActivityRecord.java
+index ce415e36b1f..1e9db22adbd 100644
+--- a/services/core/java/com/android/server/wm/ActivityRecord.java
++++ b/services/core/java/com/android/server/wm/ActivityRecord.java
+@@ -2861,6 +2861,12 @@ final class ActivityRecord extends ConfigurationContainer {
+     // TODO(b/36505427): Consider moving this method and similar ones to ConfigurationContainer.
+     private void updateOverrideConfiguration() {
+         final Configuration overrideConfig = mTmpConfig;
++        if(info.applicationInfo.targetSdkVersion < O) {
++            try {
++                maxAspectRatio = Float.parseFloat(SystemProperties.get("persist.sys.max_aspect_ratio.pre_o", ""));
++            } catch (Throwable t) {}
++            Log.d("PHH", "Overrode aspect ratio because pre-o to " + maxAspectRatio);
++        }
+         if (shouldUseSizeCompatMode()) {
+             if (mCompatDisplayInsets != null) {
+                 // The override configuration is set only once in size compatibility mode.
+@@ -3094,7 +3100,7 @@ final class ActivityRecord extends ConfigurationContainer {
+     // TODO(b/36505427): Consider moving this method and similar ones to ConfigurationContainer.
+     private void computeBounds(Rect outBounds, Rect containingAppBounds) {
+         outBounds.setEmpty();
+-        final float maxAspectRatio = info.maxAspectRatio;
++        float maxAspectRatio = info.maxAspectRatio;
+         final ActivityStack stack = getActivityStack();
+         final float minAspectRatio = info.minAspectRatio;
+ 
+-- 
+2.20.1
+

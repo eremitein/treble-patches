@@ -1,4 +1,4 @@
-From 5322add4bdc6e144871ebb451ed1db63c780fdef Mon Sep 17 00:00:00 2001
+From c5bcf0944e30f79dd99e925b7bb1af289f965f02 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 25 Dec 2019 12:34:05 +0200
 Subject: [PATCH 09/12] base: add "secure" file to the system image
@@ -21,5 +21,5 @@ index ce318bb..02cb65c 100644
  
  PRODUCT_PACKAGES += \
 -- 
-2.17.1
+2.20.1
 

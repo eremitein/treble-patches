@@ -1,7 +1,7 @@
-From b2b2a3fae25bfee3b808b73368554fd0b90e3c97 Mon Sep 17 00:00:00 2001
+From 6b0d713c70e99690f903f615d5f78b41b7db535b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 13:33:02 +0200
-Subject: [PATCH 4/5] shrink-shrunk v3
+Subject: [PATCH 4/4] shrink-shrunk v3
 
 	modified:   lineage/res/res/values-fr/strings.xml
 	modified:   lineage/res/res/values-ru/strings.xml
@@ -13,10 +13,10 @@ Subject: [PATCH 4/5] shrink-shrunk v3
  3 files changed, 12 insertions(+), 12 deletions(-)
 
 diff --git a/lineage/res/res/values-fr/strings.xml b/lineage/res/res/values-fr/strings.xml
-index 2e253067..c17476fd 100644
+index 36078068..e10427f7 100644
 --- a/lineage/res/res/values-fr/strings.xml
 +++ b/lineage/res/res/values-fr/strings.xml
-@@ -98,10 +98,10 @@
+@@ -97,10 +97,10 @@
      <string name="lineage_vendor_security_patch">Niveau du correctif de sécurité du fournisseur</string>
      <string name="unknown">Inconnu</string>
      <string name="app_killed_message">Application arrêtée</string>
@@ -70,5 +70,5 @@ index 14c7eab3..b7b65f4f 100644
      <!-- Trust interface -->
      <!-- This string will be referenced from other apps when they're referring to the Trust interface.
 -- 
-2.17.1
+2.20.1
 

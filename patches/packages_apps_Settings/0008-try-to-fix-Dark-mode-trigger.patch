@@ -1,4 +1,4 @@
-From ea79d95c630b9fbd84621c6ca79b4b9ed42d7932 Mon Sep 17 00:00:00 2001
+From 13f901c195ef5770ef9062c40cb9c6e1c342d117 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Mar 2020 14:34:56 +0200
 Subject: [PATCH 08/14] try to fix Dark mode trigger
@@ -21,5 +21,5 @@ index 4816b21dca..7d02462473 100644
          return mUiModeManager.setNightModeActivated(isChecked);
      }
 -- 
-2.17.1
+2.20.1
 

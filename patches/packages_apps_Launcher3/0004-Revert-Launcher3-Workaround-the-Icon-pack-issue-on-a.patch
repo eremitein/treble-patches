@@ -1,4 +1,4 @@
-From a0485811196143fd474703c13e40544485be4b45 Mon Sep 17 00:00:00 2001
+From 594327b1ef17709bc70f299f3644643674c6f333 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 31 Mar 2020 10:06:29 +0300
 Subject: [PATCH 4/5] Revert "Launcher3: Workaround the Icon pack issue on
@@ -46,5 +46,5 @@ index 0b5788802..5c4f37ca9 100644
          return icon;
      }
 -- 
-2.17.1
+2.20.1
 

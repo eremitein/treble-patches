@@ -1,4 +1,4 @@
-From fc5b40610a692c3f795b40efac9665ebdabc68d7 Mon Sep 17 00:00:00 2001
+From f43c2ddf8ee9001eb4068dd4143307c3ba7df44b Mon Sep 17 00:00:00 2001
 From: AndyCGYan <GeForce8800Ultra@gmail.com>
 Date: Sun, 13 Jan 2019 21:44:48 +0800
 Subject: [PATCH] LineageParts: Invert per-app stretch-to-fullscreen
@@ -42,7 +42,7 @@ index 1ff0759..66dea5a 100644
      <string name="charging_sounds_enabled_title">启用</string>
      <string name="charging_sounds_enabled_summary">连接或断开电源时发出声音</string>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index e61c2f3..f71c22c 100644
+index 4fc9c59..cc3a947 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -579,9 +579,9 @@
@@ -99,5 +99,5 @@ index ac04058..50ff8f6 100644
          }
  
 -- 
-2.17.1
+2.20.1
 

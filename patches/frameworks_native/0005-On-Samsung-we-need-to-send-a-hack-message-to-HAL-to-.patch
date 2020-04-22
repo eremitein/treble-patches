@@ -1,4 +1,4 @@
-From 4ff5609a7cab2c768b295a3a7be7e31b6b4ab3d9 Mon Sep 17 00:00:00 2001
+From 2d916463f25875b40de0633a80e6c9296ec4cec7 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 14 Aug 2019 23:37:10 +0200
 Subject: [PATCH 5/8] On Samsung, we need to send a hack-message to HAL to get
@@ -33,5 +33,5 @@ index 717f31769..45d6c679b 100644
              [&](const auto &list) {
                  const size_t count = list.size();
 -- 
-2.17.1
+2.20.1
 

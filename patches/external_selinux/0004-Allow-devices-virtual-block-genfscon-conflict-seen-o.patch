@@ -1,4 +1,4 @@
-From 44dd47a64aab4b6dc92a79a1d68b2d9e4dee26e1 Mon Sep 17 00:00:00 2001
+From 096f5abfeabda595c7f8ee77ed68b3203f589774 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Fri, 6 Sep 2019 15:07:25 +0200
 Subject: [PATCH 4/7] Allow /devices/virtual/block/ genfscon conflict (seen on
@@ -39,5 +39,5 @@ index 0b09cecc..255c9e12 100644
  
  int cil_post_netifcon_context_compare(const void *a, const void *b)
 -- 
-2.17.1
+2.20.1
 

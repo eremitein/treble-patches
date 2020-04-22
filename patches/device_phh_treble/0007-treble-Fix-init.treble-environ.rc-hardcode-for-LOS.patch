@@ -1,4 +1,4 @@
-From 5a16e4df661ce24935dc35acb511ef5a990c9163 Mon Sep 17 00:00:00 2001
+From 37eef5979c032edd72144a03fd922336f6a73d96 Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Fri, 1 Nov 2019 15:26:10 +0000
 Subject: [PATCH 07/12] treble: Fix init.treble-environ.rc hardcode for LOS
@@ -21,5 +21,5 @@ index 4fc8c32..d36ba2c 100644
 -    export SYSTEMSERVERCLASSPATH /system/framework/services.jar:/system/framework/ethernet-service.jar:/system/framework/wifi-service.jar:/system/framework/com.android.location.provider.jar
 +    export SYSTEMSERVERCLASSPATH /system/framework/org.lineageos.platform.jar:/system/framework/services.jar:/system/framework/ethernet-service.jar:/system/framework/wifi-service.jar:/system/framework/com.android.location.provider.jar
 -- 
-2.17.1
+2.20.1
 

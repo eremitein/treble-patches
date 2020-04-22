@@ -1,4 +1,4 @@
-From b5c2e417b2c4e91327c3112a781c8e4a0526abfc Mon Sep 17 00:00:00 2001
+From be09ca25681b5664f759e6118c52a381b440820f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 18 Apr 2020 21:22:26 +0300
 Subject: [PATCH 8/8] Revert "Add suspend_resume trace events to the atrace
@@ -39,5 +39,5 @@ index 6e460a0d2..f1426b6bd 100644
      chmod 0666 /sys/kernel/tracing/events/cpufreq_interactive/enable
      chmod 0666 /sys/kernel/debug/tracing/events/vmscan/mm_vmscan_direct_reclaim_begin/enable
 -- 
-2.17.1
+2.20.1
 

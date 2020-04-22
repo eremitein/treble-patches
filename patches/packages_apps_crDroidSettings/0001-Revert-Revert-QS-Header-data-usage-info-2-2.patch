@@ -1,4 +1,4 @@
-From 536131cc484623f0948ed6f1a4ecd3e9d944ea86 Mon Sep 17 00:00:00 2001
+From 18bcc1620833e8825dce7931d31991d50196c884 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 15 Apr 2020 04:39:38 +0300
 Subject: [PATCH 1/7] Revert "Revert "QS Header data usage info [2/2]""
@@ -11,10 +11,10 @@ This reverts commit 3e66510f3ba927e899bd4292ac7ee6ebf6053e00.
  3 files changed, 14 insertions(+)
 
 diff --git a/res/values/cr_strings.xml b/res/values/cr_strings.xml
-index d9d982db..f2fc23d2 100644
+index 84630ea8..5cafa62a 100644
 --- a/res/values/cr_strings.xml
 +++ b/res/values/cr_strings.xml
-@@ -2519,6 +2519,10 @@
+@@ -2521,6 +2521,10 @@
      <string name="pattern_da_da_dzzz">da-da-dzzz</string>
      <string name="pattern_da_dzzz_da">da-dzzz-da</string>
  
@@ -58,5 +58,5 @@ index a57c33f8..762c30de 100644
                  Settings.System.QS_SHOW_BATTERY_PERCENT, 2, UserHandle.USER_CURRENT);
          Settings.System.putIntForUser(resolver,
 -- 
-2.17.1
+2.20.1
 

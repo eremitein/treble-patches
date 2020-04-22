@@ -1,4 +1,4 @@
-From 869d1105e7f9dc2271e1c083dce6d49ba30937a8 Mon Sep 17 00:00:00 2001
+From 800753abc30a98e4d9f9f42052443ae5a7037c6f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 14 Sep 2019 21:53:35 +0200
 Subject: [PATCH 10/17] Take ro.vndk.version into account to know what to test
@@ -40,5 +40,5 @@ index 4420ebbd2..a6f290960 100644
          std::string new_opts;
          for (int j = 0; j < new_opts_list.size() - i; ++j) {
 -- 
-2.17.1
+2.20.1
 

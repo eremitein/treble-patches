@@ -1,4 +1,4 @@
-From 93a62c4279aab42c1742ce293aa344ec4623c961 Mon Sep 17 00:00:00 2001
+From 06729adff8243cf2b09e671ef3c2f353c03e16cb Mon Sep 17 00:00:00 2001
 From: AndyCGYan <GeForce8800Ultra@gmail.com>
 Date: Mon, 15 Jul 2019 10:43:52 +0000
 Subject: [PATCH 04/12] treble: Add overlay-lineage
@@ -113,5 +113,5 @@ index 0000000..8df673a
 +    <integer name="config_deviceHardwareWakeKeys">127</integer>
 +</resources>
 -- 
-2.17.1
+2.20.1
 

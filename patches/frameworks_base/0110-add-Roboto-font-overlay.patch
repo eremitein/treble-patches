@@ -1,0 +1,156 @@
+From 2fcceb1edfedd6ed7e3430ca184a691e65a502db Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 26 Feb 2020 21:17:45 +0200
+Subject: [PATCH 110/115] add Roboto font overlay
+
+	new file:   packages/overlays/FontRobotoOverlay/Android.mk
+	new file:   packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+	new file:   packages/overlays/FontRobotoOverlay/res/values/config.xml
+	new file:   packages/overlays/FontRobotoOverlay/res/values/strings.xml
+---
+ .../overlays/FontRobotoOverlay/Android.mk     | 31 +++++++++++++++++++
+ .../FontRobotoOverlay/AndroidManifest.xml     | 31 +++++++++++++++++++
+ .../FontRobotoOverlay/res/values/config.xml   | 27 ++++++++++++++++
+ .../FontRobotoOverlay/res/values/strings.xml  | 20 ++++++++++++
+ 4 files changed, 109 insertions(+)
+ create mode 100644 packages/overlays/FontRobotoOverlay/Android.mk
+ create mode 100644 packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontRobotoOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontRobotoOverlay/res/values/strings.xml
+
+diff --git a/packages/overlays/FontRobotoOverlay/Android.mk b/packages/overlays/FontRobotoOverlay/Android.mk
+new file mode 100644
+index 00000000000..805be23da29
+--- /dev/null
++++ b/packages/overlays/FontRobotoOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontRoboto
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontRobotoOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontRobotoOverlay/AndroidManifest.xml b/packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..c11ccfb4cfe
+--- /dev/null
++++ b/packages/overlays/FontRobotoOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.roboto"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_roboto_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="roboto-mini,roboto-mini-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontRobotoOverlay/res/values/config.xml b/packages/overlays/FontRobotoOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..b9e6e6d6739
+--- /dev/null
++++ b/packages/overlays/FontRobotoOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">roboto-mini</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">roboto-mini-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">roboto-mini</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">roboto-mini-bold</string>
++</resources>
+diff --git a/packages/overlays/FontRobotoOverlay/res/values/strings.xml b/packages/overlays/FontRobotoOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..e35613d1bef
+--- /dev/null
++++ b/packages/overlays/FontRobotoOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_roboto_overlay" translatable="false">Roboto</string>
++</resources>
+-- 
+2.20.1
+

@@ -1,4 +1,4 @@
-From 5e4e96147d7ba7c83ee9c8f8401d6db2a56462df Mon Sep 17 00:00:00 2001
+From 93a4a06e667559fac071076e3fea8a646f30e2ff Mon Sep 17 00:00:00 2001
 From: Mingming Yin <mingming@codeaurora.org>
 Date: Wed, 19 Aug 2015 20:32:33 -0700
 Subject: [PATCH 14/14] audio: add encoding support for linear PCM format
@@ -15,7 +15,7 @@ Change-Id: Iecf402064d67d35d5057b814c842d79af92756d0
  5 files changed, 32 insertions(+), 9 deletions(-)
 
 diff --git a/media/libmedia/MediaProfiles.cpp b/media/libmedia/MediaProfiles.cpp
-index 98c54971ad..86b4807018 100644
+index 98c54971a..86b480701 100644
 --- a/media/libmedia/MediaProfiles.cpp
 +++ b/media/libmedia/MediaProfiles.cpp
 @@ -49,7 +49,8 @@ const MediaProfiles::NameToTagMap MediaProfiles::sAudioEncoderNameMap[] = {
@@ -51,7 +51,7 @@ index 98c54971ad..86b4807018 100644
  MediaProfiles::createDefaultImageEncodingQualityLevels(MediaProfiles *profiles)
  {
 diff --git a/media/libmedia/include/media/MediaProfiles.h b/media/libmedia/include/media/MediaProfiles.h
-index 3e8e7c854e..90a1aaaddc 100644
+index 3e8e7c854..90a1aaadd 100644
 --- a/media/libmedia/include/media/MediaProfiles.h
 +++ b/media/libmedia/include/media/MediaProfiles.h
 @@ -433,6 +433,7 @@ private:
@@ -63,7 +63,7 @@ index 3e8e7c854e..90a1aaaddc 100644
      static int findTagForName(const NameToTagMap *map, size_t nMappings, const char *name);
  
 diff --git a/media/libmedia/include/media/mediarecorder.h b/media/libmedia/include/media/mediarecorder.h
-index 2dd4b7f807..22593ab0b0 100644
+index 2dd4b7f80..22593ab0b 100644
 --- a/media/libmedia/include/media/mediarecorder.h
 +++ b/media/libmedia/include/media/mediarecorder.h
 @@ -96,6 +96,7 @@ enum audio_encoder {
@@ -75,7 +75,7 @@ index 2dd4b7f807..22593ab0b0 100644
      AUDIO_ENCODER_LIST_END // must be the last - used to validate the audio encoder type
  };
 diff --git a/media/libmediaplayerservice/StagefrightRecorder.cpp b/media/libmediaplayerservice/StagefrightRecorder.cpp
-index 71c79720fe..6fb34273f6 100644
+index 71c79720f..6fb34273f 100644
 --- a/media/libmediaplayerservice/StagefrightRecorder.cpp
 +++ b/media/libmediaplayerservice/StagefrightRecorder.cpp
 @@ -1160,14 +1160,15 @@ sp<MediaCodecSource> StagefrightRecorder::createAudioSource() {
@@ -127,7 +127,7 @@ index 71c79720fe..6fb34273f6 100644
          mWriter->setMaxFileDuration(mMaxFileDurationUs);
      }
 diff --git a/media/libmediaplayerservice/StagefrightRecorder.h b/media/libmediaplayerservice/StagefrightRecorder.h
-index 8bf083a11e..98d6a8e3ed 100644
+index 8bf083a11..98d6a8e3e 100644
 --- a/media/libmediaplayerservice/StagefrightRecorder.h
 +++ b/media/libmediaplayerservice/StagefrightRecorder.h
 @@ -23,6 +23,7 @@
@@ -147,5 +147,5 @@ index 8bf083a11e..98d6a8e3ed 100644
  
      StagefrightRecorder(const StagefrightRecorder &);
 -- 
-2.17.1
+2.20.1
 

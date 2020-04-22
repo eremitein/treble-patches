@@ -1,7 +1,7 @@
-From b3a62c68018a046f3c6ff3f830ebdddab9c8f2fc Mon Sep 17 00:00:00 2001
+From f60c2f7d446c5a3503c36c1174afc835fc8bc8e4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Mar 2020 19:41:28 +0200
-Subject: [PATCH 1/5] make crDroid Music deactivable
+Subject: [PATCH 1/4] make crDroid Music deactivable
 
 ---
  prebuilt/system/priv-app/Android.mk | 2 +-
@@ -21,5 +21,5 @@ index 79e6c91..a0f590a 100644
  LOCAL_PRIVILEGED_MODULE := true
  LOCAL_MODULE_SUFFIX := $(COMMON_ANDROID_PACKAGE_SUFFIX)
 -- 
-2.17.1
+2.20.1
 

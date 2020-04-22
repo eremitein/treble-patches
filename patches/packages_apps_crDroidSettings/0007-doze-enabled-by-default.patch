@@ -1,4 +1,4 @@
-From da8b3d59c6355c937f4c1cde34fdffa95d921799 Mon Sep 17 00:00:00 2001
+From d08ea4a3136648fcb69ac9a5c32271b418d8575a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 19:01:45 +0200
 Subject: [PATCH 7/7] doze enabled by default
@@ -23,5 +23,5 @@ index 06183fc7..58820d9a 100644
      <com.crdroid.settings.preferences.SecureSettingSwitchPreference
          android:key="doze_always_on"
 -- 
-2.17.1
+2.20.1
 

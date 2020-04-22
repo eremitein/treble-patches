@@ -1,4 +1,4 @@
-From 92bfac715f259ca2ac192f7c9ee7e22c025b5436 Mon Sep 17 00:00:00 2001
+From 88a64f265d29eef2da37d54e11f5ccf16e35b403 Mon Sep 17 00:00:00 2001
 From: Stan Iliev <stani@google.com>
 Date: Thu, 1 Aug 2019 14:22:34 -0400
 Subject: [PATCH 2/2] Allow to rebind GL texture if AHB content has changed
@@ -323,5 +323,5 @@ index 5a2a12d485..cd340000ae 100644
              return nullptr;
          }
 -- 
-2.17.1
+2.20.1
 

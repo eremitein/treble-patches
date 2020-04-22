@@ -1,4 +1,4 @@
-From 7c3cbe5c329597abce26d9848a2d0525de52857e Mon Sep 17 00:00:00 2001
+From 185e8c1a66a869c33b0dd72178092f10f5558c4b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 12 Mar 2020 23:26:15 +0200
 Subject: [PATCH 1/5] launcher one quick step
@@ -148,5 +148,5 @@ index a7112d1ee..d4afbd4ec 100644
  <!-- Accessibility actions -->
      <item type="id" name="action_remove" />
 -- 
-2.17.1
+2.20.1
 

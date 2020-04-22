@@ -1,4 +1,4 @@
-From 592305c96e0869991663d64f108d0a496fcf88df Mon Sep 17 00:00:00 2001
+From 794d7667fc44f01acb6da00195321d07049ffd98 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:35:49 +0200
 Subject: [PATCH 09/14] Pixel UI (crDroid)
@@ -61,5 +61,5 @@ index 40fc0ed6c5..fc0d03a869 100755
      <!-- CryptKeeper top margin for password/pin screen -->
      <dimen name="crypt_keeper_password_top_margin">88dip</dimen>
 -- 
-2.17.1
+2.20.1
 

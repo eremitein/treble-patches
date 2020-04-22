@@ -1,4 +1,4 @@
-From 2a2fa7a5e3cc177689e661cf549c9eab39953c1b Mon Sep 17 00:00:00 2001
+From d712803bac85b99e0508e3cb5337a80282570547 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Feb 2020 09:47:38 +0200
 Subject: [PATCH 2/2] make app deactivable
@@ -11,7 +11,7 @@ Change-Id: If32e06a15840f806dacbc60e45dc16ad9f766cf7
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/Android.mk b/Android.mk
-index 9901d50..3f24c47 100644
+index 9901d509d..3f24c470a 100644
 --- a/Android.mk
 +++ b/Android.mk
 @@ -33,7 +33,7 @@ LOCAL_AAPT_FLAGS := \
@@ -24,5 +24,5 @@ index 9901d50..3f24c47 100644
  LOCAL_PRIVATE_PLATFORM_APIS := true
  LOCAL_PRIVILEGED_MODULE := true
 -- 
-2.17.1
+2.20.1
 

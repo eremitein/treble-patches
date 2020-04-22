@@ -1,7 +1,7 @@
-From b7b01175c276c529d25dd2e3bc32bcb77bcfce38 Mon Sep 17 00:00:00 2001
+From 18759b94f7e0f6fc500f4b4aad17884ba3b33569 Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Thu, 5 Sep 2019 02:08:22 +0000
-Subject: [PATCH 1/4] vendor_lineage: Log privapp-permissions whitelist
+Subject: [PATCH 1/5] vendor_lineage: Log privapp-permissions whitelist
  violations instead
 
 Change-Id: I49dba61f332253e291a65e79ca70d9a07d45bb07
@@ -26,5 +26,5 @@ index 636c5703..faf651cc 100644
  # Hidden API whitelist
  PRODUCT_COPY_FILES += \
 -- 
-2.17.1
+2.20.1
 

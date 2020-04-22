@@ -1,4 +1,4 @@
-From 812bb6a48bfde88a5f2b3fd9194d6eaa0b7b1aee Mon Sep 17 00:00:00 2001
+From 5e46ca9d83e17e27409d6bc70c22da6959a0dffc Mon Sep 17 00:00:00 2001
 From: Michael Cheah <michael@cheah.xyz>
 Date: Sat, 11 Jan 2020 19:23:57 +0800
 Subject: [PATCH 3/3] Fix operatorNumeric parsing in CellInfoUtil & support old
@@ -71,7 +71,7 @@ index 82720291d..fe1959404 100644
          CellIdentityGsm cig = new CellIdentityGsm(
                  Integer.MAX_VALUE /* lac */,
 diff --git a/src/com/android/phone/NetworkSelectListPreference.java b/src/com/android/phone/NetworkSelectListPreference.java
-index bfcbe8bf9..4462d50e5 100644
+index df3f44a8d..9fc571500 100644
 --- a/src/com/android/phone/NetworkSelectListPreference.java
 +++ b/src/com/android/phone/NetworkSelectListPreference.java
 @@ -24,6 +24,7 @@ import android.os.Handler;
@@ -100,5 +100,5 @@ index bfcbe8bf9..4462d50e5 100644
      }
  
 -- 
-2.17.1
+2.20.1
 

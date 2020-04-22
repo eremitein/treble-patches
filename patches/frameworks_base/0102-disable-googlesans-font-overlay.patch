@@ -1,0 +1,24 @@
+From 6712fede7d77cdf51bf20bbf343ea51bed022ab8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 27 Mar 2020 19:27:04 +0200
+Subject: [PATCH 102/115] disable googlesans font overlay
+
+---
+ packages/overlays/Android.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 820303e40fc..fbc51f9fabe 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -30,7 +30,6 @@ LOCAL_REQUIRED_MODULES := \
+ 	FontUbuntuSourceOverlay \
+ 	FontComicSansSourceOverlay \
+ 	FontCoolstorySourceOverlay \
+-	FontGoogleSansSourceOverlay \
+ 	FontLGSmartGothicSourceOverlay \
+ 	FontNotoSerifSourceOverlay \
+ 	FontOneplusSlateSource \
+-- 
+2.20.1
+

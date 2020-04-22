@@ -1,0 +1,22 @@
+From c4409d8f99499579d93180af53528bca98e0f347 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 3 Apr 2020 09:09:04 +0300
+Subject: [PATCH 11/12] moving to FM2 [1/2]
+
+	modified:   target/board/BoardConfigGsiCommon.mk
+---
+ target/board/BoardConfigGsiCommon.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/target/board/BoardConfigGsiCommon.mk b/target/board/BoardConfigGsiCommon.mk
+index f3c878e76..8195fc7c0 100644
+--- a/target/board/BoardConfigGsiCommon.mk
++++ b/target/board/BoardConfigGsiCommon.mk
+@@ -62,4 +62,3 @@ TARGET_FLATTEN_APEX := true
+ 
+ # FM
+ BOARD_HAVE_QCOM_FM := true
+-TARGET_QCOM_NO_FM_FIRMWARE := true
+-- 
+2.20.1
+

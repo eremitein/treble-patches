@@ -1,0 +1,214 @@
+From 69b8c54d6d045ca2697bf2cadc571371c57fba46 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 22 Apr 2020 20:58:43 +0300
+Subject: [PATCH 001/115] Revert "FOD: Show fod circle below pattern/pin view"
+
+This reverts commit a19e63f82fc7cdd132752445e1adee3bb27a523b.
+---
+ .../values-sw540dp-port/dimens.xml            |  2 +-
+ .../res-keyguard/values-sw720dp/dimens.xml    |  2 +-
+ .../SystemUI/res-keyguard/values/dimens.xml   |  4 ++--
+ packages/SystemUI/res/values/cr_dimens.xml    |  4 ----
+ .../keyguard/KeyguardSecurityContainer.java   | 19 -------------------
+ .../keyguard/KeyguardUpdateMonitor.java       | 10 ----------
+ .../systemui/biometrics/FODCircleView.java    | 14 +++-----------
+ 7 files changed, 7 insertions(+), 48 deletions(-)
+
+diff --git a/packages/SystemUI/res-keyguard/values-sw540dp-port/dimens.xml b/packages/SystemUI/res-keyguard/values-sw540dp-port/dimens.xml
+index c14b85adafe..a3c37e420f2 100644
+--- a/packages/SystemUI/res-keyguard/values-sw540dp-port/dimens.xml
++++ b/packages/SystemUI/res-keyguard/values-sw540dp-port/dimens.xml
+@@ -20,5 +20,5 @@
+ <resources>
+     <!-- Height of the sliding KeyguardSecurityContainer
+         (includes 2x keyguard_security_view_top_margin) -->
+-    <dimen name="keyguard_security_height">690dp</dimen>
++    <dimen name="keyguard_security_height">550dp</dimen>
+ </resources>
+diff --git a/packages/SystemUI/res-keyguard/values-sw720dp/dimens.xml b/packages/SystemUI/res-keyguard/values-sw720dp/dimens.xml
+index 23d6605399b..1dc61c501be 100644
+--- a/packages/SystemUI/res-keyguard/values-sw720dp/dimens.xml
++++ b/packages/SystemUI/res-keyguard/values-sw720dp/dimens.xml
+@@ -20,7 +20,7 @@
+ 
+     <!-- Height of the sliding KeyguardSecurityContainer
+          (includes 2x keyguard_security_view_top_margin) -->
+-    <dimen name="keyguard_security_height">610dp</dimen>
++    <dimen name="keyguard_security_height">470dp</dimen>
+ 
+     <dimen name="widget_big_font_size">100dp</dimen>
+ </resources>
+diff --git a/packages/SystemUI/res-keyguard/values/dimens.xml b/packages/SystemUI/res-keyguard/values/dimens.xml
+index 18e313dbbe9..f9389ce24d9 100644
+--- a/packages/SystemUI/res-keyguard/values/dimens.xml
++++ b/packages/SystemUI/res-keyguard/values/dimens.xml
+@@ -27,11 +27,11 @@
+ 
+     <!-- Height of the sliding KeyguardSecurityContainer
+          (includes 2x keyguard_security_view_top_margin) -->
+-    <dimen name="keyguard_security_height">560dp</dimen>
++    <dimen name="keyguard_security_height">420dp</dimen>
+ 
+     <!-- Max Height of the sliding KeyguardSecurityContainer
+          (includes 2x keyguard_security_view_top_margin) -->
+-    <dimen name="keyguard_security_max_height">590dp</dimen>
++    <dimen name="keyguard_security_max_height">450dp</dimen>
+ 
+     <!-- Margin around the various security views -->
+     <dimen name="keyguard_security_view_top_margin">8dp</dimen>
+diff --git a/packages/SystemUI/res/values/cr_dimens.xml b/packages/SystemUI/res/values/cr_dimens.xml
+index 11ce2bd159b..7aa8ee4ee4f 100644
+--- a/packages/SystemUI/res/values/cr_dimens.xml
++++ b/packages/SystemUI/res/values/cr_dimens.xml
+@@ -111,8 +111,4 @@
+ 
+     <!-- Screen recorder -->
+     <dimen name="screenrecord_dot_size">48dp</dimen>
+-
+-    <!-- The margin between Emergency Carrier area and pattern/pin
+-         view to incorporate the FOD icon -->
+-    <dimen name="keyguard_security_fod_view_margin">140dp</dimen>
+ </resources>
+diff --git a/packages/SystemUI/src/com/android/keyguard/KeyguardSecurityContainer.java b/packages/SystemUI/src/com/android/keyguard/KeyguardSecurityContainer.java
+index c09ba9732b8..ace24a3b7ce 100644
+--- a/packages/SystemUI/src/com/android/keyguard/KeyguardSecurityContainer.java
++++ b/packages/SystemUI/src/com/android/keyguard/KeyguardSecurityContainer.java
+@@ -32,7 +32,6 @@ import android.view.LayoutInflater;
+ import android.view.MotionEvent;
+ import android.view.VelocityTracker;
+ import android.view.View;
+-import android.view.ViewGroup;
+ import android.view.ViewConfiguration;
+ import android.view.WindowManager;
+ import android.widget.FrameLayout;
+@@ -55,7 +54,6 @@ import com.android.systemui.util.InjectionInflationController;
+ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSecurityView {
+     private static final boolean DEBUG = KeyguardConstants.DEBUG;
+     private static final String TAG = "KeyguardSecurityView";
+-    private static final String FOD = "vendor.lineage.biometrics.fingerprint.inscreen";
+ 
+     private static final int USER_TYPE_PRIMARY = 1;
+     private static final int USER_TYPE_WORK_PROFILE = 2;
+@@ -102,7 +100,6 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
+     private int mActivePointerId = -1;
+     private boolean mIsDragging;
+     private float mStartTouchY = -1;
+-    private final int mFODmargin;
+ 
+     // Used to notify the container when something interesting happens.
+     public interface SecurityCallback {
+@@ -138,8 +135,6 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
+             SystemUIFactory.getInstance().getRootComponent());
+         mUnlockMethodCache = UnlockMethodCache.getInstance(context);
+         mViewConfiguration = ViewConfiguration.get(context);
+-        mFODmargin = mContext.getResources().getDimensionPixelSize(
+-            R.dimen.keyguard_security_fod_view_margin);
+     }
+ 
+     public void setSecurityCallback(SecurityCallback callback) {
+@@ -302,15 +297,6 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
+             if (DEBUG) Log.v(TAG, "inflating id = " + layoutId);
+             View v = mInjectionInflationController.injectable(inflater)
+                     .inflate(layoutId, mSecurityViewFlipper, false);
+-            View eca = v.findViewById(R.id.keyguard_selector_fade_container);
+-            if (eca != null && hasInDisplayFingerprint() &&
+-                    (securityMode == SecurityMode.Pattern
+-                        || securityMode == SecurityMode.PIN)) {
+-                ViewGroup.MarginLayoutParams lp = (ViewGroup.MarginLayoutParams)
+-                            eca.getLayoutParams();
+-                lp.setMargins(lp.leftMargin, mFODmargin, lp.rightMargin,
+-                            lp.bottomMargin);
+-            }
+             mSecurityViewFlipper.addView(v);
+             updateSecurityView(v);
+             view = (KeyguardSecurityView)v;
+@@ -477,10 +463,6 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
+         }
+     }
+ 
+-    private boolean hasInDisplayFingerprint() {
+-        return mContext.getPackageManager().hasSystemFeature(FOD);
+-    }
+-
+     /**
+      * Shows the primary security screen for the user. This will be either the multi-selector
+      * or the user's security method.
+@@ -597,7 +579,6 @@ public class KeyguardSecurityContainer extends FrameLayout implements KeyguardSe
+         mCurrentSecurityView = newView;
+         mSecurityCallback.onSecurityModeChanged(securityMode,
+                 securityMode != SecurityMode.None && newView.needsInput());
+-        mUpdateMonitor.setSecurityMode(securityMode);
+     }
+ 
+     private KeyguardSecurityViewFlipper getFlipper() {
+diff --git a/packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java b/packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java
+index 36d897aa948..9c854390187 100644
+--- a/packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java
++++ b/packages/SystemUI/src/com/android/keyguard/KeyguardUpdateMonitor.java
+@@ -98,7 +98,6 @@ import com.android.internal.telephony.PhoneConstants;
+ import com.android.internal.telephony.TelephonyIntents;
+ import com.android.internal.util.Preconditions;
+ import com.android.internal.widget.LockPatternUtils;
+-import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
+ import com.android.settingslib.WirelessUtils;
+ import com.android.systemui.R;
+ import com.android.systemui.shared.system.ActivityManagerWrapper;
+@@ -260,7 +259,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
+     private int mFingerprintRunningState = BIOMETRIC_STATE_STOPPED;
+     private int mFaceRunningState = BIOMETRIC_STATE_STOPPED;
+     private LockPatternUtils mLockPatternUtils;
+-    private SecurityMode mCurrentSecurityMode = SecurityMode.Invalid;
+     private final IDreamManager mDreamManager;
+     private boolean mIsDreaming;
+     private final DevicePolicyManager mDevicePolicyManager;
+@@ -932,14 +930,6 @@ public class KeyguardUpdateMonitor implements TrustManager.TrustListener {
+         }
+     }
+ 
+-    public SecurityMode getSecurityMode() {
+-        return mCurrentSecurityMode;
+-    }
+-
+-    public void setSecurityMode(SecurityMode securityMode) {
+-        mCurrentSecurityMode = securityMode;
+-    }
+-
+     public boolean isFaceUnlockRunning(int userId) {
+         return mUserFaceUnlockRunning.get(userId);
+     }
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 2489c12d1f0..6349da50bb0 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -52,7 +52,6 @@ import androidx.palette.graphics.Palette;
+ 
+ import com.android.keyguard.KeyguardUpdateMonitor;
+ import com.android.keyguard.KeyguardUpdateMonitorCallback;
+-import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
+ import com.android.systemui.R;
+ import com.android.systemui.Dependency;
+ import com.android.systemui.statusbar.policy.ConfigurationController;
+@@ -169,17 +168,10 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         public void onKeyguardBouncerChanged(boolean isBouncer) {
+             mIsBouncer = isBouncer;
+ 
+-            if (mUpdateMonitor.isFingerprintDetectionRunning()) {
+-                final SecurityMode sec = mUpdateMonitor.getSecurityMode();
+-                final boolean maybeShow = sec == SecurityMode.Pattern ||
+-                        sec == SecurityMode.PIN;
+-                if (maybeShow || !mIsBouncer) {
+-                    show();
+-                } else {
+-                    hide();
+-                }
+-            } else {
++            if (isBouncer) {
+                 hide();
++            } else if (mIsKeyguard && mUpdateMonitor.isFingerprintDetectionRunning()) {
++                show();
+             }
+         }
+ 
+-- 
+2.20.1
+

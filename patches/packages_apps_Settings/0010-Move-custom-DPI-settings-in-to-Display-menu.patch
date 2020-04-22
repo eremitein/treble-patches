@@ -1,4 +1,4 @@
-From 018877a139c7725e74d3086bb5ad2d59c1df8443 Mon Sep 17 00:00:00 2001
+From cafc48891dc4b635d2809b383cde3fa892444dea Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 12:20:39 +0200
 Subject: [PATCH 10/14] Move custom DPI settings in to Display menu
@@ -16,10 +16,10 @@ Subject: [PATCH 10/14] Move custom DPI settings in to Display menu
  3 files changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/res/xml/development_settings.xml b/res/xml/development_settings.xml
-index e00cdccbcf..6493e65f2d 100644
+index 5c91a858f7..6b3b1d3dd1 100644
 --- a/res/xml/development_settings.xml
 +++ b/res/xml/development_settings.xml
-@@ -431,10 +431,6 @@
+@@ -436,10 +436,6 @@
              android:entries="@array/overlay_display_devices_entries"
              android:entryValues="@array/overlay_display_devices_values" />
  
@@ -31,10 +31,10 @@ index e00cdccbcf..6493e65f2d 100644
              android:key="display_cutout_emulation"
              android:title="@string/display_cutout_emulation"
 diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
-index 41910cc7cb..0687740a6b 100644
+index c4e5445ea3..23ed3e57a7 100644
 --- a/res/xml/display_settings.xml
 +++ b/res/xml/display_settings.xml
-@@ -123,6 +123,10 @@
+@@ -122,6 +122,10 @@
          android:entries="@array/refresh_rate_entries"
          android:entryValues="@array/refresh_rate_values" />
  
@@ -46,10 +46,10 @@ index 41910cc7cb..0687740a6b 100644
          android:key="show_operator_name"
          android:title="@string/show_operator_name_title"
 diff --git a/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java b/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java
-index a935386b98..e68a8a9b57 100644
+index f18225e8fb..dc633d7869 100644
 --- a/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java
 +++ b/src/com/android/settings/development/DevelopmentSettingsDashboardFragment.java
-@@ -505,7 +505,6 @@ public class DevelopmentSettingsDashboardFragment extends RestrictedDashboardFra
+@@ -521,7 +521,6 @@ public class DevelopmentSettingsDashboardFragment extends RestrictedDashboardFra
          controllers.add(new DefaultLaunchPreferenceController(context, "feature_flags_dashboard"));
          controllers.add(
              new DefaultLaunchPreferenceController(context, "default_usb_configuration"));
@@ -58,5 +58,5 @@ index a935386b98..e68a8a9b57 100644
          controllers.add(new DefaultLaunchPreferenceController(context, "inactive_apps"));
          controllers.add(new AutofillLoggingLevelPreferenceController(context, lifecycle));
 -- 
-2.17.1
+2.20.1
 

@@ -1,7 +1,7 @@
-From c93e69020dd098f8ff52f798583b34aeb1194273 Mon Sep 17 00:00:00 2001
+From 0f009ea747069de80ef40db664a9f4b62bac186f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 18:54:56 +0200
-Subject: [PATCH 2/5] rework dark themes
+Subject: [PATCH 2/4] rework dark themes
 
 	modified:   themes/dark/charcoalblack/res/values-night/colors.xml
 	modified:   themes/dark/midnightblue/res/values-night/colors.xml
@@ -51,5 +51,5 @@ index c4be946..282fe89 100644
      <color name="material_grey_600">#ff1e343f</color>
      <color name="material_grey_300">#ff9db3be</color>
 -- 
-2.17.1
+2.20.1
 

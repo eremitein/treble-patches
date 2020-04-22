@@ -1,0 +1,24 @@
+From 3c940c7b90478e85daa56a654a0d483a6c9881e4 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 29 Mar 2020 20:15:14 +0300
+Subject: [PATCH 3/4] fix white popup menu
+
+---
+ .../common/frameworks/base/core/res/res/values-night/styles.xml  | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/overlay/common/frameworks/base/core/res/res/values-night/styles.xml b/overlay/common/frameworks/base/core/res/res/values-night/styles.xml
+index d739039..b7d52a7 100644
+--- a/overlay/common/frameworks/base/core/res/res/values-night/styles.xml
++++ b/overlay/common/frameworks/base/core/res/res/values-night/styles.xml
+@@ -46,7 +46,6 @@
+     </style>
+     <style name="Theme.DeviceDefault.Settings" parent="@*android:style/Theme.Material">
+         <item name="android:actionBarStyle">@*android:style/Widget.DeviceDefault.Light.ActionBar.Solid</item>
+-        <item name="android:popupTheme">@*android:style/ThemeOverlay.DeviceDefault.Popup.Light</item>
+         <item name="android:colorPrimary">@*android:color/primary_device_default_dark</item>
+         <item name="android:colorPrimaryDark">@*android:color/primary_dark_device_default_settings</item>
+         <item name="android:colorAccent">@*android:color/accent_device_default_dark</item>
+-- 
+2.20.1
+

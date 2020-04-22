@@ -1,4 +1,4 @@
-From b664a69b148eae2e622058195d1b96966a6bae84 Mon Sep 17 00:00:00 2001
+From 9aa1df5a6ba87208d2bcab7d7cd5b8bd256156de Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 2 Mar 2020 22:41:26 +0200
 Subject: [PATCH 2/4] update 'sakura' overlay
@@ -335,5 +335,5 @@ index c58450f..ecc84cb 100644
 \ No newline at end of file
 +</device>
 -- 
-2.17.1
+2.20.1
 

@@ -1,4 +1,4 @@
-From dfb05605bc176d14b2e87fec5638f83fd677d5fd Mon Sep 17 00:00:00 2001
+From 92cd8495e93bc6d6e55d6f4598320dc0f5d95b66 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 9 Dec 2018 15:56:59 +0100
 Subject: [PATCH 06/14] Revert "Set rlimit rtprio for cameraserver"
@@ -12,7 +12,7 @@ like this instruction at all (read: this prevents boot)
  1 file changed, 1 deletion(-)
 
 diff --git a/camera/cameraserver/cameraserver.rc b/camera/cameraserver/cameraserver.rc
-index a9aae0b15c..fea5a1d5c6 100644
+index a9aae0b15..fea5a1d5c 100644
 --- a/camera/cameraserver/cameraserver.rc
 +++ b/camera/cameraserver/cameraserver.rc
 @@ -4,4 +4,3 @@ service cameraserver /system/bin/cameraserver
@@ -21,5 +21,5 @@ index a9aae0b15c..fea5a1d5c6 100644
      writepid /dev/cpuset/camera-daemon/tasks /dev/stune/top-app/tasks
 -    rlimit rtprio 10 10
 -- 
-2.17.1
+2.20.1
 

@@ -1,4 +1,4 @@
-From 8c639d5c6808fc8d9b91c9b3025042d3cb6dfdd8 Mon Sep 17 00:00:00 2001
+From 3fb95d9b16561601fac726e8cfe9df77bf83b8b4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Mar 2020 06:26:28 +0200
 Subject: [PATCH 4/7] Revert "crDroid Settings: FOD pressed state [2/2]"
@@ -67,10 +67,10 @@ index 3897615a..e28515bb 100644
      <string-array name="lockscreen_charging_animation_entries" translatable="false">
          <item>@string/disabled</item>
 diff --git a/res/values/cr_strings.xml b/res/values/cr_strings.xml
-index be18c3a6..8069ad59 100644
+index 6325c603..8338330c 100644
 --- a/res/values/cr_strings.xml
 +++ b/res/values/cr_strings.xml
-@@ -2451,14 +2451,6 @@
+@@ -2453,14 +2453,6 @@
      <string name="back_height_message">Amount of screen height used as touchable region for back gesture.</string>
      <string name="back_gesture_haptic">Enable haptic tick effect on back gesture</string>
  
@@ -86,7 +86,7 @@ index be18c3a6..8069ad59 100644
      <string name="gesture_pill_message">Hide the navigation bar pill for seamless fullscreen gestures.</string>
  
 diff --git a/res/xml/crdroid_settings_lockscreen.xml b/res/xml/crdroid_settings_lockscreen.xml
-index e1fe044d..2b15c59c 100644
+index 2b8c2c81..fb0ec728 100644
 --- a/res/xml/crdroid_settings_lockscreen.xml
 +++ b/res/xml/crdroid_settings_lockscreen.xml
 @@ -188,32 +188,10 @@
@@ -123,5 +123,5 @@ index e1fe044d..2b15c59c 100644
  
      <PreferenceCategory
 -- 
-2.17.1
+2.20.1
 

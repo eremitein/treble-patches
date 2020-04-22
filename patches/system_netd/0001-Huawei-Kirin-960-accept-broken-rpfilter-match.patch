@@ -1,4 +1,4 @@
-From 7804888a602b8b41674e442ee673af1307bf5af5 Mon Sep 17 00:00:00 2001
+From 4c8e028f9f341be7bad703a18a217095692803d2 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 2 Jul 2018 22:01:43 +0200
 Subject: [PATCH 1/2] Huawei Kirin 960:: accept broken rpfilter match
@@ -12,7 +12,7 @@ Change-Id: I9aa63d18e54a8254133adf97bf757c03d6b66757
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/server/TetherController.cpp b/server/TetherController.cpp
-index 0c5b6bfe..d9439be6 100644
+index e9445c82..64ff80b0 100644
 --- a/server/TetherController.cpp
 +++ b/server/TetherController.cpp
 @@ -696,7 +696,7 @@ int TetherController::setForwardRules(bool add, const char *intIface, const char
@@ -25,5 +25,5 @@ index 0c5b6bfe..d9439be6 100644
      }
  
 -- 
-2.17.1
+2.20.1
 

@@ -1,4 +1,4 @@
-From 818982b47f82d328500a8320c35211c7f1e2c200 Mon Sep 17 00:00:00 2001
+From 530d52d9fc7e24933801ea0edd2db7718467efde Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 14 Sep 2019 22:49:31 +0200
 Subject: [PATCH 11/17] Use a vndk-lite friendly ld config
@@ -27,5 +27,5 @@ index c95f60fb0..50c153f4a 100644
  ###############################################################################
  # "runtime" APEX namespace
 -- 
-2.17.1
+2.20.1
 

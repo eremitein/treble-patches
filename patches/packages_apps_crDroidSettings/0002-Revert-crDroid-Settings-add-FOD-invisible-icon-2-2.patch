@@ -1,4 +1,4 @@
-From ca6f1875f9f081122bace1a4233504706a5c7fb2 Mon Sep 17 00:00:00 2001
+From cd058cd926fbeb40e5bda9bab78eeea48c3d07ff Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Mar 2020 06:22:16 +0200
 Subject: [PATCH 2/7] Revert "crDroid Settings: add FOD invisible icon [2/2]"
@@ -96,5 +96,5 @@ index a245b479..a47fe429 100644
      }
  }
 -- 
-2.17.1
+2.20.1
 

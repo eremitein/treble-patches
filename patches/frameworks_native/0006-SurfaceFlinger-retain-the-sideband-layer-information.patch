@@ -1,4 +1,4 @@
-From ab60098a405d2b6bdeba9f97e7cd7f73669ab0b7 Mon Sep 17 00:00:00 2001
+From 43b2b0361ad4d2c3cf4e7f0dbb52458fb581a99e Mon Sep 17 00:00:00 2001
 From: Pierre Couillaud <pierre.couillaud@broadcom.com>
 Date: Tue, 27 Aug 2019 13:43:22 -0700
 Subject: [PATCH 6/8] SurfaceFlinger: retain the sideband layer information for
@@ -72,10 +72,10 @@ Signed-off-by: Pierre Couillaud <pierre.couillaud@broadcom.com>
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/services/surfaceflinger/BufferQueueLayer.cpp b/services/surfaceflinger/BufferQueueLayer.cpp
-index f35a4fd49..cbb9d658e 100644
+index 8b69404f9..df032e72b 100644
 --- a/services/surfaceflinger/BufferQueueLayer.cpp
 +++ b/services/surfaceflinger/BufferQueueLayer.cpp
-@@ -243,8 +243,9 @@ bool BufferQueueLayer::latchSidebandStream(bool& recomputeVisibleRegions) {
+@@ -259,8 +259,9 @@ bool BufferQueueLayer::latchSidebandStream(bool& recomputeVisibleRegions) {
      bool sidebandStreamChanged = true;
      if (mSidebandStreamChanged.compare_exchange_strong(sidebandStreamChanged, false)) {
          // mSidebandStreamChanged was changed to false
@@ -87,5 +87,5 @@ index f35a4fd49..cbb9d658e 100644
              setTransactionFlags(eTransactionNeeded);
              mFlinger->setTransactionFlags(eTraversalNeeded);
 -- 
-2.17.1
+2.20.1
 

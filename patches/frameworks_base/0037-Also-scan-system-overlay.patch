@@ -1,0 +1,52 @@
+From e6402d0eed29b04968d13643ef6d234978af788d Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 1 May 2018 17:47:36 +0200
+Subject: [PATCH 037/115] Also scan /system/overlay
+
+Change-Id: Ib0223560606b80cdaaa986b159b34b4db0154589
+---
+ core/jni/android_util_AssetManager.cpp | 6 +++++-
+ core/jni/fd_utils.cpp                  | 3 ++-
+ 2 files changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/core/jni/android_util_AssetManager.cpp b/core/jni/android_util_AssetManager.cpp
+index 2b471fec9c8..4518c7e66a5 100644
+--- a/core/jni/android_util_AssetManager.cpp
++++ b/core/jni/android_util_AssetManager.cpp
+@@ -163,7 +163,7 @@ static void NativeVerifySystemIdmaps(JNIEnv* /*env*/, jclass /*clazz*/) {
+       }
+ 
+       // Generic idmap parameters
+-      const char* argv[10];
++      const char* argv[11];
+       int argc = 0;
+       struct stat st;
+ 
+@@ -207,6 +207,10 @@ static void NativeVerifySystemIdmaps(JNIEnv* /*env*/, jclass /*clazz*/) {
+         argv[argc++] = AssetManager::OEM_OVERLAY_DIR;
+       }
+ 
++      if(stat("/system/overlay", &st) == 0) {
++        argv[argc++] = "/system/overlay";
++      }
++
+       // Finally, invoke idmap (if any overlay directory exists)
+       if (argc > 5) {
+         execv(AssetManager::IDMAP_BIN, (char* const*)argv);
+diff --git a/core/jni/fd_utils.cpp b/core/jni/fd_utils.cpp
+index 8ba2559ec2e..45b3c6a909d 100644
+--- a/core/jni/fd_utils.cpp
++++ b/core/jni/fd_utils.cpp
+@@ -119,7 +119,8 @@ bool FileDescriptorWhitelist::IsAllowed(const std::string& path) const {
+        || android::base::StartsWith(path, kSystemOdmOverlayDir)
+        || android::base::StartsWith(path, kOdmOverlayDir)
+        || android::base::StartsWith(path, kSystemOemOverlayDir)
+-       || android::base::StartsWith(path, kOemOverlayDir))
++       || android::base::StartsWith(path, kOemOverlayDir)
++       || android::base::StartsWith(path, "/system/overlay"))
+       && android::base::EndsWith(path, kApkSuffix)
+       && path.find("/../") == std::string::npos) {
+     return true;
+-- 
+2.20.1
+

@@ -1,4 +1,4 @@
-From 7985eac4ac242b13fe399838e09df96fb5c568eb Mon Sep 17 00:00:00 2001
+From 2d5c1dafa21b365e8d0ce111274a520bf6195160 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 12 Sep 2019 20:41:03 +0200
 Subject: [PATCH] Disable rlimit on bpfloader, because it will crash 8.0 init
@@ -20,5 +20,5 @@ index 31747fb..d95cdbd 100644
 +    #rlimit memlock 67108864 67108864
      oneshot
 -- 
-2.17.1
+2.20.1
 

@@ -1,0 +1,32 @@
+From eea5d8c1d9157bb7040a86000651ed01b4f5e71d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 23 Apr 2020 05:41:04 +0300
+Subject: [PATCH 115/115] Revert "Don't include the data dir in zygote library
+ paths."
+
+This reverts commit 4f91f5ea5c34073866cc01d280de96e77db92088.
+
+  try to fix issues in GSI build - very long time to open appps
+---
+ core/java/android/app/LoadedApk.java | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/core/java/android/app/LoadedApk.java b/core/java/android/app/LoadedApk.java
+index f4bb94f83c0..91250c5b07b 100644
+--- a/core/java/android/app/LoadedApk.java
++++ b/core/java/android/app/LoadedApk.java
+@@ -784,11 +784,6 @@ public final class LoadedApk {
+         makePaths(mActivityThread, isBundledApp, mApplicationInfo, zipPaths, libPaths);
+ 
+         String libraryPermittedPath = mDataDir;
+-        if (mActivityThread == null) {
+-            // In a zygote context where mActivityThread is null we can't access the app data dir
+-            // and including this in libraryPermittedPath would cause SELinux denials.
+-            libraryPermittedPath = "";
+-        }
+ 
+         if (isBundledApp) {
+             // For bundled apps, add the base directory of the app (e.g.,
+-- 
+2.20.1
+

@@ -1,4 +1,4 @@
-From 107c7e3fbff713065def6e10f11e7210929726fe Mon Sep 17 00:00:00 2001
+From 15b20b939409bcd29cfb0606de99db4c81278731 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 29 Jul 2019 18:09:12 +0200
 Subject: [PATCH 2/2] Don't fail on FTP conntracking failing
@@ -43,5 +43,5 @@ index 64ff80b0..2fa4a0c9 100644
              StringPrintf("%s %s -i %s -o %s -m state --state ESTABLISHED,RELATED -g %s", op,
                           LOCAL_FORWARD, extIface, intIface, LOCAL_TETHER_COUNTERS_CHAIN),
 -- 
-2.17.1
+2.20.1
 

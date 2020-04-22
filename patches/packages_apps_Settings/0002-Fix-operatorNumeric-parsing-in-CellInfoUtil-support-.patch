@@ -1,4 +1,4 @@
-From 08b89be18cffc3bc20361485edbcc5bb5e747df4 Mon Sep 17 00:00:00 2001
+From 018500190a9714a8b37b948c0c688d1f8a43b2ae Mon Sep 17 00:00:00 2001
 From: Michael Cheah <michael@cheah.xyz>
 Date: Sat, 11 Jan 2020 13:19:04 +0800
 Subject: [PATCH 02/14] Fix operatorNumeric parsing in CellInfoUtil & support
@@ -70,5 +70,5 @@ index def81a10c6..6e6586a4cb 100644
          CellIdentityGsm cig = new CellIdentityGsm(
                  Integer.MAX_VALUE /* lac */,
 -- 
-2.17.1
+2.20.1
 

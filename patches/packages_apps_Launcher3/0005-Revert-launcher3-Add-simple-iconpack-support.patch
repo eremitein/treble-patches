@@ -1,4 +1,4 @@
-From 8a5985764b7a2c2988245eb5095cdfb2e61cf50a Mon Sep 17 00:00:00 2001
+From 129e6e32b6c2c06f95c13cbab1f4afd1722b6179 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 31 Mar 2020 10:06:31 +0300
 Subject: [PATCH 5/5] Revert "launcher3: Add simple iconpack support"
@@ -603,10 +603,10 @@ index c621a8fcb..000000000
 -    }
 -}
 diff --git a/src/com/android/launcher3/InvariantDeviceProfile.java b/src/com/android/launcher3/InvariantDeviceProfile.java
-index 297181211..eda679f11 100644
+index a805c0813..b80cff810 100644
 --- a/src/com/android/launcher3/InvariantDeviceProfile.java
 +++ b/src/com/android/launcher3/InvariantDeviceProfile.java
-@@ -104,7 +104,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
+@@ -105,7 +105,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
      public int numFolderColumns;
      public float iconSize;
      public String iconShapePath;
@@ -614,7 +614,7 @@ index 297181211..eda679f11 100644
      public float landscapeIconSize;
      public int iconBitmapSize;
      public int fillResIconDpi;
-@@ -149,7 +148,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
+@@ -150,7 +149,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
          numFolderColumns = p.numFolderColumns;
          iconSize = p.iconSize;
          iconShapePath = p.iconShapePath;
@@ -622,7 +622,7 @@ index 297181211..eda679f11 100644
          landscapeIconSize = p.landscapeIconSize;
          iconTextSize = p.iconTextSize;
          numHotseatIcons = p.numHotseatIcons;
-@@ -313,7 +311,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
+@@ -316,7 +314,6 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
  
          iconSize = displayOption.iconSize;
          iconShapePath = getIconShapePath(context);
@@ -630,7 +630,7 @@ index 297181211..eda679f11 100644
          landscapeIconSize = displayOption.landscapeIconSize;
          iconBitmapSize = ResourceUtils.pxFromDp(iconSize, metrics);
          iconTextSize = displayOption.iconTextSize;
-@@ -380,7 +377,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
+@@ -383,7 +380,7 @@ public class InvariantDeviceProfile implements OnSharedPreferenceChangeListener
          }
  
          if (iconSize != oldProfile.iconSize || iconBitmapSize != oldProfile.iconBitmapSize ||
@@ -882,5 +882,5 @@ index 7ee2c5614..0f8152057 100644
              Log.e(TAG, "Failed to unregister config monitor", e);
          }
 -- 
-2.17.1
+2.20.1
 

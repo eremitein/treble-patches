@@ -1,4 +1,4 @@
-From 017a19b6a5b853304da7c20276c848c80e97b60d Mon Sep 17 00:00:00 2001
+From e970c88294f9ab55fdf8fec09e92b9412467f9be Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 4 Feb 2020 11:09:32 +0200
 Subject: [PATCH 14/14] add statusbar icon spacing tuning (crDroid)
@@ -36,10 +36,10 @@ index ebb31a0bfd..f2e52adc1b 100644
      <string name="theme_customization_device_default">Device default</string>
  
 diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
-index 0687740a6b..7383974ef3 100644
+index 23ed3e57a7..02ad5684aa 100644
 --- a/res/xml/display_settings.xml
 +++ b/res/xml/display_settings.xml
-@@ -200,4 +200,14 @@
+@@ -199,4 +199,14 @@
          android:title="@string/display_vr_pref_title"
          android:fragment="com.android.settings.display.VrDisplayPreferencePicker" />
  
@@ -55,10 +55,10 @@ index 0687740a6b..7383974ef3 100644
 +
  </PreferenceScreen>
 diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
-index 6d61ecaa8b..83263ecec3 100644
+index 7e9c6ace62..162510aa4c 100644
 --- a/src/com/android/settings/DisplaySettings.java
 +++ b/src/com/android/settings/DisplaySettings.java
-@@ -34,6 +34,7 @@ import com.android.settings.display.TapToWakePreferenceController;
+@@ -36,6 +36,7 @@ import com.android.settings.display.TapToWakePreferenceController;
  import com.android.settings.display.ThemePreferenceController;
  import com.android.settings.display.TimeoutPreferenceController;
  import com.android.settings.display.VrDisplayPreferenceController;
@@ -66,10 +66,10 @@ index 6d61ecaa8b..83263ecec3 100644
  import com.android.settings.search.BaseSearchIndexProvider;
  import com.android.settings.search.Indexable;
  import com.android.settingslib.core.AbstractPreferenceController;
-@@ -99,6 +100,8 @@ public class DisplaySettings extends DashboardFragment {
+@@ -121,6 +122,8 @@ public class DisplaySettings extends DashboardFragment {
+         controllers.add(new ShowOperatorNamePreferenceController(context));
          controllers.add(new ThemePreferenceController(context));
          controllers.add(new BrightnessLevelPreferenceController(context, lifecycle));
-         controllers.add(new RefreshRatePreferenceController(context));
 +        controllers.add(new OverlayCategoryPreferenceController(context,
 +                "android.theme.customization.statusbar"));
          return controllers;
@@ -147,5 +147,5 @@ index 6e0b2d00f6..6a20e3aac3 100644
 -
  }
 -- 
-2.17.1
+2.20.1
 

@@ -1,4 +1,4 @@
-From 568dafe7e2801a2beb2cd59b6b4542be959b258a Mon Sep 17 00:00:00 2001
+From 130a6de7e05dc772e41b43f70661081d6e57e4c8 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <pierre-hugues.husson@softathome.com>
 Date: Tue, 18 Sep 2018 17:05:07 +0200
 Subject: [PATCH 2/4] Support hostap on O/O-MR1 vendors
@@ -90,5 +90,5 @@ index 3e5dc3c79..63907e67c 100644
                  Log.i(TAG, "Vendor Hal not supported, ignoring createApIface.");
                  return handleIfaceCreationWhenVendorHalNotSupported(iface);
 -- 
-2.17.1
+2.20.1
 

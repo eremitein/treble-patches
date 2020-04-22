@@ -1,7 +1,7 @@
-From 76375b992038d60674b06b6e8f1a6d39c0fcf9f4 Mon Sep 17 00:00:00 2001
+From 61afb402f43daf77a440810131eef177082b9688 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 19 Mar 2020 20:14:42 +0200
-Subject: [PATCH 3/4] try to add fm-radio [2/2]
+Subject: [PATCH 3/5] try to add fm-radio [2/2]
 
 Change-Id: I502ab8e7383b14bf00ffef272e8a42f575edf544
 
@@ -29,5 +29,5 @@ index faf651cc..972aabdb 100644
  PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \
      ro.storage_manager.enabled=true
 -- 
-2.17.1
+2.20.1
 

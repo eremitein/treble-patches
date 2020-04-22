@@ -1,4 +1,4 @@
-From 7abd6cd3eff8d4b1d3ed77fcc222360e69901d97 Mon Sep 17 00:00:00 2001
+From 3e3325f7c8794ece221d67e87d2c12032c6f733f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 14 Sep 2019 21:29:29 +0200
 Subject: [PATCH 09/17] Remove reserved_disk group (not very useful, and breaks
@@ -69,5 +69,5 @@ index 48461ecd3..6fd203bc5 100644
      socket usap_pool_secondary stream 660 root system
      onrestart restart zygote
 -- 
-2.17.1
+2.20.1
 

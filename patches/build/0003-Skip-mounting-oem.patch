@@ -1,7 +1,7 @@
-From 0a874810c2b1f3bd76d1f67c1a1c9fee5f0b62fd Mon Sep 17 00:00:00 2001
+From 62b828fbe0c53387d953890dfa49577953bd4785 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 29 Mar 2020 08:26:56 +0300
-Subject: [PATCH 03/13] Skip mounting /oem
+Subject: [PATCH 03/12] Skip mounting /oem
 
   * from
   https://github.com/phhusson/platform_build/commit/198b86d8ac1714d4593760b3efeb23e4c48438c8
@@ -18,5 +18,5 @@ index 549767edf..327676384 100644
  /product_services
 +/oem
 -- 
-2.17.1
+2.20.1
 

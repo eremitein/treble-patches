@@ -1,4 +1,4 @@
-From f58ee83ccf60446ce25de97ec205426c8552add0 Mon Sep 17 00:00:00 2001
+From 846bab84cb31d3a308a32cbef5cdd0517f7f20bf Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 16 Sep 2019 17:42:37 +0200
 Subject: [PATCH 3/4] Restore O/O-MR1 behaviour of initing ifaces before supp.
@@ -90,5 +90,5 @@ index 63907e67c..917494a10 100644
                  Log.e(TAG, "Failed to setup iface in supplicant on " + iface);
                  teardownInterface(iface.name);
 -- 
-2.17.1
+2.20.1
 

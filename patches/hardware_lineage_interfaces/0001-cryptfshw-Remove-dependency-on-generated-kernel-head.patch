@@ -1,4 +1,4 @@
-From 379a99c65d8d192b08c205631ae1b3d51c7831c0 Mon Sep 17 00:00:00 2001
+From 255dd13f19683fbe14aaf39fb66c15811936ee19 Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Tue, 24 Dec 2019 15:32:21 +0000
 Subject: [PATCH] cryptfshw: Remove dependency on generated kernel headers
@@ -36,5 +36,5 @@ index b06e286..01cadd4 100644
          "libbase",
          "libdl",
 -- 
-2.17.1
+2.20.1
 

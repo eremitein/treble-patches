@@ -1,4 +1,4 @@
-From 49f4b28e3e43ed7f6031adf3c3fddd58e843960d Mon Sep 17 00:00:00 2001
+From e5b94eaf877ee6d483966469f7a579757d47a6c8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Dec 2019 19:08:14 +0200
 Subject: [PATCH] Match Settings Pixel style (crDroid)
@@ -45,5 +45,5 @@ index 82b1e11..4e9d152 100644
 \ No newline at end of file
 +</LinearLayout>
 -- 
-2.17.1
+2.20.1
 

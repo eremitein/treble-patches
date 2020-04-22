@@ -1,4 +1,4 @@
-From 7fb826be6e78ca2ae755063fe9953f58ad6ed5a5 Mon Sep 17 00:00:00 2001
+From a824c7453d93711de81c0b9ee5eb9e481b7c165d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 15 Apr 2020 08:11:26 +0300
 Subject: [PATCH 01/12] Revert "Enable navbar by default"
@@ -21,5 +21,5 @@ index 7094634..606b4f6 100644
  fw.max_users=10
  persist.sys.max_profiles=10
 -- 
-2.17.1
+2.20.1
 

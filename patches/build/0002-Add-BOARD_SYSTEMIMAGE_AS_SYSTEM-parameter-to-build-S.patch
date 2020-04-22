@@ -1,7 +1,7 @@
-From 5c79b4b56e6ee83caf643df7191ad09a63f3dff9 Mon Sep 17 00:00:00 2001
+From f9dfc2908cc27d8df147bb022f50ee296feaceb5 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 14 Sep 2019 21:25:07 +0200
-Subject: [PATCH 02/13] Add BOARD_SYSTEMIMAGE_AS_SYSTEM parameter to build SaS
+Subject: [PATCH 02/12] Add BOARD_SYSTEMIMAGE_AS_SYSTEM parameter to build SaS
  GSI
 
 Change-Id: I764f0ef4e3be9a338fbe93944445cedc29d2bb81
@@ -45,5 +45,5 @@ index 4136ed432..96f7ddcb0 100755
      # We inherit the selinux policies of /system since we contain some of its
      # files.
 -- 
-2.17.1
+2.20.1
 

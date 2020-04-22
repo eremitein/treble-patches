@@ -1,4 +1,4 @@
-From 4f7a2c9fc175b6485fb2dfab94ffc930a67405a3 Mon Sep 17 00:00:00 2001
+From f771f9bc9d657a9dd029f906fd1849bf1e701b7e Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 10 Mar 2020 23:26:55 +0100
 Subject: [PATCH 7/8] Use BKK's hwcomposer hacks to properly display FOD layers
@@ -36,5 +36,5 @@ index 5ce72b087..23b29d6fd 100644
                    to_string(error).c_str(), static_cast<int32_t>(error));
          }
 -- 
-2.17.1
+2.20.1
 

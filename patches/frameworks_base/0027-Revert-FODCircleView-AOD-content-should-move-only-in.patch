@@ -1,0 +1,54 @@
+From 96748955ae107e2eb9c4bdbab54ea63de10bbb80 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 26 Mar 2020 18:47:32 +0200
+Subject: [PATCH 027/115] Revert "FODCircleView: AOD content should move only
+ in Y"
+
+This reverts commit facc2dba31c5d25919f6d904af5ea1b803fc75b9.
+---
+ .../android/systemui/biometrics/FODCircleView.java  | 13 +++++++++++++
+ 1 file changed, 13 insertions(+)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 569cbf75d64..0af62b731b9 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -60,6 +60,7 @@ public class FODCircleView extends ImageView {
+ 
+     private IFingerprintInscreen mFingerprintInscreenDaemon;
+ 
++    private int mDreamingOffsetX;
+     private int mDreamingOffsetY;
+ 
+     private int mColor;
+@@ -371,6 +372,7 @@ public class FODCircleView extends ImageView {
+         }
+ 
+         if (mIsDreaming) {
++            mParams.x += mDreamingOffsetX;
+             mParams.y += mDreamingOffsetY;
+         }
+ 
+@@ -407,8 +409,19 @@ public class FODCircleView extends ImageView {
+         @Override
+         public void run() {
+             long now = System.currentTimeMillis() / 1000 / 60;
++
++            mDreamingOffsetX = (int) (now % (mDreamingMaxOffset * 4));
++            if (mDreamingOffsetX > mDreamingMaxOffset * 2) {
++                mDreamingOffsetX = mDreamingMaxOffset * 4 - mDreamingOffsetX;
++            }
++
+             // Let y to be not synchronized with x, so that we get maximum movement
+             mDreamingOffsetY = (int) ((now + mDreamingMaxOffset / 3) % (mDreamingMaxOffset * 2));
++            if (mDreamingOffsetY > mDreamingMaxOffset * 2) {
++                mDreamingOffsetY = mDreamingMaxOffset * 4 - mDreamingOffsetY;
++            }
++
++            mDreamingOffsetX -= mDreamingMaxOffset;
+             mDreamingOffsetY -= mDreamingMaxOffset;
+ 
+             mHandler.post(() -> updatePosition());
+-- 
+2.20.1
+

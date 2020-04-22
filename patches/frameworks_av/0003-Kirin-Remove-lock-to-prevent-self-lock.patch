@@ -1,4 +1,4 @@
-From 5f08c2c01f42960328baa7cda0602df85cb8720b Mon Sep 17 00:00:00 2001
+From e81ceedd7ab83fb8e19c38b4c3488f6128fa27e2 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 19 Aug 2018 22:59:06 +0200
 Subject: [PATCH 03/14] Kirin:: Remove lock to prevent self-lock
@@ -17,7 +17,7 @@ Hence the safe-lock
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/services/camera/libcameraservice/CameraService.cpp b/services/camera/libcameraservice/CameraService.cpp
-index b2c0bc30c0..4ef091e36a 100644
+index b2c0bc30c..4ef091e36 100644
 --- a/services/camera/libcameraservice/CameraService.cpp
 +++ b/services/camera/libcameraservice/CameraService.cpp
 @@ -273,7 +273,7 @@ bool CameraService::isPublicallyHiddenSecureCamera(const String8& cameraId) {
@@ -30,5 +30,5 @@ index b2c0bc30c0..4ef091e36a 100644
      mNormalDeviceIds =
              mCameraProviderManager->getAPI1CompatibleCameraDeviceIds();
 -- 
-2.17.1
+2.20.1
 

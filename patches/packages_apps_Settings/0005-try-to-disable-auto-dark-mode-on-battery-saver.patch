@@ -1,4 +1,4 @@
-From f452288216b747e188d7fc82ab7255704cf5f35b Mon Sep 17 00:00:00 2001
+From 4be2e0f74b335c97041abc473b5c8202a2b14214 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 2 Mar 2020 13:42:28 +0200
 Subject: [PATCH 05/14] try to disable auto dark mode on battery saver
@@ -34,5 +34,5 @@ index 98d9a69ea7..e93f7a49bd 100644
  
      @Override
 -- 
-2.17.1
+2.20.1
 

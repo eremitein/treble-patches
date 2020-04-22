@@ -1,4 +1,4 @@
-From cd039b60ac0b75b45f424a84f2dcfed292885f7b Mon Sep 17 00:00:00 2001
+From 19449d87df20594bc5e697ad46c7f992210896be Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 15 Apr 2020 08:26:13 +0300
 Subject: [PATCH 3/7] Revert "FODAnimation: Make animation resources optional
@@ -75,10 +75,10 @@ index 0ed57a4d..8c372bad 100644
 -    <bool name="showFODAnimationPicker">false</bool>
  </resources>
 diff --git a/res/values/cr_strings.xml b/res/values/cr_strings.xml
-index f2fc23d2..be18c3a6 100644
+index 5cafa62a..6325c603 100644
 --- a/res/values/cr_strings.xml
 +++ b/res/values/cr_strings.xml
-@@ -2433,7 +2433,6 @@
+@@ -2435,7 +2435,6 @@
      <string name="smart_charging_footer">Smart Charging allows you to set maximum charging level to extend the lifespan of your battery. When enabled, battery stops charging at Stop trigger level and resumes charging at Start trigger level. Stop trigger level should be always greater than Start trigger level.</string>
  
      <!--FOD -->
@@ -86,7 +86,7 @@ index f2fc23d2..be18c3a6 100644
      <string name="fod_icon_picker_title">FOD icon picker</string>
      <string name="fod_icon_picker_summary">Pick your favourite fingerprint icon</string>
      <string name="fod_icon_picker_footer">In order to add your own icon, select the top left icon and use the OnePlus 6T FP Customizer app to select the icon you want.</string>
-@@ -2441,7 +2440,6 @@
+@@ -2443,7 +2442,6 @@
      <string name="fod_wallpaper_color_summary">Uses adjusted primary wallpaper color for FOD icon\nNOTE: might look good only with some wallpapers</string>
      <string name="fod_recog_animation">FOD recognizing animation</string>
      <string name="fod_recog_animation_summary">Shows animation while reading your finger</string>
@@ -94,7 +94,7 @@ index f2fc23d2..be18c3a6 100644
  
      <!-- QS background opacity -->
      <string name="qs_panel_alpha_title">Background opacity</string>
-@@ -2455,6 +2453,7 @@
+@@ -2457,6 +2455,7 @@
  
      <!-- FOD pressed state behavior -->
      <string name="fod_pressed_state_title">FOD pressed state behavior</string>
@@ -103,7 +103,7 @@ index f2fc23d2..be18c3a6 100644
      <string name="fod_pressed_state_icon">Icon (usually Cyan)</string>
      <string name="fod_pressed_state_icon_white">Icon (White)</string>
 diff --git a/res/xml/crdroid_settings_lockscreen.xml b/res/xml/crdroid_settings_lockscreen.xml
-index 82de9d1c..e1fe044d 100644
+index 46fcd5f7..2b8c2c81 100644
 --- a/res/xml/crdroid_settings_lockscreen.xml
 +++ b/res/xml/crdroid_settings_lockscreen.xml
 @@ -174,10 +174,9 @@
@@ -143,16 +143,15 @@ index 82de9d1c..e1fe044d 100644
                  android:entryValues="@array/fod_pressed_state_values"
                  android:defaultValue="0" />
 diff --git a/src/com/crdroid/settings/fragments/LockScreen.java b/src/com/crdroid/settings/fragments/LockScreen.java
-index 50565803..629b9b6c 100644
+index 4dd4888e..f93c4984 100644
 --- a/src/com/crdroid/settings/fragments/LockScreen.java
 +++ b/src/com/crdroid/settings/fragments/LockScreen.java
-@@ -61,13 +61,11 @@ public class LockScreen extends SettingsPreferenceFragment
+@@ -60,12 +60,10 @@ public class LockScreen extends SettingsPreferenceFragment
      private static final String FP_SUCCESS_VIBRATE = "fp_success_vibrate";
      private static final String FP_ERROR_VIBRATE = "fp_error_vibrate";
      private static final String FOD_ICON_PICKER_CATEGORY = "fod_icon_picker";
 -    private static final String FOD_ANIMATION = "fod_anim";
  
-     private Preference mUnlockWithoutBouncer;
      private Preference mFingerprintVib;
      private Preference mFingerprintVibErr;
      private PreferenceCategory mFODIconPickerCategory;
@@ -160,7 +159,7 @@ index 50565803..629b9b6c 100644
  
      @Override
      public void onCreate(Bundle savedInstanceState) {
-@@ -102,12 +100,6 @@ public class LockScreen extends SettingsPreferenceFragment
+@@ -94,12 +92,6 @@ public class LockScreen extends SettingsPreferenceFragment
          if (mFODIconPickerCategory != null && !hasFod) {
              prefSet.removePreference(mFODIconPickerCategory);
          }
@@ -174,5 +173,5 @@ index 50565803..629b9b6c 100644
  
      @Override
 -- 
-2.17.1
+2.20.1
 

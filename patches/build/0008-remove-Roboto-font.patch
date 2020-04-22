@@ -1,7 +1,7 @@
-From 497fa1cefdbcd11c66e84a8e3184bc1d806ac77d Mon Sep 17 00:00:00 2001
+From e926645bd229d050c0031a2b57fb1b12855367f7 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Mar 2020 16:38:42 +0200
-Subject: [PATCH 08/13] remove Roboto font
+Subject: [PATCH 08/12] remove Roboto font
 
 ---
  target/product/handheld_system.mk | 1 -
@@ -20,5 +20,5 @@ index 947ad4c09..d42d5c3cc 100644
  $(call inherit-product-if-exists, frameworks/base/data/keyboards/keyboards.mk)
  $(call inherit-product-if-exists, frameworks/webview/chromium/chromium.mk)
 -- 
-2.17.1
+2.20.1
 

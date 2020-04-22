@@ -1,4 +1,4 @@
-From 8fa8ee51a328695195756b2ccef05af0551c1691 Mon Sep 17 00:00:00 2001
+From 0a0afccba6a43fce7016ad44458bcc6c4b5aee47 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 12 Sep 2019 20:37:04 +0200
 Subject: [PATCH 6/7] if service is "rcs", accept conflict. Seen on Moto E5
@@ -40,5 +40,5 @@ index ab92985b..ca16327c 100644
  					selinux_log
  						(SELINUX_WARNING,
 -- 
-2.17.1
+2.20.1
 

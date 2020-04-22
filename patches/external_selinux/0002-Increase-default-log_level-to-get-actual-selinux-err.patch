@@ -1,4 +1,4 @@
-From 0f40d0fc3b0f65c4e01487dc9d29035bc60f4712 Mon Sep 17 00:00:00 2001
+From cd863c77742c97aa80e9d4e428f8e2ea29c8170b Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 9 Apr 2018 00:19:49 +0200
 Subject: [PATCH 2/7] Increase default log_level to get actual selinux error in
@@ -22,5 +22,5 @@ index 8799e99a..631b4b0a 100644
  		{"help", no_argument, 0, 'h'},
  		{"verbose", no_argument, 0, 'v'},
 -- 
-2.17.1
+2.20.1
 

@@ -1,4 +1,4 @@
-From 6f23175b438cf4b1f990de68393c46fc6b717748 Mon Sep 17 00:00:00 2001
+From 493d96b9aa06fba75909bfae40accddc9022ccf9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 16:33:15 +0200
 Subject: [PATCH 04/14] rework info about security patch date
@@ -209,5 +209,5 @@ index 0000000000..7ed48b1aa6
 +    }
 +}
 -- 
-2.17.1
+2.20.1
 
