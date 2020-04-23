@@ -1,7 +1,7 @@
-From 53fdc547c124a457eecfc875c394a35a10626a06 Mon Sep 17 00:00:00 2001
+From eaa3945f4c2c9c88edb372b8f4c8afc26aa6772c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 6 Feb 2020 16:21:44 +0200
-Subject: [PATCH 2/2] Revert "Ignore unexpected ACTION_DOWN for SIM avatar
+Subject: [PATCH 2/9] Revert "Ignore unexpected ACTION_DOWN for SIM avatar
  icons"
 
 	modified:   src/com/android/messaging/ui/conversation/SimIconView.java
@@ -37,5 +37,5 @@ index 6799bad..e2e446c 100644
      protected void maybeInitializeOnClickListener() {
          // TODO: SIM icon view shouldn't consume or handle clicks, but it should if
 -- 
-2.17.1
+2.25.1
 

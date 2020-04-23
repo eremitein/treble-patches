@@ -1,0 +1,25 @@
+From 9386c5bcc7e0d1c8488d98dc3f4ed8b74219c9cb Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 23 Apr 2020 05:54:26 +0300
+Subject: [PATCH 20/20] Revert "disable oat limitations"
+
+This reverts commit 26cdae870ab79ae97dc76a5211937ce0221942d7.
+---
+ core/product.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/core/product.mk b/core/product.mk
+index 5cd946d98..b45d802d0 100644
+--- a/core/product.mk
++++ b/core/product.mk
+@@ -487,6 +487,7 @@ endef
+ # be cleaned up to not be product variables.
+ _readonly_late_variables := \
+   DEVICE_PACKAGE_OVERLAYS \
++  WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY \
+ 
+ # Modified internally in the build system
+ _readonly_late_variables += \
+-- 
+2.20.1
+

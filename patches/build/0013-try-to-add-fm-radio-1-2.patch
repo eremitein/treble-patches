@@ -1,7 +1,7 @@
 From 4f1a1256ccba189a858b60911659755ce0f8a59a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 19 Mar 2020 23:08:47 +0200
-Subject: [PATCH 13/17] try to add fm-radio [1/2]
+Subject: [PATCH 13/20] try to add fm-radio [1/2]
 
 	modified:   target/board/BoardConfigGsiCommon.mk
 
@@ -23,5 +23,5 @@ index 702ef3c66..f3c878e76 100644
 +BOARD_HAVE_QCOM_FM := true
 +TARGET_QCOM_NO_FM_FIRMWARE := true
 -- 
-2.17.1
+2.20.1
 

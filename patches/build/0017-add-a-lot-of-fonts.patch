@@ -1,7 +1,7 @@
 From 7ec84df09b340e3f90e8aed0a757201196dc1453 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 9 Apr 2020 05:32:23 +0300
-Subject: [PATCH 17/17] add a lot of fonts
+Subject: [PATCH 17/20] add a lot of fonts
 
 ---
  target/product/handheld_system.mk | 16 ++++++++++++++++
@@ -35,5 +35,5 @@ index 755ce8fb6..2e16502ea 100644
  $(call inherit-product-if-exists, frameworks/base/data/keyboards/keyboards.mk)
  $(call inherit-product-if-exists, frameworks/webview/chromium/chromium.mk)
 -- 
-2.17.1
+2.20.1
 

@@ -13,7 +13,6 @@ pushd "$1"
 repo init -u https://github.com/LineageOS/android.git -b lineage-17.1
 git clone --single-branch https://github.com/eremitein/treble_manifest_losq -b v215 .repo/local_manifests
 repo sync -j8 -c -q --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune
-rm -f device/*/sepolicy/common/private/genfs_contexts
 bash ${rund}/apply-patches.sh ${rund}
 cd device/phh/treble
 bash generate.sh lineage

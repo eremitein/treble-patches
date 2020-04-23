@@ -1,0 +1,26 @@
+From 6e8b38204ef6222927a64521654eeed43ae75f65 Mon Sep 17 00:00:00 2001
+From: maxwen <max.weninger@gmail.com>
+Date: Wed, 25 Dec 2019 22:49:21 +0100
+Subject: [PATCH 5/9] Messaging: use config_dialogCornerRadius for contacts
+ popup
+
+Change-Id: I320cbba61354a699e1573137483e4105ba26e461
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+---
+ res/drawable/popup_background.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/res/drawable/popup_background.xml b/res/drawable/popup_background.xml
+index 6182489..3ef00eb 100644
+--- a/res/drawable/popup_background.xml
++++ b/res/drawable/popup_background.xml
+@@ -17,5 +17,5 @@
+ <!-- Based on the Theme.Material's default selectableItemBackground -->
+ <shape xmlns:android="http://schemas.android.com/apk/res/android">
+     <solid android:color="@color/contextual_action_bar_background_color"/>
+-    <corners android:radius="16dp"/>
++    <corners android:radius="@*android:dimen/config_dialogCornerRadius"/>
+ </shape>
+-- 
+2.25.1
+

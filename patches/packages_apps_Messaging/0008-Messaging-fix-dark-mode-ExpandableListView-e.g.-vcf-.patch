@@ -1,0 +1,49 @@
+From 1760cf2461f125e9b6e3e8d43d75fa9e0d23e8a2 Mon Sep 17 00:00:00 2001
+From: maxwen <max.weninger@gmail.com>
+Date: Mon, 13 Jan 2020 23:07:20 +0100
+Subject: [PATCH 8/9] Messaging: fix dark mode ExpandableListView e.g. vcf card
+ attachment
+
+Change-Id: I3a15c827f16d91d8044226840ecd4a61626cac11
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+---
+ res/values-night/styles.xml | 16 +++++++++++++---
+ 1 file changed, 13 insertions(+), 3 deletions(-)
+
+diff --git a/res/values-night/styles.xml b/res/values-night/styles.xml
+index c84a97f..b8a154b 100644
+--- a/res/values-night/styles.xml
++++ b/res/values-night/styles.xml
+@@ -42,6 +42,7 @@
+          <item name="actionBarStyle">@style/BugleActionBar</item>
+          <item name="apnPreferenceStyle">@style/ApnPreference</item>
+          <item name="android:listViewStyle">@style/ListViewStyle</item>
++         <item name="android:expandableListViewStyle">@style/ExpandableListViewStyle</item>
+          <item name="actionBarPopupTheme">@style/PopupMenuStyleAppCompat</item>
+          <item name="android:actionBarPopupTheme">@style/PopupMenuStyleAppCompat</item>
+     </style>
+@@ -49,9 +50,18 @@
+     <style name="ListViewStyle" parent="@android:style/Widget.DeviceDefault.ListView">
+         <item name="android:overScrollMode">always</item>
+         <item name="android:textColor">@color/message_title_text</item>
+-         <item name="android:textColorPrimary">@color/omni_text1</item>
+-         <item name="android:textColorSecondary">@color/omni_text2</item>
+-         <item name="android:textColorTertiary">@color/omni_text3</item>
++        <item name="android:textColorPrimary">@color/omni_text1</item>
++        <item name="android:textColorSecondary">@color/omni_text2</item>
++        <item name="android:textColorTertiary">@color/omni_text3</item>
++        <item name="android:background">@color/contextual_action_bar_background_color</item>
++    </style>
++
++    <style name="ExpandableListViewStyle" parent="@android:style/Widget.DeviceDefault.ExpandableListView">
++        <item name="android:overScrollMode">always</item>
++        <item name="android:textColor">@color/message_title_text</item>
++        <item name="android:textColorPrimary">@color/omni_text1</item>
++        <item name="android:textColorSecondary">@color/omni_text2</item>
++        <item name="android:textColorTertiary">@color/omni_text3</item>
+         <item name="android:background">@color/contextual_action_bar_background_color</item>
+     </style>
+ 
+-- 
+2.25.1
+

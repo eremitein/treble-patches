@@ -1,7 +1,7 @@
 From e2edbc40c9034f532add31e5398545faebda9159 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 13 Mar 2020 01:15:06 +0200
-Subject: [PATCH 12/17] LOSQ speed up
+Subject: [PATCH 12/20] LOSQ speed up
 
 	modified:   target/product/base_system.mk
 
@@ -55,5 +55,5 @@ index 41a367898..013c4694c 100644
  PRODUCT_PACKAGES_DEBUG_ASAN := \
      fuzz \
 -- 
-2.17.1
+2.20.1
 
