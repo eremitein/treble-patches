@@ -1,11 +1,11 @@
 {
   "response": [
     {
-      "datetime": 1588314799,
+      "datetime": 1588321066,
       "filename": "losq-v215-arm64ab-200501-vanilla.img.7z",
       "id": "5eb63bbbe01eeed093cb22bb8f5acdc5",
       "romtype": "UNOFFICIAL",
-      "size": 587020427,
+      "size": 587664685,
       "url": "https://sourceforge.net/projects/treblerom/files/LOSQ/2020.05.01/losq-v215-arm64ab-200501-vanilla.img.7z/download",
       "version": "17.1"
     }
