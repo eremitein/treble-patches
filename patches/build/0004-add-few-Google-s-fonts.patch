@@ -1,7 +1,7 @@
-From be967b909c2479b334b2a023380df8aa0c6cdfb7 Mon Sep 17 00:00:00 2001
+From eaa7e2068811288f3114abba303b778e955c0522 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 12:06:03 +0200
-Subject: [PATCH 04/11] add few Google's fonts
+Subject: [PATCH 4/9] add few Google's fonts
 
 	modified:   target/product/handheld_system.mk
 
@@ -11,7 +11,7 @@ Change-Id: I762837d03e6c2b8a0bbfdb3035b36c2bdebe2420
  1 file changed, 5 insertions(+)
 
 diff --git a/target/product/handheld_system.mk b/target/product/handheld_system.mk
-index fde431a..5ebceea 100644
+index fde431add..5ebceeafe 100644
 --- a/target/product/handheld_system.mk
 +++ b/target/product/handheld_system.mk
 @@ -25,6 +25,11 @@ $(call inherit-product-if-exists, external/google-fonts/carrois-gothic-sc/fonts.
@@ -27,5 +27,5 @@ index fde431a..5ebceea 100644
  $(call inherit-product-if-exists, external/roboto-fonts/fonts.mk)
  $(call inherit-product-if-exists, external/hyphenation-patterns/patterns.mk)
 -- 
-2.17.1
+2.25.1
 

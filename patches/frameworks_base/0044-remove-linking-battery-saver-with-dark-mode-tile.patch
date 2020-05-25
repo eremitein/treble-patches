@@ -1,0 +1,59 @@
+From 65dec23a6cedeb448736cc09515912a829ca4dfa Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 9 Mar 2020 23:23:07 +0200
+Subject: [PATCH 44/66] remove linking battery saver with dark mode tile
+
+	modified:   packages/SystemUI/src/com/android/systemui/qs/tiles/UiModeNightTile.java
+---
+ .../systemui/qs/tiles/UiModeNightTile.java      | 17 ++---------------
+ 1 file changed, 2 insertions(+), 15 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/UiModeNightTile.java b/packages/SystemUI/src/com/android/systemui/qs/tiles/UiModeNightTile.java
+index 107958f49b9..d9506ecba45 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/UiModeNightTile.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/UiModeNightTile.java
+@@ -63,11 +63,6 @@ public class UiModeNightTile extends QSTileImpl<QSTile.BooleanState> implements
+         refreshState();
+     }
+ 
+-    @Override
+-    public void onPowerSaveChanged(boolean isPowerSave) {
+-        refreshState();
+-    }
+-
+     @Override
+     public BooleanState newTileState() {
+         return new BooleanState();
+@@ -86,15 +81,11 @@ public class UiModeNightTile extends QSTileImpl<QSTile.BooleanState> implements
+     @Override
+     protected void handleUpdateState(BooleanState state, Object arg) {
+         int uiMode = mUiModeManager.getNightMode();
+-        boolean powerSave = mBatteryController.isPowerSave();
+         boolean isAuto = uiMode == UiModeManager.MODE_NIGHT_AUTO;
+         boolean nightMode = (mContext.getResources().getConfiguration().uiMode
+                         & Configuration.UI_MODE_NIGHT_MASK) == Configuration.UI_MODE_NIGHT_YES;
+ 
+-        if (powerSave) {
+-            state.secondaryLabel = mContext.getResources().getString(
+-                    R.string.quick_settings_dark_mode_secondary_label_battery_saver);
+-        } else if (isAuto) {
++        if (isAuto) {
+             state.secondaryLabel = mContext.getResources().getString(nightMode
+                     ? R.string.quick_settings_dark_mode_secondary_label_until_sunrise
+                     : R.string.quick_settings_dark_mode_secondary_label_on_at_sunset);
+@@ -107,11 +98,7 @@ public class UiModeNightTile extends QSTileImpl<QSTile.BooleanState> implements
+         state.contentDescription = TextUtils.isEmpty(state.secondaryLabel)
+                 ? state.label
+                 : TextUtils.concat(state.label, ", ", state.secondaryLabel);
+-        if (powerSave) {
+-            state.state = Tile.STATE_UNAVAILABLE;
+-        } else {
+-            state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
+-        }
++        state.state = state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
+         state.showRippleEffect = false;
+     }
+ 
+-- 
+2.25.1
+

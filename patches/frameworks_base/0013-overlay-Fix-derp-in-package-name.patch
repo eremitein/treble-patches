@@ -1,7 +1,7 @@
-From 6008e4736c3810a3f75ef2746ff9cba7e1613d43 Mon Sep 17 00:00:00 2001
+From 1bf415666e0a0a0196f2383554775e3d2347ee6f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 7 Feb 2020 03:40:13 +0200
-Subject: [PATCH 13/50] overlay: Fix derp in package name
+Subject: [PATCH 13/66] overlay: Fix derp in package name
 
   * from https://github.com/Havoc-OS/android_frameworks_base/commit/f858a771ba567ceee5ac7ac125fcfcc14f85f473
 
@@ -24,5 +24,5 @@ index 3eb90491f90..eecc10158e8 100644
  	IconShapeSquircleOverlay \
  	IconShapeTeardropOverlay \
 -- 
-2.17.1
+2.25.1
 

@@ -1,7 +1,7 @@
-From 04315c8407d3518e15eda16ffec812a4400c996f Mon Sep 17 00:00:00 2001
+From 10219ed19d0d8f717849a8ece37acfda665a185a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 09:35:09 +0200
-Subject: [PATCH 29/50] rework Simple Day font
+Subject: [PATCH 29/66] rework Simple Day font
 
 	modified:   data/fonts/fonts.xml
 	modified:   packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
@@ -67,5 +67,5 @@ index ea227095ce0..ef1853ce3b9 100644
 +    <string name="config_headlineFontFamilyMedium" translatable="false">simple-day-medium</string>
  </resources>
 -- 
-2.17.1
+2.25.1
 

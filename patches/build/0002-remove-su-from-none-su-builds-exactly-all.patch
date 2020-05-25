@@ -1,7 +1,7 @@
-From 5d1c71028dadf9975d99988f7584c2a9d3d1f6bd Mon Sep 17 00:00:00 2001
+From 7090bb5b1db7bd40ea4f6c93f9b9952adc3cc983 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 23:46:34 +0200
-Subject: [PATCH 02/11] remove 'su' from none-su builds (exactly, all)
+Subject: [PATCH 2/9] remove 'su' from none-su builds (exactly, all)
 
   * quickfix, need another way to implement checking
 
@@ -11,7 +11,7 @@ Subject: [PATCH 02/11] remove 'su' from none-su builds (exactly, all)
  1 file changed, 1 deletion(-)
 
 diff --git a/target/product/base_system.mk b/target/product/base_system.mk
-index e3e3fbf..41a3678 100644
+index e3e3fbf7e..41a367898 100644
 --- a/target/product/base_system.mk
 +++ b/target/product/base_system.mk
 @@ -361,7 +361,6 @@ PRODUCT_PACKAGES_DEBUG := \
@@ -23,5 +23,5 @@ index e3e3fbf..41a3678 100644
      tracepath \
      tracepath6 \
 -- 
-2.17.1
+2.25.1
 

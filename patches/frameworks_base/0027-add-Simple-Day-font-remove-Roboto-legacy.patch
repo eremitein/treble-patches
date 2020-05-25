@@ -1,7 +1,7 @@
-From 16ebc852acf0182dadc9f170075e95bb8effca59 Mon Sep 17 00:00:00 2001
+From e91987dbfe80cb4fabae4e9aef8ea5a860e3a021 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 08:30:58 +0200
-Subject: [PATCH 27/50] add Simple Day font, remove Roboto legacy
+Subject: [PATCH 27/66] add Simple Day font, remove Roboto legacy
 
 	modified:   data/fonts/fonts.xml
 	renamed:    packages/overlays/FontRobotoOverlay/Android.mk -> packages/overlays/FontSimpleDayOverlay/Android.mk
@@ -131,5 +131,5 @@ index e35613d1bef..fa5aabcddfe 100644
 +    <string name="font_simpleday_overlay" translatable="false">Simple Day</string>
  </resources>
 -- 
-2.17.1
+2.25.1
 

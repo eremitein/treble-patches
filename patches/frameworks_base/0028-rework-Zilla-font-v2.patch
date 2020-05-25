@@ -1,7 +1,7 @@
-From 97cce3c3cf15659ba4a9afe28ad3e9bf5a7f8a89 Mon Sep 17 00:00:00 2001
+From 8da86422a53a6cf3b108aff61789d418a99b64b8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 09:31:17 +0200
-Subject: [PATCH 28/50] rework Zilla font v2
+Subject: [PATCH 28/66] rework Zilla font v2
 
 	modified:   data/fonts/fonts.xml
 ---
@@ -21,5 +21,5 @@ index 3bb6e1c5191..21150f6bf78 100644
      <family name="simpleday">
          <font weight="400" style="normal">SimpleDay-Regular.ttf</font>
 -- 
-2.17.1
+2.25.1
 

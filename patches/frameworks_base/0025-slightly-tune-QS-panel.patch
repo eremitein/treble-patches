@@ -1,7 +1,7 @@
-From c5b5dcd939c1692239285e8568f51376199eca35 Mon Sep 17 00:00:00 2001
+From c22f5bf764473f7d84668aefd8be9713fecc4de5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 23 Feb 2020 18:55:45 +0200
-Subject: [PATCH 25/50] slightly tune QS panel
+Subject: [PATCH 25/66] slightly tune QS panel
 
 	modified:   packages/SystemUI/res/values/config.xml
 ---
@@ -22,5 +22,5 @@ index 78318cb7e85..98429ab994a 100644
  
      <!-- The minimum number of tiles to display in QuickSettings -->
 -- 
-2.17.1
+2.25.1
 

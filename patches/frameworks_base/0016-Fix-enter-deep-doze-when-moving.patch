@@ -1,7 +1,7 @@
-From 7e24ec948d493ac9a0943cf5b5d684e8e81c3750 Mon Sep 17 00:00:00 2001
+From 1693110615e0b5e6c07870c583d69a8b6c1e295f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 9 Feb 2020 00:48:21 +0200
-Subject: [PATCH 16/50] Fix enter deep doze when moving
+Subject: [PATCH 16/66] Fix enter deep doze when moving
 
   * from https://github.com/LineageOS/android_frameworks_base/commit/0486877683147d4c311574c2123c9cb7d2dfadaa
 
@@ -25,5 +25,5 @@ index 8c5ee7f3502..316306df4f4 100644
              if (status != RESULT_UNKNOWN) {
                  if (mWakeLock.isHeld()) {
 -- 
-2.17.1
+2.25.1
 

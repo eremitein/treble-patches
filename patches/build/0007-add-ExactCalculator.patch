@@ -1,0 +1,25 @@
+From 7cddb75424a99c164a0a0288773100307911f3f8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Feb 2020 21:04:29 +0200
+Subject: [PATCH 7/9] add ExactCalculator
+
+	modified:   target/product/handheld_product.mk
+---
+ target/product/handheld_product.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index 0fdb1b234..54cca22ec 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -26,6 +26,7 @@ PRODUCT_PACKAGES += \
+     Camera2 \
+     Contacts \
+     DeskClock \
++    ExactCalculator \
+     LatinIME \
+     Launcher3QuickStep \
+     OneTimeInitializer \
+-- 
+2.25.1
+

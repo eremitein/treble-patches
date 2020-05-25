@@ -1,7 +1,7 @@
-From f188817997ac4ff1441e89d1169b14a864abf114 Mon Sep 17 00:00:00 2001
+From 3f440ed8cf6991e26b2b26fe60dcc4ca25a1205b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Dec 2019 13:19:38 +0200
-Subject: [PATCH 01/11] rename to Messaging
+Subject: [PATCH 1/9] rename to Messaging
 
 	modified:   target/product/aosp_base_telephony.mk
 	modified:   target/product/gsi_common.mk
@@ -11,7 +11,7 @@ Subject: [PATCH 01/11] rename to Messaging
  2 files changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/target/product/aosp_base_telephony.mk b/target/product/aosp_base_telephony.mk
-index 0d4e333..17bbd55 100644
+index 0d4e33356..17bbd5532 100644
 --- a/target/product/aosp_base_telephony.mk
 +++ b/target/product/aosp_base_telephony.mk
 @@ -16,4 +16,4 @@
@@ -21,7 +21,7 @@ index 0d4e333..17bbd55 100644
 -    messaging
 +    Messaging
 diff --git a/target/product/gsi_common.mk b/target/product/gsi_common.mk
-index 7578f92..bb0152d 100644
+index 7578f92ac..bb0152dcd 100644
 --- a/target/product/gsi_common.mk
 +++ b/target/product/gsi_common.mk
 @@ -35,7 +35,7 @@ PRODUCT_PRODUCT_PROPERTIES += \
@@ -43,5 +43,5 @@ index 7578f92..bb0152d 100644
      WAPPushManager \
      WallpaperPicker \
 -- 
-2.17.1
+2.25.1
 

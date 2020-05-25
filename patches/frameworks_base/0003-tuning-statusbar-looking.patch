@@ -1,7 +1,7 @@
-From 2512573b69acb19958dfe63009e10f7133f4f0c7 Mon Sep 17 00:00:00 2001
+From 02ff01d4ace19fb61ec160db7d9ef7f958170d13 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 14:14:32 +0200
-Subject: [PATCH 03/50] tuning statusbar looking
+Subject: [PATCH 03/66] tuning statusbar looking
 
 	modified:   core/res/res/values/dimens.xml
 	modified:   packages/SystemUI/res/drawable/stat_sys_alarm.xml
@@ -531,5 +531,5 @@ index 2e1799168b5..36b3ecce0e1 100644
      <!-- Screen pinning request width -->
      <dimen name="screen_pinning_request_width">@dimen/match_parent</dimen>
 -- 
-2.17.1
+2.25.1
 

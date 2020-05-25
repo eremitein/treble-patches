@@ -1,7 +1,7 @@
-From 2dafa971338b1fc27a0c9db24e0f0061bd5aa6fd Mon Sep 17 00:00:00 2001
+From 5b16f653b9f8491c65b3b0e8ab416da456d7d4b6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 11:44:11 +0200
-Subject: [PATCH 17/50] navigation mode settings [1/2]
+Subject: [PATCH 17/66] navigation mode settings [1/2]
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/c071cf9df2f49adef63f5eb16fd9e62283f94ed1#diff-0b25240e6c3bd48a12b12b0758f0ddefR494
@@ -2723,5 +2723,5 @@ index 1df9411019d..5adc9c1ec3a 100644
          mContext.registerReceiverAsUser(mReceiver, UserHandle.ALL, preferredActivityFilter, null,
                  null);
 -- 
-2.17.1
+2.25.1
 

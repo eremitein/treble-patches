@@ -1,7 +1,7 @@
-From 55ee1666271b85cb5bb64e9aae42479f6fbaf0cd Mon Sep 17 00:00:00 2001
+From df934a6fe47290b8715fe53803bde5ca6c3565e3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 12:21:08 +0200
-Subject: [PATCH 18/50] Add new font overlays
+Subject: [PATCH 18/66] Add new font overlays
 
   * based on
   https://github.com/Havoc-OS/android_frameworks_base/commit/6ce2c108a31ebce64e01c44073e280aeebd9ac56#diff-1577047be19b3c4c395085c246970be7
@@ -608,5 +608,5 @@ index 00000000000..a9352016763
 +    <string name="font_zilla_zilla_overlay" translatable="false">Zilla / Zilla</string>
 +</resources>
 -- 
-2.17.1
+2.25.1
 

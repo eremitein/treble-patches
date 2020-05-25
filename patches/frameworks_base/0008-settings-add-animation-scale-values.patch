@@ -1,7 +1,7 @@
-From 007f0c1648d9d33d01214ee4234128584dfb362e Mon Sep 17 00:00:00 2001
+From 9b6ec0c7ffdf8a0ff0925068b8baad7619d4ce57 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 12:41:40 +0200
-Subject: [PATCH 08/50] settings: add animation scale values
+Subject: [PATCH 08/66] settings: add animation scale values
 
 	modified:   packages/SettingsLib/res/values/arrays.xml
 ---
@@ -73,5 +73,5 @@ index 39c55fd1925..9bb543f6c04 100644
          <item>1.5</item>
          <item>2</item>
 -- 
-2.17.1
+2.25.1
 

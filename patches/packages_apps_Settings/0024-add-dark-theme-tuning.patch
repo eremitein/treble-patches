@@ -1,0 +1,57 @@
+From 25e009926bfc93aa50b800b969cd4c99af1badc5 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 12 Apr 2020 00:31:56 +0300
+Subject: [PATCH 24/26] add dark theme tuning
+
+	modified:   res/values/strings.xml
+	modified:   res/xml/display_settings.xml
+	modified:   src/com/android/settings/DisplaySettings.java
+---
+ res/values/strings.xml                        | 2 ++
+ res/xml/display_settings.xml                  | 3 +++
+ src/com/android/settings/DisplaySettings.java | 2 ++
+ 3 files changed, 7 insertions(+)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index d1fe5673df..677531e35a 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10095,6 +10095,8 @@
+     <string name="theme_customization_icon_pack_title">Icon style</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the adaptive icon shape (e.g. launcher and quick settings icons). -->
+     <string name="theme_customization_icon_shape_title">Icon shape</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the dark mode colors -->
++    <string name="theme_customization_darkui_title">Dark themes</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the statusbar icons spacing (e.g. set 2dp paddings). -->
+     <string name="theme_customization_statusbar_title">Status Bar spacing</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the QS Panel layout (e.g. set 3x3 icons). -->
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index 4e4b9140a6..bda5984b37 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -172,6 +172,9 @@
+         <ListPreference
+             android:key="android.theme.customization.adaptive_icon_shape"
+             android:title="@string/theme_customization_icon_shape_title"/>
++        <ListPreference
++            android:key="android.theme.customization.darkui"
++            android:title="@string/theme_customization_darkui_title"/>
+         <ListPreference
+             android:key="android.theme.customization.statusbar"
+             android:title="@string/theme_customization_statusbar_title"/>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index 213a77d988..5bbe8bd0ca 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -101,6 +101,8 @@ public class DisplaySettings extends DashboardFragment {
+                 "android.theme.customization.icon_pack.android"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.adaptive_icon_shape"));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.darkui"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.statusbar"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+-- 
+2.17.1
+

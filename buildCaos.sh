@@ -10,9 +10,9 @@ fi
 
 pushd "$1"
 
-repo init -u https://android.googlesource.com/platform/manifest -b android-10.0.0_r31
-git clone --single-branch https://github.com/eremitein/treble_manifest_caos -b v214 .repo/local_manifests
-repo sync -j8 -c --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune
+repo init -u https://android.googlesource.com/platform/manifest -b android-10.0.0_r33
+git clone --single-branch https://github.com/eremitein/treble_manifest_caos -b v215 .repo/local_manifests
+repo sync -j8 -c -q --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune
 bash ${rund}/apply-patches.sh ${rund}
 cd device/phh/treble
 bash generate.sh
