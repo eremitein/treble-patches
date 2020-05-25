@@ -1,0 +1,2166 @@
+From 5452e37455407caa1968292f19ba5627597a3abb Mon Sep 17 00:00:00 2001
+From: Marko Man <darkobas@gmail.com>
+Date: Thu, 10 Oct 2019 10:58:39 +0200
+Subject: [PATCH 3/9] Messaging: add night mode
+
+Change-Id: Ie4df124283f5188f1a21c52528481e76a46d97aa
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+---
+ .../attachment_audio_preview_background.xml   |   6 +-
+ ...ttachment_image_placeholder_background.xml |   4 +-
+ .../attachment_vcard_preview_background.xml   |   6 +-
+ ...audio_record_control_button_background.xml |   4 +-
+ res/drawable/chips_dropdown_background.xml    |   4 +-
+ res/drawable/ic_archive.xml                   |   8 +
+ res/drawable/ic_archive_small.xml             |   8 +
+ res/drawable/ic_archive_undo_small.xml        |   9 +
+ res/drawable/ic_cancel_small.xml              |  10 +
+ res/drawable/ic_content_copy.xml              |   8 +
+ res/drawable/ic_delete_small.xml              |  10 +
+ res/drawable/ic_dnd_on.xml                    |   9 +
+ res/drawable/ic_file_download.xml             |   9 +
+ res/drawable/ic_forward.xml                   |   9 +
+ res/drawable/ic_info.xml                      |   8 +
+ res/drawable/ic_notifications_off.xml         |   9 +
+ res/drawable/ic_notifications_on.xml          |   9 +
+ res/drawable/ic_person_add.xml                |   9 +
+ res/drawable/ic_save.xml                      |   8 +
+ res/drawable/ic_send.xml                      |   9 +
+ res/drawable/ic_share.xml                     |   8 +
+ res/drawable/msg_bubble_incoming_new.xml      |  21 +
+ res/drawable/msg_bubble_input_new.xml         |  21 +
+ res/drawable/msg_bubble_outgoing_new.xml      |  21 +
+ res/drawable/popup_background.xml             |  21 +
+ res/drawable/swipe_shadow_drag_new.xml        |  20 +
+ res/drawable/swipe_shadow_new.xml             |  19 +
+ .../widget_msg_bubble_incoming_new.xml        |  21 +
+ .../widget_msg_bubble_outgoing_new.xml        |  21 +
+ res/layout/compose_message_view.xml           |   4 +-
+ res/layout/contact_picker_fragment.xml        |   2 +-
+ res/layout/conversation_list_item_view.xml    |   2 +-
+ res/layout/conversation_message_view.xml      |   2 +
+ res/layout/mediapicker_audio_chooser.xml      |   4 +-
+ res/layout/mediapicker_camera_chooser.xml     |   2 +-
+ res/layout/mediapicker_gallery_chooser.xml    |   6 +-
+ res/layout/vcard_detail_activity.xml          |   4 +-
+ res/layout/widget_message_item_incoming.xml   |   3 +-
+ res/layout/widget_message_item_outgoing.xml   |   3 +-
+ .../conversation_fragment_select_menu.xml     |  16 +-
+ ...conversation_list_fragment_select_menu.xml |  10 +-
+ res/values-night/colors.xml                   | 187 +++++
+ res/values-night/styles.xml                   | 664 ++++++++++++++++++
+ res/values-v21/styles.xml                     |   2 +-
+ res/values/colors.xml                         |  18 +-
+ res/values/dimens.xml                         |   6 +-
+ res/values/styles.xml                         |  27 +-
+ .../messaging/ui/BugleActionBarActivity.java  |   2 +-
+ .../messaging/ui/ConversationDrawables.java   |   8 +-
+ .../ui/SmsStorageLowWarningFragment.java      |   3 +-
+ .../ui/appsettings/ApnEditorActivity.java     |   2 +-
+ .../ui/appsettings/GroupMmsSettingDialog.java |   2 +-
+ .../AddContactsConfirmationDialog.java        |   3 +-
+ .../ui/conversation/ConversationFragment.java |   7 +-
+ .../EnterSelfPhoneNumberDialog.java           |   3 +-
+ .../ui/conversation/MessageDetailsDialog.java |   2 +-
+ .../AbstractConversationListActivity.java     |   4 +-
+ .../ArchivedConversationListActivity.java     |   2 +-
+ .../ConversationListItemView.java             |   2 +-
+ .../conversationlist/ShareIntentFragment.java |   3 +-
+ .../PeopleAndOptionsFragment.java             |   2 +-
+ .../messaging/util/BugleActivityUtil.java     |   2 +-
+ src/com/android/messaging/util/UiUtils.java   |  11 +-
+ 63 files changed, 1264 insertions(+), 85 deletions(-)
+ create mode 100644 res/drawable/ic_archive.xml
+ create mode 100644 res/drawable/ic_archive_small.xml
+ create mode 100644 res/drawable/ic_archive_undo_small.xml
+ create mode 100644 res/drawable/ic_cancel_small.xml
+ create mode 100644 res/drawable/ic_content_copy.xml
+ create mode 100644 res/drawable/ic_delete_small.xml
+ create mode 100644 res/drawable/ic_dnd_on.xml
+ create mode 100644 res/drawable/ic_file_download.xml
+ create mode 100644 res/drawable/ic_forward.xml
+ create mode 100644 res/drawable/ic_info.xml
+ create mode 100644 res/drawable/ic_notifications_off.xml
+ create mode 100644 res/drawable/ic_notifications_on.xml
+ create mode 100644 res/drawable/ic_person_add.xml
+ create mode 100644 res/drawable/ic_save.xml
+ create mode 100644 res/drawable/ic_send.xml
+ create mode 100644 res/drawable/ic_share.xml
+ create mode 100644 res/drawable/msg_bubble_incoming_new.xml
+ create mode 100644 res/drawable/msg_bubble_input_new.xml
+ create mode 100644 res/drawable/msg_bubble_outgoing_new.xml
+ create mode 100644 res/drawable/popup_background.xml
+ create mode 100644 res/drawable/swipe_shadow_drag_new.xml
+ create mode 100644 res/drawable/swipe_shadow_new.xml
+ create mode 100644 res/drawable/widget_msg_bubble_incoming_new.xml
+ create mode 100644 res/drawable/widget_msg_bubble_outgoing_new.xml
+ create mode 100644 res/values-night/colors.xml
+ create mode 100644 res/values-night/styles.xml
+
+diff --git a/res/drawable/attachment_audio_preview_background.xml b/res/drawable/attachment_audio_preview_background.xml
+index 8b62415..a63c510 100644
+--- a/res/drawable/attachment_audio_preview_background.xml
++++ b/res/drawable/attachment_audio_preview_background.xml
+@@ -15,6 +15,6 @@
+     limitations under the License.
+ -->
+ <shape xmlns:android="http://schemas.android.com/apk/res/android">
+-    <solid android:color="@android:color/white" />
+-    <corners android:radius="2dp" />
+-</shape>
+\ No newline at end of file
++    <solid android:color="@color/contextual_action_bar_background_color" />
++    <corners android:radius="16dp" />
++</shape>
+diff --git a/res/drawable/attachment_image_placeholder_background.xml b/res/drawable/attachment_image_placeholder_background.xml
+index b3315e8..5d4cc96 100644
+--- a/res/drawable/attachment_image_placeholder_background.xml
++++ b/res/drawable/attachment_image_placeholder_background.xml
+@@ -15,6 +15,6 @@
+     limitations under the License.
+ -->
+ <shape xmlns:android="http://schemas.android.com/apk/res/android">
+-    <solid android:color="@android:color/white" />
++    <solid android:color="@color/contextual_action_bar_background_color" />
+     <corners android:radius="@dimen/attachment_rounded_corner_radius" />
+-</shape>
+\ No newline at end of file
++</shape>
+diff --git a/res/drawable/attachment_vcard_preview_background.xml b/res/drawable/attachment_vcard_preview_background.xml
+index 8b62415..a63c510 100644
+--- a/res/drawable/attachment_vcard_preview_background.xml
++++ b/res/drawable/attachment_vcard_preview_background.xml
+@@ -15,6 +15,6 @@
+     limitations under the License.
+ -->
+ <shape xmlns:android="http://schemas.android.com/apk/res/android">
+-    <solid android:color="@android:color/white" />
+-    <corners android:radius="2dp" />
+-</shape>
+\ No newline at end of file
++    <solid android:color="@color/contextual_action_bar_background_color" />
++    <corners android:radius="16dp" />
++</shape>
+diff --git a/res/drawable/audio_record_control_button_background.xml b/res/drawable/audio_record_control_button_background.xml
+index 02f329e..a3f5fa8 100644
+--- a/res/drawable/audio_record_control_button_background.xml
++++ b/res/drawable/audio_record_control_button_background.xml
+@@ -22,5 +22,5 @@
+         android:width="1dp"
+         android:color="@color/audio_record_control_button_stroke"/>
+     <solid
+-        android:color="@android:color/white"/>
+-</shape>
+\ No newline at end of file
++        android:color="@color/contact_picker_background"/>
++</shape>
+diff --git a/res/drawable/chips_dropdown_background.xml b/res/drawable/chips_dropdown_background.xml
+index 48a727d..02a6b5c 100644
+--- a/res/drawable/chips_dropdown_background.xml
++++ b/res/drawable/chips_dropdown_background.xml
+@@ -18,5 +18,5 @@
+     <item android:drawable="@color/chips_dropdown_background_activated"
+           android:state_activated="true"/>
+     <item android:drawable="@color/chips_dropdown_background_pressed" android:state_pressed="true"/>
+-    <item android:drawable="@android:color/white"/>
+-</selector>
+\ No newline at end of file
++    <item android:drawable="@color/contextual_action_bar_background_color"/>
++</selector>
+diff --git a/res/drawable/ic_archive.xml b/res/drawable/ic_archive.xml
+new file mode 100644
+index 0000000..36aa44f
+--- /dev/null
++++ b/res/drawable/ic_archive.xml
+@@ -0,0 +1,8 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff" android:pathData="M5.12,5L5.93,4H17.93L18.87,5M12,17.5L6.5,12H10V10H14V12H17.5L12,17.5M20.54,5.23L19.15,3.55C18.88,3.21 18.47,3 18,3H6C5.53,3 5.12,3.21 4.84,3.55L3.46,5.23C3.17,5.57 3,6 3,6.5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V6.5C21,6 20.83,5.57 20.54,5.23Z" />
++</vector>
+diff --git a/res/drawable/ic_archive_small.xml b/res/drawable/ic_archive_small.xml
+new file mode 100644
+index 0000000..36aa44f
+--- /dev/null
++++ b/res/drawable/ic_archive_small.xml
+@@ -0,0 +1,8 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff" android:pathData="M5.12,5L5.93,4H17.93L18.87,5M12,17.5L6.5,12H10V10H14V12H17.5L12,17.5M20.54,5.23L19.15,3.55C18.88,3.21 18.47,3 18,3H6C5.53,3 5.12,3.21 4.84,3.55L3.46,5.23C3.17,5.57 3,6 3,6.5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V6.5C21,6 20.83,5.57 20.54,5.23Z" />
++</vector>
+diff --git a/res/drawable/ic_archive_undo_small.xml b/res/drawable/ic_archive_undo_small.xml
+new file mode 100644
+index 0000000..7a34620
+--- /dev/null
++++ b/res/drawable/ic_archive_undo_small.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++        android:pathData="M12.5,8C9.85,8 7.45,9 5.6,10.6L2,7V16H11L7.38,12.38C8.77,11.22 10.54,10.5 12.5,10.5C16.04,10.5 19.05,12.81 20.1,16L22.47,15.22C21.08,11.03 17.15,8 12.5,8Z" />
++</vector>
+diff --git a/res/drawable/ic_cancel_small.xml b/res/drawable/ic_cancel_small.xml
+new file mode 100644
+index 0000000..05dd498
+--- /dev/null
++++ b/res/drawable/ic_cancel_small.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:viewportWidth="24"
++    android:viewportHeight="24"
++    android:tint="@color/settings_item_title_text_primary">
++    <path android:fillColor="#ffffff"
++
++        android:pathData="M12,2C17.53,2 22,6.47 22,12C22,17.53 17.53,22 12,22C6.47,22 2,17.53 2,12C2,6.47 6.47,2 12,2M15.59,7L12,10.59L8.41,7L7,8.41L10.59,12L7,15.59L8.41,17L12,13.41L15.59,17L17,15.59L13.41,12L17,8.41L15.59,7Z" />
++</vector>
+diff --git a/res/drawable/ic_content_copy.xml b/res/drawable/ic_content_copy.xml
+new file mode 100644
+index 0000000..de01f50
+--- /dev/null
++++ b/res/drawable/ic_content_copy.xml
+@@ -0,0 +1,8 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff" android:pathData="M19,21H8V7H19M19,5H8A2,2 0 0,0 6,7V21A2,2 0 0,0 8,23H19A2,2 0 0,0 21,21V7A2,2 0 0,0 19,5M16,1H4A2,2 0 0,0 2,3V17H4V3H16V1Z" />
++</vector>
+diff --git a/res/drawable/ic_delete_small.xml b/res/drawable/ic_delete_small.xml
+new file mode 100644
+index 0000000..f79cf47
+--- /dev/null
++++ b/res/drawable/ic_delete_small.xml
+@@ -0,0 +1,10 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++
++        android:pathData="M19,4H15.5L14.5,3H9.5L8.5,4H5V6H19M6,19A2,2 0 0,0 8,21H16A2,2 0 0,0 18,19V7H6V19Z" />
++</vector>
+diff --git a/res/drawable/ic_dnd_on.xml b/res/drawable/ic_dnd_on.xml
+new file mode 100644
+index 0000000..a7711f7
+--- /dev/null
++++ b/res/drawable/ic_dnd_on.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++        android:pathData="M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M17,13H7V11H17V13Z" />
++</vector>
+diff --git a/res/drawable/ic_file_download.xml b/res/drawable/ic_file_download.xml
+new file mode 100644
+index 0000000..8c6d167
+--- /dev/null
++++ b/res/drawable/ic_file_download.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++        android:pathData="M5,20H19V18H5M19,9H15V3H9V9H5L12,16L19,9Z" />
++</vector>
+diff --git a/res/drawable/ic_forward.xml b/res/drawable/ic_forward.xml
+new file mode 100644
+index 0000000..d0107f1
+--- /dev/null
++++ b/res/drawable/ic_forward.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++        android:pathData="M12,8V4L20,12L12,20V16H4V8H12Z" />
++</vector>
+diff --git a/res/drawable/ic_info.xml b/res/drawable/ic_info.xml
+new file mode 100644
+index 0000000..0705b37
+--- /dev/null
++++ b/res/drawable/ic_info.xml
+@@ -0,0 +1,8 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff" android:pathData="M11,9H13V7H11M12,20C7.59,20 4,16.41 4,12C4,7.59 7.59,4 12,4C16.41,4 20,7.59 20,12C20,16.41 16.41,20 12,20M12,2A10,10 0 0,0 2,12A10,10 0 0,0 12,22A10,10 0 0,0 22,12A10,10 0 0,0 12,2M11,17H13V11H11V17Z" />
++</vector>
+diff --git a/res/drawable/ic_notifications_off.xml b/res/drawable/ic_notifications_off.xml
+new file mode 100644
+index 0000000..df2f070
+--- /dev/null
++++ b/res/drawable/ic_notifications_off.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++        android:pathData="M20.84,22.73L18.11,20H3V19L5,17V11C5,9.86 5.29,8.73 5.83,7.72L1.11,3L2.39,1.73L22.11,21.46L20.84,22.73M19,15.8V11C19,7.9 16.97,5.17 14,4.29C14,4.19 14,4.1 14,4A2,2 0 0,0 12,2A2,2 0 0,0 10,4C10,4.1 10,4.19 10,4.29C9.39,4.47 8.8,4.74 8.26,5.09L19,15.8M12,23A2,2 0 0,0 14,21H10A2,2 0 0,0 12,23Z" />
++</vector>
+diff --git a/res/drawable/ic_notifications_on.xml b/res/drawable/ic_notifications_on.xml
+new file mode 100644
+index 0000000..3e35d36
+--- /dev/null
++++ b/res/drawable/ic_notifications_on.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++        android:pathData="M21,19V20H3V19L5,17V11C5,7.9 7.03,5.17 10,4.29C10,4.19 10,4.1 10,4A2,2 0 0,1 12,2A2,2 0 0,1 14,4C14,4.1 14,4.19 14,4.29C16.97,5.17 19,7.9 19,11V17L21,19M14,21A2,2 0 0,1 12,23A2,2 0 0,1 10,21" />
++</vector>
+diff --git a/res/drawable/ic_person_add.xml b/res/drawable/ic_person_add.xml
+new file mode 100644
+index 0000000..e4032e3
+--- /dev/null
++++ b/res/drawable/ic_person_add.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++        android:pathData="M15,14C12.33,14 7,15.33 7,18V20H23V18C23,15.33 17.67,14 15,14M6,10V7H4V10H1V12H4V15H6V12H9V10M15,12A4,4 0 0,0 19,8A4,4 0 0,0 15,4A4,4 0 0,0 11,8A4,4 0 0,0 15,12Z" />
++</vector>
+diff --git a/res/drawable/ic_save.xml b/res/drawable/ic_save.xml
+new file mode 100644
+index 0000000..1f96688
+--- /dev/null
++++ b/res/drawable/ic_save.xml
+@@ -0,0 +1,8 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff" android:pathData="M15,9H5V5H15M12,19A3,3 0 0,1 9,16A3,3 0 0,1 12,13A3,3 0 0,1 15,16A3,3 0 0,1 12,19M17,3H5C3.89,3 3,3.9 3,5V19A2,2 0 0,0 5,21H19A2,2 0 0,0 21,19V7L17,3Z" />
++</vector>
+diff --git a/res/drawable/ic_send.xml b/res/drawable/ic_send.xml
+new file mode 100644
+index 0000000..1567a5f
+--- /dev/null
++++ b/res/drawable/ic_send.xml
+@@ -0,0 +1,9 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff"
++        android:pathData="M8,7.71L18,12L8,16.29V12.95L15.14,12L8,11.05V7.71M12,2A10,10 0 0,1 22,12A10,10 0 0,1 12,22A10,10 0 0,1 2,12A10,10 0 0,1 12,2M12,4A8,8 0 0,0 4,12A8,8 0 0,0 12,20A8,8 0 0,0 20,12A8,8 0 0,0 12,4Z" />
++</vector>
+diff --git a/res/drawable/ic_share.xml b/res/drawable/ic_share.xml
+new file mode 100644
+index 0000000..3f5f0d0
+--- /dev/null
++++ b/res/drawable/ic_share.xml
+@@ -0,0 +1,8 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++    android:tint="@color/settings_item_title_text_primary"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#ffffff" android:pathData="M18,16.08C17.24,16.08 16.56,16.38 16.04,16.85L8.91,12.7C8.96,12.47 9,12.24 9,12C9,11.76 8.96,11.53 8.91,11.3L15.96,7.19C16.5,7.69 17.21,8 18,8A3,3 0 0,0 21,5A3,3 0 0,0 18,2A3,3 0 0,0 15,5C15,5.24 15.04,5.47 15.09,5.7L8.04,9.81C7.5,9.31 6.79,9 6,9A3,3 0 0,0 3,12A3,3 0 0,0 6,15C6.79,15 7.5,14.69 8.04,14.19L15.16,18.34C15.11,18.55 15.08,18.77 15.08,19C15.08,20.61 16.39,21.91 18,21.91C19.61,21.91 20.92,20.61 20.92,19A2.92,2.92 0 0,0 18,16.08Z" />
++</vector>
+diff --git a/res/drawable/msg_bubble_incoming_new.xml b/res/drawable/msg_bubble_incoming_new.xml
+new file mode 100644
+index 0000000..148231b
+--- /dev/null
++++ b/res/drawable/msg_bubble_incoming_new.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (C) 2015 The OmniROM Open Source Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <solid android:color="@color/subject_editor_bubble" />
++    <corners android:topLeftRadius="5dp" android:radius="16dp" />
++</shape>
+diff --git a/res/drawable/msg_bubble_input_new.xml b/res/drawable/msg_bubble_input_new.xml
+new file mode 100644
+index 0000000..36e8b89
+--- /dev/null
++++ b/res/drawable/msg_bubble_input_new.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (C) 2015 The OmniROM Open Source Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <solid android:color="@color/subject_editor_bubble" />
++    <corners android:radius="16dp" />
++</shape>
+diff --git a/res/drawable/msg_bubble_outgoing_new.xml b/res/drawable/msg_bubble_outgoing_new.xml
+new file mode 100644
+index 0000000..e4bee9d
+--- /dev/null
++++ b/res/drawable/msg_bubble_outgoing_new.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (C) 2015 The OmniROM Open Source Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <solid android:color="@color/message_bubble_color_outgoing" />
++    <corners android:topRightRadius="5dp" android:radius="16dp" />
++</shape>
+diff --git a/res/drawable/popup_background.xml b/res/drawable/popup_background.xml
+new file mode 100644
+index 0000000..6182489
+--- /dev/null
++++ b/res/drawable/popup_background.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2014 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<!-- Based on the Theme.Material's default selectableItemBackground -->
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="@color/contextual_action_bar_background_color"/>
++    <corners android:radius="16dp"/>
++</shape>
+diff --git a/res/drawable/swipe_shadow_drag_new.xml b/res/drawable/swipe_shadow_drag_new.xml
+new file mode 100644
+index 0000000..23b9a6b
+--- /dev/null
++++ b/res/drawable/swipe_shadow_drag_new.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2014 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<!-- Based on the Theme.Material's default selectableItemBackground -->
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="@color/google_gray"/>
++</shape>
+diff --git a/res/drawable/swipe_shadow_new.xml b/res/drawable/swipe_shadow_new.xml
+new file mode 100644
+index 0000000..393e638
+--- /dev/null
++++ b/res/drawable/swipe_shadow_new.xml
+@@ -0,0 +1,19 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2014 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<shape xmlns:android="http://schemas.android.com/apk/res/android">
++    <solid android:color="@color/primary_color"/>
++</shape>
++
+diff --git a/res/drawable/widget_msg_bubble_incoming_new.xml b/res/drawable/widget_msg_bubble_incoming_new.xml
+new file mode 100644
+index 0000000..08059d0
+--- /dev/null
++++ b/res/drawable/widget_msg_bubble_incoming_new.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (C) 2015 The OmniROM Open Source Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <solid android:color="@color/google_gray" />
++    <corners android:topLeftRadius="5dp" android:radius="16dp" />
++</shape>
+diff --git a/res/drawable/widget_msg_bubble_outgoing_new.xml b/res/drawable/widget_msg_bubble_outgoing_new.xml
+new file mode 100644
+index 0000000..e4bee9d
+--- /dev/null
++++ b/res/drawable/widget_msg_bubble_outgoing_new.xml
+@@ -0,0 +1,21 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (C) 2015 The OmniROM Open Source Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<shape xmlns:android="http://schemas.android.com/apk/res/android"
++    android:shape="rectangle">
++    <solid android:color="@color/message_bubble_color_outgoing" />
++    <corners android:topRightRadius="5dp" android:radius="16dp" />
++</shape>
+diff --git a/res/layout/compose_message_view.xml b/res/layout/compose_message_view.xml
+index 8bb8249..7338aa7 100644
+--- a/res/layout/compose_message_view.xml
++++ b/res/layout/compose_message_view.xml
+@@ -94,6 +94,7 @@
+                 android:layout_width="0dp"
+                 android:layout_weight="1"
+                 android:layout_height="wrap_content"
++                android:paddingRight="16px"
+                 android:orientation="vertical">
+ 
+                 <!-- Contains media button and compose message bubble whose centers should be
+@@ -121,8 +122,9 @@
+                         android:layout_width="0dp"
+                         android:layout_weight="1"
+                         android:layout_gravity="center"
+-                        android:background="@drawable/msg_bubble_input"
++                        android:background="@drawable/msg_bubble_input_new"
+                         android:hint="@string/compose_message_view_hint_text"
++                        android:textColorHint="@color/conversation_list_item_read"
+                         android:imeOptions="actionSend|flagNoEnterAction|flagNoExtractUi" />
+ 
+                 </LinearLayout>
+diff --git a/res/layout/contact_picker_fragment.xml b/res/layout/contact_picker_fragment.xml
+index 78350d7..edfa7ff 100644
+--- a/res/layout/contact_picker_fragment.xml
++++ b/res/layout/contact_picker_fragment.xml
+@@ -42,7 +42,7 @@
+                 android:layout_height="wrap_content"
+                 android:layout_gravity="center_vertical"
+                 android:minHeight="@dimen/compose_message_contacts_height"
+-                android:popupBackground="@drawable/contact_popup_background"
++                android:popupBackground="@drawable/popup_background"
+                 android:dropDownWidth="match_parent"
+                 android:hint="@string/recipient_hint"
+                 app:avatarPosition="start"
+diff --git a/res/layout/conversation_list_item_view.xml b/res/layout/conversation_list_item_view.xml
+index c89e470..202ba41 100644
+--- a/res/layout/conversation_list_item_view.xml
++++ b/res/layout/conversation_list_item_view.xml
+@@ -28,7 +28,7 @@
+         android:layout_height="match_parent"
+         android:gravity="center_vertical|start"
+         android:baselineAligned="false"
+-        android:background="@drawable/swipe_shadow"
++        android:background="@drawable/swipe_shadow_new"
+         android:visibility="gone"
+         android:padding="@dimen/conversation_list_item_view_padding">
+         <ImageView
+diff --git a/res/layout/conversation_message_view.xml b/res/layout/conversation_message_view.xml
+index daad600..6fd19ad 100644
+--- a/res/layout/conversation_message_view.xml
++++ b/res/layout/conversation_message_view.xml
+@@ -28,6 +28,8 @@
+         app:iconSize="normal"
+         android:clickable="true"
+         android:layout_gravity="center_vertical"
++        android:paddingRight="16px"
++        android:paddingLeft="16px"
+         android:importantForAccessibility="no" />
+ 
+     <com.android.messaging.ui.conversation.ConversationMessageBubbleView
+diff --git a/res/layout/mediapicker_audio_chooser.xml b/res/layout/mediapicker_audio_chooser.xml
+index 795d2f8..b702269 100644
+--- a/res/layout/mediapicker_audio_chooser.xml
++++ b/res/layout/mediapicker_audio_chooser.xml
+@@ -19,7 +19,7 @@
+     xmlns:app="http://schemas.android.com/apk/res-auto"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:background="@android:color/white"
++    android:background="@color/contextual_action_bar_background_color"
+     android:importantForAccessibility="no" >
+ 
+     <FrameLayout
+@@ -89,7 +89,7 @@
+         android:layout_height="match_parent"
+         android:text="@string/enable_permission_procedure"
+         android:contentDescription="@string/enable_permission_procedure_description"
+-        android:background="@android:color/white"
++        android:background="@color/contextual_action_bar_background_color"
+         android:gravity="center"
+         android:visibility="gone" />
+ 
+diff --git a/res/layout/mediapicker_camera_chooser.xml b/res/layout/mediapicker_camera_chooser.xml
+index 27d26bd..8d3d220 100644
+--- a/res/layout/mediapicker_camera_chooser.xml
++++ b/res/layout/mediapicker_camera_chooser.xml
+@@ -143,7 +143,7 @@
+         android:layout_height="match_parent"
+         android:text="@string/enable_permission_procedure"
+         android:contentDescription="@string/enable_permission_procedure_description"
+-        android:background="@android:color/white"
++        android:background="@color/contextual_action_bar_background_color"
+         android:gravity="center"
+         android:visibility="gone" />
+ 
+diff --git a/res/layout/mediapicker_gallery_chooser.xml b/res/layout/mediapicker_gallery_chooser.xml
+index b4f3c01..c550dab 100644
+--- a/res/layout/mediapicker_gallery_chooser.xml
++++ b/res/layout/mediapicker_gallery_chooser.xml
+@@ -30,7 +30,7 @@
+         android:stretchMode="columnWidth"
+         android:gravity="center"
+         android:clipToPadding="false"
+-        android:background="@android:color/white" />
++        android:background="@color/contextual_action_bar_background_color" />
+     <!-- This view will hide all other views if the required permission is not granted -->
+     <TextView
+         android:id="@+id/missing_permission_view"
+@@ -38,7 +38,7 @@
+         android:layout_height="match_parent"
+         android:text="@string/enable_permission_procedure"
+         android:contentDescription="@string/enable_permission_procedure_description"
+-        android:background="@android:color/white"
++        android:background="@color/contextual_action_bar_background_color"
+         android:gravity="center"
+         android:visibility="gone" />
+-</FrameLayout>
+\ No newline at end of file
++</FrameLayout>
+diff --git a/res/layout/vcard_detail_activity.xml b/res/layout/vcard_detail_activity.xml
+index aa4c3b9..8eb27e5 100644
+--- a/res/layout/vcard_detail_activity.xml
++++ b/res/layout/vcard_detail_activity.xml
+@@ -18,6 +18,6 @@
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     class="com.android.messaging.ui.VCardDetailFragment"
+     android:id="@+id/vcard_detail_fragment"
+-    android:theme="@style/Theme.AppCompat.Light.DarkActionBar"
++    android:theme="@android:style/Theme.Material.Light.DarkActionBar"
+     android:layout_width="match_parent"
+-    android:layout_height="match_parent" />
+\ No newline at end of file
++    android:layout_height="match_parent" />
+diff --git a/res/layout/widget_message_item_incoming.xml b/res/layout/widget_message_item_incoming.xml
+index 786385b..e387606 100644
+--- a/res/layout/widget_message_item_incoming.xml
++++ b/res/layout/widget_message_item_incoming.xml
+@@ -63,7 +63,8 @@
+         android:layout_gravity="top"
+         android:orientation="vertical"
+         style="@style/WidgetConversationItemBodyIncoming"
+-        android:background="@drawable/widget_msg_bubble_incoming"
++        android:background="@drawable/widget_msg_bubble_incoming_new"
++        android:paddingLeft="8px"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" >
+ 
+diff --git a/res/layout/widget_message_item_outgoing.xml b/res/layout/widget_message_item_outgoing.xml
+index c3d734e..faba51d 100644
+--- a/res/layout/widget_message_item_outgoing.xml
++++ b/res/layout/widget_message_item_outgoing.xml
+@@ -63,7 +63,8 @@
+         android:layout_gravity="top"
+         android:orientation="vertical"
+         style="@style/WidgetConversationItemBodyOutgoing"
+-        android:background="@drawable/widget_msg_bubble_outgoing"
++        android:background="@drawable/widget_msg_bubble_outgoing_new"
++        android:paddingRight="8px"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content" >
+ 
+diff --git a/res/menu/conversation_fragment_select_menu.xml b/res/menu/conversation_fragment_select_menu.xml
+index 7ce0829..7f8106f 100644
+--- a/res/menu/conversation_fragment_select_menu.xml
++++ b/res/menu/conversation_fragment_select_menu.xml
+@@ -21,43 +21,43 @@
+     <item
+         android:id="@+id/share_message_menu"
+         android:title="@string/action_share"
+-        android:icon="@drawable/ic_share_dark"
++        android:icon="@drawable/ic_share"
+         appcompat:showAsAction="collapseActionView|always" />
+     <item
+         android:id="@+id/forward_message_menu"
+         android:title="@string/message_context_menu_forward_message"
+-        android:icon="@drawable/ic_forward_dark"
++        android:icon="@drawable/ic_forward"
+         appcompat:showAsAction="collapseActionView|always"/>
+     <item
+         android:id="@+id/save_attachment"
+         android:title="@string/save"
+-        android:icon="@drawable/ic_save_dark"
++        android:icon="@drawable/ic_save"
+         appcompat:showAsAction="collapseActionView|always" />
+     <item
+         android:id="@+id/copy_text"
+         android:title="@string/message_context_menu_copy_text"
+-        android:icon="@drawable/ic_content_copy_dark"
++        android:icon="@drawable/ic_content_copy"
+         appcompat:showAsAction="collapseActionView|always"/>
+ 
+     <item
+         android:id="@+id/details_menu"
+         android:title="@string/message_context_menu_view_details"
+-        android:icon="@drawable/ic_info_dark"
++        android:icon="@drawable/ic_info"
+         appcompat:showAsAction="collapseActionView|always"/>
+ 
+     <item
+         android:id="@+id/action_send"
+-        android:icon="@drawable/ic_send_dark"
++        android:icon="@drawable/ic_send"
+         android:title="@string/action_send"
+         appcompat:showAsAction="collapseActionView|always"/>
+     <item
+         android:id="@+id/action_download"
+-        android:icon="@drawable/ic_file_download_dark"
++        android:icon="@drawable/ic_file_download"
+         android:title="@string/action_download"
+         appcompat:showAsAction="collapseActionView|always"/>
+     <item
+         android:id="@+id/action_delete_message"
+-        android:icon="@drawable/ic_delete_small_dark"
++        android:icon="@drawable/ic_delete_small"
+         android:title="@string/action_delete_message"
+         appcompat:showAsAction="collapseActionView|always"/>
+ </menu>
+diff --git a/res/menu/conversation_list_fragment_select_menu.xml b/res/menu/conversation_list_fragment_select_menu.xml
+index 9247923..0b98eb3 100644
+--- a/res/menu/conversation_list_fragment_select_menu.xml
++++ b/res/menu/conversation_list_fragment_select_menu.xml
+@@ -20,31 +20,31 @@
+ 
+     <item
+         android:id="@+id/action_archive"
+-        android:icon="@drawable/ic_archive_small_dark"
++        android:icon="@drawable/ic_archive_small"
+         android:orderInCategory="50"
+         android:title="@string/action_archive"
+         appcompat:showAsAction="collapseActionView|always"/>
+     <item
+         android:id="@+id/action_unarchive"
+-        android:icon="@drawable/ic_archive_undo_small_dark"
++        android:icon="@drawable/ic_archive_undo_small"
+         android:orderInCategory="50"
+         android:title="@string/action_unarchive"
+         appcompat:showAsAction="collapseActionView|always"/>
+     <item
+         android:id="@+id/action_delete"
+-        android:icon="@drawable/ic_delete_small_dark"
++        android:icon="@drawable/ic_delete_small"
+         android:orderInCategory="60"
+         android:title="@string/action_delete"
+         appcompat:showAsAction="collapseActionView|always"/>
+     <item
+         android:id="@+id/action_add_contact"
+-        android:icon="@drawable/ic_person_add_dark"
++        android:icon="@drawable/ic_person_add"
+         android:orderInCategory="90"
+         android:title="@string/action_add_contact"
+         appcompat:showAsAction="collapseActionView|always"/>
+     <item
+         android:id="@+id/action_block"
+-        android:icon="@drawable/ic_dnd_on_dark"
++        android:icon="@drawable/ic_dnd_on"
+         android:orderInCategory="100"
+         android:title="@string/action_block"
+         appcompat:showAsAction="collapseActionView|always"/>
+diff --git a/res/values-night/colors.xml b/res/values-night/colors.xml
+new file mode 100644
+index 0000000..eeed7d9
+--- /dev/null
++++ b/res/values-night/colors.xml
+@@ -0,0 +1,187 @@
++<!--
++  ~ Copyright (C) 2014 The Android Open Source Project
++  ~
++  ~ Licensed under the Apache License, Version 2.0 (the "License");
++  ~ you may not use this file except in compliance with the License.
++  ~ You may obtain a copy of the License at
++  ~
++  ~      http://www.apache.org/licenses/LICENSE-2.0
++  ~
++  ~ Unless required by applicable law or agreed to in writing, software
++  ~ distributed under the License is distributed on an "AS IS" BASIS,
++  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++  ~ See the License for the specific language governing permissions and
++  ~ limitations under the License
++  -->
++
++<resources>
++
++    <color name="omni_color5">@*android:color/accent_device_default_light</color>
++    <color name="omni_color4">@*android:color/accent_device_default_dark</color>
++    <color name="omni_color3">#80eeeeee</color>
++<!--    <color name="omni_color1">@*android:color/primary_dark_device_default_light</color> -->
++    <color name="omni_color2">@*android:color/primary_dark_device_default_settings</color>
++    <color name="omni_color1">@*android:color/primary_device_default_settings</color>
++    <color name="omni_color7">@*android:color/background_floating_device_default_dark</color>
++    <color name="omni_text1">#ffffffff</color>
++    <color name="omni_text2">#ffeeeeee</color>
++    <color name="omni_text3">#eeeeeeee</color>
++    <color name="primary_color">@color/omni_color5</color>
++    <color name="permission_check_activity_background">@color/omni_color2</color>
++
++    <!--  Action bar -->
++    <color name="action_bar_title_text_color">#ffffff</color>
++    <color name="action_bar_background_color">@color/omni_color5</color>
++    <color name="action_bar_background_color_dark">@color/omni_color4</color>
++    <color name="contextual_action_bar_background_color">@color/omni_color2</color>
++    <color name="archived_conversation_action_bar_background_color">@color/omni_color5</color>
++    <color name="archived_conversation_action_bar_background_color_dark">@color/omni_color4</color>
++
++    <!-- Conversation list -->
++    <color name="conversation_list_item_read">@color/omni_text2</color>
++    <color name="conversation_list_item_unread">@color/omni_text1</color>
++    <color name="conversation_list_error">#fff45342</color>
++    <color name="conversation_list_name">@color/omni_text1</color>
++    <color name="conversation_list_details">@color/omni_text3</color>
++
++    <color name="conversation_compose_divider_start">#44999999</color>
++
++    <color name="message_text">@color/omni_text1</color>
++    <color name="timestamp_text_outgoing">@color/omni_text3</color>
++    <color name="timestamp_text_incoming">#99ffffff</color>
++    <color name="timestamp_text_failed">#99ff0000</color>
++    <color name="compose_send_text_color">@color/omni_text1</color>
++
++    <color name="message_title_text">@color/omni_text1</color>
++    <color name="message_download_failed_status_text">@color/omni_text2</color>
++    <color name="message_info_text">#99ffffff</color>
++    <color name="message_info_text_incoming_download_failed">#6a6a6a</color>
++    <color name="message_download_failed_timestamp_text">#007fce</color>
++    <color name="message_failed_timestamp_text">#99ff0000</color>
++    <color name="message_action_status_text">#ffffffff</color>
++    <color name="message_action_info_text">#99ffffff</color>
++    <color name="message_action_timestamp_text">#ffffffff</color>
++
++    <color name="background_item_transparent">@android:color/transparent</color>
++    <color name="background_item_activated">@color/omni_color4</color>
++    <color name="background_item_selected">@color/omni_color7</color>
++    <color name="background_item_pressed">@color/omni_color2</color>
++
++    <color name="subject_editor_bubble">@color/omni_color7</color>
++    <color name="message_text_color_incoming">@color/omni_text3</color> <!-- fix white text on white bg #ffffffff-->
++    <color name="message_text_color_incoming_download_failed">#6a6a6a</color>
++    <color name="message_text_color_outgoing">@color/omni_text2</color>
++    <color name="conversation_background">@color/omni_color2</color>
++    <color name="conversation_edge_effect">#9d9d9d</color>
++    <color name="compose_message_send_color">@color/omni_color5</color>
++    <color name="compose_message_send_color_pressed">@color/omni_color3</color>
++    <color name="message_bubble_color_outgoing">@color/omni_color1</color>
++    <color name="message_error_bubble_color_incoming">#fff45342</color>
++    <color name="message_audio_button_color_incoming">@color/omni_color4</color>
++    <color name="message_bubble_color_selected">@color/omni_color3</color>
++    <color name="message_image_selected_tint">#80689F38</color>
++    <color name="generic_video_icon">#ff8f8f8f</color>
++
++    <!-- Base color used for color filtering. -->
++    <color name="color_filter_base_color">@color/omni_color1</color>
++
++    <!-- Activity background color -->
++    <drawable name="class_zero_background">@color/omni_color1</drawable>
++
++    <color name="contact_avatar_default_background">@color/omni_color2</color>
++    <color name="contact_avatar_pressed_color">#40ffffff</color>
++    <color name="contact_list_text_primary">@color/omni_text1</color>
++    <color name="contact_list_text_secondary">@color/omni_text2</color>
++
++    <color name="compose_contact_text">@color/omni_text1</color>
++    <color name="compose_contact_faint_text">@color/omni_text2</color>
++    <color name="compose_contact_divider">#44999999</color>
++    <color name="contact_picker_tab_pressed">#ddffffff</color>
++    <color name="contact_picker_tab_underline">@color/omni_color3</color>
++    <color name="contact_list_alphabet_header">@color/omni_color5</color>
++    <color name="contact_picker_background">@color/omni_color2</color>
++    <color name="chips_dropdown_background_activated">@color/omni_color3</color>
++    <color name="chips_dropdown_background_pressed">@color/omni_color4</color>
++    <color name="chips_background_color">@color/omni_color4</color>
++    <color name="chips_text_color">@color/omni_text1</color>
++
++    <color name="camera_button_container_background">#80000000</color>
++
++    <color name="translucent_white">#80ffffff</color>
++
++    <color name="gallery_image_default_background">#eeeeee</color>
++    <color name="gallery_image_pressed">#6733b5e5</color>
++    <color name="attachment_preview_more_items_text_background">@color/omni_color7</color>
++
++    <color name="letter_tile_font_color">#ffffff</color>
++
++    <color name="audio_picker_level_primary_color">#29ffffff</color>
++    <color name="audio_record_control_button_stroke">#30ffffff</color>
++    <color name="audio_picker_hint_text_color">#40ffffff</color>
++    <color name="audio_picker_timer_text_color">#dedede</color>
++    <color name="audio_attachment_timer_text_color">#dedede</color>
++    <color name="audio_progress_bar_color">@color/omni_color5</color>
++
++    <color name="notification_sender_text">#9A9A9A</color>
++    <color name="notification_secondary_text">#FFFFFF</color>
++    <color name="notification_tertiary_text">#FFFFFF</color>
++    <color name="wearable_notification_participants_count">#a2a2a2</color>
++    <color name="notification_accent_color">@color/omni_color5</color>
++    <color name="notification_warning_color">#ffffff</color>
++    <color name="notification_subject_color">@color/omni_text1</color>
++
++    <color name="participant_list_text_primary">@color/omni_text1</color>
++    <color name="participant_list_text_secondary">@color/omni_text2</color>
++    <color name="people_and_options_header_text">@color/omni_text1</color>
++    <color name="people_and_options_list_divider">#222222</color>
++
++    <color name="fab_color">@color/omni_color5</color>
++    <color name="fab_pressed_color">@color/omni_color3</color>
++    <color name="fab_ripple">@color/omni_color5</color>
++
++    <color name="message_text_counter_color">@color/omni_text1</color>
++    <color name="mms_indicator_color">@color/omni_color3</color>
++    <color name="list_empty_text">@color/omni_color2</color>
++    <color name="low_storage_action_item_color">#ffeeeeee</color>
++    <color name="unblock_item_text_color">@color/omni_color5</color>
++    <color name="open_conversation_animation_background_shadow">@color/omni_color1</color>
++    <color name="compose_notification_bar_background">@color/omni_color5</color>
++
++    <color name="sim_selector_text_primary">@color/omni_text1</color>
++    <color name="sim_selector_text_secondary">@color/omni_text2</color>
++    <color name="sim_selector_background_end">@color/omni_color2</color>
++    <color name="sim_selector_background_start">@color/omni_color1</color>
++    <color name="sim_indicator_color_light">#ffffff</color>
++    <color name="sim_indicator_color_dark">#777777</color>
++
++    <color name="text_highlight_color">@color/omni_color4</color>
++    <color name="search_view_text_cursor">@color/omni_color3</color>
++
++    <color name="button_bar_action_button_text_color">@color/omni_color4</color>
++    <color name="button_bar_cancel_button_text_color">@color/omni_color4</color>
++
++    <color name="settings_list_text_primary">@color/omni_text1</color>
++    <color name="settings_list_text_secondary">@color/omni_text2</color>
++    <color name="group_mms_setting_text_color">@color/omni_text2</color>
++    <color name="settings_item_title_text_primary">@color/omni_text2</color>
++
++    <color name="contact_picker_button_text_color">@color/omni_text1</color>
++
++    <color name="widget_text_color">@color/omni_text1</color>
++    <color name="widget_incoming_text_color">@color/omni_text1</color>
++    <color name="widget_outgoing_text_color">@color/omni_text2</color>
++    <color name="widget_background_color">@color/omni_color1</color>
++    <color name="ripple_material_light">@color/omni_color3</color>
++    <color name="widget_conversation_title_color">#FFFFFF</color>
++
++    <color name="attachment_chooser_audio_background">@color/omni_color7</color>
++    <color name="attachment_chooser_vcard_background">@color/omni_color7</color>
++
++    <color name="fastscroll_track_color">#1e999999</color>
++    <color name="fastscroll_thumb_color">#42999999</color>
++    <color name="fastscroll_preview_text_color">#999999</color>
++
++    <color name="google_gray">@color/omni_color7</color>
++    <color name="ic_launcher_background">@color/omni_color5</color>
++</resources>
++
+diff --git a/res/values-night/styles.xml b/res/values-night/styles.xml
+new file mode 100644
+index 0000000..be77185
+--- /dev/null
++++ b/res/values-night/styles.xml
+@@ -0,0 +1,664 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (C) 2015 The Android Open Source Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <!--
++        Base application theme, dependent on API level. This theme is replaced
++        by BugleBaseTheme from res/values-vXX/styles.xml on newer devices.
++    -->
++    <style name="BugleBaseTheme" parent="Theme.AppCompat.Light.DarkActionBar">
++        <!--
++            Theme customizations available in newer API levels can go in
++            res/values-vXX/styles.xml, while customizations related to
++            backward-compatibility can go here.
++        -->
++    </style>
++
++
++    <!-- Application theme. -->
++    <style name="BugleTheme" parent="BugleBaseTheme">
++        <!-- All customizations that are NOT specific to a particular API-level can go here. -->
++         <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
++         <item name="colorPrimary">@color/action_bar_background_color</item>
++         <item name="colorPrimaryDark">@color/action_bar_background_color</item>
++         <item name="android:textColorPrimary">@color/omni_text1</item>
++         <item name="android:textColorSecondary">@color/omni_text2</item>
++         <item name="android:textColorTertiary">@color/omni_text3</item>
++         <item name="colorAccent">@color/action_bar_background_color</item>
++         <item name="android:textColorHighlight">@color/text_highlight_color</item>
++         <item name="actionBarStyle">@style/BugleActionBar</item>
++         <item name="apnPreferenceStyle">@style/ApnPreference</item>
++         <item name="android:listViewStyle">@style/ListViewStyle</item>
++         <item name="actionBarPopupTheme">@style/PopupMenuStyleAppCompat</item>
++         <item name="android:actionBarPopupTheme">@style/PopupMenuStyleAppCompat</item>
++    </style>
++
++    <style name="ListViewStyle" parent="@android:style/Widget.DeviceDefault.ListView">
++        <item name="android:overScrollMode">always</item>
++        <item name="android:textColor">@color/message_title_text</item>
++         <item name="android:textColorPrimary">@color/omni_text1</item>
++         <item name="android:textColorSecondary">@color/omni_text2</item>
++         <item name="android:textColorTertiary">@color/omni_text3</item>
++        <item name="android:background">@color/contextual_action_bar_background_color</item>
++    </style>
++
++    <style name="PopupMenuStyleAppCompat" parent="@android:style/Theme.DeviceDefault.Dialog">
++    </style>
++
++    <style name="BugleTheme.ConversationActivity"
++        parent="@style/BugleTheme.ConversationActivityBase">
++    </style>
++
++    <style name="BugleTheme.ConversationActivityBase" parent="BugleTheme">
++        <item name="android:windowBackground">@color/conversation_background</item>
++        <item name="windowActionBarOverlay">true</item>
++        <item name="android:fastScrollPreviewBackgroundLeft">@drawable/contacts_fastscroll_label_left</item>
++        <item name="android:fastScrollPreviewBackgroundRight">@drawable/contacts_fastscroll_label_right</item>
++    </style>
++
++    <style name="BugleTheme.DialogActivity" parent="@android:style/Theme.DeviceDefault.Dialog">
++    </style>
++
++    <style name="BugleThemeDialog" parent="BugleTheme.DialogActivity">
++        <item name="android:textColorPrimary">@color/omni_text1</item>
++        <item name="android:textColorSecondary">@color/omni_text2</item>
++        <item name="android:textColorTertiary">@color/omni_text3</item>
++        <item name="android:colorAccent">@color/primary_color</item>
++        <item name="android:colorPrimary">@color/archived_conversation_action_bar_background_color</item>
++        <item name="android:colorPrimaryDark">@color/archived_conversation_action_bar_background_color</item>
++        <item name="android:background">@color/contextual_action_bar_background_color</item>
++    </style>
++
++    <style name="BugleTheme.ConversationListActivity" parent="BugleTheme">
++        <item name="android:windowBackground">@color/contextual_action_bar_background_color</item>
++    </style>
++
++    <style name="BugleTheme.ArchivedConversationListActivity" parent="BugleTheme.ConversationListActivity">
++        <item name="colorPrimary">@color/archived_conversation_action_bar_background_color</item>
++        <item name="colorPrimaryDark">@color/archived_conversation_action_bar_background_color</item>
++    </style>
++
++    <style name="BugleTheme.SettingsActivity" parent="BugleTheme">
++        <item name="android:textSize">@dimen/settings_list_text_size</item>
++    </style>
++
++    <style name="Invisible" parent="BugleBaseTheme">
++        <item name="android:windowBackground">@null</item>
++        <item name="android:windowContentOverlay">@null</item>
++        <item name="android:windowIsTranslucent">true</item>
++        <item name="android:windowAnimationStyle">@null</item>
++        <item name="android:windowDisablePreview">true</item>
++        <item name="android:windowNoDisplay">true</item>
++    </style>
++
++    <style name="BugleActionBar" parent="@style/Widget.AppCompat.ActionBar.Solid">
++        <item name="height">@dimen/action_bar_height</item>
++        <item name="displayOptions">showTitle</item>
++        <item name="titleTextStyle">@style/BugleActionBarTitleTextStyle</item>
++    </style>
++
++    <style name="BugleActionBarTitleTextStyle" parent="@style/TextAppearance.AppCompat.Widget.ActionBar.Title">
++      <item name="android:textColor">@color/action_bar_title_text_color</item>
++      <item name="android:textSize">@dimen/action_bar_text_size</item>
++      <item name="android:lines">1</item>
++    </style>
++
++    <style name="ConversationActionBarTitleTextStyle" parent="BugleActionBarTitleTextStyle">
++      <item name="android:background">?android:attr/selectableItemBackground</item>
++    </style>
++
++    <style name="BuglePhotoViewTheme" parent="PhotoViewTheme.Translucent">
++        <item name="actionModeShareDrawable">@drawable/ic_share_light</item>
++    </style>
++
++    <style name="ConversationMessageText">
++        <item name="android:background">@null</item>
++    </style>
++
++    <style name="ConversationMessage" parent="ConversationMessageText">
++        <item name="android:textSize">@dimen/conversation_message_text_size</item>
++        <item name="android:textColor">@color/message_text</item>
++    </style>
++
++    <style name="ConversationMessageStatus" parent="ConversationMessageText">
++        <item name="android:textSize">@dimen/conversation_status_text_size</item>
++    </style>
++
++    <style name="ConversationMessageTitle" parent="ConversationMessageText">
++        <item name="android:textSize">@dimen/conversation_title_text_size</item>
++        <item name="android:background">@null</item>
++        <item name="android:textColor">@color/message_title_text</item>
++    </style>
++
++    <style name="ConversationMessageInfo" parent="ConversationMessageText">
++        <item name="android:textSize">@dimen/conversation_info_text_size</item>
++        <item name="android:textColor">@color/message_info_text</item>
++    </style>
++
++    <style name="ConversationComposeSendText">
++        <item name="android:textColor">@color/compose_send_text_color</item>
++        <item name="android:singleLine">false</item>
++        <item name="android:textSize">@dimen/conversation_compose_send_text_size</item>
++        <item name="android:gravity">center_vertical</item>
++        <item name="android:fontFamily">sans-serif</item>
++        <item name="android:paddingLeft">@dimen/compose_message_text_box_padding_side</item>
++        <item name="android:paddingRight">@dimen/compose_message_text_box_padding_side</item>
++        <item name="android:minHeight">@dimen/conversation_message_contact_icon_size</item>
++        <item name="android:maxLines">4</item>
++        <item name="android:background">@null</item>
++        <item name="android:scrollHorizontally">false</item>
++        <item name="android:textCursorDrawable">@null</item>
++        <item name="android:inputType">textShortMessage|textAutoCorrect|textCapSentences|textMultiLine</item>
++    </style>
++
++    <style name="ConversationComposeSubjectText" parent="ConversationComposeSendText">
++        <item name="android:paddingLeft">18dp</item>
++        <item name="android:layout_marginLeft">@dimen/compose_message_subject_cancel_left_margin</item>
++    </style>
++
++    <style name="ContactListItem">
++        <item name="android:textSize">@dimen/contact_list_text_size</item>
++        <item name="android:textColor">@color/contact_list_text_primary</item>
++        <item name="android:background">@null</item>
++    </style>
++
++    <style name="ContactListItemDetail">
++        <item name="android:textSize">@dimen/contact_list_detail_text_size</item>
++        <item name="android:textColor">@color/contact_list_text_secondary</item>
++        <item name="android:background">@null</item>
++    </style>
++
++    <style name="ContactListItemDetailType" parent="ContactListItemDetail">
++        <item name="android:paddingLeft">12dp</item>
++    </style>
++
++    <style name="ContactListItemDrawableIndicator">
++        <item name="android:background">?android:attr/selectableItemBackground</item>
++    </style>
++
++    <style name="RecipientEditTextView">
++        <item name="android:textSize">@dimen/recipient_edit_text_size</item>
++        <item name="android:textColor">@color/compose_contact_text</item>
++        <item name="android:textColorHint">@color/compose_contact_faint_text</item>
++        <item name="android:fontFamily">sans-serif</item>
++        <item name="android:paddingLeft">4dp</item>
++        <item name="android:paddingRight">4dp</item>
++    </style>
++
++    <style name="PagerTabHeader">
++        <item name="android:textColor">@color/tab_text_color</item>
++        <item name="android:textSize">@dimen/pager_tab_header_text_size</item>
++        <item name="android:background">@null</item>
++        <item name="android:textStyle">bold</item>
++    </style>
++
++    <style name="ContactListAlphabetHeader">
++        <item name="android:textSize">@dimen/contact_list_alphabet_header_text_size</item>
++        <item name="android:textColor">@color/contact_list_alphabet_header</item>
++    </style>
++
++    <style name="AttachmentPreviewMoreItemsText">
++        <item name="android:textSize">@dimen/attachment_preview_more_items_text_size</item>
++        <item name="android:textColor">@android:color/white</item>
++    </style>
++
++    <style name="AudioPickerHintText">
++        <item name="android:textSize">@dimen/audio_picker_text_size</item>
++        <item name="android:textColor">@color/audio_picker_hint_text_color</item>
++    </style>
++
++    <style name="AudioPickerTimerText">
++        <item name="android:textSize">@dimen/audio_picker_text_size</item>
++        <item name="android:textColor">@color/audio_picker_timer_text_color</item>
++    </style>
++
++    <style name="AudioAttachmentTimerText">
++        <item name="android:textSize">@dimen/audio_attachment_text_size</item>
++        <item name="android:textColor">@color/audio_attachment_timer_text_color</item>
++        <item name="android:layout_marginRight">16dp</item>
++    </style>
++
++    <style name="AudioAttachmentViewStyle">
++        <item name="android:paddingRight">16dp</item>
++        <item name="android:paddingLeft">16dp</item>
++    </style>
++
++    <style name="VcardAttachmentSingleStyle">
++        <item name="android:paddingRight">@dimen/message_text_left_right_padding</item>
++        <item name="android:paddingLeft">@dimen/message_text_left_right_padding</item>
++    </style>
++
++    <style name="MessageVcardAttachmentStyle">
++        <item name="android:paddingRight">@dimen/message_text_left_right_padding</item>
++        <item name="android:paddingLeft">@dimen/message_text_left_right_padding</item>
++    </style>
++
++    <style name="NotificationSenderText">
++        <item name="android:textColor">@color/notification_sender_text</item>
++    </style>
++
++    <style name="NotificationSecondaryText">
++        <item name="android:textColor">@color/notification_secondary_text</item>
++    </style>
++
++    <style name="NotificationTertiaryText">
++        <item name="android:textColor">@color/notification_tertiary_text</item>
++    </style>
++
++    <style name="NotificationSubjectText">
++        <item name="android:textColor">@color/notification_subject_color</item>
++    </style>
++
++    <!-- Styles to support RTL for pre API 17 -->
++    <style name="AttachmentPreviewCloseButtonStyle">
++        <item name="android:gravity">left</item>
++    </style>
++
++    <style name="CameraChooserFrameStyle">
++        <item name="android:paddingLeft">16dp</item>
++    </style>
++
++    <style name="ComposeMessageViewAttachMediaButtonStyle">
++        <item name="android:paddingLeft">@dimen/compose_message_attachment_padding_sides</item>
++        <item name="android:paddingRight">@dimen/compose_message_attachment_padding_sides</item>
++        <item name="android:background">?android:attr/selectableItemBackground</item>
++    </style>
++
++    <style name="ContactListItemViewStyle">
++        <item name="android:paddingLeft">16dp</item>
++    </style>
++
++    <style name="ContactListItemLinearLayoutStyle">
++        <item name="android:paddingLeft">12dp</item>
++        <item name="android:paddingRight">24dp</item>
++    </style>
++
++    <style name="ConversationListItemViewPaddingStyle">
++        <item name="android:paddingLeft">@dimen/conversation_list_item_view_padding</item>
++        <item name="android:paddingRight">@dimen/conversation_list_item_view_padding</item>
++    </style>
++
++    <style name="ConversationListItemViewTextStyle">
++        <item name="android:includeFontPadding">false</item>
++        <item name="android:textSize">14sp</item>
++        <item name="android:background">@null</item>
++        <item name="android:textColor">@color/conversation_list_details</item>
++    </style>
++
++    <style name="ConversationListItemViewConversationNameStyle" parent="ConversationListItemViewTextStyle">
++        <item name="android:textSize">16sp</item>
++        <item name="android:textColor">@color/conversation_list_name</item>
++    </style>
++
++    <style name="ConversationListNotificationBellPaddingStyle">
++        <item name="android:paddingRight">@dimen/conversation_list_notification_bell_padding</item>
++    </style>
++
++    <style name="ComposeMessageViewFrameLayoutStyle">
++        <item name="android:paddingRight">@dimen/compose_message_send_button_padding_right</item>
++    </style>
++
++    <style name="ConversationListFragmentStartNewButtonStyle">
++        <item name="android:layout_marginRight">@dimen/fab_left_right_margin</item>
++    </style>
++
++    <style name="GalleryGridItemViewCheckBoxStyle">
++        <item name="android:paddingRight">22dp</item>
++    </style>
++
++    <style name="AttachmentPreviewAttachmentStyle">
++        <item name="android:layout_marginLeft">10dp</item>
++    </style>
++
++    <style name="AudioAttachmentViewPlayPauseButtonStyle">
++        <item name="android:layout_marginRight">16dp</item>
++    </style>
++
++    <style name="ComposeMessageViewDraftViewStyle">
++        <item name="android:layout_marginLeft">53dp</item>
++        <item name="android:layout_marginRight">63dp</item>
++    </style>
++
++    <style name="ConversationMessageViewStyle">
++        <item name="android:paddingLeft">12dp</item>
++        <item name="android:paddingRight">12dp</item>
++    </style>
++
++    <style name="SubjectViewStyle">
++        <item name="android:paddingLeft">@dimen/compose_message_subject_left_padding</item>
++        <item name="android:paddingRight">@dimen/compose_message_subject_right_padding</item>
++    </style>
++
++    <style name="ParticipantListItem">
++        <item name="android:textSize">@dimen/participant_list_text_size</item>
++        <item name="android:textColor">@color/participant_list_text_primary</item>
++        <item name="android:background">@null</item>
++        <item name="android:layout_gravity">left|center_vertical</item>
++    </style>
++
++    <style name="AddContactConfirmationTextStyle" parent="ParticipantListItem">
++        <item name="android:paddingLeft">12dp</item>
++        <item name="android:paddingRight">24dp</item>
++    </style>
++
++    <style name="CopyContactDialogTextStyle" parent="ParticipantListItem">
++        <item name="android:paddingLeft">@dimen/copy_contact_dialog_left_padding</item>
++        <item name="android:paddingRight">@dimen/copy_contact_dialog_right_padding</item>
++    </style>
++
++    <style name="ParticipantListItemDetail">
++        <item name="android:textSize">@dimen/participant_list_detail_text_size</item>
++        <item name="android:textColor">@color/participant_list_text_secondary</item>
++        <item name="android:background">@null</item>
++    </style>
++
++    <style name="PeopleListItemViewStyle">
++        <item name="android:paddingLeft">16dp</item>
++    </style>
++
++    <style name="PeopleAndOptionsItemStyle">
++        <item name="android:paddingRight">16dp</item>
++        <item name="android:paddingLeft">16dp</item>
++    </style>
++
++    <style name="PeopleAndOptionsSectionHeader">
++        <item name="android:textSize">@dimen/people_and_options_header_text_size</item>
++        <item name="android:textColor">@color/people_and_options_header_text</item>
++        <item name="android:background">@null</item>
++    </style>
++
++    <style name="DropDownListViewStyle">
++      <item name="android:dividerHeight">0dp</item>
++    </style>
++
++    <style name="ComposeMessageViewTextCounterStyle">
++        <item name="android:textColor">@color/message_text_counter_color</item>
++        <item name="android:textSize">@dimen/message_text_counter_size</item>
++        <item name="android:fontFamily">sans-serif</item>
++        <item name="android:layout_gravity">right|center_vertical</item>
++        <item name="android:paddingRight">@dimen/compose_message_text_box_padding_side</item>
++    </style>
++
++    <style name="MmsIndicatorStyle">
++        <item name="android:textColor">@color/mms_indicator_color</item>
++        <item name="android:textSize">@dimen/mms_indicator_size</item>
++        <item name="android:fontFamily">sans-serif</item>
++        <item name="android:background">@null</item>
++        <item name="android:paddingRight">@dimen/compose_message_send_button_padding_right</item>
++        <item name="android:paddingTop">@dimen/compose_message_mms_indicator_padding_top</item>
++        <item name="android:layout_gravity">center_horizontal</item>
++    </style>
++
++    <style name="ListEmptyText">
++        <item name="android:textSize">@dimen/list_empty_text_size</item>
++        <item name="android:textColor">@color/list_empty_text</item>
++    </style>
++
++    <style name="LowStorageActionItemStyle">
++        <item name="android:textColor">@color/low_storage_action_item_color</item>
++        <item name="android:textSize">@dimen/low_storage_action_item_text_size</item>
++        <item name="android:singleLine">false</item>
++    </style>
++
++    <style name="SnackBarMessageWrapper">
++        <item name="android:layout_marginLeft">@dimen/snack_bar_left_right_margin</item>
++        <item name="android:layout_marginRight">0dp</item>
++    </style>
++
++    <style name="SnackBarText">
++        <item name="android:textColor">@android:color/white</item>
++        <item name="android:textSize">14sp</item>
++        <item name="android:fontFamily">sans-serif</item>
++    </style>
++
++    <style name="SmsDeliverdBadge">
++        <item name="android:layout_marginLeft">4dp</item>
++    </style>
++
++    <style name="appTitleStyle">
++        <item name="android:textColor">@android:color/black</item>
++        <item name="android:textSize">20sp</item>
++        <item name="android:ellipsize">end</item>
++    </style>
++
++    <style name="appVersionStyle">
++        <item name="android:textColor">@android:color/black</item>
++        <item name="android:textSize">14sp</item>
++        <item name="android:ellipsize">end</item>
++    </style>
++
++    <style name="appCopyrightStyle">
++        <item name="android:textColor">@android:color/black</item>
++        <item name="android:textSize">12sp</item>
++        <item name="android:ellipsize">end</item>
++    </style>
++
++    <style name="ChipDeleteIconStyle">
++        <item name="android:paddingLeft">8dp</item>
++    </style>
++
++    <style name="ChipIconStyle">
++        <item name="android:layout_marginRight">12dp</item>
++    </style>
++
++    <style name="SimSelectorItem">
++        <item name="android:textSize">@dimen/sim_selector_text_size</item>
++        <item name="android:textColor">@color/sim_selector_text_primary</item>
++        <item name="android:background">@null</item>
++        <item name="android:layout_gravity">right</item>
++    </style>
++
++    <style name="SimSelectorItemDetail">
++        <item name="android:textSize">@dimen/sim_selector_detail_text_size</item>
++        <item name="android:textColor">@color/sim_selector_text_secondary</item>
++        <item name="android:background">@null</item>
++        <item name="android:layout_gravity">right</item>
++    </style>
++
++    <style name="SimSelectorItemLinearLayoutStyle">
++        <item name="android:paddingRight">12dp</item>
++    </style>
++
++    <style name="MessageSimIndicator">
++        <item name="android:textSize">@dimen/conversation_status_text_size</item>
++        <item name="android:layout_marginLeft">4dp</item>
++    </style>
++
++    <style name="ColorAccentBlueOverrideStyle">
++        <item name="colorAccent">@color/action_bar_background_color</item>
++    </style>
++
++    <style name="ColorAccentGrayOverrideStyle">
++        <item name="colorAccent">@color/search_view_text_cursor</item>
++    </style>
++
++    <style name="ApnPreference">
++        <item name="android:layout">@layout/apn_preference_layout</item>
++    </style>
++
++    <style name="ApnPreferenceLayoutStyle">
++        <item name="android:paddingLeft">?android:attr/listPreferredItemPaddingStart</item>
++        <item name="android:paddingRight">?android:attr/listPreferredItemPaddingEnd</item>
++    </style>
++
++    <style name="SettingsListItem">
++        <item name="android:textSize">@dimen/settings_list_text_size</item>
++        <item name="android:textColor">@color/settings_list_text_primary</item>
++        <item name="android:background">@null</item>
++    </style>
++
++    <style name="SettingsListItemDetail">
++        <item name="android:textSize">@dimen/settings_list_detail_text_size</item>
++        <item name="android:textColor">@color/settings_list_text_secondary</item>
++        <item name="android:background">@null</item>
++    </style>
++
++    <style name="GroupMmsSettingItem">
++        <item name="android:textSize">@dimen/group_mms_setting_text_size</item>
++        <item name="android:textColor">@color/group_mms_setting_text_color</item>
++        <item name="android:layout_marginLeft">20dp</item>
++        <item name="android:layout_marginRight">20dp</item>
++        <item name="android:layout_marginTop">16dp</item>
++        <item name="android:paddingLeft">10dp</item>
++        <item name="android:paddingRight">10dp</item>
++        <item name="android:background">?android:attr/selectableItemBackground</item>
++    </style>
++
++    <style name="DebugMmsConfigItemStyle">
++        <item name="android:paddingLeft">16dp</item>
++        <item name="android:paddingRight">16dp</item>
++    </style>
++
++    <style name="WidgetTitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
++        <item name="android:textColor">@color/action_bar_title_text_color</item>
++        <item name="android:singleLine">true</item>
++        <item name="android:layout_marginEnd">8dp</item>
++    </style>
++
++    <style name="WidgetConversationTitle" parent="@android:style/TextAppearance.Holo.Widget.ActionBar.Title">
++        <item name="android:textColor">@color/widget_conversation_title_color</item>
++        <item name="android:singleLine">true</item>
++        <item name="android:layout_marginRight">8dp</item>
++        <item name="android:textSize">@dimen/widget_conversation_title_size</item>
++        <item name="android:shadowColor">#000000</item>
++        <item name="android:shadowDx">0</item>
++        <item name="android:shadowDy">2</item>
++        <item name="android:shadowRadius">1</item>
++    </style>
++
++    <style name="WidgetHeaderImage">
++        <item name="android:paddingStart">4dip</item>
++    </style>
++
++    <style name="WidgetConversationListItemAvatar">
++        <item name="android:layout_marginEnd">12dp</item>
++        <item name="android:layout_marginStart">8dp</item>
++        <item name="android:layout_alignParentStart">true</item>
++    </style>
++
++    <style name="WidgetConversationItemAvatarIncoming">
++        <item name="android:layout_marginStart">8dp</item>
++        <item name="android:layout_alignParentStart">true</item>
++    </style>
++
++    <style name="WidgetConversationItemAvatarOutgoing">
++        <item name="android:layout_marginRight">8dp</item>
++        <item name="android:layout_alignParentRight">true</item>
++    </style>
++
++    <style name="WidgetConversationItemBodyIncoming">
++        <item name="android:layout_toRightOf">@id/avatarFrame</item>
++    </style>
++
++    <style name="WidgetConversationItemBodyOutgoing">
++        <item name="android:layout_toLeftOf">@id/avatarFrame</item>
++    </style>
++
++    <style name="WidgetConversationItemIncoming">
++        <item name="android:layout_marginRight">5dp</item>
++        <item name="android:layout_alignParentLeft">true</item>
++        <item name="android:layout_toLeftOf">@id/date</item>
++    </style>
++
++    <style name="WidgetConversationItemIncomingAvatarShadow">
++        <item name="android:layout_marginLeft">4dp</item>
++    </style>
++
++    <style name="WidgetConversationItemOutgoingAvatarShadow">
++        <item name="android:layout_marginLeft">-4dp</item>
++    </style>
++
++    <style name="WidgetConversationAppIcon" parent="WidgetHeaderImage">
++        <item name="android:layout_marginLeft">-20dp</item>
++    </style>
++
++    <style name="WidgetConversationItemDate">
++        <item name="android:layout_marginRight">8dp</item>
++        <item name="android:layout_marginLeft">5dp</item>
++        <item name="android:layout_alignParentLeft">true</item>
++    </style>
++
++    <style name="WidgetConversationItemFailed">
++        <item name="android:layout_gravity">bottom|right</item>
++    </style>
++
++    <style name="WidgetConversationItemAttachment">
++        <item name="android:layout_gravity">bottom|right</item>
++    </style>
++
++    <style name="WidgetConversationItemWidget">
++        <item name="android:layout_marginRight">8dp</item>
++        <item name="android:layout_marginLeft">5dp</item>
++        <item name="android:layout_alignParentLeft">true</item>
++    </style>
++
++    <style name="WidgetConversationListItemBody">
++        <item name="android:layout_toRightOf">@id/avatarFrame</item>
++    </style>
++
++    <style name="WidgetConversationListItemFrom">
++        <item name="android:layout_marginRight">5dp</item>
++        <item name="android:layout_alignParentLeft">true</item>
++    </style>
++
++    <style name="WidgetConversationListItemDate">
++        <item name="android:layout_marginRight">8dp</item>
++        <item name="android:layout_marginLeft">5dp</item>
++        <item name="android:layout_gravity">right</item>
++    </style>
++
++    <style name="WidgetLoading">
++        <item name="android:layout_marginLeft">16dp</item>
++    </style>
++
++    <style name="WidgetConversationListItemStyle">
++        <item name="android:layout_height">80dp</item>
++    </style>
++
++    <style name="AttachmentGridItemViewCheckBoxStyle">
++        <item name="android:paddingRight">4dp</item>
++    </style>
++
++    <style name="PromoScreenTextStyle">
++        <item name="android:paddingLeft">40dp</item>
++        <item name="android:paddingRight">40dp</item>
++        <item name="android:textSize">16sp</item>
++        <item name="android:textColor">@android:color/white</item>
++        <item name="android:fontFamily">roboto-regular</item>
++    </style>
++    <style name="PromoScreenTextStyle.CenterAligned">
++        <item name="android:textAlignment">center</item>
++    </style>
++    <style name="PromoScreenButtonStyle">
++        <item name="android:textSize">14sp</item>
++        <item name="android:fontFamily">roboto-medium</item>
++        <item name="android:textAllCaps">true</item>
++        <item name="android:textStyle">bold</item>
++        <item name="android:background">?android:attr/selectableItemBackground</item>
++        <item name="android:textColor">@android:color/white</item>
++        <item name="android:gravity">center</item>
++    </style>
++    <style name="DirectoryHeaderStyle">
++        <item name="android:paddingLeft">@dimen/directory_header_padding_start</item>
++        <item name="android:paddingStart">@dimen/directory_header_padding_start</item>
++        <item name="android:paddingRight">@dimen/directory_header_padding_end</item>
++        <item name="android:paddingEnd">@dimen/directory_header_padding_end</item>
++        <item name="android:paddingTop">@dimen/directory_header_padding_top</item>
++        <item name="android:paddingBottom">@dimen/directory_header_padding_bottom</item>
++        <item name="android:textSize">@dimen/directory_header_text_size</item>
++        <item name="android:textStyle">bold</item>
++    </style>
++</resources>
+diff --git a/res/values-v21/styles.xml b/res/values-v21/styles.xml
+index aef5d1c..ca4eced 100644
+--- a/res/values-v21/styles.xml
++++ b/res/values-v21/styles.xml
+@@ -22,7 +22,7 @@
+ 
+     <style name="BugleTheme.DialogActivity" parent="@style/Theme.AppCompat.Light.Dialog">
+         <item name="android:windowNoTitle">false</item>
+-        <item name="android:background">@android:color/white</item>
++        <item name="android:background">@color/contextual_action_bar_background_color</item>
+     </style>
+ 
+     <style name="ContactListItemDrawableIndicator">
+diff --git a/res/values/colors.xml b/res/values/colors.xml
+index 2ccf643..d792461 100644
+--- a/res/values/colors.xml
++++ b/res/values/colors.xml
+@@ -36,20 +36,20 @@
+     <color name="conversation_compose_divider_start">#44000000</color>
+ 
+     <color name="message_text">#000000</color>
+-    <color name="timestamp_text_outgoing">#99323232</color>
+-    <color name="timestamp_text_incoming">#99ffffff</color>
++    <color name="timestamp_text_outgoing">#99000000</color>
++    <color name="timestamp_text_incoming">#99000000</color>
+     <color name="timestamp_text_failed">#99ff0000</color>
+     <color name="compose_send_text_color">#000000</color>
+ 
+     <color name="message_title_text">#ff323232</color>
+     <color name="message_download_failed_status_text">#000000</color>
+-    <color name="message_info_text">#99ffffff</color>
++    <color name="message_info_text">#99000000</color>
+     <color name="message_info_text_incoming_download_failed">#6a6a6a</color>
+     <color name="message_download_failed_timestamp_text">#007fce</color>
+     <color name="message_failed_timestamp_text">#99ff0000</color>
+-    <color name="message_action_status_text">#ffffffff</color>
+-    <color name="message_action_info_text">#99ffffff</color>
+-    <color name="message_action_timestamp_text">#ffffffff</color>
++    <color name="message_action_status_text">#000000</color>
++    <color name="message_action_info_text">#99000000</color>
++    <color name="message_action_timestamp_text">#ff000000</color>
+ 
+     <color name="background_item_transparent">@android:color/transparent</color>
+     <color name="background_item_activated">#670099cc</color>
+@@ -57,14 +57,14 @@
+     <color name="background_item_pressed">#6733b5e5</color>
+ 
+     <color name="subject_editor_bubble">#ffffffff</color>
+-    <color name="message_text_color_incoming">#ffffffff</color>
++    <color name="message_text_color_incoming">#ff000000</color>
+     <color name="message_text_color_incoming_download_failed">#6a6a6a</color>
+     <color name="message_text_color_outgoing">#ff323232</color>
+-    <color name="conversation_background">#eeeeee</color>
++    <color name="conversation_background">#ffffff</color>
+     <color name="conversation_edge_effect">#9d9d9d</color>
+     <color name="compose_message_send_color">@color/lineage_accent</color>
+     <color name="compose_message_send_color_pressed">#999999</color>
+-    <color name="message_bubble_color_outgoing">#ffffffff</color>
++    <color name="message_bubble_color_outgoing">#ffeeeeee</color>
+     <color name="message_error_bubble_color_incoming">#e2e2e2</color>
+     <color name="message_audio_button_color_incoming">#ffffffff</color>
+     <color name="message_bubble_color_selected">@color/lineage_accent</color>
+diff --git a/res/values/dimens.xml b/res/values/dimens.xml
+index 734afe8..8a72315 100644
+--- a/res/values/dimens.xml
++++ b/res/values/dimens.xml
+@@ -29,9 +29,9 @@
+     <dimen name="contact_icon_view_small_size">12dp</dimen>
+     <dimen name="conversation_list_item_view_padding">16dp</dimen>
+     <dimen name="conversation_list_first_item_extra_padding">8dp</dimen>
+-    <dimen name="conversation_list_image_preview_corner_radius">3dp</dimen>
++    <dimen name="conversation_list_image_preview_corner_radius">16dp</dimen>
+     <dimen name="conversation_list_image_preview_size">56dp</dimen>
+-    <dimen name="conversation_list_contact_icon_size">56dp</dimen>
++    <dimen name="conversation_list_contact_icon_size">42dp</dimen>
+     <dimen name="conversation_message_contact_icon_size">42dp</dimen>
+     <dimen name="conversation_message_photo_min_size">96dp</dimen>
+     <dimen name="conversation_list_empty_text_bottom_margin">30dp</dimen>
+@@ -104,7 +104,7 @@
+ 
+     <!-- Videos in the message list view should at least be this big in the smallest dimension -->
+     <dimen name="video_message_min_size">320dp</dimen>
+-    <dimen name="attachment_rounded_corner_radius">3dp</dimen>
++    <dimen name="attachment_rounded_corner_radius">16dp</dimen>
+     <dimen name="progress_indicator_default_stroke_width">2dp</dimen>
+     <dimen name="progress_indicator_default_radius">12dp</dimen>
+     <dimen name="participant_list_text_size">18sp</dimen>
+diff --git a/res/values/styles.xml b/res/values/styles.xml
+index 9bd338f..78c4e85 100644
+--- a/res/values/styles.xml
++++ b/res/values/styles.xml
+@@ -33,11 +33,23 @@
+         <!-- All customizations that are NOT specific to a particular API-level can go here. -->
+          <item name="android:dropDownListViewStyle">@style/DropDownListViewStyle</item>
+          <item name="colorPrimary">@color/action_bar_background_color</item>
+-         <item name="colorPrimaryDark">@color/action_bar_background_color_dark</item>
++         <item name="colorPrimaryDark">@color/action_bar_background_color</item>
+          <item name="colorAccent">@color/lineage_accent</item>
+          <item name="android:textColorHighlight">@color/text_highlight_color</item>
+          <item name="actionBarStyle">@style/BugleActionBar</item>
+          <item name="apnPreferenceStyle">@style/ApnPreference</item>
++         <item name="android:listViewStyle">@style/ListViewStyle</item>
++         <item name="actionBarPopupTheme">@style/PopupMenuStyleAppCompat</item>
++         <item name="android:actionBarPopupTheme">@style/PopupMenuStyleAppCompat</item>
++    </style>
++
++    <style name="ListViewStyle" parent="@android:style/Widget.Material.Light.ListView">
++        <item name="android:overScrollMode">always</item>
++        <item name="android:textColor">@color/message_title_text</item>
++        <item name="android:background">@color/contextual_action_bar_background_color</item>
++    </style>
++
++    <style name="PopupMenuStyleAppCompat" parent="@android:style/Theme.DeviceDefault.Light.Dialog">
+     </style>
+ 
+     <style name="BugleTheme.ConversationActivity"
+@@ -52,16 +64,23 @@
+         <item name="android:fastScrollPreviewBackgroundRight">@drawable/contacts_fastscroll_label_right</item>
+     </style>
+ 
+-    <style name="BugleTheme.DialogActivity" parent="@style/Theme.AppCompat.Light.Dialog">
++    <style name="BugleTheme.DialogActivity" parent="@android:style/Theme.DeviceDefault.Light.Dialog">
++    </style>
++
++    <style name="BugleThemeDialog" parent="BugleTheme.DialogActivity">
++        <item name="android:colorAccent">@color/primary_color</item>
++        <item name="android:colorPrimary">@color/archived_conversation_action_bar_background_color</item>
++        <item name="android:colorPrimaryDark">@color/archived_conversation_action_bar_background_color</item>
++        <item name="android:background">@color/contextual_action_bar_background_color</item>
+     </style>
+ 
+     <style name="BugleTheme.ConversationListActivity" parent="BugleTheme">
+-        <item name="android:windowBackground">@android:color/background_light</item>
++        <item name="android:windowBackground">@color/contextual_action_bar_background_color</item>
+     </style>
+ 
+     <style name="BugleTheme.ArchivedConversationListActivity" parent="BugleTheme.ConversationListActivity">
+         <item name="colorPrimary">@color/archived_conversation_action_bar_background_color</item>
+-        <item name="colorPrimaryDark">@color/archived_conversation_action_bar_background_color_dark</item>
++        <item name="colorPrimaryDark">@color/archived_conversation_action_bar_background_color</item>
+     </style>
+ 
+     <style name="BugleTheme.SettingsActivity" parent="BugleTheme">
+diff --git a/src/com/android/messaging/ui/BugleActionBarActivity.java b/src/com/android/messaging/ui/BugleActionBarActivity.java
+index 42d40fe..24f1c6a 100644
+--- a/src/com/android/messaging/ui/BugleActionBarActivity.java
++++ b/src/com/android/messaging/ui/BugleActionBarActivity.java
+@@ -349,7 +349,7 @@ public class BugleActionBarActivity extends AppCompatActivity implements ImeUtil
+             mActionMode.getCallback().onPrepareActionMode(mActionMode, mActionBarMenu);
+             actionBar.setBackgroundDrawable(new ColorDrawable(
+                     getResources().getColor(R.color.contextual_action_bar_background_color)));
+-            actionBar.setHomeAsUpIndicator(R.drawable.ic_cancel_small_dark);
++            actionBar.setHomeAsUpIndicator(R.drawable.ic_cancel_small);
+             actionBar.show();
+         }
+     }
+diff --git a/src/com/android/messaging/ui/ConversationDrawables.java b/src/com/android/messaging/ui/ConversationDrawables.java
+index cf858e2..a5654b7 100644
+--- a/src/com/android/messaging/ui/ConversationDrawables.java
++++ b/src/com/android/messaging/ui/ConversationDrawables.java
+@@ -52,6 +52,7 @@ public class ConversationDrawables {
+     private int mIncomingAudioButtonColor;
+     private int mSelectedBubbleColor;
+     private int mThemeColor;
++    private int mBubbleColor;
+ 
+     public static ConversationDrawables get() {
+         if (sInstance == null) {
+@@ -73,11 +74,11 @@ public class ConversationDrawables {
+     public void updateDrawables() {
+         final Resources resources = mContext.getResources();
+ 
+-        mIncomingBubbleDrawable = resources.getDrawable(R.drawable.msg_bubble_incoming);
++        mIncomingBubbleDrawable = resources.getDrawable(R.drawable.msg_bubble_incoming_new);
+         mIncomingBubbleNoArrowDrawable =
+                 resources.getDrawable(R.drawable.message_bubble_incoming_no_arrow);
+         mIncomingErrorBubbleDrawable = resources.getDrawable(R.drawable.msg_bubble_error);
+-        mOutgoingBubbleDrawable =  resources.getDrawable(R.drawable.msg_bubble_outgoing);
++        mOutgoingBubbleDrawable =  resources.getDrawable(R.drawable.msg_bubble_outgoing_new);
+         mOutgoingBubbleNoArrowDrawable =
+                 resources.getDrawable(R.drawable.message_bubble_outgoing_no_arrow);
+         mAudioPlayButtonDrawable = resources.getDrawable(R.drawable.ic_audio_play);
+@@ -102,6 +103,7 @@ public class ConversationDrawables {
+                 resources.getColor(R.color.message_audio_button_color_incoming);
+         mSelectedBubbleColor = resources.getColor(R.color.message_bubble_color_selected);
+         mThemeColor = resources.getColor(R.color.primary_color);
++        mBubbleColor = resources.getColor(R.color.google_gray);
+     }
+ 
+     public Drawable getBubbleDrawable(final boolean selected, final boolean incoming,
+@@ -127,7 +129,7 @@ public class ConversationDrawables {
+             if (isError) {
+                 color = mIncomingErrorBubbleColor;
+             } else {
+-                color = mThemeColor;
++                color = mBubbleColor;
+             }
+         } else {
+             color = mOutgoingBubbleColor;
+diff --git a/src/com/android/messaging/ui/SmsStorageLowWarningFragment.java b/src/com/android/messaging/ui/SmsStorageLowWarningFragment.java
+index 3ebfdcf..c89e971 100644
+--- a/src/com/android/messaging/ui/SmsStorageLowWarningFragment.java
++++ b/src/com/android/messaging/ui/SmsStorageLowWarningFragment.java
+@@ -92,7 +92,8 @@ public class SmsStorageLowWarningFragment extends Fragment {
+ 
+         @Override
+         public Dialog onCreateDialog(final Bundle savedInstanceState) {
+-            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
++            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(),
++                    R.style.BugleThemeDialog);
+ 
+             final LayoutInflater inflater = getActivity().getLayoutInflater();
+             final View dialogLayout = inflater.inflate(
+diff --git a/src/com/android/messaging/ui/appsettings/ApnEditorActivity.java b/src/com/android/messaging/ui/appsettings/ApnEditorActivity.java
+index ae4b2eb..45e9293 100644
+--- a/src/com/android/messaging/ui/appsettings/ApnEditorActivity.java
++++ b/src/com/android/messaging/ui/appsettings/ApnEditorActivity.java
+@@ -301,7 +301,7 @@ public class ApnEditorActivity extends BugleActionBarActivity {
+             // If it's a new APN, then cancel will delete the new entry in onPause
+             if (!mNewApn) {
+                 menu.add(0, MENU_DELETE, 0, R.string.menu_delete_apn)
+-                    .setIcon(R.drawable.ic_delete_small_dark);
++                    .setIcon(R.drawable.ic_delete_small);
+             }
+             menu.add(0, MENU_SAVE, 0, R.string.menu_save_apn)
+                 .setIcon(android.R.drawable.ic_menu_save);
+diff --git a/src/com/android/messaging/ui/appsettings/GroupMmsSettingDialog.java b/src/com/android/messaging/ui/appsettings/GroupMmsSettingDialog.java
+index 739d2dc..7db5fb8 100644
+--- a/src/com/android/messaging/ui/appsettings/GroupMmsSettingDialog.java
++++ b/src/com/android/messaging/ui/appsettings/GroupMmsSettingDialog.java
+@@ -48,7 +48,7 @@ public class GroupMmsSettingDialog {
+ 
+     private void show() {
+         Assert.isNull(mDialog);
+-        mDialog = new AlertDialog.Builder(mContext)
++        mDialog = new AlertDialog.Builder(mContext, R.style.BugleThemeDialog)
+                 .setView(createView())
+                 .setTitle(R.string.group_mms_pref_title)
+                 .setNegativeButton(android.R.string.cancel, null)
+diff --git a/src/com/android/messaging/ui/contact/AddContactsConfirmationDialog.java b/src/com/android/messaging/ui/contact/AddContactsConfirmationDialog.java
+index 9c1393d..45cc97f 100644
+--- a/src/com/android/messaging/ui/contact/AddContactsConfirmationDialog.java
++++ b/src/com/android/messaging/ui/contact/AddContactsConfirmationDialog.java
+@@ -45,7 +45,8 @@ public class AddContactsConfirmationDialog implements DialogInterface.OnClickLis
+     public void show() {
+         final int confirmAddContactStringId = R.string.add_contact_confirmation;
+         final int cancelStringId = android.R.string.cancel;
+-        final AlertDialog alertDialog = new AlertDialog.Builder(mContext)
++        final AlertDialog alertDialog = new AlertDialog.Builder(mContext,
++                 R.style.BugleThemeDialog)
+         .setTitle(R.string.add_contact_confirmation_dialog_title)
+         .setView(createBodyView())
+         .setPositiveButton(confirmAddContactStringId, this)
+diff --git a/src/com/android/messaging/ui/conversation/ConversationFragment.java b/src/com/android/messaging/ui/conversation/ConversationFragment.java
+index 5c97c1c..235503e 100644
+--- a/src/com/android/messaging/ui/conversation/ConversationFragment.java
++++ b/src/com/android/messaging/ui/conversation/ConversationFragment.java
+@@ -812,7 +812,7 @@ public class ConversationFragment extends Fragment implements ConversationDataLi
+ 
+             case R.id.action_delete:
+                 if (isReadyForAction()) {
+-                    new AlertDialog.Builder(getActivity())
++                    new AlertDialog.Builder(getActivity(), R.style.BugleThemeDialog)
+                             .setTitle(getResources().getQuantityString(
+                                     R.plurals.delete_conversations_confirmation_dialog_title, 1))
+                             .setPositiveButton(R.string.delete_conversation_confirmation_button,
+@@ -1135,7 +1135,8 @@ public class ConversationFragment extends Fragment implements ConversationDataLi
+ 
+     void deleteMessage(final String messageId) {
+         if (isReadyForAction()) {
+-            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity())
++            final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity(), 
++                    R.style.BugleThemeDialog)
+                     .setTitle(R.string.delete_message_confirmation_dialog_title)
+                     .setMessage(R.string.delete_message_confirmation_dialog_text)
+                     .setPositiveButton(R.string.delete_message_confirmation_button,
+@@ -1496,7 +1497,7 @@ public class ConversationFragment extends Fragment implements ConversationDataLi
+             final ComposeMessageView composeMessageView, final String conversationId,
+             final Activity activity, final boolean tooManyVideos) {
+         final AlertDialog.Builder builder =
+-                new AlertDialog.Builder(activity)
++                new AlertDialog.Builder(activity, R.style.BugleThemeDialog)
+                     .setTitle(R.string.mms_attachment_limit_reached);
+ 
+         if (sending) {
+diff --git a/src/com/android/messaging/ui/conversation/EnterSelfPhoneNumberDialog.java b/src/com/android/messaging/ui/conversation/EnterSelfPhoneNumberDialog.java
+index e3ad601..7614bc5 100644
+--- a/src/com/android/messaging/ui/conversation/EnterSelfPhoneNumberDialog.java
++++ b/src/com/android/messaging/ui/conversation/EnterSelfPhoneNumberDialog.java
+@@ -49,7 +49,8 @@ public class EnterSelfPhoneNumberDialog extends DialogFragment {
+         final LayoutInflater inflater = LayoutInflater.from(context);
+         mEditText = (EditText) inflater.inflate(R.layout.enter_phone_number_view, null, false);
+ 
+-        final AlertDialog.Builder builder = new AlertDialog.Builder(context);
++        final AlertDialog.Builder builder = new AlertDialog.Builder(context,
++                R.style.BugleThemeDialog);
+         builder.setTitle(R.string.enter_phone_number_title)
+                 .setMessage(R.string.enter_phone_number_text)
+                 .setView(mEditText)
+diff --git a/src/com/android/messaging/ui/conversation/MessageDetailsDialog.java b/src/com/android/messaging/ui/conversation/MessageDetailsDialog.java
+index 89b9148..4a5369d 100644
+--- a/src/com/android/messaging/ui/conversation/MessageDetailsDialog.java
++++ b/src/com/android/messaging/ui/conversation/MessageDetailsDialog.java
+@@ -86,7 +86,7 @@ public class MessageDetailsDialog {
+ 
+     private static void showDialog(final Context context, String messageDetails) {
+         if (!TextUtils.isEmpty(messageDetails)) {
+-            new AlertDialog.Builder(context)
++            new AlertDialog.Builder(context, R.style.BugleThemeDialog)
+                     .setTitle(R.string.message_details_title)
+                     .setMessage(messageDetails)
+                     .setCancelable(true)
+diff --git a/src/com/android/messaging/ui/conversationlist/AbstractConversationListActivity.java b/src/com/android/messaging/ui/conversationlist/AbstractConversationListActivity.java
+index 5fd7315..3e4bbcc 100644
+--- a/src/com/android/messaging/ui/conversationlist/AbstractConversationListActivity.java
++++ b/src/com/android/messaging/ui/conversationlist/AbstractConversationListActivity.java
+@@ -131,7 +131,7 @@ public abstract class AbstractConversationListActivity  extends BugleActionBarAc
+             return;
+         }
+ 
+-        new AlertDialog.Builder(this)
++        new AlertDialog.Builder(this, R.style.BugleThemeDialog)
+                 .setTitle(getResources().getQuantityString(
+                         R.plurals.delete_conversations_confirmation_dialog_title,
+                         conversations.size()))
+@@ -205,7 +205,7 @@ public abstract class AbstractConversationListActivity  extends BugleActionBarAc
+     @Override
+     public void onActionBarBlock(final SelectedConversation conversation) {
+         final Resources res = getResources();
+-        new AlertDialog.Builder(this)
++        new AlertDialog.Builder(this, R.style.BugleThemeDialog)
+                 .setTitle(res.getString(R.string.block_confirmation_title,
+                         conversation.otherParticipantNormalizedDestination))
+                 .setMessage(res.getString(R.string.block_confirmation_message))
+diff --git a/src/com/android/messaging/ui/conversationlist/ArchivedConversationListActivity.java b/src/com/android/messaging/ui/conversationlist/ArchivedConversationListActivity.java
+index 342c970..baff89c 100644
+--- a/src/com/android/messaging/ui/conversationlist/ArchivedConversationListActivity.java
++++ b/src/com/android/messaging/ui/conversationlist/ArchivedConversationListActivity.java
+@@ -42,7 +42,7 @@ public class ArchivedConversationListActivity extends AbstractConversationListAc
+         actionBar.setDisplayHomeAsUpEnabled(true);
+         actionBar.setBackgroundDrawable(new ColorDrawable(
+                 getResources().getColor(
+-                        R.color.archived_conversation_action_bar_background_color_dark)));
++                        R.color.archived_conversation_action_bar_background_color)));
+         actionBar.show();
+         super.updateActionBar(actionBar);
+     }
+diff --git a/src/com/android/messaging/ui/conversationlist/ConversationListItemView.java b/src/com/android/messaging/ui/conversationlist/ConversationListItemView.java
+index 9331d10..a4e3b0b 100644
+--- a/src/com/android/messaging/ui/conversationlist/ConversationListItemView.java
++++ b/src/com/android/messaging/ui/conversationlist/ConversationListItemView.java
+@@ -541,7 +541,7 @@ public class ConversationListItemView extends FrameLayout implements OnClickList
+                 mCrossSwipeArchiveLeftImageView.setVisibility(GONE);
+                 mCrossSwipeArchiveRightImageView.setVisibility(VISIBLE);
+             }
+-            mSwipeableContainer.setBackgroundResource(R.drawable.swipe_shadow_drag);
++            mSwipeableContainer.setBackgroundResource(R.drawable.swipe_shadow_drag_new);
+         }
+     }
+ 
+diff --git a/src/com/android/messaging/ui/conversationlist/ShareIntentFragment.java b/src/com/android/messaging/ui/conversationlist/ShareIntentFragment.java
+index beafb53..527cca6 100644
+--- a/src/com/android/messaging/ui/conversationlist/ShareIntentFragment.java
++++ b/src/com/android/messaging/ui/conversationlist/ShareIntentFragment.java
+@@ -85,7 +85,8 @@ public class ShareIntentFragment extends DialogFragment implements ConversationL
+         mRecyclerView.setLayoutManager(manager);
+         mRecyclerView.setHasFixedSize(true);
+         mRecyclerView.setAdapter(mAdapter);
+-        final Builder dialogBuilder = new AlertDialog.Builder(activity)
++        final Builder dialogBuilder = new AlertDialog.Builder(activity,
++                R.style.BugleThemeDialog)
+                 .setView(view)
+                 .setTitle(R.string.share_intent_activity_label);
+ 
+diff --git a/src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java b/src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java
+index 00af751..64305fb 100644
+--- a/src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java
++++ b/src/com/android/messaging/ui/conversationsettings/PeopleAndOptionsFragment.java
+@@ -148,7 +148,7 @@ public class PeopleAndOptionsFragment extends Fragment
+                 }
+                 final Resources res = getResources();
+                 final Activity activity = getActivity();
+-                new AlertDialog.Builder(activity)
++                new AlertDialog.Builder(activity, R.style.BugleThemeDialog)
+                         .setTitle(res.getString(R.string.block_confirmation_title,
+                                 item.getOtherParticipant().getDisplayDestination()))
+                         .setMessage(res.getString(R.string.block_confirmation_message))
+diff --git a/src/com/android/messaging/util/BugleActivityUtil.java b/src/com/android/messaging/util/BugleActivityUtil.java
+index 7f722fd..70d1b04 100644
+--- a/src/com/android/messaging/util/BugleActivityUtil.java
++++ b/src/com/android/messaging/util/BugleActivityUtil.java
+@@ -68,7 +68,7 @@ public class BugleActivityUtil {
+         }
+         UserManager userManager = (UserManager) context.getSystemService(Context.USER_SERVICE);
+         if (userManager.hasUserRestriction(UserManager.DISALLOW_SMS)) {
+-            new AlertDialog.Builder(activity)
++            new AlertDialog.Builder(activity, R.style.BugleThemeDialog)
+                     .setMessage(R.string.requires_sms_permissions_message)
+                     .setCancelable(false)
+                     .setNegativeButton(R.string.requires_sms_permissions_close_button,
+diff --git a/src/com/android/messaging/util/UiUtils.java b/src/com/android/messaging/util/UiUtils.java
+index 17c877f..bad8b2d 100644
+--- a/src/com/android/messaging/util/UiUtils.java
++++ b/src/com/android/messaging/util/UiUtils.java
+@@ -261,16 +261,7 @@ public class UiUtils {
+     }
+ 
+     public static void setStatusBarColor(final Activity activity, final int color) {
+-        if (OsUtil.isAtLeastL()) {
+-            // To achieve the appearance of an 80% opacity blend against a black background,
+-            // each color channel is reduced in value by 20%.
+-            final int blendedRed = (int) Math.floor(0.8 * Color.red(color));
+-            final int blendedGreen = (int) Math.floor(0.8 * Color.green(color));
+-            final int blendedBlue = (int) Math.floor(0.8 * Color.blue(color));
+-
+-            activity.getWindow().setStatusBarColor(
+-                    Color.rgb(blendedRed, blendedGreen, blendedBlue));
+-        }
++        activity.getWindow().setStatusBarColor(color);
+     }
+ 
+     public static void lockOrientation(final Activity activity) {
+-- 
+2.25.1
+

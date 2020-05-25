@@ -1,7 +1,7 @@
-From abd002d1eb6a8b666132fcd150f5c4f9163e2373 Mon Sep 17 00:00:00 2001
+From a975ac4c4ee62ca216c582557380951b8d479771 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 4 Mar 2020 18:09:47 +0200
-Subject: [PATCH 13/26] Revert "Update the behavior of the Dark theme slice"
+Subject: [PATCH 13/28] Revert "Update the behavior of the Dark theme slice"
 
 This reverts commit 5f42f2f7a7589fed30caae1d11d0e9757639caf1.
 
@@ -273,5 +273,5 @@ index 1af7b2bfac..bb213329b7 100644
          when(mBatteryManager.getIntProperty(BatteryManager.BATTERY_PROPERTY_CAPACITY))
                  .thenReturn(power_level);
 -- 
-2.17.1
+2.25.1
 

@@ -1,7 +1,7 @@
-From ffa6c2a3431fa9b6ffd757f31696e6ea1c578580 Mon Sep 17 00:00:00 2001
+From 499d36b5e6c95952b63a42e2ca6d6d93a3ebee91 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 12 Mar 2020 23:26:15 +0200
-Subject: [PATCH 5/5] launcher one quick step
+Subject: [PATCH 5/7] launcher one quick step
 
 	modified:   res/anim/no_anim.xml
 	modified:   res/anim/task_open_enter.xml
@@ -19,7 +19,7 @@ Change-Id: If8a97815abf1a65216cc8718799a366343a48583
  5 files changed, 14 insertions(+), 14 deletions(-)
 
 diff --git a/res/anim/no_anim.xml b/res/anim/no_anim.xml
-index 02b1625..e804372 100644
+index 02b162519..e80437225 100644
 --- a/res/anim/no_anim.xml
 +++ b/res/anim/no_anim.xml
 @@ -15,4 +15,4 @@
@@ -29,7 +29,7 @@ index 02b1625..e804372 100644
 -    android:duration="417" />
 +    android:duration="200" />
 diff --git a/res/anim/task_open_enter.xml b/res/anim/task_open_enter.xml
-index 3eb1915..69e1ce2 100644
+index 3eb191537..69e1ce28c 100644
 --- a/res/anim/task_open_enter.xml
 +++ b/res/anim/task_open_enter.xml
 @@ -24,11 +24,11 @@
@@ -47,7 +47,7 @@ index 3eb1915..69e1ce2 100644
 +            android:duration="250" />
  </set>
 diff --git a/res/animator/all_apps_fastscroll_icon_anim.xml b/res/animator/all_apps_fastscroll_icon_anim.xml
-index 380b009..42cbb18 100644
+index 380b009a6..42cbb18a1 100644
 --- a/res/animator/all_apps_fastscroll_icon_anim.xml
 +++ b/res/animator/all_apps_fastscroll_icon_anim.xml
 @@ -19,12 +19,12 @@
@@ -87,7 +87,7 @@ index 380b009..42cbb18 100644
 \ No newline at end of file
 +</selector>
 diff --git a/res/animator/discovery_bounce.xml b/res/animator/discovery_bounce.xml
-index f02ebdb..4510f22 100644
+index f02ebdbac..4510f22cd 100644
 --- a/res/animator/discovery_bounce.xml
 +++ b/res/animator/discovery_bounce.xml
 @@ -19,7 +19,7 @@
@@ -109,7 +109,7 @@ index f02ebdb..4510f22 100644
          android:propertyName="progress"
          android:valueTo="1f"
 diff --git a/res/values/config.xml b/res/values/config.xml
-index 0387184..4468740 100644
+index 038718473..44687403f 100644
 --- a/res/values/config.xml
 +++ b/res/values/config.xml
 @@ -37,7 +37,7 @@
@@ -148,5 +148,5 @@ index 0387184..4468740 100644
  <!-- Accessibility actions -->
      <item type="id" name="action_remove" />
 -- 
-2.17.1
+2.25.1
 

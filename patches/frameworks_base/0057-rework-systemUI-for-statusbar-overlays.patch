@@ -1,7 +1,7 @@
 From e2183019b44126853adb504ffb23e71ab655291b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 11 Apr 2020 04:38:19 +0300
-Subject: [PATCH 57/66] rework systemUI for statusbar overlays
+Subject: [PATCH 57/76] rework systemUI for statusbar overlays
 
 	modified:   core/res/res/values/dimens.xml
 	modified:   packages/SystemUI/res/drawable/stat_sys_alarm.xml

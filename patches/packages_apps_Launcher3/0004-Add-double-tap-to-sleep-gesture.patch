@@ -1,7 +1,7 @@
-From bcf7e7de6bd1d559458780345eb55c8a52580fd9 Mon Sep 17 00:00:00 2001
+From d77350de8e44f0cb1a1ac8096496244f014a6acb Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 16 Feb 2020 22:25:00 +0200
-Subject: [PATCH 4/5] Add double tap to sleep gesture
+Subject: [PATCH 4/7] Add double tap to sleep gesture
 
   * based on
   https://github.com/crdroidandroid/android_packages_apps_Launcher3/commit/1ced8c431b3a8ccb397199f68e1dd1ac401a90d4
@@ -31,7 +31,7 @@ Change-Id: I9a172cfbc38617914dcdc626e19e397ca8d7c229
  9 files changed, 57 insertions(+), 8 deletions(-)
 
 diff --git a/Android.mk b/Android.mk
-index 78ea02a..5bb3e9b 100644
+index 78ea02a26..5bb3e9b0f 100644
 --- a/Android.mk
 +++ b/Android.mk
 @@ -28,7 +28,8 @@ LOCAL_STATIC_JAVA_LIBRARIES:= PluginCoreLib
@@ -83,7 +83,7 @@ index 78ea02a..5bb3e9b 100644
  LOCAL_OVERRIDES_PACKAGES := Home Launcher2 Launcher3
  LOCAL_REQUIRED_MODULES := privapp_whitelist_com.android.launcher3
 diff --git a/AndroidManifest-common.xml b/AndroidManifest-common.xml
-index 555cc73..4ca9982 100644
+index 555cc7302..4ca9982ec 100644
 --- a/AndroidManifest-common.xml
 +++ b/AndroidManifest-common.xml
 @@ -19,7 +19,9 @@
@@ -107,7 +107,7 @@ index 555cc73..4ca9982 100644
      <!--
      Permissions required for read/write access to the workspace data. These permission name
 diff --git a/AndroidManifest.xml b/AndroidManifest.xml
-index b031ffb..6496a7c 100644
+index b031ffbee..6496a7c35 100644
 --- a/AndroidManifest.xml
 +++ b/AndroidManifest.xml
 @@ -19,7 +19,9 @@
@@ -122,7 +122,7 @@ index b031ffb..6496a7c 100644
      <!--
      Manifest entries specific to Launcher3. This is merged with AndroidManifest-common.xml.
 diff --git a/SecondaryDisplayLauncher/Android.mk b/SecondaryDisplayLauncher/Android.mk
-index 7f305bb..134e708 100644
+index 7f305bba5..134e70893 100644
 --- a/SecondaryDisplayLauncher/Android.mk
 +++ b/SecondaryDisplayLauncher/Android.mk
 @@ -31,7 +31,8 @@ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
@@ -136,7 +136,7 @@ index 7f305bb..134e708 100644
  LOCAL_MODULE := SecondaryDisplayLauncherLib
  LOCAL_PRIVILEGED_MODULE := true
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 9d9c2e8..96e3cae 100644
+index 9d9c2e8de..96e3caecc 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -339,4 +339,8 @@
@@ -149,7 +149,7 @@ index 9d9c2e8..96e3cae 100644
 +    <string name="pref_sleep_gesture_summary">Double tap on empty space for power-off screen</string>
  </resources>
 diff --git a/res/xml/launcher_preferences.xml b/res/xml/launcher_preferences.xml
-index 3455cb8..13ee1c5 100644
+index 3455cb866..13ee1c57c 100644
 --- a/res/xml/launcher_preferences.xml
 +++ b/res/xml/launcher_preferences.xml
 @@ -44,6 +44,13 @@
@@ -167,7 +167,7 @@ index 3455cb8..13ee1c5 100644
          android:key="pref_grid_options"
          android:title="Enable grid options"
 diff --git a/src/com/android/launcher3/Utilities.java b/src/com/android/launcher3/Utilities.java
-index 5d0effa..5d3eb04 100644
+index 5d0effa5f..5d3eb04b3 100644
 --- a/src/com/android/launcher3/Utilities.java
 +++ b/src/com/android/launcher3/Utilities.java
 @@ -130,6 +130,9 @@ public final class Utilities {
@@ -190,7 +190,7 @@ index 5d0effa..5d3eb04 100644
 +    }
  }
 diff --git a/src/com/android/launcher3/Workspace.java b/src/com/android/launcher3/Workspace.java
-index 9eeb286..e7d4a0e 100644
+index 9eeb2866b..e7d4a0eea 100644
 --- a/src/com/android/launcher3/Workspace.java
 +++ b/src/com/android/launcher3/Workspace.java
 @@ -47,6 +47,7 @@ import android.os.Handler;
@@ -245,7 +245,7 @@ index 9eeb286..e7d4a0e 100644
      public void setInsets(Rect insets) {
          DeviceProfile grid = mLauncher.getDeviceProfile();
 diff --git a/src/com/android/launcher3/touch/WorkspaceTouchListener.java b/src/com/android/launcher3/touch/WorkspaceTouchListener.java
-index 310d598..1d67bd6 100644
+index 310d598b2..1d67bd669 100644
 --- a/src/com/android/launcher3/touch/WorkspaceTouchListener.java
 +++ b/src/com/android/launcher3/touch/WorkspaceTouchListener.java
 @@ -81,6 +81,7 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
@@ -257,5 +257,5 @@ index 310d598..1d67bd6 100644
          int action = ev.getActionMasked();
          if (action == ACTION_DOWN) {
 -- 
-2.17.1
+2.25.1
 

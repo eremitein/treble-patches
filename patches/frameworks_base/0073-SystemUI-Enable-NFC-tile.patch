@@ -1,0 +1,110 @@
+From 67f3eb44b42075160c49db0e9f63cd0bf1497600 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 22 May 2020 02:32:39 +0300
+Subject: [PATCH 73/76] SystemUI: Enable NFC tile
+
+  * from
+  https://github.com/LineageOS/android_frameworks_base/commit/ebec0fb5c25691d3a5df9dc494544e943dd49124
+---
+ .../{ic_qs_nfc_enabled.xml => ic_qs_nfc.xml}  |  4 +--
+ .../res/drawable/ic_qs_nfc_disabled.xml       | 31 -------------------
+ packages/SystemUI/res/values/config.xml       |  2 +-
+ .../android/systemui/qs/tiles/NfcTile.java    |  5 +--
+ 4 files changed, 6 insertions(+), 36 deletions(-)
+ rename packages/SystemUI/res/drawable/{ic_qs_nfc_enabled.xml => ic_qs_nfc.xml} (95%)
+ delete mode 100644 packages/SystemUI/res/drawable/ic_qs_nfc_disabled.xml
+
+diff --git a/packages/SystemUI/res/drawable/ic_qs_nfc_enabled.xml b/packages/SystemUI/res/drawable/ic_qs_nfc.xml
+similarity index 95%
+rename from packages/SystemUI/res/drawable/ic_qs_nfc_enabled.xml
+rename to packages/SystemUI/res/drawable/ic_qs_nfc.xml
+index becb18ad8ba..2c080964b48 100644
+--- a/packages/SystemUI/res/drawable/ic_qs_nfc_enabled.xml
++++ b/packages/SystemUI/res/drawable/ic_qs_nfc.xml
+@@ -14,8 +14,8 @@
+      limitations under the License.
+ -->
+ <vector xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:width="24dp"
+-    android:height="24dp"
++    android:width="48dp"
++    android:height="48dp"
+     android:viewportWidth="24"
+     android:viewportHeight="24">
+ 
+diff --git a/packages/SystemUI/res/drawable/ic_qs_nfc_disabled.xml b/packages/SystemUI/res/drawable/ic_qs_nfc_disabled.xml
+deleted file mode 100644
+index 558f3d083f4..00000000000
+--- a/packages/SystemUI/res/drawable/ic_qs_nfc_disabled.xml
++++ /dev/null
+@@ -1,31 +0,0 @@
+-<!--
+-     Copyright (C) 2016 The Android Open Source Project
+-
+-     Licensed under the Apache License, Version 2.0 (the "License");
+-     you may not use this file except in compliance with the License.
+-     You may obtain a copy of the License at
+-
+-          http://www.apache.org/licenses/LICENSE-2.0
+-
+-     Unless required by applicable law or agreed to in writing, software
+-     distributed under the License is distributed on an "AS IS" BASIS,
+-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-     See the License for the specific language governing permissions and
+-     limitations under the License.
+--->
+-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:width="24dp"
+-    android:height="24dp"
+-    android:viewportWidth="24"
+-    android:viewportHeight="24">
+-
+-    <path
+-        android:pathData="M4 20h16V4H4v16z" />
+-    <path
+-        android:fillColor="#4DFFFFFF"
+-        android:pathData="M20 2H4c-1.1 0-2 .9-2 2v16c0 1.1 .9 2 2 2h16c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0
+-18H4V4h16v16zM18 6h-5c-1.1 0-2 .9-2 2v2.28c-.6 .35 -1 .98-1 1.72 0 1.1 .9 2 2
+-2s2-.9 2-2c0-.74-.4-1.38-1-1.72V8h3v8H8V8h2V6H6v12h12V6z" />
+-    <path
+-        android:pathData="M0 0h24v24H0z" />
+-</vector>
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index cf374f8666e..8396d0cc17b 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -117,7 +117,7 @@
+ 
+     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
+     <string name="quick_settings_tiles_stock" translatable="false">
+-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,dark,work,cast,night,heads_up
++        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,location,hotspot,inversion,saver,dark,work,cast,night,heads_up
+     </string>
+ 
+     <!-- The tiles to display in QuickSettings -->
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java b/packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java
+index 476a239de72..d0bd073e248 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java
+@@ -38,6 +38,8 @@ import javax.inject.Inject;
+ /** Quick settings tile: Enable/Disable NFC **/
+ public class NfcTile extends QSTileImpl<BooleanState> {
+ 
++    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_nfc);
++
+     private NfcAdapter mAdapter;
+ 
+     private boolean mListening;
+@@ -105,8 +107,7 @@ public class NfcTile extends QSTileImpl<BooleanState> {
+         state.state = getAdapter() == null
+                 ? Tile.STATE_UNAVAILABLE
+                 : state.value ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
+-        state.icon = ResourceIcon.get(
+-                state.value ? R.drawable.ic_qs_nfc_enabled : R.drawable.ic_qs_nfc_disabled);
++        state.icon = mIcon;
+         state.label = mContext.getString(R.string.quick_settings_nfc_label);
+         state.expandedAccessibilityClassName = Switch.class.getName();
+         state.contentDescription = state.label;
+-- 
+2.25.1
+

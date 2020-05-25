@@ -1,7 +1,7 @@
 From 46f8512ff40318a024aa577ad184c488b510fd43 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 08:24:29 +0200
-Subject: [PATCH 26/66] rework Zilla font
+Subject: [PATCH 26/76] rework Zilla font
 
 	modified:   data/fonts/fonts.xml
 	modified:   packages/overlays/FontZillaOverlay/AndroidManifest.xml

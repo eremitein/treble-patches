@@ -1,7 +1,7 @@
-From 4f0e5055716893a8608765b5e498e17b23efb497 Mon Sep 17 00:00:00 2001
+From 48bc126cbbe67711ba905af33d18532860402ae8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Mar 2020 14:34:56 +0200
-Subject: [PATCH 15/26] fix Dark mode trigger
+Subject: [PATCH 15/28] fix Dark mode trigger
 
 	modified:   src/com/android/settings/display/DarkUIPreferenceController.java
 ---
@@ -21,5 +21,5 @@ index 4816b21dca..7d02462473 100644
          return mUiModeManager.setNightModeActivated(isChecked);
      }
 -- 
-2.17.1
+2.25.1
 

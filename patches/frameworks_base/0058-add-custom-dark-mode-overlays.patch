@@ -1,7 +1,7 @@
 From d2dbac5c106069ac8f0b4402d8c0677fc3e5f34c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 11 Apr 2020 14:45:02 +0300
-Subject: [PATCH 58/66] add custom dark mode overlays
+Subject: [PATCH 58/76] add custom dark mode overlays
 
 ---
  .../systemui/theme/ThemeOverlayManager.java   |  8 +++-

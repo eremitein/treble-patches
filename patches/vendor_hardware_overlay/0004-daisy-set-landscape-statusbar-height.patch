@@ -1,0 +1,26 @@
+From 2c883e6ad8426e61a49981b20d79fefa97c41933 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 23 May 2020 19:10:02 +0300
+Subject: [PATCH 4/4] [daisy] set landscape statusbar height
+
+	modified:   Xiaomi/MiA2Lite/res/values/notch.xml
+---
+ Xiaomi/MiA2Lite/res/values/notch.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/Xiaomi/MiA2Lite/res/values/notch.xml b/Xiaomi/MiA2Lite/res/values/notch.xml
+index 812369c..d6b5585 100644
+--- a/Xiaomi/MiA2Lite/res/values/notch.xml
++++ b/Xiaomi/MiA2Lite/res/values/notch.xml
+@@ -20,6 +20,6 @@
+     <!-- Height of the status bar in portrait -->
+     <dimen name="status_bar_height_portrait">89px</dimen>
+     <!-- Height of the status bar in landscape -->
+-    <dimen name="status_bar_height_landscape">24dp</dimen>
+-	<string translatable="false" name="config_mainBuiltInDisplayCutout">M -186,0 L -186,94 L 186,94 L 186,0 Z</string>
++    <dimen name="status_bar_height_landscape">89px</dimen>
++    <string translatable="false" name="config_mainBuiltInDisplayCutout">M -186,0 L -186,94 L 186,94 L 186,0 Z</string>
+ </resources>
+-- 
+2.25.1
+

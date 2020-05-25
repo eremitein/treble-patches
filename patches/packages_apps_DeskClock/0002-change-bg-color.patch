@@ -1,7 +1,7 @@
-From 02c660aea47f39644768b3c157beb735d4ecfdc1 Mon Sep 17 00:00:00 2001
+From 1a207431ad2bfcb2fbb85cea57a72a2838a695b8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Dec 2019 12:14:32 +0200
-Subject: [PATCH 2/3] change bg color
+Subject: [PATCH 2/4] change bg color
 
 	modified:   res/values/colors.xml
 ---
@@ -22,5 +22,5 @@ index 19db82482..efb740041 100644
      <!-- shadowColor for widget text -->
      <color name="widget_shadow_color">#67000000</color>
 -- 
-2.11.0
+2.25.1
 

@@ -1,7 +1,7 @@
 From 926712fdff8282e5cfc657ff1d4ce175e6516c90 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 21:51:35 +0200
-Subject: [PATCH 51/66] fix DroidSans compilation
+Subject: [PATCH 51/76] fix DroidSans compilation
 
 	modified:   data/fonts/Android.mk
 ---

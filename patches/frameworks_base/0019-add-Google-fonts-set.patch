@@ -1,7 +1,7 @@
 From 3852e97b62a7defe2d3dc858c43b110db396493f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 16:56:30 +0200
-Subject: [PATCH 19/66] add Google fonts set
+Subject: [PATCH 19/76] add Google fonts set
 
 	modified:   data/fonts/fonts.xml
 ---

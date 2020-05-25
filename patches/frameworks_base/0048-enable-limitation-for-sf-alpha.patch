@@ -1,7 +1,7 @@
 From 8acdb73da860a6161b661b07e354c645601adb35 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 8 Apr 2020 19:18:12 +0300
-Subject: [PATCH 48/66] enable limitation for sf alpha
+Subject: [PATCH 48/76] enable limitation for sf alpha
 
   * based on
   https://github.com/PixysOS-Devices/android_device_xiaomi_whyred/commit/803519b33c308fd9545c19078970c3608dc2edfb

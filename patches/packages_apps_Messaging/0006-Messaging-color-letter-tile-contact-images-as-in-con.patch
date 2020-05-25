@@ -1,0 +1,132 @@
+From b80c3cfa854dcffc5a01380436a9cfe0e399d23c Mon Sep 17 00:00:00 2001
+From: maxwen <max.weninger@gmail.com>
+Date: Thu, 26 Dec 2019 23:52:06 +0100
+Subject: [PATCH 6/9] Messaging: color letter tile contact images as in
+ contacts app
+
+fruitloops here we come!
+
+Change-Id: I0c5fbc948c25efbc40308bbd03e3c7aec3b9fad1
+Signed-off-by: Pranav Vashi <neobuddy89@gmail.com>
+---
+ res/values-night/colors.xml                     | 17 +++++++++++++++++
+ res/values/colors.xml                           | 17 +++++++++++++++++
+ .../datamodel/media/AvatarRequest.java          | 15 ++++++++++++---
+ 3 files changed, 46 insertions(+), 3 deletions(-)
+
+diff --git a/res/values-night/colors.xml b/res/values-night/colors.xml
+index f352483..eb41af6 100644
+--- a/res/values-night/colors.xml
++++ b/res/values-night/colors.xml
+@@ -165,5 +165,22 @@
+     <color name="fastscroll_preview_text_color">#999999</color>
+ 
+     <color name="google_gray">@color/omni_color7</color>
++
++    <array name="letter_tile_colors">
++        <item>#8c2b23</item>
++        <item>#af164a</item>
++        <item>#51d847</item>
++        <item>#4e2b8c</item>
++        <item>#2e3b84</item>
++        <item>#2d5dad</item>
++        <item>#0071a8</item>
++        <item>#0f5d66</item>
++        <item>#02665c</item>
++        <item>#0b7743</item>
++        <item>#507a2c</item>
++        <item>#af4f00</item>
++        <item>#cc451a</item>
++        <item>#595959</item>
++    </array>
+ </resources>
+ 
+diff --git a/res/values/colors.xml b/res/values/colors.xml
+index d792461..f3afb49 100644
+--- a/res/values/colors.xml
++++ b/res/values/colors.xml
+@@ -172,4 +172,21 @@
+     <color name="fastscroll_preview_text_color">#ffffff</color>
+ 
+     <color name="google_gray">#F1F1F1</color>
++
++    <array name="letter_tile_colors">
++        <item>#DB4437</item>
++        <item>#E91E63</item>
++        <item>#9C27B0</item>
++        <item>#673AB7</item>
++        <item>#3F51B5</item>
++        <item>#4285F4</item>
++        <item>#039BE5</item>
++        <item>#0097A7</item>
++        <item>#009688</item>
++        <item>#0F9D58</item>
++        <item>#689F38</item>
++        <item>#EF6C00</item>
++        <item>#FF5722</item>
++        <item>#757575</item>
++    </array>
+ </resources>
+diff --git a/src/com/android/messaging/datamodel/media/AvatarRequest.java b/src/com/android/messaging/datamodel/media/AvatarRequest.java
+index 6a738c7..dea467f 100644
+--- a/src/com/android/messaging/datamodel/media/AvatarRequest.java
++++ b/src/com/android/messaging/datamodel/media/AvatarRequest.java
+@@ -17,6 +17,7 @@ package com.android.messaging.datamodel.media;
+ 
+ import android.content.Context;
+ import android.content.res.Resources;
++import android.content.res.TypedArray;
+ import android.graphics.Bitmap;
+ import android.graphics.Canvas;
+ import android.graphics.Matrix;
+@@ -42,10 +43,12 @@ import java.util.List;
+ public class AvatarRequest extends UriImageRequest<AvatarRequestDescriptor> {
+     private static Bitmap sDefaultPersonBitmap;
+     private static Bitmap sDefaultPersonBitmapLarge;
++    private static TypedArray sColors;
+ 
+     public AvatarRequest(final Context context,
+             final AvatarRequestDescriptor descriptor) {
+         super(context, descriptor);
++        sColors = context.getResources().obtainTypedArray(R.array.letter_tile_colors);
+     }
+ 
+     @Override
+@@ -106,7 +109,8 @@ public class AvatarRequest extends UriImageRequest<AvatarRequestDescriptor> {
+             avatarType = AvatarUriUtil.getAvatarType(generatedUri);
+             if (AvatarUriUtil.TYPE_LETTER_TILE_URI.equals(avatarType)) {
+                 final String name = AvatarUriUtil.getName(generatedUri);
+-                bitmap = renderLetterTile(name, width, height);
++                final String identifier = AvatarUriUtil.getIdentifier(generatedUri);
++                bitmap = renderLetterTile(name, identifier, width, height);
+             } else {
+                 bitmap = renderDefaultAvatar(width, height);
+             }
+@@ -153,12 +157,12 @@ public class AvatarRequest extends UriImageRequest<AvatarRequestDescriptor> {
+         return bitmap;
+     }
+ 
+-    private Bitmap renderLetterTile(final String name, final int width, final int height) {
++    private Bitmap renderLetterTile(final String name, final String identifier, final int width, final int height) {
+         final float halfWidth = width / 2;
+         final float halfHeight = height / 2;
+         final int minOfWidthAndHeight = Math.min(width, height);
+         final Bitmap bitmap = getBitmapPool().createOrReuseBitmap(width, height,
+-                getBackgroundColor());
++                getBackgroundColor(identifier));
+         final Resources resources = mContext.getResources();
+         final Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
+         paint.setTypeface(Typeface.create("sans-serif-medium", Typeface.NORMAL));
+@@ -186,4 +190,9 @@ public class AvatarRequest extends UriImageRequest<AvatarRequestDescriptor> {
+     public int getCacheId() {
+         return BugleMediaCacheManager.AVATAR_IMAGE_CACHE;
+     }
++
++    private int getBackgroundColor(String identifier) {
++        final int color = Math.abs(identifier.hashCode()) % sColors.length();
++        return sColors.getColor(color, mContext.getResources().getColor(R.color.primary_color));
++    }
+ }
+-- 
+2.25.1
+

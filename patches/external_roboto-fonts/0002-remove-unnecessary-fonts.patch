@@ -1,0 +1,41 @@
+From 5b3b460262b8ca70e0c393fc61095567560a0cbc Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 22 May 2020 15:43:15 +0300
+Subject: [PATCH 2/2] remove unnecessary fonts
+
+Change-Id: Ibb89fe0a0d5b32d6647ab2b7b4b1995d53c6e3e0
+---
+ Android.mk | 4 +---
+ fonts.mk   | 4 +---
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/Android.mk b/Android.mk
+index 77ce5d0..28a5260 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -31,9 +31,7 @@ font_src_files := \
+     RobotoMini-Regular.ttf \
+     RobotoMini-Bold.ttf \
+     RobotoMini-Italic.ttf \
+-    RobotoMini-BoldItalic.ttf \
+-    RobotoMini-Medium.ttf \
+-    RobotoMini-MediumItalic.ttf
++    RobotoMini-BoldItalic.ttf
+ 
+ $(foreach f, $(font_src_files), $(call build-one-font-module, $(f)))
+ 
+diff --git a/fonts.mk b/fonts.mk
+index 3d27fcd..d1a29de 100644
+--- a/fonts.mk
++++ b/fonts.mk
+@@ -16,6 +16,4 @@ PRODUCT_PACKAGES := \
+     RobotoMini-Regular.ttf \
+     RobotoMini-Bold.ttf \
+     RobotoMini-Italic.ttf \
+-    RobotoMini-BoldItalic.ttf \
+-    RobotoMini-Medium.ttf \
+-    RobotoMini-MediumItalic.ttf
++    RobotoMini-BoldItalic.ttf
+-- 
+2.25.1
+

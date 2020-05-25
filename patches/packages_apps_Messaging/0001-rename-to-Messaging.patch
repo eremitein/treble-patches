@@ -1,0 +1,39 @@
+From bcdfce96c40afa258bb1c8c9a95b6cce6eab5bb0 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 28 Dec 2019 13:59:41 +0200
+Subject: [PATCH 1/9] rename to Messaging
+
+	modified:   Android.mk
+	modified:   CleanSpec.mk
+---
+ Android.mk   | 2 +-
+ CleanSpec.mk | 1 +
+ 2 files changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/Android.mk b/Android.mk
+index 618a3ff..2ab539e 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -64,7 +64,7 @@ else
+     LOCAL_PROGUARD_FLAG_FILES += proguard-release.flags
+ endif
+ 
+-LOCAL_PACKAGE_NAME := messaging
++LOCAL_PACKAGE_NAME := Messaging
+ 
+ LOCAL_SDK_VERSION := current
+ 
+diff --git a/CleanSpec.mk b/CleanSpec.mk
+index 79e4ced..52cb056 100644
+--- a/CleanSpec.mk
++++ b/CleanSpec.mk
+@@ -39,5 +39,6 @@
+ # ************************************************
+ 
+ $(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/app/messaging)
++$(call add-clean-step, rm -rf $(PRODUCT_OUT)/system/app/Messaging)
+ $(call add-clean-step, rm -f $(PRODUCT_OUT)/system/lib/libgiftranscode.so)
+ $(call add-clean-step, rm -f $(PRODUCT_OUT)/system/lib64/libgiftranscode.so)
+-- 
+2.25.1
+

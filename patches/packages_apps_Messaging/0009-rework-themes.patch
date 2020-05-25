@@ -1,0 +1,103 @@
+From 053de08fb178270f885f684f7952211f88ad3f3c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 28 Apr 2020 19:38:52 +0300
+Subject: [PATCH 9/9] rework themes
+
+	modified:   res/values-night/colors.xml
+	modified:   res/values-night/styles.xml
+	modified:   res/values/colors.xml
+	modified:   res/values/lineage_colors.xml
+
+Change-Id: I9a9c2f7ad44c5c9fc3fda9fd595923633f88a9b9
+---
+ res/values-night/colors.xml   | 7 +++----
+ res/values-night/styles.xml   | 2 +-
+ res/values/colors.xml         | 4 ++--
+ res/values/lineage_colors.xml | 2 +-
+ 4 files changed, 7 insertions(+), 8 deletions(-)
+
+diff --git a/res/values-night/colors.xml b/res/values-night/colors.xml
+index eb41af6..5113bb6 100644
+--- a/res/values-night/colors.xml
++++ b/res/values-night/colors.xml
+@@ -20,7 +20,7 @@
+     <color name="omni_color3">#80eeeeee</color>
+ <!--    <color name="omni_color1">@*android:color/primary_dark_device_default_light</color> -->
+     <color name="omni_color2">@*android:color/primary_dark_device_default_settings</color>
+-    <color name="omni_color1">@*android:color/primary_device_default_settings</color>
++    <color name="omni_color1">@*android:color/primary_dark_device_default_dark</color>
+     <color name="omni_color7">@*android:color/background_floating_device_default_dark</color>
+     <color name="omni_text1">#ffffffff</color>
+     <color name="omni_text2">#ffeeeeee</color>
+@@ -32,7 +32,7 @@
+ 
+     <!-- Conversation list -->
+     <color name="conversation_list_item_read">@color/omni_text2</color>
+-    <color name="conversation_list_item_unread">@color/omni_text1</color>
++    <color name="conversation_list_item_unread">#ff9800</color>
+     <color name="conversation_list_error">#fff45342</color>
+     <color name="conversation_list_name">@color/omni_text1</color>
+     <color name="conversation_list_details">@color/omni_text3</color>
+@@ -120,7 +120,7 @@
+ 
+     <color name="participant_list_text_primary">@color/omni_text1</color>
+     <color name="people_and_options_header_text">@color/omni_text1</color>
+-    <color name="people_and_options_list_divider">#222222</color>
++    <color name="people_and_options_list_divider">#00ffffff</color>
+ 
+     <color name="fab_pressed_color">@color/omni_color3</color>
+ 
+@@ -183,4 +183,3 @@
+         <item>#595959</item>
+     </array>
+ </resources>
+-
+diff --git a/res/values-night/styles.xml b/res/values-night/styles.xml
+index b8a154b..a3e5f66 100644
+--- a/res/values-night/styles.xml
++++ b/res/values-night/styles.xml
+@@ -388,7 +388,7 @@
+ 
+     <style name="ComposeMessageViewTextCounterStyle">
+         <item name="android:textColor">@color/message_text_counter_color</item>
+-        <item name="android:textSize">@dimen/message_text_counter_size</item>
++        <item name="android:textSize">@dimen/conversation_compose_send_text_size</item>
+         <item name="android:fontFamily">sans-serif</item>
+         <item name="android:layout_gravity">right|center_vertical</item>
+         <item name="android:paddingRight">@dimen/compose_message_text_box_padding_side</item>
+diff --git a/res/values/colors.xml b/res/values/colors.xml
+index f3afb49..fafa510 100644
+--- a/res/values/colors.xml
++++ b/res/values/colors.xml
+@@ -56,7 +56,7 @@
+     <color name="background_item_selected">#cc0099cc</color>
+     <color name="background_item_pressed">#6733b5e5</color>
+ 
+-    <color name="subject_editor_bubble">#ffffffff</color>
++    <color name="subject_editor_bubble">#f1f1f1</color>
+     <color name="message_text_color_incoming">#ff000000</color>
+     <color name="message_text_color_incoming_download_failed">#6a6a6a</color>
+     <color name="message_text_color_outgoing">#ff323232</color>
+@@ -123,7 +123,7 @@
+ 
+     <color name="participant_list_text_primary">#4d4d4d</color>
+     <color name="people_and_options_header_text">#6d6d6d</color>
+-    <color name="people_and_options_list_divider">#cccccc</color>
++    <color name="people_and_options_list_divider">#00ffffff</color>
+ 
+     <color name="fab_color">@color/lineage_accent</color>
+     <color name="fab_pressed_color">#3ea4dc</color>
+diff --git a/res/values/lineage_colors.xml b/res/values/lineage_colors.xml
+index 787d5e5..c239c6e 100644
+--- a/res/values/lineage_colors.xml
++++ b/res/values/lineage_colors.xml
+@@ -20,5 +20,5 @@
+     <color name="button_text">#000000</color>
+ 
+     <color name="navigation_bar_bg">@android:color/white</color>
+-    <color name="navigation_bar_divider">#1f000000</color>
++    <color name="navigation_bar_divider">#00ffffff</color>
+ </resources>
+-- 
+2.25.1
+

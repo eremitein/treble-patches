@@ -1,7 +1,7 @@
 From f31c7acbd2f11248f7c8bf9b99527d3da0ef7e69 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 16:51:46 +0200
-Subject: [PATCH 50/66] add GoogleSans font normally
+Subject: [PATCH 50/76] add GoogleSans font normally
 
 	modified:   data/fonts/fonts.xml
 ---

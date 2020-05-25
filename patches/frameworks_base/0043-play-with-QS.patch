@@ -1,7 +1,7 @@
 From 392e4448264ec3d0f9a5566b21c9c6bf9623b439 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Mar 2020 15:26:13 +0200
-Subject: [PATCH 43/66] play with QS
+Subject: [PATCH 43/76] play with QS
 
 	modified:   packages/SystemUI/res/values/config.xml
 	modified:   packages/SystemUI/res/values/dimens.xml

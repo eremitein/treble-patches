@@ -1,7 +1,7 @@
 From d58602e4f5bc6d0cecbced04f951d924777230c6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 13 Apr 2020 17:34:52 +0300
-Subject: [PATCH 62/66] change material_grey_900 & 850 colors
+Subject: [PATCH 62/76] change material_grey_900 & 850 colors
 
 	modified:   core/res/res/values/colors_material.xml
 ---

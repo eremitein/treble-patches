@@ -1,0 +1,41 @@
+From 5641aa14fe843f2c135b0c672d39b9c366cada0a Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 22 May 2020 15:47:15 +0300
+Subject: [PATCH 2/2] remove unnecessary fonts
+
+Change-Id: I6cf2e13089f514e4ff2565031f2e4c982c92497b
+---
+ Android.mk | 4 +---
+ fonts.mk   | 4 +---
+ 2 files changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/Android.mk b/Android.mk
+index cd0366e..90da560 100644
+--- a/Android.mk
++++ b/Android.mk
+@@ -38,9 +38,7 @@ font_src_files := \
+     Rubik-Regular.ttf \
+     Rubik-Italic.ttf \
+     Rubik-Medium.ttf \
+-    Rubik-MediumItalic.ttf \
+-    Rubik-Bold.ttf \
+-    Rubik-BoldItalic.ttf
++    Rubik-MediumItalic.ttf
+ 
+ $(foreach f, $(font_src_files), $(call build-one-font-module, $(f)))
+ 
+diff --git a/fonts.mk b/fonts.mk
+index a328b4b..f42a22f 100644
+--- a/fonts.mk
++++ b/fonts.mk
+@@ -20,6 +20,4 @@ PRODUCT_PACKAGES := \
+     Rubik-Regular.ttf \
+     Rubik-Italic.ttf \
+     Rubik-Medium.ttf \
+-    Rubik-MediumItalic.ttf \
+-    Rubik-Bold.ttf \
+-    Rubik-BoldItalic.ttf
++    Rubik-MediumItalic.ttf
+-- 
+2.25.1
+

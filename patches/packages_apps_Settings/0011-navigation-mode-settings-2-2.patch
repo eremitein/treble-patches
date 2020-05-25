@@ -1,7 +1,7 @@
-From 2a43bb052952299f53d9c74d4a0de77e9735ec55 Mon Sep 17 00:00:00 2001
+From 110908dffca21fd1a6dd5c297b2bb6814d41d37d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 11:51:23 +0200
-Subject: [PATCH 11/26] navigation mode settings [2/2]
+Subject: [PATCH 11/28] navigation mode settings [2/2]
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/598a941efc26c1550d11737b0438584df57851ec
@@ -255,5 +255,5 @@ index 9e35529801..3f720bd8c3 100644
      static String getCurrentSystemNavigationMode(Context context) {
          if (SystemNavigationPreferenceController.isEdgeToEdgeEnabled(context)) {
 -- 
-2.17.1
+2.25.1
 

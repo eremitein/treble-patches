@@ -1,7 +1,7 @@
 From 5a564335154437988527fc9d8320c2206472bbee Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 2 Mar 2020 13:14:03 +0200
-Subject: [PATCH 66/66] disable advance anti-falsing classifier on the
+Subject: [PATCH 66/76] disable advance anti-falsing classifier on the
  lockscreen
 
 	modified:   packages/SystemUI/res/values/config.xml

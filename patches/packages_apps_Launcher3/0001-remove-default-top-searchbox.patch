@@ -1,7 +1,7 @@
-From e5563058a82011ab1f78f086dbc931712d3fc23a Mon Sep 17 00:00:00 2001
+From 15bafcb857c966876515bf478c64842e621cf1b2 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Dec 2019 00:10:35 +0200
-Subject: [PATCH 1/5] remove default top searchbox
+Subject: [PATCH 1/7] remove default top searchbox
 
 	modified:   src/com/android/launcher3/config/BaseFlags.java
 
@@ -11,7 +11,7 @@ Change-Id: I46031b73828738236f85eb7a3e4a8aeefbef4752
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/com/android/launcher3/config/BaseFlags.java b/src/com/android/launcher3/config/BaseFlags.java
-index 64d236f..7f60bd0 100644
+index 64d236fab..7f60bd031 100644
 --- a/src/com/android/launcher3/config/BaseFlags.java
 +++ b/src/com/android/launcher3/config/BaseFlags.java
 @@ -66,7 +66,7 @@ public abstract class BaseFlags {
@@ -24,5 +24,5 @@ index 64d236f..7f60bd0 100644
      public static final TogglableFlag EXAMPLE_FLAG = new TogglableFlag("EXAMPLE_FLAG", true,
              "An example flag that doesn't do anything. Useful for testing");
 -- 
-2.17.1
+2.25.1
 
