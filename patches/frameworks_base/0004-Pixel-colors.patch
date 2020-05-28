@@ -1,7 +1,7 @@
-From 92f00be35d29928bb51654ea092bda1e3f745ffb Mon Sep 17 00:00:00 2001
+From 30f1aee34212b1ce58bd9c8baee9698b50fb52e5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 16 Dec 2019 01:21:53 +0200
-Subject: [PATCH 04/76] Pixel colors
+Subject: [PATCH 04/75] Pixel colors
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/9f98b8ef947fcc6f7eea6690fd524807495367fb#diff-5cc79dde5c8fa0b4f33df52dc0799c70

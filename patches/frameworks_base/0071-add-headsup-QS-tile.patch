@@ -1,0 +1,282 @@
+From deca05729ad45e35d498a84eef81c4415966284c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 12 May 2020 20:15:52 +0300
+Subject: [PATCH 71/75] add headsup QS tile
+
+  * from
+  https://github.com/LineageOS/android_frameworks_base/commit/14f9d78f60c4554c953085e1bee1957d503a044f
+
+	new file:   packages/SystemUI/res/drawable/ic_qs_heads_up.xml
+	modified:   packages/SystemUI/res/values/config.xml
+	modified:   packages/SystemUI/res/values/strings.xml
+	modified:   packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
+	new file:   packages/SystemUI/src/com/android/systemui/qs/tiles/HeadsUpTile.java
+	modified:   proto/src/metrics_constants/metrics_constants.proto
+---
+ .../SystemUI/res/drawable/ic_qs_heads_up.xml  |  36 ++++++
+ packages/SystemUI/res/values/config.xml       |   2 +-
+ packages/SystemUI/res/values/strings.xml      |   6 +
+ .../systemui/qs/tileimpl/QSFactoryImpl.java   |   8 +-
+ .../systemui/qs/tiles/HeadsUpTile.java        | 119 ++++++++++++++++++
+ .../metrics_constants/metrics_constants.proto |   2 +
+ 6 files changed, 171 insertions(+), 2 deletions(-)
+ create mode 100644 packages/SystemUI/res/drawable/ic_qs_heads_up.xml
+ create mode 100644 packages/SystemUI/src/com/android/systemui/qs/tiles/HeadsUpTile.java
+
+diff --git a/packages/SystemUI/res/drawable/ic_qs_heads_up.xml b/packages/SystemUI/res/drawable/ic_qs_heads_up.xml
+new file mode 100644
+index 00000000000..b107602787c
+--- /dev/null
++++ b/packages/SystemUI/res/drawable/ic_qs_heads_up.xml
+@@ -0,0 +1,36 @@
++<!--
++Copyright (C) 2014 The Android Open Source Project
++
++   Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++         http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++        android:width="64dp"
++        android:height="64dp"
++        android:viewportWidth="24.0"
++        android:viewportHeight="24.0">
++
++        <path
++            android:pathData="M0,0h24v24H0V0z" />
++        <path
++            android:fillColor="#FFFFFFFF"
++            android:pathData="M18,16v-5c0-3.07-1.64-5.64-4.5-6.32V4c0-0.83-0.68-1.5-1.51-1.5S10.5,3.17,10.5,4v0.68C7.63,5.36,6,7.92,6,11v5 l-1.3,1.29C4.07,17.92,4.51,19,5.4,19h13.17c0.89,0,1.34-1.08,0.71-1.71L18,16z" />
++        <path
++            android:fillColor="#FFFFFFFF"
++            android:pathData="M11.99,22c1.1,0,2-0.9,2-2h-4C9.99,21.1,10.88,22,11.99,22z" />
++        <path
++            android:fillColor="#FFFFFFFF"
++            android:pathData="M6.77,4.73C7.19,4.35,7.2,3.7,6.8,3.3l0,0c-0.38-0.38-1-0.39-1.39-0.02C3.7,4.84,2.52,6.96,2.14,9.34 C2.05,9.95,2.52,10.5,3.14,10.5h0c0.48,0,0.9-0.35,0.98-0.83C4.42,7.73,5.38,6,6.77,4.73z" />
++        <path
++            android:fillColor="#FFFFFFFF"
++            android:pathData="M18.6,3.28c-0.4-0.37-1.02-0.36-1.4,0.02l0,0c-0.4,0.4-0.38,1.04,0.03,1.42c1.38,1.27,2.35,3,2.65,4.94 c0.07,0.48,0.49,0.83,0.98,0.83c0.61,0,1.09-0.55,0.99-1.16C21.47,6.96,20.3,4.85,18.6,3.28z" />
++</vector>
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index 1487b723674..cf374f8666e 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -117,7 +117,7 @@
+ 
+     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
+     <string name="quick_settings_tiles_stock" translatable="false">
+-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,dark,work,cast,night
++        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,dark,work,cast,night,heads_up
+     </string>
+ 
+     <!-- The tiles to display in QuickSettings -->
+diff --git a/packages/SystemUI/res/values/strings.xml b/packages/SystemUI/res/values/strings.xml
+index 72c0ba858b6..620407935a8 100644
+--- a/packages/SystemUI/res/values/strings.xml
++++ b/packages/SystemUI/res/values/strings.xml
+@@ -2489,4 +2489,10 @@
+     <!-- Notification content text when switching to a default launcher that supports gesture navigation [CHAR LIMIT=NONE] -->
+     <string name="notification_content_gesture_nav_available">Go to Settings to update system navigation</string>
+ 
++    <!-- Heads up QS tile -->
++    <string name="quick_settings_heads_up_label">Heads up</string>
++    <string name="accessibility_quick_settings_heads_up_off">Heads up off</string>
++    <string name="accessibility_quick_settings_heads_up_on">Heads up on</string>
++    <string name="accessibility_quick_settings_heads_up_changed_off">Heads up turned off</string>
++    <string name="accessibility_quick_settings_heads_up_changed_on">Heads up turned on</string>
+ </resources>
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java b/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
+index daaee4cd533..90b4fbb2854 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
+@@ -35,6 +35,7 @@ import com.android.systemui.qs.tiles.ColorInversionTile;
+ import com.android.systemui.qs.tiles.DataSaverTile;
+ import com.android.systemui.qs.tiles.DndTile;
+ import com.android.systemui.qs.tiles.FlashlightTile;
++import com.android.systemui.qs.tiles.HeadsUpTile;
+ import com.android.systemui.qs.tiles.HotspotTile;
+ import com.android.systemui.qs.tiles.IntentTile;
+ import com.android.systemui.qs.tiles.LocationTile;
+@@ -75,6 +76,7 @@ public class QSFactoryImpl implements QSFactory {
+     private final Provider<NfcTile> mNfcTileProvider;
+     private final Provider<GarbageMonitor.MemoryTile> mMemoryTileProvider;
+     private final Provider<UiModeNightTile> mUiModeNightTileProvider;
++    private final Provider<HeadsUpTile> mHeadsUpTileProvider;
+ 
+     private QSTileHost mHost;
+ 
+@@ -97,7 +99,8 @@ public class QSFactoryImpl implements QSFactory {
+             Provider<NightDisplayTile> nightDisplayTileProvider,
+             Provider<NfcTile> nfcTileProvider,
+             Provider<GarbageMonitor.MemoryTile> memoryTileProvider,
+-            Provider<UiModeNightTile> uiModeNightTileProvider) {
++            Provider<UiModeNightTile> uiModeNightTileProvider,
++            Provider<HeadsUpTile> headsUpTileProvider) {
+         mWifiTileProvider = wifiTileProvider;
+         mBluetoothTileProvider = bluetoothTileProvider;
+         mCellularTileProvider = cellularTileProvider;
+@@ -117,6 +120,7 @@ public class QSFactoryImpl implements QSFactory {
+         mNfcTileProvider = nfcTileProvider;
+         mMemoryTileProvider = memoryTileProvider;
+         mUiModeNightTileProvider = uiModeNightTileProvider;
++        mHeadsUpTileProvider = headsUpTileProvider;
+     }
+ 
+     public void setHost(QSTileHost host) {
+@@ -170,6 +174,8 @@ public class QSFactoryImpl implements QSFactory {
+                 return mNfcTileProvider.get();
+             case "dark":
+                 return mUiModeNightTileProvider.get();
++            case "heads_up":
++                return mHeadsUpTileProvider.get();
+         }
+ 
+         // Intent tiles.
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/HeadsUpTile.java b/packages/SystemUI/src/com/android/systemui/qs/tiles/HeadsUpTile.java
+new file mode 100644
+index 00000000000..17ac71b1fdc
+--- /dev/null
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/HeadsUpTile.java
+@@ -0,0 +1,119 @@
++/*
++ * Copyright (C) 2015 The CyanogenMod Project
++ * Copyright (C) 2017 The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.systemui.qs.tiles;
++
++import android.content.Intent;
++import android.provider.Settings;
++import android.provider.Settings.Global;
++import android.service.quicksettings.Tile;
++
++import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
++import com.android.systemui.plugins.qs.QSTile.BooleanState;
++import com.android.systemui.qs.GlobalSetting;
++import com.android.systemui.qs.QSHost;
++import com.android.systemui.qs.tileimpl.QSTileImpl;
++import com.android.systemui.R;
++
++import javax.inject.Inject;
++
++/** Quick settings tile: Heads up **/
++public class HeadsUpTile extends QSTileImpl<BooleanState> {
++
++    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_heads_up);
++
++    private static final Intent NOTIFICATION_SETTINGS =
++            new Intent("android.settings.NOTIFICATION_SETTINGS");
++
++    private final GlobalSetting mSetting;
++
++    @Inject
++    public HeadsUpTile(QSHost host) {
++        super(host);
++
++        mSetting = new GlobalSetting(mContext, mHandler, Global.HEADS_UP_NOTIFICATIONS_ENABLED) {
++            @Override
++            protected void handleValueChanged(int value) {
++                handleRefreshState(value);
++            }
++        };
++    }
++
++    @Override
++    public BooleanState newTileState() {
++        return new BooleanState();
++    }
++
++    @Override
++    protected void handleClick() {
++        setEnabled(!mState.value);
++        refreshState();
++    }
++
++    @Override
++    public Intent getLongClickIntent() {
++        return NOTIFICATION_SETTINGS;
++    }
++
++    private void setEnabled(boolean enabled) {
++        Settings.Global.putInt(mContext.getContentResolver(),
++                Settings.Global.HEADS_UP_NOTIFICATIONS_ENABLED,
++                enabled ? 1 : 0);
++    }
++
++    @Override
++    protected void handleUpdateState(BooleanState state, Object arg) {
++        final int value = arg instanceof Integer ? (Integer) arg : mSetting.getValue();
++        final boolean headsUp = value != 0;
++        state.value = headsUp;
++        state.label = mContext.getString(R.string.quick_settings_heads_up_label);
++        state.icon = mIcon;
++        if (headsUp) {
++            state.contentDescription =  mContext.getString(
++                    R.string.accessibility_quick_settings_heads_up_on);
++            state.state = Tile.STATE_ACTIVE;
++        } else {
++            state.contentDescription =  mContext.getString(
++                    R.string.accessibility_quick_settings_heads_up_off);
++            state.state = Tile.STATE_INACTIVE;
++        }
++    }
++
++    @Override
++    public CharSequence getTileLabel() {
++        return mContext.getString(R.string.quick_settings_heads_up_label);
++    }
++
++    @Override
++    protected String composeChangeAnnouncement() {
++        if (mState.value) {
++            return mContext.getString(R.string.accessibility_quick_settings_heads_up_changed_on);
++        } else {
++            return mContext.getString(R.string.accessibility_quick_settings_heads_up_changed_off);
++        }
++    }
++
++    @Override
++    public int getMetricsCategory() {
++        return MetricsEvent.QS_HEADSUP;
++    }
++
++    @Override
++    public void handleSetListening(boolean listening) {
++        // Do nothing
++    }
++}
+diff --git a/proto/src/metrics_constants/metrics_constants.proto b/proto/src/metrics_constants/metrics_constants.proto
+index 38154cb2a2b..b7bdcec0af2 100644
+--- a/proto/src/metrics_constants/metrics_constants.proto
++++ b/proto/src/metrics_constants/metrics_constants.proto
+@@ -7429,5 +7429,7 @@ message MetricsEvent {
+     // ---- End Q Constants, all Q constants go above this line ----
+     // Add new aosp constants above this line.
+     // END OF AOSP CONSTANTS
++
++    QS_HEADSUP = 1751;
+   }
+ }
+-- 
+2.25.1
+

@@ -1,7 +1,7 @@
-From 33a8e6d27ff7f8f4e1e779a8bf6d0d1246e0bc93 Mon Sep 17 00:00:00 2001
+From 33a40e0b09cac405adfd2e5fb4843f419c2d0ba0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 23 Feb 2020 16:08:55 +0200
-Subject: [PATCH 23/76] Allow user to add/remove QS with one click
+Subject: [PATCH 23/75] Allow user to add/remove QS with one click
 
   * from
   https://github.com/LiquidRemix/android_frameworks_base/commit/8b62630afdc8cdee275be256f491bb566c4b30bf

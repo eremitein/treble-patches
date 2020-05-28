@@ -1,0 +1,23 @@
+From b15dc7f1f285bd1db692e8d3a95c91a3987435a3 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 13 Apr 2020 02:39:04 +0300
+Subject: [PATCH 60/75] rework AccentColorGray overlay
+
+---
+ .../res/values/colors_device_defaults.xml                       | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+index 2d0df98bf17..30311cf3a4a 100644
+--- a/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
++++ b/packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
+@@ -18,5 +18,5 @@
+ -->
+ <resources>
+     <color name="accent_device_default_light">#808080</color>
+-    <color name="accent_device_default_dark">#808080</color>
++    <color name="accent_device_default_dark">#bfc5cc</color>
+ </resources>
+-- 
+2.25.1
+

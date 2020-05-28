@@ -1,7 +1,7 @@
-From 34c1448c4cd4e26b874eacd7540e2c28805a4494 Mon Sep 17 00:00:00 2001
+From be2d6aed2e8f1dd993c855ce46a1a6093ccf6a5c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 21:17:45 +0200
-Subject: [PATCH 39/76] add Roboto font overlay
+Subject: [PATCH 39/75] add Roboto font overlay
 
 	new file:   packages/overlays/FontRobotoOverlay/Android.mk
 	new file:   packages/overlays/FontRobotoOverlay/AndroidManifest.xml

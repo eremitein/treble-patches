@@ -1,7 +1,7 @@
-From 84cf62ce1e7b613a1d4293be815353ae551650fb Mon Sep 17 00:00:00 2001
+From 9d5b2b7dcd02eca1dc24c5c1c55da755611b1bcb Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 29 Dec 2019 17:28:08 +0200
-Subject: [PATCH 6/9] replace Gallery2 app
+Subject: [PATCH 6/8] replace Gallery2 app
 
 	modified:   target/product/handheld_product.mk
 	modified:   target/product/mainline_arm64.mk

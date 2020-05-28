@@ -1,7 +1,7 @@
-From 1f7c78baf5559a789b95bb17128c6d1f70b85bc8 Mon Sep 17 00:00:00 2001
+From ff2da22efbc2e68c3e536641780bb74ee7c19d5b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 10:14:46 +0200
-Subject: [PATCH 30/76] include Simple Day font overlay
+Subject: [PATCH 30/75] include Simple Day font overlay
 
 	modified:   packages/overlays/Android.mk
 ---

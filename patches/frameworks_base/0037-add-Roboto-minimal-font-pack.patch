@@ -1,7 +1,7 @@
-From 6c12f2263d676c3be3c6a8f5b5bfb936208ee886 Mon Sep 17 00:00:00 2001
+From 79d5da86a0225146419347815a84a30a96c4f9aa Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 20:59:43 +0200
-Subject: [PATCH 37/76] add Roboto minimal font pack
+Subject: [PATCH 37/75] add Roboto minimal font pack
 
 	modified:   data/fonts/fonts.xml
 ---

@@ -1,7 +1,7 @@
-From 21f7d21bd3ab0da44ae628442bd69d6d85bd880b Mon Sep 17 00:00:00 2001
+From 5419f94f51dccae6e8327286197478120aeafe0c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 19:55:56 +0200
-Subject: [PATCH 35/76] rework Arbutus font
+Subject: [PATCH 35/75] rework Arbutus font
 
 	modified:   data/fonts/fonts.xml
 	modified:   packages/overlays/FontArbutusOverlay/AndroidManifest.xml

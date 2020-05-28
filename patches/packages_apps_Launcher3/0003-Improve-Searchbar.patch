@@ -1,7 +1,7 @@
-From eac91a9ea0fa54d0919c534bb42aadd3abd6427f Mon Sep 17 00:00:00 2001
+From 3c1ed8883584638a0ad2225fa63a50430a583efa Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Dec 2019 14:29:51 +0200
-Subject: [PATCH 3/7] Improve Searchbar
+Subject: [PATCH 3/6] Improve Searchbar
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Launcher3/commit/8127ae42855bc7e922cd31c9f985dbb5a9c5fc33

@@ -1,7 +1,7 @@
-From d77350de8e44f0cb1a1ac8096496244f014a6acb Mon Sep 17 00:00:00 2001
+From 90d62ba002c0d597c4f83aba3104f8e715a58e96 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 16 Feb 2020 22:25:00 +0200
-Subject: [PATCH 4/7] Add double tap to sleep gesture
+Subject: [PATCH 4/6] Add double tap to sleep gesture
 
   * based on
   https://github.com/crdroidandroid/android_packages_apps_Launcher3/commit/1ced8c431b3a8ccb397199f68e1dd1ac401a90d4

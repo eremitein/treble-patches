@@ -1,0 +1,1257 @@
+From fb9bb772a529f2f94d2f797d61a01ee74caecd08 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 12 May 2020 11:00:51 +0300
+Subject: [PATCH 69/75] add accent overlays from LineageOS
+
+  * https://github.com/LineageOS/android_packages_overlays_Lineage
+---
+ .../AccentColorBlueOverlay/Android.mk         | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ .../AccentColorBrownOverlay/Android.mk        | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ .../AccentColorCyanOverlay/Android.mk         | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ .../AccentColorDeepGreenOverlay/Android.mk    | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ .../AccentColorDeepPurpleOverlay/Android.mk   | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ .../AccentColorOrangeOverlay/Android.mk       | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ .../AccentColorPinkOverlay/Android.mk         | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ .../overlays/AccentColorRedOverlay/Android.mk | 31 +++++++++++++++++++
+ .../AccentColorRedOverlay/AndroidManifest.xml | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ .../AccentColorYellowOverlay/Android.mk       | 31 +++++++++++++++++++
+ .../AndroidManifest.xml                       | 30 ++++++++++++++++++
+ .../res/values/colors_device_defaults.xml     | 20 ++++++++++++
+ .../res/values/strings.xml                    | 23 ++++++++++++++
+ packages/overlays/Android.mk                  |  9 ++++++
+ 37 files changed, 945 insertions(+)
+ create mode 100644 packages/overlays/AccentColorBlueOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorBlueOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorBlueOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorBlueOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/AccentColorBrownOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorBrownOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorBrownOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorBrownOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/AccentColorCyanOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorCyanOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorCyanOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorCyanOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/AccentColorDeepGreenOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorDeepGreenOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorDeepGreenOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorDeepGreenOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/AccentColorDeepPurpleOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorDeepPurpleOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorDeepPurpleOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorDeepPurpleOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/AccentColorOrangeOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorOrangeOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorOrangeOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorOrangeOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/AccentColorPinkOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorPinkOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorPinkOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorPinkOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/AccentColorRedOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorRedOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorRedOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorRedOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/AccentColorYellowOverlay/Android.mk
+ create mode 100644 packages/overlays/AccentColorYellowOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/AccentColorYellowOverlay/res/values/colors_device_defaults.xml
+ create mode 100644 packages/overlays/AccentColorYellowOverlay/res/values/strings.xml
+
+diff --git a/packages/overlays/AccentColorBlueOverlay/Android.mk b/packages/overlays/AccentColorBlueOverlay/Android.mk
+new file mode 100644
+index 00000000000..b3780ae5a3f
+--- /dev/null
++++ b/packages/overlays/AccentColorBlueOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorBlue
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorBlueOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorBlueOverlay/AndroidManifest.xml b/packages/overlays/AccentColorBlueOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..51231762316
+--- /dev/null
++++ b/packages/overlays/AccentColorBlueOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.blue"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_blue_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorBlueOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorBlueOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..123351846ec
+--- /dev/null
++++ b/packages/overlays/AccentColorBlueOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#4182EF</color>
++    <color name="accent_device_default_dark">#4182EF</color>
++</resources>
+diff --git a/packages/overlays/AccentColorBlueOverlay/res/values/strings.xml b/packages/overlays/AccentColorBlueOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..39517643e0d
+--- /dev/null
++++ b/packages/overlays/AccentColorBlueOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Blue accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_blue_overlay" translatable="false">Blue</string>
++</resources>
++
+diff --git a/packages/overlays/AccentColorBrownOverlay/Android.mk b/packages/overlays/AccentColorBrownOverlay/Android.mk
+new file mode 100644
+index 00000000000..6072313610e
+--- /dev/null
++++ b/packages/overlays/AccentColorBrownOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorBrown
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorBrownOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorBrownOverlay/AndroidManifest.xml b/packages/overlays/AccentColorBrownOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..2780ee622b0
+--- /dev/null
++++ b/packages/overlays/AccentColorBrownOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.brown"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_brown_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorBrownOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorBrownOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..226a032f6cc
+--- /dev/null
++++ b/packages/overlays/AccentColorBrownOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#996A5A</color>
++    <color name="accent_device_default_dark">#996A5A</color>
++</resources>
+diff --git a/packages/overlays/AccentColorBrownOverlay/res/values/strings.xml b/packages/overlays/AccentColorBrownOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..01d924e62dd
+--- /dev/null
++++ b/packages/overlays/AccentColorBrownOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Brown accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_brown_overlay" translatable="false">Brown</string>
++</resources>
++
+diff --git a/packages/overlays/AccentColorCyanOverlay/Android.mk b/packages/overlays/AccentColorCyanOverlay/Android.mk
+new file mode 100644
+index 00000000000..346db82d7a3
+--- /dev/null
++++ b/packages/overlays/AccentColorCyanOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorCyan
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorCyanOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorCyanOverlay/AndroidManifest.xml b/packages/overlays/AccentColorCyanOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..3c37aee0167
+--- /dev/null
++++ b/packages/overlays/AccentColorCyanOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.cyan"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_cyan_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorCyanOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorCyanOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..032e90bf64f
+--- /dev/null
++++ b/packages/overlays/AccentColorCyanOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#00B1E5</color>
++    <color name="accent_device_default_dark">#00B1E5</color>
++</resources>
+diff --git a/packages/overlays/AccentColorCyanOverlay/res/values/strings.xml b/packages/overlays/AccentColorCyanOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..ca4cbfad987
+--- /dev/null
++++ b/packages/overlays/AccentColorCyanOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Cyan accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_cyan_overlay" translatable="false">Cyan</string>
++</resources>
++
+diff --git a/packages/overlays/AccentColorDeepGreenOverlay/Android.mk b/packages/overlays/AccentColorDeepGreenOverlay/Android.mk
+new file mode 100644
+index 00000000000..4cb67c497b8
+--- /dev/null
++++ b/packages/overlays/AccentColorDeepGreenOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorDeepGreen
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorDeepGreenOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorDeepGreenOverlay/AndroidManifest.xml b/packages/overlays/AccentColorDeepGreenOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..58db0eed0e7
+--- /dev/null
++++ b/packages/overlays/AccentColorDeepGreenOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.deepgreen"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_deepgreen_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorDeepGreenOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorDeepGreenOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..32c026b6642
+--- /dev/null
++++ b/packages/overlays/AccentColorDeepGreenOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#38853B</color>
++    <color name="accent_device_default_dark">#38853B</color>
++</resources>
+diff --git a/packages/overlays/AccentColorDeepGreenOverlay/res/values/strings.xml b/packages/overlays/AccentColorDeepGreenOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..cd47cfbe012
+--- /dev/null
++++ b/packages/overlays/AccentColorDeepGreenOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Deep green accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_deepgreen_overlay" translatable="false">Deep Green</string>
++</resources>
++
+diff --git a/packages/overlays/AccentColorDeepPurpleOverlay/Android.mk b/packages/overlays/AccentColorDeepPurpleOverlay/Android.mk
+new file mode 100644
+index 00000000000..8dde187281b
+--- /dev/null
++++ b/packages/overlays/AccentColorDeepPurpleOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorDeepPurple
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorDeepPurpleOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorDeepPurpleOverlay/AndroidManifest.xml b/packages/overlays/AccentColorDeepPurpleOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..8e85c7a0c62
+--- /dev/null
++++ b/packages/overlays/AccentColorDeepPurpleOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.deepurple"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_deepurple_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorDeepPurpleOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorDeepPurpleOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..f817dcb4370
+--- /dev/null
++++ b/packages/overlays/AccentColorDeepPurpleOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#673AB7</color>
++    <color name="accent_device_default_dark">#673AB7</color>
++</resources>
+diff --git a/packages/overlays/AccentColorDeepPurpleOverlay/res/values/strings.xml b/packages/overlays/AccentColorDeepPurpleOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..d644a0ec7b7
+--- /dev/null
++++ b/packages/overlays/AccentColorDeepPurpleOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Purple accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_deepurple_overlay" translatable="false">Deep Purple</string>
++</resources>
++
+diff --git a/packages/overlays/AccentColorOrangeOverlay/Android.mk b/packages/overlays/AccentColorOrangeOverlay/Android.mk
+new file mode 100644
+index 00000000000..defccf51391
+--- /dev/null
++++ b/packages/overlays/AccentColorOrangeOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorOrange
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorOrangeOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorOrangeOverlay/AndroidManifest.xml b/packages/overlays/AccentColorOrangeOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..9b27e37568a
+--- /dev/null
++++ b/packages/overlays/AccentColorOrangeOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.orange"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_orange_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorOrangeOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorOrangeOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..267bd0b09d0
+--- /dev/null
++++ b/packages/overlays/AccentColorOrangeOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#FF5722</color>
++    <color name="accent_device_default_dark">#FF5722</color>
++</resources>
+diff --git a/packages/overlays/AccentColorOrangeOverlay/res/values/strings.xml b/packages/overlays/AccentColorOrangeOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..09d988b26d4
+--- /dev/null
++++ b/packages/overlays/AccentColorOrangeOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Orange accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_orange_overlay" translatable="false">Orange</string>
++</resources>
++
+diff --git a/packages/overlays/AccentColorPinkOverlay/Android.mk b/packages/overlays/AccentColorPinkOverlay/Android.mk
+new file mode 100644
+index 00000000000..e4e2f2c4d36
+--- /dev/null
++++ b/packages/overlays/AccentColorPinkOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorPink
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorPinkOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorPinkOverlay/AndroidManifest.xml b/packages/overlays/AccentColorPinkOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..d3b035de136
+--- /dev/null
++++ b/packages/overlays/AccentColorPinkOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.pink"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_pink_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorPinkOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorPinkOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..f517d28e3ae
+--- /dev/null
++++ b/packages/overlays/AccentColorPinkOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#E6125E</color>
++    <color name="accent_device_default_dark">#E6125E</color>
++</resources>
+diff --git a/packages/overlays/AccentColorPinkOverlay/res/values/strings.xml b/packages/overlays/AccentColorPinkOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..ed7eb39c3fc
+--- /dev/null
++++ b/packages/overlays/AccentColorPinkOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Pink accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_pink_overlay" translatable="false">Pink</string>
++</resources>
++
+diff --git a/packages/overlays/AccentColorRedOverlay/Android.mk b/packages/overlays/AccentColorRedOverlay/Android.mk
+new file mode 100644
+index 00000000000..eada790b6c4
+--- /dev/null
++++ b/packages/overlays/AccentColorRedOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorRed
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorRedOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorRedOverlay/AndroidManifest.xml b/packages/overlays/AccentColorRedOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..d111e968bce
+--- /dev/null
++++ b/packages/overlays/AccentColorRedOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.red"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_red_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorRedOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorRedOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..09a62a899b3
+--- /dev/null
++++ b/packages/overlays/AccentColorRedOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#D0422D</color>
++    <color name="accent_device_default_dark">#D0422D</color>
++</resources>
+diff --git a/packages/overlays/AccentColorRedOverlay/res/values/strings.xml b/packages/overlays/AccentColorRedOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..9c0edf94247
+--- /dev/null
++++ b/packages/overlays/AccentColorRedOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Red accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_red_overlay" translatable="false">Red</string>
++</resources>
++
+diff --git a/packages/overlays/AccentColorYellowOverlay/Android.mk b/packages/overlays/AccentColorYellowOverlay/Android.mk
+new file mode 100644
+index 00000000000..fb62da2a145
+--- /dev/null
++++ b/packages/overlays/AccentColorYellowOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := AccentColorYellow
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := AccentColorYellowOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/AccentColorYellowOverlay/AndroidManifest.xml b/packages/overlays/AccentColorYellowOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..4e3c9859a59
+--- /dev/null
++++ b/packages/overlays/AccentColorYellowOverlay/AndroidManifest.xml
+@@ -0,0 +1,30 @@
++<!--
++    Copyright (c) 2018, The LineageOS Project
++    2020 (c) Mod for CAOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.color.yellow"
++    android:versionCode="1"
++    android:versionName="1.0">
++
++    <overlay
++        android:targetPackage="android"
++        android:category="android.theme.customization.accent_color"
++        android:priority="1" />
++
++    <application
++        android:hasCode="false"
++        android:label="@string/accent_color_yellow_overlay" />
++</manifest>
+diff --git a/packages/overlays/AccentColorYellowOverlay/res/values/colors_device_defaults.xml b/packages/overlays/AccentColorYellowOverlay/res/values/colors_device_defaults.xml
+new file mode 100644
+index 00000000000..3fda2571d52
+--- /dev/null
++++ b/packages/overlays/AccentColorYellowOverlay/res/values/colors_device_defaults.xml
+@@ -0,0 +1,20 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++    Copyright (c) 2019, The LineageOS Project
++
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++
++        http://www.apache.org/licenses/LICENSE-2.0
++
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<resources>
++    <color name="accent_device_default_light">#F4AC45</color>
++    <color name="accent_device_default_dark">#F4AC45</color>
++</resources>
+diff --git a/packages/overlays/AccentColorYellowOverlay/res/values/strings.xml b/packages/overlays/AccentColorYellowOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..7198b8b62ea
+--- /dev/null
++++ b/packages/overlays/AccentColorYellowOverlay/res/values/strings.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Yellow accent color name application label. [CHAR LIMIT=50] -->
++    <string name="accent_color_yellow_overlay" translatable="false">Yellow</string>
++</resources>
++
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 30feca5a783..a4a93e07bba 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -26,6 +26,15 @@ LOCAL_REQUIRED_MODULES := \
+ 	AccentColorSpaceOverlay \
+ 	AccentColorGreenOverlay \
+ 	AccentColorPurpleOverlay \
++	AccentColorBlueOverlay \
++	AccentColorBrownOverlay \
++	AccentColorCyanOverlay \
++	AccentColorDeepPurpleOverlay \
++	AccentColorDeepGreenOverlay \
++	AccentColorOrangeOverlay \
++	AccentColorPinkOverlay \
++	AccentColorRedOverlay \
++	AccentColorYellowOverlay \
+ 	DisplayCutoutEmulationCornerOverlay \
+ 	DisplayCutoutEmulationDoubleOverlay \
+ 	DisplayCutoutEmulationTallOverlay \
+-- 
+2.25.1
+

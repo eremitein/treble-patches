@@ -1,7 +1,7 @@
-From 4d18791d4da4745add0ac1d9df41c6243e5f0b9a Mon Sep 17 00:00:00 2001
+From bcc4867371a95326188cac8517898736e2fe89e3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 23 Feb 2020 18:53:49 +0200
-Subject: [PATCH 24/76] add missed Arvo font specs
+Subject: [PATCH 24/75] add missed Arvo font specs
 
 	modified:   data/fonts/fonts.xml
 ---

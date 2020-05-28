@@ -1,7 +1,7 @@
-From 15bafcb857c966876515bf478c64842e621cf1b2 Mon Sep 17 00:00:00 2001
+From ca1416f007be0ff478006fd08b81fa7f26863c21 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Dec 2019 00:10:35 +0200
-Subject: [PATCH 1/7] remove default top searchbox
+Subject: [PATCH 1/6] remove default top searchbox
 
 	modified:   src/com/android/launcher3/config/BaseFlags.java
 

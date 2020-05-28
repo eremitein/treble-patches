@@ -1,7 +1,7 @@
-From 753b543f4273ca44324a21119f11344ee1e43a69 Mon Sep 17 00:00:00 2001
+From cbd669a0782f702ebffd819bd568fbfded2a88d6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Dec 2019 03:51:08 +0200
-Subject: [PATCH 2/7] Fix searchbar wrong position after swiping from home
+Subject: [PATCH 2/6] Fix searchbar wrong position after swiping from home
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Launcher3/commit/c5a12c51e13c678e0a10c4f4f0196ac18e7061b3

@@ -1,7 +1,7 @@
-From 3f440ed8cf6991e26b2b26fe60dcc4ca25a1205b Mon Sep 17 00:00:00 2001
+From d33b7dfae1d44b396eef7c60922e781b1f3f713b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Dec 2019 13:19:38 +0200
-Subject: [PATCH 1/9] rename to Messaging
+Subject: [PATCH 1/8] rename to Messaging
 
 	modified:   target/product/aosp_base_telephony.mk
 	modified:   target/product/gsi_common.mk

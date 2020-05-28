@@ -1,7 +1,7 @@
-From eaa7e2068811288f3114abba303b778e955c0522 Mon Sep 17 00:00:00 2001
+From 78803813ae26c4e83c765fa0cb8ec97043af4ad6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 12:06:03 +0200
-Subject: [PATCH 4/9] add few Google's fonts
+Subject: [PATCH 4/8] add few Google's fonts
 
 	modified:   target/product/handheld_system.mk
 
