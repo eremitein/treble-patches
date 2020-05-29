@@ -1,4 +1,4 @@
-From 1ddd568798faeb097288fb772ae4f7ba1bb2eaa1 Mon Sep 17 00:00:00 2001
+From 3f5115a331cda0e75cdb4737397351cc1be0fa03 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 20 May 2019 23:45:56 +0200
 Subject: [PATCH 3/5] Fail gracefully in mobile settings
@@ -8,7 +8,7 @@ Subject: [PATCH 3/5] Fail gracefully in mobile settings
  1 file changed, 6 insertions(+), 2 deletions(-)
 
 diff --git a/src/com/android/phone/DataUsagePreference.java b/src/com/android/phone/DataUsagePreference.java
-index b6b26e2..ebd446d 100644
+index b6b26e2b8..ebd446dfa 100644
 --- a/src/com/android/phone/DataUsagePreference.java
 +++ b/src/com/android/phone/DataUsagePreference.java
 @@ -54,8 +54,12 @@ public class DataUsagePreference extends Preference {
@@ -27,5 +27,5 @@ index b6b26e2..ebd446d 100644
      }
  
 -- 
-2.17.1
+2.25.1
 

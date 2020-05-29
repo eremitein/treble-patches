@@ -1,4 +1,4 @@
-From e3c8f60444a87485e6e5f009ec6b7fefb4344b8d Mon Sep 17 00:00:00 2001
+From d42f5b66fa59456337d585b9c07eae9a4a1b5897 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 6 May 2019 20:25:34 +0200
 Subject: [PATCH 2/5] Fixes crash when selecting network
@@ -9,7 +9,7 @@ Cf https://github.com/phhusson/treble_experimentations/issues/486
  1 file changed, 11 insertions(+), 3 deletions(-)
 
 diff --git a/src/com/android/phone/NetworkQueryService.java b/src/com/android/phone/NetworkQueryService.java
-index e67582f..c622713 100644
+index e67582fa3..c622713e8 100644
 --- a/src/com/android/phone/NetworkQueryService.java
 +++ b/src/com/android/phone/NetworkQueryService.java
 @@ -43,6 +43,8 @@ import com.android.settingslib.utils.ThreadUtils;
@@ -46,5 +46,5 @@ index e67582f..c622713 100644
              CellIdentityGsm cig = new CellIdentityGsm(
                      Integer.MAX_VALUE /* lac */,
 -- 
-2.17.1
+2.25.1
 

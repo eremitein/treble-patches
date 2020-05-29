@@ -1,4 +1,4 @@
-From 0a65cbe079ef548884de9c131c8e407fb760882d Mon Sep 17 00:00:00 2001
+From d381ca968c6d2c14fd03fe9c58c1f7ef7c2d850e Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Fri, 1 Nov 2019 18:22:13 +0100
 Subject: [PATCH 14/17] Ugly but secure: Set /dev/uinput as 0666 to fix
@@ -15,7 +15,7 @@ Change-Id: Id374e781957927d5604cb96c7a39b3fb28b3a6c5
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/rootdir/ueventd.rc b/rootdir/ueventd.rc
-index 451f5ad..41ad5bd 100644
+index 451f5adf3..41ad5bd09 100644
 --- a/rootdir/ueventd.rc
 +++ b/rootdir/ueventd.rc
 @@ -45,7 +45,7 @@ subsystem sound
@@ -28,5 +28,5 @@ index 451f5ad..41ad5bd 100644
  /dev/tty0                 0660   root       system
  /dev/graphics/*           0660   root       graphics
 -- 
-2.17.1
+2.25.1
 

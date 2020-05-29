@@ -1,7 +1,7 @@
-From 55adc202614eb6a32b00d7dba32ab6f191764583 Mon Sep 17 00:00:00 2001
+From ac5e4143808e6d20e6163f1c3056e2c3653e6ebb Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Dec 2019 13:19:38 +0200
-Subject: [PATCH 05/20] rename to Messaging
+Subject: [PATCH 05/10] rename to Messaging
 
 	modified:   target/product/aosp_base_telephony.mk
 	modified:   target/product/gsi_common.mk
@@ -43,5 +43,5 @@ index ff19f1d3c..7824a3cbb 100644
      WAPPushManager \
      WallpaperPicker \
 -- 
-2.20.1
+2.25.1
 

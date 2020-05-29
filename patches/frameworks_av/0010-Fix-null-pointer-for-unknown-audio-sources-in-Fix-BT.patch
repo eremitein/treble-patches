@@ -1,7 +1,7 @@
-From b5387fec39fd021fb63379626b83be4dc3cc4418 Mon Sep 17 00:00:00 2001
+From 2c814f027abe1decc02a41d7a975d5a34ac21567 Mon Sep 17 00:00:00 2001
 From: Vincent Vidal <vincent.vidal@onera.fr>
 Date: Thu, 12 Sep 2019 14:17:14 +0200
-Subject: [PATCH 10/13] Fix null pointer for unknown audio sources in "Fix BT
+Subject: [PATCH 10/24] Fix null pointer for unknown audio sources in "Fix BT
  in-call on CAF devices"
 
 Some audio sources may not exist on some devices (e.g. Axon 7), leading to a segmentation fault.
@@ -10,7 +10,7 @@ Some audio sources may not exist on some devices (e.g. Axon 7), leading to a seg
  1 file changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
-index 9c7e5c4..8bfdb5b 100644
+index 9c7e5c49d..8bfdb5b0a 100644
 --- a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
 +++ b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
 @@ -685,8 +685,10 @@ static void fixupQualcommBtScoRoute(RouteTraits::Collection& routes, DevicePortT
@@ -27,5 +27,5 @@ index 9c7e5c4..8bfdb5b 100644
  
      newRoute->setSources(sources);
 -- 
-2.17.1
+2.25.1
 

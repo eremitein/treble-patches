@@ -1,4 +1,4 @@
-From 3d45bd34dd9efca62211035a7dc9a789b3536720 Mon Sep 17 00:00:00 2001
+From 0b8d0486d7ce7d2ca0cb8188d96f5f24cb945595 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 5 Dec 2019 16:01:26 +0100
 Subject: [PATCH 16/17] Revert "HACK XXX Never check adb key"
@@ -9,7 +9,7 @@ This reverts commit 52e211961f89e2b83bad61a4c017697214e80f01.
  1 file changed, 3 deletions(-)
 
 diff --git a/adb/daemon/main.cpp b/adb/daemon/main.cpp
-index 98180f6..91d8665 100644
+index ed4c6c52e..1f2fc88c4 100644
 --- a/adb/daemon/main.cpp
 +++ b/adb/daemon/main.cpp
 @@ -205,7 +205,6 @@ int adbd_main(int server_port) {
@@ -20,7 +20,7 @@ index 98180f6..91d8665 100644
  #if defined(ALLOW_ADBD_NO_AUTH)
      // If ro.adb.secure is unset, default to no authentication required.
      auth_required = android::base::GetBoolProperty("ro.adb.secure", false);
-@@ -214,8 +213,6 @@ int adbd_main(int server_port) {
+@@ -218,8 +217,6 @@ int adbd_main(int server_port) {
          auth_required = android::base::GetBoolProperty("ro.adb.secure", false);
      }
  #endif
@@ -30,5 +30,5 @@ index 98180f6..91d8665 100644
      adbd_auth_init();
  
 -- 
-2.17.1
+2.25.1
 

@@ -1,7 +1,7 @@
-From 4c69a61920b7d4c95d7c0a3e422aa71d8ecad4e8 Mon Sep 17 00:00:00 2001
+From d8a49602920da04e3536011ed0bc8ce58ec246a4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Feb 2020 00:34:12 +0200
-Subject: [PATCH 2/4] disable low battery led pulsing
+Subject: [PATCH 2/6] disable low battery led pulsing
 
 	modified:   sdk/src/java/org/lineageos/internal/notification/LineageBatteryLights.java
 ---
@@ -24,5 +24,5 @@ index 31ad0279..83aa473d 100644
          } else if (status == BatteryManager.BATTERY_STATUS_CHARGING
                  || status == BatteryManager.BATTERY_STATUS_FULL) {
 -- 
-2.17.1
+2.25.1
 

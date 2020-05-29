@@ -1,7 +1,7 @@
-From 671d5400bcd6f3e3e679c909b4b3ecc976f0c06e Mon Sep 17 00:00:00 2001
+From 82c9d5282199b18f4b5b72d4d47887ea0948a59e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 29 Dec 2019 17:28:08 +0200
-Subject: [PATCH 06/20] replace Gallery2 app
+Subject: [PATCH 06/10] replace Gallery2 app
 
 	modified:   target/product/handheld_product.mk
 	modified:   target/product/mainline_arm64.mk
@@ -48,5 +48,5 @@ index f21fa89c0..1f8aad0c1 100644
    system/app/webview/webview.apk \
    system/bin/healthd \
 -- 
-2.20.1
+2.25.1
 

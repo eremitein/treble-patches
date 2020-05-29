@@ -1,7 +1,7 @@
-From b20d4074b085180040268e5c71a8e1bb078d8095 Mon Sep 17 00:00:00 2001
+From c99297055b2f742981698ceb98ae706f933e4582 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 20 Mar 2020 14:07:06 +0200
-Subject: [PATCH 5/6] replace FMRadio to Qualcomm FM
+Subject: [PATCH 5/5] replace FMRadio to Qualcomm FM
 
 	modified:   config/common.mk
 
@@ -11,10 +11,10 @@ Change-Id: I8f422912d02673c86fe2457d7f66a591c13f58ce
  1 file changed, 5 insertions(+), 2 deletions(-)
 
 diff --git a/config/common.mk b/config/common.mk
-index 6b19747a..8007c9e3 100644
+index 3b78dbe9..686323cf 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -169,8 +169,11 @@ PRODUCT_PACKAGES += \
+@@ -123,8 +123,11 @@ PRODUCT_PACKAGES += \
  
  # FM-Radivo
  PRODUCT_PACKAGES += \
@@ -29,5 +29,5 @@ index 6b19747a..8007c9e3 100644
  # Extra tools in Lineage
  PRODUCT_PACKAGES += \
 -- 
-2.20.1
+2.25.1
 

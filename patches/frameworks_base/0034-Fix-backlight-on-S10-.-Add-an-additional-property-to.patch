@@ -1,0 +1,28 @@
+From b8c9197fea5107e39a1e38973db4b0e22c5db589 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 24 Apr 2019 20:09:53 +0200
+Subject: [PATCH 034/136] Fix backlight on S10*. Add an additional property to
+ check, so testers can try it more easily
+
+---
+ .../core/java/com/android/server/lights/LightsService.java    | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 31033d57616..feba6bf8205 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -104,7 +104,9 @@ public class LightsService extends SystemService {
+                         return;
+                     }
+ 
+-                    if(fp.matches(".*(crown|star)[q2]*lte.*") ||
++                    if(SystemProperties.getInt("persist.sys.phh.samsung_backlight", 0) == 1 ||
++			            fp.matches(".*beyond.*lte.*") ||
++			            fp.matches(".*(crown|star)[q2]*lte.*") ||
+ 				    fp.matches(".*(SC-0[23]K|SCV3[89]).*")) {
+                         int newBrightness = brightness * 100;
+                         if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
+-- 
+2.25.1
+

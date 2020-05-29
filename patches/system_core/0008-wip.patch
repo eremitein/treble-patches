@@ -1,4 +1,4 @@
-From 5f3c4c802873970c3c3a0abe07e195e556078267 Mon Sep 17 00:00:00 2001
+From a2e6d58f009b30869f0f0f37de435977ac3b5a56 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 12 Sep 2019 13:09:46 +0200
 Subject: [PATCH 08/17] wip
@@ -12,7 +12,7 @@ Change-Id: I925f21802d3dd031c6d7d8c4777f36e62e52699b
  4 files changed, 15 insertions(+), 22 deletions(-)
 
 diff --git a/init/uevent_listener.cpp b/init/uevent_listener.cpp
-index 62cd2be..26f7ed6 100644
+index 62cd2be3a..26f7ed6a9 100644
 --- a/init/uevent_listener.cpp
 +++ b/init/uevent_listener.cpp
 @@ -88,10 +88,11 @@ static void ParseEvent(const char* msg, Uevent* uevent) {
@@ -30,7 +30,7 @@ index 62cd2be..26f7ed6 100644
  }
  
 diff --git a/libcutils/uevent.cpp b/libcutils/uevent.cpp
-index 721de7c..dc51b12 100644
+index 721de7c47..dc51b12b9 100644
 --- a/libcutils/uevent.cpp
 +++ b/libcutils/uevent.cpp
 @@ -105,31 +105,25 @@ int uevent_open_socket(int buf_sz, bool passcred) {
@@ -77,7 +77,7 @@ index 721de7c..dc51b12 100644
  }
  
 diff --git a/lmkd/lmkd.rc b/lmkd/lmkd.rc
-index 76b6055..5a357ee 100644
+index 76b60558a..5a357ee84 100644
 --- a/lmkd/lmkd.rc
 +++ b/lmkd/lmkd.rc
 @@ -1,7 +1,5 @@
@@ -89,7 +89,7 @@ index 76b6055..5a357ee 100644
      critical
      socket lmkd seqpacket 0660 system system
 diff --git a/rootdir/init.zygote32.rc b/rootdir/init.zygote32.rc
-index bf3fb42..0a67281 100644
+index bf3fb4217..0a67281ab 100644
 --- a/rootdir/init.zygote32.rc
 +++ b/rootdir/init.zygote32.rc
 @@ -2,7 +2,7 @@ service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-sys
@@ -102,5 +102,5 @@ index bf3fb42..0a67281 100644
      socket usap_pool_primary stream 660 root system
      onrestart write /sys/android_power/request_state wake
 -- 
-2.17.1
+2.25.1
 

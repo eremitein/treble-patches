@@ -1,7 +1,7 @@
-From 883cc0d0dddaf7022f3d1653f81a18712a5fd354 Mon Sep 17 00:00:00 2001
+From f99b12077caf61944f2b8d0acfc91df3acd90548 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 12:20:39 +0200
-Subject: [PATCH 03/26] Move custom DPI settings in to Display menu
+Subject: [PATCH 03/28] Move custom DPI settings in to Display menu
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/ae0244c957ec115822da526d54ee3665488e50ef
@@ -58,5 +58,5 @@ index f18225e8fb..dc633d7869 100644
          controllers.add(new DefaultLaunchPreferenceController(context, "inactive_apps"));
          controllers.add(new AutofillLoggingLevelPreferenceController(context, lifecycle));
 -- 
-2.17.1
+2.25.1
 

@@ -1,0 +1,27 @@
+From 1e7360905bb8f1e77d9bcb0226e90e9fb04431c4 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 15 Mar 2020 09:53:26 +0200
+Subject: [PATCH 113/136] Lineage have own black accent
+
+	modified:   packages/overlays/Android.mk
+
+Change-Id: Ief5af928823a41fb046e7adaef40ba9e7f8a4719
+---
+ packages/overlays/Android.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index eae5ff63d0f..596f5281d20 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -18,7 +18,6 @@ include $(CLEAR_VARS)
+ LOCAL_MODULE := frameworks-base-overlays
+ LOCAL_REQUIRED_MODULES := \
+ 	AccentColorAmberOverlay \
+-	AccentColorBlackOverlay \
+ 	AccentColorCinnamonOverlay \
+ 	AccentColorGrayOverlay \
+ 	AccentColorOceanOverlay \
+-- 
+2.25.1
+

@@ -1,7 +1,7 @@
-From 9524b48259d176eedf410292df7733aa7ee1e644 Mon Sep 17 00:00:00 2001
+From 1aec8d2ed270050f1413f471742a5bdaa4e02e21 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 20:49:53 +0200
-Subject: [PATCH 07/26] Add back SELinux info
+Subject: [PATCH 07/28] Add back SELinux info
 
   * based on https://github.com/Evolution-X/packages_apps_Settings/commit/d1dc320beb1b6d0c8d5c04f69951f903d841a183
 
@@ -136,5 +136,5 @@ index 0000000000..df642d6352
 +		}
 +}
 -- 
-2.17.1
+2.25.1
 

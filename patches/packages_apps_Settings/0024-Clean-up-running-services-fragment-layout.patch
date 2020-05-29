@@ -1,0 +1,199 @@
+From 98f83d6a944bcc021c15befa200a8df1deaa5dee Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 9 Apr 2020 13:12:23 +0300
+Subject: [PATCH 24/28] Clean up running services fragment layout
+
+  * from
+  https://github.com/crdroidandroid/android_packages_apps_Settings/commit/5e4dfc9b70add7af98eb228e4e360a0fd2e2b253
+---
+ res/layout/running_processes_header.xml       | 60 +------------------
+ .../applications/RunningProcessesView.java    | 42 ++++++-------
+ 2 files changed, 22 insertions(+), 80 deletions(-)
+
+diff --git a/res/layout/running_processes_header.xml b/res/layout/running_processes_header.xml
+index b2db025fe9..153777b6d5 100644
+--- a/res/layout/running_processes_header.xml
++++ b/res/layout/running_processes_header.xml
+@@ -60,31 +60,13 @@
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:orientation="horizontal">
+-            <TextView
+-                android:id="@+id/systemSizePrefix"
+-                android:text="@string/running_processes_header_system_prefix"
+-                android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body1"
+-                android:textColor="?android:attr/textColorSecondary"
+-                android:layout_height="wrap_content"
+-                android:layout_width="wrap_content"
+-                android:layout_marginLeft="16dp"
+-                android:maxLines="1" />
+-            <ImageView
+-                android:src="@drawable/dotted_line_480px"
+-                android:layout_width="0dip"
+-                android:layout_weight="1"
+-                android:layout_height="1px"
+-                android:layout_marginStart="1dip"
+-                android:layout_marginEnd="1dip"
+-                android:baselineAlignBottom="true"
+-                android:scaleType="center"
+-                android:contentDescription="@null" />
+             <TextView
+                 android:id="@+id/systemSize"
+                 android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body1"
+                 android:textColor="?android:attr/textColorSecondary"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
++                android:layout_marginLeft="16dp"
+                 android:maxLines="1" />
+         </LinearLayout>
+     </LinearLayout>
+@@ -105,31 +87,13 @@
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:orientation="horizontal">
+-            <TextView
+-                android:id="@+id/appsSizePrefix"
+-                android:text="@string/running_processes_header_apps_prefix"
+-                android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body1"
+-                android:textColor="?android:attr/textColorSecondary"
+-                android:layout_height="wrap_content"
+-                android:layout_width="wrap_content"
+-                android:layout_marginLeft="16dp"
+-                android:maxLines="1" />
+-            <ImageView
+-                android:src="@drawable/dotted_line_480px"
+-                android:layout_width="0dip"
+-                android:layout_weight="1"
+-                android:layout_height="1px"
+-                android:baselineAlignBottom="true"
+-                android:layout_marginStart="1dip"
+-                android:layout_marginEnd="1dip"
+-                android:scaleType="center"
+-                android:contentDescription="@null" />
+             <TextView
+                 android:id="@+id/appsSize"
+                 android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body1"
+                 android:textColor="?android:attr/textColorSecondary"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
++                android:layout_marginLeft="16dp"
+                 android:maxLines="1" />
+         </LinearLayout>
+     </LinearLayout>
+@@ -150,31 +114,13 @@
+             android:layout_height="wrap_content"
+             android:layout_gravity="center"
+             android:orientation="horizontal">
+-            <TextView
+-                android:id="@+id/freeSizePrefix"
+-                android:text="@string/running_processes_header_free_prefix"
+-                android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body1"
+-                android:textColor="?android:attr/textColorSecondary"
+-                android:layout_height="wrap_content"
+-                android:layout_width="wrap_content"
+-                android:layout_marginLeft="16dp"
+-                android:maxLines="1" />
+-            <ImageView
+-                android:src="@drawable/dotted_line_480px"
+-                android:layout_width="0dip"
+-                android:layout_weight="1"
+-                android:layout_height="1px"
+-                android:baselineAlignBottom="true"
+-                android:layout_marginStart="1dip"
+-                android:layout_marginEnd="1dip"
+-                android:scaleType="center"
+-                android:contentDescription="@null" />
+             <TextView
+                 android:id="@+id/freeSize"
+                 android:textAppearance="@*android:style/TextAppearance.DeviceDefault.Body1"
+                 android:textColor="?android:attr/textColorSecondary"
+                 android:layout_height="wrap_content"
+                 android:layout_width="wrap_content"
++                android:layout_marginLeft="16dp"
+                 android:maxLines="1" />
+         </LinearLayout>
+     </LinearLayout>
+diff --git a/src/com/android/settings/applications/RunningProcessesView.java b/src/com/android/settings/applications/RunningProcessesView.java
+index 5491ad14c6..8a8ec65e99 100644
+--- a/src/com/android/settings/applications/RunningProcessesView.java
++++ b/src/com/android/settings/applications/RunningProcessesView.java
+@@ -78,12 +78,12 @@ public class RunningProcessesView extends FrameLayout
+     View mHeader;
+     ServiceListAdapter mAdapter;
+     ProgressBar mColorBar;
+-    TextView mBackgroundProcessPrefix;
+-    TextView mAppsProcessPrefix;
+-    TextView mForegroundProcessPrefix;
+-    TextView mBackgroundProcessText;
+-    TextView mAppsProcessText;
+-    TextView mForegroundProcessText;
++    TextView mBackgroundProcess;
++    TextView mAppsProcess;
++    TextView mForegroundProcess;
++    CharSequence mForegroundProcessText;
++    CharSequence mAppsProcessText;
++    CharSequence mBackgroundProcessText;
+ 
+     long mCurTotalRam = -1;
+     long mCurHighRam = -1;      // "System" or "Used"
+@@ -342,15 +342,11 @@ public class RunningProcessesView extends FrameLayout
+             if (mCurShowCached != mAdapter.mShowBackground) {
+                 mCurShowCached = mAdapter.mShowBackground;
+                 if (mCurShowCached) {
+-                    mForegroundProcessPrefix.setText(getResources().getText(
+-                            R.string.running_processes_header_used_prefix));
+-                    mAppsProcessPrefix.setText(getResources().getText(
+-                            R.string.running_processes_header_cached_prefix));
++                    mForegroundProcessText = getResources().getText(R.string.running_processes_header_used_prefix);
++                    mAppsProcessText = getResources().getText(R.string.running_processes_header_cached_prefix);
+                 } else {
+-                    mForegroundProcessPrefix.setText(getResources().getText(
+-                            R.string.running_processes_header_system_prefix));
+-                    mAppsProcessPrefix.setText(getResources().getText(
+-                            R.string.running_processes_header_apps_prefix));
++                    mForegroundProcessText = getResources().getText(R.string.running_processes_header_system_prefix);
++                    mAppsProcessText = getResources().getText(R.string.running_processes_header_apps_prefix);
+                 }
+             }
+ 
+@@ -377,15 +373,15 @@ public class RunningProcessesView extends FrameLayout
+                 BidiFormatter bidiFormatter = BidiFormatter.getInstance();
+                 String sizeStr = bidiFormatter.unicodeWrap(
+                         Formatter.formatShortFileSize(getContext(), lowRam));
+-                mBackgroundProcessText.setText(getResources().getString(
++                mBackgroundProcess.setText(mBackgroundProcessText + ": " + getResources().getString(
+                         R.string.running_processes_header_ram, sizeStr));
+                 sizeStr = bidiFormatter.unicodeWrap(
+                         Formatter.formatShortFileSize(getContext(), medRam));
+-                mAppsProcessText.setText(getResources().getString(
++                mAppsProcess.setText(mAppsProcessText + ": " + getResources().getString(
+                         R.string.running_processes_header_ram, sizeStr));
+                 sizeStr = bidiFormatter.unicodeWrap(
+                         Formatter.formatShortFileSize(getContext(), highRam));
+-                mForegroundProcessText.setText(getResources().getString(
++                mForegroundProcess.setText(mForegroundProcessText + ": " + getResources().getString(
+                         R.string.running_processes_header_ram, sizeStr));
+                 int progress = (int) ((highRam/(float) totalRam) * 100);
+                 mColorBar.setProgress(progress);
+@@ -457,12 +453,12 @@ public class RunningProcessesView extends FrameLayout
+         mColorBar.setProgressBackgroundTintList(
+                 ColorStateList.valueOf(context.getColor(R.color.running_processes_free_ram)));
+         mColorBar.setProgressBackgroundTintMode(PorterDuff.Mode.SRC);
+-        mBackgroundProcessPrefix = mHeader.findViewById(R.id.freeSizePrefix);
+-        mAppsProcessPrefix = mHeader.findViewById(R.id.appsSizePrefix);
+-        mForegroundProcessPrefix = mHeader.findViewById(R.id.systemSizePrefix);
+-        mBackgroundProcessText = mHeader.findViewById(R.id.freeSize);
+-        mAppsProcessText = mHeader.findViewById(R.id.appsSize);
+-        mForegroundProcessText = mHeader.findViewById(R.id.systemSize);
++        mBackgroundProcess = mHeader.findViewById(R.id.freeSize);
++        mAppsProcess = mHeader.findViewById(R.id.appsSize);
++        mForegroundProcess = mHeader.findViewById(R.id.systemSize);
++        mForegroundProcessText = getResources().getText(R.string.running_processes_header_system_prefix);
++        mAppsProcessText = getResources().getText(R.string.running_processes_header_apps_prefix);
++        mBackgroundProcessText = getResources().getText(R.string.running_processes_header_free_prefix);
+ 
+         ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
+         mAm.getMemoryInfo(memInfo);
+-- 
+2.25.1
+

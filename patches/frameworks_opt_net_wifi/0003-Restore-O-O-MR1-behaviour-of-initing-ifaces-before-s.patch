@@ -1,4 +1,4 @@
-From e6f67cb9080108a7ff56a9054b3275da8d40b0c3 Mon Sep 17 00:00:00 2001
+From 446439bbe475f7853c7b2b1b9c2ac466af09074b Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 16 Sep 2019 17:42:37 +0200
 Subject: [PATCH 3/4] Restore O/O-MR1 behaviour of initing ifaces before supp.
@@ -11,7 +11,7 @@ Change-Id: I7a94b3c4a3fca140a50962e6787af3a7aa2c7d61
  2 files changed, 16 insertions(+), 4 deletions(-)
 
 diff --git a/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java b/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java
-index 8db7c90..fa82cca 100644
+index 8db7c90ee..fa82cca20 100644
 --- a/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java
 +++ b/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java
 @@ -741,7 +741,7 @@ public class SupplicantStaIfaceHal {
@@ -33,7 +33,7 @@ index 8db7c90..fa82cca 100644
                  android.hardware.wifi.supplicant.V1_2.ISupplicant.kInterfaceName);
      }
 diff --git a/service/java/com/android/server/wifi/WifiNative.java b/service/java/com/android/server/wifi/WifiNative.java
-index 63907e6..917494a 100644
+index 63907e67c..917494a10 100644
 --- a/service/java/com/android/server/wifi/WifiNative.java
 +++ b/service/java/com/android/server/wifi/WifiNative.java
 @@ -370,9 +370,11 @@ public class WifiNative {
@@ -90,5 +90,5 @@ index 63907e6..917494a 100644
                  Log.e(TAG, "Failed to setup iface in supplicant on " + iface);
                  teardownInterface(iface.name);
 -- 
-2.17.1
+2.25.1
 

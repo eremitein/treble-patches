@@ -1,4 +1,4 @@
-From 9142249a49c914902ffce64cdcfcdc5b668968bf Mon Sep 17 00:00:00 2001
+From 3c6c0432b0a9700f99f4033c673082c9391a5bdd Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 2 Jan 2019 17:17:20 +0100
 Subject: [PATCH 04/17] Ignore /proc/kmsg if reading from it faults
@@ -15,7 +15,7 @@ Change-Id: I4b902b7ec36107c722e2f5cc5dbb7964734bb71d
  1 file changed, 3 insertions(+)
 
 diff --git a/logd/LogKlog.cpp b/logd/LogKlog.cpp
-index edd326a..8ff719f 100644
+index edd326aec..8ff719f6e 100644
 --- a/logd/LogKlog.cpp
 +++ b/logd/LogKlog.cpp
 @@ -238,6 +238,9 @@ bool LogKlog::onDataAvailable(SocketClient* cli) {
@@ -29,5 +29,5 @@ index edd326a..8ff719f 100644
          }
          len += retval;
 -- 
-2.17.1
+2.25.1
 

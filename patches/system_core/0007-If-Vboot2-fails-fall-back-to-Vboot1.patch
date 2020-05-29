@@ -1,4 +1,4 @@
-From 2f4bc5a6bbacfd2cd6cb44b6d102fb0e8ffbe000 Mon Sep 17 00:00:00 2001
+From ed68be87bcc1a58c1a553bb2420cd3fa0765ab28 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 12 Sep 2019 13:05:37 +0200
 Subject: [PATCH 07/17] If Vboot2 fails, fall-back to Vboot1
@@ -18,7 +18,7 @@ Change-Id: I97a7042fb03f817c41b801d558e438d2c1f6c375
  1 file changed, 7 insertions(+), 1 deletion(-)
 
 diff --git a/init/first_stage_mount.cpp b/init/first_stage_mount.cpp
-index 3e76556..4149820 100644
+index 3e76556ff..41498202f 100644
 --- a/init/first_stage_mount.cpp
 +++ b/init/first_stage_mount.cpp
 @@ -852,7 +852,13 @@ bool DoFirstStageMount() {
@@ -37,5 +37,5 @@ index 3e76556..4149820 100644
  
  void SetInitAvbVersionInRecovery() {
 -- 
-2.17.1
+2.25.1
 

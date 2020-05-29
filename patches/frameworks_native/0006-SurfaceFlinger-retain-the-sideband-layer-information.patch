@@ -1,7 +1,7 @@
-From ab60098a405d2b6bdeba9f97e7cd7f73669ab0b7 Mon Sep 17 00:00:00 2001
+From 2b12a1523c7c32dd27b089ba7cef0936fa9b7ce6 Mon Sep 17 00:00:00 2001
 From: Pierre Couillaud <pierre.couillaud@broadcom.com>
 Date: Tue, 27 Aug 2019 13:43:22 -0700
-Subject: [PATCH 6/8] SurfaceFlinger: retain the sideband layer information for
+Subject: [PATCH 6/9] SurfaceFlinger: retain the sideband layer information for
  composition
 
 when present, the sideband layer stream information is not saved into
@@ -87,5 +87,5 @@ index f35a4fd49..cbb9d658e 100644
              setTransactionFlags(eTransactionNeeded);
              mFlinger->setTransactionFlags(eTraversalNeeded);
 -- 
-2.17.1
+2.25.1
 

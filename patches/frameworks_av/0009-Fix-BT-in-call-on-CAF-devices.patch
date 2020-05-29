@@ -1,7 +1,7 @@
-From 13cc6812f2fbe51a59991790ab0d93d54e8dd9cc Mon Sep 17 00:00:00 2001
+From 12965bfa9ee637388c3fd9a21956cdf6e093fa8c Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 5 Aug 2019 18:09:50 +0200
-Subject: [PATCH 09/13] Fix BT in-call on CAF devices
+Subject: [PATCH 09/24] Fix BT in-call on CAF devices
 
 See https://github.com/phhusson/treble_experimentations/issues/374
 
@@ -16,7 +16,7 @@ Change-Id: Ifea0f88276ec9a0811f3cb1973c4b06f2c82077b
  1 file changed, 91 insertions(+)
 
 diff --git a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
-index 9f2bdc4..9c7e5c4 100644
+index 9f2bdc4b3..9c7e5c49d 100644
 --- a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
 +++ b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
 @@ -607,6 +607,96 @@ Return<RouteTraits::Element> RouteTraits::deserialize(const xmlNode *cur, PtrSer
@@ -125,5 +125,5 @@ index 9f2bdc4..9c7e5c4 100644
  
      for (const xmlNode *children = cur->xmlChildrenNode; children != NULL;
 -- 
-2.17.1
+2.25.1
 

@@ -1,0 +1,48 @@
+From ff2a573fc7c2e867922706df74d7a35679366de8 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 20 May 2020 17:39:50 +0200
+Subject: [PATCH 066/136] Don't show facola on preenroll, wait for enroll
+
+---
+ .../server/biometrics/fingerprint/FingerprintService.java     | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java b/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java
+index 1323c5ec0dd..c53607786df 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java
+@@ -176,7 +176,6 @@ public class FingerprintService extends BiometricServiceBase {
+         @Override
+         public boolean onAcquired(int acquiredInfo, int vendorCode) {
+             boolean result = super.onAcquired(acquiredInfo, vendorCode);
+-            android.util.Log.d("PHH-Enroll", "acquired ret " + result);
+             if(result) mFacola.hide();
+             return result;
+         }
+@@ -185,7 +184,6 @@ public class FingerprintService extends BiometricServiceBase {
+         public boolean onAuthenticated(BiometricAuthenticator.Identifier identifier,
+             boolean authenticated, ArrayList<Byte> token) {
+             boolean result = super.onAuthenticated(identifier, authenticated, token);
+-            android.util.Log.d("PHH-Enroll", "auth-ed ret " + result);
+             if(result) mFacola.hide();
+             return result;
+         }
+@@ -744,6 +742,7 @@ public class FingerprintService extends BiometricServiceBase {
+                 Slog.w(TAG, "enroll(): no fingerprint HAL!");
+                 return ERROR_ESRCH;
+             }
++            mFacola.show();
+             return daemon.enroll(cryptoToken, groupId, timeout);
+         }
+ 
+@@ -990,7 +989,6 @@ public class FingerprintService extends BiometricServiceBase {
+             Slog.w(TAG, "startPreEnroll: no fingerprint HAL!");
+             return 0;
+         }
+-        mFacola.show();
+         try {
+             return daemon.preEnroll();
+         } catch (RemoteException e) {
+-- 
+2.25.1
+

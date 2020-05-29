@@ -1,7 +1,7 @@
-From 7ac4a4d5278b2d0169396b9609a5d320185771ed Mon Sep 17 00:00:00 2001
+From e08c1620a12d1827a28a41a9719ab1f7ded18695 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Dec 2019 14:29:51 +0200
-Subject: [PATCH 2/3] Improve Searchbar
+Subject: [PATCH 2/2] Improve Searchbar
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Launcher3/commit/8127ae42855bc7e922cd31c9f985dbb5a9c5fc33
@@ -18,7 +18,7 @@ Change-Id: I62378a2feff3174e28a6ef3e5ae32a3eec7da967
  3 files changed, 6 insertions(+), 4 deletions(-)
 
 diff --git a/res/drawable/bg_all_apps_searchbox.xml b/res/drawable/bg_all_apps_searchbox.xml
-index c324927..34465dd 100644
+index c3249279a..34465dd8b 100644
 --- a/res/drawable/bg_all_apps_searchbox.xml
 +++ b/res/drawable/bg_all_apps_searchbox.xml
 @@ -15,5 +15,5 @@
@@ -31,7 +31,7 @@ index c324927..34465dd 100644
 +    <corners android:radius="24dp" />
 +</shape>
 diff --git a/res/layout/search_container_all_apps.xml b/res/layout/search_container_all_apps.xml
-index fd9cb60..4717c3a 100644
+index fd9cb60fc..4717c3aa3 100644
 --- a/res/layout/search_container_all_apps.xml
 +++ b/res/layout/search_container_all_apps.xml
 @@ -20,6 +20,8 @@
@@ -51,7 +51,7 @@ index fd9cb60..4717c3a 100644
 \ No newline at end of file
 +    android:translationY="24dp" />
 diff --git a/res/values/dimens.xml b/res/values/dimens.xml
-index d9b0f9a..9211718 100644
+index d9b0f9a0b..921171817 100644
 --- a/res/values/dimens.xml
 +++ b/res/values/dimens.xml
 @@ -79,7 +79,7 @@
@@ -64,5 +64,5 @@ index d9b0f9a..9211718 100644
      <dimen name="all_apps_work_profile_tab_footer_bottom_padding">20dp</dimen>
      <dimen name="all_apps_tabs_side_padding">12dp</dimen>
 -- 
-2.17.1
+2.25.1
 

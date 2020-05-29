@@ -1,7 +1,7 @@
-From 09b5d81b01c3a333783d3c1b5bed5b9590410824 Mon Sep 17 00:00:00 2001
+From b15244226d515260be50b695436a41e04708936c Mon Sep 17 00:00:00 2001
 From: Artem Borisov <dedsa2002@gmail.com>
 Date: Tue, 25 Sep 2018 12:39:22 +0300
-Subject: [PATCH 05/13] CameraService: Support calling addStates in
+Subject: [PATCH 05/24] CameraService: Support calling addStates in
  enumerateProviders
 
 Some pre-P camera HALs trigger onDeviceStatusChange callback during HAL init.
@@ -22,7 +22,7 @@ Change-Id: Ife25b9753fdb679ab0c77f385e1b8527551a4711
  1 file changed, 16 insertions(+)
 
 diff --git a/services/camera/libcameraservice/CameraService.cpp b/services/camera/libcameraservice/CameraService.cpp
-index 2c7c520..12b0d33 100644
+index 103598e61..4cef36bd1 100644
 --- a/services/camera/libcameraservice/CameraService.cpp
 +++ b/services/camera/libcameraservice/CameraService.cpp
 @@ -210,6 +210,20 @@ status_t CameraService::enumerateProviders() {
@@ -58,5 +58,5 @@ index 2c7c520..12b0d33 100644
              updateStatus(newStatus, id);
          } else {
 -- 
-2.17.1
+2.25.1
 

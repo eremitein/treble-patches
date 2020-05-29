@@ -1,4 +1,4 @@
-From bcbe6324d64eefe7bf1dc35ab5ead4472b313e39 Mon Sep 17 00:00:00 2001
+From 0966d18964956dd97d8f0e71f106d81a94fab21f Mon Sep 17 00:00:00 2001
 From: Bevis Tseng <bevis@cloudmosa.com>
 Date: Thu, 18 Apr 2019 16:30:45 +0800
 Subject: [PATCH 5/9] Reverse-engineer MTK IRadio interfaces to approve
@@ -37,7 +37,7 @@ Change-Id: I35d29f0f2ebc4abf8678bd59c2d97a257fac1b29
  create mode 100644 src/java/com/android/internal/telephony/MtkRadioResponse.java
 
 diff --git a/Android.bp b/Android.bp
-index d1a8937..ae678cb 100644
+index d1a89377b..ae678cb54 100644
 --- a/Android.bp
 +++ b/Android.bp
 @@ -55,6 +55,7 @@ java_library {
@@ -50,7 +50,7 @@ index d1a8937..ae678cb 100644
          "services",
 diff --git a/src/java/com/android/internal/telephony/MtkRadioIndication.java b/src/java/com/android/internal/telephony/MtkRadioIndication.java
 new file mode 100644
-index 0000000..8d6963b
+index 000000000..8d6963be7
 --- /dev/null
 +++ b/src/java/com/android/internal/telephony/MtkRadioIndication.java
 @@ -0,0 +1,481 @@
@@ -537,7 +537,7 @@ index 0000000..8d6963b
 +}
 diff --git a/src/java/com/android/internal/telephony/MtkRadioResponse.java b/src/java/com/android/internal/telephony/MtkRadioResponse.java
 new file mode 100644
-index 0000000..2548e96
+index 000000000..2548e967e
 --- /dev/null
 +++ b/src/java/com/android/internal/telephony/MtkRadioResponse.java
 @@ -0,0 +1,984 @@
@@ -1526,7 +1526,7 @@ index 0000000..2548e96
 +    //-- MTK Radio V2_0
 +}
 diff --git a/src/java/com/android/internal/telephony/RIL.java b/src/java/com/android/internal/telephony/RIL.java
-index 83398b6..96f1efd 100644
+index 83398b62c..96f1efdd7 100644
 --- a/src/java/com/android/internal/telephony/RIL.java
 +++ b/src/java/com/android/internal/telephony/RIL.java
 @@ -245,6 +245,9 @@ public class RIL extends BaseCommands implements CommandsInterface {
@@ -1587,7 +1587,7 @@ index 83398b6..96f1efd 100644
 +    }
  }
 diff --git a/src/java/com/android/internal/telephony/RadioResponse.java b/src/java/com/android/internal/telephony/RadioResponse.java
-index 97fe3dc..509cb83 100644
+index 97fe3dc13..509cb8336 100644
 --- a/src/java/com/android/internal/telephony/RadioResponse.java
 +++ b/src/java/com/android/internal/telephony/RadioResponse.java
 @@ -1809,7 +1809,7 @@ public class RadioResponse extends IRadioResponse.Stub {
@@ -1600,5 +1600,5 @@ index 97fe3dc..509cb83 100644
  
          if (rr != null) {
 -- 
-2.17.1
+2.25.1
 

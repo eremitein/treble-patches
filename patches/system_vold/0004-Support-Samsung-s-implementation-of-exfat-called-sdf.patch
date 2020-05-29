@@ -1,4 +1,4 @@
-From 931c2b9a9b1fe730171d59eb7c7cdda04a1d1052 Mon Sep 17 00:00:00 2001
+From ee53139aaa5617ff9f7799bf3b1d927fbc0aff97 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 20 Aug 2018 22:37:54 +0200
 Subject: [PATCH 4/9] Support Samsung's implementation of exfat, called sdfat
@@ -40,5 +40,5 @@ index c624eb9..b9844a5 100644
      }
  
 -- 
-2.17.1
+2.25.1
 

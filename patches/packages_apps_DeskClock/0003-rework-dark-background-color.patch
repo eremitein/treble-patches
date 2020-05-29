@@ -1,0 +1,28 @@
+From 7475e88650f70ff41274b2449923ccac8d5d20bd Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 12 May 2020 18:15:46 +0300
+Subject: [PATCH 3/3] rework dark background color
+
+	modified:   res/values/colors.xml
+
+Change-Id: If54ced92733c45c3d1ac16121ccee4f57d878477
+---
+ res/values/colors.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/res/values/colors.xml b/res/values/colors.xml
+index 46aacee2e..c8f71d393 100644
+--- a/res/values/colors.xml
++++ b/res/values/colors.xml
+@@ -32,7 +32,7 @@
+ 
+     <color name="clock_gray">#B3FFFFFF</color>
+ 
+-    <color name="default_background">#202124</color>
++    <color name="default_background">@*android:color/primary_dark_device_default_settings</color>
+ 
+     <!-- shadowColor for widget text -->
+     <color name="widget_shadow_color">#000000</color>
+-- 
+2.25.1
+

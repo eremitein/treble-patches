@@ -1,7 +1,7 @@
-From 84260a007c94e667bc4aeeb6a47a82ef5fecdbf6 Mon Sep 17 00:00:00 2001
+From dd9090d2df31592b1c561e962134f80fa91f1f91 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 3 Dec 2019 14:04:17 +0100
-Subject: [PATCH 12/13] Fix for some Huawei camera (that's not ideal because it
+Subject: [PATCH 12/24] Fix for some Huawei camera (that's not ideal because it
  is a revert, it needs to be further investigated and cleaned)
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 12/13] Fix for some Huawei camera (that's not ideal because it
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/services/camera/libcameraservice/CameraService.cpp b/services/camera/libcameraservice/CameraService.cpp
-index 7e38973..6f9ea16 100644
+index ba9f3ae55..fc8cf1851 100644
 --- a/services/camera/libcameraservice/CameraService.cpp
 +++ b/services/camera/libcameraservice/CameraService.cpp
 @@ -16,7 +16,7 @@
@@ -34,5 +34,5 @@ index 7e38973..6f9ea16 100644
  
      return OK;
 -- 
-2.17.1
+2.25.1
 

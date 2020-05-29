@@ -1,4 +1,4 @@
-From 5b8f7152473e6cbade4bd6cd8353a7737f99d29c Mon Sep 17 00:00:00 2001
+From 4373c60aeadf3983a715453630471bb6ed3bf73d Mon Sep 17 00:00:00 2001
 From: Artem Borisov <dedsa2002@gmail.com>
 Date: Wed, 19 Sep 2018 17:02:06 +0300
 Subject: [PATCH 1/5] Telephony: Support muting by RIL command
@@ -14,7 +14,7 @@ Change-Id: Id916dec2574d6e57b6f809fbaf2b0959c0cc7256
  1 file changed, 4 insertions(+)
 
 diff --git a/src/com/android/services/telephony/TelephonyConnection.java b/src/com/android/services/telephony/TelephonyConnection.java
-index 05c3f21..189f86e 100644
+index 05c3f211f..189f86ec7 100644
 --- a/src/com/android/services/telephony/TelephonyConnection.java
 +++ b/src/com/android/services/telephony/TelephonyConnection.java
 @@ -25,6 +25,7 @@ import android.os.Handler;
@@ -36,5 +36,5 @@ index 05c3f21..189f86e 100644
      }
  
 -- 
-2.17.1
+2.25.1
 

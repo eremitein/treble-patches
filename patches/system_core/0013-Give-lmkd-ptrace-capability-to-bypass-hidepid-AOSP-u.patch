@@ -1,4 +1,4 @@
-From a543578966aeab4827dd912ba76db4a0ec25e482 Mon Sep 17 00:00:00 2001
+From 2e1a45f90ac1f92da3785e09bfedff07ead31e01 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 16 Oct 2019 15:52:12 +0200
 Subject: [PATCH 13/17] Give lmkd ptrace capability, to bypass hidepid (AOSP
@@ -10,7 +10,7 @@ Change-Id: Ic58e7c125d86fde45764d39f250675cf84777266
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/lmkd/lmkd.rc b/lmkd/lmkd.rc
-index 5a357ee..d5ddab0 100644
+index 5a357ee84..d5ddab091 100644
 --- a/lmkd/lmkd.rc
 +++ b/lmkd/lmkd.rc
 @@ -1,6 +1,6 @@
@@ -22,5 +22,5 @@ index 5a357ee..d5ddab0 100644
      socket lmkd seqpacket 0660 system system
      writepid /dev/cpuset/system-background/tasks
 -- 
-2.17.1
+2.25.1
 

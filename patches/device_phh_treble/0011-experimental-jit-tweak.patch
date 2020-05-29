@@ -1,0 +1,24 @@
+From 702be0a28a45186051915bea4568a8fd1821943d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 22 May 2020 01:37:57 +0300
+Subject: [PATCH 11/12] experimental jit tweak
+
+	modified:   system.prop
+---
+ system.prop | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/system.prop b/system.prop
+index 7094634..047ace1 100644
+--- a/system.prop
++++ b/system.prop
+@@ -10,3 +10,6 @@ persist.sys.phh.mainkeys=0
+ 
+ fw.max_users=10
+ persist.sys.max_profiles=10
++
++#experimental tweak for CAOS Project
++dalvik.vm.jitthreshold=1000
+-- 
+2.25.1
+

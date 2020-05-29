@@ -1,7 +1,7 @@
-From 6828e69822393c21b2db78495ebce7bf2653b6b2 Mon Sep 17 00:00:00 2001
+From 16427610e1bed4e62b9a2e1c7d1e6e2a78d03530 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 13:33:02 +0200
-Subject: [PATCH 4/4] shrink-shrunk v3
+Subject: [PATCH 4/6] shrink-shrunk v3
 
 	modified:   lineage/res/res/values-fr/strings.xml
 	modified:   lineage/res/res/values-ru/strings.xml
@@ -32,10 +32,10 @@ index 2436179e..04279b9b 100644
      <string name="permlab_trustInterface">accéder à l\'interface Trust</string>
      <string name="permdesc_trustInterface">Autorise une application à afficher des avertissements et suggestions Trust</string>
 diff --git a/lineage/res/res/values-ru/strings.xml b/lineage/res/res/values-ru/strings.xml
-index 052469eb..2d446dbe 100644
+index 4d86f902..640b6a7a 100644
 --- a/lineage/res/res/values-ru/strings.xml
 +++ b/lineage/res/res/values-ru/strings.xml
-@@ -98,10 +98,10 @@
+@@ -97,10 +97,10 @@
      <string name="lineage_vendor_security_patch">Уровень исправлений системы безопасности от производителя</string>
      <string name="unknown">Неизвестно</string>
      <string name="app_killed_message">Приложение завершено</string>
@@ -70,5 +70,5 @@ index c632f426..0d603cd8 100644
      <!-- Trust interface -->
      <!-- This string will be referenced from other apps when they're referring to the Trust interface.
 -- 
-2.17.1
+2.25.1
 

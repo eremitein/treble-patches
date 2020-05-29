@@ -1,0 +1,59 @@
+From 9f8c96f2bc7b84995cec5b0ed99956344d2d1425 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Thu, 21 May 2020 18:41:57 +0200
+Subject: [PATCH 069/136] Add mUiHidden which is guarded by Handler. This is
+ needed because backlight listener might intervene at the wrong time
+
+---
+ .../android/server/biometrics/fingerprint/FacolaView.java  | 7 ++++++-
+ 1 file changed, 6 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+index 8afbbc0dce0..aeb81f5b7c9 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+@@ -84,6 +84,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+     private boolean mFullGreenDisplayed = false;
+     private final View mFullGreen;
+     private boolean mHidden = true;
++    private boolean mUiHidden = true;
+     private boolean xiaomiAsynchronous = false;
+     FacolaView(Context context) {
+         super(context);
+@@ -216,6 +217,8 @@ public class FacolaView extends ImageView implements OnTouchListener {
+             String maskBrightnessStr = readFile("/sys/class/lcd/panel/mask_brightness");
+             String actualMaskBrightnessPath = "/sys/class/lcd/panel/actual_mask_brightness";
+ 
++            Slog.d("PHH-Enroll", "Got fod position, mask brightness " + fodPositionString + ", " + maskBrightnessStr);
++
+             if(fodPositionString != null && maskBrightnessStr != null) {
+                 double maskBrightness = Double.parseDouble(maskBrightnessStr);
+                 String[] fodPositionArray = readFile("/sys/class/fingerprint/fingerprint/position").split(",");
+@@ -337,7 +340,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+                     if(!noDim) {
+                         Slog.d("PHH-Enroll", "Setting dim to " + dim);
+                         mParams.dimAmount = (float)dim;
+-                        if(!mHidden) {
++                        if(!mUiHidden) {
+                             Slog.d("PHH-Enroll", "++Setting dim to " + dim);
+                             mWM.updateViewLayout(FacolaView.this, mParams);
+                         }
+@@ -573,6 +576,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+ 
+         mParams.gravity = Gravity.TOP | Gravity.LEFT;
+         mHandler.post( () -> {
++            mUiHidden = false;
+             mWM.addView(this, mParams);
+         });
+ 
+@@ -618,6 +622,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+ 
+         Slog.d("PHH-Enroll", "Removed facola");
+         mHandler.post( () -> {
++            mUiHidden = true;
+             mWM.removeView(this);
+         });
+     }
+-- 
+2.25.1
+

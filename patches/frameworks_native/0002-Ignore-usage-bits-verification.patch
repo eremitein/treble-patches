@@ -1,7 +1,7 @@
-From 7cfe3a34202bf137ae671832794204d30521fc09 Mon Sep 17 00:00:00 2001
+From 7e83e0145d6eb1865b037956f6a4d75dde4f053e Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 19 Aug 2018 23:07:24 +0200
-Subject: [PATCH 2/8] Ignore usage bits verification
+Subject: [PATCH 2/9] Ignore usage bits verification
 
 This didn't ignore as of 8.1, so we're ""safe""
 
@@ -24,5 +24,5 @@ index 2dd11b141..3ebf9808d 100644
      return NO_ERROR;
  }
 -- 
-2.17.1
+2.25.1
 

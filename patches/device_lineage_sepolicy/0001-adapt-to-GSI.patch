@@ -1,0 +1,27 @@
+From 941b46666f58761edc6cba7e3062846808d09312 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 23 Apr 2020 05:21:53 +0300
+Subject: [PATCH] adapt to GSI
+
+  * taken from Treble Project
+
+Change-Id: Iaab540b2270593341eddfaf490081f034eb21ffe
+---
+ common/private/genfs_contexts | 5 -----
+ 1 file changed, 5 deletions(-)
+ delete mode 100644 common/private/genfs_contexts
+
+diff --git a/common/private/genfs_contexts b/common/private/genfs_contexts
+deleted file mode 100644
+index c629305..0000000
+--- a/common/private/genfs_contexts
++++ /dev/null
+@@ -1,5 +0,0 @@
+-ifelse(board_excludes_fuseblk_sepolicy, `true', ,
+-genfscon fuseblk / u:object_r:vfat:s0
+-)
+-
+-genfscon sysfs /devices/virtual/timed_output/vibrator u:object_r:sysfs_vibrator:s0
+-- 
+2.25.1
+

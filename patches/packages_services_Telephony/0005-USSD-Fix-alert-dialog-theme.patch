@@ -1,4 +1,4 @@
-From 0b0197badb577903a63e0fbc4d5029b7795779a6 Mon Sep 17 00:00:00 2001
+From aaf19a1165e188d79ee645f905eba88dfde2ea9f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 7 Feb 2020 13:11:31 +0200
 Subject: [PATCH 5/5] USSD: Fix alert dialog theme
@@ -14,7 +14,7 @@ Subject: [PATCH 5/5] USSD: Fix alert dialog theme
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/com/android/phone/PhoneUtils.java b/src/com/android/phone/PhoneUtils.java
-index 20c8276..986dcef 100644
+index 20c8276f8..986dcef13 100644
 --- a/src/com/android/phone/PhoneUtils.java
 +++ b/src/com/android/phone/PhoneUtils.java
 @@ -88,7 +88,7 @@ public class PhoneUtils {
@@ -27,5 +27,5 @@ index 20c8276..986dcef 100644
      /** USSD information used to aggregate all USSD messages */
      private static AlertDialog sUssdDialog = null;
 -- 
-2.17.1
+2.25.1
 

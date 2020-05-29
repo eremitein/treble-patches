@@ -1,7 +1,7 @@
-From 02a995dd67dc3e82565fc61d65d23521a839aa33 Mon Sep 17 00:00:00 2001
+From b3b073bf3326f0f0871db2b5f5850b95e3bddb3d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 15 Mar 2020 09:51:59 +0200
-Subject: [PATCH 2/2] disable dividers
+Subject: [PATCH 2/4] disable dividers
 
 	modified:   res/values/styles.xml
 
@@ -33,5 +33,5 @@ index c9c5cdb..9e82f53 100644
          <item name="android:layout">@layout/preference_material_settings</item>
      </style>
 -- 
-2.17.1
+2.25.1
 

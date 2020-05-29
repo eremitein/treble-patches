@@ -1,0 +1,26 @@
+From 9a3403a0bf4c8736dad8e70abccc2284b8092db1 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 18 Dec 2019 14:52:32 +0200
+Subject: [PATCH 073/136] enable SystemNavigationKeys
+
+	modified:   core/res/res/values/config.xml
+---
+ core/res/res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index d4b9b5d7fbc..549421f6f04 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -3494,7 +3494,7 @@
+     <bool name="config_allowDisablingAssistDisclosure">true</bool>
+ 
+     <!-- True if the device supports system navigation keys. -->
+-    <bool name="config_supportSystemNavigationKeys">false</bool>
++    <bool name="config_supportSystemNavigationKeys">true</bool>
+ 
+     <!-- emergency call number for the emergency affordance -->
+     <string name="config_emergency_call_number" translatable="false">112</string>
+-- 
+2.25.1
+

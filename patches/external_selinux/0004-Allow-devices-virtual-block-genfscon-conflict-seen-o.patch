@@ -1,7 +1,7 @@
-From 09cfaa65caea470cd334b9b363db2954aa79da93 Mon Sep 17 00:00:00 2001
+From ec71eda32ad839cd6704792e9f92890e0676553f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Fri, 6 Sep 2019 15:07:25 +0200
-Subject: [PATCH 4/7] Allow /devices/virtual/block/ genfscon conflict (seen on
+Subject: [PATCH 4/8] Allow /devices/virtual/block/ genfscon conflict (seen on
  Xiaomi Mi 9)
 
 Change-Id: I06e4e9d5b82d61a8aeab595b47e2589249675895
@@ -10,7 +10,7 @@ Change-Id: I06e4e9d5b82d61a8aeab595b47e2589249675895
  1 file changed, 17 insertions(+), 1 deletion(-)
 
 diff --git a/libsepol/cil/src/cil_post.c b/libsepol/cil/src/cil_post.c
-index 0b09cec..255c9e1 100644
+index 0b09cecc..255c9e12 100644
 --- a/libsepol/cil/src/cil_post.c
 +++ b/libsepol/cil/src/cil_post.c
 @@ -477,7 +477,23 @@ int cil_post_genfscon_context_compare(const void *a, const void *b)
@@ -39,5 +39,5 @@ index 0b09cec..255c9e1 100644
  
  int cil_post_netifcon_context_compare(const void *a, const void *b)
 -- 
-2.17.1
+2.25.1
 

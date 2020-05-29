@@ -1,6 +1,6 @@
-From 0f7cb1d71dbc7940d74ae083be9c6b43f4c0b099 Mon Sep 17 00:00:00 2001
+From 4b544076670dba22266a332402c19aa9a52fcfcc Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
-Date: Mon, 10 Feb 2020 04:14:57 +0200
+Date: Fri, 29 May 2020 14:56:10 +0300
 Subject: [PATCH] Revert "tinycompress: Use generated kernel headers"
 
 This reverts commit 82c8fbf6d3fb0a017026b675adf2cee3f994e08a.
@@ -22,5 +22,5 @@ index abdcea7..256e2c0 100644
      product_variables: {
          lineage: {
 -- 
-2.11.0
+2.25.1
 

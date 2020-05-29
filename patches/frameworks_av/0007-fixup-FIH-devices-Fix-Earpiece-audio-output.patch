@@ -1,14 +1,14 @@
-From c003a901882052bbf98003b2117903f494b4c0f8 Mon Sep 17 00:00:00 2001
+From 7314fd76878e552bd716920a8f7cccf200713ca6 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 4 Sep 2019 22:28:56 +0200
-Subject: [PATCH 07/13] fixup! FIH devices: Fix "Earpiece" audio output
+Subject: [PATCH 07/24] fixup! FIH devices: Fix "Earpiece" audio output
 
 ---
  .../audiopolicy/common/managerdefinitions/src/Serializer.cpp   | 3 ++-
  1 file changed, 2 insertions(+), 1 deletion(-)
 
 diff --git a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
-index 0b56132..c8cb54b 100644
+index 0b561320b..c8cb54b5f 100644
 --- a/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
 +++ b/services/audiopolicy/common/managerdefinitions/src/Serializer.cpp
 @@ -394,6 +394,7 @@ Return<AudioGainTraits::Element> AudioGainTraits::deserialize(const xmlNode *cur
@@ -29,5 +29,5 @@ index 0b56132..c8cb54b 100644
          status = deserializeCollection<AudioProfileTraits>(cur, &profiles, NULL);
      if (status != NO_ERROR) {
 -- 
-2.17.1
+2.25.1
 

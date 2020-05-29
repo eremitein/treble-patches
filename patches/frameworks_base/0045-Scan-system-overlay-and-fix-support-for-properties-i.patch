@@ -1,0 +1,166 @@
+From 91e545337750b092ca2028e7297157a307e6f352 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 14 Oct 2019 23:50:46 +0200
+Subject: [PATCH 045/136] Scan /system/overlay and fix support for properties
+ in idmap2
+
+Change-Id: Ic04b5b1cc7b5d8cee67b1e2fdaa8aa793546b6d6
+---
+ cmds/idmap2/idmap2/Scan.cpp                   |  6 ++++-
+ cmds/idmap2/include/idmap2/ResourceUtils.h    |  3 +++
+ cmds/idmap2/libidmap2/ResourceUtils.cpp       | 26 +++++++++++++++++++
+ .../android/content/pm/PackageParser.java     |  9 ++++++-
+ core/jni/android_util_AssetManager.cpp        |  3 +++
+ .../server/pm/PackageManagerService.java      |  6 +++++
+ 6 files changed, 51 insertions(+), 2 deletions(-)
+
+diff --git a/cmds/idmap2/idmap2/Scan.cpp b/cmds/idmap2/idmap2/Scan.cpp
+index cfac5f31e2e..adac1ef88cf 100644
+--- a/cmds/idmap2/idmap2/Scan.cpp
++++ b/cmds/idmap2/idmap2/Scan.cpp
+@@ -159,13 +159,17 @@ Result<Unit> Scan(const std::vector<std::string>& args) {
+     Result<OverlayManifestInfo> overlay_info =
+         ExtractOverlayManifestInfo(path, /* assert_overlay */ false);
+     if (!overlay_info) {
+-      return overlay_info.GetError();
++      continue;
+     }
+ 
+     if (!overlay_info->is_static) {
+       continue;
+     }
+ 
++    if (!overlay_info->property_match) {
++      continue;
++    }
++
+     if (overlay_info->target_package.empty() ||
+         overlay_info->target_package != target_package_name) {
+       continue;
+diff --git a/cmds/idmap2/include/idmap2/ResourceUtils.h b/cmds/idmap2/include/idmap2/ResourceUtils.h
+index 8797a788dd1..0f98f4d1a2d 100644
+--- a/cmds/idmap2/include/idmap2/ResourceUtils.h
++++ b/cmds/idmap2/include/idmap2/ResourceUtils.h
+@@ -30,6 +30,9 @@ namespace android::idmap2::utils {
+ struct OverlayManifestInfo {
+   std::string target_package;  // NOLINT(misc-non-private-member-variables-in-classes)
+   std::string target_name;     // NOLINT(misc-non-private-member-variables-in-classes)
++  std::string property_name;     // NOLINT(misc-non-private-member-variables-in-classes)
++  std::string property_value;     // NOLINT(misc-non-private-member-variables-in-classes)
++  bool property_match; // NOLINT(misc-non-private-member-variables-in-classes)
+   bool is_static;              // NOLINT(misc-non-private-member-variables-in-classes)
+   int priority = -1;           // NOLINT(misc-non-private-member-variables-in-classes)
+ };
+diff --git a/cmds/idmap2/libidmap2/ResourceUtils.cpp b/cmds/idmap2/libidmap2/ResourceUtils.cpp
+index 71ba3f0f1ac..7fda402b80f 100644
+--- a/cmds/idmap2/libidmap2/ResourceUtils.cpp
++++ b/cmds/idmap2/libidmap2/ResourceUtils.cpp
+@@ -18,7 +18,9 @@
+ 
+ #include <memory>
+ #include <string>
++#include <fnmatch.h>
+ 
++#include "android-base/properties.h"
+ #include "androidfw/StringPiece.h"
+ #include "androidfw/Util.h"
+ #include "idmap2/Result.h"
+@@ -93,6 +95,30 @@ Result<OverlayManifestInfo> ExtractOverlayManifestInfo(const std::string& path,
+     info.target_name = iter->second;
+   }
+ 
++  iter = tag->find("requiredSystemPropertyName");
++  if (iter != tag->end()) {
++    info.property_name = iter->second;
++  }
++
++  iter = tag->find("requiredSystemPropertyValue");
++  if (iter != tag->end()) {
++    info.property_value = iter->second;
++  }
++
++  info.property_match = false;
++  if(!info.property_name.empty() && !info.property_value.empty()) {
++      std::string prop = android::base::GetProperty(info.property_name, "");
++      if(info.property_value == prop) {
++          info.property_match = true;
++      }
++      if(info.property_value[0] == '+') {
++          info.property_match =
++              fnmatch(info.property_value.c_str()+1, prop.c_str(), 0) == 0;
++      }
++  } else {
++      info.property_match = true;
++  }
++
+   iter = tag->find("isStatic");
+   if (iter != tag->end()) {
+     info.is_static = std::stoul(iter->second) != 0U;
+diff --git a/core/java/android/content/pm/PackageParser.java b/core/java/android/content/pm/PackageParser.java
+index 535a8bc9db7..a164cb186a9 100644
+--- a/core/java/android/content/pm/PackageParser.java
++++ b/core/java/android/content/pm/PackageParser.java
+@@ -1355,6 +1355,7 @@ public class PackageParser {
+         } catch (PackageParserException e) {
+             throw e;
+         } catch (Exception e) {
++            android.util.Log.d("PHH", "failed reading manifest because of", e);
+             throw new PackageParserException(INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION,
+                     "Failed to read manifest from " + apkPath, e);
+         } finally {
+@@ -1394,6 +1395,7 @@ public class PackageParser {
+         } catch (PackageParserException e) {
+             throw e;
+         } catch (Exception e) {
++            android.util.Log.d("PHH", "failed reading manifest because of", e);
+             throw new PackageParserException(INSTALL_PARSE_FAILED_UNEXPECTED_EXCEPTION,
+                     "Failed to read manifest from " + apkPath, e);
+         } finally {
+@@ -2574,7 +2576,12 @@ public class PackageParser {
+ 
+         // check property value - make sure it is both set and equal to expected value
+         final String currValue = SystemProperties.get(propName);
+-        return (currValue != null && currValue.equals(propValue));
++        if(propValue.charAt(0) == '+') {
++            String valRegexp = propValue.replace("*", ".*").substring(1);
++            return currValue != null && currValue.matches(valRegexp);
++        } else {
++            return (currValue != null && currValue.equals(propValue));
++        }
+     }
+ 
+     /**
+diff --git a/core/jni/android_util_AssetManager.cpp b/core/jni/android_util_AssetManager.cpp
+index 4518c7e66a5..9e1b6db9ad9 100644
+--- a/core/jni/android_util_AssetManager.cpp
++++ b/core/jni/android_util_AssetManager.cpp
+@@ -233,6 +233,9 @@ static jobjectArray NativeCreateIdmapsForStaticOverlaysTargetingAndroid(JNIEnv*
+   // --input-directory can be given multiple times, but idmap2 expects the directory to exist
+   std::vector<std::string> input_dirs;
+   struct stat st;
++  if (stat("/system/overlay", &st) == 0) {
++    input_dirs.push_back("/system/overlay");
++  }
+   if (stat(AssetManager::VENDOR_OVERLAY_DIR, &st) == 0) {
+     input_dirs.push_back(AssetManager::VENDOR_OVERLAY_DIR);
+   }
+diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
+index c153a452cbe..b38c8a2acd4 100644
+--- a/services/core/java/com/android/server/pm/PackageManagerService.java
++++ b/services/core/java/com/android/server/pm/PackageManagerService.java
+@@ -2639,6 +2639,12 @@ public class PackageManagerService extends IPackageManager.Stub
+             // any apps.)
+             // For security and version matching reason, only consider overlay packages if they
+             // reside in the right directory.
++            scanDirTracedLI(new File("/system/overlay"),
++                    mDefParseFlags
++                    | PackageParser.PARSE_IS_SYSTEM_DIR,
++                    scanFlags
++                    | SCAN_AS_SYSTEM,
++                    0);
+             scanDirTracedLI(new File(VENDOR_OVERLAY_DIR),
+                     mDefParseFlags
+                     | PackageParser.PARSE_IS_SYSTEM_DIR,
+-- 
+2.25.1
+

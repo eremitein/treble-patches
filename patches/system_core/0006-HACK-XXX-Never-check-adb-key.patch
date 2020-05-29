@@ -1,4 +1,4 @@
-From cc46b4410f7f76f02178ea663a52795eae8512e9 Mon Sep 17 00:00:00 2001
+From 22322e3fe133c9c7eb81c49fba3a37f3f0e5a535 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Fri, 6 Sep 2019 15:09:45 +0200
 Subject: [PATCH 06/17] HACK XXX Never check adb key
@@ -9,7 +9,7 @@ Change-Id: Ic933023724c80f4a30725bb23de03fba9c5fbd12
  1 file changed, 3 insertions(+)
 
 diff --git a/adb/daemon/main.cpp b/adb/daemon/main.cpp
-index 91d8665..98180f6 100644
+index 1f2fc88c4..ed4c6c52e 100644
 --- a/adb/daemon/main.cpp
 +++ b/adb/daemon/main.cpp
 @@ -205,6 +205,7 @@ int adbd_main(int server_port) {
@@ -20,7 +20,7 @@ index 91d8665..98180f6 100644
  #if defined(ALLOW_ADBD_NO_AUTH)
      // If ro.adb.secure is unset, default to no authentication required.
      auth_required = android::base::GetBoolProperty("ro.adb.secure", false);
-@@ -213,6 +214,8 @@ int adbd_main(int server_port) {
+@@ -217,6 +218,8 @@ int adbd_main(int server_port) {
          auth_required = android::base::GetBoolProperty("ro.adb.secure", false);
      }
  #endif
@@ -30,5 +30,5 @@ index 91d8665..98180f6 100644
      adbd_auth_init();
  
 -- 
-2.17.1
+2.25.1
 

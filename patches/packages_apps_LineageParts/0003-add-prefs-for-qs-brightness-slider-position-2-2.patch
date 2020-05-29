@@ -1,7 +1,7 @@
-From d83b10031e2f147ff5f1ed37d4c46a85a73d52ca Mon Sep 17 00:00:00 2001
+From a472c34dca9e4fa23018377859299fc89f7ff5b1 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 24 Apr 2020 17:10:11 +0300
-Subject: [PATCH] add prefs for qs brightness slider position [2/2]
+Subject: [PATCH 3/4] add prefs for qs brightness slider position [2/2]
 
   * from
   https://github.com/Evolution-X/packages_apps_Evolver/commit/df9a0ac1564ebae8004633d9b1c76c564e25e98d
@@ -14,10 +14,10 @@ Change-Id: Iaed18dc78fb919b5520e9dd601f977aa61db433a
  3 files changed, 12 insertions(+)
 
 diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
-index 55b8f6e..405db3c 100644
+index a626765..6186d0b 100644
 --- a/res/values-ru/strings.xml
 +++ b/res/values-ru/strings.xml
-@@ -548,4 +548,6 @@
+@@ -531,4 +531,6 @@
      <string name="sms_security_check_limit_summary">Запрашивать подтверждение при отправке более %s сообщений в минуту</string>
      <string name="sms_security_check_limit_summary_none">Приложениям запрещено отправлять сообщения без подтверждения</string>
      <string name="sms_security_check_limit_always_confirm">Подтверждать всегда</string>
@@ -55,5 +55,5 @@ index 5364075..632968e 100644
              android:key="qs_show_auto_brightness"
              android:title="@string/status_bar_brightness_slider_auto_title"
 -- 
-2.20.1
+2.25.1
 
