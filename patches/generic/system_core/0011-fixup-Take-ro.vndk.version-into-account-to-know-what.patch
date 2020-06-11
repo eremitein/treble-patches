@@ -1,0 +1,37 @@
+From be87f69a0dd067f72d5910a85f9ae261a9251a6e Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 1 Oct 2019 13:34:35 +0200
+Subject: [PATCH 11/14] fixup! Take ro.vndk.version into account to know what
+ to test
+
+---
+ sdcard/sdcard.cpp | 11 ++++-------
+ 1 file changed, 4 insertions(+), 7 deletions(-)
+
+diff --git a/sdcard/sdcard.cpp b/sdcard/sdcard.cpp
+index a6f290960..7b2bb588a 100644
+--- a/sdcard/sdcard.cpp
++++ b/sdcard/sdcard.cpp
+@@ -107,15 +107,12 @@ static bool sdcardfs_setup(const std::string& source_path, const std::string& de
+     int vndk = android::base::GetIntProperty<int>("ro.vndk.version", 29);
+     std::vector<std::string> new_opts_list;
+     if (multi_user) new_opts_list.push_back("multiuser,");
+-    if (derive_gid) new_opts_list.push_back("derive_gid,");
+-    if (default_normal) new_opts_list.push_back("default_normal,");
+-    if (unshared_obb) new_opts_list.push_back("unshared_obb,");
++    if (derive_gid && vndk >= 27) new_opts_list.push_back("derive_gid,");
++    if (default_normal && vndk >= 28) new_opts_list.push_back("default_normal,");
++    if (unshared_obb && vndk >= 29) new_opts_list.push_back("unshared_obb,");
+     // Try several attempts, each time with one less option, to gracefully
+     // handle older kernels that aren't updated yet.
+-    int first_option_to_try = 0;
+-    if(vndk == 26) first_option_to_try = 3;
+-    if(vndk == 27) first_option_to_try = 2;
+-    for (int i = first_option_to_try; i <= new_opts_list.size(); ++i) {
++    for (int i = 0; i <= new_opts_list.size(); ++i) {
+         std::string new_opts;
+         for (int j = 0; j < new_opts_list.size() - i; ++j) {
+             new_opts += new_opts_list[j];
+-- 
+2.25.1
+

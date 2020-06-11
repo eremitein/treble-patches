@@ -1,0 +1,33 @@
+From e3d8829943ae035928b38b611d45599934637e60 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Thu, 21 May 2020 16:12:42 +0200
+Subject: [PATCH 073/140] On MIUI12 vendor, we don't want our own diming
+
+---
+ .../com/android/server/biometrics/fingerprint/FacolaView.java  | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+index d3d58aff6c0..8afbbc0dce0 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+@@ -81,8 +81,6 @@ public class FacolaView extends ImageView implements OnTouchListener {
+ 
+     private java.util.ArrayList<Object> objectsToKeep = new java.util.ArrayList();
+ 
+-    private static boolean doneCalibrationOnce = true;
+-
+     private boolean mFullGreenDisplayed = false;
+     private final View mFullGreen;
+     private boolean mHidden = true;
+@@ -297,6 +295,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+         String xiaomiFodReadyPath = "/sys/class/drm/card0-DSI-1/fod_ui_ready";
+         if(new File(xiaomiFodReadyPath).exists()) {
+             xiaomiAsynchronous = true;
++            noDim = true;
+             FileObserver xiaomiUiReadyCb = new FileObserver(xiaomiFodReadyPath, FileObserver.MODIFY) {
+                 @Override
+                 public void onEvent(int event, String path) {
+-- 
+2.25.1
+

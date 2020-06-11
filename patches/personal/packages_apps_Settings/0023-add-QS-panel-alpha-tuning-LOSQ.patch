@@ -1,0 +1,59 @@
+From 40bc096a75d9abbd61401e3dc0136ea7da70c0ce Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 12 Apr 2020 02:45:14 +0300
+Subject: [PATCH 23/28] add QS panel alpha tuning (LOSQ)
+
+	modified:   res/values/strings.xml
+	modified:   res/xml/display_settings.xml
+	modified:   src/com/android/settings/DisplaySettings.java
+
+Change-Id: I139b1308dfb8297e554ba0d39c9cb17482eca824
+---
+ res/values/strings.xml                        | 2 ++
+ res/xml/display_settings.xml                  | 3 +++
+ src/com/android/settings/DisplaySettings.java | 2 ++
+ 3 files changed, 7 insertions(+)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 1573709044..a2c9e5a25d 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10089,6 +10089,8 @@
+     <string name="theme_customization_darkui_title">Dark themes</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar icons spacing (e.g. set 2dp paddings). -->
+     <string name="theme_customization_statusbar_title">Status Bar spacing</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the QS   Panel alpha opacity -->
++    <string name="theme_customization_qsalpha_title">QS Alpha opacity</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the QS   Panel layout (e.g. set 3x3 icons). -->
+     <string name="theme_customization_qspanel_title">QS Panel layout</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Label for the option that turns off customizations for a given category.-->
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index fb201b629f..f956a8dfaa 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -204,6 +204,9 @@
+         <ListPreference
+             android:key="android.theme.customization.statusbar"
+             android:title="@string/theme_customization_statusbar_title"/>
++        <ListPreference
++            android:key="android.theme.customization.qsalpha"
++            android:title="@string/theme_customization_qsalpha_title"/>
+         <ListPreference
+             android:key="android.theme.customization.qspanel"
+             android:title="@string/theme_customization_qspanel_title"/>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index d71c51e0da..5492dd6286 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -100,6 +100,8 @@ public class DisplaySettings extends DashboardFragment {
+         controllers.add(new BrightnessLevelPreferenceController(context, lifecycle));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.statusbar"));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.qsalpha"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.qspanel"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+-- 
+2.25.1
+

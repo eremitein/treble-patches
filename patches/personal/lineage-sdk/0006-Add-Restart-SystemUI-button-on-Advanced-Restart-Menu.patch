@@ -1,0 +1,42 @@
+From 439bb0b4b3f923dde35c64008d657bcae3537c1a Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 29 May 2020 17:19:27 +0300
+Subject: [PATCH 6/6] Add Restart SystemUI button on Advanced Restart Menu
+ [2/2]
+
+  * from
+  https://github.com/crdroidandroid/android_lineage-sdk/commit/dbd0185b0df0c6fec692ff461cba45cc811c53d3
+
+Change-Id: Ib995ca0405a89a34063b5f3822afa8aa424174ef
+---
+ lineage/res/res/values/config.xml                                | 1 +
+ sdk/src/java/org/lineageos/internal/util/PowerMenuConstants.java | 1 +
+ 2 files changed, 2 insertions(+)
+
+diff --git a/lineage/res/res/values/config.xml b/lineage/res/res/values/config.xml
+index ae0ffc5c..0abc7391 100644
+--- a/lineage/res/res/values/config.xml
++++ b/lineage/res/res/values/config.xml
+@@ -224,6 +224,7 @@
+     <!-- Defines the actions shown in advanced reboot submenu -->
+     <string-array name="config_restartActionsList">
+         <item>restart</item>
++        <item>restart_systemui</item>
+         <item>restart_recovery</item>
+         <item>restart_bootloader</item>
+      </string-array>
+diff --git a/sdk/src/java/org/lineageos/internal/util/PowerMenuConstants.java b/sdk/src/java/org/lineageos/internal/util/PowerMenuConstants.java
+index dc03dc81..b3558f25 100644
+--- a/sdk/src/java/org/lineageos/internal/util/PowerMenuConstants.java
++++ b/sdk/src/java/org/lineageos/internal/util/PowerMenuConstants.java
+@@ -40,6 +40,7 @@ public class PowerMenuConstants {
+     public static final String GLOBAL_ACTION_KEY_RESTART_BOOTLOADER = "restart_bootloader";
+     public static final String GLOBAL_ACTION_KEY_RESTART_DOWNLOAD = "restart_download";
+     public static final String GLOBAL_ACTION_KEY_RESTART_FASTBOOT = "restart_fastboot";
++    public static final String GLOBAL_ACTION_KEY_RESTART_SYSTEMUI = "restart_systemui";
+ 
+     private static String[] ALL_ACTIONS = {
+         GLOBAL_ACTION_KEY_POWER,
+-- 
+2.25.1
+

@@ -1,0 +1,92 @@
+From f06964944400844932cafe5d2a450e9071601131 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 9 Apr 2020 22:30:52 +0300
+Subject: [PATCH 21/28] add QS panel tuning (LOSQ)
+
+	modified:   res/values/strings.xml
+	modified:   res/xml/display_settings.xml
+	modified:   src/com/android/settings/DisplaySettings.java
+	modified:   src/com/android/settings/display/OverlayCategoryPreferenceController.java
+
+Change-Id: I8ce0e2964396202786c26d906c689b764475b984
+---
+ res/values/strings.xml                                    | 2 ++
+ res/xml/display_settings.xml                              | 3 +++
+ src/com/android/settings/DisplaySettings.java             | 2 ++
+ .../display/OverlayCategoryPreferenceController.java      | 8 ++++++++
+ 4 files changed, 15 insertions(+)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 3e5070cb31..910f067e8f 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10087,6 +10087,8 @@
+     <string name="theme_customization_category">Theming</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar icons spacing (e.g. set 2dp paddings). -->
+     <string name="theme_customization_statusbar_title">Status Bar spacing</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the QS   Panel layout (e.g. set 3x3 icons). -->
++    <string name="theme_customization_qspanel_title">QS Panel layout</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Label for the option that turns off customizations for a given category.-->
+     <string name="theme_customization_device_default">Device default</string>
+ 
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index ed98dcae9e..8f3d490faa 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -201,6 +201,9 @@
+         <ListPreference
+             android:key="android.theme.customization.statusbar"
+             android:title="@string/theme_customization_statusbar_title"/>
++        <ListPreference
++            android:key="android.theme.customization.qspanel"
++            android:title="@string/theme_customization_qspanel_title"/>
+     </PreferenceCategory>
+ 
+ </PreferenceScreen>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index 2727448011..0395556852 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -100,6 +100,8 @@ public class DisplaySettings extends DashboardFragment {
+         controllers.add(new BrightnessLevelPreferenceController(context, lifecycle));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.statusbar"));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.qspanel"));
+         return controllers;
+     }
+ 
+diff --git a/src/com/android/settings/display/OverlayCategoryPreferenceController.java b/src/com/android/settings/display/OverlayCategoryPreferenceController.java
+index 6a20e3aac3..188171889f 100644
+--- a/src/com/android/settings/display/OverlayCategoryPreferenceController.java
++++ b/src/com/android/settings/display/OverlayCategoryPreferenceController.java
+@@ -53,6 +53,7 @@ public class OverlayCategoryPreferenceController extends AbstractPreferenceContr
+     @VisibleForTesting
+     static final String PACKAGE_DEVICE_DEFAULT = "package_device_default";
+     private static final String OVERLAY_TARGET_PACKAGE = "android";
++    private static final String OVERLAY_TARGET_PACKAGE_UI = "com.android.systemui";
+     private static final Comparator<OverlayInfo> OVERLAY_INFO_COMPARATOR =
+             Comparator.comparingInt(a -> a.priority);
+     private final IOverlayManager mOverlayManager;
+@@ -183,11 +184,18 @@ public class OverlayCategoryPreferenceController extends AbstractPreferenceContr
+         try {
+             List<OverlayInfo> overlayInfos = mOverlayManager
+                     .getOverlayInfosForTarget(OVERLAY_TARGET_PACKAGE, USER_SYSTEM);
++            List<OverlayInfo> overlayInfosUI = mOverlayManager
++                    .getOverlayInfosForTarget(OVERLAY_TARGET_PACKAGE_UI, USER_SYSTEM);
+             for (OverlayInfo overlayInfo : overlayInfos) {
+                 if (mCategory.equals(overlayInfo.category)) {
+                     filteredInfos.add(overlayInfo);
+                 }
+             }
++            for (OverlayInfo overlayInfo : overlayInfosUI) {
++                if (mCategory.equals(overlayInfo.category)) {
++                    filteredInfos.add(overlayInfo);
++                }
++            }
+         } catch (RemoteException re) {
+             throw re.rethrowFromSystemServer();
+         }
+-- 
+2.25.1
+

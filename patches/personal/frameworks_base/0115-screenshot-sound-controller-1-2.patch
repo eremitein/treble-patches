@@ -1,0 +1,87 @@
+From 136bf1622d7fba2128a14bf4702fb73070340fc7 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 10 Mar 2020 19:47:20 +0200
+Subject: [PATCH 115/140] screenshot sound controller [1/2]
+
+  * from
+  https://github.com/Havoc-OS/android_frameworks_base/commit/21a3c15edaeb9eceb4b2a63f2f26a375de787ead
+
+	modified:   core/java/android/provider/Settings.java
+	modified:   packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java
+
+Change-Id: I5d75678e9c012c761698f9d85a4d08afdb5dc195
+---
+ core/java/android/provider/Settings.java             | 12 ++++++++++++
+ .../systemui/screenshot/GlobalScreenshot.java        |  5 ++++-
+ 2 files changed, 16 insertions(+), 1 deletion(-)
+
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index de3b1e54656..f213706a45e 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -4520,6 +4520,15 @@ public final class Settings {
+           */
+         public static final String VOLUME_KEY_CURSOR_CONTROL = "volume_key_cursor_control";
+ 
++        /**
++         * Enable/Disable screenshot sound
++         * @hide
++         */
++        public static final String SCREENSHOT_SOUND = "screenshot_sound";
++        /** @hide */
++        private static final Validator SCREENSHOT_SOUND_VALIDATOR =
++                BOOLEAN_VALIDATOR;
++
+         /**
+          * Settings to backup. This is here so that it's in the same place as the settings
+          * keys and easy to update.
+@@ -4585,6 +4594,7 @@ public final class Settings {
+             DISPLAY_COLOR_MODE,
+             ALARM_ALERT,
+             NOTIFICATION_LIGHT_PULSE,
++            SCREENSHOT_SOUND,
+         };
+ 
+         /**
+@@ -4704,6 +4714,7 @@ public final class Settings {
+             PRIVATE_SETTINGS.add(EGG_MODE);
+             PRIVATE_SETTINGS.add(SHOW_BATTERY_PERCENT);
+             PRIVATE_SETTINGS.add(DISPLAY_COLOR_MODE);
++            PRIVATE_SETTINGS.add(SCREENSHOT_SOUND);
+         }
+ 
+         /**
+@@ -4799,6 +4810,7 @@ public final class Settings {
+             VALIDATORS.put(NOTIFICATION_LIGHT_PULSE, BOOLEAN_VALIDATOR);
+             VALIDATORS.put(ACCELEROMETER_ROTATION_ANGLES,
+                     ACCELEROMETER_ROTATION_ANGLES_VALIDATOR);
++            VALIDATORS.put(SCREENSHOT_SOUND, SCREENSHOT_SOUND_VALIDATOR);
+         }
+ 
+         /**
+diff --git a/packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java b/packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java
+index 17ebe3a2d9b..b55c0765116 100644
+--- a/packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java
++++ b/packages/SystemUI/src/com/android/systemui/screenshot/GlobalScreenshot.java
+@@ -82,6 +82,7 @@ import android.os.VibrationEffect;
+ import android.os.Vibrator;
+ import android.provider.DeviceConfig;
+ import android.provider.MediaStore;
++import android.provider.Settings;
+ import android.text.TextUtils;
+ import android.util.DisplayMetrics;
+ import android.util.Slog;
+@@ -989,7 +990,9 @@ class GlobalScreenshot {
+                         break;
+                     case AudioManager.RINGER_MODE_NORMAL:
+                         // Play the shutter sound to notify that we've taken a screenshot
+-                        mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
++                        if (Settings.System.getInt(mContext.getContentResolver(), Settings.System.SCREENSHOT_SOUND, 1) == 1) {
++                            mCameraSound.play(MediaActionSound.SHUTTER_CLICK);
++                        }
+                         break;
+                 }
+ 
+-- 
+2.25.1
+

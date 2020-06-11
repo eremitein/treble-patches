@@ -1,0 +1,29 @@
+From 2a6949a82c81fce471307fe95f319bbafe5183bb Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 4 Sep 2019 21:11:48 +0200
+Subject: [PATCH 05/14] Panic into recovery rather than bootloader
+
+Getting last_kmsg/pstore from bootloader isn't possible for other people
+than the OEM, but we have TWRP to access last_kmsg/pstore
+
+Change-Id: If04bb6572dc66677d7b44f7d302b2d69ce526200
+---
+ init/reboot_utils.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/init/reboot_utils.cpp b/init/reboot_utils.cpp
+index de085cc9b..36d39b50d 100644
+--- a/init/reboot_utils.cpp
++++ b/init/reboot_utils.cpp
+@@ -33,7 +33,7 @@
+ namespace android {
+ namespace init {
+ 
+-static std::string init_fatal_reboot_target = "bootloader";
++static std::string init_fatal_reboot_target = "recovery";
+ 
+ void SetFatalRebootTarget() {
+     std::string cmdline;
+-- 
+2.25.1
+

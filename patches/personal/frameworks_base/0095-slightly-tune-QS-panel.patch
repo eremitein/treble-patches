@@ -1,0 +1,26 @@
+From fba59421ae5cbebecc1a6f72cfc0c97ac4a69a51 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Feb 2020 18:55:45 +0200
+Subject: [PATCH 095/140] slightly tune QS panel
+
+	modified:   packages/SystemUI/res/values/config.xml
+---
+ packages/SystemUI/res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index e6e47457749..520f50ea3be 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -109,7 +109,7 @@
+ 
+     <!-- The default tiles to display in QuickSettings -->
+     <string name="quick_settings_tiles_default" translatable="false">
+-        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,cast
++        wifi,bt,dnd,flashlight,rotation,battery,cell,airplane,night,cast,dark,location
+     </string>
+ 
+     <!-- The minimum number of tiles to display in QuickSettings -->
+-- 
+2.25.1
+

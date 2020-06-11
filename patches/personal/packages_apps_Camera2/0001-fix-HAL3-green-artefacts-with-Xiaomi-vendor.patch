@@ -1,0 +1,29 @@
+From 9b7f3b2c7fca79efbadec153e79a0a41cd2e11e9 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 6 Feb 2020 03:37:47 +0200
+Subject: [PATCH 1/2] fix HAL3 green artefacts with Xiaomi vendor
+
+  * based on
+  https://github.com/Speedhorn/r/commit/c713ccb03d63714839c3859226a94436b0a4ac50
+
+	modified:   src/com/android/camera/one/config/OneCameraFeatureConfigCreator.java
+---
+ .../camera/one/config/OneCameraFeatureConfigCreator.java        | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/com/android/camera/one/config/OneCameraFeatureConfigCreator.java b/src/com/android/camera/one/config/OneCameraFeatureConfigCreator.java
+index dc7f900..adc8c69 100644
+--- a/src/com/android/camera/one/config/OneCameraFeatureConfigCreator.java
++++ b/src/com/android/camera/one/config/OneCameraFeatureConfigCreator.java
+@@ -146,7 +146,7 @@ public class OneCameraFeatureConfigCreator {
+         for (int cap : capabilities) {
+             if (cap == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_PRIVATE_REPROCESSING ||
+                     cap == CameraCharacteristics.REQUEST_AVAILABLE_CAPABILITIES_YUV_REPROCESSING) {
+-                return true;
++                return false;
+             }
+         }
+         return false;
+-- 
+2.17.1
+

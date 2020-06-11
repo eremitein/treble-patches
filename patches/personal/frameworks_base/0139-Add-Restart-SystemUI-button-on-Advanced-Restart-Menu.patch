@@ -1,0 +1,107 @@
+From ab00d4a0d8d8b60d2923b237805c1d5b61278dad Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 29 May 2020 16:09:20 +0300
+Subject: [PATCH 139/140] Add Restart SystemUI button on Advanced Restart Menu
+ [1/2]
+
+  * from
+  https://github.com/crdroidandroid/android_frameworks_base/commit/d60838e81726f6197fdde0ab717f9102c1a9a3c9
+
+Change-Id: I486fca0b2fe5b87dfd73eb7622dde84ad253157a
+---
+ .../res/drawable/ic_restart_systemui.xml      |  8 ++++++
+ packages/SystemUI/res/values/cm_strings.xml   |  2 ++
+ .../globalactions/GlobalActionsDialog.java    | 28 +++++++++++++++++++
+ 3 files changed, 38 insertions(+)
+ create mode 100644 packages/SystemUI/res/drawable/ic_restart_systemui.xml
+
+diff --git a/packages/SystemUI/res/drawable/ic_restart_systemui.xml b/packages/SystemUI/res/drawable/ic_restart_systemui.xml
+new file mode 100644
+index 00000000000..fe82285837b
+--- /dev/null
++++ b/packages/SystemUI/res/drawable/ic_restart_systemui.xml
+@@ -0,0 +1,8 @@
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++    android:height="24dp"
++    android:width="24dp"
++	android:tint="?android:attr/colorControlNormal"
++    android:viewportWidth="24"
++    android:viewportHeight="24">
++    <path android:fillColor="#000" android:pathData="M15,9A1,1 0 0,1 14,8A1,1 0 0,1 15,7A1,1 0 0,1 16,8A1,1 0 0,1 15,9M9,9A1,1 0 0,1 8,8A1,1 0 0,1 9,7A1,1 0 0,1 10,8A1,1 0 0,1 9,9M16.12,4.37L18.22,2.27L17.4,1.44L15.09,3.75C14.16,3.28 13.11,3 12,3C10.88,3 9.84,3.28 8.91,3.75L6.6,1.44L5.78,2.27L7.88,4.37C6.14,5.64 5,7.68 5,10V11H19V10C19,7.68 17.86,5.64 16.12,4.37M5,16C5,19.86 8.13,23 12,23A7,7 0 0,0 19,16V12H5V16Z" />
++</vector>
+diff --git a/packages/SystemUI/res/values/cm_strings.xml b/packages/SystemUI/res/values/cm_strings.xml
+index 15597ffc90d..04eb0aa73de 100644
+--- a/packages/SystemUI/res/values/cm_strings.xml
++++ b/packages/SystemUI/res/values/cm_strings.xml
+@@ -29,6 +29,8 @@
+     <string name="global_action_restart_download">Download</string>
+     <!-- Button to restart the device into fastboot mode, within the Restart Options dialog -->
+     <string name="global_action_restart_fastboot">Fastbootd</string>
++    <!-- Restart SystemUI via Advanced Power Menu -->
++    <string name="global_action_restart_systemui">SystemUI</string>
+ 
+     <!-- Restart progress dialog. This is shown if the user chooses to restart the device. -->
+     <string name="global_action_restart_progress">Restarting\u2026</string>
+diff --git a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+index fc278d8762f..65aebd95b74 100644
+--- a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
++++ b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+@@ -55,6 +55,7 @@ import android.os.Binder;
+ import android.os.Handler;
+ import android.os.IBinder;
+ import android.os.Message;
++import android.os.Process;
+ import android.os.PowerManager;
+ import android.os.RemoteException;
+ import android.os.ServiceManager;
+@@ -382,6 +383,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+                 items.add(new RestartDownloadAction());
+             } else if (GLOBAL_ACTION_KEY_RESTART_FASTBOOT.equals(actionKey)) {
+                 items.add(new RestartFastbootAction());
++            } else if (GLOBAL_ACTION_KEY_RESTART_SYSTEMUI.equals(actionKey)) {
++                items.add(new RestartSystemUIAction());
+             }
+         }
+         return items;
+@@ -518,6 +521,9 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+             } else if (GLOBAL_ACTION_KEY_RESTART_FASTBOOT.equals(actionKey) &&
+                     PowerMenuUtils.isAdvancedRestartPossible(mContext)) {
+                 mItems.add(new RestartFastbootAction());
++            } else if (GLOBAL_ACTION_KEY_RESTART_SYSTEMUI.equals(actionKey) &&
++                    PowerMenuUtils.isAdvancedRestartPossible(mContext)) {
++                mItems.add(new RestartSystemUIAction());
+             } else if (GLOBAL_ACTION_KEY_SCREENSHOT.equals(actionKey)) {
+                 mItems.add(new ScreenshotAction());
+             } else if (GLOBAL_ACTION_KEY_LOGOUT.equals(actionKey)) {
+@@ -840,6 +846,28 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+         }
+     }
+ 
++    private final class RestartSystemUIAction extends SinglePressAction {
++        private RestartSystemUIAction() {
++            super(com.android.systemui.R.drawable.ic_restart_systemui,
++                    com.android.systemui.R.string.global_action_restart_systemui);
++        }
++
++        @Override
++        public boolean showDuringKeyguard() {
++            return true;
++        }
++
++        @Override
++        public boolean showBeforeProvisioning() {
++            return true;
++        }
++
++        @Override
++        public void onPress() {
++            Process.killProcess(Process.myPid());
++        }
++    }
++
+     private class ScreenshotAction extends SinglePressAction implements LongPressAction {
+         public ScreenshotAction() {
+             super(R.drawable.ic_screenshot, R.string.global_action_screenshot);
+-- 
+2.25.1
+

@@ -1,0 +1,30 @@
+From 0398b8efe01f5c317f059af8a65c3444bf7bf250 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 27 Aug 2018 00:47:13 +0200
+Subject: [PATCH 033/140] Add a property toggle to enable high brightness range
+ on samsung device
+
+---
+ .../core/java/com/android/server/lights/LightsService.java  | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 0a799cfd8fa..6a7876b75f0 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -95,7 +95,11 @@ public class LightsService extends SystemService {
+                 if(mId == 0) {
+                     String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
+                     if(fp.matches(".*(crown|star)[q2]*lte.*")) {
+-                        setLightLocked(brightness*100, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
++                        int newBrightness = brightness * 100;
++                        if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
++                            newBrightness = (int) (brightness * 40960.0 / 255.0);
++                        }
++                        setLightLocked(newBrightness, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
+                         return;
+                     }
+ 
+-- 
+2.25.1
+

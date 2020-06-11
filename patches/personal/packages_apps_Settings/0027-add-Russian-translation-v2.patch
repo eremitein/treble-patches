@@ -1,0 +1,51 @@
+From c4d3331a0f6d4c9d4e86a078cb12db9a6b8187d0 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 24 Apr 2020 09:53:34 +0300
+Subject: [PATCH 27/28] add Russian translation v2
+
+Change-Id: I84a908eee8dfb42120ea168c045d3b811697018f
+---
+ res/values-ru/strings.xml | 29 +++++++++++++++++++++++++++++
+ 1 file changed, 29 insertions(+)
+
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index 5a18dd2095..d0b1fe3937 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -4845,4 +4845,33 @@
+     <!-- Quick unlock -->
+     <string name="unlock_quick_unlock_control_title">Быстрая разблокировка</string>
+     <string name="unlock_quick_unlock_control_summary">Разблокировать устройство без нажатия OK</string>
++    <!-- Navigation settings -->
++    <string name="back_height_low_label">Целиком</string>
++    <string name="back_height_high_label">Низ</string>
++    <string name="back_options_dialog_title">Опции</string>
++    <string name="back_height_message">Высота экрана, используемая в качестве сенсорной области для жеста назад</string>
++    <!-- Screenshot sound -->
++    <string name="screenshot_sound_title">Звук сохранения снимка экрана</string>
++    <!-- Three-fingers-swipe to screenshot -->
++    <string name="three_finger_gesture">Жест для сохранения снимка экрана</string>
++    <string name="three_finger_gesture_summary">Проведите тремя пальцами вниз по экрану для сохранения его       снимка</string>
++    <!-- NavigationBar Gestural Mode Tweaks -->
++    <string name="gesture_pill_message">Скрыть панель навигации для полноэкранных жестов</string>
++    <!-- Vendor security -->
++    <string name="security_patch_vendor">Дата обновления безопасности от производителя</string>
++    <!-- SELinux state -->
++    <string name="selinux_status">Состояние SELinux защиты</string>
++    <string name="selinux_status_disabled">Отсутствует</string>
++    <string name="selinux_status_permissive">Отключена</string>
++    <string name="selinux_status_enforcing">Включена</string>
++    <!-- Theming -->
++    <string name="theme_customization_accent_color_title">Цветовой акцент</string>
++    <string name="theme_customization_font_title">Шрифт заголовка/содержимого</string>
++    <string name="theme_customization_icon_shape_title">Закругление иконок</string>
++    <string name="theme_customization_icon_pack_title">Стиль иконок</string>
++    <string name="theme_customization_qspanel_title">Сетка быстрых настроек</string>
++    <string name="theme_customization_statusbar_title">Разделение иконок в строке состояния</string>
++    <string name="theme_customization_darkui_title">Варианты тёмного оформления</string>
++    <string name="theme_customization_qsalpha_title">Прозрачность панели быстрых настроек</string>
++    <string name="theme_customization_speedui_title">Ускорение интерфейса/Энергосбережение</string>
+ </resources>
+-- 
+2.25.1
+

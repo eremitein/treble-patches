@@ -1,0 +1,140 @@
+From 1aec8d2ed270050f1413f471742a5bdaa4e02e21 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 23 Dec 2019 20:49:53 +0200
+Subject: [PATCH 07/28] Add back SELinux info
+
+  * based on https://github.com/Evolution-X/packages_apps_Settings/commit/d1dc320beb1b6d0c8d5c04f69951f903d841a183
+
+	modified:   res/values/strings.xml
+	modified:   res/xml/firmware_version.xml
+	new file:   src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
+---
+ res/values/strings.xml                        |  7 ++
+ res/xml/firmware_version.xml                  | 10 ++-
+ .../SelinuxStatusPreferenceController.java    | 70 +++++++++++++++++++
+ 3 files changed, 86 insertions(+), 1 deletion(-)
+ create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 0c706ad5de..6ee26abad5 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -3143,6 +3143,8 @@
+     <string name="build_number">Build number</string>
+     <!-- About phone screen, tapping this button will take user to a seperate UI to check Google Play system update [CHAR LIMIT=60] -->
+     <string name="module_version">Google Play system update</string>
++    <!-- About phone screen,  setting option name  [CHAR LIMIT=40] -->
++    <string name="selinux_status">SELinux status</string>
+ 
+     <!-- About phone screen, show when a value of some status item is unavailable. -->
+     <string name="device_info_not_available">Not available</string>
+@@ -6741,6 +6743,11 @@
+     from their cell phone carrier. The use of the string is similar to the string
+     "system_update_settings_list_item_title" in this project. [CHAR LIMIT=25] -->
+     <string name="additional_system_update_settings_list_item_title">Additional system updates</string>
++    <!-- These statuses are displayed when a device was built with SE Android supoprt.
++    These are displayed by the settings app in the about section. -->
++    <string name="selinux_status_disabled">Disabled</string>
++    <string name="selinux_status_permissive">Permissive</string>
++    <string name="selinux_status_enforcing">Enforcing</string>
+ 
+     <!-- Notification of installed CA Certs --> <skip/>
+ 
+diff --git a/res/xml/firmware_version.xml b/res/xml/firmware_version.xml
+index eb8a82c7aa..7a456c7884 100644
+--- a/res/xml/firmware_version.xml
++++ b/res/xml/firmware_version.xml
+@@ -100,4 +100,12 @@
+         settings:enableCopying="true"
+         settings:controller="com.android.settings.deviceinfo.firmwareversion.SimpleBuildNumberPreferenceController"/>
+ 
+-</PreferenceScreen>
+\ No newline at end of file
++    <!-- SELinux -->
++    <Preference
++        android:key="selinux_status"
++        android:title="@string/selinux_status"
++        android:summary="@string/summary_placeholder"
++        settings:enableCopying="false"
++        settings:controller="com.android.settings.deviceinfo.firmwareversion.SelinuxStatusPreferenceController"/>
++
++</PreferenceScreen>
+diff --git a/src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java b/src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
+new file mode 100644
+index 0000000000..df642d6352
+--- /dev/null
++++ b/src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
+@@ -0,0 +1,70 @@
++/*
++ * Copyright (C) 2017 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.settings.deviceinfo.firmwareversion;
++
++import android.content.Context;
++
++import com.android.settings.R;
++import com.android.settings.core.BasePreferenceController;
++
++import java.io.*;
++import android.app.Activity;
++import android.os.Bundle;
++import android.util.Log;
++
++public class SelinuxStatusPreferenceController extends BasePreferenceController {
++
++    private static final String TAG = "SelinuxStatusCtrl";
++
++    public SelinuxStatusPreferenceController(Context context, String key) {
++        super(context, key);
++    }
++
++    @Override
++    public int getAvailabilityStatus() {
++        return AVAILABLE;
++    }
++
++    public CharSequence getSummary() {
++				StringBuffer output = new StringBuffer();
++				Process p;
++				try {
++						p = Runtime.getRuntime().exec("getenforce");
++						p.waitFor();
++						BufferedReader reader = new BufferedReader(new InputStreamReader(p.getInputStream()));
++						String line = "";
++						while ((line = reader.readLine())!= null) {
++								output.append(line);
++						}
++				} catch (Exception e) {
++						Log.e(TAG, "OS does not support getenforce");
++						// If getenforce is not available to the device, assume the device is not enforcing
++						e.printStackTrace();
++            return (CharSequence) mContext.getString(R.string.selinux_status_disabled);
++				}
++				String response = output.toString();
++				if ("Enforcing".equals(response)) {
++            return (CharSequence) mContext.getString(R.string.selinux_status_enforcing);
++				} else if ("Permissive".equals(response)) {
++            return (CharSequence) mContext.getString(R.string.selinux_status_permissive);
++				} else {
++						Log.e(TAG, "getenforce returned unexpected value, unable to determine selinux!");
++						// If getenforce is modified on this device, assume the device is not enforcing
++            return (CharSequence) mContext.getString(R.string.selinux_status_disabled);
++				}
++		}
++}
+-- 
+2.25.1
+

@@ -1,0 +1,236 @@
+From 3d34164271e97a65b30865c14bcac783b9885a3e Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 11 Jun 2020 07:03:36 +0300
+Subject: [PATCH 001/140] Revert "FODCircleView: Add support for pressed fod
+ layer"
+
+This reverts commit dcfcf1f5078f4adb8aac984a48011955872bbc3a.
+---
+ .../systemui/biometrics/FODCircleView.java    | 92 +++++++------------
+ 1 file changed, 35 insertions(+), 57 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index a1691b9cb69..e480d704a05 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -57,10 +57,8 @@ public class FODCircleView extends ImageView {
+     private final int mDreamingMaxOffset;
+     private final int mNavigationBarSize;
+     private final boolean mShouldBoostBrightness;
+-    private final Paint mPaintFingerprintBackground = new Paint();
+     private final Paint mPaintFingerprint = new Paint();
+     private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
+-    private final WindowManager.LayoutParams mPressedParams = new WindowManager.LayoutParams();
+     private final WindowManager mWindowManager;
+ 
+     private IFingerprintInscreen mFingerprintInscreenDaemon;
+@@ -73,12 +71,11 @@ public class FODCircleView extends ImageView {
+ 
+     private boolean mIsBouncer;
+     private boolean mIsDreaming;
++    private boolean mIsShowing;
+     private boolean mIsCircleShowing;
+ 
+     private Handler mHandler;
+ 
+-    private final ImageView mPressedView;
+-
+     private LockPatternUtils mLockPatternUtils;
+ 
+     private Timer mBurnInProtectionTimer;
+@@ -161,12 +158,10 @@ public class FODCircleView extends ImageView {
+         Resources res = context.getResources();
+ 
+         mColor = res.getColor(R.color.config_fodColor);
+-        mPaintFingerprint.setColor(mColor);
+-        mPaintFingerprint.setAntiAlias(true);
+-
+         mColorBackground = res.getColor(R.color.config_fodColorBackground);
+-        mPaintFingerprintBackground.setColor(mColorBackground);
+-        mPaintFingerprintBackground.setAntiAlias(true);
++
++        mPaintFingerprint.setAntiAlias(true);
++        mPaintFingerprint.setColor(mColorBackground);
+ 
+         mWindowManager = context.getSystemService(WindowManager.class);
+ 
+@@ -180,28 +175,14 @@ public class FODCircleView extends ImageView {
+         mParams.width = mSize;
+         mParams.format = PixelFormat.TRANSLUCENT;
+ 
++        mParams.setTitle("Fingerprint on display");
+         mParams.packageName = "android";
+         mParams.type = WindowManager.LayoutParams.TYPE_DISPLAY_OVERLAY;
+         mParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
++                WindowManager.LayoutParams.FLAG_DIM_BEHIND |
+                 WindowManager.LayoutParams.FLAG_LAYOUT_IN_SCREEN;
+         mParams.gravity = Gravity.TOP | Gravity.LEFT;
+ 
+-        mPressedParams.copyFrom(mParams);
+-        mPressedParams.flags |= WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+-
+-        mParams.setTitle("Fingerprint on display");
+-        mPressedParams.setTitle("Fingerprint on display.touched");
+-
+-        mPressedView = new ImageView(context)  {
+-            @Override
+-            protected void onDraw(Canvas canvas) {
+-                if (mIsCircleShowing) {
+-                    canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+-                }
+-                super.onDraw(canvas);
+-            }
+-        };
+-
+         mWindowManager.addView(this, mParams);
+ 
+         updatePosition();
+@@ -215,9 +196,7 @@ public class FODCircleView extends ImageView {
+ 
+     @Override
+     protected void onDraw(Canvas canvas) {
+-        if (!mIsCircleShowing) {
+-            canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprintBackground);
+-        }
++        canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+         super.onDraw(canvas);
+     }
+ 
+@@ -305,8 +284,10 @@ public class FODCircleView extends ImageView {
+         setKeepScreenOn(true);
+ 
+         setDim(true);
++        updateAlpha();
+         dispatchPress();
+ 
++        mPaintFingerprint.setColor(mColor);
+         setImageDrawable(null);
+         invalidate();
+     }
+@@ -314,11 +295,14 @@ public class FODCircleView extends ImageView {
+     public void hideCircle() {
+         mIsCircleShowing = false;
+ 
++        mPaintFingerprint.setColor(mColorBackground);
+         setImageResource(R.drawable.fod_icon_default);
+         invalidate();
+ 
+         dispatchRelease();
++
+         setDim(false);
++        updateAlpha();
+ 
+         setKeepScreenOn(false);
+     }
+@@ -334,6 +318,8 @@ public class FODCircleView extends ImageView {
+             return;
+         }
+ 
++        mIsShowing = true;
++
+         updatePosition();
+ 
+         dispatchShow();
+@@ -341,13 +327,19 @@ public class FODCircleView extends ImageView {
+     }
+ 
+     public void hide() {
++        mIsShowing = false;
++
+         setVisibility(View.GONE);
+         hideCircle();
+         dispatchHide();
+     }
+ 
+     private void updateAlpha() {
+-        setAlpha(mIsDreaming ? 0.5f : 1.0f);
++        if (mIsCircleShowing) {
++            setAlpha(1.0f);
++        } else {
++            setAlpha(mIsDreaming ? 0.5f : 1.0f);
++        }
+     }
+ 
+     private void updatePosition() {
+@@ -357,41 +349,33 @@ public class FODCircleView extends ImageView {
+         defaultDisplay.getRealSize(size);
+ 
+         int rotation = defaultDisplay.getRotation();
+-        int x, y;
+         switch (rotation) {
+             case Surface.ROTATION_0:
+-                x = mPositionX;
+-                y = mPositionY;
++                mParams.x = mPositionX;
++                mParams.y = mPositionY;
+                 break;
+             case Surface.ROTATION_90:
+-                x = mPositionY;
+-                y = mPositionX;
++                mParams.x = mPositionY;
++                mParams.y = mPositionX;
+                 break;
+             case Surface.ROTATION_180:
+-                x = mPositionX;
+-                y = size.y - mPositionY - mSize;
++                mParams.x = mPositionX;
++                mParams.y = size.y - mPositionY - mSize;
+                 break;
+             case Surface.ROTATION_270:
+-                x = size.x - mPositionY - mSize - mNavigationBarSize;
+-                y = mPositionX;
++                mParams.x = size.x - mPositionY - mSize - mNavigationBarSize;
++                mParams.y = mPositionX;
+                 break;
+             default:
+                 throw new IllegalArgumentException("Unknown rotation: " + rotation);
+         }
+ 
+-        mPressedParams.x = mParams.x = x;
+-        mPressedParams.y = mParams.y = y;
+-
+         if (mIsDreaming) {
+             mParams.x += mDreamingOffsetX;
+             mParams.y += mDreamingOffsetY;
+         }
+ 
+         mWindowManager.updateViewLayout(this, mParams);
+-
+-        if (mPressedView.getParent() != null) {
+-            mWindowManager.updateViewLayout(mPressedView, mPressedParams);
+-        }
+     }
+ 
+     private void setDim(boolean dim) {
+@@ -408,22 +392,16 @@ public class FODCircleView extends ImageView {
+             }
+ 
+             if (mShouldBoostBrightness) {
+-                mPressedParams.screenBrightness = 1.0f;
++                mParams.screenBrightness = 1.0f;
+             }
+ 
+-            mPressedParams.dimAmount = dimAmount / 255.0f;
+-            if (mPressedView.getParent() == null) {
+-                mWindowManager.addView(mPressedView, mPressedParams);
+-            } else {
+-                mWindowManager.updateViewLayout(mPressedView, mPressedParams);
+-            }
++            mParams.dimAmount = dimAmount / 255.0f;
+         } else {
+-            mPressedParams.screenBrightness = 0.0f;
+-            mPressedParams.dimAmount = 0.0f;
+-            if (mPressedView.getParent() != null) {
+-                mWindowManager.removeView(mPressedView);
+-            }
++            mParams.screenBrightness = 0.0f;
++            mParams.dimAmount = 0.0f;
+         }
++
++        mWindowManager.updateViewLayout(this, mParams);
+     }
+ 
+     private boolean isPinOrPattern(int userId) {
+-- 
+2.25.1
+

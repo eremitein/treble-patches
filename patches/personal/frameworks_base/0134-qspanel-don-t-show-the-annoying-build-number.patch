@@ -1,0 +1,37 @@
+From 8243588b387486dc85383c27d9172544a7f0f853 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 25 Apr 2020 08:31:13 +0300
+Subject: [PATCH 134/140] qspanel: don't show the annoying build number
+
+  * from
+  https://github.com/ezio84/abc_frameworks_base/commit/0dfad8ec4dfe95b7cf81d64f3ede201d2d3d258c
+
+Change-Id: Ie0fb101530dc3aa63b9c247468f5cfd28ebcec08
+---
+ .../src/com/android/systemui/qs/QSFooterImpl.java      | 10 +---------
+ 1 file changed, 1 insertion(+), 9 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/QSFooterImpl.java b/packages/SystemUI/src/com/android/systemui/qs/QSFooterImpl.java
+index 644664ecaee..0c9d9277864 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/QSFooterImpl.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/QSFooterImpl.java
+@@ -165,15 +165,7 @@ public class QSFooterImpl extends FrameLayout implements QSFooter,
+     private void setBuildText() {
+         TextView v = findViewById(R.id.build);
+         if (v == null) return;
+-        if (DevelopmentSettingsEnabler.isDevelopmentSettingsEnabled(mContext)) {
+-            v.setText(mContext.getString(
+-                    com.android.internal.R.string.bugreport_status,
+-                    Build.VERSION.RELEASE,
+-                    Build.ID));
+-            v.setVisibility(View.VISIBLE);
+-        } else {
+-            v.setVisibility(View.GONE);
+-        }
++        v.setVisibility(View.GONE);
+     }
+ 
+     private void updateAnimator(int width) {
+-- 
+2.25.1
+

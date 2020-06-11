@@ -1,0 +1,24 @@
+From 1e8bd55ad021daa71d9af5f484a27ef41734c160 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 22 May 2020 01:37:57 +0300
+Subject: [PATCH 12/12] experimental jit tweak
+
+	modified:   system.prop
+---
+ system.prop | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/system.prop b/system.prop
+index 3dbe6df..b04f632 100644
+--- a/system.prop
++++ b/system.prop
+@@ -11,3 +11,6 @@ persist.sys.phh.mainkeys=0
+ fw.max_users=10
+ persist.sys.max_profiles=10
+ ro.boot.realme.lockstate=0
++
++#experimental tweak for LOSQ Project
++dalvik.vm.jitthreshold=1000
+-- 
+2.25.1
+

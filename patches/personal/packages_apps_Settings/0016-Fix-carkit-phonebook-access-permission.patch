@@ -1,0 +1,30 @@
+From 1e2dd30e9debf19fe066b5617b181f51b5e0d7b3 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 9 Mar 2020 22:29:35 +0200
+Subject: [PATCH 16/28] Fix carkit phonebook access permission
+
+  * from
+  https://github.com/i-o-n/packages_apps_Settings/commit/31c53b7c1e3d0d0132a93e80a0d9b149ddcefd34
+
+	modified:   src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java
+---
+ .../settings/bluetooth/BluetoothPairingDialogFragment.java      | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java b/src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java
+index d38302d883..f9c26c1c1f 100644
+--- a/src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java
++++ b/src/com/android/settings/bluetooth/BluetoothPairingDialogFragment.java
+@@ -334,8 +334,8 @@ public class BluetoothPairingDialogFragment extends InstrumentedDialogFragment i
+         contactSharing.setVisibility(
+                 mPairingController.isProfileReady() ? View.GONE : View.VISIBLE);
+         mPairingController.setContactSharingState();
+-        contactSharing.setChecked(mPairingController.getContactSharingState());
+         contactSharing.setOnCheckedChangeListener(mPairingController);
++        contactSharing.setChecked(mPairingController.getContactSharingState());
+ 
+         messagePairing.setVisibility(mPairingController.isDisplayPairingKeyVariant()
+                 ? View.VISIBLE : View.GONE);
+-- 
+2.25.1
+

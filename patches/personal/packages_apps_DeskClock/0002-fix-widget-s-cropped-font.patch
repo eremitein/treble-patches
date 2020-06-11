@@ -1,0 +1,26 @@
+From 5a31190e21c30e46b9dac361dadaefc60893d667 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 10 Jan 2020 21:26:13 +0200
+Subject: [PATCH 2/3] fix widget's cropped font
+
+	modified:   src/com/android/alarmclock/DigitalAppWidgetProvider.java
+---
+ src/com/android/alarmclock/DigitalAppWidgetProvider.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/com/android/alarmclock/DigitalAppWidgetProvider.java b/src/com/android/alarmclock/DigitalAppWidgetProvider.java
+index 3be07eca7..43b847fef 100644
+--- a/src/com/android/alarmclock/DigitalAppWidgetProvider.java
++++ b/src/com/android/alarmclock/DigitalAppWidgetProvider.java
+@@ -484,7 +484,7 @@ public class DigitalAppWidgetProvider extends AppWidgetProvider {
+         private int mIconPaddingPx;
+ 
+         private Sizes(int targetWidthPx, int targetHeightPx, int largestClockFontSizePx) {
+-            mTargetWidthPx = targetWidthPx;
++            mTargetWidthPx = targetWidthPx - 60;
+             mTargetHeightPx = targetHeightPx;
+             mLargestClockFontSizePx = largestClockFontSizePx;
+             mSmallestClockFontSizePx = 1;
+-- 
+2.25.1
+

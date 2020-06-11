@@ -1,0 +1,50 @@
+From d42f5b66fa59456337d585b9c07eae9a4a1b5897 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 6 May 2019 20:25:34 +0200
+Subject: [PATCH 2/5] Fixes crash when selecting network
+
+Cf https://github.com/phhusson/treble_experimentations/issues/486
+---
+ src/com/android/phone/NetworkQueryService.java | 14 +++++++++++---
+ 1 file changed, 11 insertions(+), 3 deletions(-)
+
+diff --git a/src/com/android/phone/NetworkQueryService.java b/src/com/android/phone/NetworkQueryService.java
+index e67582fa3..c622713e8 100644
+--- a/src/com/android/phone/NetworkQueryService.java
++++ b/src/com/android/phone/NetworkQueryService.java
+@@ -43,6 +43,8 @@ import com.android.settingslib.utils.ThreadUtils;
+ 
+ import java.util.ArrayList;
+ import java.util.List;
++import java.util.regex.Matcher;
++import java.util.regex.Pattern;
+ 
+ /**
+  * Service code used to assist in querying the network for service
+@@ -377,14 +379,20 @@ public class NetworkQueryService extends Service {
+      */
+     private List<CellInfo> getCellInfoList(List<OperatorInfo> operatorInfoList) {
+         List<CellInfo> cellInfoList = new ArrayList<>();
++        Pattern p = Pattern.compile("^([0-9]{5,6}).*");
+         for (OperatorInfo oi: operatorInfoList) {
+             String operatorNumeric = oi.getOperatorNumeric();
+             String mcc = null;
+             String mnc = null;
+             log("operatorNumeric: " + operatorNumeric);
+-            if (operatorNumeric != null && operatorNumeric.matches("^[0-9]{5,6}$")) {
+-                mcc = operatorNumeric.substring(0, 3);
+-                mnc = operatorNumeric.substring(3);
++            if (operatorNumeric != null) {
++                Matcher m = p.matcher(operatorNumeric);
++                if (m.matches()) {
++                    mcc = m.group(1).substring(0, 3);
++                    mnc = m.group(1).substring(3);
++                } else {
++                    Log.e(LOG_TAG, "Failed to parse operatorNumeric!");
++                }
+             }
+             CellIdentityGsm cig = new CellIdentityGsm(
+                     Integer.MAX_VALUE /* lac */,
+-- 
+2.25.1
+

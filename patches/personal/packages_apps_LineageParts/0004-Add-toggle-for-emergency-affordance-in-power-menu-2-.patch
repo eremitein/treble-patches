@@ -1,0 +1,91 @@
+From 2bc126734acfa29e66bc568fc54cd824efc2c00b Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 30 Apr 2020 14:35:24 +0300
+Subject: [PATCH 4/4] Add toggle for emergency affordance in power menu (2/2)
+
+  * based on
+  https://github.com/crdroidandroid/android_packages_apps_crDroidSettings/commit/c52a5e79f784902fa898dcf2d79b5699d4cb0fdc
+
+	modified:   res/values/strings.xml
+	modified:   res/xml/power_menu_settings.xml
+	modified:   src/org/lineageos/lineageparts/input/PowerMenuActions.java
+
+Change-Id: Ie7c56bda870462492d491ac9e48a832208f12064
+---
+ res/values/strings.xml                                |  1 +
+ res/xml/power_menu_settings.xml                       |  5 +++++
+ .../lineageparts/input/PowerMenuActions.java          | 11 +++++++++++
+ 3 files changed, 17 insertions(+)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 2f6432a..c9e7399 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -252,6 +252,7 @@
+     <string name="power_menu_bug_report_title">Bug report</string>
+     <string name="power_menu_bug_report_disabled">Bug reporting is disabled in development settings</string>
+     <string name="power_menu_lockdown_title">Lockdown</string>
++    <string name="power_menu_emergency_title">Emergency</string>
+ 
+     <string name="camera_double_tap_power_gesture_title">Press power button twice for camera</string>
+ 
+diff --git a/res/xml/power_menu_settings.xml b/res/xml/power_menu_settings.xml
+index e947f31..d8b2a32 100644
+--- a/res/xml/power_menu_settings.xml
++++ b/res/xml/power_menu_settings.xml
+@@ -44,4 +44,9 @@
+         android:key="lockdown"
+         android:title="@string/power_menu_lockdown_title"
+         android:defaultValue="false" />
++
++    <CheckBoxPreference
++        android:key="emergency"
++        android:title="@string/power_menu_emergency_title"
++        android:defaultValue="false" />
+ </PreferenceScreen>
+diff --git a/src/org/lineageos/lineageparts/input/PowerMenuActions.java b/src/org/lineageos/lineageparts/input/PowerMenuActions.java
+index f119769..282706c 100644
+--- a/src/org/lineageos/lineageparts/input/PowerMenuActions.java
++++ b/src/org/lineageos/lineageparts/input/PowerMenuActions.java
+@@ -47,6 +47,7 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+     private CheckBoxPreference mUsersPref;
+     private CheckBoxPreference mBugReportPref;
+     private CheckBoxPreference mLockDownPref;
++    private CheckBoxPreference mEmergencyPref;
+ 
+     Context mContext;
+     private ArrayList<String> mLocalUserConfig = new ArrayList<String>();
+@@ -72,6 +73,8 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+                 mBugReportPref = findPreference(GLOBAL_ACTION_KEY_BUGREPORT);
+             } else if (action.equals(GLOBAL_ACTION_KEY_LOCKDOWN)) {
+                 mLockDownPref = findPreference(GLOBAL_ACTION_KEY_LOCKDOWN);
++            } else if (action.equals(GLOBAL_ACTION_KEY_EMERGENCY)) {
++                mEmergencyPref = findPreference(GLOBAL_ACTION_KEY_EMERGENCY);
+             }
+         }
+ 
+@@ -107,6 +110,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+             mBugReportPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_BUGREPORT));
+         }
+ 
++        if (mEmergencyPref != null) {
++            mEmergencyPref.setChecked(settingsArrayContains(GLOBAL_ACTION_KEY_EMERGENCY));
++        }
++
+         updatePreferences();
+     }
+ 
+@@ -142,6 +149,10 @@ public class PowerMenuActions extends SettingsPreferenceFragment {
+             Settings.Secure.putInt(getContentResolver(),
+                     Settings.Secure.LOCKDOWN_IN_POWER_MENU, value ? 1 : 0);
+ 
++        } else if (preference == mEmergencyPref) {
++            value = mEmergencyPref.isChecked();
++            updateUserConfig(value, GLOBAL_ACTION_KEY_EMERGENCY);
++
+         } else {
+             return super.onPreferenceTreeClick(preference);
+         }
+-- 
+2.25.1
+

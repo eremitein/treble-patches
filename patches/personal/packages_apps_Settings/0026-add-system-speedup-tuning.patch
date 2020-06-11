@@ -1,0 +1,57 @@
+From 4521b4feb312ca66f68399f41ea24963c6536584 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 11 May 2020 20:18:14 +0300
+Subject: [PATCH 26/28] add system speedup tuning
+
+	modified:   res/values/strings.xml
+	modified:   res/xml/display_settings.xml
+	modified:   src/com/android/settings/DisplaySettings.java
+---
+ res/values/strings.xml                        | 2 ++
+ res/xml/display_settings.xml                  | 3 +++
+ src/com/android/settings/DisplaySettings.java | 2 ++
+ 3 files changed, 7 insertions(+)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 39b8a2cd09..9866947c12 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10093,6 +10093,8 @@
+     <string name="theme_customization_qsalpha_title">QS Alpha opacity</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the QS   Panel layout (e.g. set 3x3 icons). -->
+     <string name="theme_customization_qspanel_title">QS Panel layout</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      SystemUI speed performance -->
++    <string name="theme_customization_speedui_title">UI Speed up/Powersaving</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Label for the option that turns off customizations for a given category.-->
+     <string name="theme_customization_device_default">Device default</string>
+ 
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index f956a8dfaa..827fa58d27 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -210,6 +210,9 @@
+         <ListPreference
+             android:key="android.theme.customization.qspanel"
+             android:title="@string/theme_customization_qspanel_title"/>
++        <ListPreference
++            android:key="android.theme.customization.speedui"
++            android:title="@string/theme_customization_speedui_title"/>
+     </PreferenceCategory>
+ 
+ </PreferenceScreen>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index 5492dd6286..3652b26cf9 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -106,6 +106,8 @@ public class DisplaySettings extends DashboardFragment {
+                 "android.theme.customization.qspanel"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.darkui"));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.speedui"));
+         return controllers;
+     }
+ 
+-- 
+2.25.1
+
