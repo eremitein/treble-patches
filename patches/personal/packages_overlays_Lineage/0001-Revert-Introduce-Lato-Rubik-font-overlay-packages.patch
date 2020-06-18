@@ -1,0 +1,266 @@
+From 781395c24daed77529fe13c50c01da1fe34fbf1c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 18 Jun 2020 23:41:13 +0300
+Subject: [PATCH 1/2] Revert "Introduce {Lato,Rubik} font overlay packages"
+
+This reverts commit 2b8dc1bc26183baad89daa0c086a423c9bce5e7c.
+---
+ fonts/Lato/Android.mk              | 12 -----------
+ fonts/Lato/AndroidManifest.xml     | 33 ------------------------------
+ fonts/Lato/res/values/config.xml   | 29 --------------------------
+ fonts/Lato/res/values/strings.xml  | 21 -------------------
+ fonts/Rubik/Android.mk             | 12 -----------
+ fonts/Rubik/AndroidManifest.xml    | 33 ------------------------------
+ fonts/Rubik/res/values/config.xml  | 29 --------------------------
+ fonts/Rubik/res/values/strings.xml | 21 -------------------
+ 8 files changed, 190 deletions(-)
+ delete mode 100644 fonts/Lato/Android.mk
+ delete mode 100644 fonts/Lato/AndroidManifest.xml
+ delete mode 100644 fonts/Lato/res/values/config.xml
+ delete mode 100644 fonts/Lato/res/values/strings.xml
+ delete mode 100644 fonts/Rubik/Android.mk
+ delete mode 100644 fonts/Rubik/AndroidManifest.xml
+ delete mode 100644 fonts/Rubik/res/values/config.xml
+ delete mode 100644 fonts/Rubik/res/values/strings.xml
+
+diff --git a/fonts/Lato/Android.mk b/fonts/Lato/Android.mk
+deleted file mode 100644
+index 3a64a62..0000000
+--- a/fonts/Lato/Android.mk
++++ /dev/null
+@@ -1,12 +0,0 @@
+-LOCAL_PATH:= $(call my-dir)
+-include $(CLEAR_VARS)
+-
+-LOCAL_RRO_THEME := LineageLatoFont
+-LOCAL_PRODUCT_MODULE := true
+-LOCAL_CERTIFICATE := platform
+-LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+-LOCAL_PACKAGE_NAME := LineageLatoFont
+-
+-LOCAL_PRIVATE_PLATFORM_APIS := true
+-
+-include $(BUILD_RRO_PACKAGE)
+diff --git a/fonts/Lato/AndroidManifest.xml b/fonts/Lato/AndroidManifest.xml
+deleted file mode 100644
+index 6b502ba..0000000
+--- a/fonts/Lato/AndroidManifest.xml
++++ /dev/null
+@@ -1,33 +0,0 @@
+-<!--
+-    Copyright (c) 2020, The LineageOS Project
+-
+-    Licensed under the Apache License, Version 2.0 (the "License");
+-    you may not use this file except in compliance with the License.
+-    You may obtain a copy of the License at
+-
+-        http://www.apache.org/licenses/LICENSE-2.0
+-
+-    Unless required by applicable law or agreed to in writing, software
+-    distributed under the License is distributed on an "AS IS" BASIS,
+-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-    See the License for the specific language governing permissions and
+-    limitations under the License.
+--->
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="org.lineageos.overlay.font.lato"
+-    android:versionCode="1"
+-    android:versionName="1.0">
+-
+-    <overlay
+-        android:targetPackage="android"
+-        android:category="android.theme.customization.font"
+-        android:priority="1" />
+-
+-    <application
+-        android:hasCode="false"
+-        android:label="@string/font_lato_overlay">
+-        <meta-data
+-            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+-            android:value="lato,lato-medium" />
+-    </application>
+-</manifest>
+diff --git a/fonts/Lato/res/values/config.xml b/fonts/Lato/res/values/config.xml
+deleted file mode 100644
+index f6cafc3..0000000
+--- a/fonts/Lato/res/values/config.xml
++++ /dev/null
+@@ -1,29 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-/**
+- * Copyright (c) 2020, The LineageOS Project
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+--->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-     <!-- Name of a font family to use for body text. -->
+-    <string name="config_bodyFontFamily" translatable="false">lato</string>
+-    <!-- Name of a font family to use for medium body text. -->
+-    <string name="config_bodyFontFamilyMedium" translatable="false">lato-medium</string>
+-    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
+-    <string name="config_headlineFontFamily" translatable="false">lato</string>
+-    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
+-    <string name="config_headlineFontFamilyMedium" translatable="false">lato-medium</string>
+-</resources>
+-
+diff --git a/fonts/Lato/res/values/strings.xml b/fonts/Lato/res/values/strings.xml
+deleted file mode 100644
+index 539fe6e..0000000
+--- a/fonts/Lato/res/values/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<!--
+-/**
+- * Copyright (c) 2020, The Android Open Source Project
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+--->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <!-- Headline / Body font Lato overlay -->
+-    <string name="font_lato_overlay" translatable="false">Lato</string>
+-</resources>
+diff --git a/fonts/Rubik/Android.mk b/fonts/Rubik/Android.mk
+deleted file mode 100644
+index b0cfca3..0000000
+--- a/fonts/Rubik/Android.mk
++++ /dev/null
+@@ -1,12 +0,0 @@
+-LOCAL_PATH:= $(call my-dir)
+-include $(CLEAR_VARS)
+-
+-LOCAL_RRO_THEME := LineageRubikFont
+-LOCAL_PRODUCT_MODULE := true
+-LOCAL_CERTIFICATE := platform
+-LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+-LOCAL_PACKAGE_NAME := LineageRubikFont
+-
+-LOCAL_PRIVATE_PLATFORM_APIS := true
+-
+-include $(BUILD_RRO_PACKAGE)
+diff --git a/fonts/Rubik/AndroidManifest.xml b/fonts/Rubik/AndroidManifest.xml
+deleted file mode 100644
+index bc8b4ed..0000000
+--- a/fonts/Rubik/AndroidManifest.xml
++++ /dev/null
+@@ -1,33 +0,0 @@
+-<!--
+-    Copyright (c) 2020, The LineageOS Project
+-
+-    Licensed under the Apache License, Version 2.0 (the "License");
+-    you may not use this file except in compliance with the License.
+-    You may obtain a copy of the License at
+-
+-        http://www.apache.org/licenses/LICENSE-2.0
+-
+-    Unless required by applicable law or agreed to in writing, software
+-    distributed under the License is distributed on an "AS IS" BASIS,
+-    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-    See the License for the specific language governing permissions and
+-    limitations under the License.
+--->
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="org.lineageos.overlay.font.rubik"
+-    android:versionCode="1"
+-    android:versionName="1.0">
+-
+-    <overlay
+-        android:targetPackage="android"
+-        android:category="android.theme.customization.font"
+-        android:priority="1" />
+-
+-    <application
+-        android:hasCode="false"
+-        android:label="@string/font_rubik_overlay">
+-        <meta-data
+-            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
+-            android:value="rubik,rubik-medium" />
+-    </application>
+-</manifest>
+diff --git a/fonts/Rubik/res/values/config.xml b/fonts/Rubik/res/values/config.xml
+deleted file mode 100644
+index 0144031..0000000
+--- a/fonts/Rubik/res/values/config.xml
++++ /dev/null
+@@ -1,29 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-/**
+- * Copyright (c) 2020, The LineageOS Project
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+--->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-     <!-- Name of a font family to use for body text. -->
+-    <string name="config_bodyFontFamily" translatable="false">rubik</string>
+-    <!-- Name of a font family to use for medium body text. -->
+-    <string name="config_bodyFontFamilyMedium" translatable="false">rubik-medium</string>
+-    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
+-    <string name="config_headlineFontFamily" translatable="false">rubik</string>
+-    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
+-    <string name="config_headlineFontFamilyMedium" translatable="false">rubik-medium</string>
+-</resources>
+-
+diff --git a/fonts/Rubik/res/values/strings.xml b/fonts/Rubik/res/values/strings.xml
+deleted file mode 100644
+index 5ab5669..0000000
+--- a/fonts/Rubik/res/values/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<!--
+-/**
+- * Copyright (c) 2020, The Android Open Source Project
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *     http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+--->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <!-- Headline / Body font Rubik overlay -->
+-    <string name="font_rubik_overlay" translatable="false">Rubik</string>
+-</resources>
+-- 
+2.25.1
+

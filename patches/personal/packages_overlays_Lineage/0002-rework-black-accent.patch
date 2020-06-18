@@ -1,0 +1,26 @@
+From fcc89e1762c273e0acc11fb7e73b2d113911e201 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 15 Mar 2020 09:55:41 +0200
+Subject: [PATCH 2/2] rework black accent
+
+	modified:   accents/black/res/values/colors_device_defaults.xml
+
+Change-Id: I40f3ce0540efe7af6605510319d2d5782342332f
+---
+ accents/black/res/values/colors_device_defaults.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/accents/black/res/values/colors_device_defaults.xml b/accents/black/res/values/colors_device_defaults.xml
+index 2abf156..38fe46a 100644
+--- a/accents/black/res/values/colors_device_defaults.xml
++++ b/accents/black/res/values/colors_device_defaults.xml
+@@ -16,5 +16,5 @@
+ -->
+ <resources>
+     <color name="accent_device_default_light">#212121</color>
+-    <color name="accent_device_default_dark">#212121</color>
++    <color name="accent_device_default_dark">#555555</color>
+ </resources>
+-- 
+2.25.1
+
