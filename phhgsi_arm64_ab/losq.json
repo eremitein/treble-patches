@@ -1,12 +1,12 @@
 {
   "response": [
     {
-      "datetime": 1591800132,
-      "filename": "losq-v219-200611-arm64-bvN.img.xz",
+      "datetime": 1592445020,
+      "filename": "losq-v220-200618-arm64-bvN.img.xz",
       "id": "5eb63bbbe01eeed093cb22bb8f5acdc5",
       "romtype": "UNOFFICIAL",
-      "size": 558466588,
-      "url": "https://sourceforge.net/projects/treblerom/files/LOSQ/2020.06.11/losq-v219-200611-arm64-bvN.img.xz/download",
+      "size": 558446068,
+      "url": "https://sourceforge.net/projects/treblerom/files/LOSQ/2020.06.18/losq-v220-200618-arm64-bvN.img.xz/download",
       "version": "17.1"
     }
   ]
