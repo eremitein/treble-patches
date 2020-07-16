@@ -1,7 +1,7 @@
-From d080d0472868c04e6868941c9a751eac867bf29f Mon Sep 17 00:00:00 2001
+From a65c0791d2d2d60297e80bafe716369eb8565fa9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 8 Feb 2020 16:39:09 +0200
-Subject: [PATCH 3/8] replace to Q Google sounds
+Subject: [PATCH 03/10] replace to Q Google sounds
 
   * from
   https://github.com/Havoc-OS/android_build/commit/8c8e17dce8164fa7e4bea0e2e4787e22bc62c1c9

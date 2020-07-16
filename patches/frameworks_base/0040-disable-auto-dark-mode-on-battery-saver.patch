@@ -1,7 +1,7 @@
-From d6793b99e6c247d8293c27100bfaa208336c7d0f Mon Sep 17 00:00:00 2001
+From 2079756589d47b8bb9175b160b8c0c7f2da21200 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 2 Mar 2020 00:01:34 +0200
-Subject: [PATCH 40/75] disable auto dark mode on battery saver
+Subject: [PATCH 40/79] disable auto dark mode on battery saver
 
 	modified:   services/core/java/com/android/server/UiModeManagerService.java
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 40/75] disable auto dark mode on battery saver
  1 file changed, 12 deletions(-)
 
 diff --git a/services/core/java/com/android/server/UiModeManagerService.java b/services/core/java/com/android/server/UiModeManagerService.java
-index 978cc577f1e..c5e9dff42f0 100644
+index 17742b7f634..f76d18dcc0a 100644
 --- a/services/core/java/com/android/server/UiModeManagerService.java
 +++ b/services/core/java/com/android/server/UiModeManagerService.java
-@@ -297,18 +297,6 @@ final class UiModeManagerService extends SystemService {
+@@ -310,18 +310,6 @@ final class UiModeManagerService extends SystemService {
          PowerManagerInternal localPowerManager =
                  LocalServices.getService(PowerManagerInternal.class);
          mPowerSave = localPowerManager.getLowPowerState(ServiceType.NIGHT_MODE).batterySaverEnabled;

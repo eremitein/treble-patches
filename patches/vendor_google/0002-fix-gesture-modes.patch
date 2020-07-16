@@ -1,7 +1,7 @@
-From 39a8914f453a2778e6a2b6ee36c8f886ced634eb Mon Sep 17 00:00:00 2001
+From 695afe3a13c1da4bfbeb6e131d5df2e726b89585 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 27 May 2020 16:59:35 +0300
-Subject: [PATCH 2/2] fix gesture modes
+Subject: [PATCH 2/3] fix gesture modes
 
 ---
  apps/SearchLauncher/overlay/res/values/config.xml | 2 +-

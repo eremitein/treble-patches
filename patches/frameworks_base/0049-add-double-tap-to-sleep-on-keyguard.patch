@@ -1,0 +1,65 @@
+From 54260dd4d5b8f3f1d1fb6da78d14a156b25e7556 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 8 Apr 2020 20:29:00 +0300
+Subject: [PATCH 49/79] add double-tap-to-sleep on keyguard
+
+  * based on
+  https://github.com/crdroidandroid/android_frameworks_base/commit/fee2c57f5150f5bdaee70cf3ee8b8a672c9d1e88
+
+	modified:   packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java
+---
+ .../statusbar/phone/NotificationPanelView.java  | 17 +++++++++++++++++
+ 1 file changed, 17 insertions(+)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java
+index 2a5044463ea..72419379f77 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NotificationPanelView.java
+@@ -46,6 +46,7 @@ import android.util.AttributeSet;
+ import android.util.Log;
+ import android.util.MathUtils;
+ import android.view.LayoutInflater;
++import android.view.GestureDetector;
+ import android.view.MotionEvent;
+ import android.view.VelocityTracker;
+ import android.view.View;
+@@ -408,6 +409,8 @@ public class NotificationPanelView extends PanelView implements
+             Dependency.get(ShadeController.class);
+     private int mDisplayId;
+ 
++    private GestureDetector mDoubleTapGesture;
++
+     /**
+      * Cache the resource id of the theme to avoid unnecessary work in onThemeChanged.
+      *
+@@ -478,6 +481,16 @@ public class NotificationPanelView extends PanelView implements
+         });
+         mBottomAreaShadeAlphaAnimator.setDuration(160);
+         mBottomAreaShadeAlphaAnimator.setInterpolator(Interpolators.ALPHA_OUT);
++        mDoubleTapGesture = new GestureDetector(mContext,
++                new GestureDetector.SimpleOnGestureListener() {
++            @Override
++            public boolean onDoubleTap(MotionEvent e) {
++                if (mPowerManager != null) {
++                    mPowerManager.goToSleep(e.getEventTime());
++                }
++                return true;
++            }
++        });
+     }
+ 
+     /**
+@@ -1230,6 +1243,10 @@ public class NotificationPanelView extends PanelView implements
+             return false;
+         }
+ 
++        if (mBarState == StatusBarState.KEYGUARD) {
++            mDoubleTapGesture.onTouchEvent(event);
++        }
++
+         // Make sure the next touch won't the blocked after the current ends.
+         if (event.getAction() == MotionEvent.ACTION_UP
+                 || event.getAction() == MotionEvent.ACTION_CANCEL) {
+-- 
+2.25.1
+

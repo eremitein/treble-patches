@@ -1,7 +1,7 @@
-From 114a74857c031e358797c88e4433eb0f38bb3640 Mon Sep 17 00:00:00 2001
+From 0f27e6134cfac95658a56d85d09b370530937804 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 11:44:11 +0200
-Subject: [PATCH 17/75] navigation mode settings [1/2]
+Subject: [PATCH 17/79] navigation mode settings [1/2]
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/c071cf9df2f49adef63f5eb16fd9e62283f94ed1#diff-0b25240e6c3bd48a12b12b0758f0ddefR494

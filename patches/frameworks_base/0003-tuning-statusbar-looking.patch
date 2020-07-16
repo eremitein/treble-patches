@@ -1,7 +1,7 @@
-From 0d9c178867114a501dc6ebc825c6486efe9bce09 Mon Sep 17 00:00:00 2001
+From 07f302ff838e9c69ffcd60bfcd8c6daa9a55aa63 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 14:14:32 +0200
-Subject: [PATCH 03/75] tuning statusbar looking
+Subject: [PATCH 03/79] tuning statusbar looking
 
 	modified:   core/res/res/values/dimens.xml
 	modified:   packages/SystemUI/res/drawable/stat_sys_alarm.xml
@@ -47,12 +47,11 @@ Subject: [PATCH 03/75] tuning statusbar looking
  .../res/layout/mobile_signal_group.xml        |  6 ++--
  .../layout/status_bar_mobile_signal_group.xml | 10 +++---
  .../res/layout/status_bar_wifi_group.xml      |  6 ++--
- packages/SystemUI/res/layout/system_icons.xml |  2 +-
  packages/SystemUI/res/values/dimens.xml       | 32 +++++++++----------
- 21 files changed, 80 insertions(+), 76 deletions(-)
+ 20 files changed, 79 insertions(+), 75 deletions(-)
 
 diff --git a/core/res/res/values/dimens.xml b/core/res/res/values/dimens.xml
-index 4fdb498451a..593e9f92b4b 100644
+index 3edfb36982f..b8294c3f67c 100644
 --- a/core/res/res/values/dimens.xml
 +++ b/core/res/res/values/dimens.xml
 @@ -70,12 +70,12 @@
@@ -404,19 +403,8 @@ index 35cce25d45a..8f9e57199c3 100644
                  android:visibility="gone"
              />
          </FrameLayout>
-diff --git a/packages/SystemUI/res/layout/system_icons.xml b/packages/SystemUI/res/layout/system_icons.xml
-index f3b72bf2375..818d1d77177 100644
---- a/packages/SystemUI/res/layout/system_icons.xml
-+++ b/packages/SystemUI/res/layout/system_icons.xml
-@@ -35,4 +35,4 @@
-         android:clipToPadding="false"
-         android:clipChildren="false"
-         systemui:textAppearance="@style/TextAppearance.StatusBar.Clock" />
--</LinearLayout>
-\ No newline at end of file
-+</LinearLayout>
 diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
-index 2e1799168b5..36b3ecce0e1 100644
+index 0263329dbe8..4abcf7b08e8 100644
 --- a/packages/SystemUI/res/values/dimens.xml
 +++ b/packages/SystemUI/res/values/dimens.xml
 @@ -63,7 +63,7 @@

@@ -1,7 +1,7 @@
-From 6a240cb2c8e1f47294bf338c6cfe4dff6ff14dc9 Mon Sep 17 00:00:00 2001
+From 070968096116e4bdfa71eb2b8b9a03c756d9d6f6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 12:21:08 +0200
-Subject: [PATCH 18/75] Add new font overlays
+Subject: [PATCH 18/79] Add new font overlays
 
   * based on
   https://github.com/Havoc-OS/android_frameworks_base/commit/6ce2c108a31ebce64e01c44073e280aeebd9ac56#diff-1577047be19b3c4c395085c246970be7

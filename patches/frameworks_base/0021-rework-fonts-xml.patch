@@ -1,7 +1,7 @@
-From f818980c44cae9b0bb2aa09314cd61949fb9eb44 Mon Sep 17 00:00:00 2001
+From 36730a85aa044125304c7c35dcf2650d65543c3e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 19:24:23 +0200
-Subject: [PATCH 21/75] rework fonts xml
+Subject: [PATCH 21/79] rework fonts xml
 
 	modified:   data/fonts/fonts.xml
 ---

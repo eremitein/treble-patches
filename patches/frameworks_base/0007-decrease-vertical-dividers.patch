@@ -1,7 +1,7 @@
-From 4abac52ae6c8930d4e04f2b30f67f79936bb8c6c Mon Sep 17 00:00:00 2001
+From 0d9961ab574fe839877935a75eab513fe8140227 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 20 Dec 2019 02:39:13 +0200
-Subject: [PATCH 07/75] decrease vertical dividers
+Subject: [PATCH 07/79] decrease vertical dividers
 
 	modified:   packages/SystemUI/res/values/dimens.xml
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 07/75] decrease vertical dividers
  1 file changed, 7 insertions(+), 7 deletions(-)
 
 diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
-index 36b3ecce0e1..9ed37d8fc63 100644
+index 4abcf7b08e8..977824f102a 100644
 --- a/packages/SystemUI/res/values/dimens.xml
 +++ b/packages/SystemUI/res/values/dimens.xml
 @@ -226,7 +226,7 @@

@@ -1,7 +1,7 @@
-From 6d145db4d17264a366f0d5d221c4d74f7b8af359 Mon Sep 17 00:00:00 2001
+From 6b9e5d05275dcf83a743a99b851c5f98e50aca04 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:55:43 +0200
-Subject: [PATCH 10/75] Pixel UI
+Subject: [PATCH 10/79] Pixel UI
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/9f98b8ef947fcc6f7eea6690fd524807495367fb
@@ -55,10 +55,10 @@ index 9ad7bfc6812..16c83babbfa 100644
              android:color="?attr/colorPopupBackground" />
  
 diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
-index 0be0b124611..c8f15ac5aff 100644
+index c7b9f6bf77d..55a49298a46 100644
 --- a/core/res/res/values/config.xml
 +++ b/core/res/res/values/config.xml
-@@ -3828,7 +3828,7 @@
+@@ -3837,7 +3837,7 @@
      <string name="config_mediaProjectionPermissionDialogComponent" translatable="false">com.android.systemui/com.android.systemui.media.MediaProjectionPermissionActivity</string>
  
      <!-- Corner radius of system dialogs -->
@@ -68,7 +68,7 @@ index 0be0b124611..c8f15ac5aff 100644
      <dimen name="config_buttonCornerRadius">@dimen/control_corner_material</dimen>
      <!-- Corner radius for bottom sheet system dialogs -->
 diff --git a/core/res/res/values/dimens.xml b/core/res/res/values/dimens.xml
-index 593e9f92b4b..5244e494573 100644
+index b8294c3f67c..0691728a9cb 100644
 --- a/core/res/res/values/dimens.xml
 +++ b/core/res/res/values/dimens.xml
 @@ -636,7 +636,7 @@
@@ -125,7 +125,7 @@ index ad38f3d57c2..d4d33334262 100644
          <!-- AlertDialog attributes -->
          <item name="alertDialogTheme">@style/Theme.Dialog.Alert</item>
 diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
-index 9ed37d8fc63..ac396e573a0 100644
+index 977824f102a..b600f033160 100644
 --- a/packages/SystemUI/res/values/dimens.xml
 +++ b/packages/SystemUI/res/values/dimens.xml
 @@ -513,7 +513,7 @@

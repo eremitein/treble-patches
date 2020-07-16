@@ -1,0 +1,112 @@
+From e68c0fa7f5591511ef7d0e861ef6aac7a5f2ec01 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 11 Apr 2020 19:40:56 +0300
+Subject: [PATCH 59/79] fix QS Panel background (and other forced black)
+
+---
+ core/res/res/values-night/colors.xml           |  2 +-
+ core/res/res/values-night/values.xml           |  4 ++--
+ core/res/res/values/colors_device_defaults.xml |  4 ++--
+ packages/SystemUI/res/values-night/colors.xml  | 12 ++++++------
+ 4 files changed, 11 insertions(+), 11 deletions(-)
+
+diff --git a/core/res/res/values-night/colors.xml b/core/res/res/values-night/colors.xml
+index c5e72f012a2..5892455ddaf 100644
+--- a/core/res/res/values-night/colors.xml
++++ b/core/res/res/values-night/colors.xml
+@@ -27,7 +27,7 @@
+     <color name="notification_default_color_dark">#ddffffff</color>
+ 
+     <!-- The background color of a notification card. -->
+-    <color name="notification_material_background_color">@color/black</color>
++    <color name="notification_material_background_color">@color/primary_dark_device_default_dark</color>
+ 
+     <color name="chooser_row_divider">@color/list_divider_color_dark</color>
+     <color name="chooser_gradient_background">@color/loading_gradient_background_color_dark</color>
+diff --git a/core/res/res/values-night/values.xml b/core/res/res/values-night/values.xml
+index 4e6b712f1f5..41b1a9c477f 100644
+--- a/core/res/res/values-night/values.xml
++++ b/core/res/res/values-night/values.xml
+@@ -27,7 +27,7 @@
+         <item name="forceDarkAllowed">false</item>
+ 
+         <!-- QS panel background -->
+-        <item name="colorBackgroundFloating">@color/black</item>
++        <item name="colorBackgroundFloating">@color/primary_dark_device_default_dark</item>
+ 
+         <!-- volume background -->
+         <item name="panelColorBackground">@color/material_grey_800</item>
+@@ -39,4 +39,4 @@
+         <item name="textColor">@color/notification_secondary_text_color_dark</item>
+         <item name="textSize">@dimen/notification_text_size</item>
+     </style>
+-</resources>
+\ No newline at end of file
++</resources>
+diff --git a/core/res/res/values/colors_device_defaults.xml b/core/res/res/values/colors_device_defaults.xml
+index 80a1b9427b8..f120c738531 100644
+--- a/core/res/res/values/colors_device_defaults.xml
++++ b/core/res/res/values/colors_device_defaults.xml
+@@ -21,7 +21,7 @@
+     <color name="primary_device_default_light">@color/primary_material_light</color>
+     <color name="primary_device_default_settings">#ff2d2d2d</color>
+     <color name="primary_device_default_settings_light">#ffffffff</color>
+-    <color name="primary_dark_device_default_dark">#ff242424</color>
++    <color name="primary_dark_device_default_dark">#ff151618</color>
+     <color name="primary_dark_device_default_light">@color/primary_dark_material_light</color>
+     <color name="primary_dark_device_default_settings">#ff000000</color>
+     <color name="primary_dark_device_default_settings_light">#ffffffff</color>
+@@ -39,7 +39,7 @@
+ 
+     <color name="background_device_default_dark">@color/background_material_dark</color>
+     <color name="background_device_default_light">#ffffffff</color>
+-    <color name="background_floating_device_default_dark">#ff3c4043</color>
++    <color name="background_floating_device_default_dark">@color/primary_dark_device_default_dark</color>
+     <color name="background_floating_device_default_light">@color/background_floating_material_light</color>
+ 
+     <!-- Error color -->
+diff --git a/packages/SystemUI/res/values-night/colors.xml b/packages/SystemUI/res/values-night/colors.xml
+index 7b55d18676d..c78ec5de0b8 100644
+--- a/packages/SystemUI/res/values-night/colors.xml
++++ b/packages/SystemUI/res/values-night/colors.xml
+@@ -18,14 +18,14 @@
+   -->
+ <resources>
+     <!-- The color of the material notification background -->
+-    <color name="notification_material_background_color">@*android:color/notification_material_background_color</color>
++    <color name="notification_material_background_color">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- The color of the legacy notifications with customs backgrounds (gingerbread and lollipop.)
+     It's fine to override this color since at that point the shade was dark. -->
+-    <color name="notification_legacy_background_color">@*android:color/notification_material_background_color</color>
++    <color name="notification_legacy_background_color">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- The color of the material notification background when dimmed -->
+-    <color name="notification_material_background_dimmed_color">#aa000000</color>
++    <color name="notification_material_background_dimmed_color">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- The color of the dividing line between grouped notifications while . -->
+     <color name="notification_divider_color">#212121</color>
+@@ -61,16 +61,16 @@
+     <color name="notification_channel_dialog_separator">@color/GM2_grey_700</color>
+ 
+     <!-- The color of the background in the top part of QSCustomizer -->
+-    <color name="qs_customize_background">@color/GM2_grey_900</color>
++    <color name="qs_customize_background">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- The color of the background in the bottom part of QSCustomizer -->
+-    <color name="qs_customize_decoration">@color/GM2_grey_800</color>
++    <color name="qs_customize_decoration">@color/GM2_grey_900</color>
+ 
+     <!-- The color of the background in the separated list of the Global Actions menu -->
+     <color name="global_actions_separated_background">@color/GM2_grey_900</color>
+ 
+     <!-- The color of the background in the grid of the Global Actions menu -->
+-    <color name="global_actions_grid_background">@color/GM2_grey_800</color>
++    <color name="global_actions_grid_background">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- The color of the text in the Global Actions menu -->
+     <color name="global_actions_text">@color/GM2_grey_200</color>
+-- 
+2.25.1
+
