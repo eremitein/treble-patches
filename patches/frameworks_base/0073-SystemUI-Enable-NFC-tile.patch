@@ -1,7 +1,7 @@
 From 7f2bfdceccf1a668a1211bc09913a65235fe915d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 22 May 2020 02:32:39 +0300
-Subject: [PATCH 73/79] SystemUI: Enable NFC tile
+Subject: [PATCH 73/88] SystemUI: Enable NFC tile
 
   * from
   https://github.com/LineageOS/android_frameworks_base/commit/ebec0fb5c25691d3a5df9dc494544e943dd49124

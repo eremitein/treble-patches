@@ -1,7 +1,7 @@
 From 4e6bf1cd05ed81e571db4c47df37ebce97590453 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 5 Mar 2020 14:36:23 +0200
-Subject: [PATCH 42/79] speed up (and fix lags) in Q recents
+Subject: [PATCH 42/88] speed up (and fix lags) in Q recents
 
 	modified:   packages/SystemUI/legacy/recents/res/anim/recents_fast_toggle_app_home_exit.xml
 	modified:   packages/SystemUI/legacy/recents/res/anim/recents_from_launcher_enter.xml

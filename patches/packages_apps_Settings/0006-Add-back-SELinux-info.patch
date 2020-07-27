@@ -1,7 +1,7 @@
-From e525d11292399913ae26ae4f7d7fcfbcf74957a9 Mon Sep 17 00:00:00 2001
+From ee9e542221a56a5de6a3e4f6530199613d304ef7 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 20:49:53 +0200
-Subject: [PATCH 06/28] Add back SELinux info
+Subject: [PATCH 06/29] Add back SELinux info
 
   * based on https://github.com/Evolution-X/packages_apps_Settings/commit/d1dc320beb1b6d0c8d5c04f69951f903d841a183
 
@@ -16,7 +16,7 @@ Subject: [PATCH 06/28] Add back SELinux info
  create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 36a84d8f53..0cd71c26c5 100644
+index 7056a9dd90..4fa5c342c3 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -3143,6 +3143,8 @@
@@ -28,7 +28,7 @@ index 36a84d8f53..0cd71c26c5 100644
  
      <!-- About phone screen, show when a value of some status item is unavailable. -->
      <string name="device_info_not_available">Not available</string>
-@@ -6741,6 +6743,11 @@
+@@ -6738,6 +6740,11 @@
      from their cell phone carrier. The use of the string is similar to the string
      "system_update_settings_list_item_title" in this project. [CHAR LIMIT=25] -->
      <string name="additional_system_update_settings_list_item_title">Additional system updates</string>

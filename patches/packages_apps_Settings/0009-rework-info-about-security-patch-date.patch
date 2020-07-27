@@ -1,7 +1,7 @@
-From f2cfadf47b46e12a17613e7a4704948c925dd198 Mon Sep 17 00:00:00 2001
+From d9f17e9da38dccf3e5d6db08f5aa24ec783ec8e3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 5 Feb 2020 14:33:45 +0200
-Subject: [PATCH 09/28] rework info about security patch date
+Subject: [PATCH 09/29] rework info about security patch date
 
   * based on
   https://github.com/LineageOS/android_packages_apps_Settings/commit/2fe6f351f98cb9456359182bcf902546b3dc638b#diff-fc3d9d607f2fdcc77bb9e90ba41e7389
@@ -19,7 +19,7 @@ Subject: [PATCH 09/28] rework info about security patch date
  create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 45d71454f4..0e8762fcb3 100644
+index 8d8055eac8..c3c9705985 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -3125,6 +3125,8 @@

@@ -1,7 +1,7 @@
 From 93de36964dde807fabcfe76b6db18d3c58d7743b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 21:14:52 +0200
-Subject: [PATCH 38/79] rework Gray accent overlay v2
+Subject: [PATCH 38/88] rework Gray accent overlay v2
 
 	modified:   packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
 ---

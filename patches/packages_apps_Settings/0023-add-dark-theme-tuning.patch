@@ -1,7 +1,7 @@
-From adb6c45db45e8a3104b6266fcaee32d87eb3f6f3 Mon Sep 17 00:00:00 2001
+From e762d2c2b87f0321c5c5deda4f158b9e7f4f1783 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 12 Apr 2020 00:31:56 +0300
-Subject: [PATCH 23/28] add dark theme tuning
+Subject: [PATCH 23/29] add dark theme tuning
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -13,10 +13,10 @@ Subject: [PATCH 23/28] add dark theme tuning
  3 files changed, 7 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index d1fe5673df..677531e35a 100644
+index f3d7729c7c..4a7f063558 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10095,6 +10095,8 @@
+@@ -10092,6 +10092,8 @@
      <string name="theme_customization_icon_pack_title">Icon style</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the adaptive icon shape (e.g. launcher and quick settings icons). -->
      <string name="theme_customization_icon_shape_title">Icon shape</string>

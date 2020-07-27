@@ -1,7 +1,7 @@
-From 268bb7c84327872cb9152d290712b4f0bfb9738f Mon Sep 17 00:00:00 2001
+From 41061ff51901b0969e1977a6bffc5135795bd5f5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 9 Apr 2020 13:12:23 +0300
-Subject: [PATCH 20/28] Clean up running services fragment layout
+Subject: [PATCH 20/29] Clean up running services fragment layout
 
   * from
   https://github.com/crdroidandroid/android_packages_apps_Settings/commit/5e4dfc9b70add7af98eb228e4e360a0fd2e2b253

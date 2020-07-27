@@ -1,7 +1,7 @@
 From 772e709674c9e34d64ee5ad179877b1d91cd1af0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 17:51:57 +0200
-Subject: [PATCH 33/79] rework Simple Day font overlay
+Subject: [PATCH 33/88] rework Simple Day font overlay
 
 	modified:   packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
 	modified:   packages/overlays/FontSimpleDayOverlay/res/values/config.xml

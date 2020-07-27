@@ -1,0 +1,35 @@
+From d673ae05f04febf83c16ba1966af7d5ccdb4d2ae Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 21 Jul 2020 16:34:39 +0300
+Subject: [PATCH 85/88] add translation (2020.07.21)
+
+---
+ packages/SystemUI/res/values-fr/strings.xml | 2 ++
+ packages/SystemUI/res/values-ru/strings.xml | 2 ++
+ 2 files changed, 4 insertions(+)
+
+diff --git a/packages/SystemUI/res/values-fr/strings.xml b/packages/SystemUI/res/values-fr/strings.xml
+index 39b3a917992..2fca06221b2 100644
+--- a/packages/SystemUI/res/values-fr/strings.xml
++++ b/packages/SystemUI/res/values-fr/strings.xml
+@@ -942,4 +942,6 @@
+     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Ignorer"</string>
+     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Navigation système mise à jour. Pour apporter des modifications, accédez aux paramètres."</string>
+     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Accédez aux paramètres pour mettre à jour la navigation système"</string>
++    <string name="quick_settings_volume_panel_label">"Panneau de volume"</string>
++    <string name="quick_settings_usb_tether_label">"Modem USB"</string>
+ </resources>
+diff --git a/packages/SystemUI/res/values-ru/strings.xml b/packages/SystemUI/res/values-ru/strings.xml
+index 9302a962b3d..5b782d8b45c 100644
+--- a/packages/SystemUI/res/values-ru/strings.xml
++++ b/packages/SystemUI/res/values-ru/strings.xml
+@@ -952,4 +952,6 @@
+     <string name="bubble_dismiss_text" msgid="7071770411580452911">"Закрыть"</string>
+     <string name="notification_content_system_nav_changed" msgid="5077913144844684544">"Параметры навигации в системе обновлены. Чтобы изменить их, перейдите в настройки."</string>
+     <string name="notification_content_gesture_nav_available" msgid="4431460803004659888">"Чтобы обновить параметры навигации в системе, перейдите в настройки."</string>
++    <string name="quick_settings_volume_panel_label">"Панель громкости"</string>
++    <string name="quick_settings_usb_tether_label">"USB-модем"</string>
+ </resources>
+-- 
+2.25.1
+

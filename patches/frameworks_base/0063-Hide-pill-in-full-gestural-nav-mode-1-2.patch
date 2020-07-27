@@ -1,7 +1,7 @@
 From 460b1ac9200eb1a73dd02235e1926342c0416d52 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 13 Apr 2020 17:57:30 +0300
-Subject: [PATCH 63/79] Hide pill in full gestural nav mode [1/2]
+Subject: [PATCH 63/88] Hide pill in full gestural nav mode [1/2]
 
   * from
   https://github.com/crdroidandroid/android_frameworks_base/commit/7034894d0dfc6d18e215a66dd76613c4691b4cde

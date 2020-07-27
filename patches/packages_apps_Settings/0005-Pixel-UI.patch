@@ -1,7 +1,7 @@
-From 700d6c8ddc28396db9af63937cf3cf173038d621 Mon Sep 17 00:00:00 2001
+From b5cecf5246b459c09d3560ca7ce55820205f40e8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:35:49 +0200
-Subject: [PATCH 05/28] Pixel UI
+Subject: [PATCH 05/29] Pixel UI
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/fe6ec9d5978149a5652c70a665d914e389e40890

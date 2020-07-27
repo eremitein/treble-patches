@@ -1,7 +1,7 @@
-From 749d741380c3ea78ad111d7bb541897fe49658d4 Mon Sep 17 00:00:00 2001
+From 6400786e0d1be89e25ab1f8ed064d7468b2b1843 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 11 May 2020 20:18:14 +0300
-Subject: [PATCH 26/28] add system speedup tuning
+Subject: [PATCH 26/29] add system speedup tuning
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -13,10 +13,10 @@ Subject: [PATCH 26/28] add system speedup tuning
  3 files changed, 7 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 2010f79066..5594a4eec9 100644
+index 1a1fa83102..885a70ea2b 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10097,6 +10097,8 @@
+@@ -10094,6 +10094,8 @@
      <string name="theme_customization_icon_shape_title">Icon shape</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the dark mode colors -->
      <string name="theme_customization_darkui_title">Dark themes</string>

@@ -1,7 +1,7 @@
-From 110908dffca21fd1a6dd5c297b2bb6814d41d37d Mon Sep 17 00:00:00 2001
+From 787ee03269a2c9df9246a51cbaa74dd274b7fe5d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 11:51:23 +0200
-Subject: [PATCH 11/28] navigation mode settings [2/2]
+Subject: [PATCH 11/29] navigation mode settings [2/2]
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/598a941efc26c1550d11737b0438584df57851ec
@@ -147,10 +147,10 @@ index 0000000000..328931f943
 +    </LinearLayout>
 +</LinearLayout>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 7c1d9ab33a..bce54092b7 100644
+index 532148a29a..a4c064f46e 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -11452,4 +11452,10 @@
+@@ -11449,4 +11449,10 @@
      <!-- Subtext for showing the option of RTT setting. [CHAR LIMIT=NONE] -->
      <string name="rtt_settings_always_visible"></string>
  

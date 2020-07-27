@@ -1,7 +1,7 @@
 From cd18469a3956e37e6a8665366135b41cf9868a92 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 11 Jan 2020 00:18:12 +0200
-Subject: [PATCH 12/79] remove led blinking if battery low
+Subject: [PATCH 12/88] remove led blinking if battery low
 
 	modified:   services/core/java/com/android/server/BatteryService.java
 ---

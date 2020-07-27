@@ -1,7 +1,7 @@
-From 174ce6db1cca1fbcdbdd0a2c30f6c3bf6090f802 Mon Sep 17 00:00:00 2001
+From 1d868117200ebf4a472e08267f0ee4c1c79ab64f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 11 Mar 2020 20:20:05 +0200
-Subject: [PATCH 19/28] add three-fingers-swipe to screenshot [2/2]
+Subject: [PATCH 19/29] add three-fingers-swipe to screenshot [2/2]
 
   * based on
   https://github.com/Evolution-X/packages_apps_Evolver/commit/1b64fadf5debcda66382763312d77867bbb8be78
@@ -21,10 +21,10 @@ Subject: [PATCH 19/28] add three-fingers-swipe to screenshot [2/2]
  create mode 100644 src/com/caos/settings/preference/SystemSettingSwitchPreference.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 9de472e20b..0e04b01659 100644
+index d6bcbc3cde..a3704d793c 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -11461,4 +11461,8 @@
+@@ -11458,4 +11458,8 @@
      <!-- Screenshot sound -->
      <string name="screenshot_sound_title">Screenshot sound</string>
  

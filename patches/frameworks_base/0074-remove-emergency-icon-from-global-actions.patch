@@ -1,7 +1,7 @@
 From 7e500e923df4ee38e49203063b50b38b2eeb5fbf Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 22 May 2020 04:03:34 +0300
-Subject: [PATCH 74/79] remove emergency icon from global actions
+Subject: [PATCH 74/88] remove emergency icon from global actions
 
 	modified:   packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
 ---

@@ -1,0 +1,25 @@
+From fb27ee5475cfecf57734f3f60c2f140584ae1a97 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 12 Mar 2020 13:10:47 +0200
+Subject: [PATCH] disable OAT limitations
+
+	modified:   core/product.mk
+---
+ core/product.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/core/product.mk b/core/product.mk
+index 40485638c..c69937ab0 100644
+--- a/core/product.mk
++++ b/core/product.mk
+@@ -488,7 +488,6 @@ endef
+ # be cleaned up to not be product variables.
+ _readonly_late_variables := \
+   DEVICE_PACKAGE_OVERLAYS \
+-  WITH_DEXPREOPT_BOOT_IMG_AND_SYSTEM_SERVER_ONLY \
+ 
+ # Modified internally in the build system
+ _readonly_late_variables += \
+-- 
+2.25.1
+

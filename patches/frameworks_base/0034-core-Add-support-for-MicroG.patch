@@ -1,7 +1,7 @@
 From f7326221de7a2ede7469dee69a14bb24a30d0986 Mon Sep 17 00:00:00 2001
 From: gudenau <gudenau>
 Date: Tue, 25 Sep 2018 09:44:26 +0200
-Subject: [PATCH 34/79] core: Add support for MicroG
+Subject: [PATCH 34/88] core: Add support for MicroG
 
 -fake signatures, enabled per app by dynamic permission
 

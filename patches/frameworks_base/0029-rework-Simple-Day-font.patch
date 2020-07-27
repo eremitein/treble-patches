@@ -1,7 +1,7 @@
 From d6484174c443693a6eb9f30d46df0686d1b04181 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 09:35:09 +0200
-Subject: [PATCH 29/79] rework Simple Day font
+Subject: [PATCH 29/88] rework Simple Day font
 
 	modified:   data/fonts/fonts.xml
 	modified:   packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml

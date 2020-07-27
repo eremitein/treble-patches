@@ -1,0 +1,479 @@
+From a8c5fefc77710dc0c6fd091469f8d4587e223bdb Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 21 Jul 2020 04:58:43 +0300
+Subject: [PATCH 88/88] add header padding overlays
+
+---
+ .../systemui/theme/ThemeOverlayManager.java   |  8 ++++-
+ packages/overlays/Android.mk                  |  4 +++
+ packages/overlays/Header10Overlay/Android.mk  | 30 +++++++++++++++++++
+ .../Header10Overlay/AndroidManifest.xml       | 24 +++++++++++++++
+ .../Header10Overlay/res/values/dimens.xml     | 23 ++++++++++++++
+ packages/overlays/Header15Overlay/Android.mk  | 30 +++++++++++++++++++
+ .../Header15Overlay/AndroidManifest.xml       | 24 +++++++++++++++
+ .../Header15Overlay/res/values/dimens.xml     | 23 ++++++++++++++
+ packages/overlays/Header20Overlay/Android.mk  | 30 +++++++++++++++++++
+ .../Header20Overlay/AndroidManifest.xml       | 24 +++++++++++++++
+ .../Header20Overlay/res/values/dimens.xml     | 23 ++++++++++++++
+ packages/overlays/Header25Overlay/Android.mk  | 30 +++++++++++++++++++
+ .../Header25Overlay/AndroidManifest.xml       | 24 +++++++++++++++
+ .../Header25Overlay/res/values/dimens.xml     | 23 ++++++++++++++
+ 14 files changed, 319 insertions(+), 1 deletion(-)
+ create mode 100644 packages/overlays/Header10Overlay/Android.mk
+ create mode 100644 packages/overlays/Header10Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Header10Overlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/Header15Overlay/Android.mk
+ create mode 100644 packages/overlays/Header15Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Header15Overlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/Header20Overlay/Android.mk
+ create mode 100644 packages/overlays/Header20Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Header20Overlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/Header25Overlay/Android.mk
+ create mode 100644 packages/overlays/Header25Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Header25Overlay/res/values/dimens.xml
+
+diff --git a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+index c507c570bb5..2f3860bd6fc 100644
+--- a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
++++ b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+@@ -82,6 +82,9 @@ class ThemeOverlayManager {
+     @VisibleForTesting
+     static final String OVERLAY_CATEGORY_SPEEDUI =
+             "android.theme.customization.speedui";
++    @VisibleForTesting
++    static final String OVERLAY_CATEGORY_HEADER =
++            "android.theme.customization.header";
+ 
+     /*
+      * All theme customization categories used by the system, in order that they should be applied,
+@@ -97,6 +100,7 @@ class ThemeOverlayManager {
+             OVERLAY_CATEGORY_QSALPHA,
+             OVERLAY_CATEGORY_DARKUI,
+             OVERLAY_CATEGORY_SPEEDUI,
++            OVERLAY_CATEGORY_HEADER,
+             OVERLAY_CATEGORY_ICON_ANDROID,
+             OVERLAY_CATEGORY_ICON_SYSUI,
+             OVERLAY_CATEGORY_ICON_SETTINGS,
+@@ -113,6 +117,7 @@ class ThemeOverlayManager {
+             OVERLAY_CATEGORY_QSALPHA,
+             OVERLAY_CATEGORY_DARKUI,
+             OVERLAY_CATEGORY_SPEEDUI,
++            OVERLAY_CATEGORY_HEADER,
+             OVERLAY_CATEGORY_ICON_ANDROID,
+             OVERLAY_CATEGORY_ICON_SYSUI);
+ 
+@@ -134,7 +139,7 @@ class ThemeOverlayManager {
+         mTargetPackageToCategories.put(ANDROID_PACKAGE, Sets.newHashSet(
+                 OVERLAY_CATEGORY_COLOR, OVERLAY_CATEGORY_FONT, OVERLAY_CATEGORY_STATUSBAR,
+                 OVERLAY_CATEGORY_SHAPE, OVERLAY_CATEGORY_ICON_ANDROID, OVERLAY_CATEGORY_DARKUI,
+-                OVERLAY_CATEGORY_SPEEDUI));
++                OVERLAY_CATEGORY_SPEEDUI, OVERLAY_CATEGORY_HEADER));
+         mTargetPackageToCategories.put(SYSUI_PACKAGE,
+                 Sets.newHashSet(OVERLAY_CATEGORY_ICON_SYSUI, OVERLAY_CATEGORY_QSPANEL,
+                                 OVERLAY_CATEGORY_QSALPHA));
+@@ -151,6 +156,7 @@ class ThemeOverlayManager {
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_STATUSBAR, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_DARKUI, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_SPEEDUI, ANDROID_PACKAGE);
++        mCategoryToTargetPackage.put(OVERLAY_CATEGORY_HEADER, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_QSPANEL, SYSUI_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_QSALPHA, SYSUI_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SYSUI, SYSUI_PACKAGE);
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 4cc7f88df6e..291ca5e9228 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -105,6 +105,10 @@ LOCAL_REQUIRED_MODULES := \
+ 	QSPanelAlpha70Overlay \
+ 	QSPanelAlpha80Overlay \
+ 	QSPanelAlpha90Overlay \
++	Header10Overlay \
++	Header15Overlay \
++	Header20Overlay \
++	Header25Overlay \
+ 	NavigationBarMode3ButtonOverlay \
+ 	NavigationBarMode2ButtonOverlay \
+ 	NavigationBarModeGesturalOverlay \
+diff --git a/packages/overlays/Header10Overlay/Android.mk b/packages/overlays/Header10Overlay/Android.mk
+new file mode 100644
+index 00000000000..fa6e9504663
+--- /dev/null
++++ b/packages/overlays/Header10Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Header10
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Header10Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Header10Overlay/AndroidManifest.xml b/packages/overlays/Header10Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..f71912cf288
+--- /dev/null
++++ b/packages/overlays/Header10Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.header10"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.header" android:priority="1"/>
++    <application android:label="10x" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Header10Overlay/res/values/dimens.xml b/packages/overlays/Header10Overlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..fdd4c488985
+--- /dev/null
++++ b/packages/overlays/Header10Overlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <dimen name="header_padding_extra">60dp</dimen>
++    <dimen name="quick_qs_offset_height">72dp</dimen>
++    <dimen name="quick_qs_total_height">200dp</dimen>
++</resources>
+diff --git a/packages/overlays/Header15Overlay/Android.mk b/packages/overlays/Header15Overlay/Android.mk
+new file mode 100644
+index 00000000000..85d1654fed5
+--- /dev/null
++++ b/packages/overlays/Header15Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Header15
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Header15Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Header15Overlay/AndroidManifest.xml b/packages/overlays/Header15Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..a3f05fbcb9d
+--- /dev/null
++++ b/packages/overlays/Header15Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.header15"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.header" android:priority="1"/>
++    <application android:label="15x" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Header15Overlay/res/values/dimens.xml b/packages/overlays/Header15Overlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..b12f7335495
+--- /dev/null
++++ b/packages/overlays/Header15Overlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <dimen name="header_padding_extra">72dp</dimen>
++    <dimen name="quick_qs_offset_height">72dp</dimen>
++    <dimen name="quick_qs_total_height">200dp</dimen>
++</resources>
+diff --git a/packages/overlays/Header20Overlay/Android.mk b/packages/overlays/Header20Overlay/Android.mk
+new file mode 100644
+index 00000000000..dbd6aebfea4
+--- /dev/null
++++ b/packages/overlays/Header20Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Header20
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Header20Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Header20Overlay/AndroidManifest.xml b/packages/overlays/Header20Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..a0308dca383
+--- /dev/null
++++ b/packages/overlays/Header20Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.header20"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.header" android:priority="1"/>
++    <application android:label="20x" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Header20Overlay/res/values/dimens.xml b/packages/overlays/Header20Overlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..81026ec586a
+--- /dev/null
++++ b/packages/overlays/Header20Overlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <dimen name="header_padding_extra">96dp</dimen>
++    <dimen name="quick_qs_offset_height">96dp</dimen>
++    <dimen name="quick_qs_total_height">224dp</dimen>
++</resources>
+diff --git a/packages/overlays/Header25Overlay/Android.mk b/packages/overlays/Header25Overlay/Android.mk
+new file mode 100644
+index 00000000000..6af2360614c
+--- /dev/null
++++ b/packages/overlays/Header25Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Header25
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Header25Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Header25Overlay/AndroidManifest.xml b/packages/overlays/Header25Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..2bc55e3eb52
+--- /dev/null
++++ b/packages/overlays/Header25Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.header25"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.header" android:priority="1"/>
++    <application android:label="25x" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Header25Overlay/res/values/dimens.xml b/packages/overlays/Header25Overlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..b34f766d791
+--- /dev/null
++++ b/packages/overlays/Header25Overlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <dimen name="header_padding_extra">120dp</dimen>
++    <dimen name="quick_qs_offset_height">120dp</dimen>
++    <dimen name="quick_qs_total_height">248dp</dimen>
++</resources>
+-- 
+2.25.1
+

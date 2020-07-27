@@ -1,7 +1,7 @@
 From 07f302ff838e9c69ffcd60bfcd8c6daa9a55aa63 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 14:14:32 +0200
-Subject: [PATCH 03/79] tuning statusbar looking
+Subject: [PATCH 03/88] tuning statusbar looking
 
 	modified:   core/res/res/values/dimens.xml
 	modified:   packages/SystemUI/res/drawable/stat_sys_alarm.xml

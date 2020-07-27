@@ -1,7 +1,7 @@
 From 48b7ecf210caefd6630a8821864042fe388fd5b9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 12 May 2020 20:08:13 +0300
-Subject: [PATCH 71/79] add auto brightness in QS slider
+Subject: [PATCH 71/88] add auto brightness in QS slider
 
   * based on
   https://github.com/LineageOS/android_frameworks_base/commit/b029e00b6644c1bc57b12971a56bd587ff07d418

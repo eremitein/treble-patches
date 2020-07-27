@@ -1,7 +1,7 @@
 From 08d75323787ed9f4de7a90ebffb10625e050270a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 8 Jul 2020 05:51:58 +0300
-Subject: [PATCH 78/79] settings: add 1.2x animation scales
+Subject: [PATCH 78/88] settings: add 1.2x animation scales
 
 ---
  packages/SettingsLib/res/values/arrays.xml | 6 ++++++

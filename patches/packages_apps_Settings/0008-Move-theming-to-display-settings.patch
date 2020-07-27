@@ -1,7 +1,7 @@
-From effe0d0e56f774fa7cd23a03bda5e95d4f066760 Mon Sep 17 00:00:00 2001
+From 5dfe963c8e292c7f91a398991509ad6eb472adcf Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 4 Feb 2020 11:09:32 +0200
-Subject: [PATCH 08/28] Move theming to display settings
+Subject: [PATCH 08/29] Move theming to display settings
 
   * from
   https://github.com/neon-os/packages_apps_Settings/commit/ba07105ed23396f47d78bc3867bcd112ff1584bd
@@ -21,10 +21,10 @@ Subject: [PATCH 08/28] Move theming to display settings
  rename src/com/android/settings/{development => display}/OverlayCategoryPreferenceController.java (92%)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 0cd71c26c5..45d71454f4 100644
+index 4fa5c342c3..8d8055eac8 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10085,6 +10085,12 @@
+@@ -10082,6 +10082,12 @@
  
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the settings category for theme overlays. -->
      <string name="theme_customization_category">Theming</string>
