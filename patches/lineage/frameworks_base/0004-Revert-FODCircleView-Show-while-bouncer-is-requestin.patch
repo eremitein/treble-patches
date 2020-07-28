@@ -1,7 +1,7 @@
-From cfc82bad6b8815a56e9c83efadf39ad1361aa29f Mon Sep 17 00:00:00 2001
+From c94d075fd2c1fc88b56d5040527c996e09e159ce Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 29 May 2020 07:03:18 +0300
-Subject: [PATCH 004/140] Revert "FODCircleView: Show while bouncer is
+Subject: [PATCH 004/143] Revert "FODCircleView: Show while bouncer is
  requesting Pattern or PIN"
 
 This reverts commit 6e7483b7eea2681de3c509450f2f561c97cea3e7.

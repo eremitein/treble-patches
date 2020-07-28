@@ -1,0 +1,26 @@
+From 6fb21b5fc622b04cab2c796943bee6dd37b54899 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 28 Jul 2020 05:28:53 +0300
+Subject: [PATCH 3/3] tuning nopill gesture
+
+Change-Id: I60341dc24feaf2cc664be06949eb186b45c26d1b
+---
+ customizations/NavigationBarNoHint/res/values/dimens.xml | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/customizations/NavigationBarNoHint/res/values/dimens.xml b/customizations/NavigationBarNoHint/res/values/dimens.xml
+index f389f83..6660f79 100644
+--- a/customizations/NavigationBarNoHint/res/values/dimens.xml
++++ b/customizations/NavigationBarNoHint/res/values/dimens.xml
+@@ -10,4 +10,8 @@
+     <dimen name="navigation_bar_height_landscape">0dp</dimen>
+     <!-- Width of the navigation bar when it is placed vertically on the screen -->
+     <dimen name="navigation_bar_width">0dp</dimen>
++    <!-- Height of the bottom navigation / system bar. -->
++    <dimen name="navigation_bar_frame_height">0dp</dimen>
++    <!-- The height of the bottom navigation gesture area. -->
++    <dimen name="navigation_bar_gesture_height">24dp</dimen>
+ </resources>
+-- 
+2.25.1
+

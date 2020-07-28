@@ -1,7 +1,7 @@
-From fcc89e1762c273e0acc11fb7e73b2d113911e201 Mon Sep 17 00:00:00 2001
+From 6cfc47c142dd4a60baab6bd5cf5c3e88fa32b958 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 15 Mar 2020 09:55:41 +0200
-Subject: [PATCH 2/2] rework black accent
+Subject: [PATCH 2/3] rework black accent
 
 	modified:   accents/black/res/values/colors_device_defaults.xml
 

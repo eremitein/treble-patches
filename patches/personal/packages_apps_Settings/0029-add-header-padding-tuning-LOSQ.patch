@@ -1,0 +1,145 @@
+From 2f8ab61f3cc35c8cb2612ab2dfdc409b2f896a3d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 21 Jul 2020 05:11:39 +0300
+Subject: [PATCH] add header padding tuning (LOSQ)
+
+  based on
+  https://github.com/Extended-UI/android_packages_apps_Settings/commit/ac5666e0e053ea09e6473458237039892a99f9ec
+  https://github.com/Extended-UI/android_packages_apps_Settings/commit/a2c76d9499242525364b1f9823b1526a66bbaeb2
+  https://github.com/Extended-UI/android_packages_apps_Settings/commit/6edab08c9c93b214bb52e17b9aca24188b7bbea5
+
+Change-Id: I3022a5901bc15ff2962933f4355ae9d6fc1a1682
+---
+ res/layout/header_padding.xml                 | 26 +++++++++++++++++++
+ res/layout/settings_base_layout.xml           |  2 ++
+ res/layout/settings_homepage_container.xml    |  2 ++
+ res/values-ru/strings.xml                     |  1 +
+ res/values/strings.xml                        |  2 ++
+ res/xml/display_settings.xml                  |  3 +++
+ src/com/android/settings/DisplaySettings.java |  2 ++
+ 7 files changed, 38 insertions(+)
+ create mode 100644 res/layout/header_padding.xml
+
+diff --git a/res/layout/header_padding.xml b/res/layout/header_padding.xml
+new file mode 100644
+index 0000000000..6babc0a52a
+--- /dev/null
++++ b/res/layout/header_padding.xml
+@@ -0,0 +1,26 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++     Copyright (C) 2019 Extended-UI
++     (2020 Mod for CAOS Project)
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++     http://www.apache.org/licenses/LICENSE-2.0
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<androidx.cardview.widget.CardView
++    xmlns:android="http://schemas.android.com/apk/res/android"
++    xmlns:app="http://schemas.android.com/apk/res-auto"
++    android:id="@+id/header_padding"
++    android:layout_width="match_parent"
++    android:layout_height="@*android:dimen/header_padding_extra"
++    android:outlineProvider="none"
++    app:cardBackgroundColor="?android:attr/colorPrimary"
++    app:layout_scrollFlags="scroll|enterAlwaysCollapsed">
++
++</androidx.cardview.widget.CardView>
+diff --git a/res/layout/settings_base_layout.xml b/res/layout/settings_base_layout.xml
+index f94d25d484..a2c74abd8d 100644
+--- a/res/layout/settings_base_layout.xml
++++ b/res/layout/settings_base_layout.xml
+@@ -21,11 +21,13 @@
+     android:layout_height="match_parent"
+     android:fitsSystemWindows="true"
+     android:orientation="vertical">
++    <include layout="@layout/header_padding"/>
+     <Toolbar
+         android:id="@+id/action_bar"
+         style="?android:attr/actionBarStyle"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
++        android:outlineProvider="none"
+         android:theme="?android:attr/actionBarTheme"
+         android:navigationContentDescription="@*android:string/action_bar_up_description" />
+     <FrameLayout
+diff --git a/res/layout/settings_homepage_container.xml b/res/layout/settings_homepage_container.xml
+index d6c4aeff50..c5e3274637 100644
+--- a/res/layout/settings_homepage_container.xml
++++ b/res/layout/settings_homepage_container.xml
+@@ -27,6 +27,7 @@
+         android:id="@+id/main_content_scrollable_container"
+         android:layout_width="match_parent"
+         android:layout_height="match_parent"
++        android:layout_marginTop="@*android:dimen/header_padding_extra"
+         app:layout_behavior="com.android.settings.widget.FloatingAppBarScrollingViewBehavior">
+ 
+         <LinearLayout
+@@ -56,6 +57,7 @@
+     <com.google.android.material.appbar.AppBarLayout
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content">
++        <include layout="@layout/header_padding"/>
+         <include layout="@layout/search_bar"/>
+     </com.google.android.material.appbar.AppBarLayout>
+ </androidx.coordinatorlayout.widget.CoordinatorLayout>
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index 761e642a09..173d8de381 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -4872,4 +4872,5 @@
+     <string name="theme_customization_darkui_title">Варианты тёмного оформления</string>
+     <string name="theme_customization_qsalpha_title">Прозрачность панели быстрых настроек</string>
+     <string name="theme_customization_speedui_title">Ускорение интерфейса/Энергосбережение</string>
++    <string name="theme_customization_header_title">Верхний отступ</string>
+ </resources>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 264f496de0..70dbf20b25 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10084,6 +10084,8 @@
+     <string name="theme_customization_category">Theming</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the dark mode colors -->
+     <string name="theme_customization_darkui_title">Dark themes</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the UI   corners radius -->
++    <string name="theme_customization_header_title">Header padding</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar icons spacing (e.g. set 2dp paddings). -->
+     <string name="theme_customization_statusbar_title">Status Bar spacing</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the QS   Panel alpha opacity -->
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index 827fa58d27..96b9b2f01c 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -210,6 +210,9 @@
+         <ListPreference
+             android:key="android.theme.customization.qspanel"
+             android:title="@string/theme_customization_qspanel_title"/>
++        <ListPreference
++            android:key="android.theme.customization.header"
++            android:title="@string/theme_customization_header_title"/>
+         <ListPreference
+             android:key="android.theme.customization.speedui"
+             android:title="@string/theme_customization_speedui_title"/>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index 3652b26cf9..bd3b0231a8 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -108,6 +108,8 @@ public class DisplaySettings extends DashboardFragment {
+                 "android.theme.customization.darkui"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.speedui"));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.header"));
+         return controllers;
+     }
+ 
+-- 
+2.25.1
+

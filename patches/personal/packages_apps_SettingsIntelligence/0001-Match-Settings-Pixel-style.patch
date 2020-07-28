@@ -1,24 +1,19 @@
-From 61431641f20db1f530b64af5d8d949bdf712d18f Mon Sep 17 00:00:00 2001
+From 50de76e9e29d5aadf344122d81501141f7c5b107 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Dec 2019 19:08:14 +0200
-Subject: [PATCH] Match Settings Pixel style
+Subject: [PATCH 1/2] Match Settings Pixel style
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_SettingsIntelligence/commit/eaad8c26fd2d098c6aa38bc667c1d55d80294538
 
-	modified:   res/layout/search_panel.xml
-	new file:   res/values-night/colors.xml
-	modified:   res/values/colors.xml
-	modified:   res/values/dimens.xml
-
-Change-Id: Idb9f084a2f3b55d9ec96d5804885f7615df77537
+Change-Id: I7b396967b15c6c52f737d73f83b433bf7f0c02d9
 ---
  res/layout/search_panel.xml | 7 ++++---
  res/values-night/colors.xml | 2 +-
  2 files changed, 5 insertions(+), 4 deletions(-)
 
 diff --git a/res/layout/search_panel.xml b/res/layout/search_panel.xml
-index 82b1e11..df2a46f 100644
+index 82b1e11..1078803 100644
 --- a/res/layout/search_panel.xml
 +++ b/res/layout/search_panel.xml
 @@ -32,8 +32,9 @@
@@ -28,7 +23,7 @@ index 82b1e11..df2a46f 100644
 -            app:cardCornerRadius="@*android:dimen/config_dialogCornerRadius"
 -            app:cardElevation="3dp">
 +            app:cardBackgroundColor="@color/search_panel_background"
-+						app:cardCornerRadius="24dp"
++            app:cardCornerRadius="24dp"
 +            app:cardElevation="2dp">
              <Toolbar
                  android:id="@+id/search_toolbar"
@@ -52,5 +47,5 @@ index 399913a..7e251db 100644
 +    <color name="search_panel_background">@*android:color/material_grey_900</color>
  </resources>
 -- 
-2.17.1
+2.25.1
 

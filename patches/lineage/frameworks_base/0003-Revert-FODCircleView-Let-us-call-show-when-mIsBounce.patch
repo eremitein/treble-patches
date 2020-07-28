@@ -1,7 +1,7 @@
-From 1ef2859a71cd7510ef25410e8598a0dd27e0e3bd Mon Sep 17 00:00:00 2001
+From 0592b03e7521a948d7860bcf0472c909322ab9ce Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 29 May 2020 07:03:15 +0300
-Subject: [PATCH 003/140] Revert "FODCircleView: Let us call show() when
+Subject: [PATCH 003/143] Revert "FODCircleView: Let us call show() when
  mIsBouncer() && !isPinOrPattern()"
 
 This reverts commit 5fa02eab60af8fccded11911391eedb3f3d20299.

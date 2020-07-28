@@ -1,0 +1,77 @@
+From 0a67af5bc50a49c6218ef0e38cf209782acd6c9d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 30 Apr 2020 14:49:12 +0300
+Subject: [PATCH 133/143] Add toggle for emergency affordance in power menu
+ (1/2)
+
+  * based on
+  https://github.com/crdroidandroid/android_frameworks_base/commit/2d8b52e459b3a6e1c12a00b6d4edddb12f45277d
+
+	modified:   packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+	modified:   services/core/java/com/android/server/policy/LegacyGlobalActions.java
+
+Change-Id: I1b073425981296b7f288565c9cbeedef3dd4fb77
+---
+ .../systemui/globalactions/GlobalActionsDialog.java        | 6 ++----
+ .../com/android/server/policy/LegacyGlobalActions.java     | 7 +++----
+ 2 files changed, 5 insertions(+), 8 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+index 1da302a40af..fc278d8762f 100644
+--- a/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
++++ b/packages/SystemUI/src/com/android/systemui/globalactions/GlobalActionsDialog.java
+@@ -530,6 +530,8 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+                 if (!mEmergencyAffordanceManager.needsEmergencyAffordance() && !mIsRestartMenu) {
+                     mItems.add(new EmergencyDialerAction());
+                 }
++            } else if (GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey) && mEmergencyAffordanceManager.needsEmergencyAffordance() && !mIsRestartMenu) {
++                mItems.add(new EmergencyAffordanceAction());
+             } else {
+                 Log.e(TAG, "Invalid global action key " + actionKey);
+             }
+@@ -537,10 +539,6 @@ public class GlobalActionsDialog implements DialogInterface.OnDismissListener,
+             addedKeys.add(actionKey);
+         }
+ 
+-        if (mEmergencyAffordanceManager.needsEmergencyAffordance() && !mIsRestartMenu) {
+-            mItems.add(new EmergencyAffordanceAction());
+-        }
+-
+         mAdapter = new MyAdapter();
+ 
+         GlobalActionsPanelPlugin.PanelViewController panelViewController =
+diff --git a/services/core/java/com/android/server/policy/LegacyGlobalActions.java b/services/core/java/com/android/server/policy/LegacyGlobalActions.java
+index 9cb2441d566..6bdc2ceef0b 100644
+--- a/services/core/java/com/android/server/policy/LegacyGlobalActions.java
++++ b/services/core/java/com/android/server/policy/LegacyGlobalActions.java
+@@ -95,6 +95,7 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
+     private static final String GLOBAL_ACTION_KEY_VOICEASSIST = "voiceassist";
+     private static final String GLOBAL_ACTION_KEY_ASSIST = "assist";
+     private static final String GLOBAL_ACTION_KEY_RESTART = "restart";
++    private static final String GLOBAL_ACTION_KEY_EMERGENCY = "emergency";
+ 
+     private final Context mContext;
+     private final WindowManagerFuncs mWindowManagerFuncs;
+@@ -304,6 +305,8 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
+                 mItems.add(getAssistAction());
+             } else if (GLOBAL_ACTION_KEY_RESTART.equals(actionKey)) {
+                 mItems.add(new RestartAction(mContext, mWindowManagerFuncs));
++            } else if (GLOBAL_ACTION_KEY_EMERGENCY.equals(actionKey) && mEmergencyAffordanceManager.needsEmergencyAffordance()) {
++                mItems.add(getEmergencyAction());
+             } else {
+                 Log.e(TAG, "Invalid global action key " + actionKey);
+             }
+@@ -311,10 +314,6 @@ class LegacyGlobalActions implements DialogInterface.OnDismissListener, DialogIn
+             addedKeys.add(actionKey);
+         }
+ 
+-        if (mEmergencyAffordanceManager.needsEmergencyAffordance()) {
+-            mItems.add(getEmergencyAction());
+-        }
+-
+         mAdapter = new ActionsAdapter(mContext, mItems,
+                 () -> mDeviceProvisioned, () -> mKeyguardShowing);
+ 
+-- 
+2.25.1
+

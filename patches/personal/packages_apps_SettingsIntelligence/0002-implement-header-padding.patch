@@ -1,0 +1,37 @@
+From b3ba468ab17c04e3354a47efa2732b6ebe1d8e52 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 22 Jul 2020 17:46:54 +0300
+Subject: [PATCH 2/2] implement header padding
+
+Change-Id: I09a4d810b0efbedc6060674f73f2d4e3e130b2bc
+---
+ res/layout/search_panel.xml | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/res/layout/search_panel.xml b/res/layout/search_panel.xml
+index 1078803..d3a6ad3 100644
+--- a/res/layout/search_panel.xml
++++ b/res/layout/search_panel.xml
+@@ -25,16 +25,16 @@
+         android:id="@+id/search_bar_container"
+         android:layout_width="match_parent"
+         android:layout_height="wrap_content"
++        android:layout_marginTop="@*android:dimen/header_padding_extra"
+         android:background="?android:attr/colorPrimary"
+-        android:elevation="4dp">
++        android:outlineProvider="none">
+         <androidx.cardview.widget.CardView
+             android:id="@+id/search_bar"
+             android:layout_width="match_parent"
+             android:layout_height="wrap_content"
+             android:layout_margin="@dimen/search_bar_margin"
+             app:cardBackgroundColor="@color/search_panel_background"
+-            app:cardCornerRadius="24dp"
+-            app:cardElevation="2dp">
++            app:cardCornerRadius="24dp">
+             <Toolbar
+                 android:id="@+id/search_toolbar"
+                 android:layout_width="match_parent"
+-- 
+2.25.1
+

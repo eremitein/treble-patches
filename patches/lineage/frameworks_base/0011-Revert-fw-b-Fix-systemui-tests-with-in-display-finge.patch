@@ -1,7 +1,7 @@
-From 4927e627251c259ac108d3d67880b6fa155c782a Mon Sep 17 00:00:00 2001
+From 1843209d2938605ebd0adf8dab98f09fd701b8c0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:29:31 +0200
-Subject: [PATCH 011/140] Revert "fw/b: Fix systemui tests with in-display
+Subject: [PATCH 011/143] Revert "fw/b: Fix systemui tests with in-display
  fingerprint"
 
 This reverts commit d4f2369d19f390a3d087b579a57615ba0583b318.

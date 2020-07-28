@@ -1,7 +1,7 @@
 From 62a3698bd7ac0a86392ee7daf2039ad2518b15d5 Mon Sep 17 00:00:00 2001
 From: Peter Cai <peter@typeblog.net>
 Date: Tue, 22 Oct 2019 20:54:25 +0800
-Subject: [PATCH 1/2] GrGLCaps: allow ignoring vendor-supplied texture swizzle
+Subject: [PATCH] GrGLCaps: allow ignoring vendor-supplied texture swizzle
  flag
 
 * This is broken on MTK 8.1 vendor

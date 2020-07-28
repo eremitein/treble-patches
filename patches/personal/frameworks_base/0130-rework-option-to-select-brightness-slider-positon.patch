@@ -1,0 +1,139 @@
+From e45f5ef314e213f7b7296ed936d2b9311662238c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 25 Apr 2020 02:33:24 +0300
+Subject: [PATCH 130/143] rework option to select brightness slider positon
+
+  * based on
+  https://github.com/crdroidandroid/android_frameworks_base/commit/d497efecda5efa31b6b756596d39bca23b0e82b8
+
+Change-Id: Idd1c8f0d3525484b06473de7956317e4becef95c
+---
+ .../SystemUI/res/layout/qs_page_indicator.xml |  3 +-
+ .../src/com/android/systemui/qs/QSPanel.java  | 55 +++++++++++--------
+ 2 files changed, 34 insertions(+), 24 deletions(-)
+
+diff --git a/packages/SystemUI/res/layout/qs_page_indicator.xml b/packages/SystemUI/res/layout/qs_page_indicator.xml
+index 583753a362f..51512ececf6 100644
+--- a/packages/SystemUI/res/layout/qs_page_indicator.xml
++++ b/packages/SystemUI/res/layout/qs_page_indicator.xml
+@@ -20,7 +20,8 @@
+     android:layout_width="match_parent"
+     android:layout_height="48dp"
+     android:layout_gravity="center"
+-    android:layout_marginBottom="24dp"
++    android:layout_marginBottom="12dp"
++    android:layout_marginTop="12dp"
+     android:focusable="true"
+     android:gravity="center"
+     android:importantForAccessibility="yes"
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/QSPanel.java b/packages/SystemUI/src/com/android/systemui/qs/QSPanel.java
+index 4bb87360fa6..c2ea113c2b3 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/QSPanel.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/QSPanel.java
+@@ -73,7 +73,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
+             "lineagesecure:" + LineageSettings.Secure.QS_SHOW_AUTO_BRIGHTNESS;
+     public static final String QS_SHOW_BRIGHTNESS_SLIDER =
+             "lineagesecure:" + LineageSettings.Secure.QS_SHOW_BRIGHTNESS_SLIDER;
+-    public static final String QS_BRIGHTNESS_POSITION_BOTTOM = "qs_brightness_position_bottom";
++    public static final String QS_BRIGHTNESS_POSITION_BOTTOM =
++            "lineagesecure:" + LineageSettings.Secure.QS_BRIGHTNESS_POSITION_BOTTOM;
+     public static final String QS_SHOW_HEADER = "qs_show_header";
+ 
+     private static final String TAG = "QSPanel";
+@@ -101,6 +102,8 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
+ 
+     protected QSTileLayout mTileLayout;
+ 
++    private int mBrightnessPositionBottom = 0;
++
+     private QSCustomizer mCustomizePanel;
+     private Record mDetailRecord;
+ 
+@@ -125,22 +128,17 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
+ 
+         mBrightnessView = LayoutInflater.from(mContext).inflate(
+             R.layout.quick_settings_brightness_dialog, this, false);
+-        addView(mBrightnessView);
+ 
+         mTileLayout = (QSTileLayout) LayoutInflater.from(mContext).inflate(
+                 R.layout.qs_paged_tile_layout, this, false);
+         mTileLayout.setListening(mListening);
+-        addView((View) mTileLayout);
+ 
+         mQsTileRevealController = new QSTileRevealController(mContext, this,
+                 (PagedTileLayout) mTileLayout);
+ 
+-        addDivider();
+-
+         mFooter = new QSSecurityFooter(this, context);
+-        addView(mFooter.getView());
+ 
+-        updateResources();
++        addQSPanel();
+ 
+         mBrightnessController = new BrightnessController(getContext(),
+                 findViewById(R.id.brightness_icon),
+@@ -153,6 +151,29 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
+                 com.android.internal.R.bool.config_automatic_brightness_available);
+     }
+ 
++    private void addQSPanel() {
++        if (mBrightnessPositionBottom == 1) {
++            addView((View) mTileLayout);
++            addView(mBrightnessView);
++        } else {
++            addView(mBrightnessView);
++            addView((View) mTileLayout);
++        }
++
++        addDivider();
++        addView(mFooter.getView());
++        updateResources();
++    }
++
++    private void restartQSPanel() {
++        if (mFooter.getView() != null) removeView(mFooter.getView());
++        if (mDivider != null) removeView(mDivider);
++        if ((View) mTileLayout != null) removeView((View) mTileLayout);
++        if (mBrightnessView != null) removeView(mBrightnessView);
++
++        addQSPanel();
++    }
++
+     protected void addDivider() {
+         mDivider = LayoutInflater.from(mContext).inflate(R.layout.qs_divider, this, false);
+         mDivider.setBackgroundColor(Utils.applyAlpha(mDivider.getAlpha(),
+@@ -234,26 +255,14 @@ public class QSPanel extends LinearLayout implements Tunable, Callback, Brightne
+             updateViewVisibilityForTuningValue(mAutoBrightnessView, newValue);
+         } else if (QS_SHOW_BRIGHTNESS_SLIDER.equals(key)) {
+             updateViewVisibilityForTuningValue(mBrightnessView, newValue);
+-        }
+-        if (QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
++        } else if (QS_BRIGHTNESS_POSITION_BOTTOM.equals(key)) {
+             if (newValue == null || Integer.parseInt(newValue) == 0) {
+-                removeView(mBrightnessView);
+-                addView(mBrightnessView, 0);
++                mBrightnessPositionBottom = 0;
+             } else {
+-                removeView(mBrightnessView);
+-                addView(mBrightnessView, getBrightnessViewPositionBottom());
+-            }
+-        }
+-    }
+-
+-    private int getBrightnessViewPositionBottom() {
+-        for (int i = 0; i < getChildCount(); i++) {
+-            View v = getChildAt(i);
+-            if (v == mDivider) {
+-                return i;
++                mBrightnessPositionBottom = 1;
+             }
++            restartQSPanel();
+         }
+-        return 0;
+     }
+ 
+     private void updateViewVisibilityForTuningValue(View view, @Nullable String newValue) {
+-- 
+2.25.1
+

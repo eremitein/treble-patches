@@ -1,7 +1,7 @@
-From e23edda2b622d09d2dcee2e5fa0f5046c92542b3 Mon Sep 17 00:00:00 2001
+From 648a8fc196e5a9efa337371d4212ef616e5d952e Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Thu, 5 Sep 2019 02:08:22 +0000
-Subject: [PATCH 1/5] vendor_lineage: Log privapp-permissions whitelist
+Subject: [PATCH 1/2] vendor_lineage: Log privapp-permissions whitelist
  violations instead
 
 Change-Id: I49dba61f332253e291a65e79ca70d9a07d45bb07

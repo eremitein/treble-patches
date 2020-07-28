@@ -1,7 +1,7 @@
-From 829651c8cff276c51a8b4d1bc4942696bf7e78dd Mon Sep 17 00:00:00 2001
+From 4fa93e60f4365d5ec0f374d52632d6f6959bdbaa Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:35:39 +0200
-Subject: [PATCH 013/140] Revert "Initial support for in-display fingerprint
+Subject: [PATCH 013/143] Revert "Initial support for in-display fingerprint
  sensors"
 
 This reverts commit 782a3f805408147c8504f6071aa4f275c22b0167.
