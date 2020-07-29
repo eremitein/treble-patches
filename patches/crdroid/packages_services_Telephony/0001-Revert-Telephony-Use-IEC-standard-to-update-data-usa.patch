@@ -1,0 +1,31 @@
+From 7f72e73e6ddf3179c943a4e273b4ae622a3b0bb3 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 31 Jul 2020 02:16:15 +0300
+Subject: [PATCH 1/5] Revert "Telephony: Use IEC standard to update data usage"
+
+This reverts commit 039ea36975a6471baa27884de2bc0110ce212487.
+---
+ src/com/android/phone/DataUsagePreference.java | 6 +-----
+ 1 file changed, 1 insertion(+), 5 deletions(-)
+
+diff --git a/src/com/android/phone/DataUsagePreference.java b/src/com/android/phone/DataUsagePreference.java
+index 014934cec..b6b26e2b8 100644
+--- a/src/com/android/phone/DataUsagePreference.java
++++ b/src/com/android/phone/DataUsagePreference.java
+@@ -54,12 +54,8 @@ public class DataUsagePreference extends Preference {
+         DataUsageController controller = new DataUsageController(activity);
+ 
+         DataUsageController.DataUsageInfo usageInfo = controller.getDataUsageInfo(mTemplate);
+-
+-        Formatter.BytesResult bres = Formatter.formatBytes(activity.getResources(),
+-                usageInfo.usageLevel,
+-                Formatter.FLAG_CALCULATE_ROUNDED | Formatter.FLAG_IEC_UNITS);
+         setSummary(activity.getString(R.string.data_usage_template,
+-                String.format("%s %s", bres.value, bres.units), usageInfo.period));
++                Formatter.formatFileSize(activity, usageInfo.usageLevel), usageInfo.period));
+         setIntent(getIntent());
+     }
+ 
+-- 
+2.25.1
+

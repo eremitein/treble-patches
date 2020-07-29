@@ -1,0 +1,177 @@
+From 19449d87df20594bc5e697ad46c7f992210896be Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 15 Apr 2020 08:26:13 +0300
+Subject: [PATCH 3/7] Revert "FODAnimation: Make animation resources optional
+ [2/2]"
+
+This reverts commit 3da947f1cc44e29506aa21c32731306dfc70f0cf.
+---
+ res/drawable/ic_fp_animation.xml              | 24 -------------------
+ res/values/cr_arrays.xml                      |  7 ------
+ res/values/cr_bools.xml                       |  2 --
+ res/values/cr_strings.xml                     |  3 +--
+ res/xml/crdroid_settings_lockscreen.xml       | 15 ++----------
+ .../settings/fragments/LockScreen.java        |  8 -------
+ 6 files changed, 3 insertions(+), 56 deletions(-)
+ delete mode 100644 res/drawable/ic_fp_animation.xml
+
+diff --git a/res/drawable/ic_fp_animation.xml b/res/drawable/ic_fp_animation.xml
+deleted file mode 100644
+index c3f2ad19..00000000
+--- a/res/drawable/ic_fp_animation.xml
++++ /dev/null
+@@ -1,24 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-     Copyright (C) 2020 crDroid Android Project
+-
+-     Licensed under the Apache License, Version 2.0 (the "License");
+-     you may not use this file except in compliance with the License.
+-     You may obtain a copy of the License at
+-
+-          http://www.apache.org/licenses/LICENSE-2.0
+-
+-     Unless required by applicable law or agreed to in writing, software
+-     distributed under the License is distributed on an "AS IS" BASIS,
+-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-     See the License for the specific language governing permissions and
+-     limitations under the License.
+--->
+-<vector xmlns:android="http://schemas.android.com/apk/res/android"
+-        android:width="24.0dp"
+-        android:height="24.0dp"
+-        android:viewportWidth="24.0"
+-        android:viewportHeight="24.0"
+-        android:tint="?android:attr/colorControlNormal">
+-    <path android:fillColor="#000" android:pathData="M15,2A7,7 0 0,1 22,9C22,11.71 20.46,14.05 18.22,15.22C17.55,16.5 16.5,17.55 15.22,18.22C14.05,20.46 11.71,22 9,22A7,7 0 0,1 2,15C2,12.29 3.54,9.95 5.78,8.78C6.45,7.5 7.5,6.45 8.78,5.78C9.95,3.54 12.29,2 15,2M12,19A7,7 0 0,1 5,12C4.37,12.84 4,13.87 4,15A5,5 0 0,0 9,20C10.13,20 11.16,19.63 12,19M15,16A7,7 0 0,1 8,9H8C7.37,9.84 7,10.87 7,12A5,5 0 0,0 12,17C13.13,17 14.16,16.63 15,16V16M15,4C13.87,4 12.84,4.37 12,5V5A7,7 0 0,1 19,12H19C19.63,11.16 20,10.13 20,9A5,5 0 0,0 15,4M10,9A5,5 0 0,0 15,14C15.6,14 16.17,13.9 16.7,13.7C16.9,13.17 17,12.6 17,12A5,5 0 0,0 12,7C11.4,7 10.83,7.1 10.3,7.3C10.1,7.83 10,8.4 10,9Z" />
+-</vector>
+diff --git a/res/values/cr_arrays.xml b/res/values/cr_arrays.xml
+index bec8e353..3897615a 100644
+--- a/res/values/cr_arrays.xml
++++ b/res/values/cr_arrays.xml
+@@ -2219,13 +2219,6 @@
+         <item>1</item>
+     </string-array>
+ 
+-    <!-- FOD Recognizing fingerprint animations -->
+-    <string-array name="fod_recog_animation_entries" translatable="false">
+-    </string-array>
+-
+-    <string-array name="fod_recog_animation_values" translatable="false">
+-    </string-array>
+-
+     <!-- FOD pressed state options -->
+     <string-array name="fod_pressed_state_entries" translatable="false">
+         <item>@string/fod_pressed_state_icon</item>
+diff --git a/res/values/cr_bools.xml b/res/values/cr_bools.xml
+index 0ed57a4d..8c372bad 100644
+--- a/res/values/cr_bools.xml
++++ b/res/values/cr_bools.xml
+@@ -2,6 +2,4 @@
+ <resources>
+     <!-- ColorPicker -->
+     <bool name="showFullColorPickSummary">true</bool>
+-    <!-- FOD recognizing animation -->
+-    <bool name="showFODAnimationPicker">false</bool>
+ </resources>
+diff --git a/res/values/cr_strings.xml b/res/values/cr_strings.xml
+index 5cafa62a..6325c603 100644
+--- a/res/values/cr_strings.xml
++++ b/res/values/cr_strings.xml
+@@ -2435,7 +2435,6 @@
+     <string name="smart_charging_footer">Smart Charging allows you to set maximum charging level to extend the lifespan of your battery. When enabled, battery stops charging at Stop trigger level and resumes charging at Start trigger level. Stop trigger level should be always greater than Start trigger level.</string>
+ 
+     <!--FOD -->
+-    <string name="fod_icon_picker_category_title">FOD customization options</string>
+     <string name="fod_icon_picker_title">FOD icon picker</string>
+     <string name="fod_icon_picker_summary">Pick your favourite fingerprint icon</string>
+     <string name="fod_icon_picker_footer">In order to add your own icon, select the top left icon and use the OnePlus 6T FP Customizer app to select the icon you want.</string>
+@@ -2443,7 +2442,6 @@
+     <string name="fod_wallpaper_color_summary">Uses adjusted primary wallpaper color for FOD icon\nNOTE: might look good only with some wallpapers</string>
+     <string name="fod_recog_animation">FOD recognizing animation</string>
+     <string name="fod_recog_animation_summary">Shows animation while reading your finger</string>
+-    <string name="fod_recog_animation_effect_title">FOD recognizing animation effect</string>
+ 
+     <!-- QS background opacity -->
+     <string name="qs_panel_alpha_title">Background opacity</string>
+@@ -2457,6 +2455,7 @@
+ 
+     <!-- FOD pressed state behavior -->
+     <string name="fod_pressed_state_title">FOD pressed state behavior</string>
++    <string name="fod_pressed_state_summary">Choose the appropriate pressed state behavior for your device</string>
+     <string name="fod_pressed_state_footer">Icons/colors may vary depending on which device you are using.</string>
+     <string name="fod_pressed_state_icon">Icon (usually Cyan)</string>
+     <string name="fod_pressed_state_icon_white">Icon (White)</string>
+diff --git a/res/xml/crdroid_settings_lockscreen.xml b/res/xml/crdroid_settings_lockscreen.xml
+index 46fcd5f7..2b8c2c81 100644
+--- a/res/xml/crdroid_settings_lockscreen.xml
++++ b/res/xml/crdroid_settings_lockscreen.xml
+@@ -174,10 +174,9 @@
+             android:defaultValue="0" />-->
+     </PreferenceCategory>
+ 
+-    <!-- FOD customization options -->
+     <PreferenceCategory
+             android:key="fod_icon_picker"
+-            android:title="@string/fod_icon_picker_category_title" >
++            android:title="@string/fod_icon_picker_title" >
+ 
+             <!-- FOD icon picker -->
+             <Preference
+@@ -202,22 +201,12 @@
+                 android:summary="@string/fod_recog_animation_summary"
+                 android:defaultValue="false" />
+ 
+-            <com.crdroid.settings.preferences.SystemSettingListPreference
+-                android:key="fod_anim"
+-                android:icon="@drawable/ic_fp_animation"
+-                android:title="@string/fod_recog_animation_effect_title"
+-                android:summary="%s"
+-                android:entries="@array/fod_recog_animation_entries"
+-                android:entryValues="@array/fod_recog_animation_values"
+-                android:defaultValue="0"
+-                android:dependency="fod_recognizing_animation" />
+-
+             <com.crdroid.settings.preferences.SystemSettingListPreference
+                 android:key="fod_pressed_state"
+                 android:icon="@drawable/ic_fp"
+                 android:dialogTitle="@string/fod_pressed_state_title"
+                 android:title="@string/fod_pressed_state_title"
+-                android:summary="%s"
++                android:summary="@string/fod_pressed_state_summary"
+                 android:entries="@array/fod_pressed_state_entries"
+                 android:entryValues="@array/fod_pressed_state_values"
+                 android:defaultValue="0" />
+diff --git a/src/com/crdroid/settings/fragments/LockScreen.java b/src/com/crdroid/settings/fragments/LockScreen.java
+index 4dd4888e..f93c4984 100644
+--- a/src/com/crdroid/settings/fragments/LockScreen.java
++++ b/src/com/crdroid/settings/fragments/LockScreen.java
+@@ -60,12 +60,10 @@ public class LockScreen extends SettingsPreferenceFragment
+     private static final String FP_SUCCESS_VIBRATE = "fp_success_vibrate";
+     private static final String FP_ERROR_VIBRATE = "fp_error_vibrate";
+     private static final String FOD_ICON_PICKER_CATEGORY = "fod_icon_picker";
+-    private static final String FOD_ANIMATION = "fod_anim";
+ 
+     private Preference mFingerprintVib;
+     private Preference mFingerprintVibErr;
+     private PreferenceCategory mFODIconPickerCategory;
+-    private Preference mFODAnimation;
+ 
+     @Override
+     public void onCreate(Bundle savedInstanceState) {
+@@ -94,12 +92,6 @@ public class LockScreen extends SettingsPreferenceFragment
+         if (mFODIconPickerCategory != null && !hasFod) {
+             prefSet.removePreference(mFODIconPickerCategory);
+         }
+-        boolean showFODAnimationPicker = mContext.getResources().getBoolean(R.bool.showFODAnimationPicker);
+-        mFODAnimation = (Preference) findPreference(FOD_ANIMATION);
+-        if ((mFODIconPickerCategory != null && mFODAnimation != null && !hasFod) ||
+-                (mFODIconPickerCategory != null && mFODAnimation != null && !showFODAnimationPicker)) {
+-            mFODIconPickerCategory.removePreference(mFODAnimation);
+-        }
+     }
+ 
+     @Override
+-- 
+2.20.1
+

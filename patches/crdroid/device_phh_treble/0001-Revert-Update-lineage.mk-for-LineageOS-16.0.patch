@@ -1,0 +1,22 @@
+From 018e86781496b6a503fc42533f3c4c013631422d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 26 Mar 2020 20:18:34 +0200
+Subject: [PATCH 01/11] Revert "Update lineage.mk for LineageOS 16.0"
+
+This reverts commit 82b15278bad816632dcaeaed623b569978e9840d.
+---
+ lineage.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/lineage.mk b/lineage.mk
+index 172bb01..f6315b9 100644
+--- a/lineage.mk
++++ b/lineage.mk
+@@ -1,3 +1,4 @@
+ $(call inherit-product, vendor/lineage/config/common_full_phone.mk)
++$(call inherit-product, device/lineage/sepolicy/common/sepolicy.mk)
+ -include vendor/lineage/build/core/config.mk
+ -include vendor/lineage/build/core/apicheck.mk
+-- 
+2.25.1
+

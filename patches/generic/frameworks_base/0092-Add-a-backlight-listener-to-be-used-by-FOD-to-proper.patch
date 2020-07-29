@@ -1,0 +1,40 @@
+From cfee0bb27dcce09d3a1ad6ce26753eee6a430b09 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 20 May 2020 17:28:26 +0200
+Subject: [PATCH 092/113] Add a backlight listener, to be used by FOD to
+ properly set dim
+
+---
+ .../core/java/com/android/server/lights/LightsService.java   | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 0abdcc7cb6c..25be67ba517 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -31,10 +31,14 @@ import android.view.SurfaceControl;
+ import com.android.server.SystemService;
+ 
+ public class LightsService extends SystemService {
++    public interface OnBacklightChange {
++        void onBacklightChange(int newBacklight);
++    }
+     static final String TAG = "LightsService";
+     static final boolean DEBUG = false;
+ 
+     final LightImpl mLights[] = new LightImpl[LightsManager.LIGHT_ID_COUNT];
++    public static OnBacklightChange backlightChangeListener;
+ 
+     private final class LightImpl extends Light {
+ 
+@@ -138,6 +142,7 @@ public class LightsService extends SystemService {
+                         return;
+                     }
+                 }
++                if(mId == 0 && backlightChangeListener != null) backlightChangeListener.onBacklightChange(brightness);
+ 
+                 int color = brightness & 0x000000ff;
+                 color = 0xff000000 | (color << 16) | (color << 8) | color;
+-- 
+2.25.1
+

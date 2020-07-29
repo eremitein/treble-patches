@@ -1,0 +1,64 @@
+From 5c33a478aff1b85a4cbcd18b1e7ac5ffbfea3942 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 31 Jul 2020 07:22:55 +0300
+Subject: [PATCH 01/23] Revert "av: Allow providing camera server and service"
+
+This reverts commit daa5da01745bd6903b4c699f63aa597c8ed3da48.
+---
+ camera/cameraserver/Android.bp              | 5 +----
+ media/mediaserver/Android.bp                | 2 +-
+ services/camera/libcameraservice/Android.bp | 3 ---
+ 3 files changed, 2 insertions(+), 8 deletions(-)
+
+diff --git a/camera/cameraserver/Android.bp b/camera/cameraserver/Android.bp
+index dcbfed2c3..ecaba3ac1 100644
+--- a/camera/cameraserver/Android.bp
++++ b/camera/cameraserver/Android.bp
+@@ -12,16 +12,13 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-soong_namespace {
+-}
+-
+ cc_binary {
+     name: "cameraserver",
+ 
+     srcs: ["main_cameraserver.cpp"],
+ 
+     shared_libs: [
+-        "//frameworks/av/services/camera/libcameraservice:libcameraservice",
++        "libcameraservice",
+         "liblog",
+         "libutils",
+         "libui",
+diff --git a/media/mediaserver/Android.bp b/media/mediaserver/Android.bp
+index d77c21236..cc950cb29 100644
+--- a/media/mediaserver/Android.bp
++++ b/media/mediaserver/Android.bp
+@@ -49,7 +49,7 @@ cc_binary {
+                 overrides: ["cameraserver"],
+                 cflags: ["-DNO_CAMERA_SERVER"],
+                 shared_libs: [
+-                    "//frameworks/av/services/camera/libcameraservice:libcameraservice",
++                    "libcameraservice",
+                     "libgui",
+                     "libhidlbase",
+                     "libhidltransport",
+diff --git a/services/camera/libcameraservice/Android.bp b/services/camera/libcameraservice/Android.bp
+index 84965d4a4..8b40e307a 100644
+--- a/services/camera/libcameraservice/Android.bp
++++ b/services/camera/libcameraservice/Android.bp
+@@ -12,9 +12,6 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-soong_namespace {
+-}
+-
+ //
+ // libcameraservice
+ //
+-- 
+2.25.1
+

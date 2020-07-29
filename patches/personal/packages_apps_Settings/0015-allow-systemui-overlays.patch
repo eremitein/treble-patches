@@ -1,0 +1,44 @@
+From 36f16b4c503efe373089c8a0e6580c9391e92713 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 3 Jun 2020 17:32:46 +0300
+Subject: [PATCH 15/16] allow systemui overlays
+
+Change-Id: Id9779ef38182f5ddf63b70340f380b33490160c6
+---
+ .../display/OverlayCategoryPreferenceController.java      | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/src/com/android/settings/display/OverlayCategoryPreferenceController.java b/src/com/android/settings/display/OverlayCategoryPreferenceController.java
+index 6a20e3aac3..188171889f 100644
+--- a/src/com/android/settings/display/OverlayCategoryPreferenceController.java
++++ b/src/com/android/settings/display/OverlayCategoryPreferenceController.java
+@@ -53,6 +53,7 @@ public class OverlayCategoryPreferenceController extends AbstractPreferenceContr
+     @VisibleForTesting
+     static final String PACKAGE_DEVICE_DEFAULT = "package_device_default";
+     private static final String OVERLAY_TARGET_PACKAGE = "android";
++    private static final String OVERLAY_TARGET_PACKAGE_UI = "com.android.systemui";
+     private static final Comparator<OverlayInfo> OVERLAY_INFO_COMPARATOR =
+             Comparator.comparingInt(a -> a.priority);
+     private final IOverlayManager mOverlayManager;
+@@ -183,11 +184,18 @@ public class OverlayCategoryPreferenceController extends AbstractPreferenceContr
+         try {
+             List<OverlayInfo> overlayInfos = mOverlayManager
+                     .getOverlayInfosForTarget(OVERLAY_TARGET_PACKAGE, USER_SYSTEM);
++            List<OverlayInfo> overlayInfosUI = mOverlayManager
++                    .getOverlayInfosForTarget(OVERLAY_TARGET_PACKAGE_UI, USER_SYSTEM);
+             for (OverlayInfo overlayInfo : overlayInfos) {
+                 if (mCategory.equals(overlayInfo.category)) {
+                     filteredInfos.add(overlayInfo);
+                 }
+             }
++            for (OverlayInfo overlayInfo : overlayInfosUI) {
++                if (mCategory.equals(overlayInfo.category)) {
++                    filteredInfos.add(overlayInfo);
++                }
++            }
+         } catch (RemoteException re) {
+             throw re.rethrowFromSystemServer();
+         }
+-- 
+2.25.1
+

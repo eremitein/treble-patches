@@ -1,0 +1,28 @@
+From 996dcc2d1e0c394b551362ee526b08037dba7ca3 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 29 Jul 2020 19:31:45 +0300
+Subject: [PATCH 3/3] Revert "crdroid: Allow providing camera server and
+ service"
+
+This reverts commit 9b98f73fb989b850578137bd485c9b2190725fc5.
+---
+ config/BoardConfigLineage.mk | 6 ------
+ 1 file changed, 6 deletions(-)
+
+diff --git a/config/BoardConfigLineage.mk b/config/BoardConfigLineage.mk
+index f1a9831d..547792fd 100644
+--- a/config/BoardConfigLineage.mk
++++ b/config/BoardConfigLineage.mk
+@@ -10,9 +10,3 @@ include vendor/lineage/config/BoardConfigQcom.mk
+ endif
+ 
+ include vendor/lineage/config/BoardConfigSoong.mk
+-
+-ifneq ($(TARGET_USES_PREBUILT_CAMERA_SERVICE), true)
+-PRODUCT_SOONG_NAMESPACES += \
+-    frameworks/av/camera/cameraserver \
+-    frameworks/av/services/camera/libcameraservice
+-endif
+-- 
+2.25.1
+

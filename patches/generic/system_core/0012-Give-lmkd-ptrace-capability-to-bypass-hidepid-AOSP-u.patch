@@ -1,0 +1,26 @@
+From 68f2a56b3d017f7a798d4454ff6907fced11527d Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 16 Oct 2019 15:52:12 +0200
+Subject: [PATCH 12/14] Give lmkd ptrace capability, to bypass hidepid (AOSP
+ uses `readproc` group, but I cant because of A-only)
+
+Change-Id: Ic58e7c125d86fde45764d39f250675cf84777266
+---
+ lmkd/lmkd.rc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lmkd/lmkd.rc b/lmkd/lmkd.rc
+index 4b10db269..241262d01 100644
+--- a/lmkd/lmkd.rc
++++ b/lmkd/lmkd.rc
+@@ -1,6 +1,6 @@
+ service lmkd /system/bin/lmkd
+     class core
+-    capabilities DAC_OVERRIDE KILL IPC_LOCK SYS_NICE SYS_RESOURCE BLOCK_SUSPEND
++    capabilities DAC_OVERRIDE KILL IPC_LOCK SYS_NICE SYS_RESOURCE BLOCK_SUSPEND SYS_PTRACE
+     critical
+     socket lmkd seqpacket 0660 system system
+     writepid /dev/cpuset/system-background/tasks
+-- 
+2.25.1
+

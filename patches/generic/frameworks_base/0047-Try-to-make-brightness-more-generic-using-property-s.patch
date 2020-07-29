@@ -1,0 +1,31 @@
+From b53ee0aef9f450c5f344af2225a2ab92fc6aa326 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 10 Jun 2018 22:54:55 +0200
+Subject: [PATCH 047/113] Try to make brightness more generic using property
+ set by rw-system
+
+---
+ .../core/java/com/android/server/lights/LightsService.java  | 6 ++++--
+ 1 file changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 39f646bb8b0..7e0e5575e75 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -104,9 +104,11 @@ public class LightsService extends SystemService {
+ 
+                     boolean qcomExtendBrightness = SystemProperties.getBoolean("persist.extend.brightness", false);
+                     int scale = SystemProperties.getInt("persist.display.max_brightness", 1023);
+-                    if(fp.contains("OnePlus6")) {
++                    //This is set by vndk-detect
++                    int qcomScale = SystemProperties.getInt("persist.sys.qcom-brightness", -1);
++                    if(qcomScale != -1) {
+                         qcomExtendBrightness = true;
+-                        scale = 1023;
++                        scale = qcomScale;
+                     }
+ 
+                     if(qcomExtendBrightness) {
+-- 
+2.25.1
+

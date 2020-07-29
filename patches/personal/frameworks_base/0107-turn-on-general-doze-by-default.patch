@@ -1,0 +1,26 @@
+From b6567107f16dae678c3ac36c9edbfdc17b0ac02b Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 1 Apr 2020 17:13:30 +0300
+Subject: [PATCH 107/113] turn on general doze by default
+
+	modified:   core/res/res/values/cr_config.xml
+---
+ core/res/res/values/cr_config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/res/res/values/cr_config.xml b/core/res/res/values/cr_config.xml
+index 48952601fa7..c022f1c9873 100644
+--- a/core/res/res/values/cr_config.xml
++++ b/core/res/res/values/cr_config.xml
+@@ -42,7 +42,7 @@
+     <bool name="config_deviceHaveWakeUpProximity">false</bool>
+ 
+     <!-- Whether doze feature is enabled by default in settings -->
+-    <bool name="config_doze_enabled_by_default">false</bool>
++    <bool name="config_doze_enabled_by_default">true</bool>
+ 
+     <!-- Whether to use scaled brightness (set -1 to disable) -->
+     <integer name="config_useScaleBrightness">-1</integer>
+-- 
+2.25.1
+

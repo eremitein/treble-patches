@@ -1,0 +1,85 @@
+From cd3c4d7a7dc2cf533d5c30e487872cb789804066 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 29 Jul 2020 07:45:34 +0300
+Subject: [PATCH 012/113] Revert "FODCircleView: move fod resources to addons
+ [1/2]"
+
+This reverts commit f580c30c710ec9d7f5aadfb26519cabab286a20d.
+---
+ packages/SystemUI/res/values/cr_arrays.xml    |  3 --
+ .../systemui/biometrics/FODCircleView.java    | 31 ++++++++++++++++---
+ 2 files changed, 26 insertions(+), 8 deletions(-)
+
+diff --git a/packages/SystemUI/res/values/cr_arrays.xml b/packages/SystemUI/res/values/cr_arrays.xml
+index 2c8c4d863c4..d1fccc76bf1 100644
+--- a/packages/SystemUI/res/values/cr_arrays.xml
++++ b/packages/SystemUI/res/values/cr_arrays.xml
+@@ -31,9 +31,6 @@
+     <integer-array name="fod_animation_resources">
+     </integer-array>
+ 
+-    <integer-array name="fod_icon_resources">
+-    </integer-array>
+-
+     <string-array name="type_clock_hours">
+         <item>@string/text_clock_h_twelve</item>
+         <item>@string/text_clock_h_one</item>
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 053052fc92c..3f83bc59449 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -23,7 +23,6 @@ import android.content.ContentResolver;
+ import android.content.Context;
+ import android.content.res.Configuration;
+ import android.content.res.Resources;
+-import android.content.res.TypedArray;
+ import android.database.ContentObserver;
+ import android.graphics.Bitmap;
+ import android.graphics.Canvas;
+@@ -107,7 +106,31 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     private boolean mIsRecognizingAnimEnabled;
+ 
+     private int mSelectedIcon;
+-    private TypedArray mIconStyles;
++    private final int[] ICON_STYLES = {
++        R.drawable.fod_icon_default,
++        R.drawable.fod_icon_crdroid,
++        R.drawable.fod_icon_default_2,
++        R.drawable.fod_icon_default_3,
++        R.drawable.fod_icon_default_4,
++        R.drawable.fod_icon_default_5,
++        R.drawable.fod_icon_arc_reactor,
++        R.drawable.fod_icon_cpt_america_flat,
++        R.drawable.fod_icon_cpt_america_flat_gray,
++        R.drawable.fod_icon_dragon_black_flat,
++        R.drawable.fod_icon_future,
++        R.drawable.fod_icon_glow_circle,
++        R.drawable.fod_icon_neon_arc,
++        R.drawable.fod_icon_neon_arc_gray,
++        R.drawable.fod_icon_neon_circle_pink,
++        R.drawable.fod_icon_neon_triangle,
++        R.drawable.fod_icon_paint_splash_circle,
++        R.drawable.fod_icon_rainbow_horn,
++        R.drawable.fod_icon_shooky,
++        R.drawable.fod_icon_spiral_blue,
++        R.drawable.fod_icon_sun_metro,
++        R.drawable.fod_icon_default_1,
++        R.drawable.fod_icon_invisible
++    };
+ 
+     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
+             new IFingerprintInscreenCallback.Stub() {
+@@ -428,9 +451,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         mIsCircleShowing = false;
+ 
+         setFODIcon();
+-        mIconStyles = mContext.getResources().obtainTypedArray(R.array.fod_icon_resources);
+-        setImageResource(mIconStyles.getResourceId(mSelectedIcon, -1));
+-
++        setImageResource(ICON_STYLES[mSelectedIcon]);
+         invalidate();
+ 
+         dispatchRelease();
+-- 
+2.25.1
+

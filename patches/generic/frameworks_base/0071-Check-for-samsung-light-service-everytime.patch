@@ -1,0 +1,31 @@
+From 34247dc2e737a85d5c4d3789a0a1c4635cff7b9a Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Thu, 12 Sep 2019 20:38:08 +0200
+Subject: [PATCH 071/113] Check for samsung light service everytime
+
+This is needed because it is possible sec light service isn't ready at
+that time.
+TODO: check that the services exists at all, so that this is done only
+on Samsung devices
+
+Change-Id: I30f049f3b06f83c455301b589b3558ff384ec300
+---
+ services/core/jni/com_android_server_lights_LightsService.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/core/jni/com_android_server_lights_LightsService.cpp b/services/core/jni/com_android_server_lights_LightsService.cpp
+index 2b50d04233e..a21c6e2c8ef 100644
+--- a/services/core/jni/com_android_server_lights_LightsService.cpp
++++ b/services/core/jni/com_android_server_lights_LightsService.cpp
+@@ -161,7 +161,7 @@ static void setLight_native(
+ 
+     if(!sSecTried) {
+         sSecHal = ISecLight::getService();
+-        sSecTried = true;
++        //sSecTried = true;
+     }
+ 
+     if(sSecHal != nullptr) {
+-- 
+2.25.1
+
