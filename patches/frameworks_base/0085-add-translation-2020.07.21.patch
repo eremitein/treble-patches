@@ -1,4 +1,4 @@
-From d673ae05f04febf83c16ba1966af7d5ccdb4d2ae Mon Sep 17 00:00:00 2001
+From c0500c3f69d58476b297213c3badb2889a0f5e53 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 21 Jul 2020 16:34:39 +0300
 Subject: [PATCH 85/88] add translation (2020.07.21)
@@ -31,5 +31,5 @@ index 9302a962b3d..5b782d8b45c 100644
 +    <string name="quick_settings_usb_tether_label">"USB-модем"</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

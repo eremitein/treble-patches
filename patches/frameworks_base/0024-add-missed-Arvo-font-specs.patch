@@ -1,4 +1,4 @@
-From 81e73a8f04e82a36f353d9424480044e26ca15f5 Mon Sep 17 00:00:00 2001
+From 9de5590789ca2f92dcf5df1cfd78760d0cfd67ec Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 23 Feb 2020 18:53:49 +0200
 Subject: [PATCH 24/88] add missed Arvo font specs
@@ -28,5 +28,5 @@ index a4825498634..7748e242653 100644
          <font weight="400" style="normal">Lato-Regular.ttf</font>
          <font weight="400" style="italic">Lato-Italic.ttf</font>
 -- 
-2.25.1
+2.17.1
 

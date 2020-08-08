@@ -1,7 +1,7 @@
-From c77df0e6d39018db44ea50a560ca2d8c5030bfbc Mon Sep 17 00:00:00 2001
+From c47244d40ffe39cbe48b0224bc9318a3d55f3fd1 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 7 Feb 2020 04:14:40 +0200
-Subject: [PATCH 10/29] add android icons style selector
+Subject: [PATCH 10/30] add android icons style selector
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -13,10 +13,10 @@ Subject: [PATCH 10/29] add android icons style selector
  3 files changed, 7 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index c3c9705985..532148a29a 100644
+index 023d23746b..045a8eb11b 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10088,6 +10088,8 @@
+@@ -10091,6 +10091,8 @@
      <string name="theme_customization_accent_color_title">Accent color</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize headline and body fonts. -->
      <string name="theme_customization_font_title">Headline / Body font</string>
@@ -53,5 +53,5 @@ index 657a4cb688..4ae970a762 100644
                  "android.theme.customization.adaptive_icon_shape"));
          return controllers;
 -- 
-2.25.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From f065d97583b8f3f8ef5b7451f175366d23a61e2b Mon Sep 17 00:00:00 2001
+From 4e6d81c6085fdc70ae54aeda9d079f5b22c7b864 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 21:21:37 +0200
 Subject: [PATCH 22/88] add Gray accent overlay
@@ -157,5 +157,5 @@ index cb2afcb62a2..33fd757ec0b 100644
  	AccentColorOrchidOverlay \
  	AccentColorSpaceOverlay \
 -- 
-2.25.1
+2.17.1
 

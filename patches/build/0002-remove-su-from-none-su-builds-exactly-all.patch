@@ -1,4 +1,4 @@
-From 79b45ec32d573769a1a1772f04ca25bdd0572575 Mon Sep 17 00:00:00 2001
+From bdb1ca34beada562d60c55d9847e9fb0d4888eb3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 23:46:34 +0200
 Subject: [PATCH 02/10] remove 'su' from none-su builds (exactly, all)
@@ -23,5 +23,5 @@ index 2f8a63472..699b9c7a1 100644
      tracepath \
      tracepath6 \
 -- 
-2.25.1
+2.17.1
 

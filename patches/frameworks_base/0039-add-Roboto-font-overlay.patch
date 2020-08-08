@@ -1,4 +1,4 @@
-From 78b158a269e036e08dfe1f55af6ac8bd5e494f6f Mon Sep 17 00:00:00 2001
+From ec31409d0c12d13454814ed39fd34db9fb2c2b21 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 21:17:45 +0200
 Subject: [PATCH 39/88] add Roboto font overlay
@@ -152,5 +152,5 @@ index 00000000000..e35613d1bef
 +    <string name="font_roboto_overlay" translatable="false">Roboto</string>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

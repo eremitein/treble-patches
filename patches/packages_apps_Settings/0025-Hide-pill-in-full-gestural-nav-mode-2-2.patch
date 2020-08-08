@@ -1,7 +1,7 @@
-From 754405cff1c40d9292f029a005844bb4d2cdea62 Mon Sep 17 00:00:00 2001
+From 153ca5811302893b36eec13fd8f5ff70b52db78b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 13 Apr 2020 20:52:49 +0300
-Subject: [PATCH 25/29] Hide pill in full gestural nav mode [2/2]
+Subject: [PATCH 25/30] Hide pill in full gestural nav mode [2/2]
 
   * based on
   https://github.com/crdroidandroid/android_packages_apps_crDroidSettings/commit/703938174a04599cd1337c350486a7c6760320cf
@@ -38,10 +38,10 @@ index 328931f943..d6a6e94fd4 100644
 +
  </LinearLayout>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 610400feca..1a1fa83102 100644
+index 2dc82be738..84056f6f72 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -11470,4 +11470,7 @@
+@@ -11473,4 +11473,7 @@
      <string name="three_finger_gesture">Swipe to screenshot</string>
      <string name="three_finger_gesture_summary">Swipe down with three fingers to take a screenshot</string>
  
@@ -216,5 +216,5 @@ index 3f720bd8c3..0c867b549c 100644
              case KEY_SYSTEM_NAV_2BUTTONS:
                  setNavBarInteractionMode(overlayManager, NAV_BAR_MODE_2BUTTON_OVERLAY);
 -- 
-2.25.1
+2.17.1
 

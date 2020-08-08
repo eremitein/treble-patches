@@ -1,4 +1,4 @@
-From a1a2959e8b7158e59a42b2a396d5a1177df0be94 Mon Sep 17 00:00:00 2001
+From 1baf209b8e3d85df62985e7d1e0d2fa4d3e112c4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 23 May 2020 23:45:05 +0300
 Subject: [PATCH 75/88] OOS style switches
@@ -104,5 +104,5 @@ index 8b028d3bb82..6548cde64f8 100644
 -</layer-list>
 +</selector>
 -- 
-2.25.1
+2.17.1
 

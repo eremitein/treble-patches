@@ -1,7 +1,7 @@
-From 224818c848033d349db4ea9c3b73fad581b435b8 Mon Sep 17 00:00:00 2001
+From 282afce272febff8a6893b72b4a5e9a1804cd2dc Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 12 Apr 2020 02:45:14 +0300
-Subject: [PATCH 24/29] add QS panel alpha tuning
+Subject: [PATCH 24/30] add QS panel alpha tuning
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -13,10 +13,10 @@ Subject: [PATCH 24/29] add QS panel alpha tuning
  3 files changed, 7 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 4a7f063558..610400feca 100644
+index fcb87f1021..2dc82be738 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10096,6 +10096,8 @@
+@@ -10099,6 +10099,8 @@
      <string name="theme_customization_darkui_title">Dark themes</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the statusbar icons spacing (e.g. set 2dp paddings). -->
      <string name="theme_customization_statusbar_title">Status Bar spacing</string>
@@ -53,5 +53,5 @@ index 5bbe8bd0ca..06d8c8ba93 100644
                  "android.theme.customization.qspanel"));
          return controllers;
 -- 
-2.25.1
+2.17.1
 

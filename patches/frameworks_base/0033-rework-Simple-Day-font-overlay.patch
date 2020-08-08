@@ -1,4 +1,4 @@
-From 772e709674c9e34d64ee5ad179877b1d91cd1af0 Mon Sep 17 00:00:00 2001
+From 817c3d37eda866938343ec6d2b7cc4dc22eb3503 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 17:51:57 +0200
 Subject: [PATCH 33/88] rework Simple Day font overlay
@@ -39,5 +39,5 @@ index ef1853ce3b9..0ad50d70d8c 100644
 +    <string name="config_headlineFontFamilyMedium" translatable="false">simple-day-bold</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

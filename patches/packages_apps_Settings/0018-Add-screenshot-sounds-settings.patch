@@ -1,7 +1,7 @@
-From 40dc265092f21b3c37c67f8d9bb1fd2d10fdda5d Mon Sep 17 00:00:00 2001
+From bf3a68d3b3b36c5c74ea59fd4b74d6d50270f626 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 10 Mar 2020 19:59:04 +0200
-Subject: [PATCH 18/29] Add screenshot sounds settings
+Subject: [PATCH 18/30] Add screenshot sounds settings
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/52730f137e12910589cb3074bd2c6587e5bbb96a
@@ -19,10 +19,10 @@ Subject: [PATCH 18/29] Add screenshot sounds settings
  create mode 100644 src/com/android/settings/notification/ScreenshotSoundPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index a4c064f46e..d6bcbc3cde 100644
+index 13187a5540..118b45128d 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -11455,4 +11455,7 @@
+@@ -11458,4 +11458,7 @@
      <string name="back_options_dialog_title">Options</string>
      <string name="back_height_message">Amount of screen height used as touchable region for back gesture</string>
  
@@ -118,5 +118,5 @@ index eec0fb8018..5857aa7297 100644
 \ No newline at end of file
 +}
 -- 
-2.25.1
+2.17.1
 

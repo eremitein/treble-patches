@@ -1,4 +1,4 @@
-From 0f27e6134cfac95658a56d85d09b370530937804 Mon Sep 17 00:00:00 2001
+From 8366ad8807ff0f3c62e49018d917a9f6b8a84596 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 11:44:11 +0200
 Subject: [PATCH 17/88] navigation mode settings [1/2]
@@ -2723,5 +2723,5 @@ index 1df9411019d..5adc9c1ec3a 100644
          mContext.registerReceiverAsUser(mReceiver, UserHandle.ALL, preferredActivityFilter, null,
                  null);
 -- 
-2.25.1
+2.17.1
 

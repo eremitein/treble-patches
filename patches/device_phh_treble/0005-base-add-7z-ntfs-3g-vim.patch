@@ -1,7 +1,7 @@
-From 7fe1607e15e05d8cd48d2255acafe0508399d28a Mon Sep 17 00:00:00 2001
+From b87cce2c6aad6d445a24d988d900a08b2bfda4c5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 8 Feb 2020 21:58:07 +0200
-Subject: [PATCH 5/8] base: add 7z, ntfs-3g & vim
+Subject: [PATCH 5/9] base: add 7z, ntfs-3g & vim
 
 	modified:   base.mk
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 5/8] base: add 7z, ntfs-3g & vim
  1 file changed, 14 insertions(+), 5 deletions(-)
 
 diff --git a/base.mk b/base.mk
-index 5645c14..4b7251e 100644
+index 93fc30e..63adc7c 100644
 --- a/base.mk
 +++ b/base.mk
-@@ -128,11 +128,11 @@ SELINUX_IGNORE_NEVERALLOWS := true
+@@ -130,11 +130,11 @@ SELINUX_IGNORE_NEVERALLOWS := true
  
  # Universal NoCutoutOverlay
  PRODUCT_PACKAGES += \
@@ -27,7 +27,7 @@ index 5645c14..4b7251e 100644
  
  PRODUCT_COPY_FILES += \
  	device/phh/treble/files/adbd.rc:system/etc/init/adbd.rc
-@@ -162,10 +162,19 @@ PRODUCT_COPY_FILES += \
+@@ -164,10 +164,19 @@ PRODUCT_COPY_FILES += \
  	frameworks/native/data/etc/android.software.secure_lock_screen.xml:system/etc/permissions/android.software.secure_lock_screen.xml \
  
  PRODUCT_COPY_FILES += \
@@ -50,5 +50,5 @@ index 5645c14..4b7251e 100644
  # Privapp-permissions whitelist for PhhTrebleApp
  PRODUCT_COPY_FILES += \
 -- 
-2.25.1
+2.17.1
 

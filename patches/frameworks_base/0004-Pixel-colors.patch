@@ -1,4 +1,4 @@
-From a5c948900b72b96d2a561e7ce123512c132d3a2c Mon Sep 17 00:00:00 2001
+From 6201e0939f2323461f428bc9f7b0046a13cca75d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 16 Dec 2019 01:21:53 +0200
 Subject: [PATCH 04/88] Pixel colors
@@ -154,5 +154,5 @@ index 972fe7ed91d..500827f2af4 100644
      <!-- Material time picker dimensions. -->
      <!-- Text size for the time picker header HH:MM label. This value is large
 -- 
-2.25.1
+2.17.1
 

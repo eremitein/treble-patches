@@ -1,4 +1,4 @@
-From 0121f6aaf42e59a772f3278e868eeec91f928297 Mon Sep 17 00:00:00 2001
+From e9777f43fc26b2979fd03d35e66e1a8327e41ca0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 2 Mar 2020 13:14:03 +0200
 Subject: [PATCH 66/88] disable advance anti-falsing classifier on the
@@ -23,5 +23,5 @@ index 29c4fdac0a7..23310df5602 100644
      <!-- Snooze: default notificaiton snooze time. -->
      <integer name="config_notification_snooze_time_default">60</integer>
 -- 
-2.25.1
+2.17.1
 

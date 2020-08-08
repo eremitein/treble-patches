@@ -1,4 +1,4 @@
-From 86c5b197b0115002296a7ac7adaac6d47e20a082 Mon Sep 17 00:00:00 2001
+From 7bbc7ab66d6bd57b2d0ef07b2a68dfe3c051208f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 10 Jan 2020 20:20:08 +0200
 Subject: [PATCH 01/88] Fix protected broadcast error for doze intents
@@ -25,5 +25,5 @@ index 20b61f966d2..68d510e66a6 100644
          android:name=".SystemUIApplication"
          android:persistent="true"
 -- 
-2.25.1
+2.17.1
 

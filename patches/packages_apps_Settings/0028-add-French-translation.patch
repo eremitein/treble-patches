@@ -1,7 +1,7 @@
-From b7bf2bf94bc15e5e53b27fa477b064119594e482 Mon Sep 17 00:00:00 2001
+From bcabf2e63afb50c34ccd0b3d02541875149b6027 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 12 May 2020 18:47:06 +0300
-Subject: [PATCH 28/29] add French translation
+Subject: [PATCH 28/30] add French translation
 
   * merci https://github.com/Aarqw12
 
@@ -50,5 +50,5 @@ index a1461ea6a2..bb6134d2f9 100644
 +    <string name="theme_customization_qspanel_title">disposition des panneaux dans la dalle</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

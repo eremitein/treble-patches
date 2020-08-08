@@ -1,4 +1,4 @@
-From 5c9f6e4ab758a3c280f6d2bf4bee2ae93097db35 Mon Sep 17 00:00:00 2001
+From 1b86db8b3e7259ee3601c338b540d9739019f43b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 08:30:58 +0200
 Subject: [PATCH 27/88] add Simple Day font, remove Roboto legacy
@@ -131,5 +131,5 @@ index e35613d1bef..fa5aabcddfe 100644
 +    <string name="font_simpleday_overlay" translatable="false">Simple Day</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

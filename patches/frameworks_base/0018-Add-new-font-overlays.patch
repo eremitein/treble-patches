@@ -1,4 +1,4 @@
-From 070968096116e4bdfa71eb2b8b9a03c756d9d6f6 Mon Sep 17 00:00:00 2001
+From 355e91e811477680586f996d65f8a4a519278294 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 12:21:08 +0200
 Subject: [PATCH 18/88] Add new font overlays
@@ -608,5 +608,5 @@ index 00000000000..a9352016763
 +    <string name="font_zilla_zilla_overlay" translatable="false">Zilla / Zilla</string>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

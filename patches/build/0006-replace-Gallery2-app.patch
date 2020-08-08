@@ -1,4 +1,4 @@
-From ab012c7739977f044bc0624be480f57987f0f3be Mon Sep 17 00:00:00 2001
+From 14956c2583955008c6822d5c505015c6f5fc16bc Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 29 Dec 2019 17:28:08 +0200
 Subject: [PATCH 06/10] replace Gallery2 app
@@ -46,5 +46,5 @@ index 63b9af293..c19dda6ed 100644
    system/bin/healthd \
    system/etc/init/healthd.rc \
 -- 
-2.25.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From f6fded846e60af448e87c0fcb1eaf80f8a392a4f Mon Sep 17 00:00:00 2001
+From 00ac619dde0a8e1d55b3b9e2ae853b0d3b41ec6b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 23 Feb 2020 21:04:29 +0200
 Subject: [PATCH 07/10] add ExactCalculator
@@ -21,5 +21,5 @@ index 0fdb1b234..54cca22ec 100644
      Launcher3QuickStep \
      OneTimeInitializer \
 -- 
-2.25.1
+2.17.1
 

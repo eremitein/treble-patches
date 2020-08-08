@@ -1,4 +1,4 @@
-From e0e4f30ce3c8badcc05aeb0e79e854c1c9df5fa2 Mon Sep 17 00:00:00 2001
+From a25839d9bf7417d36c33d488a8b1b11d64de98f3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 16:51:46 +0200
 Subject: [PATCH 50/88] add GoogleSans font normally
@@ -76,5 +76,5 @@ index 8159b232d94..693b98ee163 100644
      <alias name="sans-serif-condensed-light" to="sans-serif-condensed" weight="300" />
      <alias name="sans-serif-condensed-medium" to="sans-serif-condensed" weight="500" />
 -- 
-2.25.1
+2.17.1
 

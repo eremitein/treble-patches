@@ -1,4 +1,4 @@
-From f8ead8385baf547be097a9501303bf3a557a2e6a Mon Sep 17 00:00:00 2001
+From 9ca21ce78cfafd2d455ec565e343959e7518e9c2 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 12:06:03 +0200
 Subject: [PATCH 04/10] add few Google's fonts
@@ -27,5 +27,5 @@ index fde431add..5ebceeafe 100644
  $(call inherit-product-if-exists, external/roboto-fonts/fonts.mk)
  $(call inherit-product-if-exists, external/hyphenation-patterns/patterns.mk)
 -- 
-2.25.1
+2.17.1
 

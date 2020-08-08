@@ -1,4 +1,4 @@
-From 2ddd5b76da690825a07e2080c21bd515ed13101c Mon Sep 17 00:00:00 2001
+From 3a722c94904b91fb68464d191ca496b4096044b1 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 17:48:16 +0200
 Subject: [PATCH 31/88] add Amber accent overlay
@@ -157,5 +157,5 @@ index 32da739ed4e..25901c94a28 100644
  	AccentColorCinnamonOverlay \
  	AccentColorGrayOverlay \
 -- 
-2.25.1
+2.17.1
 

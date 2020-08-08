@@ -1,4 +1,4 @@
-From d304f8cee44106f815c8f7e4eac5a9ee10820e92 Mon Sep 17 00:00:00 2001
+From 8673fb971020456ed97ab311b43e1346e50e19aa Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 9 Apr 2020 06:06:42 +0300
 Subject: [PATCH 52/88] add a lot of fonts
@@ -3042,5 +3042,5 @@ index 00000000000..971a10d02a8
 +    <string name="font_vollkorn_overlay" translatable="false">Vollkorn</string>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

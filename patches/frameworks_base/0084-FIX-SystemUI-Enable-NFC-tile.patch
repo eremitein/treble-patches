@@ -1,4 +1,4 @@
-From 2beda1c8b12d3c585681f014cf4c97e6d6c7a2e2 Mon Sep 17 00:00:00 2001
+From d00858ed2cb9901c4c81b4424717e87cf605d2b2 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 21 Jul 2020 03:20:29 +0300
 Subject: [PATCH 84/88] FIX: SystemUI: Enable NFC tile
@@ -25,5 +25,5 @@ index d0bd073e248..f1781ac97b2 100644
          state.expandedAccessibilityClassName = Switch.class.getName();
          state.contentDescription = state.label;
 -- 
-2.25.1
+2.17.1
 

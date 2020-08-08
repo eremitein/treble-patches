@@ -1,4 +1,4 @@
-From 836fb5e09d6f1c93f1dfd35f82a065fc5c0c7e84 Mon Sep 17 00:00:00 2001
+From f2221502b3157f27d1db84bab6131e932a9a9493 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 12 Apr 2020 02:40:56 +0300
 Subject: [PATCH 60/88] add QS Alpha overlays
@@ -594,5 +594,5 @@ index 00000000000..709f50566c6
 +    <item name="qs_panel_background_alpha" format="float" type="dimen">0.90</item>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

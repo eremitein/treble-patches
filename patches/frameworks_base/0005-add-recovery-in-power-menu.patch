@@ -1,4 +1,4 @@
-From 912c641d47434ae24e20f4330ddeca643a5d2180 Mon Sep 17 00:00:00 2001
+From 84c3f2d8e4625ea759db87fc94042c6ecb461c28 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 16 Dec 2019 09:03:53 +0200
 Subject: [PATCH 05/88] add recovery in power menu
@@ -333,10 +333,10 @@ index 828f79007b9..3b580f542e9 100644
      public void onGlobalActionsShown() {
          enforceStatusBarService();
 diff --git a/services/core/java/com/android/server/wm/WindowManagerService.java b/services/core/java/com/android/server/wm/WindowManagerService.java
-index 529936a6c89..130bbd46575 100644
+index a9f157d985a..2b5840048ca 100644
 --- a/services/core/java/com/android/server/wm/WindowManagerService.java
 +++ b/services/core/java/com/android/server/wm/WindowManagerService.java
-@@ -3156,6 +3156,14 @@ public class WindowManagerService extends IWindowManager.Stub
+@@ -3164,6 +3164,14 @@ public class WindowManagerService extends IWindowManager.Stub
                  PowerManager.SHUTDOWN_USER_REQUESTED, confirm);
      }
  
@@ -352,5 +352,5 @@ index 529936a6c89..130bbd46575 100644
      @Override
      public void rebootSafeMode(boolean confirm) {
 -- 
-2.25.1
+2.17.1
 

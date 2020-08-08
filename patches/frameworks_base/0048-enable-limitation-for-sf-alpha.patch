@@ -1,4 +1,4 @@
-From 532d26fbc2ae74811c72071963ba14a695964c0d Mon Sep 17 00:00:00 2001
+From 2609c3ae965d496d25b8444a09a13c819ebd4f45 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 8 Apr 2020 19:18:12 +0300
 Subject: [PATCH 48/88] enable limitation for sf alpha
@@ -25,5 +25,5 @@ index f8bd445f9e7..907251f0ef7 100644
      <!-- Default value used to block data calls if ims is not
           connected.  If you use the ims apn DCT will block
 -- 
-2.25.1
+2.17.1
 

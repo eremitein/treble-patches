@@ -1,4 +1,4 @@
-From e68c0fa7f5591511ef7d0e861ef6aac7a5f2ec01 Mon Sep 17 00:00:00 2001
+From 53f5f897ea163be90e7c1cc4aaf115e541defdea Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 11 Apr 2020 19:40:56 +0300
 Subject: [PATCH 59/88] fix QS Panel background (and other forced black)
@@ -108,5 +108,5 @@ index 7b55d18676d..c78ec5de0b8 100644
      <!-- The color of the text in the Global Actions menu -->
      <color name="global_actions_text">@color/GM2_grey_200</color>
 -- 
-2.25.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From 4a5accb09af11f7ba225c66a683559b78432d33f Mon Sep 17 00:00:00 2001
+From 5a2e97f8dfed8f859adf0b392a177e598bc8b10d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 08:24:29 +0200
 Subject: [PATCH 26/88] rework Zilla font
@@ -54,5 +54,5 @@ index a7308429fe2..dfe37199301 100644
 +    <string name="config_headlineFontFamilyMedium" translatable="false">zilla-slab-bold</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

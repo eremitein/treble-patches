@@ -1,4 +1,4 @@
-From e2ab65d2458a7011a5c3f7bb1370d3f80aa5aba4 Mon Sep 17 00:00:00 2001
+From d23e30452135c45c3bfe5cb51c65dd731bdcdc67 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 7 Feb 2020 03:40:13 +0200
 Subject: [PATCH 13/88] overlay: Fix derp in package name
@@ -24,5 +24,5 @@ index 3eb90491f90..eecc10158e8 100644
  	IconShapeSquircleOverlay \
  	IconShapeTeardropOverlay \
 -- 
-2.25.1
+2.17.1
 

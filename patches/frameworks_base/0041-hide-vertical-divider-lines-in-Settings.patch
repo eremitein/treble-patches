@@ -1,4 +1,4 @@
-From 75bbacde50f196927985f33197eaf29f6b10f09d Mon Sep 17 00:00:00 2001
+From 8e3606f645c8159d9f2be70c8c4f10c55f3cc7e3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 4 Mar 2020 19:19:01 +0200
 Subject: [PATCH 41/88] hide vertical divider lines in Settings
@@ -39,5 +39,5 @@ index 5e8779fa289..b65ffe3ce1c 100644
      <color name="bt_color_icon_1">#b4a50e0e</color> <!-- 72% Material Red 900 -->
      <color name="bt_color_icon_2">#b40d652d</color> <!-- 72% Material Green 900 -->
 -- 
-2.25.1
+2.17.1
 

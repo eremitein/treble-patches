@@ -1,4 +1,4 @@
-From ebb7f220456ec17dd85ac0e752fa560b3246a7bd Mon Sep 17 00:00:00 2001
+From b2bb9d476c13ef9e3e07e3271fd528e63294c149 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 19:55:56 +0200
 Subject: [PATCH 35/88] rework Arbutus font
@@ -53,5 +53,5 @@ index 3b5224e8ae8..253e4a12c0e 100644
 +    <string name="config_headlineFontFamilyMedium" translatable="false">arbutus-slab-bold</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

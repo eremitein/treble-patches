@@ -1,4 +1,4 @@
-From 2079756589d47b8bb9175b160b8c0c7f2da21200 Mon Sep 17 00:00:00 2001
+From 369c812c9a906f6b65376ceb22899425f8c8e4d9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 2 Mar 2020 00:01:34 +0200
 Subject: [PATCH 40/88] disable auto dark mode on battery saver
@@ -32,5 +32,5 @@ index 17742b7f634..f76d18dcc0a 100644
          mConfiguration.setToDefaults();
  
 -- 
-2.25.1
+2.17.1
 

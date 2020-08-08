@@ -1,7 +1,7 @@
-From 9d17df39273dccd77c8e5d5151c1d2b7009840d0 Mon Sep 17 00:00:00 2001
+From 57c1f1ef80ace740324df62bc4fb53c40181a011 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 24 May 2020 09:16:59 +0300
-Subject: [PATCH 6/8] add caos bootanimation
+Subject: [PATCH 6/9] add caos bootanimation
 
 ---
  base.mk                |   3 +++
@@ -10,10 +10,10 @@ Subject: [PATCH 6/8] add caos bootanimation
  create mode 100644 bootanimation_caos.zip
 
 diff --git a/base.mk b/base.mk
-index 4b7251e..c3f8bcd 100644
+index 63adc7c..3ccda6f 100644
 --- a/base.mk
 +++ b/base.mk
-@@ -176,6 +176,9 @@ PRODUCT_PACKAGES += \
+@@ -178,6 +178,9 @@ PRODUCT_PACKAGES += \
  	mount.ntfs \
  	vim
  
@@ -145,5 +145,5 @@ literal 0
 HcmV?d00001
 
 -- 
-2.25.1
+2.17.1
 

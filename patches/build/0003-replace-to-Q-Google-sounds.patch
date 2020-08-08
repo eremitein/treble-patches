@@ -1,4 +1,4 @@
-From a65c0791d2d2d60297e80bafe716369eb8565fa9 Mon Sep 17 00:00:00 2001
+From 0ef628fd8bce4c6dfd75dceb9712a3b1ca7b9b54 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 8 Feb 2020 16:39:09 +0200
 Subject: [PATCH 03/10] replace to Q Google sounds
@@ -94,5 +94,5 @@ index 7900cdfee..c2623bffe 100644
  
  PRODUCT_PACKAGES += \
 -- 
-2.25.1
+2.17.1
 

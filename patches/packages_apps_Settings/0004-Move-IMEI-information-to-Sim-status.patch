@@ -1,7 +1,7 @@
-From 4c8fe79d54c135878a835e9c9b212756da99999a Mon Sep 17 00:00:00 2001
+From 47cf317a2d08ae807e5ab4403608ae497ca82079 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 14:42:14 +0200
-Subject: [PATCH 04/29] Move IMEI information to Sim status
+Subject: [PATCH 04/30] Move IMEI information to Sim status
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/3741d37c0639883cdc6855bb371fce259ffc0775#diff-8e0314d48f88bb73a3b9ebce6165548d
@@ -110,7 +110,7 @@ index 27d12a8cb1..9383499689 100644
      </LinearLayout>
  </ScrollView>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index deea388506..7056a9dd90 100644
+index 6cd456b499..e3aded4e4e 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
 @@ -7274,7 +7274,7 @@
@@ -398,5 +398,5 @@ index 3fafd14f62..3978a7238a 100644
 +    }
  }
 -- 
-2.25.1
+2.17.1
 

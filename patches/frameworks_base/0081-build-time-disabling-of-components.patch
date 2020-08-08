@@ -1,4 +1,4 @@
-From 569146bf494f793bc949973f3e8a5f2971ca63f6 Mon Sep 17 00:00:00 2001
+From dfe8cb0b104ba3e38443f33e307696f98a7013c9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 21 Jul 2020 01:43:04 +0300
 Subject: [PATCH 81/88] build-time disabling of components
@@ -135,5 +135,5 @@ index d7e8ff50751..be4f1b8e62b 100644
                  componentName.getClassName(), newState, flags, userId, null);
      }
 -- 
-2.25.1
+2.17.1
 

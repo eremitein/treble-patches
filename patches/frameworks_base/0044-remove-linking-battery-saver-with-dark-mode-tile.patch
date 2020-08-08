@@ -1,4 +1,4 @@
-From d3d870335257ea5ca6486001b11693b619735385 Mon Sep 17 00:00:00 2001
+From a18061d8ce4e90e32abed0872cea498a0fb3af5e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 9 Mar 2020 23:23:07 +0200
 Subject: [PATCH 44/88] remove linking battery saver with dark mode tile
@@ -55,5 +55,5 @@ index 107958f49b9..d9506ecba45 100644
      }
  
 -- 
-2.25.1
+2.17.1
 

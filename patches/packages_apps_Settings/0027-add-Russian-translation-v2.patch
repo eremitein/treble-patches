@@ -1,7 +1,7 @@
-From 0a982d5473587874ffba6fb3ff46548791add50e Mon Sep 17 00:00:00 2001
+From 682c5615f6e15fa12b8abc1cbd0eaa7ba2fc3efd Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 24 Apr 2020 09:53:34 +0300
-Subject: [PATCH 27/29] add Russian translation v2
+Subject: [PATCH 27/30] add Russian translation v2
 
 Change-Id: I84a908eee8dfb42120ea168c045d3b811697018f
 ---
@@ -47,5 +47,5 @@ index 6bdd49a183..e295e7d86d 100644
 +    <string name="theme_customization_speedui_title">Ускорение интерфейса/Энергосбережение</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

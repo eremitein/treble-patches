@@ -1,7 +1,7 @@
-From e55fe1261bcec4755fc097ee2dc5a9a6be749cf6 Mon Sep 17 00:00:00 2001
+From a55469b61d9732499357255e4b1b878c567ab3aa Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 21 Jul 2020 05:11:39 +0300
-Subject: [PATCH 29/29] add header padding tuning
+Subject: [PATCH 29/30] add header padding tuning
 
   based on
   https://github.com/Extended-UI/android_packages_apps_Settings/commit/ac5666e0e053ea09e6473458237039892a99f9ec
@@ -99,10 +99,10 @@ index e295e7d86d..5cd1a63fe7 100644
 +    <string name="theme_customization_header_title">Верхний отступ</string>
  </resources>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 885a70ea2b..3cdb30fe84 100644
+index 7e32e3cec4..07843c28ac 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10096,6 +10096,8 @@
+@@ -10099,6 +10099,8 @@
      <string name="theme_customization_darkui_title">Dark themes</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the SystemUI speed performance -->
      <string name="theme_customization_speedui_title">UI Speed up/Powersaving</string>
@@ -139,5 +139,5 @@ index 7b9cfbd41e..ebcef36156 100644
      }
  
 -- 
-2.25.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From 79f6bc8ccd597b69c2af725b4bc27d8f8e4f49ce Mon Sep 17 00:00:00 2001
+From c8037a06f247bf28b65e277cabb7c5eabe7ec906 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 18 Dec 2019 14:52:32 +0200
 Subject: [PATCH 06/88] enable SystemNavigationKeys
@@ -22,5 +22,5 @@ index 7186acadf45..c7b9f6bf77d 100644
      <!-- emergency call number for the emergency affordance -->
      <string name="config_emergency_call_number" translatable="false">112</string>
 -- 
-2.25.1
+2.17.1
 

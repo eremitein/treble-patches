@@ -1,7 +1,7 @@
-From b5cecf5246b459c09d3560ca7ce55820205f40e8 Mon Sep 17 00:00:00 2001
+From 4f4abe76542b2336b08d4d36eee0ade95eff356a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:35:49 +0200
-Subject: [PATCH 05/29] Pixel UI
+Subject: [PATCH 05/30] Pixel UI
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/fe6ec9d5978149a5652c70a665d914e389e40890
@@ -85,5 +85,5 @@ index d3d3199f62..41a7ff3b28 100644
  
      <style name="TextAppearance.ConditionCardTitle"
 -- 
-2.25.1
+2.17.1
 

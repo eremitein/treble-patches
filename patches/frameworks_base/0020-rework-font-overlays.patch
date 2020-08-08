@@ -1,4 +1,4 @@
-From eda238038052da1df3e523c526f721aee5296640 Mon Sep 17 00:00:00 2001
+From a7043df40f93d1f3a6b2885b9e4483eb8b2a6dbf Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 19:13:52 +0200
 Subject: [PATCH 20/88] rework font overlays
@@ -1041,5 +1041,5 @@ index 00000000000..86abe2d96d3
 +    <string name="font_zilla_overlay" translatable="false">Zilla Slab</string>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From 106adada5dfb56ad4fa1177fa5ac481b435ee71f Mon Sep 17 00:00:00 2001
+From e9abbeec53c0ee56ec62f4d31d450978883fbec8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 10:14:46 +0200
 Subject: [PATCH 30/88] include Simple Day font overlay
@@ -21,5 +21,5 @@ index 33fd757ec0b..32da739ed4e 100644
  	FontZillaOverlay \
  	IconPackCircularAndroidOverlay \
 -- 
-2.25.1
+2.17.1
 

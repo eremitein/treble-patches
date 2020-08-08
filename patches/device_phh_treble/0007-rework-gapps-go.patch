@@ -1,7 +1,7 @@
-From 27589394a3753d83a6fa1c5a9f0b64fb0bf4f15e Mon Sep 17 00:00:00 2001
+From 736b034c859992651c2e0536e7dd0508aa372e50 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 27 May 2020 05:57:53 +0300
-Subject: [PATCH 7/8] rework gapps & go
+Subject: [PATCH 7/9] rework gapps & go
 
 ---
  gapps.mk             |  1 -
@@ -60,5 +60,5 @@ index 813d66b..d50ee9d 100644
  	GmsSampleIntegrationGo \
  	GmsSampleIntegrationGo2GB \
 -- 
-2.25.1
+2.17.1
 

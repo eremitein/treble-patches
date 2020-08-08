@@ -1,4 +1,4 @@
-From de694be584c368f212d3eb0784dfda77ad409898 Mon Sep 17 00:00:00 2001
+From e14759c234b33a366f307f36abfb1d3c3f6768e5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Mar 2020 15:26:13 +0200
 Subject: [PATCH 43/88] play with QS
@@ -59,5 +59,5 @@ index b600f033160..45ee804cbed 100644
      <dimen name="qs_detail_header_text_padding">16dp</dimen>
      <dimen name="qs_data_usage_text_size">14sp</dimen>
 -- 
-2.25.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From 6b9e5d05275dcf83a743a99b851c5f98e50aca04 Mon Sep 17 00:00:00 2001
+From f5622a22422f2c66080027da867b8e36ff5f10b6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:55:43 +0200
 Subject: [PATCH 10/88] Pixel UI
@@ -147,5 +147,5 @@ index 977824f102a..b600f033160 100644
      <!-- How much into a DisplayCutout's bounds we can go, on each side -->
      <dimen name="display_cutout_margin_consumption">0px</dimen>
 -- 
-2.25.1
+2.17.1
 

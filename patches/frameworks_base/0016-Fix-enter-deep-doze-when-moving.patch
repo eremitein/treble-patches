@@ -1,4 +1,4 @@
-From c91a17ff531d3a91226838b44bf556a0adb428ea Mon Sep 17 00:00:00 2001
+From c9ef63a2e67c5d5c35aca1876fed6c2619dc4d86 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 9 Feb 2020 00:48:21 +0200
 Subject: [PATCH 16/88] Fix enter deep doze when moving
@@ -25,5 +25,5 @@ index 8c5ee7f3502..316306df4f4 100644
              if (status != RESULT_UNKNOWN) {
                  if (mWakeLock.isHeld()) {
 -- 
-2.25.1
+2.17.1
 

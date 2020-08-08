@@ -1,4 +1,4 @@
-From c033a0ef278ad459ca55fa76c82851910986b3d3 Mon Sep 17 00:00:00 2001
+From c7881c12098dcbfc9295f670e9294ed67b74b9d3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 7 Dec 2019 16:38:50 +0200
 Subject: [PATCH 05/10] remove some apps
@@ -58,5 +58,5 @@ index f21fa89c0..63b9af293 100644
    system/bin/healthd \
    system/etc/init/healthd.rc \
 -- 
-2.25.1
+2.17.1
 

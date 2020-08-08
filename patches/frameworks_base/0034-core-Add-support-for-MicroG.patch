@@ -1,4 +1,4 @@
-From f7326221de7a2ede7469dee69a14bb24a30d0986 Mon Sep 17 00:00:00 2001
+From badadad0acd3c7d046ad1378ca4263ec4a6d16ae Mon Sep 17 00:00:00 2001
 From: gudenau <gudenau>
 Date: Tue, 25 Sep 2018 09:44:26 +0200
 Subject: [PATCH 34/88] core: Add support for MicroG
@@ -102,5 +102,5 @@ index 0482729699d..d7e8ff50751 100644
      public void checkPackageStartable(String packageName, int userId) {
          final int callingUid = Binder.getCallingUid();
 -- 
-2.25.1
+2.17.1
 

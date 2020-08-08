@@ -1,4 +1,4 @@
-From 4e6bf1cd05ed81e571db4c47df37ebce97590453 Mon Sep 17 00:00:00 2001
+From 2df27ed9d33185861d67db31e642d67e261e0233 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 5 Mar 2020 14:36:23 +0200
 Subject: [PATCH 42/88] speed up (and fix lags) in Q recents
@@ -220,5 +220,5 @@ index 544ec88d2bf..000d954f442 100644
 +         android:duration="30"/>
  </set>
 -- 
-2.25.1
+2.17.1
 

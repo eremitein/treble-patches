@@ -1,4 +1,4 @@
-From 48b7ecf210caefd6630a8821864042fe388fd5b9 Mon Sep 17 00:00:00 2001
+From 194a1032d4469cae78d53b3fb649036a5c8a185c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 12 May 2020 20:08:13 +0300
 Subject: [PATCH 71/88] add auto brightness in QS slider
@@ -275,5 +275,5 @@ index d8b4df5e94d..0374a013a90 100644
  
      @Override
 -- 
-2.25.1
+2.17.1
 

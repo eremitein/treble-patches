@@ -1,7 +1,7 @@
-From 787ee03269a2c9df9246a51cbaa74dd274b7fe5d Mon Sep 17 00:00:00 2001
+From a1aee5a7885751aac8228f3b4f2b3b4fe20e6e52 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 11:51:23 +0200
-Subject: [PATCH 11/29] navigation mode settings [2/2]
+Subject: [PATCH 11/30] navigation mode settings [2/2]
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/598a941efc26c1550d11737b0438584df57851ec
@@ -147,10 +147,10 @@ index 0000000000..328931f943
 +    </LinearLayout>
 +</LinearLayout>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 532148a29a..a4c064f46e 100644
+index 045a8eb11b..13187a5540 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -11449,4 +11449,10 @@
+@@ -11452,4 +11452,10 @@
      <!-- Subtext for showing the option of RTT setting. [CHAR LIMIT=NONE] -->
      <string name="rtt_settings_always_visible"></string>
  
@@ -255,5 +255,5 @@ index 9e35529801..3f720bd8c3 100644
      static String getCurrentSystemNavigationMode(Context context) {
          if (SystemNavigationPreferenceController.isEdgeToEdgeEnabled(context)) {
 -- 
-2.25.1
+2.17.1
 

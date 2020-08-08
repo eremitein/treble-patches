@@ -1,4 +1,4 @@
-From 07f302ff838e9c69ffcd60bfcd8c6daa9a55aa63 Mon Sep 17 00:00:00 2001
+From fe86fe57b85cfffa52619a4cf29be20b538b8db5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 14 Dec 2019 14:14:32 +0200
 Subject: [PATCH 03/88] tuning statusbar looking
@@ -519,5 +519,5 @@ index 0263329dbe8..4abcf7b08e8 100644
      <!-- Screen pinning request width -->
      <dimen name="screen_pinning_request_width">@dimen/match_parent</dimen>
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 842ec7cc94b56aa49bc617cd08da7c4c8d1f48c8 Mon Sep 17 00:00:00 2001
+From 30621546d65857b7e7be03fd693bdfe17f539b1b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 9 Apr 2020 22:30:52 +0300
-Subject: [PATCH 21/29] add QS panel tuning
+Subject: [PATCH 21/30] add QS panel tuning
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -15,10 +15,10 @@ Subject: [PATCH 21/29] add QS panel tuning
  4 files changed, 15 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index a3704d793c..32518b7edc 100644
+index 86c0660cbb..25f40084c8 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10092,6 +10092,8 @@
+@@ -10095,6 +10095,8 @@
      <string name="theme_customization_icon_pack_title">Icon style</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the adaptive icon shape (e.g. launcher and quick settings icons). -->
      <string name="theme_customization_icon_shape_title">Icon shape</string>
@@ -86,5 +86,5 @@ index 6a20e3aac3..188171889f 100644
              throw re.rethrowFromSystemServer();
          }
 -- 
-2.25.1
+2.17.1
 
