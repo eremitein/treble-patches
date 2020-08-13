@@ -1,7 +1,7 @@
-From c9484b4921832de99df2809037fa9239e901ca41 Mon Sep 17 00:00:00 2001
+From db8c1d3a4987429b9fbec30cc6d32f57dce76c5f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 10 Mar 2020 19:59:04 +0200
-Subject: [PATCH 18/28] Add screenshot sounds settings
+Subject: [PATCH 18/30] Add screenshot sounds settings
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/52730f137e12910589cb3074bd2c6587e5bbb96a
@@ -19,10 +19,10 @@ Subject: [PATCH 18/28] Add screenshot sounds settings
  create mode 100644 src/com/android/settings/notification/ScreenshotSoundPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 6ee26abad5..b8535f9b47 100644
+index b8379543f1..e5ef57c286 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -11442,4 +11442,7 @@
+@@ -11439,4 +11439,7 @@
      <!-- Subtext for showing the option of RTT setting. [CHAR LIMIT=NONE] -->
      <string name="rtt_settings_always_visible"></string>
  
@@ -111,5 +111,5 @@ index 68c0e1103e..6fc1ecdd9a 100644
                  "other_sounds_and_vibrations_category").setChildren(
                  Arrays.asList(dialPadTonePreferenceController,
 -- 
-2.25.1
+2.17.1
 

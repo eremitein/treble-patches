@@ -1,7 +1,7 @@
-From 2cf0234bbc6f92c34a2dfbe48f0d94cf9daaa54d Mon Sep 17 00:00:00 2001
+From 4ea5291a1e97abc7ff8456347d0be9b51773076e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 20 Dec 2019 02:39:13 +0200
-Subject: [PATCH 077/143] decrease vertical dividers
+Subject: [PATCH 077/145] decrease vertical dividers
 
 	modified:   packages/SystemUI/res/values/dimens.xml
 ---
@@ -66,5 +66,5 @@ index 3bf6486aba3..d0fde7181c2 100644
      <!-- The padding on top of the first notification to the children container -->
      <dimen name="notification_children_container_top_padding">8dp</dimen>
 -- 
-2.25.1
+2.17.1
 

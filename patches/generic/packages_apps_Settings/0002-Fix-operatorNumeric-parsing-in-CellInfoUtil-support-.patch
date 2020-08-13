@@ -1,7 +1,7 @@
-From 65c094e00229ac2d90ebbc0163f6179baf14b8bc Mon Sep 17 00:00:00 2001
+From 828afd80dcec2d8d62e49ce08299859e311a35c7 Mon Sep 17 00:00:00 2001
 From: Michael Cheah <michael@cheah.xyz>
 Date: Sat, 11 Jan 2020 13:19:04 +0800
-Subject: [PATCH 02/28] Fix operatorNumeric parsing in CellInfoUtil & support
+Subject: [PATCH 02/30] Fix operatorNumeric parsing in CellInfoUtil & support
  old mnc format
 
 ---
@@ -70,5 +70,5 @@ index def81a10c6..6e6586a4cb 100644
          CellIdentityGsm cig = new CellIdentityGsm(
                  Integer.MAX_VALUE /* lac */,
 -- 
-2.25.1
+2.17.1
 

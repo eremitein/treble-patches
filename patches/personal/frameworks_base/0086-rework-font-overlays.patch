@@ -1,7 +1,7 @@
-From 71c425b06c32415854e5c5135b4a1046dc63847f Mon Sep 17 00:00:00 2001
+From 867d0679f7d8d55317a122b516867be243c28356 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 19:13:52 +0200
-Subject: [PATCH 086/143] rework font overlays
+Subject: [PATCH 086/145] rework font overlays
 
 	modified:   packages/overlays/Android.mk
 	renamed:    packages/overlays/FontArvoLatoOverlay/Android.mk -> packages/overlays/FontArbutusOverlay/Android.mk
@@ -1042,5 +1042,5 @@ index 00000000000..86abe2d96d3
 +    <string name="font_zilla_overlay" translatable="false">Zilla Slab</string>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

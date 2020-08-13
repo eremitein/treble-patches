@@ -1,7 +1,7 @@
-From b05ba2268fc1eee4f8e6b523d09b769b6c337895 Mon Sep 17 00:00:00 2001
+From 465108791ec7f98def904051e5c91b9c36d112a9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 29 May 2020 16:09:20 +0300
-Subject: [PATCH 136/143] Add Restart SystemUI button on Advanced Restart Menu
+Subject: [PATCH 136/145] Add Restart SystemUI button on Advanced Restart Menu
  [1/2]
 
   * from
@@ -103,5 +103,5 @@ index fc278d8762f..65aebd95b74 100644
          public ScreenshotAction() {
              super(R.drawable.ic_screenshot, R.string.global_action_screenshot);
 -- 
-2.25.1
+2.17.1
 

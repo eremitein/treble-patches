@@ -1,7 +1,7 @@
-From 4e16eab7f1025ba8a731d04ccb06335a410fe435 Mon Sep 17 00:00:00 2001
+From 2a3c22684778a80fab83c4422ecbdf59af4823dd Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 11 May 2020 20:12:55 +0300
-Subject: [PATCH 134/143] add speed UI overlays
+Subject: [PATCH 134/145] add speed UI overlays
 
 	modified:   packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
 	modified:   packages/overlays/Android.mk
@@ -295,5 +295,5 @@ index 00000000000..e7b4473892b
 +    <bool name="config_navigation_bar_enable_auto_dim_no_visible_wallpaper">false</bool>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

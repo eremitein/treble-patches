@@ -1,7 +1,7 @@
-From 4521b4feb312ca66f68399f41ea24963c6536584 Mon Sep 17 00:00:00 2001
+From fb1ed04afe307f9a33b2fc1ce2af3177b69262c0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 11 May 2020 20:18:14 +0300
-Subject: [PATCH 26/28] add system speedup tuning
+Subject: [PATCH 26/30] add system speedup tuning
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -13,10 +13,10 @@ Subject: [PATCH 26/28] add system speedup tuning
  3 files changed, 7 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 39b8a2cd09..9866947c12 100644
+index a9c0656589..264f496de0 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10093,6 +10093,8 @@
+@@ -10090,6 +10090,8 @@
      <string name="theme_customization_qsalpha_title">QS Alpha opacity</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the QS   Panel layout (e.g. set 3x3 icons). -->
      <string name="theme_customization_qspanel_title">QS Panel layout</string>
@@ -53,5 +53,5 @@ index 5492dd6286..3652b26cf9 100644
      }
  
 -- 
-2.25.1
+2.17.1
 

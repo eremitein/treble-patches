@@ -1,7 +1,7 @@
-From 193a2412382b851454e1379e678bbc502d3ef850 Mon Sep 17 00:00:00 2001
+From 89fa73b32ca40dc6ca9891ce807e3dd1285d15f1 Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Mon, 30 Mar 2020 10:07:00 +0000
-Subject: [PATCH 065/143] Support Huawei light HAL
+Subject: [PATCH 065/145] Support Huawei light HAL
 
 For https://github.com/phhusson/treble_experimentations/issues/1204
 
@@ -84,5 +84,5 @@ index dedc7734131..7c2a0b6203d 100644
      LightState state = constructState(
          colorARGB, flashMode, onMS, offMS, brightnessMode);
 -- 
-2.25.1
+2.17.1
 

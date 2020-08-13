@@ -1,7 +1,7 @@
-From a6fea30d856dab758d3cb8e24c47e0e57d582d22 Mon Sep 17 00:00:00 2001
+From 560cff8355f7a723aa947fb16f6568546cca1e85 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 28 Aug 2018 20:39:26 +0200
-Subject: [PATCH 034/143] Add japanese S9
+Subject: [PATCH 034/145] Add japanese S9
 
 ---
  .../core/java/com/android/server/lights/LightsService.java     | 3 ++-
@@ -22,5 +22,5 @@ index f1a22ee2dc4..15ab8cecfb5 100644
                          if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
                              newBrightness = (int) (brightness * 40960.0 / 255.0);
 -- 
-2.25.1
+2.17.1
 

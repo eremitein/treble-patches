@@ -1,7 +1,7 @@
-From 48c7881ec384e3ad75a0137cf707e0a27a588e96 Mon Sep 17 00:00:00 2001
+From 9c6025104c8ab1cbf4f2f25efdf25c8bc6aae3c3 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 16:38:44 +0100
-Subject: [PATCH 053/143] Support Samsung Q Light HAL
+Subject: [PATCH 053/145] Support Samsung Q Light HAL
 
 Change-Id: Ic5745eb115a14de348391e69ed6bf3c2a24b157e
 ---
@@ -471,5 +471,5 @@ index 00000000000..a21c6e2c8ef
 +
 +};
 -- 
-2.25.1
+2.17.1
 

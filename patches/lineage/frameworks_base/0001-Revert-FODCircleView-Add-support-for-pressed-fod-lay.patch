@@ -1,7 +1,7 @@
-From 27b7f906a71abfdcba5673281ec7d98c5c6de858 Mon Sep 17 00:00:00 2001
+From 42f815e22fabebb17deb20cc9ff5d668431227a7 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 11 Jun 2020 07:03:36 +0300
-Subject: [PATCH 001/143] Revert "FODCircleView: Add support for pressed fod
+Subject: [PATCH 001/145] Revert "FODCircleView: Add support for pressed fod
  layer"
 
 This reverts commit dcfcf1f5078f4adb8aac984a48011955872bbc3a.
@@ -232,5 +232,5 @@ index a1691b9cb69..e480d704a05 100644
  
      private boolean isPinOrPattern(int userId) {
 -- 
-2.25.1
+2.17.1
 

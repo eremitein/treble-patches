@@ -1,4 +1,4 @@
-From 82c9d5282199b18f4b5b72d4d47887ea0948a59e Mon Sep 17 00:00:00 2001
+From 4abe5c8d731a6bc41f90d6cdccf9154d74195189 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 29 Dec 2019 17:28:08 +0200
 Subject: [PATCH 06/10] replace Gallery2 app
@@ -48,5 +48,5 @@ index f21fa89c0..1f8aad0c1 100644
    system/app/webview/webview.apk \
    system/bin/healthd \
 -- 
-2.25.1
+2.17.1
 

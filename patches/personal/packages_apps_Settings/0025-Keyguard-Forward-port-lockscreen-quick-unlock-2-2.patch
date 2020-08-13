@@ -1,7 +1,7 @@
-From 5da9fb86804d80034e39836c6a1d8d015af7f9f0 Mon Sep 17 00:00:00 2001
+From 260bee6397064cfccd8af37eb99f5ade919a0b7e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 24 Apr 2020 09:45:57 +0300
-Subject: [PATCH 25/28] Keyguard: Forward port lockscreen quick unlock [2/2]
+Subject: [PATCH 25/30] Keyguard: Forward port lockscreen quick unlock [2/2]
 
   * from
   https://github.com/crdroidandroid/android_packages_apps_Settings/commit/1cfbfc164eecf172905c2df65522a9ed5195664d
@@ -17,10 +17,10 @@ Change-Id: Ia401dae91300d3b77ec955da427331f39a4ef97d
  create mode 100644 src/com/android/settings/security/screenlock/QuickUnlockPreferenceController.java
 
 diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
-index 34f356822d..5a18dd2095 100644
+index 6bdd49a183..7c353e22ec 100644
 --- a/res/values-ru/strings.xml
 +++ b/res/values-ru/strings.xml
-@@ -4842,4 +4842,7 @@
+@@ -4840,4 +4840,7 @@
      <string name="rtt_settings_no_visible" msgid="7440356831140948382"></string>
      <string name="rtt_settings_visible_during_call" msgid="7866181103286073700"></string>
      <string name="rtt_settings_always_visible" msgid="2364173070088756238"></string>
@@ -29,10 +29,10 @@ index 34f356822d..5a18dd2095 100644
 +    <string name="unlock_quick_unlock_control_summary">Разблокировать устройство без нажатия OK</string>
  </resources>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index a2c9e5a25d..39b8a2cd09 100644
+index a78aee3d35..a9c0656589 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -11457,4 +11457,7 @@
+@@ -11454,4 +11454,7 @@
      <string name="three_finger_gesture">Swipe to screenshot</string>
      <string name="three_finger_gesture_summary">Swipe down with three fingers to take a screenshot</string>
  
@@ -163,5 +163,5 @@ index c32fb36d2c..b2dba20705 100644
          return controllers;
      }
 -- 
-2.25.1
+2.17.1
 

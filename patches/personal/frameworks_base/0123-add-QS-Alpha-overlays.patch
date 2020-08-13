@@ -1,7 +1,7 @@
-From 22d9a9f31fac4c90b121904eb8275366935cc943 Mon Sep 17 00:00:00 2001
+From 0ac9f89421e20ffc048ef8fd0fa06a5af3d6e6b5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 12 Apr 2020 02:40:56 +0300
-Subject: [PATCH 123/143] add QS Alpha overlays
+Subject: [PATCH 123/145] add QS Alpha overlays
 
 ---
  .../SystemUI/res/color/qs_background_dark.xml |  2 +-
@@ -594,5 +594,5 @@ index 00000000000..709f50566c6
 +    <item name="qs_panel_background_alpha" format="float" type="dimen">0.90</item>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

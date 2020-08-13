@@ -1,7 +1,7 @@
-From 251dc2706ec06d6ef947dc640ffe90c2000d85b7 Mon Sep 17 00:00:00 2001
+From ddc086c0ada2fd609374b6e7c9ecc2074ba2ae74 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 25 Jul 2020 10:59:33 -0400
-Subject: [PATCH] add NearbyMessagingService & DiscoveryService
+Subject: [PATCH 4/6] add NearbyMessagingService & DiscoveryService
 
   from
   https://github.com/LineageOS/android_device_oneplus_oneplus2/commit/ 9b916939432bb5dda339bb2405f4c45ca82f80f4#diff-e0a3646285a5f4f89d0d2f1cd05c0458
@@ -26,5 +26,5 @@ index d07ebde9..43e774bd 100644
  
      <string name="config_mms_user_agent">LineageOS</string>
 -- 
-2.25.1
+2.17.1
 

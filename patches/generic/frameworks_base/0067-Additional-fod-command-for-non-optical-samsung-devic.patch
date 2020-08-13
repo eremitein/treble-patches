@@ -1,7 +1,7 @@
-From 198671f4a4128d6c80266d8ed94dc917ccccdb0c Mon Sep 17 00:00:00 2001
+From 20a78fcf411fbabfa27ca79c7fe0322e248a6e48 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 9 Apr 2020 22:57:47 +0200
-Subject: [PATCH 067/143] Additional fod command for non-optical samsung
+Subject: [PATCH 067/145] Additional fod command for non-optical samsung
  devices running Q vendor
 
 ---
@@ -21,5 +21,5 @@ index 42f21d63430..a87f7e78af4 100644
          if(mX == -1 || mY == -1 || mW == -1 || mH == -1) return;
  
 -- 
-2.25.1
+2.17.1
 

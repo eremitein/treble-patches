@@ -1,7 +1,7 @@
-From e45f5ef314e213f7b7296ed936d2b9311662238c Mon Sep 17 00:00:00 2001
+From 236a283c13612f15da85d8f8286056e1036913c2 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 25 Apr 2020 02:33:24 +0300
-Subject: [PATCH 130/143] rework option to select brightness slider positon
+Subject: [PATCH 130/145] rework option to select brightness slider positon
 
   * based on
   https://github.com/crdroidandroid/android_frameworks_base/commit/d497efecda5efa31b6b756596d39bca23b0e82b8
@@ -135,5 +135,5 @@ index 4bb87360fa6..c2ea113c2b3 100644
  
      private void updateViewVisibilityForTuningValue(View view, @Nullable String newValue) {
 -- 
-2.25.1
+2.17.1
 

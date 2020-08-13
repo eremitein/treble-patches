@@ -1,7 +1,7 @@
-From fb0b50ed7755841420300f669fe6f6aba9e0e8cd Mon Sep 17 00:00:00 2001
+From 1dcd8bb72f4a4503195351c9d1a7106195130486 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 16:56:30 +0200
-Subject: [PATCH 084/143] add Google fonts set
+Subject: [PATCH 084/145] add Google fonts set
 
 	modified:   data/fonts/fonts.xml
 ---
@@ -50,5 +50,5 @@ index c6920977f6b..32baf8f8932 100644
      <family lang="und-Arab" variant="elegant">
          <font weight="400" style="normal">NotoNaskhArabic-Regular.ttf</font>
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 8adf38668a57d548fd377cff5831888898841fb0 Mon Sep 17 00:00:00 2001
+From d6a5473001ef79e14e42089628d1bfdee5365ebe Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 10 Mar 2020 19:47:20 +0200
-Subject: [PATCH 112/143] screenshot sound controller [1/2]
+Subject: [PATCH 112/145] screenshot sound controller [1/2]
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/21a3c15edaeb9eceb4b2a63f2f26a375de787ead
@@ -83,5 +83,5 @@ index 17ebe3a2d9b..b55c0765116 100644
                  }
  
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From fe71872e4e2c46fa53583145f81a239880b68923 Mon Sep 17 00:00:00 2001
+From ce9a10b5f7007a349d1d41f439b5983d5ef9b41c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 9 Mar 2020 22:28:12 +0200
-Subject: [PATCH 15/28] Use global fonts in styles
+Subject: [PATCH 15/30] Use global fonts in styles
 
   * from
   https://github.com/i-o-n/packages_apps_Settings/commit/0947c3c4cccce3cc6f3b483791cddfdc6571ee93
@@ -61,5 +61,5 @@ index 41a7ff3b28..6cc13fecd7 100644
  
      <style name="AccessibilityDialogButtonBarSpace">
 -- 
-2.25.1
+2.17.1
 

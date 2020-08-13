@@ -1,7 +1,7 @@
-From 049b8e58588e16e8213b2606c77806c885cc5794 Mon Sep 17 00:00:00 2001
+From 6944fbd9f4f6ca0c3406decc40ba02195030a789 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 14 Aug 2019 23:36:45 +0200
-Subject: [PATCH 044/143] Also add com.samsung.sensor.physical_proximity (if
+Subject: [PATCH 044/145] Also add com.samsung.sensor.physical_proximity (if
  available, it is more a true proximity sensor than touch proximity sensor)
 
 ---
@@ -27,5 +27,5 @@ index 6ac1589aab0..84f16c4af23 100644
                  List<Sensor> sensors = mSensorManager.getSensorList(Sensor.TYPE_ALL);
                  for(Sensor sensor: sensors) {
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From c08188e8a051c9c6a2b154cd9a6e8125c26785a9 Mon Sep 17 00:00:00 2001
+From d7b25cdf4a3e4286ba1752dce0899dce5037c827 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 10:14:46 +0200
-Subject: [PATCH 097/143] include Simple Day font overlay
+Subject: [PATCH 097/145] include Simple Day font overlay
 
 	modified:   packages/overlays/Android.mk
 ---
@@ -21,5 +21,5 @@ index 0e80b54a835..79d7e91e6f3 100644
  	FontZillaOverlay \
  	IconPackCircularAndroidOverlay \
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 975a09a951d940a34de06b6c9b035268877c5364 Mon Sep 17 00:00:00 2001
+From a42eb21082cc868af22d8720ab0580dfe634e830 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 19:24:23 +0200
-Subject: [PATCH 088/143] rework fonts xml
+Subject: [PATCH 088/145] rework fonts xml
 
 	modified:   data/fonts/fonts.xml
 ---
@@ -79,5 +79,5 @@ index 32baf8f8932..a4825498634 100644
      <!-- fallback fonts -->
      <family lang="und-Arab" variant="elegant">
 -- 
-2.25.1
+2.17.1
 

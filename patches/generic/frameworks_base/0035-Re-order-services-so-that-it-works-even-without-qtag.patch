@@ -1,7 +1,7 @@
-From 4fcaf8caaf22721cc5badcce0932a1486a9bf8ee Mon Sep 17 00:00:00 2001
+From 25827845b3b3651a071b975a669cc0477692ee0d Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 8 Nov 2018 23:04:03 +0100
-Subject: [PATCH 035/143] Re-order services so that it works even without
+Subject: [PATCH 035/145] Re-order services so that it works even without
  qtaguid
 
 ---
@@ -33,5 +33,5 @@ index 11c1632b00f..3c8bee02ca1 100644
                  synchronized (mNetworkPoliciesSecondLock) {
                      updatePowerSaveWhitelistUL();
 -- 
-2.25.1
+2.17.1
 

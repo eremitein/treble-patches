@@ -1,7 +1,7 @@
-From 9d18cc15c7fd9e9f229fbc1173f3084ff9f5f142 Mon Sep 17 00:00:00 2001
+From 4eda47b3580d268ada47dda64ec9bcda7d1d6a39 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 4 Feb 2020 11:09:32 +0200
-Subject: [PATCH 20/28] add statusbar icon spacing tuning (LOQS)
+Subject: [PATCH 20/30] add statusbar icon spacing tuning (LOQS)
 
   * based on
   https://github.com/neon-os/packages_apps_Settings/commit/ba07105ed23396f47d78bc3867bcd112ff1584bd
@@ -23,10 +23,10 @@ Change-Id: I953a6158af67640092dae4fcaf2aa7cd4fc34ab3
  rename src/com/android/settings/{development => display}/OverlayCategoryPreferenceController.java (92%)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 89ef336952..3e5070cb31 100644
+index 2dd4133389..f6b4094b0b 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10085,6 +10085,8 @@
+@@ -10082,6 +10082,8 @@
  
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the settings category for theme overlays. -->
      <string name="theme_customization_category">Theming</string>
@@ -147,5 +147,5 @@ index 6e0b2d00f6..6a20e3aac3 100644
 -
  }
 -- 
-2.25.1
+2.17.1
 

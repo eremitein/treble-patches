@@ -1,7 +1,7 @@
-From 0eae745335981b1bf12003dbbdd109a944671bbd Mon Sep 17 00:00:00 2001
+From fbdb3d7afe9340d41d56bfef5f073920733418f6 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 24 Apr 2019 20:09:53 +0200
-Subject: [PATCH 038/143] Fix backlight on S10*. Add an additional property to
+Subject: [PATCH 038/145] Fix backlight on S10*. Add an additional property to
  check, so testers can try it more easily
 
 ---
@@ -24,5 +24,5 @@ index 31033d57616..feba6bf8205 100644
                          int newBrightness = brightness * 100;
                          if(SystemProperties.getBoolean("persist.sys.samsung.full_brightness", false)) {
 -- 
-2.25.1
+2.17.1
 

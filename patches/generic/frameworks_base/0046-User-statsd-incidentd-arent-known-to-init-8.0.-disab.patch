@@ -1,7 +1,7 @@
-From 2c494e3ca4b3d92d810f2d519a75cceb37fe386f Mon Sep 17 00:00:00 2001
+From 802a95ead00be1022903e2086326072dab27f759 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 12 Aug 2019 23:10:21 +0200
-Subject: [PATCH 046/143] User statsd/incidentd arent known to init 8.0.
+Subject: [PATCH 046/145] User statsd/incidentd arent known to init 8.0.
  disable those services
 
 Change-Id: I074654e194f764ffbc6961ff0ae304e36a9b5d1e
@@ -61,5 +61,5 @@ index a98ecd586b4..564cf98d0a9 100644
  on post-fs-data
      # Create directory for statsd
 -- 
-2.25.1
+2.17.1
 

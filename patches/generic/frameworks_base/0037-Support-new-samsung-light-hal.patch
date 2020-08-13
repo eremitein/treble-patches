@@ -1,7 +1,7 @@
-From 85ecf2b0bcb171e0ccf75a6a7d826d274ab159c6 Mon Sep 17 00:00:00 2001
+From 21d949422ac9eddcd32d8c448777aa313c05e9d4 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 24 Mar 2019 23:05:14 +0100
-Subject: [PATCH 037/143] Support new samsung light hal
+Subject: [PATCH 037/145] Support new samsung light hal
 
 Change-Id: I88ca834894320129737b4e31fa8f7e5ee918889a
 ---
@@ -66,5 +66,5 @@ index 35d8219651d..20de7985d1d 100644
      Type type = static_cast<Type>(light);
      LightState state = constructState(
 -- 
-2.25.1
+2.17.1
 

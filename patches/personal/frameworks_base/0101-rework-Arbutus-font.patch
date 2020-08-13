@@ -1,7 +1,7 @@
-From 045873bedbb9e6f8d99ca32d817677a5766143b8 Mon Sep 17 00:00:00 2001
+From c39d927d9f0ef70ed5076c2289a1c34256d6b2b0 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 19:55:56 +0200
-Subject: [PATCH 101/143] rework Arbutus font
+Subject: [PATCH 101/145] rework Arbutus font
 
 	modified:   data/fonts/fonts.xml
 	modified:   packages/overlays/FontArbutusOverlay/AndroidManifest.xml
@@ -53,5 +53,5 @@ index 3b5224e8ae8..253e4a12c0e 100644
 +    <string name="config_headlineFontFamilyMedium" translatable="false">arbutus-slab-bold</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

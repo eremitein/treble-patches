@@ -1,7 +1,7 @@
-From 98f83d6a944bcc021c15befa200a8df1deaa5dee Mon Sep 17 00:00:00 2001
+From 59e7fc4ab48facf3ee604f6e22c2b0650c3f8f37 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 9 Apr 2020 13:12:23 +0300
-Subject: [PATCH 24/28] Clean up running services fragment layout
+Subject: [PATCH 24/30] Clean up running services fragment layout
 
   * from
   https://github.com/crdroidandroid/android_packages_apps_Settings/commit/5e4dfc9b70add7af98eb228e4e360a0fd2e2b253
@@ -195,5 +195,5 @@ index 5491ad14c6..8a8ec65e99 100644
          ActivityManager.MemoryInfo memInfo = new ActivityManager.MemoryInfo();
          mAm.getMemoryInfo(memInfo);
 -- 
-2.25.1
+2.17.1
 

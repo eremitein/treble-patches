@@ -1,0 +1,26 @@
+From 308491df6912e969d0f13cf4c37ba8f8ef1061af Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 13 Aug 2020 12:09:39 -0400
+Subject: [PATCH 6/6] set build name
+
+Change-Id: Ib86bff4571144f22b63d65324d21b5f333a0ee78
+---
+ config/common.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/config/common.mk b/config/common.mk
+index 30181450..5474d4a5 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -263,7 +263,7 @@ else
+         ifeq ($(LINEAGE_VERSION_APPEND_TIME_OF_DAY),true)
+             LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d_%H%M%S)-$(LINEAGE_BUILDTYPE)$(LINEAGE_EXTRAVERSION)-$(LINEAGE_BUILD)
+         else
+-            LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(LINEAGE_BUILDTYPE)$(LINEAGE_EXTRAVERSION)-$(LINEAGE_BUILD)
++            LINEAGE_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date -u +%Y%m%d)-$(LINEAGE_BUILDTYPE)$(LINEAGE_EXTRAVERSION)-GSI
+         endif
+     else
+         ifeq ($(LINEAGE_VERSION_APPEND_TIME_OF_DAY),true)
+-- 
+2.17.1
+

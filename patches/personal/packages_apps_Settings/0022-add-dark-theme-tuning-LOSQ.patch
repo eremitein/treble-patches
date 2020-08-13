@@ -1,7 +1,7 @@
-From 87385792ecca85df7ec71e22878d915cb2aad908 Mon Sep 17 00:00:00 2001
+From 7f4d22b2c652a79ab6ca6057ecb697d155e9ab66 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 12 Apr 2020 00:31:56 +0300
-Subject: [PATCH 22/28] add dark theme tuning (LOSQ)
+Subject: [PATCH 22/30] add dark theme tuning (LOSQ)
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -15,10 +15,10 @@ Change-Id: Ic8cf4c458a37a384afb46faa9360ff0d103f0ada
  3 files changed, 7 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 910f067e8f..1573709044 100644
+index 6ebe990c02..a2052e3fb1 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10085,6 +10085,8 @@
+@@ -10082,6 +10082,8 @@
  
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the settings category for theme overlays. -->
      <string name="theme_customization_category">Theming</string>
@@ -55,5 +55,5 @@ index 0395556852..d71c51e0da 100644
      }
  
 -- 
-2.25.1
+2.17.1
 

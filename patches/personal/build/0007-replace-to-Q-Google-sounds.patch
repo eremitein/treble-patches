@@ -1,4 +1,4 @@
-From 8e4dac32e6aebfffc47b4ddbec115863128274eb Mon Sep 17 00:00:00 2001
+From b2c177d4f829a66b293d54e52f9b702100358e34 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 8 Feb 2020 16:39:09 +0200
 Subject: [PATCH 07/10] replace to Q Google sounds
@@ -101,5 +101,5 @@ index 70da48b25..20039b90e 100644
  
  endif
 -- 
-2.25.1
+2.17.1
 

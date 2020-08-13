@@ -1,7 +1,7 @@
-From a8ab6a710b58bc9e2510a8a7784770e367fc0495 Mon Sep 17 00:00:00 2001
+From f57cc5d85504e150a451567595f901795e2c7610 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 19:20:17 +0200
-Subject: [PATCH 087/143] add Pixel accent overlay
+Subject: [PATCH 087/145] add Pixel accent overlay
 
 	new file:   packages/overlays/AccentColorPixelOverlay/Android.mk
 	new file:   packages/overlays/AccentColorPixelOverlay/AndroidManifest.xml
@@ -158,5 +158,5 @@ index cb2afcb62a2..6a1718cf7f2 100644
  	DisplayCutoutEmulationCornerOverlay \
  	DisplayCutoutEmulationDoubleOverlay \
 -- 
-2.25.1
+2.17.1
 

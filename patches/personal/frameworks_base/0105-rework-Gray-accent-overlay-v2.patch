@@ -1,7 +1,7 @@
-From cf27d8e382a4274b50c505fd7f106f9c4dd5fb49 Mon Sep 17 00:00:00 2001
+From d2e9dd98c7d8f5abf8ab2f2a584445a415af05be Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 21:14:52 +0200
-Subject: [PATCH 105/143] rework Gray accent overlay v2
+Subject: [PATCH 105/145] rework Gray accent overlay v2
 
 	modified:   packages/overlays/AccentColorGrayOverlay/res/values/colors_device_defaults.xml
 ---
@@ -22,5 +22,5 @@ index 77e57e86e4e..2d0df98bf17 100644
 +    <color name="accent_device_default_dark">#808080</color>
  </resources>
 -- 
-2.25.1
+2.17.1
 

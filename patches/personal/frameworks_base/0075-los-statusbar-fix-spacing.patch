@@ -1,7 +1,7 @@
-From c529fae774bda470fd00febf5dfcb7b442b05530 Mon Sep 17 00:00:00 2001
+From 9291b2ba409a8253cbf66cb1c30a31b12fb9576a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 22:35:26 +0200
-Subject: [PATCH 075/143] los statusbar fix spacing
+Subject: [PATCH 075/145] los statusbar fix spacing
 
 	modified:   packages/SystemUI/src/com/android/systemui/statusbar/StatusBarIconView.java
 ---
@@ -22,5 +22,5 @@ index f4af9ae21b7..22cd61ae157 100644
      private final int ANIMATION_DURATION_FAST = 100;
  
 -- 
-2.25.1
+2.17.1
 

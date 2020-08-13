@@ -1,7 +1,7 @@
-From b8d9ffd3741a9547daa779e897998a8fe28a9089 Mon Sep 17 00:00:00 2001
+From fcfb5f370cee319e7aac14da02d0ab0c96acce9f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 21 May 2020 16:12:42 +0200
-Subject: [PATCH 071/143] On MIUI12 vendor, we don't want our own diming
+Subject: [PATCH 071/145] On MIUI12 vendor, we don't want our own diming
 
 ---
  .../com/android/server/biometrics/fingerprint/FacolaView.java  | 3 +--
@@ -29,5 +29,5 @@ index d3d58aff6c0..8afbbc0dce0 100644
                  @Override
                  public void onEvent(int event, String path) {
 -- 
-2.25.1
+2.17.1
 

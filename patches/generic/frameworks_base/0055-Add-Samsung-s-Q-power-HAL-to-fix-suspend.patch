@@ -1,7 +1,7 @@
-From 426676bb456355b12fce3d50961b2f8ff1964495 Mon Sep 17 00:00:00 2001
+From 4d45a2cafdb1ffa524956b4e263761f49daf3e1d Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 22:14:12 +0100
-Subject: [PATCH 055/143] Add Samsung's Q power HAL to fix suspend
+Subject: [PATCH 055/145] Add Samsung's Q power HAL to fix suspend
 
 Change-Id: I1edd4de9932ab089b7051f1329f60c15b9d99aaa
 ---
@@ -86,5 +86,5 @@ index 211ea50ddc9..bf0599fe18a 100644
  
  static void nativeSetAutoSuspend(JNIEnv* /* env */, jclass /* clazz */, jboolean enable) {
 -- 
-2.25.1
+2.17.1
 

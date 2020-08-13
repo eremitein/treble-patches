@@ -1,7 +1,7 @@
-From 163967f0053f624f07629c8d7cff102c4c4112af Mon Sep 17 00:00:00 2001
+From 2d2e7a0a60c320f1807ade5cd0ee9fdf4e8a971e Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 29 Aug 2018 11:05:54 +0200
-Subject: [PATCH 033/143] Add a property to override pre-o max aspect ratio
+Subject: [PATCH 033/145] Add a property to override pre-o max aspect ratio
 
 Change-Id: Id001a19fab7680feda841202b6e91c490d0d5ffa
 ---
@@ -35,5 +35,5 @@ index 55e8e19fd27..7107bba3292 100644
          final float minAspectRatio = info.minAspectRatio;
  
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From beddc22aa9cf8749ab5dc1d52bf51c7ac04aac45 Mon Sep 17 00:00:00 2001
+From 0a6307952d918c9f4d83b0d0177f4c2ff137cdc4 Mon Sep 17 00:00:00 2001
 From: gudenau <gudenau>
 Date: Tue, 25 Sep 2018 09:44:26 +0200
-Subject: [PATCH 015/143] core: Add support for MicroG
+Subject: [PATCH 015/145] core: Add support for MicroG
 
 -fake signatures, enabled per app by dynamic permission
 
@@ -102,5 +102,5 @@ index 179abe958b1..65c4c4cdbdd 100644
      public void checkPackageStartable(String packageName, int userId) {
          final int callingUid = Binder.getCallingUid();
 -- 
-2.25.1
+2.17.1
 

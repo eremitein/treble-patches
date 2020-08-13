@@ -1,7 +1,7 @@
-From c774c48e6f6478dc7619fb085bc709e25684e593 Mon Sep 17 00:00:00 2001
+From e09e841692cc6c703a09f8ae574488c869e812e5 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 14 Oct 2019 23:50:46 +0200
-Subject: [PATCH 049/143] Scan /system/overlay and fix support for properties
+Subject: [PATCH 049/145] Scan /system/overlay and fix support for properties
  in idmap2
 
 Change-Id: Ic04b5b1cc7b5d8cee67b1e2fdaa8aa793546b6d6
@@ -162,5 +162,5 @@ index 65c4c4cdbdd..2d25c6bdd62 100644
                      mDefParseFlags
                      | PackageParser.PARSE_IS_SYSTEM_DIR,
 -- 
-2.25.1
+2.17.1
 

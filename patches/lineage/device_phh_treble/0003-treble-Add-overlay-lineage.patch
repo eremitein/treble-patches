@@ -1,4 +1,4 @@
-From 97ba68e0d8e0b3846cb9d5b92a93a75864d9a3d1 Mon Sep 17 00:00:00 2001
+From bc7d8ef16de552b9ef79129086d220163655667a Mon Sep 17 00:00:00 2001
 From: AndyCGYan <GeForce8800Ultra@gmail.com>
 Date: Mon, 15 Jul 2019 10:43:52 +0000
 Subject: [PATCH 03/12] treble: Add overlay-lineage
@@ -11,7 +11,7 @@ Change-Id: I9d313b1488d98acc7cf37d23820946ee99745426
  create mode 100644 overlay-lineage/lineage-sdk/lineage/res/res/values/config.xml
 
 diff --git a/base.mk b/base.mk
-index a8b81e5..97f748c 100644
+index cad14e4..b11fde5 100644
 --- a/base.mk
 +++ b/base.mk
 @@ -12,7 +12,9 @@ PRODUCT_COPY_FILES += \
@@ -113,5 +113,5 @@ index 0000000..8df673a
 +    <integer name="config_deviceHardwareWakeKeys">127</integer>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

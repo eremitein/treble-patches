@@ -1,7 +1,7 @@
-From f20f92cd6b09bbae3dfcaee4924b414110589969 Mon Sep 17 00:00:00 2001
+From e6b2dd33bdf349d107ecea2330cd1b9fb25e11a5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 10 Jul 2020 06:40:36 +0300
-Subject: [PATCH 141/143] rework speed UI overlays
+Subject: [PATCH 141/145] rework speed UI overlays
 
 ---
  core/res/res/values/config.xml                |  4 +++
@@ -681,5 +681,5 @@ index 00000000000..a68a9303609
 +    <bool name="config_supportsRoundedCornersOnWindows">false</bool>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

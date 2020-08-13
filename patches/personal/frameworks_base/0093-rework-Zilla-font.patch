@@ -1,7 +1,7 @@
-From aa4b988b5abc7e666ef0e408328fa4efed353dc0 Mon Sep 17 00:00:00 2001
+From 72ac90dbfbce514eb42213f0ffac594b8a13809c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 08:24:29 +0200
-Subject: [PATCH 093/143] rework Zilla font
+Subject: [PATCH 093/145] rework Zilla font
 
 	modified:   data/fonts/fonts.xml
 	modified:   packages/overlays/FontZillaOverlay/AndroidManifest.xml
@@ -54,5 +54,5 @@ index a7308429fe2..dfe37199301 100644
 +    <string name="config_headlineFontFamilyMedium" translatable="false">zilla-slab-bold</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 30220ddb2896f342c68da30f6dd7b596a1c0ae5d Mon Sep 17 00:00:00 2001
+From 617b7ba6894acfe868599b2ffc3e9446c1dd9a77 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 17:50:51 +0200
-Subject: [PATCH 099/143] rework fonts xml v2
+Subject: [PATCH 099/145] rework fonts xml v2
 
 	modified:   data/fonts/fonts.xml
 ---
@@ -32,5 +32,5 @@ index da249b27ded..08d19c7f505 100644
  
      <!-- fallback fonts -->
 -- 
-2.25.1
+2.17.1
 

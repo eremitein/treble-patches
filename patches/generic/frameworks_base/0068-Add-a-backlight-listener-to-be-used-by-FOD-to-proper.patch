@@ -1,7 +1,7 @@
-From 7220850ee43369622814b9e8d898d5c5732b4b6d Mon Sep 17 00:00:00 2001
+From 66bfc305a4248b4c3d14341d882bcd6c7d83d117 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 20 May 2020 17:28:26 +0200
-Subject: [PATCH 068/143] Add a backlight listener, to be used by FOD to
+Subject: [PATCH 068/145] Add a backlight listener, to be used by FOD to
  properly set dim
 
 ---
@@ -36,5 +36,5 @@ index f9ac8db09ea..6b0dbc336bb 100644
                  if(mId == 0) {
                      String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
 -- 
-2.25.1
+2.17.1
 

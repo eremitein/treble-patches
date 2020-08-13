@@ -1,7 +1,7 @@
-From ac6f8b2f3b56fc66557bdd0ff821e9d051ad7d9d Mon Sep 17 00:00:00 2001
+From b273832bc9646b2fb429fefb1f2f4f2520400d75 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 16:51:46 +0200
-Subject: [PATCH 103/143] add GoogleSans font normally
+Subject: [PATCH 103/145] add GoogleSans font normally
 
 	modified:   data/fonts/fonts.xml
 ---
@@ -76,5 +76,5 @@ index 1b07b374ce7..e7ebf903e5c 100644
      <alias name="sans-serif-condensed-light" to="sans-serif-condensed" weight="300" />
      <alias name="sans-serif-condensed-medium" to="sans-serif-condensed" weight="500" />
 -- 
-2.25.1
+2.17.1
 

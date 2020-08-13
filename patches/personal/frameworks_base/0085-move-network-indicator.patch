@@ -1,7 +1,7 @@
-From 79e74c5475a0b4988c7e6a37098cc19a278a2de9 Mon Sep 17 00:00:00 2001
+From 579122369db49d45d555f66c26601431ccd127de Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 22 Feb 2020 18:53:10 +0200
-Subject: [PATCH 085/143] move network indicator
+Subject: [PATCH 085/145] move network indicator
 
 	modified:   packages/SystemUI/res/layout/status_bar.xml
 	modified:   packages/SystemUI/res/layout/system_icons.xml
@@ -65,5 +65,5 @@ index 3e638599031..ed0a6f66597 100644
          android:layout_width="0dp"
          android:layout_weight="1"
 -- 
-2.25.1
+2.17.1
 

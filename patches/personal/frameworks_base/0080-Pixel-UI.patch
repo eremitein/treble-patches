@@ -1,7 +1,7 @@
-From 0db3932e121c785382e9b9b59b7b4493f51da4a0 Mon Sep 17 00:00:00 2001
+From fd58ab31dade232c2358540e38b7bac937d83e9e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:55:43 +0200
-Subject: [PATCH 080/143] Pixel UI
+Subject: [PATCH 080/145] Pixel UI
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/9f98b8ef947fcc6f7eea6690fd524807495367fb
@@ -147,5 +147,5 @@ index d0fde7181c2..3a78e5d47b3 100644
      <!-- How much into a DisplayCutout's bounds we can go, on each side -->
      <dimen name="display_cutout_margin_consumption">0px</dimen>
 -- 
-2.25.1
+2.17.1
 

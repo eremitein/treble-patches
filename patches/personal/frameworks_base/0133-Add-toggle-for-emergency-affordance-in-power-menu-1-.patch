@@ -1,7 +1,7 @@
-From 0a67af5bc50a49c6218ef0e38cf209782acd6c9d Mon Sep 17 00:00:00 2001
+From c6815c0be8b1f16c725da15ccce63e4b3cd191fc Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 30 Apr 2020 14:49:12 +0300
-Subject: [PATCH 133/143] Add toggle for emergency affordance in power menu
+Subject: [PATCH 133/145] Add toggle for emergency affordance in power menu
  (1/2)
 
   * based on
@@ -73,5 +73,5 @@ index 9cb2441d566..6bdc2ceef0b 100644
                  () -> mDeviceProvisioned, () -> mKeyguardShowing);
  
 -- 
-2.25.1
+2.17.1
 

@@ -1,4 +1,4 @@
-From 12c16e6a4809b9db63da0dc82b7301d1bc45687d Mon Sep 17 00:00:00 2001
+From 4f43156b506de915d89e84eea19bb447c261a1d5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 11 Jan 2020 13:17:06 +0200
 Subject: [PATCH 09/12] selinux: allow system_app read selinux status (for
@@ -21,5 +21,5 @@ index 0000000..3ef0c48
 +# tcontext=u:object_r:selinuxfs:s0 tclass=file permissive=0
 +allow system_app selinuxfs:file r_file_perms;
 -- 
-2.25.1
+2.17.1
 

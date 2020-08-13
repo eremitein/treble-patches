@@ -1,7 +1,7 @@
-From a443bd2fc4f48c5df04c572ef30e8d53477a46dc Mon Sep 17 00:00:00 2001
+From 8b6b44e1adec5f876f7847058ad9c5b6f1312ae9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 17:51:57 +0200
-Subject: [PATCH 100/143] rework Simple Day font overlay
+Subject: [PATCH 100/145] rework Simple Day font overlay
 
 	modified:   packages/overlays/FontSimpleDayOverlay/AndroidManifest.xml
 	modified:   packages/overlays/FontSimpleDayOverlay/res/values/config.xml
@@ -39,5 +39,5 @@ index ef1853ce3b9..0ad50d70d8c 100644
 +    <string name="config_headlineFontFamilyMedium" translatable="false">simple-day-bold</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

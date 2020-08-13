@@ -1,7 +1,7 @@
-From 0643e758b1fd2fe15d79b2dbb2148840896dd1f3 Mon Sep 17 00:00:00 2001
+From 3300df385d92c86efa70be997a299039a37ccf6b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 22 Jul 2020 03:16:09 +0300
-Subject: [PATCH 142/143] implement header padding
+Subject: [PATCH 142/145] implement header padding
 
 ---
  core/res/res/values/dimens.xml | 2 ++
@@ -21,5 +21,5 @@ index 12e3ba6df13..9ad8df18d56 100644
      <!-- Default radius of the software rounded corners. -->
      <dimen name="rounded_corner_radius">0dp</dimen>
 -- 
-2.25.1
+2.17.1
 

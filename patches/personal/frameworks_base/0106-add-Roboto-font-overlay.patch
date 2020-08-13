@@ -1,7 +1,7 @@
-From 188a76ef9c0cfcf4d1a9d8e5fe3d2d3f6311edfc Mon Sep 17 00:00:00 2001
+From 2b9ddeadfa82e5f9d43b54bdc4b131d04494833d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 26 Feb 2020 21:17:45 +0200
-Subject: [PATCH 106/143] add Roboto font overlay
+Subject: [PATCH 106/145] add Roboto font overlay
 
 	new file:   packages/overlays/FontRobotoOverlay/Android.mk
 	new file:   packages/overlays/FontRobotoOverlay/AndroidManifest.xml
@@ -152,5 +152,5 @@ index 00000000000..e35613d1bef
 +    <string name="font_roboto_overlay" translatable="false">Roboto</string>
 +</resources>
 -- 
-2.25.1
+2.17.1
 

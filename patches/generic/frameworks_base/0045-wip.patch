@@ -1,7 +1,7 @@
-From a5dab321fb87b5170970100d8a2be212d172ae01 Mon Sep 17 00:00:00 2001
+From 24d62691e15c71d3e874faa82b23566d6d10c0c0 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 24 Mar 2019 22:48:39 +0100
-Subject: [PATCH 045/143] wip
+Subject: [PATCH 045/145] wip
 
 Change-Id: I50fa9a7a670cef5b93fc4a3a027f1587b1214831
 ---
@@ -409,5 +409,5 @@ index 20de7985d1d..2b50d04233e 100644
  
      Type type = static_cast<Type>(light);
 -- 
-2.25.1
+2.17.1
 

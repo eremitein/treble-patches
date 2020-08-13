@@ -1,7 +1,7 @@
-From e6b6817173971aa44a03404c852be96ca1a7f1b9 Mon Sep 17 00:00:00 2001
+From 50ccbdfa4fd0f0f69c94969bb040f0666014be97 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 5 Apr 2020 16:32:46 +0200
-Subject: [PATCH 066/143] Always allow overriding the number of work profiles
+Subject: [PATCH 066/145] Always allow overriding the number of work profiles
 
 ---
  .../java/com/android/server/pm/UserManagerService.java | 10 ++--------
@@ -29,5 +29,5 @@ index 82bc41fcdcd..4a3da73cf42 100644
  
      @GuardedBy("mUsersLock")
 -- 
-2.25.1
+2.17.1
 

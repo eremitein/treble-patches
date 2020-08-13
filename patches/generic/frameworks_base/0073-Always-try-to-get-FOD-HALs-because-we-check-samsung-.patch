@@ -1,7 +1,7 @@
-From d11d4bbaa388de371c75de9c0e4a78a6c6514862 Mon Sep 17 00:00:00 2001
+From 5d1d3dd211597127b287dcf2d5bc92ee50320236 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 21 May 2020 18:42:20 +0200
-Subject: [PATCH 073/143] Always try to get FOD HALs, because we check samsung
+Subject: [PATCH 073/145] Always try to get FOD HALs, because we check samsung
  HAL later to compute width
 
 ---
@@ -80,5 +80,5 @@ index aeb81f5b7c9..3536093a4ee 100644
  
          if(mSamsungFingerprint3_0 != null || mSamsungFingerprint != null) {
 -- 
-2.25.1
+2.17.1
 

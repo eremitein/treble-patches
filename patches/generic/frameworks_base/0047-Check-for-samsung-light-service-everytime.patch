@@ -1,7 +1,7 @@
-From d2c2bd8b62116c267040a687b866b4c6dfea8c5a Mon Sep 17 00:00:00 2001
+From 4be9c27677c7bdef4c616f4be6c9237b5aab2f6f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 12 Sep 2019 20:38:08 +0200
-Subject: [PATCH 047/143] Check for samsung light service everytime
+Subject: [PATCH 047/145] Check for samsung light service everytime
 
 This is needed because it is possible sec light service isn't ready at
 that time.
@@ -27,5 +27,5 @@ index 2b50d04233e..a21c6e2c8ef 100644
  
      if(sSecHal != nullptr) {
 -- 
-2.25.1
+2.17.1
 

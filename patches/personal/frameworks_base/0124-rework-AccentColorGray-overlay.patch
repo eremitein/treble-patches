@@ -1,7 +1,7 @@
-From ba9b857ea6b6dd988dddb8899aa6486c0f849be4 Mon Sep 17 00:00:00 2001
+From aeb07d842bd3eeefca96c6c7de37af3cfee71a25 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 13 Apr 2020 02:39:04 +0300
-Subject: [PATCH 124/143] rework AccentColorGray overlay
+Subject: [PATCH 124/145] rework AccentColorGray overlay
 
 ---
  .../res/values/colors_device_defaults.xml                       | 2 +-
@@ -19,5 +19,5 @@ index 2d0df98bf17..30311cf3a4a 100644
 +    <color name="accent_device_default_dark">#bfc5cc</color>
  </resources>
 -- 
-2.25.1
+2.17.1
 

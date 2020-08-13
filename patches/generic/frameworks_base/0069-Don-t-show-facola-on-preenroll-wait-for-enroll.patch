@@ -1,7 +1,7 @@
-From 30095b781349af228ad69899163ecddf959b5c6f Mon Sep 17 00:00:00 2001
+From a81c364269738e49be4443d73e0a2e23a46d3caa Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 20 May 2020 17:39:50 +0200
-Subject: [PATCH 069/143] Don't show facola on preenroll, wait for enroll
+Subject: [PATCH 069/145] Don't show facola on preenroll, wait for enroll
 
 ---
  .../server/biometrics/fingerprint/FingerprintService.java     | 4 +---
@@ -44,5 +44,5 @@ index 1323c5ec0dd..c53607786df 100644
              return daemon.preEnroll();
          } catch (RemoteException e) {
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 2fcb2004ae496b2f06cb668910d0dfa562d33d30 Mon Sep 17 00:00:00 2001
+From 74fe930b4b48ec7eece73e48653d2fb6a7f6ab8c Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 10 Mar 2019 19:35:06 +0100
-Subject: [PATCH 036/143] Different value for astarqlte. Probably more devices
+Subject: [PATCH 036/145] Different value for astarqlte. Probably more devices
  to add later
 
 ---
@@ -29,5 +29,5 @@ index 15ab8cecfb5..31033d57616 100644
  				    fp.matches(".*(SC-0[23]K|SCV3[89]).*")) {
                          int newBrightness = brightness * 100;
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 2c784161be5eb40d87184bd73a4fafec7b47b7f6 Mon Sep 17 00:00:00 2001
+From 35a7dd106e0f91a6fbc5529b7d6982d08fba6519 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 23:19:32 +0100
-Subject: [PATCH 056/143] FacolaView: Support goodix ext and fix wrong forced
+Subject: [PATCH 056/145] FacolaView: Support goodix ext and fix wrong forced
  brightness
 
 ---
@@ -113,5 +113,5 @@ index 08436019bc9..651cc97be39 100644
          mParams.packageName = "android";
  
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 5ed7d3079da29298b316239eb160a20ce638072e Mon Sep 17 00:00:00 2001
+From f18741d51d563f34e6eb6c797028eb6be78facb9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:26:02 +0200
-Subject: [PATCH 006/143] Revert "FODCircleView: disable touch detection on
+Subject: [PATCH 006/145] Revert "FODCircleView: disable touch detection on
  screen off"
 
 This reverts commit 99264bd8b5829d3dbd785a896b8559db14aba5f0.
@@ -42,5 +42,5 @@ index 782805cdccf..260cb49887a 100644
              // Ignore show calls when Keyguard pin screen is being shown
              return;
 -- 
-2.25.1
+2.17.1
 
