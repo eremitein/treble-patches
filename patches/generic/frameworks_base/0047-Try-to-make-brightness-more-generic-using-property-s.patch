@@ -1,7 +1,7 @@
-From b53ee0aef9f450c5f344af2225a2ab92fc6aa326 Mon Sep 17 00:00:00 2001
+From 9e20dad0296f15b01897c1b0c0bc939bc5032e13 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 10 Jun 2018 22:54:55 +0200
-Subject: [PATCH 047/113] Try to make brightness more generic using property
+Subject: [PATCH 047/116] Try to make brightness more generic using property
  set by rw-system
 
 ---
@@ -27,5 +27,5 @@ index 39f646bb8b0..7e0e5575e75 100644
  
                      if(qcomExtendBrightness) {
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 30a0c6cad3adbb46cf1b40f45586b93364e8a375 Mon Sep 17 00:00:00 2001
+From 8a78496a3e89c52996a63f89e5e314e05dea8712 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 12 Aug 2019 23:08:26 +0200
-Subject: [PATCH 066/113] Add support for samsung touch proximity sensor as
+Subject: [PATCH 066/116] Add support for samsung touch proximity sensor as
  fallback to real proximity sensor
 
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 066/113] Add support for samsung touch proximity sensor as
  1 file changed, 14 insertions(+)
 
 diff --git a/services/core/java/com/android/server/display/DisplayPowerController.java b/services/core/java/com/android/server/display/DisplayPowerController.java
-index 10602539860..a943e6fee4f 100644
+index a76283b6045..78bab33f785 100644
 --- a/services/core/java/com/android/server/display/DisplayPowerController.java
 +++ b/services/core/java/com/android/server/display/DisplayPowerController.java
 @@ -527,6 +527,13 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
@@ -41,5 +41,5 @@ index 10602539860..a943e6fee4f 100644
                  boolean positive = distance >= 0.0f && distance < mProximityThreshold;
                  handleProximitySensorEvent(time, positive);
 -- 
-2.25.1
+2.17.1
 

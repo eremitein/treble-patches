@@ -1,7 +1,7 @@
-From 1fca24046bf7d6c04fd1a62e4ee7ed4b40ffa26f Mon Sep 17 00:00:00 2001
+From dcc7727da57d7f2404b3d5421e6cac28ed19279e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 11 Apr 2020 04:38:19 +0300
-Subject: [PATCH 110/113] rework systemUI for statusbar overlays
+Subject: [PATCH 110/116] rework systemUI for statusbar overlays
 
 	modified:   core/res/res/values/dimens.xml
 	modified:   packages/SystemUI/res/drawable/stat_sys_alarm.xml
@@ -433,5 +433,5 @@ index 3a78e5d47b3..9a1f27c3b79 100644
      <!-- Padding between signal cluster and battery icon -->
      <dimen name="signal_cluster_battery_padding">2dp</dimen>
 -- 
-2.25.1
+2.17.1
 

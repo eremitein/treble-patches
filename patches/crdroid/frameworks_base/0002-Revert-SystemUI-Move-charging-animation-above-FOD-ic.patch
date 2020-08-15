@@ -1,7 +1,7 @@
-From f7b873f58be392e81322dbde14b96bfb60364412 Mon Sep 17 00:00:00 2001
+From 6b07f1830762179c652ca8c453a05fc3eb7e49a8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 06:32:40 +0300
-Subject: [PATCH 002/113] Revert "SystemUI: Move charging animation above FOD
+Subject: [PATCH 002/116] Revert "SystemUI: Move charging animation above FOD
  icon if In-display fingerprint is active"
 
 This reverts commit b391f6d321663f13bbcd3952cdbc441449915e80.
@@ -126,5 +126,5 @@ index 0b78f943611..f0164df175a 100644
      private void animateText(KeyguardIndicationTextView textView, String indication) {
          int yTranslation = mContext.getResources().getInteger(
 -- 
-2.25.1
+2.17.1
 

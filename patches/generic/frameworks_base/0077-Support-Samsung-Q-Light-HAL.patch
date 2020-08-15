@@ -1,7 +1,7 @@
-From 96d5dd4de2fc2068c6f3b4560d1eff8b9086fc6f Mon Sep 17 00:00:00 2001
+From f70849900b974aa08d261b3f710dca91dbff2a3b Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 16:38:44 +0100
-Subject: [PATCH 077/113] Support Samsung Q Light HAL
+Subject: [PATCH 077/116] Support Samsung Q Light HAL
 
 Change-Id: Ic5745eb115a14de348391e69ed6bf3c2a24b157e
 ---
@@ -197,7 +197,7 @@ index 00000000000..d8645012e24
 +    ],
 +}
 diff --git a/services/core/jni/com_android_server_lights_LightsService.cpp b/services/core/jni/com_android_server_lights_LightsService.cpp
-index a21c6e2c8ef..dedc7734131 100644
+index e3c5a74c2ca..998ea7feb1a 100644
 --- a/services/core/jni/com_android_server_lights_LightsService.cpp
 +++ b/services/core/jni/com_android_server_lights_LightsService.cpp
 @@ -25,6 +25,8 @@
@@ -471,5 +471,5 @@ index 00000000000..a21c6e2c8ef
 +
 +};
 -- 
-2.25.1
+2.17.1
 

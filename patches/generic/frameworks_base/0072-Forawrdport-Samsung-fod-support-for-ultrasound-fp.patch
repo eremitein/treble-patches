@@ -1,7 +1,7 @@
-From 6498998ca15a696cda98df62ce7a9dd00a9cc1d7 Mon Sep 17 00:00:00 2001
+From a8d3a64d3ec71d3ed94b7a43123f48943cab5eb5 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 12 Sep 2019 20:39:50 +0200
-Subject: [PATCH 072/113] Forawrdport Samsung "fod" support for ultrasound fp
+Subject: [PATCH 072/116] Forawrdport Samsung "fod" support for ultrasound fp
 
 Change-Id: I9f787a01dab922cd94f9e552a6f3f53a00ca8448
 ---
@@ -117,5 +117,5 @@ index 8829bcb7e48..f61582990cf 100644
 +
  }
 -- 
-2.25.1
+2.17.1
 

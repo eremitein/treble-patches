@@ -1,7 +1,7 @@
-From 2c5c850b1f5a4ab922d17cfa4f9e5fbafc8e00e2 Mon Sep 17 00:00:00 2001
+From 968bc5be262e12e00b07d66a5ca13fe0bce50aff Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 07:47:04 +0300
-Subject: [PATCH 017/113] Revert "FODCircleView: Separate FODAnimation into
+Subject: [PATCH 017/116] Revert "FODCircleView: Separate FODAnimation into
  it's own class"
 
 This reverts commit 82b8e04b75d858a44002593a4ad471f8ed4f0b6f.
@@ -295,5 +295,5 @@ index 2e7e71a32a3..5fe2d5bf2f7 100644
 +    }
 +}
 -- 
-2.25.1
+2.17.1
 

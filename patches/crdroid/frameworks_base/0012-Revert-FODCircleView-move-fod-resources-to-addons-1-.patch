@@ -1,7 +1,7 @@
-From cd3c4d7a7dc2cf533d5c30e487872cb789804066 Mon Sep 17 00:00:00 2001
+From 7973a8d4da07e9c6beb06996bf64dddd0afe0e92 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 07:45:34 +0300
-Subject: [PATCH 012/113] Revert "FODCircleView: move fod resources to addons
+Subject: [PATCH 012/116] Revert "FODCircleView: move fod resources to addons
  [1/2]"
 
 This reverts commit f580c30c710ec9d7f5aadfb26519cabab286a20d.
@@ -81,5 +81,5 @@ index 053052fc92c..3f83bc59449 100644
  
          dispatchRelease();
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From c5566aaf896609dae5da5431113042b4f365317d Mon Sep 17 00:00:00 2001
+From 4133d222b91f664e61d6a6b5d706f13646981f84 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 2 Mar 2020 21:13:36 +0100
-Subject: [PATCH 085/113] Add support for samsung optical under-display
+Subject: [PATCH 085/116] Add support for samsung optical under-display
  fingerprint
 
 ---
@@ -82,5 +82,5 @@ index 0fb4254eb60..edd13988e49 100644
              canvas.drawCircle(mW/2, mH/2, (float) (mW/2.0f), this.mPaintShow);
          }
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 9f346eb35ee06b68227c7f4b3b593b53af9fdd41 Mon Sep 17 00:00:00 2001
+From d19cf3bed5beca2bc8e3575df4c415bb4ab983e4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 06:34:23 +0300
-Subject: [PATCH 005/113] Revert "FODCircleView: Make FOD icon dimming
+Subject: [PATCH 005/116] Revert "FODCircleView: Make FOD icon dimming
  optional"
 
 This reverts commit efdcb03c6e18bc7a83fb2a973baea6de66347f45.
@@ -26,7 +26,7 @@ index 42d14636dab..48952601fa7 100644
      <bool name="config_hasAlertSlider">false</bool>
      
 diff --git a/core/res/res/values/cr_symbols.xml b/core/res/res/values/cr_symbols.xml
-index 15ee386d68b..64c79464e7a 100644
+index 9152c36cfd1..71c7e3cfb10 100644
 --- a/core/res/res/values/cr_symbols.xml
 +++ b/core/res/res/values/cr_symbols.xml
 @@ -165,9 +165,6 @@
@@ -70,5 +70,5 @@ index 4baf495b560..c604914e2c6 100644
          } else {
              setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
 -- 
-2.25.1
+2.17.1
 

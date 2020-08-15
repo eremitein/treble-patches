@@ -1,7 +1,7 @@
-From bf2e29f1ed646bdababfbfe6aef048f9d924209b Mon Sep 17 00:00:00 2001
+From ddc1cacfc351fdb60c755008361b0e43d3d6f5e3 Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Mon, 30 Mar 2020 10:07:00 +0000
-Subject: [PATCH 089/113] Support Huawei light HAL
+Subject: [PATCH 089/116] Support Huawei light HAL
 
 For https://github.com/phhusson/treble_experimentations/issues/1204
 
@@ -24,7 +24,7 @@ index 8f44be480c9..2bc6a15129f 100644
  
      static_libs: [
 diff --git a/services/core/jni/com_android_server_lights_LightsService.cpp b/services/core/jni/com_android_server_lights_LightsService.cpp
-index dedc7734131..7c2a0b6203d 100644
+index 998ea7feb1a..91e034a9f5c 100644
 --- a/services/core/jni/com_android_server_lights_LightsService.cpp
 +++ b/services/core/jni/com_android_server_lights_LightsService.cpp
 @@ -27,6 +27,7 @@
@@ -84,5 +84,5 @@ index dedc7734131..7c2a0b6203d 100644
      LightState state = constructState(
          colorARGB, flashMode, onMS, offMS, brightnessMode);
 -- 
-2.25.1
+2.17.1
 

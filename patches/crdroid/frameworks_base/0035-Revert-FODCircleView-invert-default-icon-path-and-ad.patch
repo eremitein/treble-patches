@@ -1,7 +1,7 @@
-From 1d805090c39c2bf04cb43210cae8ecd1bc4fd246 Mon Sep 17 00:00:00 2001
+From 2bc4a86f3d80028e3f94300941314e9c291eb405 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:06:03 +0300
-Subject: [PATCH 035/113] Revert "FODCircleView: invert default icon path and
+Subject: [PATCH 035/116] Revert "FODCircleView: invert default icon path and
  add #20000000 bg"
 
 This reverts commit ec3e5fed334852d28d6f13fc39837e293a2e009f.
@@ -112,5 +112,5 @@ index 14c24769588..8f0b352d318 100644
          invalidate();
  
 -- 
-2.25.1
+2.17.1
 

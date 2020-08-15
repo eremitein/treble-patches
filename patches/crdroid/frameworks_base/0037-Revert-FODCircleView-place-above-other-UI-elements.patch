@@ -1,7 +1,7 @@
-From b07b1aeca7eb2656c052226c8f9771c887443973 Mon Sep 17 00:00:00 2001
+From d4dc45647a71999033b3739258bdd2c933eb8531 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:06:07 +0300
-Subject: [PATCH 037/113] Revert "FODCircleView: place above other UI elements"
+Subject: [PATCH 037/116] Revert "FODCircleView: place above other UI elements"
 
 This reverts commit 71e6d97d3fe05ebd2fe3dc7f5eee846b13b88131.
 ---
@@ -22,5 +22,5 @@ index 01205a9d134..771d1f81e3d 100644
                  WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
                  WindowManager.LayoutParams.FLAG_DIM_BEHIND |
 -- 
-2.25.1
+2.17.1
 

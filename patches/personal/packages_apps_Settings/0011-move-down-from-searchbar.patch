@@ -1,7 +1,7 @@
-From 24b5daefbb51d43d1b95eb1de640d848142213aa Mon Sep 17 00:00:00 2001
+From 09b12a912a4871e0075198b3d5c895851f76892e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 07:54:22 +0200
-Subject: [PATCH 11/16] move down from searchbar
+Subject: [PATCH 11/17] move down from searchbar
 
 	modified:   res/values/dimens.xml
 ---
@@ -22,5 +22,5 @@ index d3ff2b3cad..0ac8b1436f 100755
      <dimen name="search_bar_height">48dp</dimen>
      <dimen name="search_bar_corner_radius">24dp</dimen>
 -- 
-2.25.1
+2.17.1
 

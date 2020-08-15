@@ -1,0 +1,28 @@
+From 4be4eb58aa0cad40f49debf3c160c4b94c56671e Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 15 Aug 2020 09:33:32 -0400
+Subject: [PATCH 5/7] disable dex preopt (crDroid)
+
+---
+ config/common.mk | 5 -----
+ 1 file changed, 5 deletions(-)
+
+diff --git a/config/common.mk b/config/common.mk
+index 53edba8c..d2960b15 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -176,11 +176,6 @@ PRODUCT_PACKAGES += \
+ endif
+ endif
+ 
+-# Dex preopt
+-PRODUCT_DEXPREOPT_SPEED_APPS += \
+-    SystemUI \
+-    Launcher3QuickStep
+-
+ PRODUCT_ENFORCE_RRO_EXCLUDED_OVERLAYS += vendor/lineage/overlay
+ DEVICE_PACKAGE_OVERLAYS += vendor/lineage/overlay/common
+ 
+-- 
+2.17.1
+

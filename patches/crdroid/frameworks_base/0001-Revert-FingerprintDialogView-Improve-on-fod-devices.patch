@@ -1,7 +1,7 @@
-From aa97625280598fb606a260b3f85f49ec80b6617d Mon Sep 17 00:00:00 2001
+From 39f452b60222a1ed611aabb50c15b423302df65d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 06:32:38 +0300
-Subject: [PATCH 001/113] Revert "FingerprintDialogView: Improve on fod
+Subject: [PATCH 001/116] Revert "FingerprintDialogView: Improve on fod
  devices"
 
 This reverts commit 8333ba1b77dd60ba275a2dea8d2a3a688432e8b1.
@@ -27,7 +27,7 @@ index d2398ee6ae5..c560d7e8f12 100644
                              android:gravity="center_horizontal"
                              android:accessibilityLiveRegion="polite"
 diff --git a/packages/SystemUI/res/values/cr_dimens.xml b/packages/SystemUI/res/values/cr_dimens.xml
-index f4e5239207a..4c027573940 100644
+index d24c6dda2c3..5e3796b705b 100644
 --- a/packages/SystemUI/res/values/cr_dimens.xml
 +++ b/packages/SystemUI/res/values/cr_dimens.xml
 @@ -120,14 +120,6 @@
@@ -117,5 +117,5 @@ index 8c4951c7512..183933eb395 100644
          if (newState == STATE_ERROR) {
              iconRes = R.drawable.fingerprint_dialog_fp_to_error;
 -- 
-2.25.1
+2.17.1
 

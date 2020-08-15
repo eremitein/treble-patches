@@ -1,7 +1,7 @@
-From 2b809671ce971c1f6f62bf3cbe2793b7c763658b Mon Sep 17 00:00:00 2001
+From 46f7e2b52844f44660afa7f19b7137615a1f8cc7 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:04:36 +0300
-Subject: [PATCH 022/113] Revert "FODCircleView: FOD pressed state [1/2]"
+Subject: [PATCH 022/116] Revert "FODCircleView: FOD pressed state [1/2]"
 
 This reverts commit 2ef5ed87559ecd50f4ba0d6784d1823955161857.
 ---
@@ -14,10 +14,10 @@ This reverts commit 2ef5ed87559ecd50f4ba0d6784d1823955161857.
  delete mode 100644 packages/SystemUI/res/drawable-nodpi/fod_icon_pressed_white.png
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index bfc345a72ec..2131222e237 100644
+index 7ee0f1ea23e..a79656da932 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5106,12 +5106,6 @@ public final class Settings {
+@@ -5094,12 +5094,6 @@ public final class Settings {
           */
          public static final String FOD_ICON_WALLPAPER_COLOR = "fod_icon_wallpaper_color";
  
@@ -327,5 +327,5 @@ index 0ade5e61199..e02233c7de9 100644
      }
  
 -- 
-2.25.1
+2.17.1
 

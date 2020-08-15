@@ -1,0 +1,25 @@
+From 014f22d83cf41ef25d999f4be0f62f62c99b21b0 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 27 May 2020 16:59:35 +0300
+Subject: [PATCH 2/6] fix gesture modes
+
+---
+ apps/SearchLauncher/overlay/res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/apps/SearchLauncher/overlay/res/values/config.xml b/apps/SearchLauncher/overlay/res/values/config.xml
+index c60600d..ce6f961 100644
+--- a/apps/SearchLauncher/overlay/res/values/config.xml
++++ b/apps/SearchLauncher/overlay/res/values/config.xml
+@@ -1,7 +1,7 @@
+ <?xml version="1.0" encoding="utf-8"?>
+ <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+     <!-- Whether or not swipe up gesture's opt-in setting is available on this device -->
+-    <bool name="config_swipe_up_gesture_setting_available">false</bool>
++    <bool name="config_swipe_up_gesture_setting_available">true</bool>
+ 
+     <!-- Component name for the activity that will be presenting the Recents UI, which will receive special permissions
+          for API related to fetching and presenting recent tasks. The default configuration uses Launcehr3QuickStep
+-- 
+2.17.1
+

@@ -1,0 +1,51 @@
+From a778dc3840efdd6589e110030f9e660c389df33a Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 15 Aug 2020 22:11:43 -0400
+Subject: [PATCH 17/17] rework custom overlays order
+
+---
+ res/values/strings.xml       | 2 +-
+ res/xml/display_settings.xml | 7 +++----
+ 2 files changed, 4 insertions(+), 5 deletions(-)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index db2a7cd5b8..a34476f1d1 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10074,7 +10074,7 @@
+     <string name="notification_log_details_ranking_none">Ranking object doesn\'t contain this key.</string>
+ 
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the settings category for theme overlays. -->
+-    <string name="theme_customization_category">Statusbar Theming</string>
++    <string name="theme_customization_category">Theming</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar icons spacing (e.g. set 2dp paddings). -->
+     <string name="theme_customization_statusbar_title">Status Bar spacing</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      SystemUI speed performance -->
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index a323f58409..46434ded3f 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -32,10 +32,6 @@
+         <intent android:action="com.android.intent.action.SHOW_BRIGHTNESS_DIALOG" />
+     </com.android.settingslib.RestrictedPreference>
+ 
+-        <ListPreference
+-            android:key="android.theme.customization.speedui"
+-            android:title="@string/theme_customization_speedui_title"/>
+-
+     <com.android.settings.display.darkmode.DarkModePreference
+         android:key="dark_ui_mode"
+         android:title="@string/dark_ui_mode"
+@@ -210,6 +206,9 @@
+         <ListPreference
+             android:key="android.theme.customization.statusbar"
+             android:title="@string/theme_customization_statusbar_title"/>
++        <ListPreference
++            android:key="android.theme.customization.speedui"
++            android:title="@string/theme_customization_speedui_title"/>
+     </PreferenceCategory>
+ 
+ </PreferenceScreen>
+-- 
+2.17.1
+

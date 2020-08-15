@@ -1,7 +1,7 @@
-From b14d85737c60e229ae1e9b38261e8bbdc410922d Mon Sep 17 00:00:00 2001
+From 92a7c5365f3afdec30a7b9a90725f25730cb8b20 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 06:34:26 +0300
-Subject: [PATCH 007/113] Revert "FODCircleView: Fix Wallpaper Color"
+Subject: [PATCH 007/116] Revert "FODCircleView: Fix Wallpaper Color"
 
 This reverts commit 05002f9fb379e6f525e4dd5a87191e984d1736a6.
 ---
@@ -78,5 +78,5 @@ index c604914e2c6..5c4eae0535a 100644
      }
  
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From e3ded76cfcf11e3e55b3c87a469ca5ceeb16dfcf Mon Sep 17 00:00:00 2001
+From 1eeba9c495e7115fb6191bac74b02f1d4041f19a Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 3 Jun 2020 12:54:20 +0300
-Subject: [PATCH 16/16] add translations for custom settings (crDroid)
+Subject: [PATCH 16/17] add translations for custom settings (crDroid)
 
   RU
   FR
@@ -35,5 +35,5 @@ index 6bdd49a183..225465725b 100644
 +    <string name="theme_customization_speedui_title">Ускорение интерфейса/Энергосбережение</string>
  </resources>
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From abf377464e335e456cdab23eefc7a935e9bd70ee Mon Sep 17 00:00:00 2001
+From 0a4bf03f41e22cab26254601c426645db1003783 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 8 Apr 2020 19:18:12 +0300
-Subject: [PATCH 108/113] enable limitation for sf alpha
+Subject: [PATCH 108/116] enable limitation for sf alpha
 
   * based on
   https://github.com/PixysOS-Devices/android_device_xiaomi_whyred/commit/803519b33c308fd9545c19078970c3608dc2edfb
@@ -25,5 +25,5 @@ index bbce9ad0402..daca72b9695 100644
      <!-- Default value used to block data calls if ims is not
           connected.  If you use the ims apn DCT will block
 -- 
-2.25.1
+2.17.1
 

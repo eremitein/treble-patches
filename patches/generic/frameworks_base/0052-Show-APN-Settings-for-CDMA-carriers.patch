@@ -1,7 +1,7 @@
-From a667c54186fe9b18d3669b7e2b9e6b71b5c00782 Mon Sep 17 00:00:00 2001
+From dc51b870486addb93e63006a386c2994d35ac629 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 6 Aug 2018 12:49:00 +0200
-Subject: [PATCH 052/113] Show APN Settings for CDMA carriers
+Subject: [PATCH 052/116] Show APN Settings for CDMA carriers
 
 ---
  telephony/java/android/telephony/CarrierConfigManager.java | 2 +-
@@ -21,5 +21,5 @@ index 21298c9e8eb..045cb7eee59 100644
          sDefaults.putBoolean(KEY_SMS_REQUIRES_DESTINATION_NUMBER_CONVERSION_BOOL, false);
          sDefaults.putBoolean(KEY_SUPPORT_EMERGENCY_SMS_OVER_IMS_BOOL, false);
 -- 
-2.25.1
+2.17.1
 

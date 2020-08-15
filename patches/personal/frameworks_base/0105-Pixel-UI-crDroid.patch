@@ -1,7 +1,7 @@
-From 208c8a8d50428c20973741af9286f45d5e7008f2 Mon Sep 17 00:00:00 2001
+From aa7d794c61d61b895dc2795370e15a1687a32111 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:55:43 +0200
-Subject: [PATCH 105/113] Pixel UI (crDroid)
+Subject: [PATCH 105/116] Pixel UI (crDroid)
 
   * from
   https://github.com/Havoc-OS/android_frameworks_base/commit/9f98b8ef947fcc6f7eea6690fd524807495367fb
@@ -147,5 +147,5 @@ index d0fde7181c2..3a78e5d47b3 100644
      <!-- How much into a DisplayCutout's bounds we can go, on each side -->
      <dimen name="display_cutout_margin_consumption">0px</dimen>
 -- 
-2.25.1
+2.17.1
 

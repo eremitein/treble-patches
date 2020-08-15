@@ -1,7 +1,7 @@
-From 229ea9df57b1e9cd7f864921188ba09876986378 Mon Sep 17 00:00:00 2001
+From 06335ae3c48e1fea1f1ceb5a152f5c96afd64c99 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 27 Oct 2019 16:27:55 +0100
-Subject: [PATCH 076/113] Fix crash on some devices by checking for null client
+Subject: [PATCH 076/116] Fix crash on some devices by checking for null client
 
 Some device get the following system_server crash:
  *** FATAL EXCEPTION IN SYSTEM PROCESS: main
@@ -31,5 +31,5 @@ index 2f951b21efd..9583ec19269 100644
  
          // All templates in the HAL for this user were enumerated
 -- 
-2.25.1
+2.17.1
 

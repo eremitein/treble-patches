@@ -1,7 +1,7 @@
-From 49225f25a994f5f55274a1d6c9d3853f7a904ce2 Mon Sep 17 00:00:00 2001
+From 9fe4477f1f995d5ecc9ea3cf3620c89e024db938 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 07:48:02 +0300
-Subject: [PATCH 018/113] Revert "FODCircleView: Recognizing FP animation
+Subject: [PATCH 018/116] Revert "FODCircleView: Recognizing FP animation
  effects [1/2]"
 
 This reverts commit 453f5427215fc5f4f0dd961607f6bffdf1b8ba55.
@@ -13,10 +13,10 @@ This reverts commit 453f5427215fc5f4f0dd961607f6bffdf1b8ba55.
  delete mode 100644 packages/SystemUI/res/drawable/fod_miui_pulse_recognizing_white_anim.xml
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index e3a9652c096..fd65ea68a57 100644
+index d2913db57e0..30153e35993 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5118,12 +5118,6 @@ public final class Settings {
+@@ -5106,12 +5106,6 @@ public final class Settings {
           */
          public static final String FOD_RECOGNIZING_ANIMATION = "fod_recognizing_animation";
  
@@ -132,5 +132,5 @@ index 5fe2d5bf2f7..d6aadfb1842 100644
          mAnimationPositionY = (int) Math.round(mDreamingOffsetY - (mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_size) / 2));
          mAnimParams.y = mAnimationPositionY;
 -- 
-2.25.1
+2.17.1
 

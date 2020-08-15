@@ -1,7 +1,7 @@
-From 50ce1e92c4d72415b933c559d402f63349978cbd Mon Sep 17 00:00:00 2001
+From 09d7eacc0b46561849fe94c87d99826dd6000f76 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 06:34:30 +0300
-Subject: [PATCH 010/113] Revert "FODCircleView: Improve position update"
+Subject: [PATCH 010/116] Revert "FODCircleView: Improve position update"
 
 This reverts commit 39943391379aa657272720d133a5266481fc154d.
 ---
@@ -68,5 +68,5 @@ index 376b0d50c14..4daaa8a21cd 100644
  
          mWindowManager.updateViewLayout(this, mParams);
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 1b77987898414ee934d7e8186311dfc8018e6c12 Mon Sep 17 00:00:00 2001
+From 8961fe2a417938ff54675226b046ec330b363465 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 21 Aug 2018 22:24:02 +0200
-Subject: [PATCH 054/113] Don't wake IR HAL to the infinity and beyond
+Subject: [PATCH 054/116] Don't wake IR HAL to the infinity and beyond
 
 ---
  services/core/java/com/android/server/ConsumerIrService.java | 5 -----
@@ -38,5 +38,5 @@ index 2ca348b3ae4..148fba9a688 100644
  }
  
 -- 
-2.25.1
+2.17.1
 

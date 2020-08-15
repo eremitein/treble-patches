@@ -1,7 +1,7 @@
-From 93ccaf1cc66ab60723d18352c546b20c9a030154 Mon Sep 17 00:00:00 2001
+From 5813cf1b238f82aa777ce6cbaa8921bf017006cb Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:03:59 +0300
-Subject: [PATCH 019/113] Revert "FODCircleView: Recognizing fingerprint
+Subject: [PATCH 019/116] Revert "FODCircleView: Recognizing fingerprint
  animation [1/2]"
 
 This reverts commit 3a1e41408290bbff92e6d9ff5ade95e3bd64ae93.
@@ -12,10 +12,10 @@ This reverts commit 3a1e41408290bbff92e6d9ff5ade95e3bd64ae93.
  3 files changed, 1 insertion(+), 96 deletions(-)
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index fd65ea68a57..bfc345a72ec 100644
+index 30153e35993..7ee0f1ea23e 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5112,12 +5112,6 @@ public final class Settings {
+@@ -5100,12 +5100,6 @@ public final class Settings {
           */
          public static final String FOD_PRESSED_STATE = "fod_pressed_state";
  
@@ -29,7 +29,7 @@ index fd65ea68a57..bfc345a72ec 100644
           * Whether to use the custom status bar header or not
           * @hide
 diff --git a/packages/SystemUI/res/values/cr_dimens.xml b/packages/SystemUI/res/values/cr_dimens.xml
-index 1bd76b22c1f..f212ad88363 100644
+index e79a68a6b33..b7c94bd01f1 100644
 --- a/packages/SystemUI/res/values/cr_dimens.xml
 +++ b/packages/SystemUI/res/values/cr_dimens.xml
 @@ -58,9 +58,6 @@
@@ -202,5 +202,5 @@ index d6aadfb1842..452825abd1d 100644
 -    }
 -}
 -- 
-2.25.1
+2.17.1
 

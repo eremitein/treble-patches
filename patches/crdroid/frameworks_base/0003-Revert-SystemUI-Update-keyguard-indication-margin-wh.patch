@@ -1,7 +1,7 @@
-From 9a89351bbf5b1f9104fe5930afe4f63745ae9e76 Mon Sep 17 00:00:00 2001
+From cac2fa68a3f24d7b17451f5fc8aeff998ffcc825 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 06:33:16 +0300
-Subject: [PATCH 003/113] Revert "SystemUI: Update keyguard indication margin
+Subject: [PATCH 003/116] Revert "SystemUI: Update keyguard indication margin
  when fod is in use"
 
 This reverts commit 9293606192803b4a8a6ecf1f72864f7f5a6d26a0.
@@ -24,7 +24,7 @@ index da22abd7684..061003a5650 100644
          android:orientation="vertical">
  
 diff --git a/packages/SystemUI/res/values/cr_dimens.xml b/packages/SystemUI/res/values/cr_dimens.xml
-index 4c027573940..fe0d055ba5c 100644
+index 5e3796b705b..d68f49d1287 100644
 --- a/packages/SystemUI/res/values/cr_dimens.xml
 +++ b/packages/SystemUI/res/values/cr_dimens.xml
 @@ -62,9 +62,6 @@
@@ -160,5 +160,5 @@ index ade7224de0c..c3244a4431d 100644
  
      public void updateLeftAffordance() {
 -- 
-2.25.1
+2.17.1
 

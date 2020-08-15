@@ -1,7 +1,7 @@
-From cfee0bb27dcce09d3a1ad6ce26753eee6a430b09 Mon Sep 17 00:00:00 2001
+From 16dd211694f7368bf00e77149e1e654644f94b3f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 20 May 2020 17:28:26 +0200
-Subject: [PATCH 092/113] Add a backlight listener, to be used by FOD to
+Subject: [PATCH 092/116] Add a backlight listener, to be used by FOD to
  properly set dim
 
 ---
@@ -36,5 +36,5 @@ index 0abdcc7cb6c..25be67ba517 100644
                  int color = brightness & 0x000000ff;
                  color = 0xff000000 | (color << 16) | (color << 8) | color;
 -- 
-2.25.1
+2.17.1
 

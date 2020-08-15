@@ -1,7 +1,7 @@
-From 86ae860cc7a8cc7c89d93837f5c01237490257a6 Mon Sep 17 00:00:00 2001
+From 8978bd2649d5b5dd83f3d5510efae1e59d29f8a2 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 16:58:38 +0100
-Subject: [PATCH 078/113] Add a nodim property for FacolaView
+Subject: [PATCH 078/116] Add a nodim property for FacolaView
 
 Set persist.sys.phh.nodim to true to remove diming/full brightness
 ---
@@ -42,5 +42,5 @@ index 4ff373a108d..08436019bc9 100644
  
          return true;
 -- 
-2.25.1
+2.17.1
 

@@ -1,0 +1,52 @@
+From b867d2476c4462ac7d564356e29cc05df20e51f3 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 9 Apr 2020 22:42:57 +0300
+Subject: [PATCH 115/116] dynamic QS Panel columns (crDroid)
+
+---
+ .../src/com/android/systemui/qs/customize/QSCustomizer.java  | 5 ++++-
+ .../src/com/android/systemui/qs/customize/TileAdapter.java   | 5 ++++-
+ 2 files changed, 8 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/customize/QSCustomizer.java b/packages/SystemUI/src/com/android/systemui/qs/customize/QSCustomizer.java
+index 833f9a98617..b6b601b2ee2 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/customize/QSCustomizer.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/customize/QSCustomizer.java
+@@ -20,6 +20,7 @@ import android.animation.Animator.AnimatorListener;
+ import android.animation.AnimatorListenerAdapter;
+ import android.content.Context;
+ import android.content.res.Configuration;
++import android.content.res.Resources;
+ import android.os.Bundle;
+ import android.os.UserHandle;
+ import android.provider.Settings;
+@@ -119,7 +120,9 @@ public class QSCustomizer extends LinearLayout implements OnMenuItemClickListene
+         mTileQueryHelper = new TileQueryHelper(context, mTileAdapter);
+         mRecyclerView.setAdapter(mTileAdapter);
+         mTileAdapter.getItemTouchHelper().attachToRecyclerView(mRecyclerView);
+-        GridLayoutManager layout = new GridLayoutManager(getContext(), 3);
++        Resources res = mContext.getResources();
++        final int columns = res.getInteger(R.integer.quick_settings_num_columns);
++        GridLayoutManager layout = new GridLayoutManager(getContext(), columns);
+         layout.setSpanSizeLookup(mTileAdapter.getSizeLookup());
+         mRecyclerView.setLayoutManager(layout);
+         mRecyclerView.addItemDecoration(mTileAdapter.getItemDecoration());
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/customize/TileAdapter.java b/packages/SystemUI/src/com/android/systemui/qs/customize/TileAdapter.java
+index 376151b0d96..4987ace2cba 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/customize/TileAdapter.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/customize/TileAdapter.java
+@@ -520,7 +520,10 @@ public class TileAdapter extends RecyclerView.Adapter<Holder> implements TileSta
+         @Override
+         public int getSpanSize(int position) {
+             final int type = getItemViewType(position);
+-            return type == TYPE_EDIT || type == TYPE_DIVIDER || type == TYPE_HEADER ? 3 : 1;
++            Resources res = mContext.getResources();
++            final int columns = res.getInteger(R.integer.quick_settings_num_columns);
++            return type == TYPE_EDIT || type == TYPE_DIVIDER || type == TYPE_HEADER ? columns : 1;
++
+         }
+     };
+ 
+-- 
+2.17.1
+

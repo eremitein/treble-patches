@@ -1,7 +1,7 @@
-From 8e8ebb165d4b57bebaa8ed35515dfe9ae63493eb Mon Sep 17 00:00:00 2001
+From 1ed4c9f317d6e7cd6615d05243380581dbc5ede5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 07:46:17 +0300
-Subject: [PATCH 014/113] Revert "FODAnimation: Make animation resources
+Subject: [PATCH 014/116] Revert "FODAnimation: Make animation resources
  optional [1/2]"
 
 This reverts commit 37232e58a14a66cff984e47b83a65d75d5b08b3a.
@@ -83,5 +83,5 @@ index ce89dc6ff61..9d403a3f8c0 100644
      }
  
 -- 
-2.25.1
+2.17.1
 

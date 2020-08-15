@@ -1,7 +1,7 @@
-From 623f1fd55c49ad0a11b306b32948a62f0571fb5c Mon Sep 17 00:00:00 2001
+From d1c4638ad6c93af1d71bc7f0dfaba59722405094 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:14:51 +0300
-Subject: [PATCH 039/113] Revert "Initial support for in-display fingerprint
+Subject: [PATCH 039/116] Revert "Initial support for in-display fingerprint
  sensors"
 
 This reverts commit 782a3f805408147c8504f6071aa4f275c22b0167.
@@ -1024,5 +1024,5 @@ index 3a5239da0f4..bc6d86948ed 100644
      public void setBlockedGesturalNavigation(boolean blocked) {
          if (mBar != null) {
 -- 
-2.25.1
+2.17.1
 

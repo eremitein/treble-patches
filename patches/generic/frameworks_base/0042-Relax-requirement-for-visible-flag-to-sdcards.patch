@@ -1,7 +1,7 @@
-From 68f93a058d8fbc62bf4acd00a6986011665765c4 Mon Sep 17 00:00:00 2001
+From c8ab13d24165cfbb7b2c71cf9f84f09f09183f71 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 28 Nov 2017 18:28:04 +0100
-Subject: [PATCH 042/113] Relax requirement for visible flag to sdcards
+Subject: [PATCH 042/116] Relax requirement for visible flag to sdcards
 
 The vast majority of sdcard readers are stable enough to be declared by
 the API. (I see no counter-example)
@@ -27,5 +27,5 @@ index 2112940afa0..47098c9c642 100644
              } else if (vol.disk.isSd()) {
                  vol.mountFlags |= VolumeInfo.MOUNT_FLAG_VISIBLE;
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From e0b9f5549809bf969ae2c26b5378ce285f405ad7 Mon Sep 17 00:00:00 2001
+From 7cb3e867605c2fa6cbf0798f3a921999ac5eef18 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 22 Feb 2020 23:45:54 +0100
-Subject: [PATCH 084/113] report press events to oppo fingerprint sensor
+Subject: [PATCH 084/116] report press events to oppo fingerprint sensor
 
 ---
  .../biometrics/fingerprint/FacolaView.java       | 16 ++++++++++++++++
@@ -45,5 +45,5 @@ index f77e8282689..0fb4254eb60 100644
                  if(mXiaomiFingerprint != null) {
                      mXiaomiFingerprint.extCmd(0xa, 0);
 -- 
-2.25.1
+2.17.1
 

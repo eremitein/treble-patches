@@ -1,0 +1,82 @@
+From e8bcdc58cce216b33dbae68c91c1bd640c910faf Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 27 May 2020 16:50:02 +0300
+Subject: [PATCH 1/6] add double tap to sleep gesture
+
+---
+ apps/SearchLauncher/Android.mk                       | 2 ++
+ apps/SearchLauncher/AndroidManifest.xml              | 6 +++++-
+ apps/SearchLauncher/res/values/strings.xml           | 5 +++++
+ apps/SearchLauncher/res/xml/launcher_preferences.xml | 7 +++++++
+ 4 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/apps/SearchLauncher/Android.mk b/apps/SearchLauncher/Android.mk
+index 095349e..9cab5c3 100644
+--- a/apps/SearchLauncher/Android.mk
++++ b/apps/SearchLauncher/Android.mk
+@@ -61,6 +61,8 @@ LOCAL_PRIVILEGED_MODULE := true
+ LOCAL_OVERRIDES_PACKAGES := Home Launcher2 Launcher3 Launcher3QuickStep SearchLauncher MtkLauncher3 MtkLauncher3QuickStep Op09Launcher3 Launcher3Go Launcher3NoQsb
+ LOCAL_REQUIRED_MODULES := privapp_permissions_searchlauncher SearchLauncherConfigOverlay
+ LOCAL_JACK_COVERAGE_INCLUDE_FILTER := com.android.launcher3.*
++LOCAL_PRIVATE_PLATFORM_APIS := true
++LOCAL_CERTIFICATE := platform
+ 
+ LOCAL_FULL_LIBS_MANIFEST_FILES := $(LOCAL_PATH)/$(LAUNCHER_PATH)/quickstep/AndroidManifest.xml
+ 
+diff --git a/apps/SearchLauncher/AndroidManifest.xml b/apps/SearchLauncher/AndroidManifest.xml
+index d5ffded..fa4a42b 100644
+--- a/apps/SearchLauncher/AndroidManifest.xml
++++ b/apps/SearchLauncher/AndroidManifest.xml
+@@ -20,7 +20,10 @@
+ <manifest
+     xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:tools="http://schemas.android.com/tools"
+-    package="com.android.launcher3">
++    package="com.android.launcher3"
++    coreApp="true"
++    android:sharedUserId="android.uid.system">
++
+     <uses-sdk android:targetSdkVersion="28" android:minSdkVersion="28"/>
+ 
+     <permission
+@@ -45,6 +48,7 @@
+     <uses-permission android:name="com.android.launcher3.permission.WRITE_SETTINGS" />
+     <uses-permission android:name="com.android.launcher3.permission.RECEIVE_LAUNCH_BROADCASTS" />
+     <uses-permission android:name="com.android.launcher3.permission.RECEIVE_FIRST_LOAD_BROADCAST" />
++    <uses-permission android:name="android.permission.DEVICE_POWER" />
+ 
+     <application
+         android:backupAgent="com.android.launcher3.LauncherBackupAgent"
+diff --git a/apps/SearchLauncher/res/values/strings.xml b/apps/SearchLauncher/res/values/strings.xml
+index 1505594..b113c96 100644
+--- a/apps/SearchLauncher/res/values/strings.xml
++++ b/apps/SearchLauncher/res/values/strings.xml
+@@ -32,4 +32,9 @@
+     <string name="smartspace_preferences_in_settings">At A Glance</string>
+     <!-- The description showed in Home Settings to open At A Glance preferences -->
+     <string name="smartspace_preferences_in_settings_desc">At the top of your Home screen</string>
++
++    <!-- DT2S option -->
++    <string name="pref_sleep_gesture_title">Double tap to sleep</string>
++    <string name="pref_sleep_gesture_summary">Double tap on empty space for power-off screen</string>
++
+ </resources>
+diff --git a/apps/SearchLauncher/res/xml/launcher_preferences.xml b/apps/SearchLauncher/res/xml/launcher_preferences.xml
+index 7847790..817e2ee 100644
+--- a/apps/SearchLauncher/res/xml/launcher_preferences.xml
++++ b/apps/SearchLauncher/res/xml/launcher_preferences.xml
+@@ -56,4 +56,11 @@
+         android:summary="@string/allow_rotation_desc"
+         android:title="@string/allow_rotation_title"/>
+ 
++    <SwitchPreference
++        android:key="pref_sleep_gesture"
++        android:title="@string/pref_sleep_gesture_title"
++        android:summary="@string/pref_sleep_gesture_summary"
++        android:defaultValue="true"
++        android:persistent="true"/>
++
+ </androidx.preference.PreferenceScreen>
+-- 
+2.17.1
+

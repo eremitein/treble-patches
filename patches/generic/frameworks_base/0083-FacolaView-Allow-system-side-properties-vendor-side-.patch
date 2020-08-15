@@ -1,7 +1,7 @@
-From 7a5ba931432dbfd0b3d527561d534c91d46a835f Mon Sep 17 00:00:00 2001
+From af35feb82699af2780a58b68fd256cc49658e7d9 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 22 Feb 2020 23:25:51 +0100
-Subject: [PATCH 083/113] FacolaView] Allow system-side properties (vendor-side
+Subject: [PATCH 083/116] FacolaView] Allow system-side properties (vendor-side
  works only with proper selinux)
 
 ---
@@ -25,5 +25,5 @@ index b8ca25a48d2..f77e8282689 100644
          if(size.length == 2 && location.length == 2) {
              Slog.d("PHH-Enroll", "Got real values");
 -- 
-2.25.1
+2.17.1
 

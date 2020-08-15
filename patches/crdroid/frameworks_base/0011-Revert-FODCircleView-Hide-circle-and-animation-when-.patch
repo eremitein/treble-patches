@@ -1,7 +1,7 @@
-From 5613d2507da24edc35d702151a55dd352f372307 Mon Sep 17 00:00:00 2001
+From c8477d2271133ef11292c403a26e46f9e9a266cf Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 07:44:38 +0300
-Subject: [PATCH 011/113] Revert "FODCircleView: Hide circle and animation when
+Subject: [PATCH 011/116] Revert "FODCircleView: Hide circle and animation when
  auth fails"
 
 This reverts commit e946f55b5b1e672a0f33e2a18568bb5fdbca882d.
@@ -40,5 +40,5 @@ index 4daaa8a21cd..053052fc92c 100644
              updatePosition();
          }
 -- 
-2.25.1
+2.17.1
 

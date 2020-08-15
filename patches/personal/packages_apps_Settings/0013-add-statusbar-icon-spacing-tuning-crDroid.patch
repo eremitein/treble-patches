@@ -1,7 +1,7 @@
-From 018fa284a97e81028690bd0e521208e02a0eec00 Mon Sep 17 00:00:00 2001
+From 281ea4b9bed1190d0c42be7db0b764a62bf38614 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 4 Feb 2020 11:09:32 +0200
-Subject: [PATCH 13/16] add statusbar icon spacing tuning (crDroid)
+Subject: [PATCH 13/17] add statusbar icon spacing tuning (crDroid)
 
   * based on
   https://github.com/neon-os/packages_apps_Settings/commit/ba07105ed23396f47d78bc3867bcd112ff1584bd
@@ -147,5 +147,5 @@ index 6e0b2d00f6..6a20e3aac3 100644
 -
  }
 -- 
-2.25.1
+2.17.1
 

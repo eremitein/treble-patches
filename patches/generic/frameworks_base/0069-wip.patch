@@ -1,7 +1,7 @@
-From 0686c928b9409361f69aea9344766827291b44e2 Mon Sep 17 00:00:00 2001
+From bb17b2fe1e8097e0792bf2fcdfff46a457b2d5c1 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 24 Mar 2019 22:48:39 +0100
-Subject: [PATCH 069/113] wip
+Subject: [PATCH 069/116] wip
 
 Change-Id: I50fa9a7a670cef5b93fc4a3a027f1587b1214831
 ---
@@ -366,7 +366,7 @@ index 6a8ae75decc..2cbad873a18 100644
              if (mCompatDisplayInsets != null) {
                  // The override configuration is set only once in size compatibility mode.
 diff --git a/services/core/jni/com_android_server_lights_LightsService.cpp b/services/core/jni/com_android_server_lights_LightsService.cpp
-index 20de7985d1d..2b50d04233e 100644
+index 6829036458e..797c152232a 100644
 --- a/services/core/jni/com_android_server_lights_LightsService.cpp
 +++ b/services/core/jni/com_android_server_lights_LightsService.cpp
 @@ -46,6 +46,9 @@ using ISecLight  = ::vendor::samsung::hardware::light::V2_0::ISecLight;
@@ -409,5 +409,5 @@ index 20de7985d1d..2b50d04233e 100644
  
      Type type = static_cast<Type>(light);
 -- 
-2.25.1
+2.17.1
 

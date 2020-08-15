@@ -1,7 +1,7 @@
-From 0ce11f784c1435fdfbb84d2f5989b15542c2a7f3 Mon Sep 17 00:00:00 2001
+From 4cefa86aa4341614a7d5158b0c4d0cfc751cddf4 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 24 Mar 2019 23:05:14 +0100
-Subject: [PATCH 061/113] Support new samsung light hal
+Subject: [PATCH 061/116] Support new samsung light hal
 
 Change-Id: I88ca834894320129737b4e31fa8f7e5ee918889a
 ---
@@ -22,7 +22,7 @@ index fdcefd42316..d8645012e24 100644
  
      static_libs: [
 diff --git a/services/core/jni/com_android_server_lights_LightsService.cpp b/services/core/jni/com_android_server_lights_LightsService.cpp
-index 35d8219651d..20de7985d1d 100644
+index c12f205f7d8..6829036458e 100644
 --- a/services/core/jni/com_android_server_lights_LightsService.cpp
 +++ b/services/core/jni/com_android_server_lights_LightsService.cpp
 @@ -23,6 +23,8 @@
@@ -66,5 +66,5 @@ index 35d8219651d..20de7985d1d 100644
      Type type = static_cast<Type>(light);
      LightState state = constructState(
 -- 
-2.25.1
+2.17.1
 

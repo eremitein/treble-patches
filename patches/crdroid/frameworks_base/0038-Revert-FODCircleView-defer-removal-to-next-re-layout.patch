@@ -1,7 +1,7 @@
-From 86e582d1907525076824155865907f7110d0f085 Mon Sep 17 00:00:00 2001
+From c90d670a90e3455d22120fe022f4c9af0aab4c94 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:06:09 +0300
-Subject: [PATCH 038/113] Revert "FODCircleView: defer removal to next
+Subject: [PATCH 038/116] Revert "FODCircleView: defer removal to next
  re-layout"
 
 This reverts commit 6ee0230af2bb4590ba302bb84631628a784b25d9.
@@ -151,5 +151,5 @@ index 771d1f81e3d..f7fb54935bf 100644
  
      private void resetPosition() {
 -- 
-2.25.1
+2.17.1
 

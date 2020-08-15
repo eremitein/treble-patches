@@ -1,7 +1,7 @@
-From 7b0a8f81991eb15101ff9ee552437822c30c890c Mon Sep 17 00:00:00 2001
+From 2b5240f0dc55c21e70db5b4ad8bca3e517701ec4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:04:41 +0300
-Subject: [PATCH 024/113] Revert "FODCircleView: add crDroid fod icon [1/2]"
+Subject: [PATCH 024/116] Revert "FODCircleView: add crDroid fod icon [1/2]"
 
 This reverts commit d0ac93494f7970b2938bb566981f4d60f6ed16da.
 ---
@@ -31,5 +31,5 @@ index 10e902c6bcc..67351c872ac 100644
  
          if (useWallpaperColor()) {
 -- 
-2.25.1
+2.17.1
 

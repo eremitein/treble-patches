@@ -1,7 +1,7 @@
-From f4098617a6e9fa5f80049f6f5837e92f65d6a382 Mon Sep 17 00:00:00 2001
+From 7ae36768c01bd3950f1884d49bc999837b12bd7f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 2 Mar 2020 21:13:47 +0100
-Subject: [PATCH 086/113] Fix persist.sys.fp.fod override
+Subject: [PATCH 086/116] Fix persist.sys.fp.fod override
 
 ---
  .../com/android/server/biometrics/fingerprint/FacolaView.java | 4 ++--
@@ -25,5 +25,5 @@ index edd13988e49..2c1ba76f529 100644
          Slog.d("PHH-Enroll", "FacolaView hello");
          if(size.length == 2 && location.length == 2) {
 -- 
-2.25.1
+2.17.1
 

@@ -1,7 +1,7 @@
-From 7f478f44035f548da1a0868a6b07797941dbc55a Mon Sep 17 00:00:00 2001
+From 6999c289159a0c0761b65920eab5e79d78d56bae Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:06:05 +0300
-Subject: [PATCH 036/113] Revert "FODCircleView: rewrite and simplify
+Subject: [PATCH 036/116] Revert "FODCircleView: rewrite and simplify
  implementation"
 
 This reverts commit 9213b9f5aa79d25a9633df99a7922c4c7f72dfda.
@@ -628,5 +628,5 @@ index 8f0b352d318..01205a9d134 100644
      };
  }
 -- 
-2.25.1
+2.17.1
 

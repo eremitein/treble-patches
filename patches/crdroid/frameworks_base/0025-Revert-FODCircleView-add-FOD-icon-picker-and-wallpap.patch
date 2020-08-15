@@ -1,7 +1,7 @@
-From badf76e02ec6f73d0012db73db0911982417a43b Mon Sep 17 00:00:00 2001
+From 77af47104f102526a54cdc464da2a8c7feb20988 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:05:38 +0300
-Subject: [PATCH 025/113] Revert "FODCircleView: add FOD icon picker and
+Subject: [PATCH 025/116] Revert "FODCircleView: add FOD icon picker and
  wallpaper based color option [1/2]"
 
 This reverts commit 3587993de44837f1c7afd2ccc469b11d93704a76.
@@ -11,10 +11,10 @@ This reverts commit 3587993de44837f1c7afd2ccc469b11d93704a76.
  2 files changed, 10 insertions(+), 120 deletions(-)
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 2131222e237..9d56bb7f397 100644
+index a79656da932..fec2cfc1fdb 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5094,18 +5094,6 @@ public final class Settings {
+@@ -5082,18 +5082,6 @@ public final class Settings {
           */
          public static final String SMART_CHARGING_RESUME_LEVEL = "smart_charging_resume_level";
  
@@ -224,5 +224,5 @@ index 67351c872ac..939b9571b32 100644
          if (!mUpdateMonitor.isScreenOn()) {
              // Keyguard is shown just after screen turning off
 -- 
-2.25.1
+2.17.1
 

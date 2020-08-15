@@ -1,7 +1,7 @@
-From 49ddd891ff0b63a33dd67f96758f025036974231 Mon Sep 17 00:00:00 2001
+From fd2a06db74ed3552dace65d7e0bf40872fa72715 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 06:34:28 +0300
-Subject: [PATCH 008/113] Revert "FODCircleView: Dim FOD icon"
+Subject: [PATCH 008/116] Revert "FODCircleView: Dim FOD icon"
 
 This reverts commit 398ae4c191ec5b5dae41b9156dde8be97ed34b37.
 ---
@@ -136,5 +136,5 @@ index 5c4eae0535a..c1a4cf18e70 100644
          hideCircle();
          dispatchHide();
 -- 
-2.25.1
+2.17.1
 

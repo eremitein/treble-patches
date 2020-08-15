@@ -1,7 +1,7 @@
-From eda8fe9dca5c25c81fa4f168d397b1c06580858c Mon Sep 17 00:00:00 2001
+From 82af47e1ff6b6d88e4f2c380512846bbac6d0af8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 07:46:19 +0300
-Subject: [PATCH 015/113] Revert "FODCircleView: cleanup FOD customization
+Subject: [PATCH 015/116] Revert "FODCircleView: cleanup FOD customization
  techniques"
 
 This reverts commit a55c9ae2e8cc97af7fa5976a17639e05363b1b48.
@@ -305,5 +305,5 @@ index 2d798be1fb0..2e7e71a32a3 100644
          Display defaultDisplay = mWindowManager.getDefaultDisplay();
  
 -- 
-2.25.1
+2.17.1
 

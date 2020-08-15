@@ -1,7 +1,7 @@
-From 03973f364a232e393be2a5be7c054dc6912b0fa8 Mon Sep 17 00:00:00 2001
+From 987d88cece4b263e11b43772ac085e34dbe0fd8c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 07:47:03 +0300
-Subject: [PATCH 016/113] Revert "FODAnimation: Allow to set vertical position
+Subject: [PATCH 016/116] Revert "FODAnimation: Allow to set vertical position
  offset"
 
 This reverts commit 9b86bb545a5d0c4e031d71a4f0ef92a99ff43082.
@@ -11,7 +11,7 @@ This reverts commit 9b86bb545a5d0c4e031d71a4f0ef92a99ff43082.
  2 files changed, 2 insertions(+), 5 deletions(-)
 
 diff --git a/packages/SystemUI/res/values/cr_dimens.xml b/packages/SystemUI/res/values/cr_dimens.xml
-index fe0d055ba5c..1bd76b22c1f 100644
+index d68f49d1287..e79a68a6b33 100644
 --- a/packages/SystemUI/res/values/cr_dimens.xml
 +++ b/packages/SystemUI/res/values/cr_dimens.xml
 @@ -60,7 +60,6 @@
@@ -61,5 +61,5 @@ index 0ad400e9613..d1071bb5764 100644
  
      public void setAnimationKeyguard(boolean state) {
 -- 
-2.25.1
+2.17.1
 

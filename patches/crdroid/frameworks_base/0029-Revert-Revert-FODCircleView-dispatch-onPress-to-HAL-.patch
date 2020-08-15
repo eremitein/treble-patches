@@ -1,7 +1,7 @@
-From f98e6a4b8372e303a7cfb9b3a17cdd5bd45390d4 Mon Sep 17 00:00:00 2001
+From 56b6ae47217cbec6ca24c83225e63afcf0470940 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 08:05:46 +0300
-Subject: [PATCH 029/113] Revert "Revert "FODCircleView: dispatch onPress to
+Subject: [PATCH 029/116] Revert "Revert "FODCircleView: dispatch onPress to
  HAL only after dimming is applied""
 
 This reverts commit 0dcd7fee60e41f937c8b52753279f8d70b2e0748.
@@ -48,5 +48,5 @@ index e480d704a05..6be2fef143d 100644
          mPaintFingerprint.setColor(mColor);
          setImageDrawable(null);
 -- 
-2.25.1
+2.17.1
 

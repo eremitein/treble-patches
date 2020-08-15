@@ -1,7 +1,7 @@
-From c77311c0cd9c6ca1c0d128c5702416388c5f25a8 Mon Sep 17 00:00:00 2001
+From 501f0bd228197fad64b5a62697f264d8d4abc600 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:35:49 +0200
-Subject: [PATCH 09/16] Pixel UI (crDroid)
+Subject: [PATCH 09/17] Pixel UI (crDroid)
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/fe6ec9d5978149a5652c70a665d914e389e40890
@@ -61,5 +61,5 @@ index 1f7abb3467..d3ff2b3cad 100755
      <!-- CryptKeeper top margin for password/pin screen -->
      <dimen name="crypt_keeper_password_top_margin">88dip</dimen>
 -- 
-2.25.1
+2.17.1
 

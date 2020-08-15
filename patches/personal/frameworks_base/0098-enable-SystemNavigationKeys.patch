@@ -1,7 +1,7 @@
-From 3fa0c6392b0fd54726594f8cadc66e1a67bd70fa Mon Sep 17 00:00:00 2001
+From 970dd83b21f7cb05ee95c359e93d02268ffce093 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 18 Dec 2019 14:52:32 +0200
-Subject: [PATCH 098/113] enable SystemNavigationKeys
+Subject: [PATCH 098/116] enable SystemNavigationKeys
 
 	modified:   core/res/res/values/config.xml
 ---
@@ -22,5 +22,5 @@ index 81b803c4832..5ec6cd6a927 100644
      <!-- emergency call number for the emergency affordance -->
      <string name="config_emergency_call_number" translatable="false">112</string>
 -- 
-2.25.1
+2.17.1
 
