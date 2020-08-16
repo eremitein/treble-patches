@@ -1,4 +1,4 @@
-From 9177047f2e864f85f4e63cff713145e0561262e2 Mon Sep 17 00:00:00 2001
+From c974bf7cb094618f1f1c7eef13ece9bb61c47a1b Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 16 Aug 2018 22:12:46 +0200
 Subject: [PATCH 1/9] Add route to gateway on null netmask
@@ -11,7 +11,7 @@ Change-Id: I8133da8e8f5203666684100009ba658528a02e94
  1 file changed, 17 insertions(+)
 
 diff --git a/src/java/com/android/internal/telephony/dataconnection/DataConnection.java b/src/java/com/android/internal/telephony/dataconnection/DataConnection.java
-index 31372b8e7..df354ac0c 100644
+index 4b0fa2ef3..9d486b67e 100644
 --- a/src/java/com/android/internal/telephony/dataconnection/DataConnection.java
 +++ b/src/java/com/android/internal/telephony/dataconnection/DataConnection.java
 @@ -25,6 +25,7 @@ import android.app.PendingIntent;
@@ -22,7 +22,7 @@ index 31372b8e7..df354ac0c 100644
  import android.net.LinkAddress;
  import android.net.LinkProperties;
  import android.net.NetworkCapabilities;
-@@ -1472,6 +1473,22 @@ public class DataConnection extends StateMachine {
+@@ -1422,6 +1423,22 @@ public class DataConnection extends StateMachine {
                  }
  
                  for (InetAddress gateway : response.getGatewayAddresses()) {

@@ -1,4 +1,4 @@
-From e398e7155c52cfcc0b0e7e3adc0328d87c9efdd7 Mon Sep 17 00:00:00 2001
+From 691176f1984aaf4f27977b41eaf9ca8082c8fd8e Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 2 Mar 2020 21:11:25 +0100
 Subject: [PATCH 9/9] Never blacklist RILs. It might get blacklisted for bad
@@ -9,7 +9,7 @@ Subject: [PATCH 9/9] Never blacklist RILs. It might get blacklisted for bad
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/src/java/com/android/internal/telephony/RIL.java b/src/java/com/android/internal/telephony/RIL.java
-index 69ea837fa..95b9e7c53 100644
+index 30d5fed86..eb4d07700 100644
 --- a/src/java/com/android/internal/telephony/RIL.java
 +++ b/src/java/com/android/internal/telephony/RIL.java
 @@ -506,7 +506,7 @@ public class RIL extends BaseCommands implements CommandsInterface {

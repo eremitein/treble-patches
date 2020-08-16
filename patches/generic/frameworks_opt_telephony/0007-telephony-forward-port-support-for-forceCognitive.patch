@@ -1,4 +1,4 @@
-From e7d51ec4197841189855466c62e0acab82ffc49d Mon Sep 17 00:00:00 2001
+From 204868e298a5466b5f80fb68fe15b89a21261690 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 13 Oct 2019 17:21:31 +0800
 Subject: [PATCH 7/9] telephony: forward-port support for forceCognitive
@@ -12,7 +12,7 @@ Subject: [PATCH 7/9] telephony: forward-port support for forceCognitive
  2 files changed, 4 insertions(+), 2 deletions(-)
 
 diff --git a/src/java/com/android/internal/telephony/RIL.java b/src/java/com/android/internal/telephony/RIL.java
-index 7b242b807..a6c4258bf 100644
+index 4b94ca5d4..39c5a2a33 100644
 --- a/src/java/com/android/internal/telephony/RIL.java
 +++ b/src/java/com/android/internal/telephony/RIL.java
 @@ -3991,7 +3991,8 @@ public class RIL extends BaseCommands implements CommandsInterface {
@@ -26,10 +26,10 @@ index 7b242b807..a6c4258bf 100644
                          }
                      }
 diff --git a/src/java/com/android/internal/telephony/dataconnection/DcTracker.java b/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
-index dfdc6f6ed..912813858 100644
+index 75c86b7e9..78339ca0e 100644
 --- a/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
 +++ b/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
-@@ -2021,8 +2021,9 @@ public class DcTracker extends Handler {
+@@ -1912,8 +1912,9 @@ public class DcTracker extends Handler {
          }
  
          // profile id is only meaningful when the profile is persistent on the modem.

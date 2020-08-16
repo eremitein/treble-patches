@@ -1,0 +1,31 @@
+From 3f5115a331cda0e75cdb4737397351cc1be0fa03 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 20 May 2019 23:45:56 +0200
+Subject: [PATCH 3/5] Fail gracefully in mobile settings
+
+---
+ src/com/android/phone/DataUsagePreference.java | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/src/com/android/phone/DataUsagePreference.java b/src/com/android/phone/DataUsagePreference.java
+index b6b26e2b8..ebd446dfa 100644
+--- a/src/com/android/phone/DataUsagePreference.java
++++ b/src/com/android/phone/DataUsagePreference.java
+@@ -54,8 +54,12 @@ public class DataUsagePreference extends Preference {
+         DataUsageController controller = new DataUsageController(activity);
+ 
+         DataUsageController.DataUsageInfo usageInfo = controller.getDataUsageInfo(mTemplate);
+-        setSummary(activity.getString(R.string.data_usage_template,
+-                Formatter.formatFileSize(activity, usageInfo.usageLevel), usageInfo.period));
++        if(usageInfo != null) {
++            setSummary(activity.getString(R.string.data_usage_template,
++                        Formatter.formatFileSize(activity, usageInfo.usageLevel), usageInfo.period));
++        } else {
++            setSummary(activity.getString(R.string.data_usage_title));
++        }
+         setIntent(getIntent());
+     }
+ 
+-- 
+2.25.1
+

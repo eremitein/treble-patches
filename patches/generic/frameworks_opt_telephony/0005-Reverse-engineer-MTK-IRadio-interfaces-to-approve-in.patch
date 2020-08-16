@@ -1,4 +1,4 @@
-From 41f09f87e406d9ac83f7914600b51b5c2665c2be Mon Sep 17 00:00:00 2001
+From 0966d18964956dd97d8f0e71f106d81a94fab21f Mon Sep 17 00:00:00 2001
 From: Bevis Tseng <bevis@cloudmosa.com>
 Date: Thu, 18 Apr 2019 16:30:45 +0800
 Subject: [PATCH 5/9] Reverse-engineer MTK IRadio interfaces to approve
@@ -37,7 +37,7 @@ Change-Id: I35d29f0f2ebc4abf8678bd59c2d97a257fac1b29
  create mode 100644 src/java/com/android/internal/telephony/MtkRadioResponse.java
 
 diff --git a/Android.bp b/Android.bp
-index ef0dc9a89..536ed1416 100644
+index d1a89377b..ae678cb54 100644
 --- a/Android.bp
 +++ b/Android.bp
 @@ -55,6 +55,7 @@ java_library {
@@ -47,7 +47,7 @@ index ef0dc9a89..536ed1416 100644
 +        "vendor.mediatek.hardware.radio-V2.0-java",
          "voip-common",
          "ims-common",
-         "telephony-ext",
+         "services",
 diff --git a/src/java/com/android/internal/telephony/MtkRadioIndication.java b/src/java/com/android/internal/telephony/MtkRadioIndication.java
 new file mode 100644
 index 000000000..8d6963be7
@@ -1526,7 +1526,7 @@ index 000000000..2548e967e
 +    //-- MTK Radio V2_0
 +}
 diff --git a/src/java/com/android/internal/telephony/RIL.java b/src/java/com/android/internal/telephony/RIL.java
-index 0ecb15d3a..1e111ac3a 100644
+index 83398b62c..96f1efdd7 100644
 --- a/src/java/com/android/internal/telephony/RIL.java
 +++ b/src/java/com/android/internal/telephony/RIL.java
 @@ -245,6 +245,9 @@ public class RIL extends BaseCommands implements CommandsInterface {
@@ -1562,7 +1562,7 @@ index 0ecb15d3a..1e111ac3a 100644
          return mRadioProxy;
      }
  
-@@ -6159,4 +6178,23 @@ public class RIL extends BaseCommands implements CommandsInterface {
+@@ -6157,4 +6176,23 @@ public class RIL extends BaseCommands implements CommandsInterface {
      public boolean needsOldRilFeature(String feature) {
          return mOldRilFeatures.contains(feature);
      }
