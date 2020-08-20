@@ -1,0 +1,56 @@
+From f3e8a2f34f2cd2d65fa2716fc21f8d6b2f307e20 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:13:05 -0400
+Subject: [PATCH 07/13] Revert "Dumpster: Add OP Recognizing FP animations
+ [2/2]"
+
+This reverts commit 0ed3b82cc728b0cdc910f661d864de72d6f3dba9.
+---
+ res/values/bootleg_arrays.xml  | 8 --------
+ res/values/bootleg_strings.xml | 4 ----
+ 2 files changed, 12 deletions(-)
+
+diff --git a/res/values/bootleg_arrays.xml b/res/values/bootleg_arrays.xml
+index b3126f5..45d052c 100644
+--- a/res/values/bootleg_arrays.xml
++++ b/res/values/bootleg_arrays.xml
+@@ -478,10 +478,6 @@
+         <item>@string/fod_recog_animation_miui_pulse</item>
+         <item>@string/fod_recog_animation_miui_pulse_white</item>
+         <item>@string/fod_recog_animation_miui_rhythm</item>
+-        <item>@string/fod_recog_animation_op_cosmos</item>
+-        <item>@string/fod_recog_animation_op_mclaren</item>
+-        <item>@string/fod_recog_animation_op_stripe</item>
+-        <item>@string/fod_recog_animation_op_wave</item>
+     </string-array>
+ 
+     <string-array name="fod_recog_animation_values" translatable="false">
+@@ -492,10 +488,6 @@
+         <item>4</item>
+         <item>5</item>
+         <item>6</item>
+-        <item>7</item>
+-        <item>8</item>
+-        <item>9</item>
+-        <item>10</item>
+     </string-array>
+ 
+     <!-- Gaming mode -->
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index 912b34f..0e0563f 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -664,10 +664,6 @@
+     <string name="fod_recog_animation_miui_pulse">Pulse</string>
+     <string name="fod_recog_animation_miui_pulse_white">Pulse (White)</string>
+     <string name="fod_recog_animation_miui_rhythm">Rhythm</string>
+-    <string name="fod_recog_animation_op_cosmos">Cosmos</string>
+-    <string name="fod_recog_animation_op_mclaren">McLaren</string>
+-    <string name="fod_recog_animation_op_stripe">Stripe</string>
+-    <string name="fod_recog_animation_op_wave">Wave</string>
+ 
+    <!-- Heads up options -->
+     <string name="less_boring_heads_up_title">Less boring heads up</string>
+-- 
+2.17.1
+

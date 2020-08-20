@@ -1,0 +1,58 @@
+From 89496b6326303216ed50777eb100bd0333000164 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 21 Jul 2020 03:48:19 +0300
+Subject: [PATCH] Support convert string similar to FE87-9640 to UUID
+
+  from
+  https://github.com/BlissRoms/platform_libcore/commit/9ff546265506999a8f4044a7d24270746e63f450
+
+Change-Id: I290f239691e099dde3bc363fb9cc1a2c1fa55bb0
+---
+ ojluni/src/main/java/java/util/UUID.java | 22 +++++++++++++++++++++-
+ 1 file changed, 21 insertions(+), 1 deletion(-)
+
+diff --git a/ojluni/src/main/java/java/util/UUID.java b/ojluni/src/main/java/java/util/UUID.java
+index b4ea41ff0..72652bce4 100644
+--- a/ojluni/src/main/java/java/util/UUID.java
++++ b/ojluni/src/main/java/java/util/UUID.java
+@@ -189,9 +189,22 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
+      *
+      */
+     public static UUID fromString(String name) {
++        // BEGIN Motorola, linzj1, 2019-10-30, IKSWQ-24229
++        // Support convert string similar to FE87-9640 to UUID
+         String[] components = name.split("-");
+-        if (components.length != 5)
++        if (components.length != 5 && components.length != 2)
+             throw new IllegalArgumentException("Invalid UUID string: "+name);
++
++        if (components.length == 2) {
++            for (int i=0; i<2; i++)
++                components[i] = "0x"+components[i];
++
++            long mostSigBits = Long.decode(components[0]).longValue();
++            long leastSigBits = Long.decode(components[1]).longValue();
++            return new UUID(mostSigBits, leastSigBits);
++        }
++        // END IKSWQ-24229
++
+         for (int i=0; i<5; i++)
+             components[i] = "0x"+components[i];
+ 
+@@ -373,6 +386,13 @@ public final class UUID implements java.io.Serializable, Comparable<UUID> {
+      * @return  A string representation of this {@code UUID}
+      */
+     public String toString() {
++        // BEGIN Motorola, linzj1, 2019-10-30, IKSWQ-24229
++        // Support convert string similar to FE87-9640 to UUID
++        if ((mostSigBits >> 16) == 0 && (leastSigBits >> 16) == 0) {
++            return (digits(mostSigBits, 4) + "-" +
++                    digits(leastSigBits, 4));
++        }
++        // END IKSWQ-24229
+         return (digits(mostSigBits >> 32, 8) + "-" +
+                 digits(mostSigBits >> 16, 4) + "-" +
+                 digits(mostSigBits, 4) + "-" +
+-- 
+2.25.1
+

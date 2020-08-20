@@ -1,0 +1,90 @@
+From 9c9955908b63103a1efa7773dc96602e02c8abc1 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:23:52 -0400
+Subject: [PATCH 034/127] Revert "FODCircleView: Add MIUI FP icon"
+
+This reverts commit ab17e64ba6049471f8d7f593ed7dfa75933a8384.
+---
+ .../res/drawable-nodpi/fod_icon_pressed.png      | Bin 2957 -> 0 bytes
+ .../systemui/biometrics/FODCircleView.java       |   2 +-
+ 2 files changed, 1 insertion(+), 1 deletion(-)
+ delete mode 100644 packages/SystemUI/res/drawable-nodpi/fod_icon_pressed.png
+
+diff --git a/packages/SystemUI/res/drawable-nodpi/fod_icon_pressed.png b/packages/SystemUI/res/drawable-nodpi/fod_icon_pressed.png
+deleted file mode 100644
+index 1957837d6c7e64eab3969b0a5c811f8620bca24c..0000000000000000000000000000000000000000
+GIT binary patch
+literal 0
+HcmV?d00001
+
+literal 2957
+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
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 3bb73163719..94e0f3e7ac4 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -287,7 +287,7 @@ public class FODCircleView extends ImageView {
+         setDim(true);
+         updateAlpha();
+ 
+-        setImageResource(R.drawable.fod_icon_pressed);
++        setImageDrawable(null);
+         invalidate();
+     }
+ 
+-- 
+2.17.1
+

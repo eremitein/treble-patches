@@ -1,0 +1,68 @@
+From 6e039203781e5bf1f999555b2f5fd90b0901f0bb Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:13:00 -0400
+Subject: [PATCH 03/13] Revert "Dumpster: Add new FOD pressed state icons
+ [2/2]"
+
+This reverts commit d4c50911934bf626a3e923b2a05d9ba1f4fc5e89.
+---
+ res/values/bootleg_arrays.xml  | 16 ++++------------
+ res/values/bootleg_strings.xml | 10 +++-------
+ 2 files changed, 7 insertions(+), 19 deletions(-)
+
+diff --git a/res/values/bootleg_arrays.xml b/res/values/bootleg_arrays.xml
+index b739d54..f7a3cb5 100644
+--- a/res/values/bootleg_arrays.xml
++++ b/res/values/bootleg_arrays.xml
+@@ -203,23 +203,15 @@
+ 
+     <!-- FOD pressed state options -->
+     <string-array name="fod_pressed_state_entries" translatable="false">
+-        <item>@string/fod_pressed_state_miui_cyan</item>
+-        <item>@string/fod_pressed_state_miui_white</item>
+-        <item>@string/fod_pressed_state_vivo_cyan</item>
+-        <item>@string/fod_pressed_state_vivo_cyan_shadow</item>
+-        <item>@string/fod_pressed_state_vivo_cyan_shadow_et713</item>
+-        <item>@string/fod_pressed_state_vivo_green</item>
+-        <item>@string/fod_pressed_state_vivo_yellow_shadow</item>
++        <item>@string/fod_pressed_state_icon</item>
++        <item>@string/fod_pressed_state_icon_white</item>
++        <item>@string/fod_pressed_state_solid_color</item>
+     </string-array>
+ 
+     <string-array name="fod_pressed_state_values" translatable="false">
+-	<item>0</item>
++		<item>0</item>
+         <item>1</item>
+         <item>2</item>
+-        <item>3</item>
+-        <item>4</item>
+-        <item>5</item>
+-        <item>6</item>
+     </string-array>
+ 
+     <string-array name="clock_date_display_entries">
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index 049cf7d..d37a0e2 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -649,13 +649,9 @@
+     <!-- FOD pressed state effect -->
+     <string name="fod_pressed_state_title">Pressed icon effect</string>
+     <string name="fod_pressed_state_footer">Icons/colors may vary depending on which device you are using.</string>
+-    <string name="fod_pressed_state_miui_cyan">MIUI Cyan</string>
+-    <string name="fod_pressed_state_miui_white">MIUI White</string>
+-    <string name="fod_pressed_state_vivo_cyan">Vivo Cyan</string>
+-    <string name="fod_pressed_state_vivo_cyan_shadow">Vivo Cyan (Shadow)</string>
+-    <string name="fod_pressed_state_vivo_cyan_shadow_et713">Vivo Cyan (Shadow alt)</string>
+-    <string name="fod_pressed_state_vivo_green">Vivo Green</string>
+-    <string name="fod_pressed_state_vivo_yellow_shadow">Vivo Yellow (Shadow)</string>
++    <string name="fod_pressed_state_icon">Icon (usually Cyan)</string>
++    <string name="fod_pressed_state_icon_white">Icon (White)</string>
++    <string name="fod_pressed_state_solid_color">Solid color (usually Green)</string>
+ 
+     <!-- FOD animations -->
+     <string name="fod_recog_animation">Recognizing animation</string>
+-- 
+2.17.1
+

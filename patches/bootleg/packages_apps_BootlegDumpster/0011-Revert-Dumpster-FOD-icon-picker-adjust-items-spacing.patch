@@ -1,0 +1,41 @@
+From ab2d84955a0f7ce1b3032bb708e84628d75e487a Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:15:25 -0400
+Subject: [PATCH 11/13] Revert "Dumpster: FOD icon picker: adjust items
+ spacing"
+
+This reverts commit 9e049e013cc39ec9e8764053a02a0fef8339bd0d.
+---
+ res/layout/fod_picker_preference.xml | 2 --
+ res/values/bootleg_dimens.xml        | 2 +-
+ 2 files changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/res/layout/fod_picker_preference.xml b/res/layout/fod_picker_preference.xml
+index 0cb5a94..f01e5fe 100644
+--- a/res/layout/fod_picker_preference.xml
++++ b/res/layout/fod_picker_preference.xml
+@@ -18,8 +18,6 @@
+ <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+     android:layout_width="match_parent"
+     android:layout_height="match_parent"
+-    android:paddingLeft="5dp"
+-    android:paddingRight="5dp"
+     android:orientation="vertical" >
+ 
+     <LinearLayout
+diff --git a/res/values/bootleg_dimens.xml b/res/values/bootleg_dimens.xml
+index fe0c241..dd286ab 100644
+--- a/res/values/bootleg_dimens.xml
++++ b/res/values/bootleg_dimens.xml
+@@ -34,7 +34,7 @@
+     <dimen name="desc_padding">40dp</dimen>
+ 
+     <!-- FOD Icon Picker -->
+-    <dimen name="fod_picker_item_margin">10dp</dimen>
++    <dimen name="fod_picker_item_margin">20dp</dimen>
+     <dimen name="fod_picker_item_size">100dp</dimen>
+     <dimen name="fod_picker_item_padding">20dp</dimen>
+ 
+-- 
+2.17.1
+

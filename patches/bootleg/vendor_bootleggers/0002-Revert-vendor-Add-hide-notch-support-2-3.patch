@@ -1,0 +1,2631 @@
+From 9a5af1eb441f5db602b6d858219ed41d890d37b9 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:50:22 -0400
+Subject: [PATCH 2/6] Revert "vendor: Add hide notch support [2/3]"
+
+This reverts commit 79c0f4ac20422ddfec58a952ba67f9de9ef78657.
+---
+ config/btlg_packages.mk                       |  7 +++---
+ packages/Android.mk                           |  3 ---
+ packages/overlays/Android.mk                  |  3 ---
+ packages/overlays/NoCutoutOverlay/Android.mk  | 11 ----------
+ .../NoCutoutOverlay/AndroidManifest.xml       |  8 -------
+ .../NoCutoutOverlay/res/values-af/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-am/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ar/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-as/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-az/strings.xml | 21 ------------------
+ .../res/values-b+sr+Latn/strings.xml          | 21 ------------------
+ .../NoCutoutOverlay/res/values-be/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-bg/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-bn/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-bs/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ca/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-cs/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-da/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-de/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-el/strings.xml | 21 ------------------
+ .../res/values-en-rAU/strings.xml             | 21 ------------------
+ .../res/values-en-rCA/strings.xml             | 21 ------------------
+ .../res/values-en-rGB/strings.xml             | 21 ------------------
+ .../res/values-en-rIN/strings.xml             | 21 ------------------
+ .../res/values-en-rXC/strings.xml             | 21 ------------------
+ .../res/values-es-rUS/strings.xml             | 21 ------------------
+ .../NoCutoutOverlay/res/values-es/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-et/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-eu/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-fa/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-fi/strings.xml | 21 ------------------
+ .../res/values-fr-rCA/strings.xml             | 21 ------------------
+ .../NoCutoutOverlay/res/values-fr/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-gl/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-gu/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-hi/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-hr/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-hu/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-hy/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-in/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-is/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-it/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-iw/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ja/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ka/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-kk/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-km/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-kn/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ko/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ky/strings.xml | 21 ------------------
+ .../res/values-land/config.xml                | 22 -------------------
+ .../NoCutoutOverlay/res/values-lo/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-lt/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-lv/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-mk/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ml/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-mn/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-mr/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ms/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-my/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-nb/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ne/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-nl/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-or/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-pa/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-pl/strings.xml | 21 ------------------
+ .../res/values-pt-rBR/strings.xml             | 21 ------------------
+ .../res/values-pt-rPT/strings.xml             | 21 ------------------
+ .../NoCutoutOverlay/res/values-pt/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ro/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ru/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-si/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-sk/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-sl/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-sq/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-sr/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-sv/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-sw/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ta/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-te/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-th/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-tl/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-tr/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-uk/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-ur/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-uz/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values-vi/strings.xml | 21 ------------------
+ .../res/values-zh-rCN/strings.xml             | 21 ------------------
+ .../res/values-zh-rHK/strings.xml             | 21 ------------------
+ .../res/values-zh-rTW/strings.xml             | 21 ------------------
+ .../NoCutoutOverlay/res/values-zu/strings.xml | 21 ------------------
+ .../NoCutoutOverlay/res/values/config.xml     |  9 --------
+ .../NoCutoutOverlay/res/values/strings.xml    | 22 -------------------
+ 93 files changed, 4 insertions(+), 1866 deletions(-)
+ delete mode 100644 packages/Android.mk
+ delete mode 100644 packages/overlays/Android.mk
+ delete mode 100644 packages/overlays/NoCutoutOverlay/Android.mk
+ delete mode 100644 packages/overlays/NoCutoutOverlay/AndroidManifest.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-af/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-am/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ar/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-as/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-az/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-b+sr+Latn/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-be/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-bg/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-bn/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-bs/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ca/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-cs/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-da/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-de/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-el/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-en-rAU/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-en-rCA/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-en-rGB/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-en-rIN/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-en-rXC/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-es-rUS/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-es/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-et/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-eu/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-fa/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-fi/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-fr-rCA/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-fr/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-gl/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-gu/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-hi/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-hr/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-hu/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-hy/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-in/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-is/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-it/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-iw/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ja/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ka/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-kk/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-km/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-kn/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ko/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ky/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-land/config.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-lo/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-lt/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-lv/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-mk/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ml/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-mn/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-mr/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ms/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-my/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-nb/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ne/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-nl/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-or/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-pa/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-pl/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-pt-rBR/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-pt-rPT/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-pt/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ro/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ru/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-si/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-sk/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-sl/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-sq/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-sr/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-sv/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-sw/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ta/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-te/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-th/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-tl/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-tr/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-uk/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-ur/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-uz/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-vi/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-zh-rCN/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-zh-rHK/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-zh-rTW/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values-zu/strings.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values/config.xml
+ delete mode 100644 packages/overlays/NoCutoutOverlay/res/values/strings.xml
+
+diff --git a/config/btlg_packages.mk b/config/btlg_packages.mk
+index bbca605d..462c132a 100644
+--- a/config/btlg_packages.mk
++++ b/config/btlg_packages.mk
+@@ -45,9 +45,10 @@ PRODUCT_PACKAGES += \
+ #PRODUCT_PACKAGES += \
+ #    CustomFonts
+ 
+-# Cutout control overlay
+-PRODUCT_PACKAGES += \
+-    NoCutoutOverlay
++# Cutout control overlays
++#PRODUCT_PACKAGES += \
++#    HideCutout \
++#    StatusBarStock
+ 
+ # Call the overlays folder to build all the rest 
+ include packages/overlays/Shishufied/shishu.mk
+diff --git a/packages/Android.mk b/packages/Android.mk
+deleted file mode 100644
+index 7a16792d..00000000
+--- a/packages/Android.mk
++++ /dev/null
+@@ -1,3 +0,0 @@
+-LOCAL_PATH := $(call my-dir)
+-
+-include $(call all-makefiles-under,$(LOCAL_PATH))
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+deleted file mode 100644
+index 7a16792d..00000000
+--- a/packages/overlays/Android.mk
++++ /dev/null
+@@ -1,3 +0,0 @@
+-LOCAL_PATH := $(call my-dir)
+-
+-include $(call all-makefiles-under,$(LOCAL_PATH))
+diff --git a/packages/overlays/NoCutoutOverlay/Android.mk b/packages/overlays/NoCutoutOverlay/Android.mk
+deleted file mode 100644
+index cba530f8..00000000
+--- a/packages/overlays/NoCutoutOverlay/Android.mk
++++ /dev/null
+@@ -1,11 +0,0 @@
+-LOCAL_PATH:= $(call my-dir)
+-include $(CLEAR_VARS)
+-
+-LOCAL_MODULE_TAGS := optional
+-
+-LOCAL_PACKAGE_NAME := NoCutoutOverlay
+-LOCAL_SDK_VERSION := current
+-LOCAL_CERTIFICATE := platform
+-LOCAL_PRIVILEGED_MODULE := false
+-
+-include $(BUILD_PACKAGE)
+diff --git a/packages/overlays/NoCutoutOverlay/AndroidManifest.xml b/packages/overlays/NoCutoutOverlay/AndroidManifest.xml
+deleted file mode 100644
+index bcce931a..00000000
+--- a/packages/overlays/NoCutoutOverlay/AndroidManifest.xml
++++ /dev/null
+@@ -1,8 +0,0 @@
+-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+-    package="org.pixelexperience.overlay.hidecutout"
+-    android:versionCode="1"
+-    android:versionName="1.0">
+-    <overlay android:targetPackage="android" android:priority="1" />
+-
+-    <application android:label="@string/display_cutout_emulation_overlay" android:hasCode="false"/>
+-</manifest>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-af/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-af/strings.xml
+deleted file mode 100644
+index 65a0e818..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-af/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Versteek"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-am/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-am/strings.xml
+deleted file mode 100644
+index 8b0c2120..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-am/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"ደብቅ"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ar/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ar/strings.xml
+deleted file mode 100644
+index e42e0ce6..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ar/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"إخفاء"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-as/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-as/strings.xml
+deleted file mode 100644
+index 57df7126..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-as/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"লুকুৱাওক"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-az/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-az/strings.xml
+deleted file mode 100644
+index 03d109da..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-az/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Gizlədin"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-b+sr+Latn/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-b+sr+Latn/strings.xml
+deleted file mode 100644
+index d970479a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-b+sr+Latn/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Sakrij"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-be/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-be/strings.xml
+deleted file mode 100644
+index c83f504d..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-be/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Схаваць"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-bg/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-bg/strings.xml
+deleted file mode 100644
+index 0594ee2a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-bg/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Скриване"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-bn/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-bn/strings.xml
+deleted file mode 100644
+index c7636839..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-bn/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"লুকান"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-bs/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-bs/strings.xml
+deleted file mode 100644
+index d970479a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-bs/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Sakrij"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ca/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ca/strings.xml
+deleted file mode 100644
+index 079d52d6..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ca/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Amaga"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-cs/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-cs/strings.xml
+deleted file mode 100644
+index 77282f16..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-cs/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Skrýt"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-da/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-da/strings.xml
+deleted file mode 100644
+index 98d18a59..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-da/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Skjul"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-de/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-de/strings.xml
+deleted file mode 100644
+index af5887a4..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-de/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ausblenden"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-el/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-el/strings.xml
+deleted file mode 100644
+index 8fd6d449..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-el/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Απόκρυψη"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-en-rAU/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-en-rAU/strings.xml
+deleted file mode 100644
+index 9e227b60..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-en-rAU/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Hide"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-en-rCA/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-en-rCA/strings.xml
+deleted file mode 100644
+index 9e227b60..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-en-rCA/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Hide"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-en-rGB/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-en-rGB/strings.xml
+deleted file mode 100644
+index 9e227b60..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-en-rGB/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Hide"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-en-rIN/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-en-rIN/strings.xml
+deleted file mode 100644
+index 9e227b60..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-en-rIN/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Hide"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-en-rXC/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-en-rXC/strings.xml
+deleted file mode 100644
+index d490bf1a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-en-rXC/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"‎‏‎‎‎‎‎‏‎‏‏‏‎‎‎‎‎‏‎‎‏‎‎‎‏‎‏‏‏‏‎‎‏‏‎‏‎‎‏‎‏‎‎‏‏‏‎‎‎‏‏‎‏‏‎‎‎‎‏‏‎‏‏‎‏‏‏‏‎‎‏‎‎‏‎‎‎‎‎‏‏‏‏‏‎‎‎‏‏‎‏‏‎Hide‎‏‎‎‏‎"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-es-rUS/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-es-rUS/strings.xml
+deleted file mode 100644
+index 58ca55ad..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-es-rUS/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ocultar"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-es/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-es/strings.xml
+deleted file mode 100644
+index 58ca55ad..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-es/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ocultar"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-et/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-et/strings.xml
+deleted file mode 100644
+index ca4aca2b..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-et/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Peida"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-eu/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-eu/strings.xml
+deleted file mode 100644
+index 9e36f3b1..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-eu/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ezkutatu"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-fa/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-fa/strings.xml
+deleted file mode 100644
+index e9bfd759..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-fa/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"پنهان کردن"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-fi/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-fi/strings.xml
+deleted file mode 100644
+index 823f3707..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-fi/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Piilota"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-fr-rCA/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-fr-rCA/strings.xml
+deleted file mode 100644
+index 4bde836b..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-fr-rCA/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Masquer"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-fr/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-fr/strings.xml
+deleted file mode 100644
+index 4bde836b..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-fr/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Masquer"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-gl/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-gl/strings.xml
+deleted file mode 100644
+index 58ca55ad..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-gl/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ocultar"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-gu/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-gu/strings.xml
+deleted file mode 100644
+index 437441c9..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-gu/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"છુપાવો"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-hi/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-hi/strings.xml
+deleted file mode 100644
+index b931845e..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-hi/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"छिपाएं"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-hr/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-hr/strings.xml
+deleted file mode 100644
+index d970479a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-hr/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Sakrij"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-hu/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-hu/strings.xml
+deleted file mode 100644
+index ffd68128..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-hu/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Elrejtés"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-hy/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-hy/strings.xml
+deleted file mode 100644
+index 094686e3..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-hy/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Թաքցնել"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-in/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-in/strings.xml
+deleted file mode 100644
+index eace0cf4..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-in/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Sembunyikan"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-is/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-is/strings.xml
+deleted file mode 100644
+index 0d102f2d..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-is/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Fela"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-it/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-it/strings.xml
+deleted file mode 100644
+index c7c6e8dc..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-it/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Nascondi"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-iw/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-iw/strings.xml
+deleted file mode 100644
+index b2194c62..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-iw/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"הסתר"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ja/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ja/strings.xml
+deleted file mode 100644
+index 079dce8a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ja/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"非表示"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ka/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ka/strings.xml
+deleted file mode 100644
+index 77444156..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ka/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"დამალვა"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-kk/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-kk/strings.xml
+deleted file mode 100644
+index 497e6e5e..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-kk/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Жасыру"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-km/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-km/strings.xml
+deleted file mode 100644
+index addea0e8..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-km/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"លាក់"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-kn/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-kn/strings.xml
+deleted file mode 100644
+index 03065d0b..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-kn/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"ಮರೆಮಾಡು"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ko/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ko/strings.xml
+deleted file mode 100644
+index 2e25f42a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ko/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"숨기기"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ky/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ky/strings.xml
+deleted file mode 100644
+index 85f55bdd..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ky/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Жашыруу"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-land/config.xml b/packages/overlays/NoCutoutOverlay/res/values-land/config.xml
+deleted file mode 100644
+index bd52901c..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-land/config.xml
++++ /dev/null
+@@ -1,22 +0,0 @@
+-<!--
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License
+-  -->
+-
+-<resources>
+-    <!-- Can't link to other dimensions here, but this should be status_bar_height_landscape -->
+-    <dimen name="quick_qs_offset_height">28dp</dimen>
+-    <!-- Total height of QQS in landscape; quick_qs_offset_height + 128 -->
+-    <dimen name="quick_qs_total_height">156dp</dimen>
+-</resources>
+\ No newline at end of file
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-lo/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-lo/strings.xml
+deleted file mode 100644
+index f9c8a715..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-lo/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"ເຊື່ອງ"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-lt/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-lt/strings.xml
+deleted file mode 100644
+index 5ac46ed2..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-lt/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Slėpti"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-lv/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-lv/strings.xml
+deleted file mode 100644
+index 09fbde61..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-lv/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Paslēpt"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-mk/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-mk/strings.xml
+deleted file mode 100644
+index 5db59dd8..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-mk/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Сокриј"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ml/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ml/strings.xml
+deleted file mode 100644
+index d616aaf3..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ml/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"മറയ്ക്കുക"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-mn/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-mn/strings.xml
+deleted file mode 100644
+index c775ea32..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-mn/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Нуух"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-mr/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-mr/strings.xml
+deleted file mode 100644
+index 25fe0e42..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-mr/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"लपवा"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ms/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ms/strings.xml
+deleted file mode 100644
+index eace0cf4..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ms/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Sembunyikan"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-my/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-my/strings.xml
+deleted file mode 100644
+index 5140ca3a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-my/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"ဝှက်ပါ"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-nb/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-nb/strings.xml
+deleted file mode 100644
+index 98d18a59..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-nb/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Skjul"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ne/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ne/strings.xml
+deleted file mode 100644
+index b964f0a2..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ne/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"लुकाउनुहोस्"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-nl/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-nl/strings.xml
+deleted file mode 100644
+index 0140cd8f..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-nl/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Verbergen"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-or/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-or/strings.xml
+deleted file mode 100644
+index 62b9b691..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-or/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"ଲୁଚାନ୍ତୁ"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-pa/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-pa/strings.xml
+deleted file mode 100644
+index 39b8c1bf..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-pa/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"ਲੁਕਾਓ"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-pl/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-pl/strings.xml
+deleted file mode 100644
+index b1059efe..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-pl/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ukryj"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-pt-rBR/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-pt-rBR/strings.xml
+deleted file mode 100644
+index 58ca55ad..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-pt-rBR/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ocultar"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-pt-rPT/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-pt-rPT/strings.xml
+deleted file mode 100644
+index 58ca55ad..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-pt-rPT/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ocultar"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-pt/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-pt/strings.xml
+deleted file mode 100644
+index 58ca55ad..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-pt/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ocultar"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ro/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ro/strings.xml
+deleted file mode 100644
+index 61254b24..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ro/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ascundeți"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ru/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ru/strings.xml
+deleted file mode 100644
+index 507b87db..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ru/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Скрыть"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-si/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-si/strings.xml
+deleted file mode 100644
+index d72c1bee..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-si/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"සඟවන්න"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-sk/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-sk/strings.xml
+deleted file mode 100644
+index d663882e..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-sk/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Skryť"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-sl/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-sl/strings.xml
+deleted file mode 100644
+index e2fb8eeb..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-sl/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Skrivanje"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-sq/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-sq/strings.xml
+deleted file mode 100644
+index c210dcdd..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-sq/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Fshih"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-sr/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-sr/strings.xml
+deleted file mode 100644
+index 8843ed8e..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-sr/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Сакриј"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-sv/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-sv/strings.xml
+deleted file mode 100644
+index 9dc5cf0f..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-sv/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Dölj"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-sw/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-sw/strings.xml
+deleted file mode 100644
+index b177c3f8..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-sw/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ficha"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ta/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ta/strings.xml
+deleted file mode 100644
+index 0d162729..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ta/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"மறை"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-te/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-te/strings.xml
+deleted file mode 100644
+index 8efd0f10..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-te/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"దాస్తుంది"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-th/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-th/strings.xml
+deleted file mode 100644
+index beb73619..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-th/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"ซ่อน"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-tl/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-tl/strings.xml
+deleted file mode 100644
+index 1ab2b800..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-tl/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Itago"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-tr/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-tr/strings.xml
+deleted file mode 100644
+index 29b9e44e..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-tr/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Gizle"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-uk/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-uk/strings.xml
+deleted file mode 100644
+index 4cb28d97..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-uk/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Сховати"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-ur/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-ur/strings.xml
+deleted file mode 100644
+index bbf4e152..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-ur/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"چھپائیں"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-uz/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-uz/strings.xml
+deleted file mode 100644
+index e7663e98..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-uz/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Berkitish"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-vi/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-vi/strings.xml
+deleted file mode 100644
+index 0480b9a3..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-vi/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Ẩn"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-zh-rCN/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-zh-rCN/strings.xml
+deleted file mode 100644
+index 0da23f7a..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-zh-rCN/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"隐藏"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-zh-rHK/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-zh-rHK/strings.xml
+deleted file mode 100644
+index 4eb6b3a0..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-zh-rHK/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"隱藏"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-zh-rTW/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-zh-rTW/strings.xml
+deleted file mode 100644
+index 4eb6b3a0..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-zh-rTW/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"隱藏"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values-zu/strings.xml b/packages/overlays/NoCutoutOverlay/res/values-zu/strings.xml
+deleted file mode 100644
+index c51c9fc1..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values-zu/strings.xml
++++ /dev/null
+@@ -1,21 +0,0 @@
+-<?xml version="1.0" encoding="UTF-8"?>
+-<!-- 
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-   -->
+-
+-<resources xmlns:android="http://schemas.android.com/apk/res/android"
+-    xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <string name="display_cutout_emulation_overlay" msgid="139628023533109567">"Fihla"</string>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values/config.xml b/packages/overlays/NoCutoutOverlay/res/values/config.xml
+deleted file mode 100644
+index 4a335465..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values/config.xml
++++ /dev/null
+@@ -1,9 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-    <bool name="config_fillMainBuiltInDisplayCutout">false</bool>
+-    <bool name="config_maskMainBuiltInDisplayCutout">true</bool>
+-    <!-- Height of the status bar -->
+-    <dimen name="status_bar_height_portrait">28dp</dimen>
+-    <dimen name="status_bar_height_landscape">28dp</dimen>
+-    <dimen name="rounded_corner_radius_top">60px</dimen>
+-</resources>
+diff --git a/packages/overlays/NoCutoutOverlay/res/values/strings.xml b/packages/overlays/NoCutoutOverlay/res/values/strings.xml
+deleted file mode 100644
+index 420cc8bf..00000000
+--- a/packages/overlays/NoCutoutOverlay/res/values/strings.xml
++++ /dev/null
+@@ -1,22 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!--
+-  ~ Copyright (C) 2018 The Android Open Source Project
+-  ~
+-  ~ Licensed under the Apache License, Version 2.0 (the "License");
+-  ~ you may not use this file except in compliance with the License.
+-  ~ You may obtain a copy of the License at
+-  ~
+-  ~      http://www.apache.org/licenses/LICENSE-2.0
+-  ~
+-  ~ Unless required by applicable law or agreed to in writing, software
+-  ~ distributed under the License is distributed on an "AS IS" BASIS,
+-  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-  ~ See the License for the specific language governing permissions and
+-  ~ limitations under the License.
+-  -->
+-<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
+-
+-    <!-- [CHAR_LIMIT=NONE] Developer Settings: Label for the option that masks the display cutout, i.e. it shrinks the display such that the display cutout is no longer visible.-->
+-    <string name="display_cutout_emulation_overlay">Hide</string>
+-
+-</resources>
+-- 
+2.17.1
+

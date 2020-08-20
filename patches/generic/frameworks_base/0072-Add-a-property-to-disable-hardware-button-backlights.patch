@@ -1,0 +1,69 @@
+From 50d7b2ce995e60f9eca8b38c3d7e6c6eec290b21 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sat, 10 Aug 2019 20:40:24 +0200
+Subject: [PATCH 072/127] Add a property to disable hardware button backlights
+
+Change-Id: I59c4003cc79f668eb0d56f99ca27f185bf7bc52f
+---
+ .../com/android/server/display/DisplayPowerController.java | 7 +++++--
+ .../java/com/android/server/power/PowerManagerService.java | 7 +++++--
+ 2 files changed, 10 insertions(+), 4 deletions(-)
+
+diff --git a/services/core/java/com/android/server/display/DisplayPowerController.java b/services/core/java/com/android/server/display/DisplayPowerController.java
+index ddeae142233..448a76de95c 100644
+--- a/services/core/java/com/android/server/display/DisplayPowerController.java
++++ b/services/core/java/com/android/server/display/DisplayPowerController.java
+@@ -160,6 +160,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+     private final IBatteryStats mBatteryStats;
+ 
+     // The lights service.
++    private static final boolean mDisableButtonsLight = android.os.SystemProperties.getBoolean("persist.sys.phh.disable_buttons_light", false);
+     private final LightsManager mLights;
+ 
+     // The sensor manager.
+@@ -913,12 +914,14 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+         if (state == Display.STATE_OFF) {
+             brightness = PowerManager.BRIGHTNESS_OFF;
+             mBrightnessReasonTemp.setReason(BrightnessReason.REASON_SCREEN_OFF);
+-            mLights.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(brightness);
++            if(!mDisableButtonsLight)
++                mLights.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(brightness);
+         }
+ 
+         // Disable button lights when dozing
+         if (state == Display.STATE_DOZE || state == Display.STATE_DOZE_SUSPEND) {
+-            mLights.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(PowerManager.BRIGHTNESS_OFF);
++            if(!mDisableButtonsLight)
++                mLights.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(PowerManager.BRIGHTNESS_OFF);
+         }
+ 
+         // Always use the VR brightness when in the VR state.
+diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
+index 9bb3c23bb5c..23580e81175 100644
+--- a/services/core/java/com/android/server/power/PowerManagerService.java
++++ b/services/core/java/com/android/server/power/PowerManagerService.java
+@@ -271,6 +271,7 @@ public final class PowerManagerService extends SystemService
+     private DreamManagerInternal mDreamManager;
+     private Light mAttentionLight;
+     private Light mButtonsLight;
++    private static final boolean mDisableButtonsLight = android.os.SystemProperties.getBoolean("persist.sys.phh.disable_buttons_light", false);
+ 
+     private int mButtonTimeout;
+     private int mButtonBrightness;
+@@ -2219,9 +2220,11 @@ public final class PowerManagerService extends SystemService
+                             + screenOffTimeout - screenDimDuration;
+                     if (now < nextTimeout) {
+                         if (now > mLastUserActivityTime + BUTTON_ON_DURATION) {
+-                            mButtonsLight.setBrightness(0);
++                            if(!mDisableButtonsLight)
++                                mButtonsLight.setBrightness(0);
+                         } else {
+-                            mButtonsLight.setBrightness(screenBrightness);
++                            if(!mDisableButtonsLight)
++                                mButtonsLight.setBrightness(screenBrightness);
+                             nextTimeout = now + BUTTON_ON_DURATION;
+                         }
+                         mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
+-- 
+2.17.1
+

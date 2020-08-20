@@ -1,0 +1,46 @@
+From 80fffeb9661e7876fc7499ccedd589abd2a2146a Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 21 Aug 2020 18:41:58 -0400
+Subject: [PATCH 6/6] remove QPGallery
+
+Change-Id: Id18656fc4fba7d961f29122b2f8275dcd19616cb
+---
+ config/btlg_packages.mk    | 1 -
+ prebuilt/common/Android.mk | 9 ---------
+ 2 files changed, 10 deletions(-)
+
+diff --git a/config/btlg_packages.mk b/config/btlg_packages.mk
+index 462c132a..e5de8c28 100644
+--- a/config/btlg_packages.mk
++++ b/config/btlg_packages.mk
+@@ -2,7 +2,6 @@
+ PRODUCT_PACKAGES += \
+     Email \
+     Etar \
+-    QPGallery \
+     MiXplorerPrebuilt \
+     WallpaperPicker2 \
+     MarkupGugel \
+diff --git a/prebuilt/common/Android.mk b/prebuilt/common/Android.mk
+index c5319aee..7a463afd 100644
+--- a/prebuilt/common/Android.mk
++++ b/prebuilt/common/Android.mk
+@@ -42,15 +42,6 @@ include $(BUILD_PREBUILT)
+ #
+ # Prebuilt APKs
+ #
+-#Gallery app
+-include $(CLEAR_VARS)
+-LOCAL_MODULE := QPGallery
+-LOCAL_SRC_FILES := app/$(LOCAL_MODULE).apk
+-LOCAL_MODULE_CLASS := APPS
+-LOCAL_MODULE_TAGS := optional
+-LOCAL_CERTIFICATE := PRESIGNED
+-LOCAL_OVERRIDES_PACKAGES := Gallery Gallery2 SnapdragonGallery VanillaGallery
+-include $(BUILD_PREBUILT)
+ 
+ #FileManager App
+ include $(CLEAR_VARS)
+-- 
+2.17.1
+

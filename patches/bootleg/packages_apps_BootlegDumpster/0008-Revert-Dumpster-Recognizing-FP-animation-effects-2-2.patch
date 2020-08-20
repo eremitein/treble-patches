@@ -1,0 +1,119 @@
+From ca43f1d43c23b96525c68bdaf08faf11407b7748 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:13:54 -0400
+Subject: [PATCH 08/13] Revert "Dumpster: Recognizing FP animation effects
+ [2/2]"
+
+This reverts commit 319c5f4a8242ff8e12bc2f5b8435ece68ae8d6b2.
+
+Change-Id: Ib1c34b2e1f7f9f3c9ea09d79015f9baff1935f7d
+---
+ res/values/bootleg_arrays.xml           | 11 -----------
+ res/values/bootleg_strings.xml          | 20 ++++++--------------
+ res/xml/bootleg_dumpster_lockscreen.xml | 15 +++------------
+ 3 files changed, 9 insertions(+), 37 deletions(-)
+
+diff --git a/res/values/bootleg_arrays.xml b/res/values/bootleg_arrays.xml
+index 45d052c..6496851 100644
+--- a/res/values/bootleg_arrays.xml
++++ b/res/values/bootleg_arrays.xml
+@@ -469,17 +469,6 @@
+         <item>40</item>
+     </string-array>
+ 
+-    <!-- FOD Recognizing fingerprint animations -->
+-    <string-array name="fod_recog_animation_entries" translatable="false">
+-        <item>@string/fod_recog_animation_miui_normal</item>
+-        <item>@string/fod_recog_animation_miui_aod</item>
+-        <item>@string/fod_recog_animation_miui_light</item>
+-        <item>@string/fod_recog_animation_miui_pop</item>
+-        <item>@string/fod_recog_animation_miui_pulse</item>
+-        <item>@string/fod_recog_animation_miui_pulse_white</item>
+-        <item>@string/fod_recog_animation_miui_rhythm</item>
+-    </string-array>
+-
+     <string-array name="fod_recog_animation_values" translatable="false">
+         <item>0</item>
+         <item>1</item>
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index 0e0563f..0e85491 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -641,29 +641,21 @@
+     <string name="pocket_judge_summary">Block screen and button inputs when device is in pocket</string>
+ 
+     <!-- FOD icon picker -->
+-    <string name="fod_icon_picker_category_title">FOD customization options</string>
+-    <string name="fod_icon_picker_title">Icon customizer</string>
++    <string name="fod_icon_picker_title">FOD icon picker</string>
+     <string name="fod_icon_picker_summary">Choose your favorite fingerprint icon</string>
+     <string name="fod_icon_picker_footer">In order to add your own icon, select the top left icon and use the OnePlus 6T FP Customizer app to select the icon you want.</string>
+ 
+-    <!-- FOD pressed state effect -->
+-    <string name="fod_pressed_state_title">Pressed icon effect</string>
++    <!-- FOD pressed state behavior -->
++    <string name="fod_pressed_state_title">FOD pressed state behavior</string>
++    <string name="fod_pressed_state_summary">Choose the appropriate pressed state behavior for your device</string>
+     <string name="fod_pressed_state_footer">Icons/colors may vary depending on which device you are using.</string>
+     <string name="fod_pressed_state_icon">Icon (usually Cyan)</string>
+     <string name="fod_pressed_state_icon_white">Icon (White)</string>
+     <string name="fod_pressed_state_solid_color">Solid color (usually Green)</string>
+ 
+-    <!-- FOD animations -->
+-    <string name="fod_recog_animation">Recognizing animation</string>
++   <!-- FOD animations -->
++    <string name="fod_recog_animation">FOD recognizing animation</string>
+     <string name="fod_recog_animation_summary">Shows an animation while reading your finger</string>
+-    <string name="fod_recog_animation_effect_title">Recognizing animation effect</string>
+-    <string name="fod_recog_animation_miui_normal">MIUI default</string>
+-    <string name="fod_recog_animation_miui_aod">AOD</string>
+-    <string name="fod_recog_animation_miui_light">Light</string>
+-    <string name="fod_recog_animation_miui_pop">Pop</string>
+-    <string name="fod_recog_animation_miui_pulse">Pulse</string>
+-    <string name="fod_recog_animation_miui_pulse_white">Pulse (White)</string>
+-    <string name="fod_recog_animation_miui_rhythm">Rhythm</string>
+ 
+    <!-- Heads up options -->
+     <string name="less_boring_heads_up_title">Less boring heads up</string>
+diff --git a/res/xml/bootleg_dumpster_lockscreen.xml b/res/xml/bootleg_dumpster_lockscreen.xml
+index 66c4d1b..66dd5c7 100644
+--- a/res/xml/bootleg_dumpster_lockscreen.xml
++++ b/res/xml/bootleg_dumpster_lockscreen.xml
+@@ -187,10 +187,10 @@
+ 
+     </PreferenceCategory>
+ 
+-   <!-- FOD customization options -->
++    <!-- FOD icon picker -->
+     <PreferenceCategory
+         android:key="fod_icon_picker"
+-        android:title="@string/fod_icon_picker_category_title">
++        android:title="@string/fod_icon_picker_title">
+ 
+         <Preference
+             android:key="fod_icon_picker_category"
+@@ -205,20 +205,11 @@
+             android:summary="@string/fod_recog_animation_summary"
+             android:defaultValue="false" />
+ 
+-        <com.bootleggers.dumpster.preferences.SystemSettingListPreference
+-            android:key="fod_anim"
+-            android:title="@string/fod_recog_animation_effect_title"
+-            android:summary="%s"
+-            android:entries="@array/fod_recog_animation_entries"
+-            android:entryValues="@array/fod_recog_animation_values"
+-            android:defaultValue="0"
+-            android:dependency="fod_recognizing_animation" />
+-
+         <com.bootleggers.dumpster.preferences.SystemSettingListPreference
+             android:key="fod_pressed_state"
+             android:dialogTitle="@string/fod_pressed_state_title"
+             android:title="@string/fod_pressed_state_title"
+-            android:summary="%s"
++            android:summary="@string/fod_pressed_state_summary"
+             android:entries="@array/fod_pressed_state_entries"
+             android:entryValues="@array/fod_pressed_state_values"
+             android:defaultValue="0" />
+-- 
+2.17.1
+

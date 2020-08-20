@@ -1,0 +1,26 @@
+From 8eae39bf33c8f45337c7c0355af158f9b27b69da Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:21:31 -0400
+Subject: [PATCH 027/127] Revert "FODCircleView: only move in Y direction"
+
+This reverts commit 30928014bea01a9fb6892235622a9a9f42f4a509.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java      | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 6c89f648126..dbee725504b 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -463,7 +463,7 @@ public class FODCircleView extends ImageView {
+         }
+ 
+         if (mIsDreaming) {
+-            //mParams.x += mDreamingOffsetX;
++            mParams.x += mDreamingOffsetX;
+             mParams.y += mDreamingOffsetY;
+         }
+ 
+-- 
+2.17.1
+

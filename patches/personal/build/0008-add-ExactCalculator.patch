@@ -1,0 +1,28 @@
+From 21a539cea71b7228190e70f21861ad8c9361c985 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 21 Aug 2020 01:53:45 -0400
+Subject: [PATCH] add ExactCalculator
+
+  from
+  https://github.com/LineageOS/android_packages_apps_ExactCalculator.git
+
+Change-Id: I75dcef95817eb5e9eeeee03892725708116a6e8c
+---
+ target/product/handheld_product.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index 567865564..d83e3602e 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -27,6 +27,7 @@ PRODUCT_PACKAGES += \
+     Camera2 \
+     Contacts \
+     DeskClock \
++    ExactCalculator \
+     Launcher3QuickStep \
+     Music \
+     OneTimeInitializer \
+-- 
+2.17.1
+

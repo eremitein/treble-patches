@@ -1,0 +1,57 @@
+From c492b9429d92d9950779ddeb247cb14ffaf79a62 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Aug 2020 11:03:18 -0400
+Subject: [PATCH] NetworkTrafficSB: try to fix cropped font
+
+Change-Id: I90d65390127d8c8bd66027f807bb4d85cd44ba5f
+---
+ .../systemui/statusbar/policy/NetworkTrafficSB.java    | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkTrafficSB.java b/packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkTrafficSB.java
+index 1d2a206e9df..794e31fee0d 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkTrafficSB.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/policy/NetworkTrafficSB.java
+@@ -111,7 +111,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable
+                     setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+                     setGravity(Gravity.CENTER);
+                     setMaxLines(2);
+-                    setLineSpacing(0.75f, 0.75f);
++                    setLineSpacing(0.70f, 0.70f);
+                     setText(output);
+                     indicatorUp = true;
+                 }
+@@ -125,7 +125,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable
+                     setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+                     setGravity(Gravity.CENTER);
+                     setMaxLines(2);
+-                    setLineSpacing(0.75f, 0.75f);
++                    setLineSpacing(0.70f, 0.70f);
+                     setText(output);
+                     indicatorDown = true;
+                 }
+@@ -186,10 +186,10 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable
+             }
+ 
+             spanSpeedString = new SpannableString(formatSpeed);
+-            spanSpeedString.setSpan(new RelativeSizeSpan(0.75f), 0, (formatSpeed).length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
++            spanSpeedString.setSpan(new RelativeSizeSpan(0.70f), 0, (formatSpeed).length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+ 
+             spanUnitString = new SpannableString(mUnit + symbol);
+-            spanUnitString.setSpan(new RelativeSizeSpan(0.70f), 0, (mUnit + symbol).length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
++            spanUnitString.setSpan(new RelativeSizeSpan(0.65f), 0, (mUnit + symbol).length(), Spanned.SPAN_INCLUSIVE_INCLUSIVE);
+             return TextUtils.concat(spanSpeedString, "\n", spanUnitString);
+         }
+ 
+@@ -390,7 +390,7 @@ public class NetworkTrafficSB extends TextView implements StatusIconDisplayable
+         setTypeface(Typeface.create("sans-serif-condensed", Typeface.BOLD));
+         setGravity(Gravity.CENTER);
+         setMaxLines(2);
+-        setLineSpacing(0.75f, 0.75f);
++        setLineSpacing(0.70f, 0.70f);
+     }
+ 
+     @Override
+-- 
+2.17.1
+

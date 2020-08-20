@@ -1,0 +1,57 @@
+From 2fc18f1dc72b3b69254e7e44cdf775ae04dc1f16 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:23:55 -0400
+Subject: [PATCH 036/127] Revert "FODCircleView: Add partial wakelock on aod"
+
+This reverts commit e2dad8927cccf110ab8b4f404f3670ea7468ea03.
+---
+ .../android/systemui/biometrics/FODCircleView.java   | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 182d1ad20aa..8f0b352d318 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -26,7 +26,6 @@ import android.graphics.PixelFormat;
+ import android.graphics.Point;
+ import android.os.Handler;
+ import android.os.Looper;
+-import android.os.PowerManager;
+ import android.os.RemoteException;
+ import android.provider.Settings;
+ import android.view.Display;
+@@ -71,9 +70,6 @@ public class FODCircleView extends ImageView {
+ 
+     private Handler mHandler;
+ 
+-    private PowerManager mPowerManager;
+-    private PowerManager.WakeLock mWakeLock;
+-
+     private Timer mBurnInProtectionTimer;
+ 
+     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
+@@ -171,10 +167,6 @@ public class FODCircleView extends ImageView {
+ 
+         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
+         mUpdateMonitor.registerCallback(mMonitorCallback);
+-
+-        mPowerManager = context.getSystemService(PowerManager.class);
+-        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+-                FODCircleView.class.getSimpleName());
+     }
+ 
+     @Override
+@@ -269,10 +261,6 @@ public class FODCircleView extends ImageView {
+ 
+         setKeepScreenOn(true);
+ 
+-        if (mIsDreaming) {
+-            mWakeLock.acquire(300);
+-        }
+-
+         setDim(true);
+         updateAlpha();
+         dispatchPress();
+-- 
+2.17.1
+

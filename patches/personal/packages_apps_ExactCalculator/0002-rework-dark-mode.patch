@@ -1,0 +1,40 @@
+From a97305b71eaf3308c50517485e64f6dae5c302ab Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 28 Apr 2020 12:52:39 +0300
+Subject: [PATCH 2/2] rework dark mode
+
+	modified:   res/values-night/lineage_colors.xml
+
+Change-Id: I89f39be2df44d97f7b74b49a2c8837a4f861b5f6
+---
+ res/values-night/lineage_colors.xml | 10 +++++++---
+ 1 file changed, 7 insertions(+), 3 deletions(-)
+
+diff --git a/res/values-night/lineage_colors.xml b/res/values-night/lineage_colors.xml
+index bfda51b..9e943b0 100644
+--- a/res/values-night/lineage_colors.xml
++++ b/res/values-night/lineage_colors.xml
+@@ -17,13 +17,17 @@
+ 
+ <resources>
+     <!-- Primary color (Color for the toolbars). -->
+-    <color name="calculator_primary_color">#212121</color>
++    <color name="calculator_primary_color">@*android:color/primary_dark_device_default_settings</color>
+ 
+     <!-- Status bar color. -->
+-    <color name="calculator_statusbar_color">#000000</color>
++    <color name="calculator_statusbar_color">@*android:color/primary_dark_device_default_settings</color>
++
++    <!-- Navigation bar color -->
++    <color name="navigationBar_color">@*android:color/primary_dark_device_default_settings</color>
++    <color name="navigationBar_divider">#00ffffff</color>
+ 
+     <!-- Background color for the operator pad. -->
+-    <color name="pad_operator_background_color">#1E1E1E</color>
++    <color name="pad_operator_background_color">@*android:color/primary_dark_device_default_dark</color>
+ 
+     <!-- Text color for the formula in the calculator display. -->
+     <color name="display_formula_text_color">@android:color/white</color>
+-- 
+2.25.1
+

@@ -1,0 +1,66 @@
+From 25c7d82b3c7abc443d78b0f4985ab0735920ad40 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 08:55:24 -0400
+Subject: [PATCH 001/127] Revert "FODAnimation: Allow to set vertical position
+ offset"
+
+This reverts commit 8d57e1b7df2a473277e732878d5d1c942677bae0.
+
+Change-Id: Ia9c2706a3bbeaeefba975ae9eb14bc92b07b641a
+---
+ packages/SystemUI/res/values/bootleg_dimens.xml             | 1 -
+ .../src/com/android/systemui/biometrics/FODAnimation.java   | 6 ++----
+ 2 files changed, 2 insertions(+), 5 deletions(-)
+
+diff --git a/packages/SystemUI/res/values/bootleg_dimens.xml b/packages/SystemUI/res/values/bootleg_dimens.xml
+index d0e7a298bad..6b71530a0a8 100644
+--- a/packages/SystemUI/res/values/bootleg_dimens.xml
++++ b/packages/SystemUI/res/values/bootleg_dimens.xml
+@@ -89,6 +89,5 @@
+ 
+     <!-- FOD Animation Size -->
+     <dimen name="fod_animation_size">280dp</dimen>
+-    <dimen name="fod_animation_offset">4dp</dimen>
+ 
+ </resources>
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
+index 22d3742175b..448d10c670c 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
+@@ -35,7 +35,6 @@ public class FODAnimation extends ImageView {
+     private boolean mShowing = false;
+     private Context mContext;
+     private int mAnimationSize;
+-    private int mAnimationOffset;
+     private int mAnimationPositionY;
+     private AnimationDrawable recognizingAnim;
+     private WindowManager mWindowManager;
+@@ -58,7 +57,6 @@ public class FODAnimation extends ImageView {
+         mWindowManager = mContext.getSystemService(WindowManager.class);
+ 
+         mAnimationSize = mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_size);
+-        mAnimationOffset = mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_offset);
+         mAnimParams.height = mAnimationSize;
+         mAnimParams.width = mAnimationSize;
+ 
+@@ -67,7 +65,7 @@ public class FODAnimation extends ImageView {
+         mAnimParams.flags =  WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE
+                 | WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL | WindowManager.LayoutParams.FLAG_LAYOUT_NO_LIMITS;
+         mAnimParams.gravity = Gravity.TOP | Gravity.CENTER;
+-        mAnimParams.y = mPositionY - (mAnimationSize / 2) + mAnimationOffset;
++        mAnimParams.y = mPositionY - (mAnimationSize / 2);
+ 
+         setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+         update();
+@@ -82,7 +80,7 @@ public class FODAnimation extends ImageView {
+     }
+ 
+     public void updateParams(int mDreamingOffsetY) {
+-        mAnimParams.y = mDreamingOffsetY - (mAnimationSize / 2) + mAnimationOffset;
++        mAnimParams.y = mDreamingOffsetY - (mAnimationSize / 2);
+     }
+ 
+     public void setAnimationKeyguard(boolean state) {
+-- 
+2.17.1
+

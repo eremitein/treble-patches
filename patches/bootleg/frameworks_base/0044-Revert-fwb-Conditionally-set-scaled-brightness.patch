@@ -1,0 +1,82 @@
+From d492f45ef8667dae2c5ae0aef2834acb72d08d32 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 14:03:28 -0400
+Subject: [PATCH 044/127] Revert "fwb: Conditionally set scaled brightness"
+
+This reverts commit 932a8f3fce38e9b6745a887fad2dc2183d46d72c.
+
+Change-Id: Ibfda26d9a62dbe898b4404594e418340c9a00c3b
+---
+ core/res/res/values/bootleg_config.xml               |  3 ---
+ core/res/res/values/bootleg_symbols.xml              |  3 ---
+ .../com/android/server/lights/LightsService.java     | 12 +++---------
+ 3 files changed, 3 insertions(+), 15 deletions(-)
+
+diff --git a/core/res/res/values/bootleg_config.xml b/core/res/res/values/bootleg_config.xml
+index c81765e8b74..9c26a594e2e 100644
+--- a/core/res/res/values/bootleg_config.xml
++++ b/core/res/res/values/bootleg_config.xml
+@@ -113,9 +113,6 @@
+     <string name="config_SmartChargingSupspendValue" translatable="false">1</string>
+     <string name="config_SmartChargingResumeValue" translatable="false">0</string>
+ 
+-    <!-- Whether to use scaled brightness (set -1 to disable) -->
+-    <integer name="config_useScaleBrightness">-1</integer>
+-
+     <!-- Defines the sysfs attribute path used by pocket bridge
+        to communicate pocket state to the pocket judge kernel driver. -->
+     <string name="config_pocketBridgeSysfsInpocket"></string>
+diff --git a/core/res/res/values/bootleg_symbols.xml b/core/res/res/values/bootleg_symbols.xml
+index 1773e41e4e3..019d644e03e 100644
+--- a/core/res/res/values/bootleg_symbols.xml
++++ b/core/res/res/values/bootleg_symbols.xml
+@@ -101,9 +101,6 @@
+     <java-symbol type="string" name="config_SmartChargingSupspendValue" />
+     <java-symbol type="string" name="config_SmartChargingResumeValue" />
+ 
+-    <!-- Whether to use scaled brightness (set -1 to disable) -->
+-    <java-symbol type="integer" name="config_useScaleBrightness" />
+-
+     <!-- Pocket Lock -->
+     <java-symbol type="layout" name="pocket_lock_view_layout" />
+     <java-symbol type="id" name="pocket_hint_container" />
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 05070632eb7..ac906bb23d3 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -38,7 +38,6 @@ public class LightsService extends SystemService {
+ 
+         private final IBinder mDisplayToken;
+         private final int mSurfaceControlMaximumBrightness;
+-        private final int mUseScaleBrightness;
+ 
+         private LightImpl(Context context, int id) {
+             mId = id;
+@@ -56,7 +55,6 @@ public class LightsService extends SystemService {
+                 }
+             }
+             mSurfaceControlMaximumBrightness = maximumBrightness;
+-            mUseScaleBrightness = context.getResources().getInteger(com.android.internal.R.integer.config_useScaleBrightness);
+         }
+ 
+         @Override
+@@ -89,13 +87,9 @@ public class LightsService extends SystemService {
+                     SurfaceControl.setDisplayBrightness(mDisplayToken,
+                             (float) brightness / mSurfaceControlMaximumBrightness);
+                 } else {
+-                    if (mUseScaleBrightness == -1){
+-                        int color = brightness & 0x000000ff;
+-                        color = 0xff000000 | (color << 16) | (color << 8) | color;
+-                        setLightLocked(color, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
+-                    }else{
+-                        setLightLocked(brightness * mUseScaleBrightness / 255, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
+-                    }
++                    int color = brightness & 0x000000ff;
++                    color = 0xff000000 | (color << 16) | (color << 8) | color;
++                    setLightLocked(color, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
+                 }
+             }
+         }
+-- 
+2.17.1
+

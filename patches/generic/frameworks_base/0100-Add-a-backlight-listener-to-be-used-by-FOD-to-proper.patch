@@ -1,0 +1,40 @@
+From db67408fccdb5b1f450f776f7edfa2d2d4306697 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 20 May 2020 17:28:26 +0200
+Subject: [PATCH 100/127] Add a backlight listener, to be used by FOD to
+ properly set dim
+
+---
+ .../core/java/com/android/server/lights/LightsService.java   | 5 +++++
+ 1 file changed, 5 insertions(+)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 777a00daf31..9d7975d63b4 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -30,10 +30,14 @@ import android.view.SurfaceControl;
+ import com.android.server.SystemService;
+ 
+ public class LightsService extends SystemService {
++    public interface OnBacklightChange {
++        void onBacklightChange(int newBacklight);
++    }
+     static final String TAG = "LightsService";
+     static final boolean DEBUG = false;
+ 
+     final LightImpl mLights[] = new LightImpl[LightsManager.LIGHT_ID_COUNT];
++    public static OnBacklightChange backlightChangeListener;
+ 
+     private final class LightImpl extends Light {
+ 
+@@ -90,6 +94,7 @@ public class LightsService extends SystemService {
+                             (float) brightness / mSurfaceControlMaximumBrightness);
+ 		    return;
+                 }
++                if(mId == 0 && backlightChangeListener != null) backlightChangeListener.onBacklightChange(brightness);
+ 
+                 if(mId == 0) {
+                     String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
+-- 
+2.17.1
+

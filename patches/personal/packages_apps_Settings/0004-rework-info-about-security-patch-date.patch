@@ -1,0 +1,110 @@
+From 40520153aad7a1c0130e788055e233c67447b2cd Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 10 Feb 2020 16:33:15 +0200
+Subject: [PATCH 04/15] rework info about security patch date
+
+	modified:   res/xml/firmware_version.xml
+	modified:   src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
+	new file:   src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchVendorPreferenceController.java
+
+Change-Id: Icf527265c090b22799d7c4ff3963020a81094e06
+---
+ ...ecurityPatchLevelPreferenceController.java | 60 +++++++++----------
+ 1 file changed, 29 insertions(+), 31 deletions(-)
+
+diff --git a/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
+index 1df78a8081..029e850a51 100644
+--- a/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
++++ b/src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java
+@@ -17,59 +17,57 @@
+ package com.android.settings.deviceinfo.firmwareversion;
+ 
+ import android.content.Context;
+-import android.content.Intent;
+-import android.content.pm.PackageManager;
+-import android.net.Uri;
+-import android.text.TextUtils;
+-import android.util.Log;
+-
+-import androidx.preference.Preference;
++import android.os.SystemProperties;
++import android.text.format.DateFormat;
+ 
++import com.android.settings.R;
+ import com.android.settings.core.BasePreferenceController;
+-import com.android.settingslib.DeviceInfoUtils;
++
++import java.text.ParseException;
++import java.text.SimpleDateFormat;
++import java.util.Date;
++import java.util.Locale;
+ 
+ public class SecurityPatchLevelPreferenceController extends BasePreferenceController {
+ 
+     private static final String TAG = "SecurityPatchCtrl";
+-    private static final Uri INTENT_URI_DATA = Uri.parse(
+-            "https://source.android.com/security/bulletin/");
+ 
+-    private final PackageManager mPackageManager;
+-    private final String mCurrentPatch;
++    private static final String KEY_AOSP_SECURITY_PATCH =
++            "ro.build.version.security_patch";
++
++    private static final String KEY_AOSP_SECURITY_PATCH_COPY =
++            "build.version.security_patch";
+ 
+     public SecurityPatchLevelPreferenceController(Context context, String key) {
+         super(context, key);
+-        mPackageManager = mContext.getPackageManager();
+-        mCurrentPatch = DeviceInfoUtils.getSecurityPatch();
+     }
+ 
+     @Override
+     public int getAvailabilityStatus() {
+-        return !TextUtils.isEmpty(mCurrentPatch)
+-                ? AVAILABLE : CONDITIONALLY_UNAVAILABLE;
++        return AVAILABLE;
+     }
+ 
+     @Override
+     public CharSequence getSummary() {
+-        return mCurrentPatch;
+-    }
++        String patchLevel = SystemProperties.get(KEY_AOSP_SECURITY_PATCH_COPY);
+ 
+-    @Override
+-    public boolean handlePreferenceTreeClick(Preference preference) {
+-        if (!TextUtils.equals(preference.getKey(), getPreferenceKey())) {
+-            return false;
++        if (patchLevel.isEmpty()) {
++            patchLevel = SystemProperties.get(KEY_AOSP_SECURITY_PATCH);
+         }
+ 
+-        final Intent intent = new Intent();
+-        intent.setAction(Intent.ACTION_VIEW);
+-        intent.setData(INTENT_URI_DATA);
+-        if (mPackageManager.queryIntentActivities(intent, 0).isEmpty()) {
+-            // Don't send out the intent to stop crash
+-            Log.w(TAG, "queryIntentActivities() returns empty");
+-            return true;
++        if (!patchLevel.isEmpty()) {
++            try {
++                SimpleDateFormat template = new SimpleDateFormat("yyyy-MM-dd");
++                Date patchLevelDate = template.parse(patchLevel);
++                String format = DateFormat.getBestDateTimePattern(Locale.getDefault(), "dMMMMyyyy");
++                patchLevel = DateFormat.format(format, patchLevelDate).toString();
++            } catch (ParseException e) {
++                // parsing failed, use raw string
++            }
++        } else {
++            patchLevel = mContext.getString(R.string.unknown);
+         }
+ 
+-        mContext.startActivity(intent);
+-        return true;
++        return patchLevel;
+     }
+ }
+-- 
+2.17.1
+

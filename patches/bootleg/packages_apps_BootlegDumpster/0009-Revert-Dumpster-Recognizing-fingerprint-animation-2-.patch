@@ -1,0 +1,63 @@
+From 92a77d70ba089215bd78ab27233c7b53631abae3 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:14:31 -0400
+Subject: [PATCH 09/13] Revert "Dumpster: Recognizing fingerprint animation
+ [2/2]"
+
+This reverts commit 356a59c2ff9d0bedb2ef7a9a00e7c31e428ac168.
+
+Change-Id: I8669b90400675b5e37fb8a8301ed0e0be1c1048b
+---
+ res/values/bootleg_strings.xml                             | 4 ----
+ res/xml/bootleg_dumpster_lockscreen.xml                    | 7 -------
+ .../bootleggers/dumpster/fragments/LockScreenSettings.java | 1 +
+ 3 files changed, 1 insertion(+), 11 deletions(-)
+
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index 0e85491..5ceec15 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -653,10 +653,6 @@
+     <string name="fod_pressed_state_icon_white">Icon (White)</string>
+     <string name="fod_pressed_state_solid_color">Solid color (usually Green)</string>
+ 
+-   <!-- FOD animations -->
+-    <string name="fod_recog_animation">FOD recognizing animation</string>
+-    <string name="fod_recog_animation_summary">Shows an animation while reading your finger</string>
+-
+    <!-- Heads up options -->
+     <string name="less_boring_heads_up_title">Less boring heads up</string>
+     <string name="less_boring_heads_up_summary">Show heads up only for dialer, messaging and alarm app</string>
+diff --git a/res/xml/bootleg_dumpster_lockscreen.xml b/res/xml/bootleg_dumpster_lockscreen.xml
+index 66dd5c7..87f8ed5 100644
+--- a/res/xml/bootleg_dumpster_lockscreen.xml
++++ b/res/xml/bootleg_dumpster_lockscreen.xml
+@@ -198,13 +198,6 @@
+             android:summary="@string/fod_icon_picker_summary"
+             android:fragment="com.bootleggers.dumpster.fragments.FODIconPickerFragment" />
+ 
+-        <!-- FOD recognizing animation -->
+-        <com.bootleggers.dumpster.preferences.SystemSettingSwitchPreference
+-            android:key="fod_recognizing_animation"
+-            android:title="@string/fod_recog_animation"
+-            android:summary="@string/fod_recog_animation_summary"
+-            android:defaultValue="false" />
+-
+         <com.bootleggers.dumpster.preferences.SystemSettingListPreference
+             android:key="fod_pressed_state"
+             android:dialogTitle="@string/fod_pressed_state_title"
+diff --git a/src/com/bootleggers/dumpster/fragments/LockScreenSettings.java b/src/com/bootleggers/dumpster/fragments/LockScreenSettings.java
+index 50cbb88..f4c98f7 100644
+--- a/src/com/bootleggers/dumpster/fragments/LockScreenSettings.java
++++ b/src/com/bootleggers/dumpster/fragments/LockScreenSettings.java
+@@ -54,6 +54,7 @@ public class LockScreenSettings extends SettingsPreferenceFragment implements
+     private static final String KEY_LOCKSCREEN_WEATHER_TEMP = "lockscreen_weather_show_temp";
+     private static final String LOCK_CLOCK_FONT_STYLE = "lock_clock_font_style";
+     private static final String LOCK_DATE_FONTS = "lock_date_fonts";
++    private static final String FOD_ICON_PICKER_CATEGORY = "fod_icon_picker_category";
+     private static final String FOD_ICON_PICKER_CATEGORY = "fod_icon_picker";
+ 
+     private ListPreference mLockClockFonts;
+-- 
+2.17.1
+

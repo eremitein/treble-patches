@@ -1,0 +1,44 @@
+From 685584607eac8aa3b9f7fe688737fc7ed14e956c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 08:42:25 -0400
+Subject: [PATCH 01/25] Revert "av: Allow providing camera server and service"
+
+This reverts commit c2e8fa5ea0f890ac4c04edac0619c204060c6903.
+
+  GSI specific fix
+---
+ camera/cameraserver/Android.bp              | 3 ---
+ services/camera/libcameraservice/Android.bp | 3 ---
+ 2 files changed, 6 deletions(-)
+
+diff --git a/camera/cameraserver/Android.bp b/camera/cameraserver/Android.bp
+index dcbfed2c3..57f0b4415 100644
+--- a/camera/cameraserver/Android.bp
++++ b/camera/cameraserver/Android.bp
+@@ -12,9 +12,6 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-soong_namespace {
+-}
+-
+ cc_binary {
+     name: "cameraserver",
+ 
+diff --git a/services/camera/libcameraservice/Android.bp b/services/camera/libcameraservice/Android.bp
+index 0cc7540d1..2f56731ce 100644
+--- a/services/camera/libcameraservice/Android.bp
++++ b/services/camera/libcameraservice/Android.bp
+@@ -12,9 +12,6 @@
+ // See the License for the specific language governing permissions and
+ // limitations under the License.
+ 
+-soong_namespace {
+-}
+-
+ //
+ // libcameraservice
+ //
+-- 
+2.17.1
+

@@ -1,0 +1,24 @@
+From 33b11a8641f036e1869a7dadc4e3bdb627af50a8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 07:14:06 -0400
+Subject: [PATCH 01/12] add bootleg.mk for GSI build
+
+---
+ bootleg.mk | 5 +++++
+ 1 file changed, 5 insertions(+)
+ create mode 100644 bootleg.mk
+
+diff --git a/bootleg.mk b/bootleg.mk
+new file mode 100644
+index 0000000..0d153e5
+--- /dev/null
++++ b/bootleg.mk
+@@ -0,0 +1,5 @@
++$(call inherit-product, vendor/bootleggers/config/common_full_phone.mk)
++$(call inherit-product, device/bootleg/sepolicy/common/sepolicy.mk)
++-include vendor/bootleggers/build/core/config.mk
++TARGET_BOOT_ANIMATION_RES := 1080
++DEVICE_MAINTAINERS := eremitein
+-- 
+2.17.1
+

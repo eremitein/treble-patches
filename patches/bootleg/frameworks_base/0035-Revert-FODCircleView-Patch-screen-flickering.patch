@@ -1,0 +1,52 @@
+From 0001ed1ed2efb935547fbb56567cc1a9a64e7b2e Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:23:54 -0400
+Subject: [PATCH 035/127] Revert "FODCircleView: Patch screen flickering"
+
+This reverts commit 049e38a4040f2a7d186ea9d2d9d82e08766b332e.
+---
+ .../android/systemui/biometrics/FODCircleView.java | 14 +++-----------
+ 1 file changed, 3 insertions(+), 11 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 94e0f3e7ac4..182d1ad20aa 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -186,17 +186,6 @@ public class FODCircleView extends ImageView {
+         }
+     }
+ 
+-    @Override
+-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+-        super.onLayout(changed, left, top, right, bottom);
+-
+-        if (mIsCircleShowing) {
+-            dispatchPress();
+-        } else {
+-            dispatchRelease();
+-        }
+-    }
+-
+     @Override
+     public boolean onTouchEvent(MotionEvent event) {
+         float x = event.getAxisValue(MotionEvent.AXIS_X);
+@@ -286,6 +275,7 @@ public class FODCircleView extends ImageView {
+ 
+         setDim(true);
+         updateAlpha();
++        dispatchPress();
+ 
+         setImageDrawable(null);
+         invalidate();
+@@ -297,6 +287,8 @@ public class FODCircleView extends ImageView {
+         setImageResource(R.drawable.fod_icon_default);
+         invalidate();
+ 
++        dispatchRelease();
++
+         setDim(false);
+         updateAlpha();
+ 
+-- 
+2.17.1
+

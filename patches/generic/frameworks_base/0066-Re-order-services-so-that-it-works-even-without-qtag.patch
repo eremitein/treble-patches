@@ -1,0 +1,37 @@
+From 5e93087cb505103a79dd2bb30f9b26349ceed987 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Thu, 8 Nov 2018 23:04:03 +0100
+Subject: [PATCH 066/127] Re-order services so that it works even without
+ qtaguid
+
+---
+ .../com/android/server/net/NetworkPolicyManagerService.java | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/services/core/java/com/android/server/net/NetworkPolicyManagerService.java b/services/core/java/com/android/server/net/NetworkPolicyManagerService.java
+index 9011bc0a0ca..eedf8f7ee41 100644
+--- a/services/core/java/com/android/server/net/NetworkPolicyManagerService.java
++++ b/services/core/java/com/android/server/net/NetworkPolicyManagerService.java
+@@ -725,6 +725,9 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
+         Trace.traceBegin(Trace.TRACE_TAG_NETWORK, "systemReady");
+         final int oldPriority = Process.getThreadPriority(Process.myTid());
+         try {
++            mUsageStats = LocalServices.getService(UsageStatsManagerInternal.class);
++            mNetworkStats = LocalServices.getService(NetworkStatsManagerInternal.class);
++
+             // Boost thread's priority during system server init
+             Process.setThreadPriority(Process.THREAD_PRIORITY_FOREGROUND);
+             if (!isBandwidthControlEnabled()) {
+@@ -732,9 +735,6 @@ public class NetworkPolicyManagerService extends INetworkPolicyManager.Stub {
+                 return;
+             }
+ 
+-            mUsageStats = LocalServices.getService(UsageStatsManagerInternal.class);
+-            mNetworkStats = LocalServices.getService(NetworkStatsManagerInternal.class);
+-
+             synchronized (mUidRulesFirstLock) {
+                 synchronized (mNetworkPoliciesSecondLock) {
+                     updatePowerSaveWhitelistUL();
+-- 
+2.17.1
+

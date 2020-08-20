@@ -1,0 +1,26 @@
+From 639f3ac6981d0eb5108ca42eb13d43b232779604 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:19:19 -0400
+Subject: [PATCH 5/6] set build name (Bootleg)
+
+Change-Id: I757568287eabaa272cc1bda73ab60bdd0c99585c
+---
+ config/btlg_branding.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/config/btlg_branding.mk b/config/btlg_branding.mk
+index 74c29237..853e084c 100644
+--- a/config/btlg_branding.mk
++++ b/config/btlg_branding.mk
+@@ -20,7 +20,7 @@ else
+     BOOTLEGGERS_MOD_SHORT := BootleggersROM-$(PRODUCT_VERSION_MAJOR)4$(BOOTLEGGERS_BUILD)-$(BOOTLEGGERS_BUILD_TYPE)
+ endif
+ 
+-BOOTLEGGERS_VERSION := BootleggersROM-$(PRODUCT_VERSION_MAJOR)4$(BOOTLEGGERS_BUILD).$(BOOTLEGGERS_VERSION_NUMBER)-$(BOOTLEGGERS_BUILD_TYPE)$(BOOTLEGGERS_POSTFIX)
++BOOTLEGGERS_VERSION := BootleggersROM-$(PRODUCT_VERSION_MAJOR)4gsi-$(BOOTLEGGERS_VERSION_NUMBER)-$(BOOTLEGGERS_BUILD_TYPE)$(BOOTLEGGERS_POSTFIX)
+ 
+ PRODUCT_PACKAGES += \
+     bootanimation.zip
+-- 
+2.17.1
+

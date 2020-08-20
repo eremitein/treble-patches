@@ -1,0 +1,97 @@
+From cf347d6b4687d5d0612135b470f9cc9d607f00b8 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 22 Oct 2019 00:33:23 +0200
+Subject: [PATCH 082/127] Improve FacolaView life cycle, though it is still
+ missing few cases. It might require to change BiometricServiceBase for actual
+ fix
+
+Change-Id: Ida96f8aca360c23cd5535f0ee92fd77dada2ebec
+---
+ .../server/biometrics/fingerprint/FacolaView.java  |  9 ++++++++-
+ .../biometrics/fingerprint/FingerprintService.java | 14 ++++++++++++++
+ 2 files changed, 22 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+index f61582990cf..4ff373a108d 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+@@ -57,6 +57,8 @@ public class FacolaView extends ImageView implements OnTouchListener {
+ 
+     private final WindowManager mWM;
+     private final boolean samsungFod = samsungHasCmd("fod_enable");
++
++    private boolean mHidden = true;
+     FacolaView(Context context) {
+         super(context);
+ 
+@@ -106,7 +108,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+         //TODO w!=h?
+         if(mInsideCircle) {
+             try {
+-                int nitValue = 3;
++                int nitValue = 2;
+                 if(mXiaomiFingerprint != null)
+                     mXiaomiFingerprint.extCmd(0xa, nitValue);
+             } catch(Exception e) {
+@@ -156,6 +158,8 @@ public class FacolaView extends ImageView implements OnTouchListener {
+ 
+     public void show() {
+         Slog.d("PHH-Enroll", "Show", new Exception());
++        if(!mHidden) return;
++        mHidden = false;
+         if(samsungFod) {
+             samsungCmd("fod_enable,1,1");
+         }
+@@ -194,7 +198,10 @@ public class FacolaView extends ImageView implements OnTouchListener {
+     }
+ 
+     public void hide() {
++        mInsideCircle = false;
+         Slog.d("PHH-Enroll", "Hide", new Exception());
++        if(mHidden) return;
++        mHidden = true;
+         if(samsungFod) {
+             samsungCmd("fod_enable,0");
+         }
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java b/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java
+index 92c0cc5dc85..1323c5ec0dd 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FingerprintService.java
+@@ -181,6 +181,16 @@ public class FingerprintService extends BiometricServiceBase {
+             return result;
+         }
+ 
++        @Override
++        public boolean onAuthenticated(BiometricAuthenticator.Identifier identifier,
++            boolean authenticated, ArrayList<Byte> token) {
++            boolean result = super.onAuthenticated(identifier, authenticated, token);
++            android.util.Log.d("PHH-Enroll", "auth-ed ret " + result);
++            if(result) mFacola.hide();
++            return result;
++        }
++
++
+         @Override
+         public int start() {
+             mFacola.show();
+@@ -220,6 +230,7 @@ public class FingerprintService extends BiometricServiceBase {
+                 final IFingerprintServiceReceiver receiver, final int flags,
+                 final String opPackageName) {
+             checkPermission(MANAGE_FINGERPRINT);
++            mFacola.show();
+ 
+             final boolean restricted = isRestricted();
+             final int groupId = userId; // default group for fingerprint enrollment
+@@ -643,6 +654,9 @@ public class FingerprintService extends BiometricServiceBase {
+         public void onError(final long deviceId, final int error, final int vendorCode) {
+             mHandler.post(() -> {
+                 FingerprintService.super.handleError(deviceId, error, vendorCode);
++                if ( error == BiometricConstants.BIOMETRIC_ERROR_CANCELED) {
++                    mFacola.hide();
++                }
+                 // TODO: this chunk of code should be common to all biometric services
+                 if (error == BiometricConstants.BIOMETRIC_ERROR_HW_UNAVAILABLE) {
+                     // If we get HW_UNAVAILABLE, try to connect again later...
+-- 
+2.17.1
+

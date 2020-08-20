@@ -1,0 +1,29 @@
+From e9844513608ade6059de15fa36536decfacbdfc0 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 8 Apr 2020 19:18:12 +0300
+Subject: [PATCH 114/127] enable limitation for sf alpha
+
+  * based on
+  https://github.com/PixysOS-Devices/android_device_xiaomi_whyred/commit/803519b33c308fd9545c19078970c3608dc2edfb
+
+	modified:   core/res/res/values/config.xml
+---
+ core/res/res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index 4d1b478f1af..8fc0509d8ea 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -99,7 +99,7 @@
+          alpha compositing functionality in hardware.  If set, the window
+          manager will disable alpha trasformation in animations where not
+          strictly needed. -->
+-    <bool name="config_sf_limitedAlpha">false</bool>
++    <bool name="config_sf_limitedAlpha">true</bool>
+ 
+     <!-- Default value used to block data calls if ims is not
+          connected.  If you use the ims apn DCT will block
+-- 
+2.17.1
+

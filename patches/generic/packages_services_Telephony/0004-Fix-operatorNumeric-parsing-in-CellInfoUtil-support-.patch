@@ -1,0 +1,104 @@
+From 15236bf24d59ce0dd10ff4d82129dbc82be95f92 Mon Sep 17 00:00:00 2001
+From: Michael Cheah <michael@cheah.xyz>
+Date: Sat, 11 Jan 2020 19:23:57 +0800
+Subject: [PATCH 4/5] Fix operatorNumeric parsing in CellInfoUtil & support old
+ mnc format
+
+---
+ src/com/android/phone/CellInfoUtil.java       | 26 ++++++++++++++++---
+ .../phone/NetworkSelectListPreference.java    | 11 ++++++++
+ 2 files changed, 34 insertions(+), 3 deletions(-)
+
+diff --git a/src/com/android/phone/CellInfoUtil.java b/src/com/android/phone/CellInfoUtil.java
+index 82720291d..fe1959404 100644
+--- a/src/com/android/phone/CellInfoUtil.java
++++ b/src/com/android/phone/CellInfoUtil.java
+@@ -16,6 +16,7 @@
+ 
+ package com.android.phone;
+ 
++import android.os.SystemProperties;
+ import android.telephony.CellIdentity;
+ import android.telephony.CellIdentityCdma;
+ import android.telephony.CellIdentityGsm;
+@@ -34,6 +35,8 @@ import android.util.Log;
+ import com.android.internal.telephony.OperatorInfo;
+ 
+ import java.util.List;
++import java.util.regex.Matcher;
++import java.util.regex.Pattern;
+ 
+ /**
+  * Add static Utility functions to get information from the CellInfo object.
+@@ -124,6 +127,16 @@ public final class CellInfoUtil {
+             Log.e(TAG, "Invalid CellInfo type");
+             oi = new OperatorInfo("", "", "");
+         }
++
++        // Fix manual network selection with old modem
++        // https://github.com/LineageOS/android_hardware_ril/commit/e3d006fa722c02fc26acdfcaa43a3f3a1378eba9
++        if (SystemProperties.getBoolean("persist.sys.phh.radio.use_old_mnc_format", false)
++              && !TextUtils.isEmpty(oi.getOperatorNumeric())) {
++            oi = new OperatorInfo(
++                    oi.getOperatorAlphaLong(),
++                    oi.getOperatorAlphaShort(),
++                    oi.getOperatorNumeric() + "+");
++        }
+         return oi;
+     }
+ 
+@@ -134,12 +147,19 @@ public final class CellInfoUtil {
+      * we only want to wrap the operator info and PLMN to a CellInfo object.
+      */
+     public static CellInfo convertOperatorInfoToCellInfo(OperatorInfo operatorInfo) {
++        Pattern p = Pattern.compile("^([0-9]{5,6}).*");
+         String operatorNumeric = operatorInfo.getOperatorNumeric();
+         String mcc = null;
+         String mnc = null;
+-        if (operatorNumeric != null && operatorNumeric.matches("^[0-9]{5,6}$")) {
+-            mcc = operatorNumeric.substring(0, 3);
+-            mnc = operatorNumeric.substring(3);
++        Log.d(TAG, "operatorNumeric: " + operatorNumeric);
++        if (operatorNumeric != null) {
++            Matcher m = p.matcher(operatorNumeric);
++            if (m.matches()) {
++                mcc = m.group(1).substring(0, 3);
++                mnc = m.group(1).substring(3);
++            } else {
++                Log.e(TAG, "Failed to parse operatorNumeric!");
++            }
+         }
+         CellIdentityGsm cig = new CellIdentityGsm(
+                 Integer.MAX_VALUE /* lac */,
+diff --git a/src/com/android/phone/NetworkSelectListPreference.java b/src/com/android/phone/NetworkSelectListPreference.java
+index df3f44a8d..9fc571500 100644
+--- a/src/com/android/phone/NetworkSelectListPreference.java
++++ b/src/com/android/phone/NetworkSelectListPreference.java
+@@ -24,6 +24,7 @@ import android.os.Handler;
+ import android.os.Message;
+ import android.os.Parcel;
+ import android.os.Parcelable;
++import android.os.SystemProperties;
+ import android.preference.ListPreference;
+ import android.preference.Preference;
+ import android.telephony.CellInfo;
+@@ -411,6 +412,16 @@ public class NetworkSelectListPreference extends ListPreference
+         } else {
+             oi = new OperatorInfo("", "", "");
+         }
++
++        // Fix manual network selection with old modem
++        // https://github.com/LineageOS/android_hardware_ril/commit/e3d006fa722c02fc26acdfcaa43a3f3a1378eba9
++        if (SystemProperties.getBoolean("persist.sys.phh.radio.use_old_mnc_format", false)
++              && !TextUtils.isEmpty(oi.getOperatorNumeric())) {
++            oi = new OperatorInfo(
++                    oi.getOperatorAlphaLong(),
++                    oi.getOperatorAlphaShort(),
++                    oi.getOperatorNumeric() + "+");
++        }
+         return oi;
+     }
+ 
+-- 
+2.25.1
+

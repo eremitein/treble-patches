@@ -1,0 +1,56 @@
+From cbce2c928caf92ffcf0fbdc92a6c0f3a03dab122 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:13:04 -0400
+Subject: [PATCH 06/13] Revert "Evolution: Add PureView recognizing FP
+ animations [2/2]"
+
+This reverts commit 2fd493b6b6fd32b35f445668247e328a37b5ccce.
+---
+ res/values/bootleg_arrays.xml  | 8 --------
+ res/values/bootleg_strings.xml | 4 ----
+ 2 files changed, 12 deletions(-)
+
+diff --git a/res/values/bootleg_arrays.xml b/res/values/bootleg_arrays.xml
+index 7c8182e..b3126f5 100644
+--- a/res/values/bootleg_arrays.xml
++++ b/res/values/bootleg_arrays.xml
+@@ -482,10 +482,6 @@
+         <item>@string/fod_recog_animation_op_mclaren</item>
+         <item>@string/fod_recog_animation_op_stripe</item>
+         <item>@string/fod_recog_animation_op_wave</item>
+-        <item>@string/fod_recog_animation_pureview_dna</item>
+-        <item>@string/fod_recog_animation_pureview_future</item>
+-        <item>@string/fod_recog_animation_pureview_halo_ring</item>
+-        <item>@string/fod_recog_animation_pureview_molecular</item>
+     </string-array>
+ 
+     <string-array name="fod_recog_animation_values" translatable="false">
+@@ -500,10 +496,6 @@
+         <item>8</item>
+         <item>9</item>
+         <item>10</item>
+-        <item>11</item>
+-        <item>12</item>
+-        <item>13</item>
+-        <item>14</item>
+     </string-array>
+ 
+     <!-- Gaming mode -->
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index 43c2649..912b34f 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -668,10 +668,6 @@
+     <string name="fod_recog_animation_op_mclaren">McLaren</string>
+     <string name="fod_recog_animation_op_stripe">Stripe</string>
+     <string name="fod_recog_animation_op_wave">Wave</string>
+-    <string name="fod_recog_animation_pureview_dna">DNA</string>
+-    <string name="fod_recog_animation_pureview_future">Future</string>
+-    <string name="fod_recog_animation_pureview_halo_ring">Halo ring</string>
+-    <string name="fod_recog_animation_pureview_molecular">Molecular</string>
+ 
+    <!-- Heads up options -->
+     <string name="less_boring_heads_up_title">Less boring heads up</string>
+-- 
+2.17.1
+

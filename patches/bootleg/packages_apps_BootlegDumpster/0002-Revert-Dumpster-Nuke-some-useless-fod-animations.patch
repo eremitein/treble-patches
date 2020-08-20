@@ -1,0 +1,89 @@
+From 5fcfa233911a06c6b461538ac77ad95bb328b76e Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:12:59 -0400
+Subject: [PATCH 02/13] Revert "Dumpster: Nuke some useless fod animations"
+
+This reverts commit 31e38709bca66267658f1899953cb5518c943c2a.
+---
+ res/values/bootleg_arrays.xml  | 24 ++++++++++++++++++++++++
+ res/values/bootleg_strings.xml | 12 ++++++++++++
+ 2 files changed, 36 insertions(+)
+
+diff --git a/res/values/bootleg_arrays.xml b/res/values/bootleg_arrays.xml
+index 38fd405..b739d54 100644
+--- a/res/values/bootleg_arrays.xml
++++ b/res/values/bootleg_arrays.xml
+@@ -479,11 +479,23 @@
+ 
+     <!-- FOD Recognizing fingerprint animations -->
+     <string-array name="fod_recog_animation_entries" translatable="false">
++        <item>@string/fod_recog_animation_miui_normal</item>
++        <item>@string/fod_recog_animation_miui_aod</item>
+         <item>@string/fod_recog_animation_miui_light</item>
++        <item>@string/fod_recog_animation_miui_pop</item>
++        <item>@string/fod_recog_animation_miui_pulse</item>
++        <item>@string/fod_recog_animation_miui_pulse_white</item>
++        <item>@string/fod_recog_animation_miui_rhythm</item>
++        <item>@string/fod_recog_animation_op_cosmos</item>
++        <item>@string/fod_recog_animation_op_mclaren</item>
+         <item>@string/fod_recog_animation_op_stripe</item>
++        <item>@string/fod_recog_animation_op_wave</item>
++        <item>@string/fod_recog_animation_pureview_dna</item>
+         <item>@string/fod_recog_animation_pureview_future</item>
++        <item>@string/fod_recog_animation_pureview_halo_ring</item>
+         <item>@string/fod_recog_animation_pureview_molecular</item>
+         <item>@string/fod_recog_animation_bluefirework</item>
++        <item>@string/fod_recog_animation_coloros7_1</item>
+         <item>@string/fod_recog_animation_coloros7_2</item>
+     </string-array>
+ 
+@@ -494,6 +506,18 @@
+         <item>3</item>
+         <item>4</item>
+         <item>5</item>
++        <item>6</item>
++        <item>7</item>
++        <item>8</item>
++        <item>9</item>
++        <item>10</item>
++        <item>11</item>
++        <item>12</item>
++        <item>13</item>
++        <item>14</item>
++        <item>15</item>
++        <item>16</item>
++        <item>17</item>
+     </string-array>
+ 
+     <!-- Gaming mode -->
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index 41f018e..049cf7d 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -661,11 +661,23 @@
+     <string name="fod_recog_animation">Recognizing animation</string>
+     <string name="fod_recog_animation_summary">Shows an animation while reading your finger</string>
+     <string name="fod_recog_animation_effect_title">Recognizing animation effect</string>
++    <string name="fod_recog_animation_miui_normal">MIUI default</string>
++    <string name="fod_recog_animation_miui_aod">AOD</string>
+     <string name="fod_recog_animation_miui_light">Light</string>
++    <string name="fod_recog_animation_miui_pop">Pop</string>
++    <string name="fod_recog_animation_miui_pulse">Pulse</string>
++    <string name="fod_recog_animation_miui_pulse_white">Pulse (White)</string>
++    <string name="fod_recog_animation_miui_rhythm">Rhythm</string>
++    <string name="fod_recog_animation_op_cosmos">Cosmos</string>
++    <string name="fod_recog_animation_op_mclaren">McLaren</string>
+     <string name="fod_recog_animation_op_stripe">Stripe</string>
++    <string name="fod_recog_animation_op_wave">Wave</string>
++    <string name="fod_recog_animation_pureview_dna">DNA</string>
+     <string name="fod_recog_animation_pureview_future">Future</string>
++    <string name="fod_recog_animation_pureview_halo_ring">Halo ring</string>
+     <string name="fod_recog_animation_pureview_molecular">Molecular</string>
+     <string name="fod_recog_animation_bluefirework">Blue Fireworks</string>
++    <string name="fod_recog_animation_coloros7_1">ColorOS7 1</string>
+     <string name="fod_recog_animation_coloros7_2">ColorOS7 2</string>
+ 
+    <!-- Heads up options -->
+-- 
+2.17.1
+

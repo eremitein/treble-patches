@@ -1,0 +1,51 @@
+From 8e8b8b90ce60872783c3fd4753132713ab021221 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:23:50 -0400
+Subject: [PATCH 033/127] Revert "FODCircleView: fix incorrect position on
+ keyguard"
+
+This reverts commit a091025b73062c39806571ab9971e7f2a4bc0820.
+---
+ .../android/systemui/biometrics/FODCircleView.java   | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index fb60e883cb9..3bb73163719 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -66,7 +66,6 @@ public class FODCircleView extends ImageView {
+ 
+     private boolean mIsBouncer;
+     private boolean mIsDreaming;
+-    private boolean mIsKeyguard;
+     private boolean mIsShowing;
+     private boolean mIsCircleShowing;
+ 
+@@ -106,12 +105,6 @@ public class FODCircleView extends ImageView {
+             }
+         }
+ 
+-        @Override
+-        public void onKeyguardVisibilityChanged(boolean showing) {
+-            mIsKeyguard = showing;
+-            updatePosition();
+-        }
+-
+         @Override
+         public void onKeyguardBouncerChanged(boolean isBouncer) {
+             mIsBouncer = isBouncer;
+@@ -366,11 +359,6 @@ public class FODCircleView extends ImageView {
+                 throw new IllegalArgumentException("Unknown rotation: " + rotation);
+         }
+ 
+-        if (mIsKeyguard) {
+-            mParams.x = mPositionX;
+-            mParams.y = mPositionY;
+-        }
+-
+         if (mIsDreaming) {
+             mParams.x += mDreamingOffsetX;
+             mParams.y += mDreamingOffsetY;
+-- 
+2.17.1
+

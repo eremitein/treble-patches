@@ -1,0 +1,23 @@
+From a42bbbd32964930efd2ac2e5a14c55b5e4ad062c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 9 Apr 2020 22:17:46 +0300
+Subject: [PATCH 122/127] add call recording support
+
+---
+ data/etc/com.android.dialer.xml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/data/etc/com.android.dialer.xml b/data/etc/com.android.dialer.xml
+index 405279f8b1a..02ae63d5d44 100644
+--- a/data/etc/com.android.dialer.xml
++++ b/data/etc/com.android.dialer.xml
+@@ -26,5 +26,6 @@
+         <permission name="com.android.voicemail.permission.WRITE_VOICEMAIL"/>
+         <permission name="android.permission.CONNECTIVITY_USE_RESTRICTED_NETWORKS"/>
+         <permission name="android.permission.READ_PRIVILEGED_PHONE_STATE"/>
++        <permission name="android.permission.CAPTURE_AUDIO_OUTPUT"/>
+     </privapp-permissions>
+ </permissions>
+-- 
+2.17.1
+

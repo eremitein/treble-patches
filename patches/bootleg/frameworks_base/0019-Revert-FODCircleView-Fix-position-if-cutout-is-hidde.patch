@@ -1,0 +1,108 @@
+From eed0b0daa6da07722f96d60dbda6f1e6d225cac2 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:17:58 -0400
+Subject: [PATCH 019/127] Revert "FODCircleView: Fix position if cutout is
+ hidden"
+
+This reverts commit df2a09f5cf3f90e65455d1941e66c40197758d3a.
+---
+ .../systemui/biometrics/FODCircleView.java    | 37 +++----------------
+ 1 file changed, 5 insertions(+), 32 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index fba629b8e6b..15109978c88 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -45,9 +45,6 @@ import android.widget.ImageView;
+ import com.android.keyguard.KeyguardUpdateMonitor;
+ import com.android.keyguard.KeyguardUpdateMonitorCallback;
+ import com.android.systemui.R;
+-import com.android.systemui.Dependency;
+-import com.android.systemui.statusbar.policy.ConfigurationController;
+-import com.android.systemui.statusbar.policy.ConfigurationController.ConfigurationListener;
+ 
+ import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreen;
+ import vendor.lineage.biometrics.fingerprint.inscreen.V1_0.IFingerprintInscreenCallback;
+@@ -56,7 +53,7 @@ import java.util.NoSuchElementException;
+ import java.util.Timer;
+ import java.util.TimerTask;
+ 
+-public class FODCircleView extends ImageView implements ConfigurationListener {
++public class FODCircleView extends ImageView {
+     private final int mPositionX;
+     private final int mPositionY;
+     private final int mSize;
+@@ -183,9 +180,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         }
+     };
+ 
+-    private boolean mCutoutMasked;
+-    private int mStatusbarHeight;
+-
+     public FODCircleView(Context context) {
+         super(context);
+ 
+@@ -237,9 +231,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
+         mUpdateMonitor.registerCallback(mMonitorCallback);
+ 
+-        updateCutoutFlags();
+-
+-        Dependency.get(ConfigurationController.class).addCallback(this);
+         mPowerManager = context.getSystemService(PowerManager.class);
+         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                 FODCircleView.class.getSimpleName());
+@@ -457,23 +448,21 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         defaultDisplay.getRealSize(size);
+ 
+         int rotation = defaultDisplay.getRotation();
+-        int cutoutMaskedExtra = mCutoutMasked ? mStatusbarHeight : 0;
+-
+         switch (rotation) {
+             case Surface.ROTATION_0:
+                 mParams.x = mPositionX;
+-                mParams.y = mPositionY - cutoutMaskedExtra;
++                mParams.y = mPositionY;
+                 break;
+             case Surface.ROTATION_90:
+                 mParams.x = mPositionY;
+-                mParams.y = mPositionX - cutoutMaskedExtra;
++                mParams.y = mPositionX;
+                 break;
+             case Surface.ROTATION_180:
+                 mParams.x = mPositionX;
+-                mParams.y = size.y - mPositionY - mSize - cutoutMaskedExtra;
++                mParams.y = size.y - mPositionY - mSize;
+                 break;
+             case Surface.ROTATION_270:
+-                mParams.x = size.x - mPositionY - mSize - mNavigationBarSize - cutoutMaskedExtra;
++                mParams.x = size.x - mPositionY - mSize - mNavigationBarSize;
+                 mParams.y = mPositionX;
+                 break;
+             default:
+@@ -542,22 +531,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             mHandler.post(() -> updatePosition());
+         }
+     };
+-
+-    @Override
+-    public void onOverlayChanged() {
+-        updateCutoutFlags();
+-    }
+-
+-    private void updateCutoutFlags() {
+-        mStatusbarHeight = getContext().getResources().getDimensionPixelSize(
+-                com.android.internal.R.dimen.status_bar_height_portrait);
+-        boolean cutoutMasked = getContext().getResources().getBoolean(
+-                com.android.internal.R.bool.config_maskMainBuiltInDisplayCutout);
+-        if (mCutoutMasked != cutoutMasked){
+-            mCutoutMasked = cutoutMasked;
+-            updatePosition();
+-        }
+-    }
+ }
+ 
+ class FODAnimation extends ImageView {
+-- 
+2.17.1
+

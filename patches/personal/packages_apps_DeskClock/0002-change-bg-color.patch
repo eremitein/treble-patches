@@ -1,0 +1,26 @@
+From 1a207431ad2bfcb2fbb85cea57a72a2838a695b8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 28 Dec 2019 12:14:32 +0200
+Subject: [PATCH 2/4] change bg color
+
+	modified:   res/values/colors.xml
+---
+ res/values/colors.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/res/values/colors.xml b/res/values/colors.xml
+index 19db82482..efb740041 100644
+--- a/res/values/colors.xml
++++ b/res/values/colors.xml
+@@ -32,7 +32,7 @@
+ 
+     <color name="clock_gray">#B3FFFFFF</color>
+ 
+-    <color name="default_background">#1A237E</color>
++    <color name="default_background">#202124</color>
+ 
+     <!-- shadowColor for widget text -->
+     <color name="widget_shadow_color">#67000000</color>
+-- 
+2.25.1
+

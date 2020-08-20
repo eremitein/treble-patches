@@ -1,0 +1,86 @@
+From c5547dd8dd2a55c84f531461d2b2fb68bf445a79 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 2 Mar 2020 21:13:36 +0100
+Subject: [PATCH 092/127] Add support for samsung optical under-display
+ fingerprint
+
+---
+ services/core/Android.bp                        |  1 +
+ .../biometrics/fingerprint/FacolaView.java      | 17 +++++++++++++++--
+ 2 files changed, 16 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/Android.bp b/services/core/Android.bp
+index 9f83e49c27d..84a5450dc05 100644
+--- a/services/core/Android.bp
++++ b/services/core/Android.bp
+@@ -55,6 +55,7 @@ java_library_static {
+         "netd_aidl_interface-V2-java",
+         "netd_event_listener_interface-java",
+         "vendor.goodix.extend.service-V2.0-java",
++        "vendor.samsung.hardware.biometrics.fingerprint-V2.1-java",
+         "vendor.xiaomi.hardware.fingerprintextension-V1.0-java",
+     ],
+ }
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+index 0fb4254eb60..edd13988e49 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+@@ -37,6 +37,7 @@ import java.io.PrintWriter;
+ 
+ import vendor.xiaomi.hardware.fingerprintextension.V1_0.IXiaomiFingerprint;
+ import vendor.goodix.extend.service.V2_0.IGoodixFPExtendService;
++import vendor.samsung.hardware.biometrics.fingerprint.V2_1.ISecBiometricsFingerprint;
+ 
+ import android.os.Handler;
+ import android.os.HandlerThread;
+@@ -48,6 +49,7 @@ public class FacolaView extends ImageView implements OnTouchListener {
+     private final Paint mPaintShow = new Paint();
+     private IXiaomiFingerprint mXiaomiFingerprint = null;
+     private IGoodixFPExtendService mGoodixFingerprint = null;
++    private ISecBiometricsFingerprint mSamsungFingerprint = null;
+     private boolean mInsideCircle = false;
+     private final WindowManager.LayoutParams mParams = new WindowManager.LayoutParams();
+ 
+@@ -111,6 +113,11 @@ public class FacolaView extends ImageView implements OnTouchListener {
+             } catch(Exception e) {
+                 Slog.d("PHH-Enroll", "Failed getting goodix fingerprint service", e);
+             }
++            try {
++                mSamsungFingerprint = ISecBiometricsFingerprint.getService();
++            } catch(Exception e) {
++                Slog.d("PHH-Enroll", "Failed getting samsung fingerprint service", e);
++            }
+         }
+     }
+ 
+@@ -141,9 +148,12 @@ public class FacolaView extends ImageView implements OnTouchListener {
+                     mXiaomiFingerprint.extCmd(0xa, nitValue);
+                 } else if(mGoodixFingerprint != null) {
+                     mGoodixFingerprint.goodixExtendCommand(10, 1);
++                } else if(mSamsungFingerprint != null) {
++                    mSamsungFingerprint.request(22 /* SEM_FINGER_STATE */, 0, 2 /* pressed */, new java.util.ArrayList<Byte>(),
++                            (int retval, java.util.ArrayList<Byte> out) -> {} );
+                 }
+             } catch(Exception e) {
+-                Slog.d("PHH-Enroll", "Failed calling xiaomi fp extcmd");
++                Slog.d("PHH-Enroll", "Failed calling fp extcmd", e);
+             }
+             oppoPress(true);
+ 
+@@ -155,9 +165,12 @@ public class FacolaView extends ImageView implements OnTouchListener {
+                     mXiaomiFingerprint.extCmd(0xa, 0);
+                 } else if(mGoodixFingerprint != null) {
+                     mGoodixFingerprint.goodixExtendCommand(10, 0);
++                } else if(mSamsungFingerprint != null) {
++                    mSamsungFingerprint.request(22 /* SEM_FINGER_STATE */, 0, 1 /* released */, new java.util.ArrayList<Byte>(),
++                            (int retval, java.util.ArrayList<Byte> out) -> {} );
+                 }
+             } catch(Exception e) {
+-                Slog.d("PHH-Enroll", "Failed calling xiaomi fp extcmd");
++                Slog.d("PHH-Enroll", "Failed calling fp extcmd", e);
+             }
+             canvas.drawCircle(mW/2, mH/2, (float) (mW/2.0f), this.mPaintShow);
+         }
+-- 
+2.17.1
+

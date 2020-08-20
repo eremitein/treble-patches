@@ -1,0 +1,66 @@
+From 3b9b8f24e121c20e685f3f7fe9ca427c6aa589eb Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:21:32 -0400
+Subject: [PATCH 028/127] Revert "FODCircleView: Don't show circle if already
+ Authenticated"
+
+This reverts commit 89e9a2b413715284da6e34c9f026b406d742e695.
+---
+ .../android/systemui/biometrics/FODCircleView.java  | 13 -------------
+ 1 file changed, 13 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index dbee725504b..022010e96cf 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -25,7 +25,6 @@ import android.graphics.Color;
+ import android.graphics.Paint;
+ import android.graphics.PixelFormat;
+ import android.graphics.Point;
+-import android.hardware.biometrics.BiometricSourceType;
+ import android.os.Handler;
+ import android.os.UserHandle;
+ import android.os.Looper;
+@@ -72,7 +71,6 @@ public class FODCircleView extends ImageView {
+     private boolean mIsKeyguard;
+     private boolean mIsShowing;
+     private boolean mIsCircleShowing;
+-    private boolean mIsAuthenticated;
+ 
+     private Handler mHandler;
+ 
+@@ -127,12 +125,6 @@ public class FODCircleView extends ImageView {
+             }
+         }
+ 
+-        @Override
+-        public void onBiometricAuthenticated(int userId, BiometricSourceType biometricSourceType) {
+-            super.onBiometricAuthenticated(userId, biometricSourceType);
+-            mIsAuthenticated = true;
+-        }
+-
+         @Override
+         public void onScreenTurnedOff() {
+             hideCircle();
+@@ -318,10 +310,6 @@ public class FODCircleView extends ImageView {
+     }
+ 
+     public void showCircle() {
+-        if (mIsAuthenticated) {
+-            return;
+-        }
+-
+         mIsCircleShowing = true;
+ 
+         setKeepScreenOn(true);
+@@ -409,7 +397,6 @@ public class FODCircleView extends ImageView {
+         }
+ 
+         mIsShowing = true;
+-        mIsAuthenticated = false;
+ 
+         dispatchShow();
+         setVisibility(View.VISIBLE);
+-- 
+2.17.1
+

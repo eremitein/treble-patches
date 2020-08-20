@@ -1,0 +1,143 @@
+From a22da84f76f6aee023878c11727aa1b5b2b81a0b Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Aug 2020 11:07:09 -0400
+Subject: [PATCH] Revert "Settings: add back selinux status in about"
+
+This reverts commit 5a284ec207c5c3e328a98805d2e1b017db6a25fe.
+
+Change-Id: If8c23f663e5c169dc353bacc0b08e182c918395b
+---
+ res/values/bootleg_strings.xml                |  6 --
+ res/xml/my_device_info.xml                    |  7 --
+ .../SELinuxStatusPreferenceController.java    | 65 -------------------
+ .../aboutphone/MyDeviceInfoFragment.java      |  2 -
+ 4 files changed, 80 deletions(-)
+ delete mode 100644 src/com/android/settings/deviceinfo/SELinuxStatusPreferenceController.java
+
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index 9f69ca3f10..d6e4d71dcf 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -101,12 +101,6 @@
+     <string name="smart_charging_resume_level_title">Start trigger level</string>
+     <string name="smart_charging_footer">Smart Charging allows you to set maximum charging level to extend the lifespan of your battery</string>
+ 
+-    <!-- SELinux -->
+-    <string name="selinux_status">SELinux status</string>
+-    <string name="selinux_status_disabled">Disabled</string>
+-    <string name="selinux_status_permissive">Permissive</string>
+-    <string name="selinux_status_enforcing">Enforcing</string>
+-
+     <!-- Volume link notification -->
+     <string name="volume_link_notification_title">Link ring &amp; notification volumes</string>
+ 
+diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
+index c01fbcc6c2..9a6047c791 100644
+--- a/res/xml/my_device_info.xml
++++ b/res/xml/my_device_info.xml
+@@ -192,11 +192,4 @@
+         settings:enableCopying="true"
+         settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"/>
+ 
+-    <!-- SELinux status information -->
+-    <Preference
+-        android:key="selinux_status"
+-        android:order="54"
+-        android:title="@string/selinux_status"
+-        android:summary="@string/selinux_status_enforcing"/>
+-
+ </PreferenceScreen>
+diff --git a/src/com/android/settings/deviceinfo/SELinuxStatusPreferenceController.java b/src/com/android/settings/deviceinfo/SELinuxStatusPreferenceController.java
+deleted file mode 100644
+index d0bf806085..0000000000
+--- a/src/com/android/settings/deviceinfo/SELinuxStatusPreferenceController.java
++++ /dev/null
+@@ -1,65 +0,0 @@
+-/*
+- * Copyright (C) 2017 The Android Open Source Project
+- *
+- * Licensed under the Apache License, Version 2.0 (the "License");
+- * you may not use this file except in compliance with the License.
+- * You may obtain a copy of the License at
+- *
+- *      http://www.apache.org/licenses/LICENSE-2.0
+- *
+- * Unless required by applicable law or agreed to in writing, software
+- * distributed under the License is distributed on an "AS IS" BASIS,
+- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+- * See the License for the specific language governing permissions and
+- * limitations under the License.
+- */
+-package com.android.settings.deviceinfo;
+-
+-import android.content.Context;
+-import android.os.SELinux;
+-import android.os.SystemProperties;
+-import androidx.preference.Preference;
+-import androidx.preference.PreferenceScreen;
+-import android.text.TextUtils;
+-
+-import com.android.settings.R;
+-import com.android.settings.core.PreferenceControllerMixin;
+-import com.android.settingslib.core.AbstractPreferenceController;
+-
+-public class SELinuxStatusPreferenceController extends AbstractPreferenceController implements
+-        PreferenceControllerMixin {
+-
+-    private static final String PROPERTY_SELINUX_STATUS = "ro.build.selinux";
+-    private static final String KEY_SELINUX_STATUS = "selinux_status";
+-
+-    public SELinuxStatusPreferenceController(Context context) {
+-        super(context);
+-    }
+-
+-    @Override
+-    public boolean isAvailable() {
+-        return !TextUtils.isEmpty(SystemProperties.get(PROPERTY_SELINUX_STATUS));
+-    }
+-
+-    @Override
+-    public String getPreferenceKey() {
+-        return KEY_SELINUX_STATUS;
+-    }
+-
+-    @Override
+-    public void displayPreference(PreferenceScreen screen) {
+-        super.displayPreference(screen);
+-        final Preference pref = screen.findPreference(KEY_SELINUX_STATUS);
+-        if (pref == null) {
+-            return;
+-        }
+-        if (!SELinux.isSELinuxEnabled()) {
+-            String status = mContext.getResources().getString(R.string.selinux_status_disabled);
+-            pref.setSummary(status);
+-        } else if (!SELinux.isSELinuxEnforced()) {
+-            String status = mContext.getResources().getString(R.string.selinux_status_permissive);
+-            pref.setSummary(status);
+-        }
+-    }
+-}
+-
+diff --git a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
+index 8c03892fc6..e6afb7b821 100644
+--- a/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
++++ b/src/com/android/settings/deviceinfo/aboutphone/MyDeviceInfoFragment.java
+@@ -38,7 +38,6 @@ import com.android.settings.deviceinfo.IpAddressPreferenceController;
+ import com.android.settings.deviceinfo.ManualPreferenceController;
+ import com.android.settings.deviceinfo.RegulatoryInfoPreferenceController;
+ import com.android.settings.deviceinfo.SafetyInfoPreferenceController;
+-import com.android.settings.deviceinfo.SELinuxStatusPreferenceController;
+ import com.android.settings.deviceinfo.UptimePreferenceController;
+ import com.android.settings.deviceinfo.WifiMacAddressPreferenceController;
+ import com.android.settings.deviceinfo.imei.ImeiInfoPreferenceController;
+@@ -116,7 +115,6 @@ public class MyDeviceInfoFragment extends DashboardFragment
+         controllers.add(new FeedbackPreferenceController(fragment, context));
+         controllers.add(new FccEquipmentIdPreferenceController(context));
+         controllers.add(new UptimePreferenceController(context, lifecycle));
+-        controllers.add(new SELinuxStatusPreferenceController(context));
+         return controllers;
+     }
+ 
+-- 
+2.17.1
+

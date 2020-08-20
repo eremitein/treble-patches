@@ -1,0 +1,26 @@
+From 5368c7f0da07bca1d3609bd651db402b200201d6 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 25 Feb 2020 18:26:19 +0200
+Subject: [PATCH 1/2] change accent color
+
+	modified:   res/values/color.xml
+---
+ res/values/color.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/res/values/color.xml b/res/values/color.xml
+index 41a58b2..32870c2 100644
+--- a/res/values/color.xml
++++ b/res/values/color.xml
+@@ -18,7 +18,7 @@
+ <resources>
+ 
+     <!-- Default accent color. -->
+-    <color name="calculator_accent_color">#167c80</color>
++    <color name="calculator_accent_color">#1a73e8</color>
+ 
+     <!-- Primary color (Color for the toolbars). -->
+     <color name="calculator_primary_color">#fafafa</color>
+-- 
+2.25.1
+

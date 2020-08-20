@@ -1,0 +1,170 @@
+From 08349fb2bddb4b1ec906fe5019cfbb271163c653 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 21 Aug 2020 14:43:04 -0400
+Subject: [PATCH] Add double tap to sleep gesture (Bootleg)
+
+  * based on
+    https://github.com/crdroidandroid/android_packages_apps_Launcher3/commit/1ced8c431b3a8ccb397199f68e1dd1ac401a90d4
+    https://github.com/crdroidandroid/android_packages_apps_Launcher3/commit/2581d966c61bbfca344803eb443f5426abf2348a
+
+Change-Id: I3d62543093a6c5112d904b4a7606d4c4b48773f5
+---
+ AndroidManifest-common.xml                    |  2 +-
+ SecondaryDisplayLauncher/Android.mk           |  3 ++-
+ res/values/strings.xml                        |  4 ++++
+ res/xml/misc_preferences.xml                  |  7 +++++++
+ src/com/android/launcher3/Utilities.java      |  6 ++++++
+ src/com/android/launcher3/Workspace.java      | 20 +++++++++++++++++++
+ .../touch/WorkspaceTouchListener.java         |  1 +
+ 7 files changed, 41 insertions(+), 2 deletions(-)
+
+diff --git a/AndroidManifest-common.xml b/AndroidManifest-common.xml
+index f08a79bc2..01ad2a2e8 100644
+--- a/AndroidManifest-common.xml
++++ b/AndroidManifest-common.xml
+@@ -52,7 +52,7 @@
+     <uses-permission android:name="android.permission.EXPAND_STATUS_BAR" />
+     <uses-permission android:name="android.permission.MEDIA_CONTENT_CONTROL" />
+     <uses-permission android:name="android.permission.USE_BIOMETRIC" />
+-
++    <uses-permission android:name="android.permission.DEVICE_POWER" />
+ 
+     <!--
+     Permissions required for read/write access to the workspace data. These permission name
+diff --git a/SecondaryDisplayLauncher/Android.mk b/SecondaryDisplayLauncher/Android.mk
+index 0c2659361..e49b21cda 100644
+--- a/SecondaryDisplayLauncher/Android.mk
++++ b/SecondaryDisplayLauncher/Android.mk
+@@ -31,7 +31,8 @@ LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
+ 
+ LOCAL_PROGUARD_ENABLED := disabled
+ 
+- LOCAL_PRIVATE_PLATFORM_APIS := true
++LOCAL_PRIVATE_PLATFORM_APIS := true
++LOCAL_CERTIFICATE := platform
+ LOCAL_MODULE := SecondaryDisplayLauncherLib
+ LOCAL_PRIVILEGED_MODULE := true
+ 
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index f696bf1aa..d8f26e0c2 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -336,4 +336,8 @@
+ 
+     <!-- Failed action error message: e.g. Failed: Pause -->
+     <string name="remote_action_failed">Failed: <xliff:g id="what" example="Pause">%1$s</xliff:g></string>
++
++    <!-- DT2S option -->
++    <string name="pref_sleep_gesture_title">Double tap to sleep</string>
++    <string name="pref_sleep_gesture_summary">Double tap on empty space for power-off screen</string>
+ </resources>
+diff --git a/res/xml/misc_preferences.xml b/res/xml/misc_preferences.xml
+index 0daf4589a..24d92baa4 100644
+--- a/res/xml/misc_preferences.xml
++++ b/res/xml/misc_preferences.xml
+@@ -15,6 +15,13 @@
+         android:defaultValue="@bool/allow_swipe_down_clearall"
+         android:persistent="true" />
+ 
++    <SwitchPreference
++        android:key="pref_sleep_gesture"
++        android:title="@string/pref_sleep_gesture_title"
++        android:summary="@string/pref_sleep_gesture_summary"
++        android:defaultValue="true"
++        android:persistent="true"/>
++
+     <androidx.preference.PreferenceScreen
+         android:key="pref_developer_options"
+         android:persistent="false"
+diff --git a/src/com/android/launcher3/Utilities.java b/src/com/android/launcher3/Utilities.java
+index edeec2959..5d1d581d1 100644
+--- a/src/com/android/launcher3/Utilities.java
++++ b/src/com/android/launcher3/Utilities.java
+@@ -149,6 +149,9 @@ public final class Utilities {
+     public static final String EXTRA_WALLPAPER_OFFSET = "com.android.launcher3.WALLPAPER_OFFSET";
+     public static final String EXTRA_WALLPAPER_FLAVOR = "com.android.launcher3.WALLPAPER_FLAVOR";
+ 
++    // DT2S
++    public static final String SLEEP_GESTURE = "pref_sleep_gesture";
++
+     public static final String SEARCH_PACKAGE = "com.google.android.googlequicksearchbox";
+ 
+     public static final String DATE_FORMAT_KEY = "pref_date_format";
+@@ -821,4 +824,7 @@ public final class Utilities {
+         }
+     }
+ 
++    public static boolean useSleepGesture(Context context) {
++        return getPrefs(context).getBoolean(SLEEP_GESTURE, true);
++    }
+ }
+diff --git a/src/com/android/launcher3/Workspace.java b/src/com/android/launcher3/Workspace.java
+index b27be8720..eeaa99967 100644
+--- a/src/com/android/launcher3/Workspace.java
++++ b/src/com/android/launcher3/Workspace.java
+@@ -47,6 +47,7 @@ import android.os.Handler;
+ import android.os.IBinder;
+ import android.os.Message;
+ import android.os.Parcelable;
++import android.os.PowerManager;
+ import android.os.UserHandle;
+ import android.text.TextUtils;
+ import android.util.AttributeSet;
+@@ -54,6 +55,7 @@ import android.util.Log;
+ import android.util.SparseArray;
+ import android.view.LayoutInflater;
+ import android.view.MotionEvent;
++import android.view.GestureDetector;
+ import android.view.View;
+ import android.view.ViewGroup;
+ import android.view.ViewTreeObserver;
+@@ -248,6 +250,7 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
+ 
+     // Handles workspace state transitions
+     private final WorkspaceStateTransitionAnimation mStateTransitionAnimation;
++    private GestureDetector mGestureListener;
+ 
+     /**
+      * Used to inflate the Workspace from XML.
+@@ -280,9 +283,26 @@ public class Workspace extends PagedView<WorkspacePageIndicator>
+ 
+         // Disable multitouch across the workspace/all apps/customize tray
+         setMotionEventSplittingEnabled(true);
++
++        final PowerManager pm = (PowerManager) context.getSystemService(Context.POWER_SERVICE);
++
++        mGestureListener =
++                new GestureDetector(context, new GestureDetector.SimpleOnGestureListener() {
++            @Override
++            public boolean onDoubleTap(MotionEvent event) {
++                if (Utilities.useSleepGesture(context)) {
++                    pm.goToSleep(event.getEventTime());
++                }
++                return true;
++            }
++        });
+         setOnTouchListener(new WorkspaceTouchListener(mLauncher, this));
+     }
+ 
++    public boolean checkDoubleTap(MotionEvent ev) {
++        return mGestureListener.onTouchEvent(ev);
++    }
++
+     @Override
+     public void setInsets(Rect insets) {
+         DeviceProfile grid = mLauncher.getDeviceProfile();
+diff --git a/src/com/android/launcher3/touch/WorkspaceTouchListener.java b/src/com/android/launcher3/touch/WorkspaceTouchListener.java
+index 310d598b2..1d67bd669 100644
+--- a/src/com/android/launcher3/touch/WorkspaceTouchListener.java
++++ b/src/com/android/launcher3/touch/WorkspaceTouchListener.java
+@@ -81,6 +81,7 @@ public class WorkspaceTouchListener extends GestureDetector.SimpleOnGestureListe
+     @Override
+     public boolean onTouch(View view, MotionEvent ev) {
+         mGestureDetector.onTouchEvent(ev);
++        mWorkspace.checkDoubleTap(ev);
+ 
+         int action = ev.getActionMasked();
+         if (action == ACTION_DOWN) {
+-- 
+2.17.1
+

@@ -1,0 +1,184 @@
+From 5983305fbeadc00fc9dd5c1e71f98f148b13f2a1 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:15:23 -0400
+Subject: [PATCH 10/13] Revert "Dumpster: FOD pressed state [2/2]"
+
+This reverts commit afd1277391e8d9c26e060d9ef237d7208eaafe62.
+
+Change-Id: I6bfefff8ee4379300e14890dac8a0b6020bb7ae1
+---
+ res/values/bootleg_arrays.xml                 | 13 ---------
+ res/values/bootleg_colors.xml                 | 17 -----------
+ res/values/bootleg_strings.xml                |  8 ------
+ res/xml/bootleg_dumpster_lockscreen.xml       | 28 ++++---------------
+ .../fragments/FODIconPickerFragment.java      |  2 +-
+ .../fragments/LockScreenSettings.java         | 14 ++++------
+ 6 files changed, 12 insertions(+), 70 deletions(-)
+ delete mode 100644 res/values/bootleg_colors.xml
+
+diff --git a/res/values/bootleg_arrays.xml b/res/values/bootleg_arrays.xml
+index 6496851..a49eddd 100644
+--- a/res/values/bootleg_arrays.xml
++++ b/res/values/bootleg_arrays.xml
+@@ -201,19 +201,6 @@
+         <item>1</item>
+     </string-array>
+ 
+-    <!-- FOD pressed state options -->
+-    <string-array name="fod_pressed_state_entries" translatable="false">
+-        <item>@string/fod_pressed_state_icon</item>
+-        <item>@string/fod_pressed_state_icon_white</item>
+-        <item>@string/fod_pressed_state_solid_color</item>
+-    </string-array>
+-
+-    <string-array name="fod_pressed_state_values" translatable="false">
+-		<item>0</item>
+-        <item>1</item>
+-        <item>2</item>
+-    </string-array>
+-
+     <string-array name="clock_date_display_entries">
+         <item>@string/clock_date_display_none</item>
+         <item>@string/clock_date_display_small</item>
+diff --git a/res/values/bootleg_colors.xml b/res/values/bootleg_colors.xml
+deleted file mode 100644
+index 06abe95..0000000
+--- a/res/values/bootleg_colors.xml
++++ /dev/null
+@@ -1,17 +0,0 @@
+-<?xml version="1.0" encoding="utf-8"?>
+-<!-- Copyright (C) 2007 The Android Open Source Project
+-     Licensed under the Apache License, Version 2.0 (the "License");
+-     you may not use this file except in compliance with the License.
+-     You may obtain a copy of the License at
+-          http://www.apache.org/licenses/LICENSE-2.0
+-     Unless required by applicable law or agreed to in writing, software
+-     distributed under the License is distributed on an "AS IS" BASIS,
+-     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+-     See the License for the specific language governing permissions and
+-     limitations under the License.
+--->
+-
+-<resources>
+-    <!-- FOD icon picker-->
+-    <color name="fod_item_background_stroke_color">#d6d6d6</color>
+-</resources>
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index 5ceec15..d16ff02 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -645,14 +645,6 @@
+     <string name="fod_icon_picker_summary">Choose your favorite fingerprint icon</string>
+     <string name="fod_icon_picker_footer">In order to add your own icon, select the top left icon and use the OnePlus 6T FP Customizer app to select the icon you want.</string>
+ 
+-    <!-- FOD pressed state behavior -->
+-    <string name="fod_pressed_state_title">FOD pressed state behavior</string>
+-    <string name="fod_pressed_state_summary">Choose the appropriate pressed state behavior for your device</string>
+-    <string name="fod_pressed_state_footer">Icons/colors may vary depending on which device you are using.</string>
+-    <string name="fod_pressed_state_icon">Icon (usually Cyan)</string>
+-    <string name="fod_pressed_state_icon_white">Icon (White)</string>
+-    <string name="fod_pressed_state_solid_color">Solid color (usually Green)</string>
+-
+    <!-- Heads up options -->
+     <string name="less_boring_heads_up_title">Less boring heads up</string>
+     <string name="less_boring_heads_up_summary">Show heads up only for dialer, messaging and alarm app</string>
+diff --git a/res/xml/bootleg_dumpster_lockscreen.xml b/res/xml/bootleg_dumpster_lockscreen.xml
+index 87f8ed5..f0d45e3 100644
+--- a/res/xml/bootleg_dumpster_lockscreen.xml
++++ b/res/xml/bootleg_dumpster_lockscreen.xml
+@@ -188,29 +188,11 @@
+     </PreferenceCategory>
+ 
+     <!-- FOD icon picker -->
+-    <PreferenceCategory
+-        android:key="fod_icon_picker"
+-        android:title="@string/fod_icon_picker_title">
+-
+-        <Preference
+-            android:key="fod_icon_picker_category"
+-            android:title="@string/fod_icon_picker_title"
+-            android:summary="@string/fod_icon_picker_summary"
+-            android:fragment="com.bootleggers.dumpster.fragments.FODIconPickerFragment" />
+-
+-        <com.bootleggers.dumpster.preferences.SystemSettingListPreference
+-            android:key="fod_pressed_state"
+-            android:dialogTitle="@string/fod_pressed_state_title"
+-            android:title="@string/fod_pressed_state_title"
+-            android:summary="@string/fod_pressed_state_summary"
+-            android:entries="@array/fod_pressed_state_entries"
+-            android:entryValues="@array/fod_pressed_state_values"
+-            android:defaultValue="0" />
+-
+-        <Preference
+-            android:summary="@string/fod_pressed_state_footer" />
+-
+-    </PreferenceCategory>
++    <Preference
++        android:key="fod_icon_picker_category"
++        android:title="@string/fod_icon_picker_title"
++        android:summary="@string/fod_icon_picker_summary"
++        android:fragment="com.bootleggers.dumpster.fragments.FODIconPickerFragment" />
+ 
+ </PreferenceScreen>
+ 	
+diff --git a/src/com/bootleggers/dumpster/fragments/FODIconPickerFragment.java b/src/com/bootleggers/dumpster/fragments/FODIconPickerFragment.java
+index 6b7600d..a673542 100644
+--- a/src/com/bootleggers/dumpster/fragments/FODIconPickerFragment.java
++++ b/src/com/bootleggers/dumpster/fragments/FODIconPickerFragment.java
+@@ -35,7 +35,7 @@ public class FODIconPickerFragment extends SettingsPreferenceFragment {
+     public void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+ 
+-        addPreferencesFromResource(R.xml.bootleg_dumpster_fod_picker);
++        addPreferencesFromResource(R.xml.evolution_settings_fod_picker);
+ 
+         getActivity().getActionBar().setTitle(R.string.fod_icon_picker_title);
+ 
+diff --git a/src/com/bootleggers/dumpster/fragments/LockScreenSettings.java b/src/com/bootleggers/dumpster/fragments/LockScreenSettings.java
+index f4c98f7..a90b930 100644
+--- a/src/com/bootleggers/dumpster/fragments/LockScreenSettings.java
++++ b/src/com/bootleggers/dumpster/fragments/LockScreenSettings.java
+@@ -55,7 +55,6 @@ public class LockScreenSettings extends SettingsPreferenceFragment implements
+     private static final String LOCK_CLOCK_FONT_STYLE = "lock_clock_font_style";
+     private static final String LOCK_DATE_FONTS = "lock_date_fonts";
+     private static final String FOD_ICON_PICKER_CATEGORY = "fod_icon_picker_category";
+-    private static final String FOD_ICON_PICKER_CATEGORY = "fod_icon_picker";
+ 
+     private ListPreference mLockClockFonts;
+     private ListPreference mLockDateFonts;
+@@ -67,7 +66,7 @@ public class LockScreenSettings extends SettingsPreferenceFragment implements
+     private SystemSettingSwitchPreference mLockscreenWeatherCity;
+     private SystemSettingSwitchPreference mLockscreenWeatherTemp;
+     private PreferenceCategory mLsMisc;
+-    private PreferenceCategory mFODIconPickerCategory;
++    private Preference mFODIconPicker;
+ 
+     @Override
+     public void onCreate(Bundle icicle) {
+@@ -93,18 +92,17 @@ public class LockScreenSettings extends SettingsPreferenceFragment implements
+             mLsMisc.removePreference(mFingerprintUnlock);
+         }
+ 
+-        mFODIconPickerCategory = (PreferenceCategory) findPreference(FOD_ICON_PICKER_CATEGORY);
+-        if (mFODIconPickerCategory != null
+-                && !getResources().getBoolean(com.android.internal.R.bool.config_needCustomFODView)) {
+-            prefScreen.removePreference(mFODIconPickerCategory);
+-        }
+-
+         mLockscreenMediaFilter.setOnPreferenceChangeListener(new Preference.OnPreferenceChangeListener() {
+         	@Override
+         	public boolean onPreferenceChange(Preference preference, Object newVal) {
+         		updatePrefsVisiblities();
+         		return true;
+         	}
++        mFODIconPicker = (Preference) findPreference(FOD_ICON_PICKER_CATEGORY);
++        if (mFODIconPicker != null
++                && !getResources().getBoolean(com.android.internal.R.bool.config_needCustomFODView)) {
++            prefScreen.removePreference(mFODIconPicker);
++        }
+ 
+     	});
+ 
+-- 
+2.17.1
+

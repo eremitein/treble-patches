@@ -1,0 +1,79 @@
+From 1f52e949810e5f787358c90c62401f0132fff397 Mon Sep 17 00:00:00 2001
+From: Ricardo Cerqueira <cyanogenmod@cerqueira.org>
+Date: Fri, 23 Nov 2012 14:23:16 +0000
+Subject: [PATCH 059/127] Reintroduce button-backlight (and respective
+ inactivity timeout)
+
+The power manager rewrite from Change I1d7a52e98f0449f76d70bf421f6a7f245957d1d7
+completely removed support for control of the button backlights, which makes
+all capacitive buttons out there stay dark. The commit message in that change
+mentions it hasn't been implemented _yet_, so this fix should be temporary
+until upstream does their own implementation
+
+[RC: Updated to 5.0]
+
+Change-Id: I6094c446e0b8c23f57d30652a3cbd35dee5e821a
+---
+ .../server/display/DisplayPowerController.java      |  7 +++++++
+ .../android/server/power/PowerManagerService.java   | 13 +++++++++++++
+ 2 files changed, 20 insertions(+)
+
+diff --git a/services/core/java/com/android/server/display/DisplayPowerController.java b/services/core/java/com/android/server/display/DisplayPowerController.java
+index 3ae24823898..ddeae142233 100644
+--- a/services/core/java/com/android/server/display/DisplayPowerController.java
++++ b/services/core/java/com/android/server/display/DisplayPowerController.java
+@@ -16,6 +16,13 @@
+ 
+ package com.android.server.display;
+ 
++import android.app.ActivityManager;
++import com.android.internal.app.IBatteryStats;
++import com.android.server.LocalServices;
++import com.android.server.am.BatteryStatsService;
++import com.android.server.policy.WindowManagerPolicy;
++import com.android.server.lights.LightsManager;
++
+ import android.animation.Animator;
+ import android.animation.ObjectAnimator;
+ import android.annotation.Nullable;
+diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
+index bf702f52ecf..251085cc359 100644
+--- a/services/core/java/com/android/server/power/PowerManagerService.java
++++ b/services/core/java/com/android/server/power/PowerManagerService.java
+@@ -239,6 +239,12 @@ public final class PowerManagerService extends SystemService
+     private static final String POWER_INTPUT_SUSPEND_NODE =
+             "/sys/class/power_supply/battery/input_suspend";
+ 
++    // Add button light timeout
++    private static final int BUTTON_ON_DURATION = 5 * 1000;
++
++    // File location for last reboot reason
++    private static final String LAST_REBOOT_LOCATION = "/data/misc/reboot/last_reboot_reason";
++
+     private final Context mContext;
+     private final ServiceThread mHandlerThread;
+     private final PowerManagerHandler mHandler;
+@@ -2204,6 +2210,7 @@ public final class PowerManagerService extends SystemService
+                 final long screenOffTimeout = getScreenOffTimeoutLocked(sleepTimeout);
+                 final long screenDimDuration = getScreenDimDurationLocked(screenOffTimeout);
+                 final boolean userInactiveOverride = mUserInactiveOverrideFromWindowManager;
++                final int screenBrightness = mScreenBrightnessSettingDefault;
+                 final long nextProfileTimeout = getNextProfileTimeoutLocked(now);
+ 
+                 mUserActivitySummary = 0;
+@@ -2211,6 +2218,12 @@ public final class PowerManagerService extends SystemService
+                     nextTimeout = mLastUserActivityTime
+                             + screenOffTimeout - screenDimDuration;
+                     if (now < nextTimeout) {
++                        if (now > mLastUserActivityTime + BUTTON_ON_DURATION) {
++                            mButtonsLight.setBrightness(0);
++                        } else {
++                            mButtonsLight.setBrightness(screenBrightness);
++                            nextTimeout = now + BUTTON_ON_DURATION;
++                        }
+                         mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
+                         if (mWakefulness == WAKEFULNESS_AWAKE) {
+                             int buttonBrightness;
+-- 
+2.17.1
+

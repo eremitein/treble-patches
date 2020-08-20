@@ -1,0 +1,28 @@
+From 24fd02c74fbe2ddea4a14aca7fa7072f58df2c02 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:31:35 -0400
+Subject: [PATCH 040/127] Revert "fw/b: Fix systemui tests with in-display
+ fingerprint"
+
+This reverts commit 2a6b9b8822279c5011658c2afa17f2565a05a035.
+---
+ packages/SystemUI/Android.bp | 3 +--
+ 1 file changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/Android.bp b/packages/SystemUI/Android.bp
+index dcdde85c820..7eae80ceba6 100644
+--- a/packages/SystemUI/Android.bp
++++ b/packages/SystemUI/Android.bp
+@@ -124,8 +124,7 @@ android_library {
+         "testables",
+         "truth-prebuilt",
+         "dagger2-2.19",
+-        "jsr330",
+-        "vendor.lineage.biometrics.fingerprint.inscreen-V1.0-java"
++        "jsr330"
+     ],
+     libs: [
+         "android.test.runner",
+-- 
+2.17.1
+

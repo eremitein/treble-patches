@@ -1,0 +1,47 @@
+From baf77704af38890397149062a3950abab8f061b6 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:13:03 -0400
+Subject: [PATCH 05/13] Revert "Dumpster: Add BlueFirework recognizing FP
+ animation [2/2]"
+
+This reverts commit 9886e4d4fe06b8977c4822afc75a75f859503b94.
+---
+ res/values/bootleg_arrays.xml  | 2 --
+ res/values/bootleg_strings.xml | 1 -
+ 2 files changed, 3 deletions(-)
+
+diff --git a/res/values/bootleg_arrays.xml b/res/values/bootleg_arrays.xml
+index e824359..7c8182e 100644
+--- a/res/values/bootleg_arrays.xml
++++ b/res/values/bootleg_arrays.xml
+@@ -486,7 +486,6 @@
+         <item>@string/fod_recog_animation_pureview_future</item>
+         <item>@string/fod_recog_animation_pureview_halo_ring</item>
+         <item>@string/fod_recog_animation_pureview_molecular</item>
+-        <item>@string/fod_recog_animation_bluefirework</item>
+     </string-array>
+ 
+     <string-array name="fod_recog_animation_values" translatable="false">
+@@ -505,7 +504,6 @@
+         <item>12</item>
+         <item>13</item>
+         <item>14</item>
+-        <item>15</item>
+     </string-array>
+ 
+     <!-- Gaming mode -->
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index dcf4b6e..43c2649 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -672,7 +672,6 @@
+     <string name="fod_recog_animation_pureview_future">Future</string>
+     <string name="fod_recog_animation_pureview_halo_ring">Halo ring</string>
+     <string name="fod_recog_animation_pureview_molecular">Molecular</string>
+-    <string name="fod_recog_animation_bluefirework">Blue Fireworks</string>
+ 
+    <!-- Heads up options -->
+     <string name="less_boring_heads_up_title">Less boring heads up</string>
+-- 
+2.17.1
+

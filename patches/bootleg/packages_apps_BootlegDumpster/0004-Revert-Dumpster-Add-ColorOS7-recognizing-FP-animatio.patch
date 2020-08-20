@@ -1,0 +1,50 @@
+From 8d9d5a7ac4e3ae43d7180a26805b138e744b8137 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 18:13:01 -0400
+Subject: [PATCH 04/13] Revert "Dumpster: Add ColorOS7 recognizing FP
+ animations [2/2]"
+
+This reverts commit f0ccb81fa3ddab841c4f34003f1d0f3cc5fb96b7.
+---
+ res/values/bootleg_arrays.xml  | 4 ----
+ res/values/bootleg_strings.xml | 2 --
+ 2 files changed, 6 deletions(-)
+
+diff --git a/res/values/bootleg_arrays.xml b/res/values/bootleg_arrays.xml
+index f7a3cb5..e824359 100644
+--- a/res/values/bootleg_arrays.xml
++++ b/res/values/bootleg_arrays.xml
+@@ -487,8 +487,6 @@
+         <item>@string/fod_recog_animation_pureview_halo_ring</item>
+         <item>@string/fod_recog_animation_pureview_molecular</item>
+         <item>@string/fod_recog_animation_bluefirework</item>
+-        <item>@string/fod_recog_animation_coloros7_1</item>
+-        <item>@string/fod_recog_animation_coloros7_2</item>
+     </string-array>
+ 
+     <string-array name="fod_recog_animation_values" translatable="false">
+@@ -508,8 +506,6 @@
+         <item>13</item>
+         <item>14</item>
+         <item>15</item>
+-        <item>16</item>
+-        <item>17</item>
+     </string-array>
+ 
+     <!-- Gaming mode -->
+diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
+index d37a0e2..dcf4b6e 100644
+--- a/res/values/bootleg_strings.xml
++++ b/res/values/bootleg_strings.xml
+@@ -673,8 +673,6 @@
+     <string name="fod_recog_animation_pureview_halo_ring">Halo ring</string>
+     <string name="fod_recog_animation_pureview_molecular">Molecular</string>
+     <string name="fod_recog_animation_bluefirework">Blue Fireworks</string>
+-    <string name="fod_recog_animation_coloros7_1">ColorOS7 1</string>
+-    <string name="fod_recog_animation_coloros7_2">ColorOS7 2</string>
+ 
+    <!-- Heads up options -->
+     <string name="less_boring_heads_up_title">Less boring heads up</string>
+-- 
+2.17.1
+

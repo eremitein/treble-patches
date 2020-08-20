@@ -1,0 +1,55 @@
+From 90a65520d8f097d7a28f0737933b5992cf8d4868 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Aug 2020 12:53:10 -0400
+Subject: [PATCH] add statusbar padding tuning (Bootleg)
+
+Change-Id: Ib31c6505d431da4f4a72888a85894d27e857ff3b
+---
+ res/values/strings.xml                        | 2 ++
+ res/xml/display_settings.xml                  | 3 +++
+ src/com/android/settings/DisplaySettings.java | 2 ++
+ 3 files changed, 7 insertions(+)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 5a8047e7e0..22be08feac 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10082,6 +10082,8 @@
+ 
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the settings category for theme overlays. -->
+     <string name="theme_customization_category">Theming</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar start and end padding (e.g. set 12dp paddings). -->
++    <string name="theme_customization_padding_title">Status Bar padding</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar icons spacing (e.g. set 2dp paddings). -->
+     <string name="theme_customization_statusbar_title">Status Bar spacing</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      SystemUI speed performance -->
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index 1650ee47b8..3b7a2f1a55 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -168,6 +168,9 @@
+         android:title="@string/theme_customization_category"
+         android:order="1200"> <!-- Incremented by 100 from last order (i.e. 1100) -->
+ 
++        <ListPreference
++            android:key="android.theme.customization.padding"
++            android:title="@string/theme_customization_padding_title"/>
+         <ListPreference
+             android:key="android.theme.customization.statusbar"
+             android:title="@string/theme_customization_statusbar_title"/>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index e4e70b69d3..9d43bd292c 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -93,6 +93,8 @@ public class DisplaySettings extends DashboardFragment {
+         controllers.add(new ShowOperatorNamePreferenceController(context));
+         controllers.add(new ThemePreferenceController(context));
+         controllers.add(new BrightnessLevelPreferenceController(context, lifecycle));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.padding"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.statusbar"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+-- 
+2.17.1
+

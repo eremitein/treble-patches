@@ -1,0 +1,26 @@
+From 2749bd944dac6ca03ea0a3b2d0f2a178b40d09da Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 20 Aug 2020 09:26:08 -0400
+Subject: [PATCH 038/127] Revert "FODCircleView: place above other UI elements"
+
+This reverts commit 676109ccc493a820d05437b48f2f05a82163d58a.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java      | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 01205a9d134..771d1f81e3d 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -407,7 +407,7 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+ 
+         mParams.setTitle("Fingerprint on display");
+         mParams.packageName = "android";
+-        mParams.type = WindowManager.LayoutParams.TYPE_DISPLAY_OVERLAY;
++        mParams.type = WindowManager.LayoutParams.TYPE_VOLUME_OVERLAY;
+         mParams.flags = WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE |
+                 WindowManager.LayoutParams.FLAG_WATCH_OUTSIDE_TOUCH |
+                 WindowManager.LayoutParams.FLAG_DIM_BEHIND |
+-- 
+2.17.1
+

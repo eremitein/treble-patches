@@ -1,0 +1,25 @@
+From 38acc0bc4b39036df1e02cb5f9f71ba5c4d4e074 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 13 Aug 2020 01:46:58 -0400
+Subject: [PATCH 7/7] try to save resources
+
+Change-Id: Ie1d07e949442e7fa5a35e65bc28d2ab1a5bff0f1
+---
+ core/soong_config.mk | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/core/soong_config.mk b/core/soong_config.mk
+index 0e9132a2f..fe9691e8e 100644
+--- a/core/soong_config.mk
++++ b/core/soong_config.mk
+@@ -44,7 +44,6 @@ $(call add_json_bool, Unbundled_build,                   $(TARGET_BUILD_APPS))
+ $(call add_json_bool, Unbundled_build_sdks_from_source,  $(UNBUNDLED_BUILD_SDKS_FROM_SOURCE))
+ $(call add_json_bool, Pdk,                               $(filter true,$(TARGET_BUILD_PDK)))
+ 
+-$(call add_json_bool, Debuggable,                        $(filter userdebug eng,$(TARGET_BUILD_VARIANT)))
+ $(call add_json_bool, Eng,                               $(filter eng,$(TARGET_BUILD_VARIANT)))
+ 
+ $(call add_json_str,  DeviceName,                        $(TARGET_DEVICE))
+-- 
+2.17.1
+
