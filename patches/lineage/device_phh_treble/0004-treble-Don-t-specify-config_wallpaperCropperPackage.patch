@@ -1,7 +1,7 @@
-From 1ba5db5fe5cd5c537e46dea3f33c98eeec9d493e Mon Sep 17 00:00:00 2001
+From a47ea4eed6b5ac3c729121910e6229f4dbe32135 Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Tue, 10 Sep 2019 02:42:36 +0000
-Subject: [PATCH 04/12] treble: Don't specify config_wallpaperCropperPackage
+Subject: [PATCH 04/11] treble: Don't specify config_wallpaperCropperPackage
 
 Change-Id: I72b59def304779e4bd9a399c01cf1180d15bf444
 ---

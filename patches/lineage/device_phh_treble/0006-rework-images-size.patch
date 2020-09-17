@@ -1,0 +1,95 @@
+From d04e3ebd20c988bc89305a7ee32adb242aa2c454 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 7 Jul 2020 16:21:34 +0300
+Subject: [PATCH 06/11] rework images size
+
+---
+ phhgsi_a64_a/BoardConfig.mk    | 3 ++-
+ phhgsi_a64_ab/BoardConfig.mk   | 3 ++-
+ phhgsi_arm64_a/BoardConfig.mk  | 1 +
+ phhgsi_arm64_ab/BoardConfig.mk | 4 +---
+ phhgsi_arm_a/BoardConfig.mk    | 2 +-
+ phhgsi_arm_ab/BoardConfig.mk   | 3 +++
+ 6 files changed, 10 insertions(+), 6 deletions(-)
+
+diff --git a/phhgsi_a64_a/BoardConfig.mk b/phhgsi_a64_a/BoardConfig.mk
+index d430bf8..5fb544d 100644
+--- a/phhgsi_a64_a/BoardConfig.mk
++++ b/phhgsi_a64_a/BoardConfig.mk
+@@ -2,7 +2,8 @@ include build/make/target/board/generic_arm_ab/BoardConfig.mk
+ include device/phh/treble/board-base.mk
+ 
+ ifeq ($(BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE),)
+-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1572864000
++BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1073741824
+ endif
++
+ TARGET_USES_64_BIT_BINDER := true
+ BOARD_SYSTEMIMAGE_AS_SYSTEM := true
+diff --git a/phhgsi_a64_ab/BoardConfig.mk b/phhgsi_a64_ab/BoardConfig.mk
+index b14acfa..1b0045f 100644
+--- a/phhgsi_a64_ab/BoardConfig.mk
++++ b/phhgsi_a64_ab/BoardConfig.mk
+@@ -2,6 +2,7 @@ include build/make/target/board/generic_arm_ab/BoardConfig.mk
+ include device/phh/treble/board-base.mk
+ 
+ ifeq ($(BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE),)
+-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1572864000
++BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1073741824
+ endif
++
+ TARGET_USES_64_BIT_BINDER := true
+diff --git a/phhgsi_arm64_a/BoardConfig.mk b/phhgsi_arm64_a/BoardConfig.mk
+index c9bc831..39294f3 100644
+--- a/phhgsi_arm64_a/BoardConfig.mk
++++ b/phhgsi_arm64_a/BoardConfig.mk
+@@ -4,4 +4,5 @@ include device/phh/treble/board-base.mk
+ ifeq ($(BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE),)
+ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2080374784
+ endif
++
+ BOARD_SYSTEMIMAGE_AS_SYSTEM := true
+diff --git a/phhgsi_arm64_ab/BoardConfig.mk b/phhgsi_arm64_ab/BoardConfig.mk
+index 1f6f532..bfa7156 100644
+--- a/phhgsi_arm64_ab/BoardConfig.mk
++++ b/phhgsi_arm64_ab/BoardConfig.mk
+@@ -2,9 +2,7 @@ include build/make/target/board/generic_arm64_ab/BoardConfig.mk
+ include device/phh/treble/board-base.mk
+ 
+ ifeq ($(BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE),)
+-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2147483648
+-else
+-BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 33554432
++BOARD_SYSTEMIMAGE_PARTITION_SIZE := 2080374784
+ endif
+ 
+ BUILD_BROKEN_PHONY_TARGETS := true
+diff --git a/phhgsi_arm_a/BoardConfig.mk b/phhgsi_arm_a/BoardConfig.mk
+index 7340fc4..848b442 100644
+--- a/phhgsi_arm_a/BoardConfig.mk
++++ b/phhgsi_arm_a/BoardConfig.mk
+@@ -2,7 +2,7 @@ include build/make/target/board/generic_arm_ab/BoardConfig.mk
+ include device/phh/treble/board-base.mk
+ 
+ ifeq ($(BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE),)
+-BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1313583104
++BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1073741824
+ else
+ BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 25165824
+ endif
+diff --git a/phhgsi_arm_ab/BoardConfig.mk b/phhgsi_arm_ab/BoardConfig.mk
+index a9a4fe3..e424b1d 100644
+--- a/phhgsi_arm_ab/BoardConfig.mk
++++ b/phhgsi_arm_ab/BoardConfig.mk
+@@ -3,5 +3,8 @@ include device/phh/treble/board-base.mk
+ 
+ ifeq ($(BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE),)
+ BOARD_SYSTEMIMAGE_PARTITION_SIZE := 1073741824
++else
++BOARD_SYSTEMIMAGE_PARTITION_RESERVED_SIZE := 25165824
+ endif
++
+ TARGET_USES_64_BIT_BINDER := false
+-- 
+2.17.1
+

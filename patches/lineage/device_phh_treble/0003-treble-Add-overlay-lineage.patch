@@ -1,7 +1,7 @@
-From bc7d8ef16de552b9ef79129086d220163655667a Mon Sep 17 00:00:00 2001
+From c9bf243d8bf339a404172746f55e05c65a24b23e Mon Sep 17 00:00:00 2001
 From: AndyCGYan <GeForce8800Ultra@gmail.com>
 Date: Mon, 15 Jul 2019 10:43:52 +0000
-Subject: [PATCH 03/12] treble: Add overlay-lineage
+Subject: [PATCH 03/11] treble: Add overlay-lineage
 
 Change-Id: I9d313b1488d98acc7cf37d23820946ee99745426
 ---

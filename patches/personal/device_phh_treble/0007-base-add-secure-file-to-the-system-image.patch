@@ -1,7 +1,7 @@
-From 2c9b6f96286a5af0937a296ac7a7459725761441 Mon Sep 17 00:00:00 2001
+From 7d2249f9726dd39781fa81d0b592072e6da930af Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 25 Dec 2019 12:34:05 +0200
-Subject: [PATCH 08/12] base: add "secure" file to the system image
+Subject: [PATCH 07/11] base: add "secure" file to the system image
 
 	modified:   base.mk
 ---

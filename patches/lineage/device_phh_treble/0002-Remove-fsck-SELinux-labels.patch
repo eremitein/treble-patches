@@ -1,7 +1,7 @@
-From eec87b5ca2a7fd709ee792b4f590af1f9b897c04 Mon Sep 17 00:00:00 2001
+From 2ccc5ed6ec83db63183b426a8f7740cc83fcefac Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Wed, 23 Oct 2019 09:38:16 +0000
-Subject: [PATCH 02/12] Remove fsck SELinux labels
+Subject: [PATCH 02/11] Remove fsck SELinux labels
 
 These are covered by LOS sepolicy
 

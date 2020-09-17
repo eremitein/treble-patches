@@ -1,4 +1,4 @@
-From 58c88df1f64140ab213e86ee31ec23bff9c11a25 Mon Sep 17 00:00:00 2001
+From ca35f74ef863d278dfff33f49a20e4d099cb482e Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 13 Aug 2020 19:15:19 -0400
 Subject: [PATCH 6/6] remove setup wizard
@@ -9,7 +9,7 @@ Subject: [PATCH 6/6] remove setup wizard
  2 files changed, 2 deletions(-)
 
 diff --git a/products/gms.mk b/products/gms.mk
-index 8782fe8..392f54b 100644
+index b4ad2ba..2c2a351 100644
 --- a/products/gms.mk
 +++ b/products/gms.mk
 @@ -23,7 +23,6 @@ GMS_PRODUCT_PACKAGES += \
@@ -21,7 +21,7 @@ index 8782fe8..392f54b 100644
  
  # GMS mandatory libraries
 diff --git a/products/gms_go.mk b/products/gms_go.mk
-index 85de00d..3f31310 100644
+index d0256d5..d6470f3 100644
 --- a/products/gms_go.mk
 +++ b/products/gms_go.mk
 @@ -23,7 +23,6 @@ GMS_PRODUCT_PACKAGES += \

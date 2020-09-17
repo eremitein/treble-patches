@@ -1,7 +1,7 @@
-From efcae9db557169fd2f9200128383faaf62678ef9 Mon Sep 17 00:00:00 2001
+From 904467e76527694c98bdb091ceeaaf87b86269d2 Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Fri, 1 Nov 2019 15:26:10 +0000
-Subject: [PATCH 06/12] treble: Fix init.treble-environ.rc hardcode for LOS
+Subject: [PATCH 05/11] treble: Fix init.treble-environ.rc hardcode for LOS
 
 Refer to https://github.com/phhusson/device_phh_treble/commit/a6aa52f7b11cc7d3f9fbe51356b34ebf0705d775
 

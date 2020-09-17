@@ -1,0 +1,68 @@
+From cb7a76fd3dbfd66dfe7f849af79fd95139251174 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Aug 2020 12:53:10 -0400
+Subject: [PATCH] add statusbar padding tuning (LOSQ)
+
+Change-Id: Ib31c6505d431da4f4a72888a85894d27e857ff3b
+---
+ res/values-ru/strings.xml                     | 1 +
+ res/values/strings.xml                        | 2 ++
+ res/xml/display_settings.xml                  | 3 +++
+ src/com/android/settings/DisplaySettings.java | 2 ++
+ 4 files changed, 8 insertions(+)
+
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index 173d8de381..d50be87265 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -4868,6 +4868,7 @@
+     <string name="theme_customization_icon_shape_title">Закругление иконок</string>
+     <string name="theme_customization_icon_pack_title">Стиль иконок</string>
+     <string name="theme_customization_qspanel_title">Сетка быстрых настроек</string>
++    <string name="theme_customization_padding_title">Отступы строки состояния</string>
+     <string name="theme_customization_statusbar_title">Разделение иконок в строке состояния</string>
+     <string name="theme_customization_darkui_title">Варианты тёмного оформления</string>
+     <string name="theme_customization_qsalpha_title">Прозрачность панели быстрых настроек</string>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index dff35f31f2..9e7f33ee9a 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10080,6 +10080,8 @@
+     <string name="theme_customization_darkui_title">Dark themes</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the UI   corners radius -->
+     <string name="theme_customization_header_title">Header padding</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar start and end padding (e.g. set 12dp paddings). -->
++    <string name="theme_customization_padding_title">Status Bar padding</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar icons spacing (e.g. set 2dp paddings). -->
+     <string name="theme_customization_statusbar_title">Status Bar spacing</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the QS   Panel alpha opacity -->
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index 96b9b2f01c..983e61aebf 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -201,6 +201,9 @@
+         <ListPreference
+             android:key="android.theme.customization.darkui"
+             android:title="@string/theme_customization_darkui_title"/>
++        <ListPreference
++            android:key="android.theme.customization.padding"
++            android:title="@string/theme_customization_padding_title"/>
+         <ListPreference
+             android:key="android.theme.customization.statusbar"
+             android:title="@string/theme_customization_statusbar_title"/>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index bd3b0231a8..3bce4727d9 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -98,6 +98,8 @@ public class DisplaySettings extends DashboardFragment {
+         controllers.add(new ShowOperatorNamePreferenceController(context));
+         controllers.add(new ThemePreferenceController(context));
+         controllers.add(new BrightnessLevelPreferenceController(context, lifecycle));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.padding"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.statusbar"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+-- 
+2.17.1
+

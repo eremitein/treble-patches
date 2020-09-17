@@ -1,7 +1,7 @@
-From 35025c429515f6a254997474593be106f48ba5e7 Mon Sep 17 00:00:00 2001
+From 5fe8931c4676c36076ef75a45b9ceaa968803e4f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 5 Feb 2020 15:41:12 +0200
-Subject: [PATCH 11/12] rw-system: implement build.version.security_patch prop
+Subject: [PATCH 10/11] rw-system: implement build.version.security_patch prop
 
 	modified:   rw-system.sh
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 11/12] rw-system: implement build.version.security_patch prop
  1 file changed, 1 insertion(+)
 
 diff --git a/rw-system.sh b/rw-system.sh
-index dcdf5de..3078c4e 100644
+index 7671410..2064d23 100644
 --- a/rw-system.sh
 +++ b/rw-system.sh
-@@ -586,6 +586,7 @@ if [ -f /system/phh/secure ];then
+@@ -592,6 +592,7 @@ if [ -f /system/phh/secure ];then
      copyprop ro.product.manufacturer ro.vendor.product.manufacturer
      copyprop ro.system.product.manufacturer ro.product.vendor.manufacturer
      copyprop ro.product.manufacturer ro.product.vendor.manufacturer

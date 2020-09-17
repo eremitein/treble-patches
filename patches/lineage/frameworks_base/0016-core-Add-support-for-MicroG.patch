@@ -1,7 +1,7 @@
-From 0a6307952d918c9f4d83b0d0177f4c2ff137cdc4 Mon Sep 17 00:00:00 2001
+From c3807d3ebae482b32e1a8262fefaeedfbae213a8 Mon Sep 17 00:00:00 2001
 From: gudenau <gudenau>
 Date: Tue, 25 Sep 2018 09:44:26 +0200
-Subject: [PATCH 015/145] core: Add support for MicroG
+Subject: [PATCH 16/16] core: Add support for MicroG
 
 -fake signatures, enabled per app by dynamic permission
 
@@ -61,10 +61,10 @@ index 40270e62e11..d7a8fc8289e 100644
      <string name="permlab_statusBar">disable or modify status bar</string>
      <!-- Description of an application permission, listed so the user can choose whether they want to allow the application to do this. -->
 diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
-index 179abe958b1..65c4c4cdbdd 100644
+index 500660dca4a..d064633a5e9 100644
 --- a/services/core/java/com/android/server/pm/PackageManagerService.java
 +++ b/services/core/java/com/android/server/pm/PackageManagerService.java
-@@ -4186,8 +4186,9 @@ public class PackageManagerService extends IPackageManager.Stub
+@@ -4179,8 +4179,9 @@ public class PackageManagerService extends IPackageManager.Stub
              final Set<String> permissions = ArrayUtils.isEmpty(p.requestedPermissions)
                      ? Collections.emptySet() : permissionsState.getPermissions(userId);
  
@@ -76,7 +76,7 @@ index 179abe958b1..65c4c4cdbdd 100644
  
              if (packageInfo == null) {
                  return null;
-@@ -4223,6 +4224,24 @@ public class PackageManagerService extends IPackageManager.Stub
+@@ -4216,6 +4217,24 @@ public class PackageManagerService extends IPackageManager.Stub
          }
      }
  

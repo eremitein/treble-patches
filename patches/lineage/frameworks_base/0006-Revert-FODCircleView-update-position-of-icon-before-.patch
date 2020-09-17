@@ -1,7 +1,7 @@
-From 638ecf77dc2072e55a360b932bc3791e1b373df5 Mon Sep 17 00:00:00 2001
+From 92c93bade5fbba478a3fa638b5228b60a307c4f6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 18 Apr 2020 02:39:53 +0300
-Subject: [PATCH 005/145] Revert "FODCircleView: update position of icon before
+Subject: [PATCH 06/16] Revert "FODCircleView: update position of icon before
  show"
 
 This reverts commit 03a8f7ac30443939ff01345ba8b034b14bd01a71.

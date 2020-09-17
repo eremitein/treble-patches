@@ -1,7 +1,7 @@
-From 938e0e97ccb2970b919bc104675a801ef5adf765 Mon Sep 17 00:00:00 2001
+From 3cda679787a2ae3d3afc6b5ac1289029d10dbdca Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 03:27:03 +0200
-Subject: [PATCH 007/145] Revert "FODCircleView: dispatch onPress to HAL only
+Subject: [PATCH 08/16] Revert "FODCircleView: dispatch onPress to HAL only
  after dimming is applied"
 
 This reverts commit 7ebd24f3bf28580489063e8266501cb6514a4091.

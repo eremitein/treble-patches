@@ -1,0 +1,582 @@
+From b9399b2a2a1a155637b33a1a720472697eb6df8e Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 23 Aug 2020 12:44:27 -0400
+Subject: [PATCH] add statusbar padding overlays
+
+Change-Id: I8cc5e5f03c1eddd8cd3208623a7219e8a17353aa
+---
+ .../systemui/theme/ThemeOverlayManager.java   |  8 ++++-
+ packages/overlays/Android.mk                  |  5 ++++
+ .../overlays/Padding12dpOverlay/Android.mk    | 30 +++++++++++++++++++
+ .../Padding12dpOverlay/AndroidManifest.xml    | 24 +++++++++++++++
+ .../Padding12dpOverlay/res/values/dimens.xml  | 23 ++++++++++++++
+ .../overlays/Padding16dpOverlay/Android.mk    | 30 +++++++++++++++++++
+ .../Padding16dpOverlay/AndroidManifest.xml    | 24 +++++++++++++++
+ .../Padding16dpOverlay/res/values/dimens.xml  | 23 ++++++++++++++
+ .../overlays/Padding20dpOverlay/Android.mk    | 30 +++++++++++++++++++
+ .../Padding20dpOverlay/AndroidManifest.xml    | 24 +++++++++++++++
+ .../Padding20dpOverlay/res/values/dimens.xml  | 23 ++++++++++++++
+ .../overlays/Padding24dpOverlay/Android.mk    | 30 +++++++++++++++++++
+ .../Padding24dpOverlay/AndroidManifest.xml    | 24 +++++++++++++++
+ .../Padding24dpOverlay/res/values/dimens.xml  | 23 ++++++++++++++
+ .../overlays/Padding28dpOverlay/Android.mk    | 30 +++++++++++++++++++
+ .../Padding28dpOverlay/AndroidManifest.xml    | 24 +++++++++++++++
+ .../Padding28dpOverlay/res/values/dimens.xml  | 23 ++++++++++++++
+ 17 files changed, 397 insertions(+), 1 deletion(-)
+ create mode 100644 packages/overlays/Padding12dpOverlay/Android.mk
+ create mode 100644 packages/overlays/Padding12dpOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Padding12dpOverlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/Padding16dpOverlay/Android.mk
+ create mode 100644 packages/overlays/Padding16dpOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Padding16dpOverlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/Padding20dpOverlay/Android.mk
+ create mode 100644 packages/overlays/Padding20dpOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Padding20dpOverlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/Padding24dpOverlay/Android.mk
+ create mode 100644 packages/overlays/Padding24dpOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Padding24dpOverlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/Padding28dpOverlay/Android.mk
+ create mode 100644 packages/overlays/Padding28dpOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Padding28dpOverlay/res/values/dimens.xml
+
+diff --git a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+index 2f3860bd6fc..c7ec1ebaa2d 100644
+--- a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
++++ b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+@@ -85,6 +85,9 @@ class ThemeOverlayManager {
+     @VisibleForTesting
+     static final String OVERLAY_CATEGORY_HEADER =
+             "android.theme.customization.header";
++    @VisibleForTesting
++    static final String OVERLAY_CATEGORY_PADDING =
++            "android.theme.customization.padding";
+ 
+     /*
+      * All theme customization categories used by the system, in order that they should be applied,
+@@ -96,6 +99,7 @@ class ThemeOverlayManager {
+             OVERLAY_CATEGORY_FONT,
+             OVERLAY_CATEGORY_COLOR,
+             OVERLAY_CATEGORY_QSPANEL,
++            OVERLAY_CATEGORY_PADDING,
+             OVERLAY_CATEGORY_STATUSBAR,
+             OVERLAY_CATEGORY_QSALPHA,
+             OVERLAY_CATEGORY_DARKUI,
+@@ -113,6 +117,7 @@ class ThemeOverlayManager {
+             OVERLAY_CATEGORY_FONT,
+             OVERLAY_CATEGORY_SHAPE,
+             OVERLAY_CATEGORY_QSPANEL,
++            OVERLAY_CATEGORY_PADDING,
+             OVERLAY_CATEGORY_STATUSBAR,
+             OVERLAY_CATEGORY_QSALPHA,
+             OVERLAY_CATEGORY_DARKUI,
+@@ -142,7 +147,7 @@ class ThemeOverlayManager {
+                 OVERLAY_CATEGORY_SPEEDUI, OVERLAY_CATEGORY_HEADER));
+         mTargetPackageToCategories.put(SYSUI_PACKAGE,
+                 Sets.newHashSet(OVERLAY_CATEGORY_ICON_SYSUI, OVERLAY_CATEGORY_QSPANEL,
+-                                OVERLAY_CATEGORY_QSALPHA));
++                                OVERLAY_CATEGORY_QSALPHA, OVERLAY_CATEGORY_PADDING));
+         mTargetPackageToCategories.put(SETTINGS_PACKAGE,
+                 Sets.newHashSet(OVERLAY_CATEGORY_ICON_SETTINGS));
+         mTargetPackageToCategories.put(mLauncherPackage,
+@@ -159,6 +164,7 @@ class ThemeOverlayManager {
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_HEADER, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_QSPANEL, SYSUI_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_QSALPHA, SYSUI_PACKAGE);
++        mCategoryToTargetPackage.put(OVERLAY_CATEGORY_PADDING, SYSUI_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SYSUI, SYSUI_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SETTINGS, SETTINGS_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_LAUNCHER, mLauncherPackage);
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 12975ea8cc2..55c3d44b6ae 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -80,6 +80,11 @@ LOCAL_REQUIRED_MODULES := \
+ 	StatusBar1Overlay \
+ 	StatusBar2Overlay \
+ 	StatusBar3Overlay \
++	Padding12dpOverlay \
++	Padding16dpOverlay \
++	Padding20dpOverlay \
++	Padding24dpOverlay \
++	Padding28dpOverlay \
+ 	Level1SpeedUIOverlay \
+ 	Level2SpeedUIOverlay \
+ 	Level3SpeedUIOverlay \
+diff --git a/packages/overlays/Padding12dpOverlay/Android.mk b/packages/overlays/Padding12dpOverlay/Android.mk
+new file mode 100644
+index 00000000000..1af553a09dd
+--- /dev/null
++++ b/packages/overlays/Padding12dpOverlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Padding12dp
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Padding12dpOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Padding12dpOverlay/AndroidManifest.xml b/packages/overlays/Padding12dpOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..3297015e1b3
+--- /dev/null
++++ b/packages/overlays/Padding12dpOverlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.padding12"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.padding" android:priority="1"/>
++    <application android:label="12dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Padding12dpOverlay/res/values/dimens.xml b/packages/overlays/Padding12dpOverlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..a9e43091fd2
+--- /dev/null
++++ b/packages/overlays/Padding12dpOverlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- the padding on the start of the statusbar -->
++    <dimen name="status_bar_padding_start">12dp</dimen>
++    <!-- the padding on the end of the statusbar -->
++    <dimen name="status_bar_padding_end">12dp</dimen>
++</resources>
+diff --git a/packages/overlays/Padding16dpOverlay/Android.mk b/packages/overlays/Padding16dpOverlay/Android.mk
+new file mode 100644
+index 00000000000..67d54f4b94e
+--- /dev/null
++++ b/packages/overlays/Padding16dpOverlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Padding16dp
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Padding16dpOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Padding16dpOverlay/AndroidManifest.xml b/packages/overlays/Padding16dpOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..0ced0e66d98
+--- /dev/null
++++ b/packages/overlays/Padding16dpOverlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.padding16"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.padding" android:priority="1"/>
++    <application android:label="16dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Padding16dpOverlay/res/values/dimens.xml b/packages/overlays/Padding16dpOverlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..1c3b6b9fbb8
+--- /dev/null
++++ b/packages/overlays/Padding16dpOverlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- the padding on the start of the statusbar -->
++    <dimen name="status_bar_padding_start">16dp</dimen>
++    <!-- the padding on the end of the statusbar -->
++    <dimen name="status_bar_padding_end">16dp</dimen>
++</resources>
+diff --git a/packages/overlays/Padding20dpOverlay/Android.mk b/packages/overlays/Padding20dpOverlay/Android.mk
+new file mode 100644
+index 00000000000..b3f16fa7f68
+--- /dev/null
++++ b/packages/overlays/Padding20dpOverlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Padding20dp
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Padding20dpOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Padding20dpOverlay/AndroidManifest.xml b/packages/overlays/Padding20dpOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..bce54515540
+--- /dev/null
++++ b/packages/overlays/Padding20dpOverlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.padding20"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.padding" android:priority="1"/>
++    <application android:label="20dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Padding20dpOverlay/res/values/dimens.xml b/packages/overlays/Padding20dpOverlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..ca599c24e2d
+--- /dev/null
++++ b/packages/overlays/Padding20dpOverlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- the padding on the start of the statusbar -->
++    <dimen name="status_bar_padding_start">20dp</dimen>
++    <!-- the padding on the end of the statusbar -->
++    <dimen name="status_bar_padding_end">20dp</dimen>
++</resources>
+diff --git a/packages/overlays/Padding24dpOverlay/Android.mk b/packages/overlays/Padding24dpOverlay/Android.mk
+new file mode 100644
+index 00000000000..274cc81bade
+--- /dev/null
++++ b/packages/overlays/Padding24dpOverlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Padding24dp
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Padding24dpOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Padding24dpOverlay/AndroidManifest.xml b/packages/overlays/Padding24dpOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..2cfe080f8ab
+--- /dev/null
++++ b/packages/overlays/Padding24dpOverlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.padding24"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.padding" android:priority="1"/>
++    <application android:label="24dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Padding24dpOverlay/res/values/dimens.xml b/packages/overlays/Padding24dpOverlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..bcd1fcc7271
+--- /dev/null
++++ b/packages/overlays/Padding24dpOverlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- the padding on the start of the statusbar -->
++    <dimen name="status_bar_padding_start">24dp</dimen>
++    <!-- the padding on the end of the statusbar -->
++    <dimen name="status_bar_padding_end">24dp</dimen>
++</resources>
+diff --git a/packages/overlays/Padding28dpOverlay/Android.mk b/packages/overlays/Padding28dpOverlay/Android.mk
+new file mode 100644
+index 00000000000..ddec96d968e
+--- /dev/null
++++ b/packages/overlays/Padding28dpOverlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Padding28dp
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Padding28dpOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Padding28dpOverlay/AndroidManifest.xml b/packages/overlays/Padding28dpOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..162c95aae1e
+--- /dev/null
++++ b/packages/overlays/Padding28dpOverlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.padding28"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.padding" android:priority="1"/>
++    <application android:label="28dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Padding28dpOverlay/res/values/dimens.xml b/packages/overlays/Padding28dpOverlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..6d30dfab1fa
+--- /dev/null
++++ b/packages/overlays/Padding28dpOverlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- the padding on the start of the statusbar -->
++    <dimen name="status_bar_padding_start">28dp</dimen>
++    <!-- the padding on the end of the statusbar -->
++    <dimen name="status_bar_padding_end">28dp</dimen>
++</resources>
+-- 
+2.17.1
+

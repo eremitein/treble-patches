@@ -1,4 +1,4 @@
-From 014f22d83cf41ef25d999f4be0f62f62c99b21b0 Mon Sep 17 00:00:00 2001
+From e561f6e2884725c26aa1db3f4874548f34c0a3a5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 27 May 2020 16:59:35 +0300
 Subject: [PATCH 2/6] fix gesture modes

@@ -12,7 +12,7 @@ fi
 pushd "$1"
 
 repo init -u https://github.com/LineageOS/android.git -b lineage-17.1
-git clone --single-branch https://github.com/eremitein/treble_manifest_losq -b v222 .repo/local_manifests
+git clone --single-branch https://github.com/eremitein/treble_manifest_losq -b v223 .repo/local_manifests
 repo sync -j${para} -c -q --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune ||exit
 bash ${rund}/apply-patches.sh ${rund}
 cd device/phh/treble
