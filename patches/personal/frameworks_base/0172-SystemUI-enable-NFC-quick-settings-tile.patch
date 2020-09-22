@@ -1,0 +1,25 @@
+From 2f5427767913ec860da2c07783fe2dec86b4e42d Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Sun, 17 Mar 2019 19:11:12 -0400
+Subject: [PATCH 172/186] SystemUI: enable NFC quick settings tile
+
+---
+ packages/SystemUI/res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index 03c17d78ac3..134d83f8617 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -117,7 +117,7 @@
+ 
+     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
+     <string name="quick_settings_tiles_stock" translatable="false">
+-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,dark,work,cast,night,heads_up,volume_panel,usb_tether
++        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,location,hotspot,inversion,saver,dark,work,cast,night,heads_up,volume_panel,usb_tether
+     </string>
+ 
+     <!-- The tiles to display in QuickSettings -->
+-- 
+2.17.1
+

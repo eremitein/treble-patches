@@ -1,0 +1,32 @@
+From b8334baffb824b46bfc352be180e813d95ab1770 Mon Sep 17 00:00:00 2001
+From: Steven Moreland <smoreland@google.com>
+Date: Thu, 28 May 2020 00:29:08 +0000
+Subject: [PATCH 1/2] String16::remove - avoid overflow
+
+Bug: 156999009
+Test: libutils_test (cases added)
+Change-Id: Iad46d95d9848928ba81000090b2fe9aec1e5eaac
+Merged-In: Iad46d95d9848928ba81000090b2fe9aec1e5eaac
+(cherry picked from commit f251c1c581f2d1b9940e60e756315c5e15443990)
+(cherry picked from commit 9a9c8910e9296c9dc8d79c37f589895f5a2a836c)
+(cherry picked from commit 4048e49956a2dfd49af3adf0f78881bf15f3550f)
+---
+ libutils/String16.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/libutils/String16.cpp b/libutils/String16.cpp
+index 818b17124..caab1bd99 100644
+--- a/libutils/String16.cpp
++++ b/libutils/String16.cpp
+@@ -389,7 +389,7 @@ status_t String16::remove(size_t len, size_t begin)
+         mString = getEmptyString();
+         return OK;
+     }
+-    if ((begin+len) > N) len = N-begin;
++    if (len > N || len > N - begin) len = N - begin;
+     if (begin == 0 && len == N) {
+         return OK;
+     }
+-- 
+2.17.1
+

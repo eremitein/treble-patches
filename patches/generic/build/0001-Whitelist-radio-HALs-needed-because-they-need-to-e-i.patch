@@ -1,0 +1,25 @@
+From d9187d1629aa2ea22b536057f2df8e9f41b845b6 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Fri, 6 Sep 2019 15:10:28 +0200
+Subject: [PATCH 1/3] Whitelist radio HALs (needed because they need to e in
+ framework because of weird jarjar issue)
+
+Change-Id: If1ccbedde92955bb86f4c6db6d68502784de1d8d
+---
+ core/tasks/check_boot_jars/package_whitelist.txt | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/core/tasks/check_boot_jars/package_whitelist.txt b/core/tasks/check_boot_jars/package_whitelist.txt
+index 38f2be57a..54baae58e 100644
+--- a/core/tasks/check_boot_jars/package_whitelist.txt
++++ b/core/tasks/check_boot_jars/package_whitelist.txt
+@@ -242,3 +242,6 @@ com\.google\.vr\.platform.*
+ # Packages used for Android in Chrome OS
+ org\.chromium\.arc
+ org\.chromium\.arc\..*
++
++vendor\.samsung\.hardware\.radio\.V1_2
++vendor\.mediatek\.hardware\.radio\.V2_0
+-- 
+2.17.1
+

@@ -1,0 +1,103 @@
+From 9ebbea944f1a8ecbc8197bfb2b425e0cdab08092 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 16 Dec 2019 00:14:33 +0200
+Subject: [PATCH 078/186] Fixes doze pulse notification
+
+  * from
+  https://github.com/Havoc-OS/android_frameworks_base/commit/6f378949b7ab4af3399334b8f5470811dfa4e4e4
+
+	modified:   packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java
+	modified:   packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimState.java
+	modified:   packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/ScrimControllerTest.java
+---
+ .../systemui/statusbar/phone/ScrimController.java    |  8 ++++----
+ .../android/systemui/statusbar/phone/ScrimState.java |  4 ++--
+ .../statusbar/phone/ScrimControllerTest.java         | 12 +-----------
+ 3 files changed, 7 insertions(+), 17 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java
+index 08ba50857fa..8972f03cc56 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimController.java
+@@ -464,11 +464,11 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, OnCo
+             if (mDarkenWhileDragging) {
+                 mCurrentBehindAlpha = MathUtils.lerp(GRADIENT_SCRIM_ALPHA_BUSY, alphaBehind,
+                         interpolatedFract);
+-                mCurrentInFrontAlpha = mState.getFrontAlpha();
++                mCurrentInFrontAlpha = 0;
+             } else {
+                 mCurrentBehindAlpha = MathUtils.lerp(0 /* start */, alphaBehind,
+                         interpolatedFract);
+-                mCurrentInFrontAlpha = mState.getFrontAlpha();
++                mCurrentInFrontAlpha = 0;
+             }
+             mCurrentBehindTint = ColorUtils.blendARGB(ScrimState.BOUNCER.getBehindTint(),
+                     mState.getBehindTint(), interpolatedFract);
+@@ -498,8 +498,8 @@ public class ScrimController implements ViewTreeObserver.OnPreDrawListener, OnCo
+      * device is dozing when the light sensor is on.
+      */
+     public void setAodFrontScrimAlpha(float alpha) {
+-        if (((mState == ScrimState.AOD && mDozeParameters.getAlwaysOn())
+-                || mState == ScrimState.PULSING) && mCurrentInFrontAlpha != alpha) {
++        if (mState == ScrimState.AOD && mDozeParameters.getAlwaysOn()
++                && mCurrentInFrontAlpha != alpha) {
+             mCurrentInFrontAlpha = alpha;
+             updateScrims();
+         }
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimState.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimState.java
+index 5fa861c8a2a..1dcfb35d7f4 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimState.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/ScrimState.java
+@@ -127,7 +127,7 @@ public enum ScrimState {
+     PULSING(5) {
+         @Override
+         public void prepare(ScrimState previousState) {
+-            mCurrentInFrontAlpha = mAodFrontScrimAlpha;
++            mCurrentInFrontAlpha = 0;
+             mCurrentBehindTint = Color.BLACK;
+             mCurrentInFrontTint = Color.BLACK;
+             mBlankScreen = mDisplayRequiresBlanking;
+@@ -304,4 +304,4 @@ public enum ScrimState {
+         mKeyguardFadingAway = fadingAway;
+         mKeyguardFadingAwayDuration = duration;
+     }
+-}
+\ No newline at end of file
++}
+diff --git a/packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/ScrimControllerTest.java b/packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/ScrimControllerTest.java
+index 205312ca508..9918d1946b1 100644
+--- a/packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/ScrimControllerTest.java
++++ b/packages/SystemUI/tests/src/com/android/systemui/statusbar/phone/ScrimControllerTest.java
+@@ -216,7 +216,7 @@ public class ScrimControllerTest extends SysuiTestCase {
+     }
+ 
+     @Test
+-    public void transitionToPulsing_withFrontAlphaUpdates() {
++    public void transitionToPulsing() {
+         // Pre-condition
+         // Need to go to AoD first because PULSING doesn't change
+         // the back scrim opacity - otherwise it would hide AoD wallpapers.
+@@ -233,20 +233,10 @@ public class ScrimControllerTest extends SysuiTestCase {
+         assertScrimVisibility(VISIBILITY_FULLY_TRANSPARENT, VISIBILITY_FULLY_OPAQUE);
+         assertScrimTint(mScrimBehind, true /* tinted */);
+ 
+-        // ... and when ambient goes dark, front scrim should be semi-transparent
+-        mScrimController.setAodFrontScrimAlpha(0.5f);
+-        mScrimController.finishAnimationsImmediately();
+-        // Front scrim should be semi-transparent
+-        assertScrimVisibility(VISIBILITY_SEMI_TRANSPARENT /* front */,
+-                VISIBILITY_FULLY_OPAQUE /* back */);
+-
+         mScrimController.setWakeLockScreenSensorActive(true);
+         mScrimController.finishAnimationsImmediately();
+         assertScrimVisibility(VISIBILITY_SEMI_TRANSPARENT /* front */,
+                 VISIBILITY_SEMI_TRANSPARENT /* back */);
+-
+-        // Reset value since enums are static.
+-        mScrimController.setAodFrontScrimAlpha(0f);
+     }
+ 
+     @Test
+-- 
+2.17.1
+

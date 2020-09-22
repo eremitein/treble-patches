@@ -1,0 +1,33 @@
+From 45c80a1d8c6164e2fef8b32f10fde14a56be207e Mon Sep 17 00:00:00 2001
+From: nx111 <gd.zhangdz@gmail.com>
+Date: Wed, 3 Oct 2018 16:58:19 +0800
+Subject: [PATCH 3/6] bionic: Use legacy pthread_mutex_init() behavior on pre-P
+ API levels
+
+* Google's changes to pthread_mutex_init is breaking RIL
+  on certain Samsung devices like klte and hlte
+* To resolve this, add a check for their new additions
+  to only apply the new behavior for P and higher APIs
+
+Change-Id: I41335c5c436fa28a66d044e6634466556dfd7f95
+---
+ libc/bionic/pthread_mutex.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/libc/bionic/pthread_mutex.cpp b/libc/bionic/pthread_mutex.cpp
+index f006bb92d..969feb43c 100644
+--- a/libc/bionic/pthread_mutex.cpp
++++ b/libc/bionic/pthread_mutex.cpp
+@@ -527,7 +527,8 @@ int pthread_mutex_init(pthread_mutex_t* mutex_interface, const pthread_mutexattr
+         return EINVAL;
+     }
+ 
+-    if (((*attr & MUTEXATTR_PROTOCOL_MASK) >> MUTEXATTR_PROTOCOL_SHIFT) == PTHREAD_PRIO_INHERIT) {
++    if (((*attr & MUTEXATTR_PROTOCOL_MASK) >> MUTEXATTR_PROTOCOL_SHIFT) == PTHREAD_PRIO_INHERIT
++            && bionic_get_application_target_sdk_version() >= __ANDROID_API_P__) {
+ #if !defined(__LP64__)
+         if (state & MUTEX_SHARED_MASK) {
+             return EINVAL;
+-- 
+2.17.1
+

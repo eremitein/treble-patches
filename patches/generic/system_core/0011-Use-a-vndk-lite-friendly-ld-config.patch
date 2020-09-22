@@ -1,0 +1,31 @@
+From dfedb417701e8a8b2dba4b79e8651f571e62986c Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sat, 14 Sep 2019 22:49:31 +0200
+Subject: [PATCH 11/16] Use a vndk-lite friendly ld config
+
+Change-Id: I5b1e49fc534e6625ebdb6e183466e73b5c49e175
+---
+ rootdir/etc/ld.config.txt | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/rootdir/etc/ld.config.txt b/rootdir/etc/ld.config.txt
+index c95f60fb0..50c153f4a 100644
+--- a/rootdir/etc/ld.config.txt
++++ b/rootdir/etc/ld.config.txt
+@@ -428,11 +428,11 @@ namespace.default.asan.permitted.paths +=           /vendor
+ 
+ namespace.default.links = system,vndk%VNDK_IN_SYSTEM_NS%,runtime
+ namespace.default.link.runtime.shared_libs = %SANITIZER_RUNTIME_LIBRARIES%
++namespace.default.link.runtime.shared_libs += libnativeloader.so
+ namespace.default.link.system.shared_libs  = %LLNDK_LIBRARIES%
+ namespace.default.link.system.shared_libs += %SANITIZER_RUNTIME_LIBRARIES%
+ namespace.default.link.vndk_in_system.shared_libs = %VNDK_USING_CORE_VARIANT_LIBRARIES%
+-namespace.default.link.vndk.shared_libs  = %VNDK_SAMEPROCESS_LIBRARIES%
+-namespace.default.link.vndk.shared_libs += %VNDK_CORE_LIBRARIES%
++namespace.default.link.vndk.allow_all_shared_libs = true
+ 
+ ###############################################################################
+ # "runtime" APEX namespace
+-- 
+2.17.1
+

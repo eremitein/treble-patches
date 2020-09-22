@@ -1,0 +1,38 @@
+From ddd26d7a47e624e2b06b36d884330450b0322456 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Thu, 12 Sep 2019 13:00:55 +0200
+Subject: [PATCH 6/6] fixup! Actually restore pre-P mutex behavior
+
+---
+ libc/bionic/pthread_mutex.cpp | 8 +-------
+ 1 file changed, 1 insertion(+), 7 deletions(-)
+
+diff --git a/libc/bionic/pthread_mutex.cpp b/libc/bionic/pthread_mutex.cpp
+index 969feb43c..bd9fabdb6 100644
+--- a/libc/bionic/pthread_mutex.cpp
++++ b/libc/bionic/pthread_mutex.cpp
+@@ -528,7 +528,7 @@ int pthread_mutex_init(pthread_mutex_t* mutex_interface, const pthread_mutexattr
+     }
+ 
+     if (((*attr & MUTEXATTR_PROTOCOL_MASK) >> MUTEXATTR_PROTOCOL_SHIFT) == PTHREAD_PRIO_INHERIT
+-            && bionic_get_application_target_sdk_version() >= __ANDROID_API_P__) {
++            && android_get_application_target_sdk_version() >= __ANDROID_API_P__) {
+ #if !defined(__LP64__)
+         if (state & MUTEX_SHARED_MASK) {
+             return EINVAL;
+@@ -798,12 +798,6 @@ static int __attribute__((noinline)) HandleUsingDestroyedMutex(pthread_mutex_t*
+     return EBUSY;
+ }
+ 
+-static int __always_inline HandleUsingDestroyedMutex(pthread_mutex_t* mutex,
+-                                                               const char* function_name) {
+-    __fortify_fatal("%s called on a destroyed mutex (%p)", function_name, mutex);
+-    return EBUSY;
+-}
+-
+ int pthread_mutex_lock(pthread_mutex_t* mutex_interface) {
+ #if !defined(__LP64__)
+     // Some apps depend on being able to pass NULL as a mutex and get EINVAL
+-- 
+2.17.1
+

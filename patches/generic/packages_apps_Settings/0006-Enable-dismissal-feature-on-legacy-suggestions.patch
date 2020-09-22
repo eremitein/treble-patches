@@ -1,0 +1,380 @@
+From 77679c217bc26ff7881cf1b5b60adbcd34371353 Mon Sep 17 00:00:00 2001
+From: Yi-Ling Chuang <emilychuang@google.com>
+Date: Thu, 19 Sep 2019 13:39:53 -0700
+Subject: [PATCH 06/40] Enable dismissal feature on legacy suggestions.
+
+Add back the close button for legacy suggestions.
+
+Fixes: 140786274
+Test: robotest
+Change-Id: Iaf0376bd482db4c4ff7d04a68131071c29c01ced
+---
+ res/layout/legacy_suggestion_tile.xml         | 17 +++++++
+ res/values/strings.xml                        |  3 ++
+ .../LegacySuggestionContextualCard.java       | 13 +++++
+ ...acySuggestionContextualCardController.java | 26 +++++++---
+ ...egacySuggestionContextualCardRenderer.java | 10 ++--
+ ...uggestionContextualCardControllerTest.java | 51 +++++++++++++++++++
+ ...ySuggestionContextualCardRendererTest.java | 40 +++++++++++++++
+ .../LegacySuggestionContextualCardTest.java   |  9 ++++
+ 8 files changed, 159 insertions(+), 10 deletions(-)
+
+diff --git a/res/layout/legacy_suggestion_tile.xml b/res/layout/legacy_suggestion_tile.xml
+index 9af5b6bf09..2a184030aa 100644
+--- a/res/layout/legacy_suggestion_tile.xml
++++ b/res/layout/legacy_suggestion_tile.xml
+@@ -42,6 +42,23 @@
+                 android:layout_marginTop="16dp"
+                 android:layout_marginBottom="6dp"/>
+ 
++            <FrameLayout
++                android:id="@+id/close_button"
++                android:layout_width="48dp"
++                android:layout_height="48dp"
++                android:layout_alignParentEnd="true"
++                android:paddingTop="8dp"
++                android:paddingEnd="8dp"
++                android:orientation="horizontal"
++                android:contentDescription="@string/suggestion_button_close">
++                <ImageView
++                    android:layout_width="18dp"
++                    android:layout_height="18dp"
++                    android:layout_gravity="end|top"
++                    android:alpha="0.54"
++                    android:src="@drawable/ic_suggestion_close_button"/>
++            </FrameLayout>
++
+         </RelativeLayout>
+ 
+         <TextView
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index deea388506..6cd456b499 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -8775,6 +8775,9 @@
+     <!-- Generic label for suggestion card's ok button [CHAR LIMIT=20] -->
+     <string name="suggestion_button_text">Ok</string>
+ 
++    <!-- Strings for suggestion card's close button [CHAR LIMIT=20] -->
++    <string name="suggestion_button_close">Close</string>
++
+     <!-- [CHAR LIMIT=35] Feedback on the device -->
+     <string name="device_feedback">Send feedback about this device</string>
+ 
+diff --git a/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCard.java b/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCard.java
+index d11f77120e..facfcde480 100644
+--- a/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCard.java
++++ b/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCard.java
+@@ -17,16 +17,19 @@
+ package com.android.settings.homepage.contextualcards.legacysuggestion;
+ 
+ import android.app.PendingIntent;
++import android.service.settings.suggestions.Suggestion;
+ 
+ import com.android.settings.homepage.contextualcards.ContextualCard;
+ 
+ public class LegacySuggestionContextualCard extends ContextualCard {
+ 
+     private final PendingIntent mPendingIntent;
++    private final Suggestion mSuggestion;
+ 
+     public LegacySuggestionContextualCard(Builder builder) {
+         super(builder);
+         mPendingIntent = builder.mPendingIntent;
++        mSuggestion = builder.mSuggestion;
+     }
+ 
+     @Override
+@@ -38,15 +41,25 @@ public class LegacySuggestionContextualCard extends ContextualCard {
+         return mPendingIntent;
+     }
+ 
++    public Suggestion getSuggestion() {
++        return mSuggestion;
++    }
++
+     public static class Builder extends ContextualCard.Builder {
+ 
+         private PendingIntent mPendingIntent;
++        private Suggestion mSuggestion;
+ 
+         public Builder setPendingIntent(PendingIntent pendingIntent) {
+             mPendingIntent = pendingIntent;
+             return this;
+         }
+ 
++        public Builder setSuggestion(Suggestion suggestion) {
++            mSuggestion = suggestion;
++            return this;
++        }
++
+         @Override
+         public Builder setCardType(int cardType) {
+             throw new IllegalArgumentException(
+diff --git a/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardController.java b/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardController.java
+index 3b0b46d2f2..834aa8ed31 100644
+--- a/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardController.java
++++ b/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardController.java
+@@ -46,6 +46,9 @@ public class LegacySuggestionContextualCardController implements ContextualCardC
+ 
+     private static final String TAG = "LegacySuggestCardCtrl";
+ 
++    @VisibleForTesting
++    final List<ContextualCard> mSuggestions;
++
+     @VisibleForTesting
+     SuggestionController mSuggestionController;
+ 
+@@ -55,6 +58,7 @@ public class LegacySuggestionContextualCardController implements ContextualCardC
+ 
+     public LegacySuggestionContextualCardController(Context context) {
+         mContext = context;
++        mSuggestions = new ArrayList<>();
+         if (!mContext.getResources().getBoolean(R.bool.config_use_legacy_suggestion)) {
+             Log.w(TAG, "Legacy suggestion contextual card disabled, skipping.");
+             return;
+@@ -88,7 +92,10 @@ public class LegacySuggestionContextualCardController implements ContextualCardC
+ 
+     @Override
+     public void onDismissed(ContextualCard card) {
+-
++        mSuggestionController
++                .dismissSuggestions(((LegacySuggestionContextualCard)card).getSuggestion());
++        mSuggestions.remove(card);
++        updateAdapter();
+     }
+ 
+     @Override
+@@ -144,6 +151,7 @@ public class LegacySuggestionContextualCardController implements ContextualCardC
+                     }
+                     cardBuilder
+                             .setPendingIntent(suggestion.getPendingIntent())
++                            .setSuggestion(suggestion)
+                             .setName(suggestion.getId())
+                             .setTitleText(suggestion.getTitle().toString())
+                             .setSummaryText(suggestion.getSummary().toString())
+@@ -153,12 +161,16 @@ public class LegacySuggestionContextualCardController implements ContextualCardC
+                 }
+             }
+ 
+-            // Update adapter
+-            final Map<Integer, List<ContextualCard>> suggestionCards = new ArrayMap<>();
+-            suggestionCards.put(ContextualCard.CardType.LEGACY_SUGGESTION, cards);
+-            ThreadUtils.postOnMainThread(
+-                    () -> mCardUpdateListener.onContextualCardUpdated(suggestionCards));
+-
++            mSuggestions.clear();
++            mSuggestions.addAll(cards);
++            updateAdapter();
+         });
+     }
++
++    private void updateAdapter() {
++        final Map<Integer, List<ContextualCard>> suggestionCards = new ArrayMap<>();
++        suggestionCards.put(ContextualCard.CardType.LEGACY_SUGGESTION, mSuggestions);
++        ThreadUtils.postOnMainThread(
++                () -> mCardUpdateListener.onContextualCardUpdated(suggestionCards));
++    }
+ }
+diff --git a/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardRenderer.java b/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardRenderer.java
+index 3bccabca4d..395e8146a3 100644
+--- a/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardRenderer.java
++++ b/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardRenderer.java
+@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
+ 
+ import com.android.settings.R;
+ import com.android.settings.homepage.contextualcards.ContextualCard;
++import com.android.settings.homepage.contextualcards.ContextualCardController;
+ import com.android.settings.homepage.contextualcards.ContextualCardRenderer;
+ import com.android.settings.homepage.contextualcards.ControllerRendererPool;
+ 
+@@ -51,12 +52,13 @@ public class LegacySuggestionContextualCardRenderer implements ContextualCardRen
+     @Override
+     public void bindView(RecyclerView.ViewHolder holder, ContextualCard card) {
+         final LegacySuggestionViewHolder vh = (LegacySuggestionViewHolder) holder;
++        final ContextualCardController controller = mControllerRendererPool
++                .getController(mContext, card.getCardType());
+         vh.icon.setImageDrawable(card.getIconDrawable());
+         vh.title.setText(card.getTitleText());
+         vh.summary.setText(card.getSummaryText());
+-        vh.itemView.setOnClickListener(v ->
+-                mControllerRendererPool.getController(mContext,
+-                        card.getCardType()).onPrimaryClick(card));
++        vh.itemView.setOnClickListener(v -> controller.onPrimaryClick(card));
++        vh.closeButton.setOnClickListener(v -> controller.onDismissed(card));
+     }
+ 
+     private static class LegacySuggestionViewHolder extends RecyclerView.ViewHolder {
+@@ -64,12 +66,14 @@ public class LegacySuggestionContextualCardRenderer implements ContextualCardRen
+         public final ImageView icon;
+         public final TextView title;
+         public final TextView summary;
++        public final View closeButton;
+ 
+         public LegacySuggestionViewHolder(View itemView) {
+             super(itemView);
+             icon = itemView.findViewById(android.R.id.icon);
+             title = itemView.findViewById(android.R.id.title);
+             summary = itemView.findViewById(android.R.id.summary);
++            closeButton = itemView.findViewById(R.id.close_button);
+         }
+     }
+ }
+diff --git a/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardControllerTest.java b/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardControllerTest.java
+index a2d4d093c4..07f172edca 100644
+--- a/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardControllerTest.java
++++ b/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardControllerTest.java
+@@ -18,11 +18,17 @@ package com.android.settings.homepage.contextualcards.legacysuggestion;
+ 
+ import static com.google.common.truth.Truth.assertThat;
+ 
++import static org.mockito.ArgumentMatchers.any;
++import static org.mockito.ArgumentMatchers.anyMap;
++import static org.mockito.Mockito.mock;
+ import static org.mockito.Mockito.verify;
+ import static org.mockito.Mockito.when;
+ 
+ import android.content.Context;
++import android.service.settings.suggestions.Suggestion;
+ 
++import com.android.settings.R;
++import com.android.settings.homepage.contextualcards.ContextualCard;
+ import com.android.settings.homepage.contextualcards.ContextualCardUpdateListener;
+ import com.android.settings.testutils.FakeFeatureFactory;
+ import com.android.settings.testutils.shadow.ShadowThreadUtils;
+@@ -93,4 +99,49 @@ public class LegacySuggestionContextualCardControllerTest {
+ 
+         verify(mSuggestionController).getSuggestions();
+     }
++
++    @Test
++    public void onDismiss_shouldCallSuggestionControllerDismiss() {
++        mController.mSuggestionController = mSuggestionController;
++        mController.setCardUpdateListener(mCardUpdateListener);
++
++        mController.onDismissed(buildContextualCard("test1"));
++
++        verify(mSuggestionController).dismissSuggestions(any(Suggestion.class));
++    }
++
++    @Test
++    public void onDismiss_shouldRemoveSuggestionFromList() {
++        mController.setCardUpdateListener(mCardUpdateListener);
++        mController.mSuggestions.add(buildContextualCard("test1"));
++        final ContextualCard card2 = buildContextualCard("test2");
++        mController.mSuggestions.add(card2);
++        assertThat(mController.mSuggestions).hasSize(2);
++
++        mController.onDismissed(card2);
++
++        assertThat(mController.mSuggestions).hasSize(1);
++    }
++
++    @Test
++    public void onDismiss_shouldCallUpdateAdapter() {
++        mController.setCardUpdateListener(mCardUpdateListener);
++        final ContextualCard card = buildContextualCard("test1");
++        mController.mSuggestions.add(card);
++
++        mController.onDismissed(card);
++
++        verify(mCardUpdateListener).onContextualCardUpdated(anyMap());
++    }
++
++    private ContextualCard buildContextualCard(String name) {
++        return new LegacySuggestionContextualCard.Builder()
++                .setSuggestion(mock(Suggestion.class))
++                .setName(name)
++                .setTitleText("test_title")
++                .setSummaryText("test_summary")
++                .setIconDrawable(mContext.getDrawable(R.drawable.ic_do_not_disturb_on_24dp))
++                .setViewType(LegacySuggestionContextualCardRenderer.VIEW_TYPE)
++                .build();
++    }
+ }
+diff --git a/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardRendererTest.java b/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardRendererTest.java
+index 596e95d618..65b3233865 100644
+--- a/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardRendererTest.java
++++ b/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardRendererTest.java
+@@ -82,6 +82,25 @@ public class LegacySuggestionContextualCardRendererTest {
+         assertThat(cardView.hasOnClickListeners()).isTrue();
+     }
+ 
++    @Test
++    public void bindView_closeButton_shouldSetListener() {
++        final RecyclerView recyclerView = new RecyclerView(mActivity);
++        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
++        final ContextualCard card = buildContextualCard();
++        final View cardView = LayoutInflater.from(mActivity).inflate(card.getViewType(),
++                recyclerView, false);
++        final RecyclerView.ViewHolder viewHolder = mRenderer.createViewHolder(cardView,
++                card.getViewType());
++        final View closeButton = viewHolder.itemView.findViewById(R.id.close_button);
++        when(mControllerRendererPool.getController(mActivity,
++                ContextualCard.CardType.LEGACY_SUGGESTION)).thenReturn(mController);
++
++        mRenderer.bindView(viewHolder, buildContextualCard());
++
++        assertThat(closeButton).isNotNull();
++        assertThat(closeButton.hasOnClickListeners()).isTrue();
++    }
++
+     @Test
+     public void viewClick_shouldInvokeControllerPrimaryClick() {
+         final RecyclerView recyclerView = new RecyclerView(mActivity);
+@@ -102,6 +121,27 @@ public class LegacySuggestionContextualCardRendererTest {
+         verify(mController).onPrimaryClick(any(ContextualCard.class));
+     }
+ 
++    @Test
++    public void viewClick_closeButton_shouldInvokeControllerDismissClick() {
++        final RecyclerView recyclerView = new RecyclerView(mActivity);
++        recyclerView.setLayoutManager(new LinearLayoutManager(mActivity));
++        final ContextualCard card = buildContextualCard();
++        final View cardView = LayoutInflater.from(mActivity).inflate(card.getViewType(),
++                recyclerView, false);
++        final RecyclerView.ViewHolder viewHolder = mRenderer.createViewHolder(cardView,
++                card.getViewType());
++        final View closeButton = viewHolder.itemView.findViewById(R.id.close_button);
++        when(mControllerRendererPool.getController(mActivity,
++                ContextualCard.CardType.LEGACY_SUGGESTION)).thenReturn(mController);
++
++        mRenderer.bindView(viewHolder, buildContextualCard());
++
++        assertThat(closeButton).isNotNull();
++        closeButton.performClick();
++
++        verify(mController).onDismissed(any(ContextualCard.class));
++    }
++
+     private ContextualCard buildContextualCard() {
+         return new LegacySuggestionContextualCard.Builder()
+                 .setName("test_name")
+diff --git a/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardTest.java b/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardTest.java
+index e0e5a0c6e4..2ffbdc9c33 100644
+--- a/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardTest.java
++++ b/tests/robotests/src/com/android/settings/homepage/contextualcards/legacysuggestion/LegacySuggestionContextualCardTest.java
+@@ -21,6 +21,7 @@ import static com.google.common.truth.Truth.assertThat;
+ import static org.mockito.Mockito.mock;
+ 
+ import android.app.PendingIntent;
++import android.service.settings.suggestions.Suggestion;
+ 
+ import com.android.settings.homepage.contextualcards.ContextualCard;
+ 
+@@ -51,4 +52,12 @@ public class LegacySuggestionContextualCardTest {
+                 .build()
+                 .getPendingIntent()).isNotNull();
+     }
++
++    @Test
++    public void build_shouldSetSuggestion() {
++        assertThat(new LegacySuggestionContextualCard.Builder()
++                .setSuggestion(mock(Suggestion.class))
++                .build()
++                .getSuggestion()).isNotNull();
++    }
+ }
+-- 
+2.17.1
+

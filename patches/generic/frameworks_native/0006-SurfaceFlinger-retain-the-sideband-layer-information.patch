@@ -1,0 +1,91 @@
+From 4495798e92e5524142c8e9739beda5074bf82ab5 Mon Sep 17 00:00:00 2001
+From: Pierre Couillaud <pierre.couillaud@broadcom.com>
+Date: Tue, 27 Aug 2019 13:43:22 -0700
+Subject: [PATCH 6/8] SurfaceFlinger: retain the sideband layer information for
+ composition
+
+when present, the sideband layer stream information is not saved into
+the BufferQueueLayer::mSidebandStream, during "latchSidebandStream".
+
+this subsequently leads to such layer being marked as non visible in the
+composition stack and to be drop from advertisement to hardware composer
+even though a sideband layer is defined in the rest of the framework.
+
+this seems to be a regression introduced during android 9 to android 10
+revamp of the SurfaceFlinger for buffer latching.  latching a sideband layer is actually harmless since there is no buffer associated with it that need to be waited on from the gpu side.
+
+the fix proposed here allows to maintain the knowledge of the sideband
+layer and make it visible in the composition stack for hardware composer to handle adequately.
+
+for illustration purposes, the relevant snippet of the layer composition
+stack are posted here from "dumpsys SurfaceFlinger", highlighting the
+issue with ">>>".
+
+[before]:
+
+* compositionengine::Layer 0xa959b34c (SurfaceView - <truncated>)
+    frontend:
+      isSecure=false geomUsesSourceCrop=false geomBufferUsesDisplayInverseTransform=false
+               geomLayerTransform 0x00000000 (ROT_0 ) 0x00 (IDENTITY )
+    1.0000  0.0000  0.0000
+    0.0000  1.0000  0.0000
+    0.0000  0.0000  1.0000
+
+      geomBufferSize=[0 0 -1 -1] geomContentCrop=[0 0 -1 -1] geomCrop=[0 0 -1 -1] geomBufferTransform=0
+        Region geomActiveTransparentRegion (this=0xa959b3f8, count=1)
+    [  0,   0,   0,   0]
+      geomLayerBounds=[0.000000 0.000000 0.000000 0.000000]
+      blend=INVALID (0) alpha=1.000000
+>>>   type=0 appId=0 composition type=INVALID (0)
+      buffer: buffer=0x0 slot=-1
+>>>   sideband stream=0x9b509900
+      color=[0 0 0]
+      dataspace=UNKNOWN (0) hdr metadata types=0 colorTransform=<truncated>
+
+[after]:
+
+* compositionengine::Layer 0xa9a5034c (SurfaceView - <truncated>)
+    frontend:
+      isSecure=false geomUsesSourceCrop=true geomBufferUsesDisplayInverseTransform=false
+               geomLayerTransform 0x00000000 (ROT_0 ) 0x00 (IDENTITY )
+    1.0000  0.0000  0.0000
+    0.0000  1.0000  0.0000
+    0.0000  0.0000  1.0000
+
+      geomBufferSize=[0 0 -1 -1] geomContentCrop=[0 0 -1 -1] geomCrop=[0 0 1920 1080] geomBufferTransform=0
+        Region geomActiveTransparentRegion (this=0xa9a503f8, count=1)
+    [  0,   0,   0,   0]
+      geomLayerBounds=[0.000000 0.000000 1920.000000 1080.000000]
+      blend=NONE (1) alpha=1.000000
+>>>   type=1 appId=10064 composition type=SIDEBAND (5)
+      buffer: buffer=0x0 slot=-1
+>>>   sideband stream=0x9a1472b0
+      color=[0 0 0]
+      dataspace=UNKNOWN (0) hdr metadata types=0 colorTransform=<truncated>
+
+Bug: 140128098
+refs #SWANDROID-6178
+
+Signed-off-by: Pierre Couillaud <pierre.couillaud@broadcom.com>
+---
+ services/surfaceflinger/BufferQueueLayer.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/services/surfaceflinger/BufferQueueLayer.cpp b/services/surfaceflinger/BufferQueueLayer.cpp
+index eb1bf66cd..af5fe6246 100644
+--- a/services/surfaceflinger/BufferQueueLayer.cpp
++++ b/services/surfaceflinger/BufferQueueLayer.cpp
+@@ -243,8 +243,9 @@ bool BufferQueueLayer::latchSidebandStream(bool& recomputeVisibleRegions) {
+     bool sidebandStreamChanged = true;
+     if (mSidebandStreamChanged.compare_exchange_strong(sidebandStreamChanged, false)) {
+         // mSidebandStreamChanged was changed to false
++        mSidebandStream = mConsumer->getSidebandStream();
+         auto& layerCompositionState = getCompositionLayer()->editState().frontEnd;
+-        layerCompositionState.sidebandStream = mConsumer->getSidebandStream();
++        layerCompositionState.sidebandStream = mSidebandStream;
+         if (layerCompositionState.sidebandStream != nullptr) {
+             setTransactionFlags(eTransactionNeeded);
+             mFlinger->setTransactionFlags(eTraversalNeeded);
+-- 
+2.17.1
+

@@ -1,0 +1,54 @@
+From 94deb3f3070617598bacdf79fb7f1423eb0a4786 Mon Sep 17 00:00:00 2001
+From: Ethan Chen <intervigil@gmail.com>
+Date: Tue, 25 Sep 2018 00:11:05 -0700
+Subject: [PATCH 2/6] Actually restore pre-P mutex behavior
+
+Apps built against versions < P may not actually expect the EBUSY return
+code, and may crash or otherwise misbehave. Check for target SDK
+versions earlier than P when performing the IsMutexDestroyed check so
+any invocation of HandleUsingDestroyedMutex is bypassed and pre-P mutex
+behavior is restored.
+
+See 9e989f12d1186231d97dac6d038db7955acebdf3 for the change that
+introduced this new behavior.
+
+Change-Id: I45f8882c9527c63eed1ef5820a5004b8958d58ea
+---
+ libc/bionic/pthread_mutex.cpp | 15 +++++++++++----
+ 1 file changed, 11 insertions(+), 4 deletions(-)
+
+diff --git a/libc/bionic/pthread_mutex.cpp b/libc/bionic/pthread_mutex.cpp
+index f92184e50..f006bb92d 100644
+--- a/libc/bionic/pthread_mutex.cpp
++++ b/libc/bionic/pthread_mutex.cpp
+@@ -783,16 +783,23 @@ static int MutexLockWithTimeout(pthread_mutex_internal_t* mutex, bool use_realti
+ }  // namespace NonPI
+ 
+ static inline __always_inline bool IsMutexDestroyed(uint16_t mutex_state) {
+-    return mutex_state == 0xffff;
++    if (android_get_application_target_sdk_version() >= __ANDROID_API_P__) {
++        return mutex_state == 0xffff;
++    }
++    return false;
+ }
+ 
+ // Inlining this function in pthread_mutex_lock() adds the cost of stack frame instructions on
+ // ARM64. So make it noinline.
+ static int __attribute__((noinline)) HandleUsingDestroyedMutex(pthread_mutex_t* mutex,
+                                                                const char* function_name) {
+-    if (android_get_application_target_sdk_version() >= __ANDROID_API_P__) {
+-        __fortify_fatal("%s called on a destroyed mutex (%p)", function_name, mutex);
+-    }
++    __fortify_fatal("%s called on a destroyed mutex (%p)", function_name, mutex);
++    return EBUSY;
++}
++
++static int __always_inline HandleUsingDestroyedMutex(pthread_mutex_t* mutex,
++                                                               const char* function_name) {
++    __fortify_fatal("%s called on a destroyed mutex (%p)", function_name, mutex);
+     return EBUSY;
+ }
+ 
+-- 
+2.17.1
+

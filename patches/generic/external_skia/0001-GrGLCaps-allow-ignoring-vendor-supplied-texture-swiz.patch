@@ -1,0 +1,60 @@
+From ceb35977adc868929014a366faa56f3e596f5555 Mon Sep 17 00:00:00 2001
+From: Peter Cai <peter@typeblog.net>
+Date: Tue, 22 Oct 2019 20:54:25 +0800
+Subject: [PATCH 1/2] GrGLCaps: allow ignoring vendor-supplied texture swizzle
+ flag
+
+* This is broken on MTK 8.1 vendor
+
+Change-Id: I1ccae06f643f01e4ea6539e1d4e3c7df8d6e30ae
+---
+ Android.bp            |  1 +
+ src/gpu/gl/GrGLCaps.h | 11 +++++++++++
+ 2 files changed, 12 insertions(+)
+
+diff --git a/Android.bp b/Android.bp
+index 3d2ab6d370..099cd6ba0b 100644
+--- a/Android.bp
++++ b/Android.bp
+@@ -3,6 +3,7 @@
+ cc_library_static {
+     name: "libskia",
+     host_supported: true,
++    shared_libs: [ "libbase" ],
+     cflags: [
+         "-U_FORTIFY_SOURCE",
+         "-DATRACE_TAG=ATRACE_TAG_VIEW",
+diff --git a/src/gpu/gl/GrGLCaps.h b/src/gpu/gl/GrGLCaps.h
+index 4a97e84cf8..aee7a5509e 100644
+--- a/src/gpu/gl/GrGLCaps.h
++++ b/src/gpu/gl/GrGLCaps.h
+@@ -17,6 +17,11 @@
+ #include "SkTHash.h"
+ #include "SkTArray.h"
+ 
++#if defined(SK_BUILD_FOR_ANDROID)
++#include "android-base/properties.h"
++using android::base::GetBoolProperty;
++#endif
++
+ class GrGLContextInfo;
+ class GrGLRenderTarget;
+ 
+@@ -330,8 +335,14 @@ public:
+     /// Are textures with GL_TEXTURE_RECTANGLE type supported.
+     bool rectangleTextureSupport() const { return fRectangleTextureSupport; }
+ 
++#if !defined(SK_BUILD_FOR_ANDROID)
+     /// GL_ARB_texture_swizzle
+     bool textureSwizzleSupport() const { return fTextureSwizzleSupport; }
++#else
++    bool textureSwizzleSupport() const {
++        return !GetBoolProperty("ro.skia.ignore_swizzle", false) && fTextureSwizzleSupport;
++    }
++#endif
+ 
+     bool mipMapLevelAndLodControlSupport() const { return fMipMapLevelAndLodControlSupport; }
+ 
+-- 
+2.17.1
+

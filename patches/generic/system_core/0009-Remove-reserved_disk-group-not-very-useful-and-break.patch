@@ -1,0 +1,73 @@
+From ef6df4981cf7e926466af63c974921a6c1b9b07a Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sat, 14 Sep 2019 21:29:29 +0200
+Subject: [PATCH 09/16] Remove reserved_disk group (not very useful, and breaks
+ SaS boot)
+
+Change-Id: Ib503fe64a095c00757d410ee65fde6fa8f6ea784
+---
+ rootdir/init.zygote32_64.rc | 4 ++--
+ rootdir/init.zygote64.rc    | 2 +-
+ rootdir/init.zygote64_32.rc | 4 ++--
+ 3 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/rootdir/init.zygote32_64.rc b/rootdir/init.zygote32_64.rc
+index 1bab588c4..14dbe563e 100644
+--- a/rootdir/init.zygote32_64.rc
++++ b/rootdir/init.zygote32_64.rc
+@@ -2,7 +2,7 @@ service zygote /system/bin/app_process32 -Xzygote /system/bin --zygote --start-s
+     class main
+     priority -20
+     user root
+-    group root readproc reserved_disk
++    group root readproc
+     socket zygote stream 660 root system
+     socket usap_pool_primary stream 660 root system
+     onrestart write /sys/android_power/request_state wake
+@@ -18,7 +18,7 @@ service zygote_secondary /system/bin/app_process64 -Xzygote /system/bin --zygote
+     class main
+     priority -20
+     user root
+-    group root readproc reserved_disk
++    group root readproc
+     socket zygote_secondary stream 660 root system
+     socket usap_pool_secondary stream 660 root system
+     onrestart restart zygote
+diff --git a/rootdir/init.zygote64.rc b/rootdir/init.zygote64.rc
+index 6fa210a7b..80fb37659 100644
+--- a/rootdir/init.zygote64.rc
++++ b/rootdir/init.zygote64.rc
+@@ -2,7 +2,7 @@ service zygote /system/bin/app_process64 -Xzygote /system/bin --zygote --start-s
+     class main
+     priority -20
+     user root
+-    group root readproc reserved_disk
++    group root readproc
+     socket zygote stream 660 root system
+     socket usap_pool_primary stream 660 root system
+     onrestart write /sys/android_power/request_state wake
+diff --git a/rootdir/init.zygote64_32.rc b/rootdir/init.zygote64_32.rc
+index 48461ecd3..6fd203bc5 100644
+--- a/rootdir/init.zygote64_32.rc
++++ b/rootdir/init.zygote64_32.rc
+@@ -2,7 +2,7 @@ service zygote /system/bin/app_process64 -Xzygote /system/bin --zygote --start-s
+     class main
+     priority -20
+     user root
+-    group root readproc reserved_disk
++    group root readproc
+     socket zygote stream 660 root system
+     socket usap_pool_primary stream 660 root system
+     onrestart write /sys/android_power/request_state wake
+@@ -18,7 +18,7 @@ service zygote_secondary /system/bin/app_process32 -Xzygote /system/bin --zygote
+     class main
+     priority -20
+     user root
+-    group root readproc reserved_disk
++    group root readproc
+     socket zygote_secondary stream 660 root system
+     socket usap_pool_secondary stream 660 root system
+     onrestart restart zygote
+-- 
+2.17.1
+

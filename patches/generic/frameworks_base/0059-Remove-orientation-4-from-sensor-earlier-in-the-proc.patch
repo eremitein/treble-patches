@@ -1,0 +1,27 @@
+From 3a5adc2064588262dc3aa186381a559ffa1252ec Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 1 Mar 2020 18:14:40 +0100
+Subject: [PATCH 059/186] Remove orientation 4 from sensor earlier in the
+ process chain
+
+---
+ .../com/android/server/policy/WindowOrientationListener.java   | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/services/core/java/com/android/server/policy/WindowOrientationListener.java b/services/core/java/com/android/server/policy/WindowOrientationListener.java
+index d5adb5e1c11..d6167a7ad91 100644
+--- a/services/core/java/com/android/server/policy/WindowOrientationListener.java
++++ b/services/core/java/com/android/server/policy/WindowOrientationListener.java
+@@ -1049,6 +1049,9 @@ public abstract class WindowOrientationListener {
+             int newRotation;
+             synchronized (mLock) {
+                 mDesiredRotation = (int) event.values[0];
++                if(mDesiredRotation >= 4 || mDesiredRotation < 0) {
++                    mDesiredRotation = 0;
++                }
+                 newRotation = evaluateRotationChangeLocked();
+             }
+             if (newRotation >=0) {
+-- 
+2.17.1
+

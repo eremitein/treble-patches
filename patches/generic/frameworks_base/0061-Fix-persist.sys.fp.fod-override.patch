@@ -1,0 +1,29 @@
+From f077675aa41a88d05767a3be38ce6dad0b02214d Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 2 Mar 2020 21:13:47 +0100
+Subject: [PATCH 061/186] Fix persist.sys.fp.fod override
+
+---
+ .../com/android/server/biometrics/fingerprint/FacolaView.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+index edd13988e49..2c1ba76f529 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+@@ -75,10 +75,10 @@ public class FacolaView extends ImageView implements OnTouchListener {
+ 
+         noDim = android.os.SystemProperties.getBoolean("persist.sys.phh.nodim", false);
+         String[] location = android.os.SystemProperties.get("persist.vendor.sys.fp.fod.location.X_Y", "").split(",");
+-        if(location.length == 0)
++        if(location.length != 2)
+             location = android.os.SystemProperties.get("persist.sys.fp.fod.location.X_Y", "").split(",");
+         String[] size = android.os.SystemProperties.get("persist.vendor.sys.fp.fod.size.width_height", "").split(",");
+-        if(size.length == 0)
++        if(size.length != 2)
+             size = android.os.SystemProperties.get("persist.sys.fp.fod.size.width_height", "").split(",");
+         Slog.d("PHH-Enroll", "FacolaView hello");
+         if(size.length == 2 && location.length == 2) {
+-- 
+2.17.1
+

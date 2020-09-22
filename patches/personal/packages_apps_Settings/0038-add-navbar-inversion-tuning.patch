@@ -1,0 +1,66 @@
+From 78de0661277f8a8b3fd0c5c13b43325afb28f876 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 24 Sep 2020 08:45:02 -0400
+Subject: [PATCH 38/40] add navbar inversion tuning
+
+Change-Id: Ibdf681560a12a0aaa01d4b589f59c13a0a4a7d00
+---
+ res/values-ru/strings.xml                     | 1 +
+ res/values/strings.xml                        | 2 ++
+ res/xml/display_settings.xml                  | 3 +++
+ src/com/android/settings/DisplaySettings.java | 2 ++
+ 4 files changed, 8 insertions(+)
+
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index bc3b9344f6..ecee0b1a2f 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -4871,4 +4871,5 @@
+     <string name="theme_customization_qsalpha_title">Прозрачность панели быстрых настроек</string>
+     <string name="theme_customization_speedui_title">Ускорение интерфейса/Энергосбережение</string>
+     <string name="theme_customization_header_title">Верхний отступ</string>
++    <string name="theme_customization_navbar_title">Порядок навигационных кнопок</string>
+ </resources>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index d9ba561afe..d579ed481f 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10099,6 +10099,8 @@
+     <string name="theme_customization_darkui_title">Dark themes</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the SystemUI speed performance -->
+     <string name="theme_customization_speedui_title">UI Speed up/Powersaving</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the navbar icons order -->
++    <string name="theme_customization_navbar_title">Navbar buttons order</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the UI corners radius -->
+     <string name="theme_customization_header_title">Header padding</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the              statusbar start and end padding (e.g. set 12dp paddings). -->
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index cb10b93561..3fcc8ea555 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -193,6 +193,9 @@
+         <ListPreference
+             android:key="android.theme.customization.speedui"
+             android:title="@string/theme_customization_speedui_title"/>
++        <ListPreference
++            android:key="android.theme.customization.navbar"
++            android:title="@string/theme_customization_navbar_title"/>
+     </PreferenceCategory>
+ 
+ </PreferenceScreen>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index 7d92cd46cf..571e01de8b 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -115,6 +115,8 @@ public class DisplaySettings extends DashboardFragment {
+                 "android.theme.customization.speedui"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.header"));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.navbar"));
+         return controllers;
+     }
+ 
+-- 
+2.17.1
+

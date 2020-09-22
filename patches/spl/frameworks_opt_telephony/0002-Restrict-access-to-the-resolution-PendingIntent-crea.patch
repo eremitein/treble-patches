@@ -1,0 +1,54 @@
+From 3231a777b6b25994f6c200eb020e0e41e2b5d111 Mon Sep 17 00:00:00 2001
+From: Peter Wang <tpwang@google.com>
+Date: Sun, 10 May 2020 01:10:13 -0700
+Subject: [PATCH 2/8] Restrict access to the resolution PendingIntent created
+ by EuiccController to EuiccResolutionUiDispatcherActivity
+
+Bug: 156097472
+Bug: 155094269
+Fix: 156097472
+Test: Local, with jpd@'s PoC app
+Change-Id: I76a9eb55d8321ea695594693580be468522e4de8
+Merged-In: I76a9eb55d8321ea695594693580be468522e4de8
+(cherry picked from commit 0126084de146b51a842d7604cddb3303f46cade7)
+---
+ .../internal/telephony/euicc/EuiccController.java        | 9 +++++++++
+ 1 file changed, 9 insertions(+)
+
+diff --git a/src/java/com/android/internal/telephony/euicc/EuiccController.java b/src/java/com/android/internal/telephony/euicc/EuiccController.java
+index 41257a350..2c8ba10f3 100644
+--- a/src/java/com/android/internal/telephony/euicc/EuiccController.java
++++ b/src/java/com/android/internal/telephony/euicc/EuiccController.java
+@@ -20,6 +20,7 @@ import android.Manifest.permission;
+ import android.annotation.Nullable;
+ import android.app.AppOpsManager;
+ import android.app.PendingIntent;
++import android.content.ComponentName;
+ import android.content.Context;
+ import android.content.Intent;
+ import android.content.pm.ComponentInfo;
+@@ -73,6 +74,11 @@ public class EuiccController extends IEuiccController.Stub {
+     private static final String EXTRA_EMBEDDED_SUBSCRIPTION_DOWNLOADABLE_SUBSCRIPTION =
+             EuiccManager.EXTRA_EMBEDDED_SUBSCRIPTION_DOWNLOADABLE_SUBSCRIPTION;
+ 
++    /** Restrictions limiting access to the PendingIntent */
++    private static final String RESOLUTION_ACTIVITY_PACKAGE_NAME = "com.android.phone";
++    private static final String RESOLUTION_ACTIVITY_CLASS_NAME =
++            "com.android.phone.euicc.EuiccResolutionUiDispatcherActivity";
++
+     private static EuiccController sInstance;
+ 
+     private final Context mContext;
+@@ -1051,6 +1057,9 @@ public class EuiccController extends IEuiccController.Stub {
+             String callingPackage, int resolvableErrors, boolean confirmationCodeRetried,
+             EuiccOperation op, int cardId) {
+         Intent intent = new Intent(EuiccManager.ACTION_RESOLVE_ERROR);
++        intent.setPackage(RESOLUTION_ACTIVITY_PACKAGE_NAME);
++        intent.setComponent(new ComponentName(
++                        RESOLUTION_ACTIVITY_PACKAGE_NAME, RESOLUTION_ACTIVITY_CLASS_NAME));
+         intent.putExtra(EuiccManager.EXTRA_EMBEDDED_SUBSCRIPTION_RESOLUTION_ACTION,
+                 resolutionAction);
+         intent.putExtra(EuiccService.EXTRA_RESOLUTION_CALLING_PACKAGE, callingPackage);
+-- 
+2.17.1
+

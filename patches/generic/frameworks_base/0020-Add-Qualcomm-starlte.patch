@@ -1,0 +1,27 @@
+From de6a389cde032fbb3313f8919e1410a1eb86500f Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 25 Jun 2018 22:43:32 +0200
+Subject: [PATCH 020/186] Add Qualcomm starlte
+
+---
+ .../core/java/com/android/server/lights/LightsService.java    | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index 529026a1e7c..65f9ea87ae5 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -93,7 +93,9 @@ public class LightsService extends SystemService {
+ 
+                 if(mId == 0) {
+                     String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
+-                    if(fp.contains("starlte") || fp.contains("star2lte")) {
++                    if(
++                           fp.contains("starlte") || fp.contains("star2lte") ||
++                           fp.contains("starqlte") || fp.contains("star2qlte")) {
+                         setLightLocked(brightness*100, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
+                         return;
+                     }
+-- 
+2.17.1
+

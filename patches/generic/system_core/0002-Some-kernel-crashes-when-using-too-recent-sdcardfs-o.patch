@@ -1,0 +1,28 @@
+From fc67b4401c5e83d5f514bf6dcf69dac1dff22e6b Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 14 Aug 2018 19:33:03 +0200
+Subject: [PATCH 02/16] Some kernel crashes when using too recent sdcardfs
+ options. Force everyone to old options
+
+Change-Id: Ia5cf1aa8dc07a0f4a78b4d8f760ca0944dabaa89
+---
+ sdcard/sdcard.cpp | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/sdcard/sdcard.cpp b/sdcard/sdcard.cpp
+index 2b358197a..4420ebbd2 100644
+--- a/sdcard/sdcard.cpp
++++ b/sdcard/sdcard.cpp
+@@ -110,7 +110,8 @@ static bool sdcardfs_setup(const std::string& source_path, const std::string& de
+     if (unshared_obb) new_opts_list.push_back("unshared_obb,");
+     // Try several attempts, each time with one less option, to gracefully
+     // handle older kernels that aren't updated yet.
+-    for (int i = 0; i <= new_opts_list.size(); ++i) {
++    int first_option_to_try = property_get_bool("persist.sys.phh.modern_sdcard", false) ? 0 : 2;
++    for (int i = first_option_to_try; i <= new_opts_list.size(); ++i) {
+         std::string new_opts;
+         for (int j = 0; j < new_opts_list.size() - i; ++j) {
+             new_opts += new_opts_list[j];
+-- 
+2.17.1
+

@@ -1,0 +1,122 @@
+From c35aaba3a7f855393a66da01218961dac5fddb0c Mon Sep 17 00:00:00 2001
+From: Martijn Coenen <maco@google.com>
+Date: Mon, 8 Jun 2020 20:31:33 +0200
+Subject: Don't give uid-based categories to app_zygote and
+ isolated processes.
+
+The mapping of UIDs to categories can only take 16 bits, yet isolated
+processes start at UID 90000. Additionally, the main purpose of these
+categories was to isolate app-private storage, but since isolated
+processes don't have access to app-private storage anyway, removing them
+doesn't hurt.
+
+The upside is that this allows us to remove mIstrustedsubject from the
+app_zygote domain, which prevents app code running in that context from
+assigning itself arbitrary categories.
+
+Bug: 157598026
+Test: inspect categories of app_zygote and children; verify Chrome works
+Merged-In: Idfa8625d939cf30f3683436949bb4f335851622a
+Merged-In: I608a096cecffc1c1ff837611ca500a8da3cf1320
+Change-Id: I608a096cecffc1c1ff837611ca500a8da3cf1320
+(cherry picked from commit 46e512ad469cb240a97d3172b017a3421046c229)
+---
+ prebuilts/api/29.0/private/app_zygote.te  | 7 +++----
+ prebuilts/api/29.0/private/seapp_contexts | 4 ++--
+ private/app_zygote.te                     | 7 +++----
+ private/seapp_contexts                    | 4 ++--
+ 4 files changed, 10 insertions(+), 12 deletions(-)
+
+diff --git a/prebuilts/api/29.0/private/app_zygote.te b/prebuilts/api/29.0/private/app_zygote.te
+index e44c1beb..467f3419 100644
+--- a/prebuilts/api/29.0/private/app_zygote.te
++++ b/prebuilts/api/29.0/private/app_zygote.te
+@@ -4,9 +4,6 @@ typeattribute app_zygote coredomain;
+ ###### Policy below is different from regular zygote-spawned apps
+ ######
+ 
+-# The app_zygote needs to be able to transition domains.
+-typeattribute app_zygote mlstrustedsubject;
+-
+ # Allow access to temporary files, which is normally permitted through
+ # a domain macro.
+ tmpfs_domain(app_zygote);
+@@ -89,12 +86,14 @@ neverallow { domain -zygote } app_zygote:process dyntransition;
+ neverallow app_zygote property_socket:sock_file write;
+ neverallow app_zygote property_type:property_service set;
+ 
+-# Should not have any access to non-app data files.
++# Should not have any access to data files.
+ neverallow app_zygote {
+     bluetooth_data_file
+     nfc_data_file
+     radio_data_file
+     shell_data_file
++    app_data_file
++    privapp_data_file
+ }:file { rwx_file_perms };
+ 
+ neverallow app_zygote {
+diff --git a/prebuilts/api/29.0/private/seapp_contexts b/prebuilts/api/29.0/private/seapp_contexts
+index ad8a76cd..b898d3e1 100644
+--- a/prebuilts/api/29.0/private/seapp_contexts
++++ b/prebuilts/api/29.0/private/seapp_contexts
+@@ -150,8 +150,8 @@ user=radio seinfo=platform domain=radio type=radio_data_file
+ user=shared_relro domain=shared_relro
+ user=shell seinfo=platform domain=shell name=com.android.shell type=shell_data_file
+ user=webview_zygote seinfo=webview_zygote domain=webview_zygote
+-user=_isolated domain=isolated_app levelFrom=all
+-user=_app seinfo=app_zygote domain=app_zygote levelFrom=all
++user=_isolated domain=isolated_app levelFrom=user
++user=_app seinfo=app_zygote domain=app_zygote levelFrom=user
+ user=_app seinfo=media domain=mediaprovider name=android.process.media type=app_data_file levelFrom=user
+ user=_app seinfo=platform domain=platform_app type=app_data_file levelFrom=user
+ user=_app isEphemeralApp=true domain=ephemeral_app type=app_data_file levelFrom=all
+diff --git a/private/app_zygote.te b/private/app_zygote.te
+index e44c1beb..467f3419 100644
+--- a/private/app_zygote.te
++++ b/private/app_zygote.te
+@@ -4,9 +4,6 @@ typeattribute app_zygote coredomain;
+ ###### Policy below is different from regular zygote-spawned apps
+ ######
+ 
+-# The app_zygote needs to be able to transition domains.
+-typeattribute app_zygote mlstrustedsubject;
+-
+ # Allow access to temporary files, which is normally permitted through
+ # a domain macro.
+ tmpfs_domain(app_zygote);
+@@ -89,12 +86,14 @@ neverallow { domain -zygote } app_zygote:process dyntransition;
+ neverallow app_zygote property_socket:sock_file write;
+ neverallow app_zygote property_type:property_service set;
+ 
+-# Should not have any access to non-app data files.
++# Should not have any access to data files.
+ neverallow app_zygote {
+     bluetooth_data_file
+     nfc_data_file
+     radio_data_file
+     shell_data_file
++    app_data_file
++    privapp_data_file
+ }:file { rwx_file_perms };
+ 
+ neverallow app_zygote {
+diff --git a/private/seapp_contexts b/private/seapp_contexts
+index ad8a76cd..b898d3e1 100644
+--- a/private/seapp_contexts
++++ b/private/seapp_contexts
+@@ -150,8 +150,8 @@ user=radio seinfo=platform domain=radio type=radio_data_file
+ user=shared_relro domain=shared_relro
+ user=shell seinfo=platform domain=shell name=com.android.shell type=shell_data_file
+ user=webview_zygote seinfo=webview_zygote domain=webview_zygote
+-user=_isolated domain=isolated_app levelFrom=all
+-user=_app seinfo=app_zygote domain=app_zygote levelFrom=all
++user=_isolated domain=isolated_app levelFrom=user
++user=_app seinfo=app_zygote domain=app_zygote levelFrom=user
+ user=_app seinfo=media domain=mediaprovider name=android.process.media type=app_data_file levelFrom=user
+ user=_app seinfo=platform domain=platform_app type=app_data_file levelFrom=user
+ user=_app isEphemeralApp=true domain=ephemeral_app type=app_data_file levelFrom=all
+-- 
+2.17.1
+

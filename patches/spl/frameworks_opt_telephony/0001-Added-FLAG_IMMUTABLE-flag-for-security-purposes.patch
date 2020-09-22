@@ -1,0 +1,51 @@
+From b25820f7ba523227734ebdb94419d10f8d4516b9 Mon Sep 17 00:00:00 2001
+From: Jack Yu <jackyu@google.com>
+Date: Sat, 9 May 2020 18:24:19 -0700
+Subject: [PATCH 1/8] Added FLAG_IMMUTABLE flag for security purposes
+
+Prevent the intent to be altered by the maleware.
+
+Bug: 155094269
+Test: Telephony sanity tests
+
+Merged-In: Ice6e438eb437d377f8c5f26891938302fcb0c8d4
+Change-Id: Ice6e438eb437d377f8c5f26891938302fcb0c8d4
+(cherry picked from commit 21e03356b28be08e2d5aeac15a446f820f95fb70)
+---
+ .../internal/telephony/dataconnection/DcTracker.java        | 6 +++---
+ 1 file changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/java/com/android/internal/telephony/dataconnection/DcTracker.java b/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
+index a9d652e83..de4ba2c52 100644
+--- a/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
++++ b/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
+@@ -2285,7 +2285,7 @@ public class DcTracker extends Handler {
+         }
+ 
+         PendingIntent alarmIntent = PendingIntent.getBroadcast(mPhone.getContext(), 0,
+-                                        intent, PendingIntent.FLAG_UPDATE_CURRENT);
++                intent, PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+         apnContext.setReconnectIntent(alarmIntent);
+ 
+         // Use the exact timer instead of the inexact one to provide better user experience.
+@@ -4942,7 +4942,7 @@ public class DcTracker extends Handler {
+             intent.putExtra(INTENT_DATA_STALL_ALARM_EXTRA_TRANSPORT_TYPE, mTransportType);
+             SubscriptionManager.putPhoneIdAndSubIdExtra(intent, mPhone.getPhoneId());
+             mDataStallAlarmIntent = PendingIntent.getBroadcast(mPhone.getContext(), 0, intent,
+-                    PendingIntent.FLAG_UPDATE_CURRENT);
++                    PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+             mAlarmManager.set(AlarmManager.ELAPSED_REALTIME,
+                     SystemClock.elapsedRealtime() + delayInMs, mDataStallAlarmIntent);
+         } else {
+@@ -5010,7 +5010,7 @@ public class DcTracker extends Handler {
+         Intent intent = new Intent(INTENT_PROVISIONING_APN_ALARM);
+         intent.putExtra(PROVISIONING_APN_ALARM_TAG_EXTRA, mProvisioningApnAlarmTag);
+         mProvisioningApnAlarmIntent = PendingIntent.getBroadcast(mPhone.getContext(), 0, intent,
+-                PendingIntent.FLAG_UPDATE_CURRENT);
++                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+         mAlarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP,
+                 SystemClock.elapsedRealtime() + delayInMs, mProvisioningApnAlarmIntent);
+     }
+-- 
+2.17.1
+

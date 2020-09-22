@@ -1,0 +1,37 @@
+From de4d1dba522ac1eb619f2dfc4158f283104fdde1 Mon Sep 17 00:00:00 2001
+From: Yu-Han Yang <yuhany@google.com>
+Date: Wed, 10 Jun 2020 17:11:16 -0700
+Subject: [PATCH 002/186] Remove unused intent in NFW notification
+
+Bug: 156123285
+Test: builds and tests passing
+Change-Id: I81fe2b1df96b73a43123851ab98575feacf3331a
+Merged-In: I81fe2b1df96b73a43123851ab98575feacf3331a
+(cherry picked from commit 9fc2876a80a6e72eae1d1da1422a4cf399d97acb)
+---
+ .../java/com/android/server/location/GnssVisibilityControl.java | 2 --
+ 1 file changed, 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/location/GnssVisibilityControl.java b/services/core/java/com/android/server/location/GnssVisibilityControl.java
+index dd522b95a93..0f38473ef11 100644
+--- a/services/core/java/com/android/server/location/GnssVisibilityControl.java
++++ b/services/core/java/com/android/server/location/GnssVisibilityControl.java
+@@ -21,7 +21,6 @@ import android.annotation.SuppressLint;
+ import android.app.AppOpsManager;
+ import android.app.Notification;
+ import android.app.NotificationManager;
+-import android.app.PendingIntent;
+ import android.content.BroadcastReceiver;
+ import android.content.Context;
+ import android.content.Intent;
+@@ -645,7 +644,6 @@ class GnssVisibilityControl {
+                 .setTicker(accessibilityServicesText)
+                 .setContentTitle(firstLineText)
+                 .setContentText(secondLineText)
+-                .setContentIntent(PendingIntent.getBroadcast(context, 0, new Intent(), 0))
+                 .build();
+     }
+ 
+-- 
+2.17.1
+

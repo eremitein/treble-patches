@@ -1,0 +1,27 @@
+From 4243bb48acd7212562219acaea6d890dd84a4392 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Tue, 14 Aug 2018 21:01:35 +0200
+Subject: [PATCH 1/8] AOSP 8.0/8.1 didn't use presentOrValidate, so it's
+ broken. Don't use it
+
+Change-Id: If86793dba3738680280f9dc0f7e7c802c0836690
+---
+ services/surfaceflinger/DisplayHardware/HWComposer.cpp | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/services/surfaceflinger/DisplayHardware/HWComposer.cpp b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+index 1099041b4..2021c26b0 100644
+--- a/services/surfaceflinger/DisplayHardware/HWComposer.cpp
++++ b/services/surfaceflinger/DisplayHardware/HWComposer.cpp
+@@ -424,7 +424,7 @@ status_t HWComposer::prepare(DisplayId displayId, const compositionengine::Outpu
+     // The check below is incorrect.  We actually rely on HWC here to fall
+     // back to validate when there is any client layer.
+     displayData.validateWasSkipped = false;
+-    if (!displayData.hasClientComposition) {
++    if ((false)) {
+         sp<Fence> outPresentFence;
+         uint32_t state = UINT32_MAX;
+         error = hwcDisplay->presentOrValidate(&numTypes, &numRequests, &outPresentFence , &state);
+-- 
+2.17.1
+

@@ -1,0 +1,126 @@
+From 7ea516f52dc37befca23a4254219b65625309552 Mon Sep 17 00:00:00 2001
+From: Ricardo Cerqueira <cyanogenmod@cerqueira.org>
+Date: Fri, 23 Nov 2012 14:23:16 +0000
+Subject: [PATCH 024/186] Reintroduce button-backlight (and respective
+ inactivity timeout)
+
+The power manager rewrite from Change I1d7a52e98f0449f76d70bf421f6a7f245957d1d7
+completely removed support for control of the button backlights, which makes
+all capacitive buttons out there stay dark. The commit message in that change
+mentions it hasn't been implemented _yet_, so this fix should be temporary
+until upstream does their own implementation
+
+[RC: Updated to 5.0]
+
+Change-Id: I6094c446e0b8c23f57d30652a3cbd35dee5e821a
+---
+ .../server/display/DisplayPowerController.java  | 17 +++++++++++++++++
+ .../server/power/PowerManagerService.java       | 15 +++++++++++++++
+ 2 files changed, 32 insertions(+)
+
+diff --git a/services/core/java/com/android/server/display/DisplayPowerController.java b/services/core/java/com/android/server/display/DisplayPowerController.java
+index 5804fc8ba72..427ab483324 100644
+--- a/services/core/java/com/android/server/display/DisplayPowerController.java
++++ b/services/core/java/com/android/server/display/DisplayPowerController.java
+@@ -16,6 +16,13 @@
+ 
+ package com.android.server.display;
+ 
++import android.app.ActivityManager;
++import com.android.internal.app.IBatteryStats;
++import com.android.server.LocalServices;
++import com.android.server.am.BatteryStatsService;
++import com.android.server.policy.WindowManagerPolicy;
++import com.android.server.lights.LightsManager;
++
+ import android.animation.Animator;
+ import android.animation.ObjectAnimator;
+ import android.annotation.Nullable;
+@@ -150,6 +157,9 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+     // Battery stats.
+     private final IBatteryStats mBatteryStats;
+ 
++    // The lights service.
++    private final LightsManager mLights;
++
+     // The sensor manager.
+     private final SensorManager mSensorManager;
+ 
+@@ -396,6 +406,7 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+         mCallbacks = callbacks;
+ 
+         mBatteryStats = BatteryStatsService.getService();
++        mLights = LocalServices.getService(LightsManager.class);
+         mSensorManager = sensorManager;
+         mWindowManagerPolicy = LocalServices.getService(WindowManagerPolicy.class);
+         mBlanker = blanker;
+@@ -850,6 +861,12 @@ final class DisplayPowerController implements AutomaticBrightnessController.Call
+         if (state == Display.STATE_OFF) {
+             brightness = PowerManager.BRIGHTNESS_OFF;
+             mBrightnessReasonTemp.setReason(BrightnessReason.REASON_SCREEN_OFF);
++            mLights.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(brightness);
++        }
++
++        // Disable button lights when dozing
++        if (state == Display.STATE_DOZE || state == Display.STATE_DOZE_SUSPEND) {
++            mLights.getLight(LightsManager.LIGHT_ID_BUTTONS).setBrightness(PowerManager.BRIGHTNESS_OFF);
+         }
+ 
+         // Always use the VR brightness when in the VR state.
+diff --git a/services/core/java/com/android/server/power/PowerManagerService.java b/services/core/java/com/android/server/power/PowerManagerService.java
+index 1cb7880ff81..e4392bf49ea 100644
+--- a/services/core/java/com/android/server/power/PowerManagerService.java
++++ b/services/core/java/com/android/server/power/PowerManagerService.java
+@@ -223,6 +223,12 @@ public final class PowerManagerService extends SystemService
+     // property for last reboot reason
+     private static final String REBOOT_PROPERTY = "sys.boot.reason";
+ 
++    // Add button light timeout
++    private static final int BUTTON_ON_DURATION = 5 * 1000;
++
++    // File location for last reboot reason
++    private static final String LAST_REBOOT_LOCATION = "/data/misc/reboot/last_reboot_reason";
++
+     private final Context mContext;
+     private final ServiceThread mHandlerThread;
+     private final PowerManagerHandler mHandler;
+@@ -248,6 +254,7 @@ public final class PowerManagerService extends SystemService
+     private SettingsObserver mSettingsObserver;
+     private DreamManagerInternal mDreamManager;
+     private Light mAttentionLight;
++    private Light mButtonsLight;
+ 
+     private final Object mLock = LockGuard.installNewLock(LockGuard.INDEX_POWER);
+ 
+@@ -857,6 +864,7 @@ public final class PowerManagerService extends SystemService
+ 
+             mLightsManager = getLocalService(LightsManager.class);
+             mAttentionLight = mLightsManager.getLight(LightsManager.LIGHT_ID_ATTENTION);
++            mButtonsLight = mLightsManager.getLight(LightsManager.LIGHT_ID_BUTTONS);
+ 
+             // Initialize display power management.
+             mDisplayManagerInternal.initPowerManagement(
+@@ -2044,6 +2052,7 @@ public final class PowerManagerService extends SystemService
+                 final long screenOffTimeout = getScreenOffTimeoutLocked(sleepTimeout);
+                 final long screenDimDuration = getScreenDimDurationLocked(screenOffTimeout);
+                 final boolean userInactiveOverride = mUserInactiveOverrideFromWindowManager;
++                final int screenBrightness = mScreenBrightnessSettingDefault;
+                 final long nextProfileTimeout = getNextProfileTimeoutLocked(now);
+ 
+                 mUserActivitySummary = 0;
+@@ -2051,6 +2060,12 @@ public final class PowerManagerService extends SystemService
+                     nextTimeout = mLastUserActivityTime
+                             + screenOffTimeout - screenDimDuration;
+                     if (now < nextTimeout) {
++                        if (now > mLastUserActivityTime + BUTTON_ON_DURATION) {
++                            mButtonsLight.setBrightness(0);
++                        } else {
++                            mButtonsLight.setBrightness(screenBrightness);
++                            nextTimeout = now + BUTTON_ON_DURATION;
++                        }
+                         mUserActivitySummary = USER_ACTIVITY_SCREEN_BRIGHT;
+                     } else {
+                         nextTimeout = mLastUserActivityTime + screenOffTimeout;
+-- 
+2.17.1
+

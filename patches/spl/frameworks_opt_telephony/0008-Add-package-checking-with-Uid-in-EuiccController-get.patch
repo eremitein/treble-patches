@@ -1,0 +1,48 @@
+From 97184a89760b86842c95b0de530c94f6acb591d3 Mon Sep 17 00:00:00 2001
+From: Shuo Qian <shuoq@google.com>
+Date: Fri, 31 Jul 2020 18:17:46 -0700
+Subject: [PATCH 8/8] Add package checking with Uid in EuiccController#getEid
+
+EuiccController does not validate the calling package name
+(i.e. to ensure that it is owned by the calling UID). It is
+therefore possible for an app to effectively gain carrier
+ privileges in the call to EuiccController#getEid by
+passing the package name of another app that does has carrier
+ privileges to one or more subscriptions.
+
+Test: safe net log
+Bug: 159062405
+Change-Id: I0bf7c8b267a0c9cd877328c4ff3169950e1ff64f
+(cherry picked from commit 1221ede9d8cdea7586ae98357726df3d80e0e448)
+---
+ .../android/internal/telephony/euicc/EuiccController.java  | 7 +++++++
+ 1 file changed, 7 insertions(+)
+
+diff --git a/src/java/com/android/internal/telephony/euicc/EuiccController.java b/src/java/com/android/internal/telephony/euicc/EuiccController.java
+index 2c8ba10f3..3485a6cf0 100644
+--- a/src/java/com/android/internal/telephony/euicc/EuiccController.java
++++ b/src/java/com/android/internal/telephony/euicc/EuiccController.java
+@@ -45,6 +45,7 @@ import android.telephony.euicc.EuiccInfo;
+ import android.telephony.euicc.EuiccManager;
+ import android.telephony.euicc.EuiccManager.OtaStatus;
+ import android.text.TextUtils;
++import android.util.EventLog;
+ import android.util.Log;
+ 
+ import com.android.internal.annotations.VisibleForTesting;
+@@ -174,6 +175,12 @@ public class EuiccController extends IEuiccController.Stub {
+     @Override
+     public String getEid(int cardId, String callingPackage) {
+         boolean callerCanReadPhoneStatePrivileged = callerCanReadPhoneStatePrivileged();
++        try {
++            mAppOpsManager.checkPackage(Binder.getCallingUid(), callingPackage);
++        } catch (SecurityException e) {
++            EventLog.writeEvent(0x534e4554, "159062405", -1, "Missing UID checking");
++            throw e;
++        }
+         long token = Binder.clearCallingIdentity();
+         try {
+             if (!callerCanReadPhoneStatePrivileged
+-- 
+2.17.1
+

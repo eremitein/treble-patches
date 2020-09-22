@@ -1,0 +1,45 @@
+From 6e3e76236d58970ed8bdb48d2d7b8797304e777a Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 13 Oct 2019 17:21:31 +0800
+Subject: [PATCH 7/9] telephony: forward-port support for forceCognitive
+
+* This is needed on some MTK devices. Android 10 refactored some code,
+  so now the "non-persistent/cognitive" filter is relocated to RIL and
+  also in DcTracker.setupData().
+---
+ src/java/com/android/internal/telephony/RIL.java               | 3 ++-
+ .../android/internal/telephony/dataconnection/DcTracker.java   | 3 ++-
+ 2 files changed, 4 insertions(+), 2 deletions(-)
+
+diff --git a/src/java/com/android/internal/telephony/RIL.java b/src/java/com/android/internal/telephony/RIL.java
+index ab83c9498..2fff03029 100644
+--- a/src/java/com/android/internal/telephony/RIL.java
++++ b/src/java/com/android/internal/telephony/RIL.java
+@@ -3970,7 +3970,8 @@ public class RIL extends BaseCommands implements CommandsInterface {
+                     for (DataProfile dp : dps) {
+                         // For v1.0 to v1.2, we only send data profiles that has the persistent
+                         // (a.k.a modem cognitive) bit set to true.
+-                        if (dp.isPersistent()) {
++                        boolean forceCognitive = SystemProperties.getBoolean("persist.sys.phh.radio.force_cognitive", false);
++                        if (dp.isPersistent() || forceCognitive) {
+                             dpis.add(convertToHalDataProfile10(dp));
+                         }
+                     }
+diff --git a/src/java/com/android/internal/telephony/dataconnection/DcTracker.java b/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
+index a9d652e83..06cb3942c 100644
+--- a/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
++++ b/src/java/com/android/internal/telephony/dataconnection/DcTracker.java
+@@ -1993,8 +1993,9 @@ public class DcTracker extends Handler {
+         }
+ 
+         // profile id is only meaningful when the profile is persistent on the modem.
++        boolean forceCognitive = SystemProperties.getBoolean("persist.sys.phh.radio.force_cognitive", false);
+         int profileId = DATA_PROFILE_INVALID;
+-        if (apnSetting.isPersistent()) {
++        if (apnSetting.isPersistent() || forceCognitive) {
+             profileId = apnSetting.getProfileId();
+             if (profileId == DATA_PROFILE_DEFAULT) {
+                 profileId = getApnProfileID(apnContext.getApnType());
+-- 
+2.17.1
+

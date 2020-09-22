@@ -1,0 +1,337 @@
+From c65e4994ccfca9403f80b64fc3ff6cb519b89b1a Mon Sep 17 00:00:00 2001
+From: Sunny Shao <sunnyshao@google.com>
+Date: Wed, 1 Jul 2020 16:59:27 +0800
+Subject: [PATCH 03/40] Enable the filterTouchesWhenObscured in Special app
+ access
+
+- Enable the filterTouchesWhenObscured attribute on all toggle
+  switches in all pages of the special app access
+
+Bug: 155288585
+Test: make RunSettingsRoboTests
+Merged-In: I011cfe4b7e4e624a8338332ac47a353f7f3ab661
+Merged-In: I0731057ec6e77c6a0867784c729c3f5812ef6170
+Change-Id: I0731057ec6e77c6a0867784c729c3f5812ef6170
+(cherry picked from commit 5d73464b76747d367aa57668472a821bb64fbf15)
+---
+ res/xml/app_ops_permissions_details.xml       |  2 +-
+ res/xml/change_wifi_state_details.xml         |  2 +-
+ res/xml/draw_overlay_permissions_details.xml  |  2 +-
+ res/xml/external_sources_details.xml          |  2 +-
+ ...picture_in_picture_permissions_details.xml |  2 +-
+ ...te_system_settings_permissions_details.xml |  2 +-
+ res/xml/zen_access_permission_details.xml     |  4 +-
+ .../DeviceAdminListPreferenceController.java  | 15 ++---
+ .../settings/widget/AppSwitchPreference.java  | 12 ++++
+ ...lterTouchesRestrictedSwitchPreference.java | 59 +++++++++++++++++++
+ .../widget/FilterTouchesSwitchPreference.java | 57 ++++++++++++++++++
+ 11 files changed, 144 insertions(+), 15 deletions(-)
+ create mode 100644 src/com/android/settings/widget/FilterTouchesRestrictedSwitchPreference.java
+ create mode 100644 src/com/android/settings/widget/FilterTouchesSwitchPreference.java
+
+diff --git a/res/xml/app_ops_permissions_details.xml b/res/xml/app_ops_permissions_details.xml
+index cb8711cb09..cbf3e127fd 100644
+--- a/res/xml/app_ops_permissions_details.xml
++++ b/res/xml/app_ops_permissions_details.xml
+@@ -17,7 +17,7 @@
+ <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+     xmlns:settings="http://schemas.android.com/apk/res-auto">
+ 
+-    <SwitchPreference
++    <com.android.settings.widget.FilterTouchesSwitchPreference
+         android:key="app_ops_settings_switch" />
+ 
+     <Preference
+diff --git a/res/xml/change_wifi_state_details.xml b/res/xml/change_wifi_state_details.xml
+index 77fd063899..e3b67557d9 100644
+--- a/res/xml/change_wifi_state_details.xml
++++ b/res/xml/change_wifi_state_details.xml
+@@ -18,7 +18,7 @@
+     android:key="change_wifi_state"
+     android:title="@string/change_wifi_state_title">
+ 
+-  <SwitchPreference
++  <com.android.settings.widget.FilterTouchesSwitchPreference
+       android:key="app_ops_settings_switch"
+       android:title="@string/change_wifi_state_app_detail_switch"/>
+ 
+diff --git a/res/xml/draw_overlay_permissions_details.xml b/res/xml/draw_overlay_permissions_details.xml
+index 3e7bec590b..d3397a707b 100644
+--- a/res/xml/draw_overlay_permissions_details.xml
++++ b/res/xml/draw_overlay_permissions_details.xml
+@@ -18,7 +18,7 @@
+     android:key="draw_overlay_permission_detail_settings"
+     android:title="@string/draw_overlay">
+ 
+-    <SwitchPreference
++    <com.android.settings.widget.FilterTouchesSwitchPreference
+         android:key="app_ops_settings_switch"
+         android:title="@string/permit_draw_overlay"/>
+ 
+diff --git a/res/xml/external_sources_details.xml b/res/xml/external_sources_details.xml
+index ea2abdc52b..57d5587c69 100644
+--- a/res/xml/external_sources_details.xml
++++ b/res/xml/external_sources_details.xml
+@@ -17,7 +17,7 @@
+ <PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+         android:title="@string/install_other_apps">
+ 
+-    <com.android.settingslib.RestrictedSwitchPreference
++    <com.android.settings.widget.FilterTouchesRestrictedSwitchPreference
+         android:key="external_sources_settings_switch"
+         android:title="@string/external_source_switch_title" />
+ 
+diff --git a/res/xml/picture_in_picture_permissions_details.xml b/res/xml/picture_in_picture_permissions_details.xml
+index c215c9d9cf..5f2a45ae55 100644
+--- a/res/xml/picture_in_picture_permissions_details.xml
++++ b/res/xml/picture_in_picture_permissions_details.xml
+@@ -18,7 +18,7 @@
+     android:key="picture_in_picture_permission_detail_settings"
+     android:title="@string/picture_in_picture_app_detail_title">
+ 
+-    <SwitchPreference
++    <com.android.settings.widget.FilterTouchesSwitchPreference
+         android:key="app_ops_settings_switch"
+         android:title="@string/picture_in_picture_app_detail_switch"/>
+ 
+diff --git a/res/xml/write_system_settings_permissions_details.xml b/res/xml/write_system_settings_permissions_details.xml
+index 82a6931592..21ea7065e1 100644
+--- a/res/xml/write_system_settings_permissions_details.xml
++++ b/res/xml/write_system_settings_permissions_details.xml
+@@ -18,7 +18,7 @@
+     android:key="write_system_settings_permission_detail_settings"
+     android:title="@string/write_settings">
+ 
+-    <SwitchPreference
++    <com.android.settings.widget.FilterTouchesSwitchPreference
+         android:key="app_ops_settings_switch"
+         android:title="@string/permit_write_settings"/>
+ 
+diff --git a/res/xml/zen_access_permission_details.xml b/res/xml/zen_access_permission_details.xml
+index afa8d80a17..dd22db3373 100644
+--- a/res/xml/zen_access_permission_details.xml
++++ b/res/xml/zen_access_permission_details.xml
+@@ -20,8 +20,8 @@
+     android:key="zen_access_permission_detail_settings"
+     android:title="@string/manage_zen_access_title">
+ 
+-    <SwitchPreference
++    <com.android.settings.widget.FilterTouchesSwitchPreference
+         android:key="zen_access_switch"
+         android:title="@string/zen_access_detail_switch"/>
+ 
+-</PreferenceScreen>
+\ No newline at end of file
++</PreferenceScreen>
+diff --git a/src/com/android/settings/applications/specialaccess/deviceadmin/DeviceAdminListPreferenceController.java b/src/com/android/settings/applications/specialaccess/deviceadmin/DeviceAdminListPreferenceController.java
+index 7b139d9770..cd68adfd2a 100644
+--- a/src/com/android/settings/applications/specialaccess/deviceadmin/DeviceAdminListPreferenceController.java
++++ b/src/com/android/settings/applications/specialaccess/deviceadmin/DeviceAdminListPreferenceController.java
+@@ -47,6 +47,7 @@ import androidx.preference.SwitchPreference;
+ 
+ import com.android.settings.R;
+ import com.android.settings.core.BasePreferenceController;
++import com.android.settings.widget.FilterTouchesSwitchPreference;
+ import com.android.settingslib.core.lifecycle.LifecycleObserver;
+ import com.android.settingslib.core.lifecycle.events.OnStart;
+ import com.android.settingslib.core.lifecycle.events.OnStop;
+@@ -172,32 +173,32 @@ public class DeviceAdminListPreferenceController extends BasePreferenceControlle
+             footer.setTitle(R.string.no_device_admins);
+             footer.setVisible(mAdmins.isEmpty());
+         }
+-        final Map<String, SwitchPreference> preferenceCache = new ArrayMap<>();
++        final Map<String, FilterTouchesSwitchPreference> preferenceCache = new ArrayMap<>();
+         final Context prefContext = mPreferenceGroup.getContext();
+         final int childrenCount = mPreferenceGroup.getPreferenceCount();
+         for (int i = 0; i < childrenCount; i++) {
+             final Preference pref = mPreferenceGroup.getPreference(i);
+-            if (!(pref instanceof SwitchPreference)) {
++            if (!(pref instanceof FilterTouchesSwitchPreference)) {
+                 continue;
+             }
+-            final SwitchPreference appSwitch = (SwitchPreference) pref;
++            final FilterTouchesSwitchPreference appSwitch = (FilterTouchesSwitchPreference) pref;
+             preferenceCache.put(appSwitch.getKey(), appSwitch);
+         }
+         for (DeviceAdminListItem item : mAdmins) {
+             final String key = item.getKey();
+-            SwitchPreference pref = preferenceCache.remove(key);
++            FilterTouchesSwitchPreference pref = preferenceCache.remove(key);
+             if (pref == null) {
+-                pref = new SwitchPreference(prefContext);
++                pref = new FilterTouchesSwitchPreference(prefContext);
+                 mPreferenceGroup.addPreference(pref);
+             }
+             bindPreference(item, pref);
+         }
+-        for (SwitchPreference unusedCacheItem : preferenceCache.values()) {
++        for (FilterTouchesSwitchPreference unusedCacheItem : preferenceCache.values()) {
+             mPreferenceGroup.removePreference(unusedCacheItem);
+         }
+     }
+ 
+-    private void bindPreference(DeviceAdminListItem item, SwitchPreference pref) {
++    private void bindPreference(DeviceAdminListItem item, FilterTouchesSwitchPreference pref) {
+         pref.setKey(item.getKey());
+         pref.setTitle(item.getName());
+         pref.setIcon(item.getIcon());
+diff --git a/src/com/android/settings/widget/AppSwitchPreference.java b/src/com/android/settings/widget/AppSwitchPreference.java
+index 506ab7642a..aeb779f696 100644
+--- a/src/com/android/settings/widget/AppSwitchPreference.java
++++ b/src/com/android/settings/widget/AppSwitchPreference.java
+@@ -17,7 +17,9 @@
+ package com.android.settings.widget;
+ 
+ import android.content.Context;
++import android.view.View;
+ 
++import androidx.preference.PreferenceViewHolder;
+ import androidx.preference.SwitchPreference;
+ 
+ import com.android.settings.R;
+@@ -28,4 +30,14 @@ public class AppSwitchPreference extends SwitchPreference {
+         super(context);
+         setLayoutResource(R.layout.preference_app);
+     }
++
++    @Override
++    public void onBindViewHolder(PreferenceViewHolder holder) {
++        super.onBindViewHolder(holder);
++        final View switchView = holder.findViewById(android.R.id.switch_widget);
++        if (switchView != null) {
++            final View rootView = switchView.getRootView();
++            rootView.setFilterTouchesWhenObscured(true);
++        }
++    }
+ }
+diff --git a/src/com/android/settings/widget/FilterTouchesRestrictedSwitchPreference.java b/src/com/android/settings/widget/FilterTouchesRestrictedSwitchPreference.java
+new file mode 100644
+index 0000000000..f4c3a14389
+--- /dev/null
++++ b/src/com/android/settings/widget/FilterTouchesRestrictedSwitchPreference.java
+@@ -0,0 +1,59 @@
++/*
++ * Copyright (C) 2020 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package com.android.settings.widget;
++
++import android.content.Context;
++import android.util.AttributeSet;
++import android.view.View;
++
++import androidx.preference.PreferenceViewHolder;
++
++import com.android.settingslib.RestrictedSwitchPreference;
++
++/**
++ * This widget with enabled filterTouchesWhenObscured attribute use to replace
++ * the {@link RestrictedSwitchPreference} in the Special access app pages for
++ * security.
++ */
++public class FilterTouchesRestrictedSwitchPreference extends RestrictedSwitchPreference {
++    public FilterTouchesRestrictedSwitchPreference(Context context, AttributeSet attrs,
++            int defStyleAttr, int defStyleRes) {
++        super(context, attrs, defStyleAttr, defStyleRes);
++    }
++
++    public FilterTouchesRestrictedSwitchPreference(Context context, AttributeSet attrs,
++            int defStyleAttr) {
++        super(context, attrs, defStyleAttr);
++    }
++
++    public FilterTouchesRestrictedSwitchPreference(Context context, AttributeSet attrs) {
++        super(context, attrs);
++    }
++
++    public FilterTouchesRestrictedSwitchPreference(Context context) {
++        super(context);
++    }
++
++    @Override
++    public void onBindViewHolder(PreferenceViewHolder holder) {
++        super.onBindViewHolder(holder);
++        final View switchView = holder.findViewById(android.R.id.switch_widget);
++        if (switchView != null) {
++            final View rootView = switchView.getRootView();
++            rootView.setFilterTouchesWhenObscured(true);
++        }
++    }
++}
+diff --git a/src/com/android/settings/widget/FilterTouchesSwitchPreference.java b/src/com/android/settings/widget/FilterTouchesSwitchPreference.java
+new file mode 100644
+index 0000000000..1b4d6817bf
+--- /dev/null
++++ b/src/com/android/settings/widget/FilterTouchesSwitchPreference.java
+@@ -0,0 +1,57 @@
++/*
++ * Copyright (C) 2020 The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++package com.android.settings.widget;
++
++import android.content.Context;
++import android.util.AttributeSet;
++import android.view.View;
++
++import androidx.preference.PreferenceViewHolder;
++import androidx.preference.SwitchPreference;
++
++/**
++ *  This widget with enabled filterTouchesWhenObscured attribute use to replace
++ *  the {@link SwitchPreference} in the Special access app pages for security.
++ */
++public class FilterTouchesSwitchPreference extends SwitchPreference {
++
++    public FilterTouchesSwitchPreference(Context context, AttributeSet attrs, int defStyleAttr,
++            int defStyleRes) {
++        super(context, attrs, defStyleAttr, defStyleRes);
++    }
++
++    public FilterTouchesSwitchPreference(Context context, AttributeSet attrs, int defStyleAttr) {
++        super(context, attrs, defStyleAttr);
++    }
++
++    public FilterTouchesSwitchPreference(Context context, AttributeSet attrs) {
++        super(context, attrs);
++    }
++
++    public FilterTouchesSwitchPreference(Context context) {
++        super(context);
++    }
++
++    @Override
++    public void onBindViewHolder(PreferenceViewHolder holder) {
++        super.onBindViewHolder(holder);
++        final View switchView = holder.findViewById(android.R.id.switch_widget);
++        if (switchView != null) {
++            final View rootView = switchView.getRootView();
++            rootView.setFilterTouchesWhenObscured(true);
++        }
++    }
++}
+-- 
+2.17.1
+

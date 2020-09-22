@@ -1,0 +1,29 @@
+From 17fa464ada8b046e16f73488e8a34267d52d0c6a Mon Sep 17 00:00:00 2001
+From: Chienyuan <chienyuanhuang@google.com>
+Date: Thu, 23 Jul 2020 15:16:35 +0800
+Subject: [PATCH] SAP: Ensure pending intent is immutable
+
+Bug: 156021269
+TAG: #security
+Test: manual
+Change-Id: Ieea6a708ca0fd1689e4b120db12f0cd96e8db95d
+(cherry picked from commit 7b17763dad16814cb743c710efd64cc5fccd2239)
+---
+ src/com/android/bluetooth/sap/SapServer.java | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/src/com/android/bluetooth/sap/SapServer.java b/src/com/android/bluetooth/sap/SapServer.java
+index d8281fe2..a2393bfc 100644
+--- a/src/com/android/bluetooth/sap/SapServer.java
++++ b/src/com/android/bluetooth/sap/SapServer.java
+@@ -225,6 +225,7 @@ public class SapServer extends Thread implements Callback {
+                 mContext.getString(R.string.bluetooth_sap_notif_title),
+                 NotificationManager.IMPORTANCE_HIGH);
+         notificationManager.createNotificationChannel(notificationChannel);
++        flags |= PendingIntent.FLAG_IMMUTABLE;
+         if (VERBOSE) {
+             Log.i(TAG, "setNotification type: " + type);
+         }
+-- 
+2.17.1
+

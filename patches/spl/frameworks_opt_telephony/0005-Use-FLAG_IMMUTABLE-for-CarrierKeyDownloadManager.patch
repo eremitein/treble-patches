@@ -1,0 +1,42 @@
+From d6b27ead87c75c51c948cf813115924f37f2c3a0 Mon Sep 17 00:00:00 2001
+From: Shuo Qian <shuoq@google.com>
+Date: Wed, 13 May 2020 12:57:37 -0700
+Subject: [PATCH 5/8] Use FLAG_IMMUTABLE for CarrierKeyDownloadManager
+
+Require that the PendingIntent be immutable so that a malicious app is
+ not able to hijack and mutate any of the details.
+
+Test: Android builds
+Bug: 155094269
+Change-Id: I223047644021a647bce72f229998487bee0c007b
+Merged-In: I223047644021a647bce72f229998487bee0c007b
+(cherry picked from commit ed0820373c236b4ef779653b08ea056e7325b0ed)
+---
+ .../android/internal/telephony/CarrierKeyDownloadManager.java | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/src/java/com/android/internal/telephony/CarrierKeyDownloadManager.java b/src/java/com/android/internal/telephony/CarrierKeyDownloadManager.java
+index 43e802629..71e9dc5ef 100644
+--- a/src/java/com/android/internal/telephony/CarrierKeyDownloadManager.java
++++ b/src/java/com/android/internal/telephony/CarrierKeyDownloadManager.java
+@@ -209,7 +209,7 @@ public class CarrierKeyDownloadManager extends Handler {
+         int slotId = mPhone.getPhoneId();
+         Intent intent = new Intent(INTENT_KEY_RENEWAL_ALARM_PREFIX + slotId);
+         PendingIntent carrierKeyDownloadIntent = PendingIntent.getBroadcast(mContext, 0, intent,
+-                PendingIntent.FLAG_UPDATE_CURRENT);
++                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+         AlarmManager alarmManager =
+                 (AlarmManager) mContext.getSystemService(mContext.ALARM_SERVICE);
+         alarmManager.cancel(carrierKeyDownloadIntent);
+@@ -269,7 +269,7 @@ public class CarrierKeyDownloadManager extends Handler {
+                 Context.ALARM_SERVICE);
+         Intent intent = new Intent(INTENT_KEY_RENEWAL_ALARM_PREFIX + slotId);
+         PendingIntent carrierKeyDownloadIntent = PendingIntent.getBroadcast(mContext, 0, intent,
+-                PendingIntent.FLAG_UPDATE_CURRENT);
++                PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE);
+         alarmManager.set(AlarmManager.ELAPSED_REALTIME_WAKEUP, minExpirationDate,
+                 carrierKeyDownloadIntent);
+         Log.d(LOG_TAG, "setRenewelAlarm: action=" + intent.getAction() + " time="
+-- 
+2.17.1
+

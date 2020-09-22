@@ -1,0 +1,106 @@
+From ca834b4281b761cd577a3925a2bb0f67a0348454 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Thu, 12 Sep 2019 13:09:46 +0200
+Subject: [PATCH 08/16] wip
+
+Change-Id: I925f21802d3dd031c6d7d8c4777f36e62e52699b
+---
+ init/uevent_listener.cpp |  5 +++--
+ libcutils/uevent.cpp     | 28 +++++++++++-----------------
+ lmkd/lmkd.rc             |  2 --
+ rootdir/init.zygote32.rc |  2 +-
+ 4 files changed, 15 insertions(+), 22 deletions(-)
+
+diff --git a/init/uevent_listener.cpp b/init/uevent_listener.cpp
+index 62cd2be3a..26f7ed6a9 100644
+--- a/init/uevent_listener.cpp
++++ b/init/uevent_listener.cpp
+@@ -88,10 +88,11 @@ static void ParseEvent(const char* msg, Uevent* uevent) {
+ 
+ UeventListener::UeventListener(size_t uevent_socket_rcvbuf_size) {
+     device_fd_.reset(uevent_open_socket(uevent_socket_rcvbuf_size, true));
+-    if (device_fd_ == -1) {
+-        LOG(FATAL) << "Could not open uevent socket";
++    if (device_fd_ <= -1) {
++        LOG(FATAL) << "Could not open uevent socket" << device_fd_;
+     }
+ 
++        LOG(ERROR) << "Successfully opened uevent socket";
+     fcntl(device_fd_, F_SETFL, O_NONBLOCK);
+ }
+ 
+diff --git a/libcutils/uevent.cpp b/libcutils/uevent.cpp
+index 721de7c47..dc51b12b9 100644
+--- a/libcutils/uevent.cpp
++++ b/libcutils/uevent.cpp
+@@ -105,31 +105,25 @@ int uevent_open_socket(int buf_sz, bool passcred) {
+     addr.nl_groups = 0xffffffff;
+ 
+     s = socket(PF_NETLINK, SOCK_DGRAM | SOCK_CLOEXEC, NETLINK_KOBJECT_UEVENT);
+-    if (s < 0) return -1;
++    if (s < 0) return -errno;
+ 
+-    if (setsockopt(s, SOL_SOCKET, SO_RCVBUF, &buf_sz, sizeof(buf_sz)) < 0 ||
+-          getsockopt(s, SOL_SOCKET, SO_RCVBUF, &buf_sz_readback, &optlen) < 0) {
+-        close(s);
+-        return -1;
+-    }
+-    /* Only if SO_RCVBUF was not effective, try SO_RCVBUFFORCE. Generally, we
+-     * want to avoid SO_RCVBUFFORCE, because it generates SELinux denials in
+-     * case we don't have CAP_NET_ADMIN. This is the case, for example, for
+-     * healthd. */
+-    if (buf_sz_readback < 2 * buf_sz) {
+-        if (setsockopt(s, SOL_SOCKET, SO_RCVBUFFORCE, &buf_sz, sizeof(buf_sz)) < 0) {
+-            close(s);
+-            return -1;
+-        }
+-    }
++fcntl(s, F_SETFD, FD_CLOEXEC);
+ 
+     setsockopt(s, SOL_SOCKET, SO_PASSCRED, &on, sizeof(on));
+ 
+     if (bind(s, (struct sockaddr*)&addr, sizeof(addr)) < 0) {
+         close(s);
+-        return -1;
++        return -errno - 1000;
+     }
+ 
++    setsockopt(s, SOL_SOCKET, SO_RCVBUF, &buf_sz, sizeof(buf_sz));
++    getsockopt(s, SOL_SOCKET, SO_RCVBUF, &buf_sz_readback, &optlen);
++    /* Only if SO_RCVBUF was not effective, try SO_RCVBUFFORCE. Generally, we
++     * want to avoid SO_RCVBUFFORCE, because it generates SELinux denials in
++     * case we don't have CAP_NET_ADMIN. This is the case, for example, for
++     * healthd. */
++    setsockopt(s, SOL_SOCKET, SO_RCVBUFFORCE, &buf_sz, sizeof(buf_sz));
++
+     return s;
+ }
+ 
+diff --git a/lmkd/lmkd.rc b/lmkd/lmkd.rc
+index 76b60558a..5a357ee84 100644
+--- a/lmkd/lmkd.rc
++++ b/lmkd/lmkd.rc
+@@ -1,7 +1,5 @@
+ service lmkd /system/bin/lmkd
+     class core
+-    user lmkd
+-    group lmkd system readproc
+     capabilities DAC_OVERRIDE KILL IPC_LOCK SYS_NICE SYS_RESOURCE
+     critical
+     socket lmkd seqpacket 0660 system system
+diff --git a/rootdir/init.zygote32.rc b/rootdir/init.zygote32.rc
+index bf3fb4217..0a67281ab 100644
+--- a/rootdir/init.zygote32.rc
++++ b/rootdir/init.zygote32.rc
+@@ -2,7 +2,7 @@ service zygote /system/bin/app_process -Xzygote /system/bin --zygote --start-sys
+     class main
+     priority -20
+     user root
+-    group root readproc reserved_disk
++    group root readproc
+     socket zygote stream 660 root system
+     socket usap_pool_primary stream 660 root system
+     onrestart write /sys/android_power/request_state wake
+-- 
+2.17.1
+

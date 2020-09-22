@@ -1,0 +1,62 @@
+From e46ace0d83c48106a03197be9d5a99bb17b3318f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 9 Mar 2020 23:31:14 +0200
+Subject: [PATCH 23/40] disable dashboards conditions and suggestions
+
+  * based on
+  https://github.com/i-o-n/packages_apps_Settings/commit/b40fd09b2051e0a5d55615f163ad8d2ab2686ee6
+
+	modified:   src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java
+	modified:   src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java
+---
+ .../SuggestionFeatureProviderImpl.java        | 20 +------------------
+ .../conditional/ConditionManager.java         |  2 +-
+ 2 files changed, 2 insertions(+), 20 deletions(-)
+
+diff --git a/src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java b/src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java
+index 35905546a0..79bd52fcb8 100644
+--- a/src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java
++++ b/src/com/android/settings/dashboard/suggestions/SuggestionFeatureProviderImpl.java
+@@ -60,25 +60,7 @@ public class SuggestionFeatureProviderImpl implements SuggestionFeatureProvider
+ 
+     @Override
+     public boolean isSuggestionComplete(Context context, @NonNull ComponentName component) {
+-        final String className = component.getClassName();
+-        if (className.equals(WallpaperSuggestionActivity.class.getName())) {
+-            return WallpaperSuggestionActivity.isSuggestionComplete(context);
+-        } else if (className.equals(StyleSuggestionActivity.class.getName())) {
+-            return StyleSuggestionActivity.isSuggestionComplete(context);
+-        } else if (className.equals(FingerprintSuggestionActivity.class.getName())) {
+-            return FingerprintSuggestionActivity.isSuggestionComplete(context);
+-        } else if (className.equals(FingerprintEnrollSuggestionActivity.class.getName())) {
+-            return FingerprintEnrollSuggestionActivity.isSuggestionComplete(context);
+-        } else if (className.equals(ScreenLockSuggestionActivity.class.getName())) {
+-            return ScreenLockSuggestionActivity.isSuggestionComplete(context);
+-        } else if (className.equals(WifiCallingSuggestionActivity.class.getName())) {
+-            return WifiCallingSuggestionActivity.isSuggestionComplete(context);
+-        } else if (className.equals(NightDisplaySuggestionActivity.class.getName())) {
+-            return NightDisplayPreferenceController.isSuggestionComplete(context);
+-        } else if (className.equals(ZenSuggestionActivity.class.getName())) {
+-            return ZenOnboardingActivity.isSuggestionComplete(context);
+-        }
+-        return false;
++        return true;
+     }
+ 
+     @Override
+diff --git a/src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java b/src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java
+index 1beac9b87b..8d2db6484d 100644
+--- a/src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java
++++ b/src/com/android/settings/homepage/contextualcards/conditional/ConditionManager.java
+@@ -175,7 +175,7 @@ public class ConditionManager {
+ 
+         @Override
+         public ContextualCard call() throws Exception {
+-            return mController.isDisplayable() ? mController.buildContextualCard() : null;
++            return null;
+         }
+     }
+ }
+-- 
+2.17.1
+

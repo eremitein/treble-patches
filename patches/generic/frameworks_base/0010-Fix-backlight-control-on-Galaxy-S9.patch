@@ -1,0 +1,56 @@
+From 322a99c5100eedef24245d6f865115279e0f6d2f Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sat, 24 Mar 2018 08:01:48 +0100
+Subject: [PATCH 010/186] Fix backlight control on Galaxy S9(+)
+
+Change-Id: I1fbbb47939c377597ef8ad6b88b2acea5f4acaa6
+---
+ .../android/server/lights/LightsService.java    | 17 +++++++++++++----
+ 1 file changed, 13 insertions(+), 4 deletions(-)
+
+diff --git a/services/core/java/com/android/server/lights/LightsService.java b/services/core/java/com/android/server/lights/LightsService.java
+index ac906bb23d3..e23e2cd3c4d 100644
+--- a/services/core/java/com/android/server/lights/LightsService.java
++++ b/services/core/java/com/android/server/lights/LightsService.java
+@@ -21,6 +21,7 @@ import android.os.Handler;
+ import android.os.IBinder;
+ import android.os.Message;
+ import android.os.PowerManager;
++import android.os.SystemProperties;
+ import android.os.Trace;
+ import android.provider.Settings;
+ import android.util.Slog;
+@@ -71,6 +72,7 @@ public class LightsService extends SystemService {
+                             ": brightness=0x" + Integer.toHexString(brightness));
+                     return;
+                 }
++
+                 // Ideally, we'd like to set the brightness mode through the SF/HWC as well, but
+                 // right now we just fall back to the old path through Lights brightessMode is
+                 // anything but USER or the device shouldBeInLowPersistenceMode().
+@@ -86,11 +88,18 @@ public class LightsService extends SystemService {
+                     }
+                     SurfaceControl.setDisplayBrightness(mDisplayToken,
+                             (float) brightness / mSurfaceControlMaximumBrightness);
+-                } else {
+-                    int color = brightness & 0x000000ff;
+-                    color = 0xff000000 | (color << 16) | (color << 8) | color;
+-                    setLightLocked(color, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
++		    return;
+                 }
++
++		String fp = SystemProperties.get("ro.vendor.build.fingerprint", "hello");
++		if(fp.contains("starlte") || fp.contains("star2lte")) {
++			setLightLocked(brightness*100, LIGHT_FLASH_HARDWARE, 0, 0, brightnessMode);
++			return;
++		}
++
++                int color = brightness & 0x000000ff;
++                color = 0xff000000 | (color << 16) | (color << 8) | color;
++                setLightLocked(color, LIGHT_FLASH_NONE, 0, 0, brightnessMode);
+             }
+         }
+ 
+-- 
+2.17.1
+

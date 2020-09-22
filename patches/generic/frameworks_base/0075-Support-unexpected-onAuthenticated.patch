@@ -1,0 +1,36 @@
+From eccf81d02072861e10d4dea3266d40f4b4f081ea Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Fri, 5 Jun 2020 20:05:31 +0200
+Subject: [PATCH 075/186] Support unexpected onAuthenticated
+
+Xiaomi Mi 8 SE send onAuthenticated during enroll
+(NO I HAVE NO IDEA WHY)
+In that case performance stats object doesn't exist (yet), ignore.
+---
+ .../server/biometrics/BiometricServiceBase.java        | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/services/core/java/com/android/server/biometrics/BiometricServiceBase.java b/services/core/java/com/android/server/biometrics/BiometricServiceBase.java
+index e74343ce4de..cd4c6c4ab5c 100644
+--- a/services/core/java/com/android/server/biometrics/BiometricServiceBase.java
++++ b/services/core/java/com/android/server/biometrics/BiometricServiceBase.java
+@@ -711,10 +711,12 @@ public abstract class BiometricServiceBase extends SystemService
+         if (client != null && client.onAuthenticated(identifier, authenticated, token)) {
+             removeClient(client);
+         }
+-        if (authenticated) {
+-            mPerformanceStats.accept++;
+-        } else {
+-            mPerformanceStats.reject++;
++        if(mPerformanceStats != null) {
++            if (authenticated) {
++                mPerformanceStats.accept++;
++            } else {
++                mPerformanceStats.reject++;
++            }
+         }
+     }
+ 
+-- 
+2.17.1
+

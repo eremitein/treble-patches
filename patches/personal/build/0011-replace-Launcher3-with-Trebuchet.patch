@@ -1,0 +1,46 @@
+From 37cd1afe303a35ce748c97adfb30af1a38b97873 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 24 Sep 2020 12:31:33 -0400
+Subject: [PATCH] replace Launcher3 with Trebuchet
+
+Change-Id: I7a64c29ea2053eede493e306010a7accb5ee552c
+---
+ target/product/handheld_product.mk | 2 +-
+ target/product/mainline_arm64.mk   | 1 -
+ 2 files changed, 1 insertion(+), 2 deletions(-)
+
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index c1864f2ba..dd1af0644 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -28,7 +28,6 @@ PRODUCT_PACKAGES += \
+     DeskClock \
+     ExactCalculator \
+     LatinIME \
+-    Launcher3QuickStep \
+     OneTimeInitializer \
+     Provision \
+     Settings \
+@@ -36,6 +35,7 @@ PRODUCT_PACKAGES += \
+     SimpleGallery \
+     StorageManager \
+     SystemUI \
++    TrebuchetQuickStep \
+     WallpaperCropper \
+     frameworks-base-overlays
+ 
+diff --git a/target/product/mainline_arm64.mk b/target/product/mainline_arm64.mk
+index 889fee5c3..047df56c9 100644
+--- a/target/product/mainline_arm64.mk
++++ b/target/product/mainline_arm64.mk
+@@ -55,7 +55,6 @@ PRODUCT_ARTIFACT_PATH_REQUIREMENT_WHITELIST += \
+   system/priv-app/CarrierConfig/oat/arm64/CarrierConfig.vdex \
+   system/priv-app/Contacts/Contacts.apk \
+   system/priv-app/Dialer/Dialer.apk \
+-  system/priv-app/Launcher3QuickStep/Launcher3QuickStep.apk \
+   system/priv-app/OneTimeInitializer/OneTimeInitializer.apk \
+   system/priv-app/Provision/Provision.apk \
+   system/priv-app/SettingsIntelligence/SettingsIntelligence.apk \
+-- 
+2.17.1
+

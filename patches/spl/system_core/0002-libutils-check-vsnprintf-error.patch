@@ -1,0 +1,41 @@
+From 48e12d08192166332f89373392731a55baefd79b Mon Sep 17 00:00:00 2001
+From: Steven Moreland <smoreland@google.com>
+Date: Tue, 28 Jul 2020 21:41:54 +0000
+Subject: [PATCH 2/2] libutils: check vsnprintf error
+
+For encoding errors, this function will return a negative value which
+causes problems down the line. Check for an error and return. Also,
+integer overflows are guarded.
+
+Bug: 161894517
+Test: fuzzer test case
+Change-Id: Ia85067d4258bde4b875c832d6223db5dd26b8838
+Merged-In: Ia85067d4258bde4b875c832d6223db5dd26b8838
+(cherry picked from commit ee22384c54d42149491c8b9dbcda0d8c5e88eddc)
+---
+ libutils/String8.cpp | 8 +++++++-
+ 1 file changed, 7 insertions(+), 1 deletion(-)
+
+diff --git a/libutils/String8.cpp b/libutils/String8.cpp
+index 0025c5648..81ec598c3 100644
+--- a/libutils/String8.cpp
++++ b/libutils/String8.cpp
+@@ -322,8 +322,14 @@ status_t String8::appendFormatV(const char* fmt, va_list args)
+     n = vsnprintf(nullptr, 0, fmt, tmp_args);
+     va_end(tmp_args);
+ 
+-    if (n != 0) {
++    if (n < 0) return UNKNOWN_ERROR;
++
++    if (n > 0) {
+         size_t oldLength = length();
++        if ((size_t)n > SIZE_MAX - 1 ||
++            oldLength > SIZE_MAX - (size_t)n - 1) {
++            return NO_MEMORY;
++        }
+         char* buf = lockBuffer(oldLength + n);
+         if (buf) {
+             vsnprintf(buf + oldLength, n + 1, fmt, args);
+-- 
+2.17.1
+

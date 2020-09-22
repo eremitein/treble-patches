@@ -1,0 +1,50 @@
+From ac3c1352ff00d684eb2150209a7c5fb50833166d Mon Sep 17 00:00:00 2001
+From: weichinweng <weichinweng@google.com>
+Date: Tue, 28 Jul 2020 16:56:33 +0800
+Subject: [PATCH 3/3] Fix possible OOB when receive gatt read type response
+ data
+
+Bug: 158833854
+Bug: 158778659
+Test: manual
+Tag: #security
+
+Change-Id: I1bd8713eecebc2bc3d919402b035987e06a2d4d3
+(cherry picked from commit 0eb7a763dff47d349b5cfc5821116ece5a46ffa3)
+---
+ stack/gatt/gatt_cl.cc | 12 ++++++++++++
+ 1 file changed, 12 insertions(+)
+
+diff --git a/stack/gatt/gatt_cl.cc b/stack/gatt/gatt_cl.cc
+index 27a4f4f7d..3115317da 100644
+--- a/stack/gatt/gatt_cl.cc
++++ b/stack/gatt/gatt_cl.cc
+@@ -771,6 +771,12 @@ void gatt_process_read_by_type_rsp(tGATT_TCB& tcb, tGATT_CLCB* p_clcb,
+     /* discover included service */
+     else if (p_clcb->operation == GATTC_OPTYPE_DISCOVERY &&
+              p_clcb->op_subtype == GATT_DISC_INC_SRVC) {
++      if (value_len < 4) {
++        android_errorWriteLog(0x534e4554, "158833854");
++        LOG(ERROR) << __func__ << " Illegal Response length, must be at least 4.";
++        gatt_end_operation(p_clcb, GATT_INVALID_PDU, NULL);
++        return;
++      }
+       STREAM_TO_UINT16(record_value.incl_service.s_handle, p);
+       STREAM_TO_UINT16(record_value.incl_service.e_handle, p);
+ 
+@@ -824,6 +830,12 @@ void gatt_process_read_by_type_rsp(tGATT_TCB& tcb, tGATT_CLCB* p_clcb,
+       return;
+     } else /* discover characterisitic */
+     {
++      if (value_len < 3) {
++        android_errorWriteLog(0x534e4554, "158778659");
++        LOG(ERROR) << __func__ << " Illegal Response length, must be at least 3.";
++        gatt_end_operation(p_clcb, GATT_INVALID_PDU, NULL);
++        return;
++      }
+       STREAM_TO_UINT8(record_value.dclr_value.char_prop, p);
+       STREAM_TO_UINT16(record_value.dclr_value.val_handle, p);
+       if (!GATT_HANDLE_IS_VALID(record_value.dclr_value.val_handle)) {
+-- 
+2.17.1
+

@@ -1,0 +1,34 @@
+From 08228b0ac749ffca4d6f5115c474b480ae8412e7 Mon Sep 17 00:00:00 2001
+From: Shuo Qian <shuoq@google.com>
+Date: Thu, 14 May 2020 15:03:36 -0700
+Subject: [PATCH 7/8] Use FLAG_IMMUTABLE for InstallCarrierAppUtils
+
+Require that the PendingIntent be immutable so that a malicious app is
+ not able to hijack and mutate any of the details.
+
+Test: Android builds
+Bug: 155094269
+Change-Id: I8ac155bf53e33474e1fcdb2466743a1e05b92399
+Merged-In: I8ac155bf53e33474e1fcdb2466743a1e05b92399
+(cherry picked from commit 5071cec911d97367a128bff577adfa43ff70cd11)
+---
+ .../internal/telephony/uicc/InstallCarrierAppUtils.java        | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/java/com/android/internal/telephony/uicc/InstallCarrierAppUtils.java b/src/java/com/android/internal/telephony/uicc/InstallCarrierAppUtils.java
+index 325b3c65d..109f72e52 100644
+--- a/src/java/com/android/internal/telephony/uicc/InstallCarrierAppUtils.java
++++ b/src/java/com/android/internal/telephony/uicc/InstallCarrierAppUtils.java
+@@ -68,7 +68,8 @@ public class InstallCarrierAppUtils {
+                 Settings.Global.INSTALL_CARRIER_APP_NOTIFICATION_PERSISTENT, 1) == 1;
+ 
+         PendingIntent goToStore = PendingIntent.getActivity(context, 0,
+-                getPlayStoreIntent(pkgName), PendingIntent.FLAG_UPDATE_CURRENT);
++                getPlayStoreIntent(pkgName), PendingIntent.FLAG_UPDATE_CURRENT
++                        | PendingIntent.FLAG_IMMUTABLE);
+ 
+         Notification.Action goToStoreAction =
+                 new Notification.Action.Builder(null, downloadButtonText, goToStore).build();
+-- 
+2.17.1
+

@@ -1,0 +1,62 @@
+From 94279b51edc91270ace4c8155c38cf6f7662d36b Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Sun, 28 Jun 2015 13:31:54 -0400
+Subject: [PATCH 39/40] fix usage of ChooseLockSettingsHelper
+
+The fragment was not being passed, so the ChooseLock* fragments are not
+informed if authentication fails (i.e. the cancel button is pushed) and
+continue on as if it was successful. This wasn't noticed because this
+code isn't used in the normal path where authentication happens before
+entering the preferences menu to choose the authentication method.
+
+The authentication support built-in to these fragments may even be dead
+code, but it should work correctly if it's there because it may be the
+basis of new code.
+---
+ src/com/android/settings/password/ChooseLockGeneric.java  | 2 +-
+ src/com/android/settings/password/ChooseLockPassword.java | 2 +-
+ src/com/android/settings/password/ChooseLockPattern.java  | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/src/com/android/settings/password/ChooseLockGeneric.java b/src/com/android/settings/password/ChooseLockGeneric.java
+index 2a7de05719..dc74b9db9d 100644
+--- a/src/com/android/settings/password/ChooseLockGeneric.java
++++ b/src/com/android/settings/password/ChooseLockGeneric.java
+@@ -198,7 +198,7 @@ public class ChooseLockGeneric extends SettingsActivity {
+             mFingerprintManager = Utils.getFingerprintManagerOrNull(getActivity());
+             mFaceManager = Utils.getFaceManagerOrNull(getActivity());
+             mDPM = (DevicePolicyManager) getSystemService(Context.DEVICE_POLICY_SERVICE);
+-            mChooseLockSettingsHelper = new ChooseLockSettingsHelper(this.getActivity());
++            mChooseLockSettingsHelper = new ChooseLockSettingsHelper(this.getActivity(), this);
+             mLockPatternUtils = new LockPatternUtils(getActivity());
+             mIsSetNewPassword = ACTION_SET_NEW_PARENT_PROFILE_PASSWORD.equals(chooseLockAction)
+                     || ACTION_SET_NEW_PASSWORD.equals(chooseLockAction);
+diff --git a/src/com/android/settings/password/ChooseLockPassword.java b/src/com/android/settings/password/ChooseLockPassword.java
+index 639dd6b63b..9d15829144 100644
+--- a/src/com/android/settings/password/ChooseLockPassword.java
++++ b/src/com/android/settings/password/ChooseLockPassword.java
+@@ -387,7 +387,7 @@ public class ChooseLockPassword extends SettingsActivity {
+                     mLockPatternUtils.getRequestedPasswordQuality(mUserId));
+ 
+             loadDpmPasswordRequirements();
+-            mChooseLockSettingsHelper = new ChooseLockSettingsHelper(getActivity());
++            mChooseLockSettingsHelper = new ChooseLockSettingsHelper(getActivity(), this);
+ 
+             if (intent.getBooleanExtra(
+                     ChooseLockSettingsHelper.EXTRA_KEY_FOR_CHANGE_CRED_REQUIRED_FOR_BOOT, false)) {
+diff --git a/src/com/android/settings/password/ChooseLockPattern.java b/src/com/android/settings/password/ChooseLockPattern.java
+index 5de4e3ad14..74db6444c7 100644
+--- a/src/com/android/settings/password/ChooseLockPattern.java
++++ b/src/com/android/settings/password/ChooseLockPattern.java
+@@ -445,7 +445,7 @@ public class ChooseLockPattern extends SettingsActivity {
+         @Override
+         public void onCreate(Bundle savedInstanceState) {
+             super.onCreate(savedInstanceState);
+-            mChooseLockSettingsHelper = new ChooseLockSettingsHelper(getActivity());
++            mChooseLockSettingsHelper = new ChooseLockSettingsHelper(getActivity(), this);
+             if (!(getActivity() instanceof ChooseLockPattern)) {
+                 throw new SecurityException("Fragment contained in wrong activity");
+             }
+-- 
+2.17.1
+

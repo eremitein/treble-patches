@@ -1,0 +1,260 @@
+From 897d8d5d3320311082c0020615d3e35c6789ce8a Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 21 Jul 2020 03:10:58 +0300
+Subject: [PATCH 157/186] add USB Tether QS tile
+
+  from
+  https://github.com/LineageOS/android_frameworks_base/commit/bcbac24c0ff560f385b00fd99d4c12c48345af89
+---
+ .../res/drawable/ic_qs_usb_tether.xml         |  23 ++++
+ packages/SystemUI/res/values/config.xml       |   2 +-
+ packages/SystemUI/res/values/strings.xml      |   3 +
+ .../systemui/qs/tileimpl/QSFactoryImpl.java   |   6 +
+ .../systemui/qs/tiles/UsbTetherTile.java      | 123 ++++++++++++++++++
+ .../metrics_constants/metrics_constants.proto |   1 +
+ 6 files changed, 157 insertions(+), 1 deletion(-)
+ create mode 100644 packages/SystemUI/res/drawable/ic_qs_usb_tether.xml
+ create mode 100644 packages/SystemUI/src/com/android/systemui/qs/tiles/UsbTetherTile.java
+
+diff --git a/packages/SystemUI/res/drawable/ic_qs_usb_tether.xml b/packages/SystemUI/res/drawable/ic_qs_usb_tether.xml
+new file mode 100644
+index 00000000000..2d22c88e80f
+--- /dev/null
++++ b/packages/SystemUI/res/drawable/ic_qs_usb_tether.xml
+@@ -0,0 +1,23 @@
++<!--
++    Copyright (C) 2015 The CyanogenMod Open Source Project
++    Copyright (C) 2017 The LineageOS Project
++    Licensed under the Apache License, Version 2.0 (the "License");
++    you may not use this file except in compliance with the License.
++    You may obtain a copy of the License at
++         http://www.apache.org/licenses/LICENSE-2.0
++    Unless required by applicable law or agreed to in writing, software
++    distributed under the License is distributed on an "AS IS" BASIS,
++    WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++    See the License for the specific language governing permissions and
++    limitations under the License.
++-->
++<vector xmlns:android="http://schemas.android.com/apk/res/android"
++        android:width="64dp"
++        android:height="64dp"
++        android:viewportWidth="64"
++        android:viewportHeight="64">
++
++    <path
++        android:fillColor="#FFFFFFFF"
++        android:pathData="M48.677,29.724h5.255V22.47h4.401l-7.047-9.611l-7.052,9.611h4.443V29.724z M48.677,34.537h5.255v7.254h4.401l-7.047,9.611 l-7.052-9.611h4.443V34.537z M38.85,16.447h-8.444v8.445h2.11v3.251l-8.574,4.36V14.337h4.562l-6.547-8.975l-6.545,8.975h4.561 v21.805l-8.571-3.715v-3.896c1.257-0.734,2.111-2.079,2.111-3.639c0-2.33-1.887-4.222-4.224-4.222c-2.332,0-4.222,1.892-4.222,4.222c0,1.56,0.854,2.905,2.113,3.639v6.668l12.794,5.547v5.609c-2.518,0.837-4.348,3.184-4.348,5.987c0,3.495,2.835,6.333,6.332,6.333c3.501,0,6.337-2.838,6.337-6.333c0-2.802-1.83-5.15-4.352-5.987v-9.113l12.798-6.512v-5.839h2.11L38.85,16.447L38.85,16.447z" />
++</vector>
+diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
+index ad652cc7351..03c17d78ac3 100644
+--- a/packages/SystemUI/res/values/config.xml
++++ b/packages/SystemUI/res/values/config.xml
+@@ -117,7 +117,7 @@
+ 
+     <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
+     <string name="quick_settings_tiles_stock" translatable="false">
+-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,dark,work,cast,night,heads_up,volume_panel
++        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,location,hotspot,inversion,saver,dark,work,cast,night,heads_up,volume_panel,usb_tether
+     </string>
+ 
+     <!-- The tiles to display in QuickSettings -->
+diff --git a/packages/SystemUI/res/values/strings.xml b/packages/SystemUI/res/values/strings.xml
+index 349cc192d01..4f1f861fa5b 100644
+--- a/packages/SystemUI/res/values/strings.xml
++++ b/packages/SystemUI/res/values/strings.xml
+@@ -2498,4 +2498,7 @@
+ 
+     <!-- Volume panel QS tile -->
+     <string name="quick_settings_volume_panel_label">Volume panel</string>
++
++    <!-- USB tethering QS tile -->
++    <string name="quick_settings_usb_tether_label">USB tethering</string>
+ </resources>
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java b/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
+index d5035f7862d..42433a32665 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
+@@ -43,6 +43,7 @@ import com.android.systemui.qs.tiles.NfcTile;
+ import com.android.systemui.qs.tiles.NightDisplayTile;
+ import com.android.systemui.qs.tiles.RotationLockTile;
+ import com.android.systemui.qs.tiles.UiModeNightTile;
++import com.android.systemui.qs.tiles.UsbTetherTile;
+ import com.android.systemui.qs.tiles.UserTile;
+ import com.android.systemui.qs.tiles.VolumeTile;
+ import com.android.systemui.qs.tiles.WifiTile;
+@@ -78,6 +79,7 @@ public class QSFactoryImpl implements QSFactory {
+     private final Provider<GarbageMonitor.MemoryTile> mMemoryTileProvider;
+     private final Provider<UiModeNightTile> mUiModeNightTileProvider;
+     private final Provider<HeadsUpTile> mHeadsUpTileProvider;
++    private final Provider<UsbTetherTile> mUsbTetherTileProvider;
+     private final Provider<VolumeTile> mVolumeTileProvider;
+ 
+     private QSTileHost mHost;
+@@ -103,6 +105,7 @@ public class QSFactoryImpl implements QSFactory {
+             Provider<GarbageMonitor.MemoryTile> memoryTileProvider,
+             Provider<UiModeNightTile> uiModeNightTileProvider,
+             Provider<HeadsUpTile> headsUpTileProvider,
++            Provider<UsbTetherTile> usbTetherTileProvider,
+             Provider<VolumeTile> volumeTileProvider) {
+         mWifiTileProvider = wifiTileProvider;
+         mBluetoothTileProvider = bluetoothTileProvider;
+@@ -124,6 +127,7 @@ public class QSFactoryImpl implements QSFactory {
+         mMemoryTileProvider = memoryTileProvider;
+         mUiModeNightTileProvider = uiModeNightTileProvider;
+         mHeadsUpTileProvider = headsUpTileProvider;
++        mUsbTetherTileProvider = usbTetherTileProvider;
+         mVolumeTileProvider = volumeTileProvider;
+     }
+ 
+@@ -180,6 +184,8 @@ public class QSFactoryImpl implements QSFactory {
+                 return mUiModeNightTileProvider.get();
+             case "heads_up":
+                 return mHeadsUpTileProvider.get();
++            case "usb_tether":
++                return mUsbTetherTileProvider.get();
+             case "volume_panel":
+                 return mVolumeTileProvider.get();
+         }
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/UsbTetherTile.java b/packages/SystemUI/src/com/android/systemui/qs/tiles/UsbTetherTile.java
+new file mode 100644
+index 00000000000..5c7f6474075
+--- /dev/null
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/UsbTetherTile.java
+@@ -0,0 +1,123 @@
++/*
++ * Copyright (C) 2015 The Android Open Source Project
++ * Copyright (C) 2017-2018 The LineageOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *      http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++
++package com.android.systemui.qs.tiles;
++
++import android.content.BroadcastReceiver;
++import android.content.ComponentName;
++import android.content.Context;
++import android.content.Intent;
++import android.content.IntentFilter;
++import android.hardware.usb.UsbManager;
++import android.provider.Settings;
++import android.net.ConnectivityManager;
++import android.service.quicksettings.Tile;
++
++import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
++import com.android.systemui.plugins.qs.QSTile.BooleanState;
++import com.android.systemui.qs.QSHost;
++import com.android.systemui.qs.tileimpl.QSTileImpl;
++import com.android.systemui.R;
++
++import javax.inject.Inject;
++
++/**
++ * USB Tether quick settings tile
++ */
++public class UsbTetherTile extends QSTileImpl<BooleanState> {
++
++    private final Icon mIcon = ResourceIcon.get(R.drawable.ic_qs_usb_tether);
++
++    private static final Intent TETHER_SETTINGS = new Intent().setComponent(new ComponentName(
++            "com.android.settings", "com.android.settings.TetherSettings"));
++
++    private final ConnectivityManager mConnectivityManager;
++
++    private boolean mListening;
++
++    private boolean mUsbConnected = false;
++    private boolean mUsbTetherEnabled = false;
++
++    @Inject
++    public UsbTetherTile(QSHost host) {
++        super(host);
++        mConnectivityManager = mContext.getSystemService(ConnectivityManager.class);
++    }
++
++    public BooleanState newTileState() {
++        return new BooleanState();
++    }
++
++    @Override
++    public void handleSetListening(boolean listening) {
++        if (mListening == listening) {
++            return;
++        }
++        mListening = listening;
++        if (listening) {
++            final IntentFilter filter = new IntentFilter();
++            filter.addAction(UsbManager.ACTION_USB_STATE);
++            mContext.registerReceiver(mReceiver, filter);
++        } else {
++            mContext.unregisterReceiver(mReceiver);
++        }
++    }
++
++    @Override
++    protected void handleClick() {
++        if (mUsbConnected) {
++            mConnectivityManager.setUsbTethering(!mUsbTetherEnabled);
++        }
++    }
++
++    @Override
++    public Intent getLongClickIntent() {
++        return new Intent(TETHER_SETTINGS);
++    }
++
++    private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
++        @Override
++        public void onReceive(Context context, Intent intent) {
++            mUsbConnected = intent.getBooleanExtra(UsbManager.USB_CONNECTED, false);
++            if (mUsbConnected && mConnectivityManager.isTetheringSupported()) {
++                mUsbTetherEnabled = intent.getBooleanExtra(UsbManager.USB_FUNCTION_RNDIS, false);
++            } else {
++                mUsbTetherEnabled = false;
++            }
++            refreshState();
++        }
++    };
++
++    @Override
++    protected void handleUpdateState(BooleanState state, Object arg) {
++        state.value = mUsbTetherEnabled;
++        state.label = mContext.getString(R.string.quick_settings_usb_tether_label);
++        state.icon = mIcon;
++        state.state = !mUsbConnected ? Tile.STATE_UNAVAILABLE
++                : mUsbTetherEnabled ? Tile.STATE_ACTIVE : Tile.STATE_INACTIVE;
++    }
++
++    @Override
++    public CharSequence getTileLabel() {
++        return mContext.getString(R.string.quick_settings_usb_tether_label);
++    }
++
++    @Override
++    public int getMetricsCategory() {
++        return MetricsEvent.QS_USB_TETHER;
++    }
++}
+diff --git a/proto/src/metrics_constants/metrics_constants.proto b/proto/src/metrics_constants/metrics_constants.proto
+index b6a030804ae..9db92c89317 100644
+--- a/proto/src/metrics_constants/metrics_constants.proto
++++ b/proto/src/metrics_constants/metrics_constants.proto
+@@ -7432,5 +7432,6 @@ message MetricsEvent {
+ 
+     QS_HEADSUP = 1751;
+     QS_VOLUME = 1752;
++    QS_USB_TETHER = 1753;
+   }
+ }
+-- 
+2.17.1
+

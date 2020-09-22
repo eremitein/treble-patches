@@ -1,0 +1,90 @@
+From 98009763780d6265d8fa50eda4ff2ef373ce5878 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Wed, 18 Sep 2019 11:50:14 +0200
+Subject: [PATCH 2/3] Mark mediacodec_2{6,7,8} as hal_omx_server
+
+Change-Id: I03e763b8092a9089739db68ed17368ff574879bb
+---
+ prebuilts/api/29.0/private/compat/26.0/26.0.cil | 1 +
+ prebuilts/api/29.0/private/compat/27.0/27.0.cil | 1 +
+ prebuilts/api/29.0/private/compat/28.0/28.0.cil | 1 +
+ private/compat/26.0/26.0.cil                    | 1 +
+ private/compat/27.0/27.0.cil                    | 1 +
+ private/compat/28.0/28.0.cil                    | 1 +
+ 6 files changed, 6 insertions(+)
+
+diff --git a/prebuilts/api/29.0/private/compat/26.0/26.0.cil b/prebuilts/api/29.0/private/compat/26.0/26.0.cil
+index 3b3dae1c6..60f42b9c4 100644
+--- a/prebuilts/api/29.0/private/compat/26.0/26.0.cil
++++ b/prebuilts/api/29.0/private/compat/26.0/26.0.cil
+@@ -336,6 +336,7 @@
+ (typeattributeset mdnsd_socket_26_0 (mdnsd_socket))
+ (typeattributeset mdns_socket_26_0 (mdns_socket))
+ (typeattributeset mediacasserver_service_26_0 (mediacasserver_service))
++(typeattributeset hal_omx_server (mediacodec_26_0))
+ (typeattributeset mediacodec_26_0 (mediacodec))
+ (typeattributeset mediacodec_exec_26_0 (mediacodec_exec))
+ (typeattributeset mediacodec_service_26_0 (mediacodec_service))
+diff --git a/prebuilts/api/29.0/private/compat/27.0/27.0.cil b/prebuilts/api/29.0/private/compat/27.0/27.0.cil
+index 365d791a7..8c8f82fc8 100644
+--- a/prebuilts/api/29.0/private/compat/27.0/27.0.cil
++++ b/prebuilts/api/29.0/private/compat/27.0/27.0.cil
+@@ -1047,6 +1047,7 @@
+ (typeattributeset mdnsd_27_0 (mdnsd))
+ (typeattributeset mdnsd_socket_27_0 (mdnsd_socket))
+ (typeattributeset mdns_socket_27_0 (mdns_socket))
++(typeattributeset hal_omx_server (mediacodec_27_0))
+ (typeattributeset mediacodec_27_0 (mediacodec))
+ (typeattributeset mediacodec_exec_27_0 (mediacodec_exec))
+ (typeattributeset mediacodec_service_27_0 (mediacodec_service))
+diff --git a/prebuilts/api/29.0/private/compat/28.0/28.0.cil b/prebuilts/api/29.0/private/compat/28.0/28.0.cil
+index 305cb3acb..338cbd027 100644
+--- a/prebuilts/api/29.0/private/compat/28.0/28.0.cil
++++ b/prebuilts/api/29.0/private/compat/28.0/28.0.cil
+@@ -1242,6 +1242,7 @@
+ (typeattributeset mdnsd_28_0 (mdnsd))
+ (typeattributeset mdnsd_socket_28_0 (mdnsd_socket))
+ (typeattributeset mdns_socket_28_0 (mdns_socket))
++(typeattributeset hal_omx_server (mediacodec_28_0))
+ (typeattributeset mediacodec_28_0 (mediacodec))
+ (typeattributeset mediacodec_exec_28_0 (mediacodec_exec))
+ (typeattributeset mediacodec_service_28_0 (mediacodec_service))
+diff --git a/private/compat/26.0/26.0.cil b/private/compat/26.0/26.0.cil
+index 3b3dae1c6..60f42b9c4 100644
+--- a/private/compat/26.0/26.0.cil
++++ b/private/compat/26.0/26.0.cil
+@@ -336,6 +336,7 @@
+ (typeattributeset mdnsd_socket_26_0 (mdnsd_socket))
+ (typeattributeset mdns_socket_26_0 (mdns_socket))
+ (typeattributeset mediacasserver_service_26_0 (mediacasserver_service))
++(typeattributeset hal_omx_server (mediacodec_26_0))
+ (typeattributeset mediacodec_26_0 (mediacodec))
+ (typeattributeset mediacodec_exec_26_0 (mediacodec_exec))
+ (typeattributeset mediacodec_service_26_0 (mediacodec_service))
+diff --git a/private/compat/27.0/27.0.cil b/private/compat/27.0/27.0.cil
+index 365d791a7..8c8f82fc8 100644
+--- a/private/compat/27.0/27.0.cil
++++ b/private/compat/27.0/27.0.cil
+@@ -1047,6 +1047,7 @@
+ (typeattributeset mdnsd_27_0 (mdnsd))
+ (typeattributeset mdnsd_socket_27_0 (mdnsd_socket))
+ (typeattributeset mdns_socket_27_0 (mdns_socket))
++(typeattributeset hal_omx_server (mediacodec_27_0))
+ (typeattributeset mediacodec_27_0 (mediacodec))
+ (typeattributeset mediacodec_exec_27_0 (mediacodec_exec))
+ (typeattributeset mediacodec_service_27_0 (mediacodec_service))
+diff --git a/private/compat/28.0/28.0.cil b/private/compat/28.0/28.0.cil
+index 305cb3acb..338cbd027 100644
+--- a/private/compat/28.0/28.0.cil
++++ b/private/compat/28.0/28.0.cil
+@@ -1242,6 +1242,7 @@
+ (typeattributeset mdnsd_28_0 (mdnsd))
+ (typeattributeset mdnsd_socket_28_0 (mdnsd_socket))
+ (typeattributeset mdns_socket_28_0 (mdns_socket))
++(typeattributeset hal_omx_server (mediacodec_28_0))
+ (typeattributeset mediacodec_28_0 (mediacodec))
+ (typeattributeset mediacodec_exec_28_0 (mediacodec_exec))
+ (typeattributeset mediacodec_service_28_0 (mediacodec_service))
+-- 
+2.17.1
+

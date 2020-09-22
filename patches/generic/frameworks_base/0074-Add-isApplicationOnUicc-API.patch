@@ -1,0 +1,87 @@
+From d52391f774d9d424a3714406bb62aa994e185708 Mon Sep 17 00:00:00 2001
+From: Hyungjun Park <hjun78.park@samsung.com>
+Date: Thu, 10 Jan 2019 15:26:23 +0900
+Subject: [PATCH 074/186] Add isApplicationOnUicc API
+
+Returns true if the specified type of application is present
+on the UICC card.
+
+Bug:127549503
+
+Signed-off-by: Hyungjun Park <hjun78.park@samsung.com>
+Change-Id: I1513951515d7225e82b5a5997cd2a8f3520c2ca7
+---
+ api/system-current.txt                        |  1 +
+ .../android/telephony/TelephonyManager.java   | 25 +++++++++++++++++++
+ .../internal/telephony/ITelephony.aidl        |  7 ++++++
+ 3 files changed, 33 insertions(+)
+
+diff --git a/api/system-current.txt b/api/system-current.txt
+index 97488c1d569..07689adc67c 100644
+--- a/api/system-current.txt
++++ b/api/system-current.txt
+@@ -7998,6 +7998,7 @@ package android.telephony {
+     method @Nullable @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public android.telephony.IccOpenLogicalChannelResponse iccOpenLogicalChannelBySlot(int, @Nullable String, int);
+     method @NonNull @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public String iccTransmitApduBasicChannelBySlot(int, int, int, int, int, int, @Nullable String);
+     method @Nullable @RequiresPermission(android.Manifest.permission.MODIFY_PHONE_STATE) public String iccTransmitApduLogicalChannelBySlot(int, int, int, int, int, int, int, @Nullable String);
++    method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public boolean isApplicationOnUicc(int);
+     method public boolean isDataConnectivityPossible();
+     method @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE) public boolean isEmergencyAssistanceEnabled();
+     method @Deprecated @RequiresPermission(anyOf={android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE, android.Manifest.permission.READ_PHONE_STATE}) public boolean isIdle();
+diff --git a/telephony/java/android/telephony/TelephonyManager.java b/telephony/java/android/telephony/TelephonyManager.java
+index 8a7125f76c7..443d77f8dff 100644
+--- a/telephony/java/android/telephony/TelephonyManager.java
++++ b/telephony/java/android/telephony/TelephonyManager.java
+@@ -3123,6 +3123,31 @@ public class TelephonyManager {
+         }
+     }
+ 
++
++    /**
++     * Returns true if the specified type of application (e.g. {@link #APPTYPE_CSIM} is present
++     * on the UICC card.
++     *
++     * Requires that the calling app has READ_PRIVILEGED_PHONE_STATE permission
++     *
++     * @param appType the uicc app type like {@link APPTYPE_CSIM}
++     * @return true if the specified type of application in UICC CARD or false if no uicc or error.
++     * @hide
++     */
++    @SystemApi
++    @RequiresPermission(android.Manifest.permission.READ_PRIVILEGED_PHONE_STATE)
++    public boolean isApplicationOnUicc(@UiccAppType int appType) {
++        try {
++            ITelephony service = getITelephony();
++            if (service != null) {
++                return service.isApplicationOnUicc(getSubId(), appType);
++            }
++        } catch (RemoteException e) {
++            Log.e(TAG, "Error calling ITelephony#isApplicationOnUicc", e);
++        }
++        return false;
++    }
++
+     /**
+      * Returns a constant indicating the state of the device SIM card in a slot.
+      *
+diff --git a/telephony/java/com/android/internal/telephony/ITelephony.aidl b/telephony/java/com/android/internal/telephony/ITelephony.aidl
+index dcfd193185c..3d065aa0860 100644
+--- a/telephony/java/com/android/internal/telephony/ITelephony.aidl
++++ b/telephony/java/com/android/internal/telephony/ITelephony.aidl
+@@ -2008,6 +2008,13 @@ interface ITelephony {
+      */
+     int getRadioHalVersion();
+ 
++    /**
++     * Returns true if the specified type of application (e.g. {@link #APPTYPE_CSIM} is present
++     * on the UICC card.
++     * @hide
++     */
++    boolean isApplicationOnUicc(int subId, int appType);
++
+     boolean isModemEnabledForSlot(int slotIndex, String callingPackage);
+ 
+     boolean isDataEnabledForApn(int apnType, int subId, String callingPackage);
+-- 
+2.17.1
+

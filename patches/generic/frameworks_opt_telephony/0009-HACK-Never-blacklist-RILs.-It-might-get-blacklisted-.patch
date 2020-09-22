@@ -1,0 +1,26 @@
+From c0c3ebe807548601549478e1b872a8faeef9b7ce Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 2 Mar 2020 21:11:25 +0100
+Subject: [PATCH 9/9] [HACK] Never blacklist RILs. It might get blacklisted for
+ bad reasons
+
+---
+ src/java/com/android/internal/telephony/RIL.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/java/com/android/internal/telephony/RIL.java b/src/java/com/android/internal/telephony/RIL.java
+index 32ddd4e07..7565798f7 100644
+--- a/src/java/com/android/internal/telephony/RIL.java
++++ b/src/java/com/android/internal/telephony/RIL.java
+@@ -504,7 +504,7 @@ public class RIL extends BaseCommands implements CommandsInterface {
+                             mRadioProxyCookie.incrementAndGet());
+                     mRadioProxy.setResponseFunctions(mRadioResponse, mRadioIndication);
+                 } else {
+-                    mDisabledRadioServices.add(mPhoneId);
++                    //mDisabledRadioServices.add(mPhoneId);
+                     riljLoge("getRadioProxy: mRadioProxy for "
+                             + HIDL_SERVICE_NAME[mPhoneId] + " is disabled");
+                 }
+-- 
+2.17.1
+

@@ -1,0 +1,33 @@
+From 907edabfd8a0803c3bcc2241c1bc021ebfb05c7b Mon Sep 17 00:00:00 2001
+From: Shuo Qian <shuoq@google.com>
+Date: Mon, 11 May 2020 17:23:41 -0700
+Subject: [PATCH 4/8] Use FLAG_IMMUTABLE for CarrierServiceStateTracker
+
+Require that the PendingIntent be immutable so that a malicious app is
+ not able to hijack and mutate any of the details.
+
+Test: Android builds
+Bug: 155094269
+Change-Id: Iea9ec6451170e592dc72c035d6eec7b80150ddd4
+Merged-In: Iea9ec6451170e592dc72c035d6eec7b80150ddd4
+(cherry picked from commit 89763569eacb10c4043d8937c948130b1f816e79)
+---
+ .../android/internal/telephony/CarrierServiceStateTracker.java  | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/java/com/android/internal/telephony/CarrierServiceStateTracker.java b/src/java/com/android/internal/telephony/CarrierServiceStateTracker.java
+index c4c5a30c7..ad3a85860 100644
+--- a/src/java/com/android/internal/telephony/CarrierServiceStateTracker.java
++++ b/src/java/com/android/internal/telephony/CarrierServiceStateTracker.java
+@@ -414,7 +414,7 @@ public class CarrierServiceStateTracker extends Handler {
+             Intent notificationIntent = new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
+             notificationIntent.putExtra("expandable", true);
+             PendingIntent settingsIntent = PendingIntent.getActivity(context, 0, notificationIntent,
+-                    PendingIntent.FLAG_ONE_SHOT);
++                    PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+             CharSequence title = context.getText(
+                     com.android.internal.R.string.NetworkPreferenceSwitchTitle);
+             CharSequence details = context.getText(
+-- 
+2.17.1
+

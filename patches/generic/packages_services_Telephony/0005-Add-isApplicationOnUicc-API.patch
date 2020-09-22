@@ -1,0 +1,65 @@
+From 6de3baacbf68812a80835c536ce5f8b670a86a80 Mon Sep 17 00:00:00 2001
+From: Hyungjun Park <hjun78.park@samsung.com>
+Date: Thu, 10 Jan 2019 15:28:51 +0900
+Subject: [PATCH 5/5] Add isApplicationOnUicc API
+
+Returns true if the specified type of application
+on the UICC card
+
+Bug:127549503
+
+Change-Id: Ie9214dbca497a370cb47a93c23ccbda89e0b45e9
+Signed-off-by: Hyungjun Park <hjun78.park@samsung.com>
+---
+ .../android/phone/PhoneInterfaceManager.java  | 28 +++++++++++++++++++
+ 1 file changed, 28 insertions(+)
+
+diff --git a/src/com/android/phone/PhoneInterfaceManager.java b/src/com/android/phone/PhoneInterfaceManager.java
+index 768e868e0..e1ed99c2d 100755
+--- a/src/com/android/phone/PhoneInterfaceManager.java
++++ b/src/com/android/phone/PhoneInterfaceManager.java
+@@ -161,6 +161,7 @@ import com.android.internal.telephony.uicc.UiccCardApplication;
+ import com.android.internal.telephony.uicc.UiccController;
+ import com.android.internal.telephony.uicc.UiccProfile;
+ import com.android.internal.telephony.uicc.UiccSlot;
++import com.android.internal.telephony.uicc.IccCardApplicationStatus.AppType;
+ import com.android.internal.telephony.util.VoicemailNotificationSettingsUtil;
+ import com.android.internal.util.HexDump;
+ import com.android.phone.settings.PickSmsSubscriptionActivity;
+@@ -7123,6 +7124,33 @@ public class PhoneInterfaceManager extends ITelephony.Stub {
+         }
+     }
+ 
++    @Override
++    public boolean isApplicationOnUicc(int subId, int appType) {
++        enforceReadPrivilegedPermission("isApplicationOnUicc");
++        Phone phone = getPhone(subId);
++        if (phone == null) {
++            return false;
++        }
++        final long identity = Binder.clearCallingIdentity();
++        try {
++            UiccCard uiccCard = phone.getUiccCard();
++            if (uiccCard == null) {
++                return false;
++            }
++            UiccProfile uiccProfile = uiccCard.getUiccProfile();
++            if (uiccProfile == null) {
++                return false;
++            }
++            if (TelephonyManager.APPTYPE_SIM <= appType
++                    && appType <= TelephonyManager.APPTYPE_ISIM) {
++                return uiccProfile.isApplicationOnIcc(AppType.values()[appType]);
++            }
++            return false;
++        } finally {
++            Binder.restoreCallingIdentity(identity);
++        }
++    }
++
+     /**
+      * Get whether making changes to modem configurations will trigger reboot.
+      * Return value defaults to true.
+-- 
+2.17.1
+

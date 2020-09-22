@@ -1,0 +1,38 @@
+From 3a327c01fa7ffd388bd50d58973d7b252f95c812 Mon Sep 17 00:00:00 2001
+From: Peter Cai <peter@typeblog.net>
+Date: Thu, 2 Jan 2020 10:52:34 +0800
+Subject: [PATCH] Camera2OneCameraManagerImpl: fix NPE when only one camera is
+ available
+
+* AOSP 10 introduced a crash on devices with only one camera that was
+  not present on AOSP 9. This was introduced in commit 8b07da, which
+  added cache to the result of `findCameraId()`, but did not check if
+  the value is null before adding to cache. Code elsewhere checked the
+  result of `findCameraId()` to avoid NPEs, but the function itself
+  would crash if it were ever to return null due to this regression.
+
+* Fixed by simply wrapping the addition to cache in a null check.
+
+Change-Id: I01730cf6d2ffb7a82cc243de7313f1a955afd6bf
+---
+ .../android/camera/one/v2/Camera2OneCameraManagerImpl.java    | 4 +++-
+ 1 file changed, 3 insertions(+), 1 deletion(-)
+
+diff --git a/src/com/android/camera/one/v2/Camera2OneCameraManagerImpl.java b/src/com/android/camera/one/v2/Camera2OneCameraManagerImpl.java
+index 031c6103d..283ac677e 100644
+--- a/src/com/android/camera/one/v2/Camera2OneCameraManagerImpl.java
++++ b/src/com/android/camera/one/v2/Camera2OneCameraManagerImpl.java
+@@ -145,7 +145,9 @@ public class Camera2OneCameraManagerImpl implements OneCameraManager {
+             id = findFirstBackCameraId();
+         }
+ 
+-        mCameraFacingCache.put(facing, id);
++        if (id != null) {
++            mCameraFacingCache.put(facing, id);
++        }
+         return id;
+     }
+ 
+-- 
+2.17.1
+

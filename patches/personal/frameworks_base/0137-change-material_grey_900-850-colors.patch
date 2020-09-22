@@ -1,0 +1,28 @@
+From 77cc4bab168dc261e4e281bcb40b7c96f5adae3d Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 13 Apr 2020 17:34:52 +0300
+Subject: [PATCH 137/186] change material_grey_900 & 850 colors
+
+	modified:   core/res/res/values/colors_material.xml
+---
+ core/res/res/values/colors_material.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/core/res/res/values/colors_material.xml b/core/res/res/values/colors_material.xml
+index 7829e3b0636..92bf6dc8174 100644
+--- a/core/res/res/values/colors_material.xml
++++ b/core/res/res/values/colors_material.xml
+@@ -85,8 +85,8 @@
+     <!-- Primary & accent colors -->
+     <eat-comment />
+ 
+-    <color name="material_grey_900">#ff212121</color>
+-    <color name="material_grey_850">#ff303030</color>
++    <color name="material_grey_900">#ff1a1b1e</color>
++    <color name="material_grey_850">#ff202124</color>
+     <color name="material_grey_800">#ff424242</color>
+     <color name="material_grey_600">#ff757575</color>
+     <color name="material_grey_300">#ffe0e0e0</color>
+-- 
+2.17.1
+

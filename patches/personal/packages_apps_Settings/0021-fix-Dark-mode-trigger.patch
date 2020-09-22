@@ -1,0 +1,25 @@
+From eb95a08add8f86ef62a85a446dbdab628c6352da Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 8 Mar 2020 14:34:56 +0200
+Subject: [PATCH 21/40] fix Dark mode trigger
+
+	modified:   src/com/android/settings/display/DarkUIPreferenceController.java
+---
+ src/com/android/settings/display/DarkUIPreferenceController.java | 1 -
+ 1 file changed, 1 deletion(-)
+
+diff --git a/src/com/android/settings/display/DarkUIPreferenceController.java b/src/com/android/settings/display/DarkUIPreferenceController.java
+index 4816b21dca..7d02462473 100644
+--- a/src/com/android/settings/display/DarkUIPreferenceController.java
++++ b/src/com/android/settings/display/DarkUIPreferenceController.java
+@@ -92,7 +92,6 @@ public class DarkUIPreferenceController extends TogglePreferenceController imple
+                         Settings.Secure.DARK_MODE_DIALOG_SEEN, 0) == DIALOG_SEEN;
+         if (!dialogSeen && isChecked) {
+             showDarkModeDialog();
+-            return false;
+         }
+         return mUiModeManager.setNightModeActivated(isChecked);
+     }
+-- 
+2.17.1
+

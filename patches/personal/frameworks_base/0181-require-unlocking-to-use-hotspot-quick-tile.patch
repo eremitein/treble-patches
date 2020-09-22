@@ -1,0 +1,102 @@
+From 56b98ad5b7002957febd52b0814cd2a145d35b94 Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Wed, 26 Jul 2017 17:57:42 -0400
+Subject: [PATCH 181/186] require unlocking to use hotspot quick tile
+
+---
+ .../systemui/qs/tiles/HotspotTile.java        | 32 +++++++++++++++++--
+ 1 file changed, 30 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/HotspotTile.java b/packages/SystemUI/src/com/android/systemui/qs/tiles/HotspotTile.java
+index 001e09406e3..9df915c4a17 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/HotspotTile.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/HotspotTile.java
+@@ -24,12 +24,15 @@ import android.service.quicksettings.Tile;
+ import android.widget.Switch;
+ 
+ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
++import com.android.systemui.Dependency;
+ import com.android.systemui.R;
+ import com.android.systemui.plugins.qs.QSTile.BooleanState;
+ import com.android.systemui.qs.QSHost;
+ import com.android.systemui.qs.tileimpl.QSTileImpl;
+ import com.android.systemui.statusbar.policy.DataSaverController;
+ import com.android.systemui.statusbar.policy.HotspotController;
++import com.android.systemui.plugins.ActivityStarter;
++import com.android.systemui.statusbar.policy.KeyguardMonitor;
+ 
+ import javax.inject.Inject;
+ 
+@@ -46,6 +49,9 @@ public class HotspotTile extends QSTileImpl<BooleanState> {
+     private final HotspotAndDataSaverCallbacks mCallbacks = new HotspotAndDataSaverCallbacks();
+     private boolean mListening;
+ 
++    private final KeyguardMonitor mKeyguard;
++    private final KeyguardCallback mKeyguardCallback = new KeyguardCallback();
++
+     @Inject
+     public HotspotTile(QSHost host, HotspotController hotspotController,
+             DataSaverController dataSaverController) {
+@@ -54,6 +60,7 @@ public class HotspotTile extends QSTileImpl<BooleanState> {
+         mDataSaverController = dataSaverController;
+         mHotspotController.observe(this, mCallbacks);
+         mDataSaverController.observe(this, mCallbacks);
++        mKeyguard = Dependency.get(KeyguardMonitor.class);
+     }
+ 
+     @Override
+@@ -71,7 +78,10 @@ public class HotspotTile extends QSTileImpl<BooleanState> {
+         if (mListening == listening) return;
+         mListening = listening;
+         if (listening) {
++            mKeyguard.addCallback(mKeyguardCallback);
+             refreshState();
++        } else {
++            mKeyguard.removeCallback(mKeyguardCallback);
+         }
+     }
+ 
+@@ -85,8 +95,7 @@ public class HotspotTile extends QSTileImpl<BooleanState> {
+         return new BooleanState();
+     }
+ 
+-    @Override
+-    protected void handleClick() {
++    private void handleClickInner() {
+         final boolean isEnabled = mState.value;
+         if (!isEnabled && mDataSaverController.isDataSaverEnabled()) {
+             return;
+@@ -96,6 +105,18 @@ public class HotspotTile extends QSTileImpl<BooleanState> {
+         mHotspotController.setHotspotEnabled(!isEnabled);
+     }
+ 
++    @Override
++    protected void handleClick() {
++        if (mKeyguard.isSecure() && mKeyguard.isShowing()) {
++            Dependency.get(ActivityStarter.class).postQSRunnableDismissingKeyguard(() -> {
++                mHost.openPanels();
++                handleClickInner();
++            });
++            return;
++        }
++        handleClickInner();
++    }
++
+     @Override
+     public CharSequence getTileLabel() {
+         return mContext.getString(R.string.quick_settings_hotspot_label);
+@@ -220,4 +241,11 @@ public class HotspotTile extends QSTileImpl<BooleanState> {
+                     .append(']').toString();
+         }
+     }
++
++    private final class KeyguardCallback implements KeyguardMonitor.Callback {
++        @Override
++        public void onKeyguardShowingChanged() {
++            refreshState();
++        }
++    }
+ }
+-- 
+2.17.1
+

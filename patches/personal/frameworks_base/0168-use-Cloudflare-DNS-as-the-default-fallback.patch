@@ -1,0 +1,27 @@
+From 98246f0c25e12f32d49dfde577e50b9ea9f40dfb Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Mon, 2 Apr 2018 12:59:51 -0400
+Subject: [PATCH 168/186] use Cloudflare DNS as the default fallback
+
+Cloudflare DNS has a better privacy policy than Google Public DNS while
+still supporting DNS over TLS.
+---
+ core/res/res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index ccab3baa496..4fcfe3a6d1f 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -2044,7 +2044,7 @@
+     <bool name="config_bluetooth_default_profiles">true</bool>
+ 
+     <!-- IP address of the dns server to use if nobody else suggests one -->
+-    <string name="config_default_dns_server" translatable="false">8.8.8.8</string>
++    <string name="config_default_dns_server" translatable="false">1.0.0.1</string>
+ 
+     <!-- The default mobile provisioning apn. Empty by default, maybe overridden by
+          an mcc/mnc specific config.xml -->
+-- 
+2.17.1
+

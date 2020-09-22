@@ -1,0 +1,34 @@
+From 1e1836882e4007fcb27eb4379c8780a61864f137 Mon Sep 17 00:00:00 2001
+From: Shuo Qian <shuoq@google.com>
+Date: Wed, 6 May 2020 17:42:00 -0700
+Subject: [PATCH 3/8] Use FLAG_IMMUTABLE for ServiceStateTracker
+
+Require that the PendingIntent be immutable so that a malicious app is
+ not able to hijack and mutate any of the details.
+
+Test: Android builds
+Bug: 155094269
+Change-Id: If127b73c975b5b3f004500de7f9baa6a7bc00ce4
+Merged-In: If127b73c975b5b3f004500de7f9baa6a7bc00ce4
+(cherry picked from commit 995d562fb4488d91cad8477e3ca93a7c722da3eb)
+---
+ .../com/android/internal/telephony/ServiceStateTracker.java    | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/src/java/com/android/internal/telephony/ServiceStateTracker.java b/src/java/com/android/internal/telephony/ServiceStateTracker.java
+index 0577e78ec..f9a6e341f 100755
+--- a/src/java/com/android/internal/telephony/ServiceStateTracker.java
++++ b/src/java/com/android/internal/telephony/ServiceStateTracker.java
+@@ -2822,7 +2822,8 @@ public class ServiceStateTracker extends Handler {
+                     AlarmManager am = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+ 
+                     Intent intent = new Intent(ACTION_RADIO_OFF);
+-                    mRadioOffIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
++                    mRadioOffIntent = PendingIntent.getBroadcast(
++                            context, 0, intent, PendingIntent.FLAG_IMMUTABLE);
+ 
+                     mAlarmSwitch = true;
+                     if (DBG) log("Alarm setting");
+-- 
+2.17.1
+

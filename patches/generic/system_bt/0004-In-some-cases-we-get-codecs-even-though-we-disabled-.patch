@@ -1,0 +1,26 @@
+From 32e2ee1c94e31f9c9c31d5d319dd863d3454455d Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 6 Jul 2020 20:47:58 +0200
+Subject: [PATCH 4/4] In some cases, we get codecs even though we disabled a2dp
+ offload. Disable that
+
+---
+ stack/a2dp/a2dp_codec_config.cc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/stack/a2dp/a2dp_codec_config.cc b/stack/a2dp/a2dp_codec_config.cc
+index 143eed7a3..795cbab9c 100644
+--- a/stack/a2dp/a2dp_codec_config.cc
++++ b/stack/a2dp/a2dp_codec_config.cc
+@@ -659,7 +659,7 @@ bool A2dpCodecs::init() {
+     }
+   }
+ 
+-  return (!ordered_source_codecs_.empty() && !ordered_sink_codecs_.empty());
++  return (!ordered_source_codecs_.empty() && !ordered_sink_codecs_.empty()) && !a2dp_offload_status;
+ }
+ 
+ A2dpCodecConfig* A2dpCodecs::findSourceCodecConfig(
+-- 
+2.17.1
+

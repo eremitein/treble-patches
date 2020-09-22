@@ -1,0 +1,74 @@
+From 01634e52fa8eb1ec86c360856a0e5b639b7dd5b1 Mon Sep 17 00:00:00 2001
+From: Winson <chiuwinson@google.com>
+Date: Thu, 23 Apr 2020 10:45:55 -0700
+Subject: [PATCH 001/186] DO NOT MERGE: Verify INSTALL_PACKAGES permissions
+ when adding installer package
+
+Without this check, any package can set the installer package of
+another package whose installer has been removed or was never set.
+This provides access to other privileged actions and is undesired.
+
+Bug: 150857253
+
+Test: manual verify with proof of concept in linked bug
+Test: atest android.appsecurity.cts.PackageSetInstallerTest
+
+Change-Id: I2159c357911ff39ffd819054b42f96ae86bc98bc
+(cherry picked from commit 75f673223649bb6cf3ec076aaa8f8043b940d7c9)
+---
+ .../server/pm/PackageManagerService.java      | 39 ++++++++++++-------
+ 1 file changed, 26 insertions(+), 13 deletions(-)
+
+diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
+index 52f6d068d54..002bdc0c842 100644
+--- a/services/core/java/com/android/server/pm/PackageManagerService.java
++++ b/services/core/java/com/android/server/pm/PackageManagerService.java
+@@ -14569,19 +14569,32 @@ public class PackageManagerService extends IPackageManager.Stub
+ 
+             // Verify: if target already has an installer package, it must
+             // be signed with the same cert as the caller.
+-            if (targetPackageSetting.installerPackageName != null) {
+-                PackageSetting setting = mSettings.mPackages.get(
+-                        targetPackageSetting.installerPackageName);
+-                // If the currently set package isn't valid, then it's always
+-                // okay to change it.
+-                if (setting != null) {
+-                    if (compareSignatures(callerSignature,
+-                            setting.signatures.mSigningDetails.signatures)
+-                            != PackageManager.SIGNATURE_MATCH) {
+-                        throw new SecurityException(
+-                                "Caller does not have same cert as old installer package "
+-                                + targetPackageSetting.installerPackageName);
+-                    }
++            String targetInstallerPackageName =
++                    targetPackageSetting.installerPackageName;
++            PackageSetting targetInstallerPkgSetting = targetInstallerPackageName == null ? null :
++                    mSettings.mPackages.get(targetInstallerPackageName);
++
++            if (targetInstallerPkgSetting != null) {
++                if (compareSignatures(callerSignature,
++                        targetInstallerPkgSetting.signatures.mSigningDetails.signatures)
++                        != PackageManager.SIGNATURE_MATCH) {
++                    throw new SecurityException(
++                            "Caller does not have same cert as old installer package "
++                                    + targetInstallerPackageName);
++                }
++            } else if (mContext.checkCallingOrSelfPermission(Manifest.permission.INSTALL_PACKAGES)
++                    != PackageManager.PERMISSION_GRANTED) {
++                // This is probably an attempt to exploit vulnerability b/150857253 of taking
++                // privileged installer permissions when the installer has been uninstalled or
++                // was never set.
++                EventLog.writeEvent(0x534e4554, "150857253", callingUid, "");
++
++                if (getUidTargetSdkVersionLockedLPr(callingUid) > Build.VERSION_CODES.Q) {
++                    throw new SecurityException("Neither user " + callingUid
++                            + " nor current process has " + Manifest.permission.INSTALL_PACKAGES);
++                } else {
++                    // If not targeting >Q, fail silently for backwards compatibility
++                    return;
+                 }
+             }
+ 
+-- 
+2.17.1
+

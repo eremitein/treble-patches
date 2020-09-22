@@ -1,0 +1,3046 @@
+From f9d60774e49a1927511ab0a3e141163b23e50ab4 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 9 Apr 2020 06:06:42 +0300
+Subject: [PATCH 127/186] add a lot of fonts
+
+---
+ data/fonts/fonts.xml                          | 164 ++++++++++++++++++
+ packages/overlays/Android.mk                  |  20 ++-
+ .../FontAlegreyaSansOverlay/Android.mk        |  31 ++++
+ .../AndroidManifest.xml                       |  31 ++++
+ .../res/values/config.xml                     |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../overlays/FontArsenalOverlay/Android.mk    |  31 ++++
+ .../FontArsenalOverlay/AndroidManifest.xml    |  31 ++++
+ .../FontArsenalOverlay/res/values/config.xml  |  27 +++
+ .../FontArsenalOverlay/res/values/strings.xml |  20 +++
+ .../overlays/FontCaveatOverlay/Android.mk     |  31 ++++
+ .../FontCaveatOverlay/AndroidManifest.xml     |  31 ++++
+ .../FontCaveatOverlay/res/values/config.xml   |  27 +++
+ .../FontCaveatOverlay/res/values/strings.xml  |  20 +++
+ .../overlays/FontComfortaaOverlay/Android.mk  |  31 ++++
+ .../FontComfortaaOverlay/AndroidManifest.xml  |  31 ++++
+ .../res/values/config.xml                     |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../FontCormorantinfantOverlay/Android.mk     |  31 ++++
+ .../AndroidManifest.xml                       |  31 ++++
+ .../res/values/config.xml                     |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../overlays/FontCuprumOverlay/Android.mk     |  31 ++++
+ .../FontCuprumOverlay/AndroidManifest.xml     |  31 ++++
+ .../FontCuprumOverlay/res/values/config.xml   |  27 +++
+ .../FontCuprumOverlay/res/values/strings.xml  |  20 +++
+ packages/overlays/FontExo2Overlay/Android.mk  |  31 ++++
+ .../FontExo2Overlay/AndroidManifest.xml       |  31 ++++
+ .../FontExo2Overlay/res/values/config.xml     |  27 +++
+ .../FontExo2Overlay/res/values/strings.xml    |  20 +++
+ .../overlays/FontGabrielaOverlay/Android.mk   |  31 ++++
+ .../FontGabrielaOverlay/AndroidManifest.xml   |  31 ++++
+ .../FontGabrielaOverlay/res/values/config.xml |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ packages/overlays/FontInterOverlay/Android.mk |  31 ++++
+ .../FontInterOverlay/AndroidManifest.xml      |  31 ++++
+ .../FontInterOverlay/res/values/config.xml    |  27 +++
+ .../FontInterOverlay/res/values/strings.xml   |  20 +++
+ packages/overlays/FontJuraOverlay/Android.mk  |  31 ++++
+ .../FontJuraOverlay/AndroidManifest.xml       |  31 ++++
+ .../FontJuraOverlay/res/values/config.xml     |  27 +++
+ .../FontJuraOverlay/res/values/strings.xml    |  20 +++
+ .../overlays/FontLobsterOverlay/Android.mk    |  31 ++++
+ .../FontLobsterOverlay/AndroidManifest.xml    |  31 ++++
+ .../FontLobsterOverlay/res/values/config.xml  |  27 +++
+ .../FontLobsterOverlay/res/values/strings.xml |  20 +++
+ .../overlays/FontMontserratOverlay/Android.mk |  31 ++++
+ .../FontMontserratOverlay/AndroidManifest.xml |  31 ++++
+ .../res/values/config.xml                     |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../overlays/FontNotoSansOverlay/Android.mk   |  31 ++++
+ .../FontNotoSansOverlay/AndroidManifest.xml   |  31 ++++
+ .../FontNotoSansOverlay/res/values/config.xml |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../overlays/FontOswaldOverlay/Android.mk     |  31 ++++
+ .../FontOswaldOverlay/AndroidManifest.xml     |  31 ++++
+ .../FontOswaldOverlay/res/values/config.xml   |  27 +++
+ .../FontOswaldOverlay/res/values/strings.xml  |  20 +++
+ .../overlays/FontPacificoOverlay/Android.mk   |  31 ++++
+ .../FontPacificoOverlay/AndroidManifest.xml   |  31 ++++
+ .../FontPacificoOverlay/res/values/config.xml |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../FontPhilosopherOverlay/Android.mk         |  31 ++++
+ .../AndroidManifest.xml                       |  31 ++++
+ .../res/values/config.xml                     |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../overlays/FontSimpledayOverlay/Android.mk  |  31 ++++
+ .../FontSimpledayOverlay/AndroidManifest.xml  |  31 ++++
+ .../res/values/config.xml                     |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../overlays/FontUbuntuOverlay/Android.mk     |  31 ++++
+ .../FontUbuntuOverlay/AndroidManifest.xml     |  31 ++++
+ .../FontUbuntuOverlay/res/values/config.xml   |  27 +++
+ .../FontUbuntuOverlay/res/values/strings.xml  |  20 +++
+ .../FontViaodalibreOverlay/Android.mk         |  31 ++++
+ .../AndroidManifest.xml                       |  31 ++++
+ .../res/values/config.xml                     |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ .../overlays/FontVollkornOverlay/Android.mk   |  31 ++++
+ .../FontVollkornOverlay/AndroidManifest.xml   |  31 ++++
+ .../FontVollkornOverlay/res/values/config.xml |  27 +++
+ .../res/values/strings.xml                    |  20 +++
+ 82 files changed, 2363 insertions(+), 1 deletion(-)
+ create mode 100644 packages/overlays/FontAlegreyaSansOverlay/Android.mk
+ create mode 100644 packages/overlays/FontAlegreyaSansOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontAlegreyaSansOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontAlegreyaSansOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontArsenalOverlay/Android.mk
+ create mode 100644 packages/overlays/FontArsenalOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontArsenalOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontArsenalOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontCaveatOverlay/Android.mk
+ create mode 100644 packages/overlays/FontCaveatOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontCaveatOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontCaveatOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontComfortaaOverlay/Android.mk
+ create mode 100644 packages/overlays/FontComfortaaOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontComfortaaOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontComfortaaOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontCormorantinfantOverlay/Android.mk
+ create mode 100644 packages/overlays/FontCormorantinfantOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontCormorantinfantOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontCormorantinfantOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontCuprumOverlay/Android.mk
+ create mode 100644 packages/overlays/FontCuprumOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontCuprumOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontCuprumOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontExo2Overlay/Android.mk
+ create mode 100644 packages/overlays/FontExo2Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontExo2Overlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontExo2Overlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontGabrielaOverlay/Android.mk
+ create mode 100644 packages/overlays/FontGabrielaOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontGabrielaOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontGabrielaOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontInterOverlay/Android.mk
+ create mode 100644 packages/overlays/FontInterOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontInterOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontInterOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontJuraOverlay/Android.mk
+ create mode 100644 packages/overlays/FontJuraOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontJuraOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontJuraOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontLobsterOverlay/Android.mk
+ create mode 100644 packages/overlays/FontLobsterOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontLobsterOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontLobsterOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontMontserratOverlay/Android.mk
+ create mode 100644 packages/overlays/FontMontserratOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontMontserratOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontMontserratOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontNotoSansOverlay/Android.mk
+ create mode 100644 packages/overlays/FontNotoSansOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontNotoSansOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontNotoSansOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontOswaldOverlay/Android.mk
+ create mode 100644 packages/overlays/FontOswaldOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontOswaldOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontOswaldOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontPacificoOverlay/Android.mk
+ create mode 100644 packages/overlays/FontPacificoOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontPacificoOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontPacificoOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontPhilosopherOverlay/Android.mk
+ create mode 100644 packages/overlays/FontPhilosopherOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontPhilosopherOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontPhilosopherOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontSimpledayOverlay/Android.mk
+ create mode 100644 packages/overlays/FontSimpledayOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontSimpledayOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontSimpledayOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontUbuntuOverlay/Android.mk
+ create mode 100644 packages/overlays/FontUbuntuOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontUbuntuOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontUbuntuOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontViaodalibreOverlay/Android.mk
+ create mode 100644 packages/overlays/FontViaodalibreOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontViaodalibreOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontViaodalibreOverlay/res/values/strings.xml
+ create mode 100644 packages/overlays/FontVollkornOverlay/Android.mk
+ create mode 100644 packages/overlays/FontVollkornOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/FontVollkornOverlay/res/values/config.xml
+ create mode 100644 packages/overlays/FontVollkornOverlay/res/values/strings.xml
+
+diff --git a/data/fonts/fonts.xml b/data/fonts/fonts.xml
+index 693b98ee163..0b027485f79 100644
+--- a/data/fonts/fonts.xml
++++ b/data/fonts/fonts.xml
+@@ -174,6 +174,170 @@
+     <alias name="simple-day-bold" to="simple-day" weight="700" />
+     <alias name="simple-day-medium" to="simple-day" weight="500" />
+ 
++    <family name="arsenal">
++        <font weight="400" style="normal">Arsenal-Regular.ttf</font>
++        <font weight="400" style="italic">Arsenal-Italic.ttf</font>
++        <font weight="700" style="normal">Arsenal-Bold.ttf</font>
++        <font weight="700" style="italic">Arsenal-BoldItalic.ttf</font>
++    </family>
++    <alias name="arsenal-bold" to="arsenal" weight="700" />
++
++    <family name="ubuntu">
++        <font weight="400" style="normal">Ubuntu-Regular.ttf</font>
++        <font weight="400" style="italic">Ubuntu-Italic.ttf</font>
++        <font weight="500" style="normal">Ubuntu-Medium.ttf</font>
++        <font weight="500" style="italic">Ubuntu-MediumItalic.ttf</font>
++        <font weight="700" style="normal">Ubuntu-Medium.ttf</font>
++        <font weight="700" style="italic">Ubuntu-MediumItalic.ttf</font>
++    </family>
++    <alias name="ubuntu-bold" to="ubuntu" weight="700" />
++
++    <family name="alegreya-sans">
++        <font weight="400" style="normal">AlegreyaSans-Regular.ttf</font>
++        <font weight="400" style="italic">AlegreyaSans-Italic.ttf</font>
++        <font weight="500" style="normal">AlegreyaSans-Medium.ttf</font>
++        <font weight="500" style="italic">AlegreyaSans-MediumItalic.ttf</font>
++        <font weight="700" style="normal">AlegreyaSans-Medium.ttf</font>
++        <font weight="700" style="italic">AlegreyaSans-MediumItalic.ttf</font>
++    </family>
++    <alias name="alegreya-sans-bold" to="alegreya-sans" weight="700" />
++
++    <family name="caveat">
++        <font weight="400" style="normal">Caveat-Regular.ttf</font>
++        <font weight="400" style="italic">Caveat-Regular.ttf</font>
++        <font weight="700" style="normal">Caveat-Bold.ttf</font>
++        <font weight="700" style="italic">Caveat-Bold.ttf</font>
++    </family>
++    <alias name="caveat-bold" to="caveat" weight="700" />
++
++    <family name="comfortaa">
++        <font weight="400" style="normal">Comfortaa-Regular.ttf</font>
++        <font weight="400" style="italic">Comfortaa-Regular.ttf</font>
++        <font weight="700" style="normal">Comfortaa-Bold.ttf</font>
++        <font weight="700" style="italic">Comfortaa-Bold.ttf</font>
++    </family>
++    <alias name="comfortaa-bold" to="comfortaa" weight="700" />
++
++    <family name="cormorantinfant">
++        <font weight="400" style="normal">CormorantInfant-Regular.ttf</font>
++        <font weight="400" style="italic">CormorantInfant-Italic.ttf</font>
++        <font weight="700" style="normal">CormorantInfant-SemiBold.ttf</font>
++        <font weight="700" style="italic">CormorantInfant-SemiBoldItalic.ttf</font>
++    </family>
++    <alias name="cormorantinfant-bold" to="cormorantinfant" weight="700" />
++
++    <family name="cuprum">
++        <font weight="400" style="normal">Cuprum-Regular.ttf</font>
++        <font weight="400" style="italic">Cuprum-Italic.ttf</font>
++        <font weight="700" style="normal">Cuprum-Bold.ttf</font>
++        <font weight="700" style="italic">Cuprum-BoldItalic.ttf</font>
++    </family>
++    <alias name="cuprum-bold" to="cuprum" weight="700" />
++
++    <family name="exo2">
++        <font weight="400" style="normal">Exo2-Regular.ttf</font>
++        <font weight="400" style="italic">Exo2-Italic.ttf</font>
++        <font weight="700" style="normal">Exo2-SemiBold.ttf</font>
++        <font weight="700" style="italic">Exo2-SemiBoldItalic.ttf</font>
++    </family>
++    <alias name="exo2-bold" to="exo2" weight="700" />
++
++    <family name="gabriela">
++        <font weight="400" style="normal">Gabriela-Regular.ttf</font>
++        <font weight="400" style="italic">Gabriela-Regular.ttf</font>
++        <font weight="700" style="normal">Gabriela-Regular.ttf</font>
++        <font weight="700" style="italic">Gabriela-Regular.ttf</font>
++    </family>
++    <alias name="gabriela-bold" to="gabriela" weight="900" />
++
++    <family name="inter">
++        <font weight="400" style="normal">Inter-Regular.ttf</font>
++        <font weight="400" style="italic">Inter-Regular.ttf</font>
++        <font weight="700" style="normal">Inter-SemiBold.ttf</font>
++        <font weight="700" style="italic">Inter-SemiBold.ttf</font>
++    </family>
++    <alias name="inter-bold" to="inter" weight="700" />
++
++    <family name="jura">
++        <font weight="400" style="normal">Jura-Regular.ttf</font>
++        <font weight="400" style="italic">Jura-Regular.ttf</font>
++        <font weight="700" style="normal">Jura-SemiBold.ttf</font>
++        <font weight="700" style="italic">Jura-SemiBold.ttf</font>
++    </family>
++    <alias name="jura-bold" to="jura" weight="700" />
++
++    <family name="lobster">
++        <font weight="400" style="normal">Lobster-Regular.ttf</font>
++        <font weight="400" style="italic">Lobster-Regular.ttf</font>
++        <font weight="700" style="normal">Lobster-Regular.ttf</font>
++        <font weight="700" style="italic">Lobster-Regular.ttf</font>
++    </family>
++    <alias name="lobster-bold" to="lobster" weight="700" />
++
++    <family name="montserrat">
++        <font weight="400" style="normal">Montserrat-Regular.ttf</font>
++        <font weight="400" style="italic">Montserrat-Italic.ttf</font>
++        <font weight="700" style="normal">Montserrat-SemiBold.ttf</font>
++        <font weight="700" style="italic">Montserrat-SemiBoldItalic.ttf</font>
++    </family>
++    <alias name="montserrat-bold" to="montserrat" weight="700" />
++
++    <family name="oswald">
++        <font weight="400" style="normal">Oswald-Regular.ttf</font>
++        <font weight="400" style="italic">Oswald-Regular.ttf</font>
++        <font weight="700" style="normal">Oswald-SemiBold.ttf</font>
++        <font weight="700" style="italic">Oswald-SemiBold.ttf</font>
++    </family>
++    <alias name="oswald-bold" to="oswald" weight="700" />
++
++    <family name="pacifico">
++        <font weight="400" style="normal">Pacifico-Regular.ttf</font>
++        <font weight="400" style="italic">Pacifico-Regular.ttf</font>
++        <font weight="700" style="normal">Pacifico-Regular.ttf</font>
++        <font weight="700" style="italic">Pacifico-Regular.ttf</font>
++    </family>
++    <alias name="pacifico-bold" to="pacifico" weight="700" />
++
++    <family name="philosopher">
++        <font weight="400" style="normal">Philosopher-Regular.ttf</font>
++        <font weight="400" style="italic">Philosopher-Italic.ttf</font>
++        <font weight="700" style="normal">Philosopher-Bold.ttf</font>
++        <font weight="700" style="italic">Philosopher-BoldItalic.ttf</font>
++    </family>
++    <alias name="philosopher-bold" to="philosopher" weight="700" />
++
++    <family name="simpleday">
++        <font weight="400" style="normal">SimpleDay-Regular.ttf</font>
++        <font weight="400" style="italic">SimpleDay-Regular.ttf</font>
++        <font weight="700" style="normal">SimpleDay-Regular.ttf</font>
++        <font weight="700" style="italic">SimpleDay-Regular.ttf</font>
++    </family>
++    <alias name="simpleday-bold" to="simpleday" weight="700" />
++
++    <family name="viaodalibre">
++        <font weight="400" style="normal">ViaodaLibre-Regular.ttf</font>
++        <font weight="400" style="italic">ViaodaLibre-Regular.ttf</font>
++        <font weight="700" style="normal">ViaodaLibre-Regular.ttf</font>
++        <font weight="700" style="italic">ViaodaLibre-Regular.ttf</font>
++    </family>
++    <alias name="viaodalibre-bold" to="viaodalibre" weight="900" />
++
++    <family name="vollkorn">
++        <font weight="400" style="normal">Vollkorn-Regular.ttf</font>
++        <font weight="400" style="italic">Vollkorn-Italic.ttf</font>
++        <font weight="700" style="normal">Vollkorn-SemiBold.ttf</font>
++        <font weight="700" style="italic">Vollkorn-SemiBoldItalic.ttf</font>
++    </family>
++    <alias name="vollkorn-bold" to="vollkorn" weight="700" />
++
++    <family name="notosans">
++        <font weight="400" style="normal">NotoSans-Regular.ttf</font>
++        <font weight="400" style="italic">NotoSans-Italic.ttf</font>
++        <font weight="700" style="normal">NotoSans-Bold.ttf</font>
++        <font weight="700" style="italic">NotoSans-BoldItalic.ttf</font>
++    </family>
++    <alias name="notosans-bold" to="notosans" weight="700" />
++
+     <!-- fallback fonts -->
+     <family lang="und-Arab" variant="elegant">
+         <font weight="400" style="normal">NotoNaskhArabic-Regular.ttf</font>
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 25901c94a28..fbd2e520e90 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -29,14 +29,32 @@ LOCAL_REQUIRED_MODULES := \
+ 	DisplayCutoutEmulationCornerOverlay \
+ 	DisplayCutoutEmulationDoubleOverlay \
+ 	DisplayCutoutEmulationTallOverlay \
++	FontAlegreyaSansOverlay \
+ 	FontArbutusOverlay \
+ 	FontArvoOverlay \
++	FontArsenalOverlay \
++	FontCaveatOverlay \
++	FontComfortaaOverlay \
++	FontCormorantinfantOverlay \
++	FontCuprumOverlay \
++	FontExo2Overlay \
++	FontGabrielaOverlay \
++	FontInterOverlay \
++	FontJuraOverlay \
+ 	FontLatoOverlay \
++	FontLobsterOverlay \
++	FontMontserratOverlay \
+ 	FontNotoSerifOverlay \
++	FontOswaldOverlay \
++	FontPacificoOverlay \
++	FontPhilosopherOverlay \
+ 	FontRobotoOverlay \
+ 	FontRubikOverlay \
+-	FontSimpleDayOverlay \
+ 	FontSourceOverlay \
++	FontSimpledayOverlay \
++	FontUbuntuOverlay \
++	FontViaodalibreOverlay \
++	FontVollkornOverlay \
+ 	FontZillaOverlay \
+ 	IconPackCircularAndroidOverlay \
+ 	IconPackCircularLauncherOverlay \
+diff --git a/packages/overlays/FontAlegreyaSansOverlay/Android.mk b/packages/overlays/FontAlegreyaSansOverlay/Android.mk
+new file mode 100644
+index 00000000000..91f65a679e3
+--- /dev/null
++++ b/packages/overlays/FontAlegreyaSansOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontAlegreyaSans
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontAlegreyaSansOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontAlegreyaSansOverlay/AndroidManifest.xml b/packages/overlays/FontAlegreyaSansOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..d430bce6393
+--- /dev/null
++++ b/packages/overlays/FontAlegreyaSansOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.alegreyasans"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_alegreyasans_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="alegreya-sans,alegreya-sans-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontAlegreyaSansOverlay/res/values/config.xml b/packages/overlays/FontAlegreyaSansOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..5186d2601a1
+--- /dev/null
++++ b/packages/overlays/FontAlegreyaSansOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">alegreya-sans</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">alegreya-sans-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">alegreya-sans</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">alegreya-sans-bold</string>
++</resources>
+diff --git a/packages/overlays/FontAlegreyaSansOverlay/res/values/strings.xml b/packages/overlays/FontAlegreyaSansOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..0631042719f
+--- /dev/null
++++ b/packages/overlays/FontAlegreyaSansOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_alegreyasans_overlay" translatable="false">Alegreya Sans</string>
++</resources>
+diff --git a/packages/overlays/FontArsenalOverlay/Android.mk b/packages/overlays/FontArsenalOverlay/Android.mk
+new file mode 100644
+index 00000000000..1dda361b08a
+--- /dev/null
++++ b/packages/overlays/FontArsenalOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontArsenal
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontArsenalOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontArsenalOverlay/AndroidManifest.xml b/packages/overlays/FontArsenalOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..38e8bcb0180
+--- /dev/null
++++ b/packages/overlays/FontArsenalOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.arsenal"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_arsenal_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="arsenal,arsenal-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontArsenalOverlay/res/values/config.xml b/packages/overlays/FontArsenalOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..12eab151e89
+--- /dev/null
++++ b/packages/overlays/FontArsenalOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">arsenal</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">arsenal-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">arsenal</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">arsenal-bold</string>
++</resources>
+diff --git a/packages/overlays/FontArsenalOverlay/res/values/strings.xml b/packages/overlays/FontArsenalOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..c52d5497336
+--- /dev/null
++++ b/packages/overlays/FontArsenalOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_arsenal_overlay" translatable="false">Arsenal</string>
++</resources>
+diff --git a/packages/overlays/FontCaveatOverlay/Android.mk b/packages/overlays/FontCaveatOverlay/Android.mk
+new file mode 100644
+index 00000000000..6285d3a5a65
+--- /dev/null
++++ b/packages/overlays/FontCaveatOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontCaveat
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontCaveatOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontCaveatOverlay/AndroidManifest.xml b/packages/overlays/FontCaveatOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..983aef3c76f
+--- /dev/null
++++ b/packages/overlays/FontCaveatOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.caveat"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_caveat_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="caveat,caveat-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontCaveatOverlay/res/values/config.xml b/packages/overlays/FontCaveatOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..dad613817de
+--- /dev/null
++++ b/packages/overlays/FontCaveatOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">caveat</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">caveat-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">caveat</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">caveat-bold</string>
++</resources>
+diff --git a/packages/overlays/FontCaveatOverlay/res/values/strings.xml b/packages/overlays/FontCaveatOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..742b8a8ebe2
+--- /dev/null
++++ b/packages/overlays/FontCaveatOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_caveat_overlay" translatable="false">Caveat</string>
++</resources>
+diff --git a/packages/overlays/FontComfortaaOverlay/Android.mk b/packages/overlays/FontComfortaaOverlay/Android.mk
+new file mode 100644
+index 00000000000..402626e0791
+--- /dev/null
++++ b/packages/overlays/FontComfortaaOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontComfortaa
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontComfortaaOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontComfortaaOverlay/AndroidManifest.xml b/packages/overlays/FontComfortaaOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..eb38554c399
+--- /dev/null
++++ b/packages/overlays/FontComfortaaOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.comfortaa"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_comfortaa_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="comfortaa,comfortaa-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontComfortaaOverlay/res/values/config.xml b/packages/overlays/FontComfortaaOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..b708cebba0d
+--- /dev/null
++++ b/packages/overlays/FontComfortaaOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">comfortaa</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">comfortaa-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">comfortaa</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">comfortaa-bold</string>
++</resources>
+diff --git a/packages/overlays/FontComfortaaOverlay/res/values/strings.xml b/packages/overlays/FontComfortaaOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..adfb490644f
+--- /dev/null
++++ b/packages/overlays/FontComfortaaOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_comfortaa_overlay" translatable="false">Comfortaa</string>
++</resources>
+diff --git a/packages/overlays/FontCormorantinfantOverlay/Android.mk b/packages/overlays/FontCormorantinfantOverlay/Android.mk
+new file mode 100644
+index 00000000000..abf752fa9dd
+--- /dev/null
++++ b/packages/overlays/FontCormorantinfantOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontCormorantinfant
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontCormorantinfantOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontCormorantinfantOverlay/AndroidManifest.xml b/packages/overlays/FontCormorantinfantOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..59d75907879
+--- /dev/null
++++ b/packages/overlays/FontCormorantinfantOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.cormorantinfant"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_cormorantinfant_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="cormorantinfant,cormorantinfant-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontCormorantinfantOverlay/res/values/config.xml b/packages/overlays/FontCormorantinfantOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..d5532ae62e9
+--- /dev/null
++++ b/packages/overlays/FontCormorantinfantOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">cormorantinfant</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">cormorantinfant-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">cormorantinfant</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">cormorantinfant-bold</string>
++</resources>
+diff --git a/packages/overlays/FontCormorantinfantOverlay/res/values/strings.xml b/packages/overlays/FontCormorantinfantOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..f696188fff3
+--- /dev/null
++++ b/packages/overlays/FontCormorantinfantOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_cormorantinfant_overlay" translatable="false">Cormorant Infant</string>
++</resources>
+diff --git a/packages/overlays/FontCuprumOverlay/Android.mk b/packages/overlays/FontCuprumOverlay/Android.mk
+new file mode 100644
+index 00000000000..9da906e0f9e
+--- /dev/null
++++ b/packages/overlays/FontCuprumOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontCuprum
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontCuprumOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontCuprumOverlay/AndroidManifest.xml b/packages/overlays/FontCuprumOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..4f5b1f13883
+--- /dev/null
++++ b/packages/overlays/FontCuprumOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.cuprum"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_cuprum_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="cuprum,cuprum-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontCuprumOverlay/res/values/config.xml b/packages/overlays/FontCuprumOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..59e0f44a647
+--- /dev/null
++++ b/packages/overlays/FontCuprumOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">cuprum</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">cuprum-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">cuprum</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">cuprum-bold</string>
++</resources>
+diff --git a/packages/overlays/FontCuprumOverlay/res/values/strings.xml b/packages/overlays/FontCuprumOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..27a1fd8a6d9
+--- /dev/null
++++ b/packages/overlays/FontCuprumOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_cuprum_overlay" translatable="false">Cuprum</string>
++</resources>
+diff --git a/packages/overlays/FontExo2Overlay/Android.mk b/packages/overlays/FontExo2Overlay/Android.mk
+new file mode 100644
+index 00000000000..e16059235a7
+--- /dev/null
++++ b/packages/overlays/FontExo2Overlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontExo2
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontExo2Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontExo2Overlay/AndroidManifest.xml b/packages/overlays/FontExo2Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..a8b9ccf63f0
+--- /dev/null
++++ b/packages/overlays/FontExo2Overlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.exo2"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_exo2_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="exo2,exo2-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontExo2Overlay/res/values/config.xml b/packages/overlays/FontExo2Overlay/res/values/config.xml
+new file mode 100644
+index 00000000000..a9c4c2dddd9
+--- /dev/null
++++ b/packages/overlays/FontExo2Overlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">exo2</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">exo2-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">exo2</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">exo2-bold</string>
++</resources>
+diff --git a/packages/overlays/FontExo2Overlay/res/values/strings.xml b/packages/overlays/FontExo2Overlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..f136978e3c5
+--- /dev/null
++++ b/packages/overlays/FontExo2Overlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_exo2_overlay" translatable="false">Exo2</string>
++</resources>
+diff --git a/packages/overlays/FontGabrielaOverlay/Android.mk b/packages/overlays/FontGabrielaOverlay/Android.mk
+new file mode 100644
+index 00000000000..60589006694
+--- /dev/null
++++ b/packages/overlays/FontGabrielaOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontGabriela
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontGabrielaOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontGabrielaOverlay/AndroidManifest.xml b/packages/overlays/FontGabrielaOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..e4391359bab
+--- /dev/null
++++ b/packages/overlays/FontGabrielaOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.gabriela"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_gabriela_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="gabriela,gabriela-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontGabrielaOverlay/res/values/config.xml b/packages/overlays/FontGabrielaOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..68bab09ce64
+--- /dev/null
++++ b/packages/overlays/FontGabrielaOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">gabriela</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">gabriela-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">gabriela</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">gabriela-bold</string>
++</resources>
+diff --git a/packages/overlays/FontGabrielaOverlay/res/values/strings.xml b/packages/overlays/FontGabrielaOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..707fc534649
+--- /dev/null
++++ b/packages/overlays/FontGabrielaOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_gabriela_overlay" translatable="false">Gabriela</string>
++</resources>
+diff --git a/packages/overlays/FontInterOverlay/Android.mk b/packages/overlays/FontInterOverlay/Android.mk
+new file mode 100644
+index 00000000000..2e8e5ddfebe
+--- /dev/null
++++ b/packages/overlays/FontInterOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontInter
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontInterOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontInterOverlay/AndroidManifest.xml b/packages/overlays/FontInterOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..eec79b32f98
+--- /dev/null
++++ b/packages/overlays/FontInterOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.inter"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_inter_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="inter,inter-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontInterOverlay/res/values/config.xml b/packages/overlays/FontInterOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..4a12a6eafcf
+--- /dev/null
++++ b/packages/overlays/FontInterOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">inter</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">inter-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">inter</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">inter-bold</string>
++</resources>
+diff --git a/packages/overlays/FontInterOverlay/res/values/strings.xml b/packages/overlays/FontInterOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..99f455d3b19
+--- /dev/null
++++ b/packages/overlays/FontInterOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_inter_overlay" translatable="false">Inter</string>
++</resources>
+diff --git a/packages/overlays/FontJuraOverlay/Android.mk b/packages/overlays/FontJuraOverlay/Android.mk
+new file mode 100644
+index 00000000000..2365f41a578
+--- /dev/null
++++ b/packages/overlays/FontJuraOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontJura
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontJuraOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontJuraOverlay/AndroidManifest.xml b/packages/overlays/FontJuraOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..bceba5b1774
+--- /dev/null
++++ b/packages/overlays/FontJuraOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.jura"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_jura_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="jura,jura-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontJuraOverlay/res/values/config.xml b/packages/overlays/FontJuraOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..eabb45a47b8
+--- /dev/null
++++ b/packages/overlays/FontJuraOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">jura</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">jura-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">jura</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">jura-bold</string>
++</resources>
+diff --git a/packages/overlays/FontJuraOverlay/res/values/strings.xml b/packages/overlays/FontJuraOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..b72fd193006
+--- /dev/null
++++ b/packages/overlays/FontJuraOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_jura_overlay" translatable="false">Jura</string>
++</resources>
+diff --git a/packages/overlays/FontLobsterOverlay/Android.mk b/packages/overlays/FontLobsterOverlay/Android.mk
+new file mode 100644
+index 00000000000..ae72f7f0d1b
+--- /dev/null
++++ b/packages/overlays/FontLobsterOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontLobster
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontLobsterOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontLobsterOverlay/AndroidManifest.xml b/packages/overlays/FontLobsterOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..2b168453269
+--- /dev/null
++++ b/packages/overlays/FontLobsterOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.lobster"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_lobster_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="lobster,lobster-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontLobsterOverlay/res/values/config.xml b/packages/overlays/FontLobsterOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..db2d1e9666b
+--- /dev/null
++++ b/packages/overlays/FontLobsterOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">lobster</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">lobster-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">lobster</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">lobster-bold</string>
++</resources>
+diff --git a/packages/overlays/FontLobsterOverlay/res/values/strings.xml b/packages/overlays/FontLobsterOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..5e493814aa5
+--- /dev/null
++++ b/packages/overlays/FontLobsterOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_lobster_overlay" translatable="false">Lobster</string>
++</resources>
+diff --git a/packages/overlays/FontMontserratOverlay/Android.mk b/packages/overlays/FontMontserratOverlay/Android.mk
+new file mode 100644
+index 00000000000..27b5b118dcc
+--- /dev/null
++++ b/packages/overlays/FontMontserratOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontMontserrat
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontMontserratOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontMontserratOverlay/AndroidManifest.xml b/packages/overlays/FontMontserratOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..e16305d1c71
+--- /dev/null
++++ b/packages/overlays/FontMontserratOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.montserrat"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_montserrat_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="montserrat,montserrat-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontMontserratOverlay/res/values/config.xml b/packages/overlays/FontMontserratOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..e2990a7f581
+--- /dev/null
++++ b/packages/overlays/FontMontserratOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">montserrat</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">montserrat-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">montserrat</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">montserrat-bold</string>
++</resources>
+diff --git a/packages/overlays/FontMontserratOverlay/res/values/strings.xml b/packages/overlays/FontMontserratOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..f3c740eaea9
+--- /dev/null
++++ b/packages/overlays/FontMontserratOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_montserrat_overlay" translatable="false">Montserrat</string>
++</resources>
+diff --git a/packages/overlays/FontNotoSansOverlay/Android.mk b/packages/overlays/FontNotoSansOverlay/Android.mk
+new file mode 100644
+index 00000000000..8a1b65a634c
+--- /dev/null
++++ b/packages/overlays/FontNotoSansOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontNotoSans
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontNotoSansOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontNotoSansOverlay/AndroidManifest.xml b/packages/overlays/FontNotoSansOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..2128dcd7512
+--- /dev/null
++++ b/packages/overlays/FontNotoSansOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.notosans"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_notosans_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="notosans,notosans-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontNotoSansOverlay/res/values/config.xml b/packages/overlays/FontNotoSansOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..77879324dac
+--- /dev/null
++++ b/packages/overlays/FontNotoSansOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">notosans</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">notosans-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">notosans</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">notosans-bold</string>
++</resources>
+diff --git a/packages/overlays/FontNotoSansOverlay/res/values/strings.xml b/packages/overlays/FontNotoSansOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..e3fba3550b6
+--- /dev/null
++++ b/packages/overlays/FontNotoSansOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_notosans_overlay" translatable="false">Noto Sans</string>
++</resources>
+diff --git a/packages/overlays/FontOswaldOverlay/Android.mk b/packages/overlays/FontOswaldOverlay/Android.mk
+new file mode 100644
+index 00000000000..ab465e8ef18
+--- /dev/null
++++ b/packages/overlays/FontOswaldOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontOswald
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontOswaldOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontOswaldOverlay/AndroidManifest.xml b/packages/overlays/FontOswaldOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..65189569403
+--- /dev/null
++++ b/packages/overlays/FontOswaldOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.oswald"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_oswald_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="oswald,oswald-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontOswaldOverlay/res/values/config.xml b/packages/overlays/FontOswaldOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..333747f259c
+--- /dev/null
++++ b/packages/overlays/FontOswaldOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">oswald</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">oswald-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">oswald</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">oswald-bold</string>
++</resources>
+diff --git a/packages/overlays/FontOswaldOverlay/res/values/strings.xml b/packages/overlays/FontOswaldOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..b06b5be389f
+--- /dev/null
++++ b/packages/overlays/FontOswaldOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_oswald_overlay" translatable="false">Oswald</string>
++</resources>
+diff --git a/packages/overlays/FontPacificoOverlay/Android.mk b/packages/overlays/FontPacificoOverlay/Android.mk
+new file mode 100644
+index 00000000000..24a1278ee45
+--- /dev/null
++++ b/packages/overlays/FontPacificoOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontPacifico
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontPacificoOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontPacificoOverlay/AndroidManifest.xml b/packages/overlays/FontPacificoOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..98aaf9e5624
+--- /dev/null
++++ b/packages/overlays/FontPacificoOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.pacifico"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_pacifico_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="pacifico,pacifico-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontPacificoOverlay/res/values/config.xml b/packages/overlays/FontPacificoOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..a921355f5b9
+--- /dev/null
++++ b/packages/overlays/FontPacificoOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">pacifico</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">pacifico-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">pacifico</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">pacifico-bold</string>
++</resources>
+diff --git a/packages/overlays/FontPacificoOverlay/res/values/strings.xml b/packages/overlays/FontPacificoOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..2e375e4beec
+--- /dev/null
++++ b/packages/overlays/FontPacificoOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_pacifico_overlay" translatable="false">Pacifico</string>
++</resources>
+diff --git a/packages/overlays/FontPhilosopherOverlay/Android.mk b/packages/overlays/FontPhilosopherOverlay/Android.mk
+new file mode 100644
+index 00000000000..dfeada12601
+--- /dev/null
++++ b/packages/overlays/FontPhilosopherOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontPhilosopher
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontPhilosopherOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontPhilosopherOverlay/AndroidManifest.xml b/packages/overlays/FontPhilosopherOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..886ad3741cb
+--- /dev/null
++++ b/packages/overlays/FontPhilosopherOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.philosopher"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_philosopher_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="philosopher,philosopher-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontPhilosopherOverlay/res/values/config.xml b/packages/overlays/FontPhilosopherOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..327a8bb0c93
+--- /dev/null
++++ b/packages/overlays/FontPhilosopherOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">philosopher</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">philosopher-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">philosopher</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">philosopher-bold</string>
++</resources>
+diff --git a/packages/overlays/FontPhilosopherOverlay/res/values/strings.xml b/packages/overlays/FontPhilosopherOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..290115726b3
+--- /dev/null
++++ b/packages/overlays/FontPhilosopherOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_philosopher_overlay" translatable="false">Philosopher</string>
++</resources>
+diff --git a/packages/overlays/FontSimpledayOverlay/Android.mk b/packages/overlays/FontSimpledayOverlay/Android.mk
+new file mode 100644
+index 00000000000..5ca63aac3a6
+--- /dev/null
++++ b/packages/overlays/FontSimpledayOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontSimpleday
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontSimpledayOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontSimpledayOverlay/AndroidManifest.xml b/packages/overlays/FontSimpledayOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..81fc18c2d28
+--- /dev/null
++++ b/packages/overlays/FontSimpledayOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.simpleday"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_simpleday_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="simpleday,simpleday-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontSimpledayOverlay/res/values/config.xml b/packages/overlays/FontSimpledayOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..cbd1cf07eb7
+--- /dev/null
++++ b/packages/overlays/FontSimpledayOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">simpleday</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">simpleday-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">simpleday</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">simpleday-bold</string>
++</resources>
+diff --git a/packages/overlays/FontSimpledayOverlay/res/values/strings.xml b/packages/overlays/FontSimpledayOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..fa5aabcddfe
+--- /dev/null
++++ b/packages/overlays/FontSimpledayOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_simpleday_overlay" translatable="false">Simple Day</string>
++</resources>
+diff --git a/packages/overlays/FontUbuntuOverlay/Android.mk b/packages/overlays/FontUbuntuOverlay/Android.mk
+new file mode 100644
+index 00000000000..4bdad0bf2e9
+--- /dev/null
++++ b/packages/overlays/FontUbuntuOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontUbuntu
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontUbuntuOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontUbuntuOverlay/AndroidManifest.xml b/packages/overlays/FontUbuntuOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..791486d2baf
+--- /dev/null
++++ b/packages/overlays/FontUbuntuOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.ubuntu"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_ubuntu_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="ubuntu,ubuntu-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontUbuntuOverlay/res/values/config.xml b/packages/overlays/FontUbuntuOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..a566cd2aaee
+--- /dev/null
++++ b/packages/overlays/FontUbuntuOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">ubuntu</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">ubuntu-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">ubuntu</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">ubuntu-bold</string>
++</resources>
+diff --git a/packages/overlays/FontUbuntuOverlay/res/values/strings.xml b/packages/overlays/FontUbuntuOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..936f4f684ee
+--- /dev/null
++++ b/packages/overlays/FontUbuntuOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_ubuntu_overlay" translatable="false">Ubuntu</string>
++</resources>
+diff --git a/packages/overlays/FontViaodalibreOverlay/Android.mk b/packages/overlays/FontViaodalibreOverlay/Android.mk
+new file mode 100644
+index 00000000000..e363f4c1af6
+--- /dev/null
++++ b/packages/overlays/FontViaodalibreOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontViaodalibre
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontViaodalibreOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontViaodalibreOverlay/AndroidManifest.xml b/packages/overlays/FontViaodalibreOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..37b01bde302
+--- /dev/null
++++ b/packages/overlays/FontViaodalibreOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.viaodalibre"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_viaodalibre_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="viaodalibre,viaodalibre-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontViaodalibreOverlay/res/values/config.xml b/packages/overlays/FontViaodalibreOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..13ada514b1e
+--- /dev/null
++++ b/packages/overlays/FontViaodalibreOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">viaodalibre</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">viaodalibre-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">viaodalibre</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">viaodalibre-bold</string>
++</resources>
+diff --git a/packages/overlays/FontViaodalibreOverlay/res/values/strings.xml b/packages/overlays/FontViaodalibreOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..868ed2197e5
+--- /dev/null
++++ b/packages/overlays/FontViaodalibreOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_viaodalibre_overlay" translatable="false">Viaoda Libre</string>
++</resources>
+diff --git a/packages/overlays/FontVollkornOverlay/Android.mk b/packages/overlays/FontVollkornOverlay/Android.mk
+new file mode 100644
+index 00000000000..30e2bbfb159
+--- /dev/null
++++ b/packages/overlays/FontVollkornOverlay/Android.mk
+@@ -0,0 +1,31 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := FontVollkorn
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := FontVollkornOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/FontVollkornOverlay/AndroidManifest.xml b/packages/overlays/FontVollkornOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..0fb2b47ecce
+--- /dev/null
++++ b/packages/overlays/FontVollkornOverlay/AndroidManifest.xml
+@@ -0,0 +1,31 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.font.vollkorn"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android"
++        android:category="android.theme.customization.font"
++        android:priority="1"/>
++
++    <application android:label="@string/font_vollkorn_overlay" android:hasCode="false">
++        <meta-data
++            android:name="android.theme.customization.REQUIRED_SYSTEM_FONTS"
++            android:value="vollkorn,vollkorn-bold" />
++    </application>
++</manifest>
+diff --git a/packages/overlays/FontVollkornOverlay/res/values/config.xml b/packages/overlays/FontVollkornOverlay/res/values/config.xml
+new file mode 100644
+index 00000000000..521271cca26
+--- /dev/null
++++ b/packages/overlays/FontVollkornOverlay/res/values/config.xml
+@@ -0,0 +1,27 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++     <!-- Name of a font family to use for body text. -->
++    <string name="config_bodyFontFamily" translatable="false">vollkorn</string>
++    <!-- Name of a font family to use for medium body text. -->
++    <string name="config_bodyFontFamilyMedium" translatable="false">vollkorn-bold</string>
++    <!-- Name of a font family to use for headlines. If empty, falls back to platform default -->
++    <string name="config_headlineFontFamily" translatable="false">vollkorn</string>
++    <!-- Name of the font family used for system surfaces where the font should use medium weight -->
++    <string name="config_headlineFontFamilyMedium" translatable="false">vollkorn-bold</string>
++</resources>
+diff --git a/packages/overlays/FontVollkornOverlay/res/values/strings.xml b/packages/overlays/FontVollkornOverlay/res/values/strings.xml
+new file mode 100644
+index 00000000000..971a10d02a8
+--- /dev/null
++++ b/packages/overlays/FontVollkornOverlay/res/values/strings.xml
+@@ -0,0 +1,20 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <string name="font_vollkorn_overlay" translatable="false">Vollkorn</string>
++</resources>
+-- 
+2.17.1
+

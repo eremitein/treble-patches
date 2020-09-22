@@ -1,0 +1,53 @@
+From 5fe508f7c7bf0d662ae8d250a9d9bd494c543e62 Mon Sep 17 00:00:00 2001
+From: Robert Shih <robertshih@google.com>
+Date: Fri, 1 May 2020 15:16:20 -0700
+Subject: [PATCH 1/3] clearkey hidl: fix oob read in decrypt
+
+Validate sum of subsample sizes do not overrun source buffer.
+
+Bug: 154123412
+Test: poc_CryptoPlugin_cpp_183
+Test: MediaDrmClearkeyTest
+Test: NativeMediaDrmClearkeyTest
+Change-Id: I27b05479202e0caedfd052c683aa1ef187f65679
+(cherry picked from commit 9adaa6b87f4834bc8fc5ead43466cf4d6099b871)
+---
+ drm/mediadrm/plugins/clearkey/hidl/CryptoPlugin.cpp | 9 ++++++---
+ 1 file changed, 6 insertions(+), 3 deletions(-)
+
+diff --git a/drm/mediadrm/plugins/clearkey/hidl/CryptoPlugin.cpp b/drm/mediadrm/plugins/clearkey/hidl/CryptoPlugin.cpp
+index 3ecf6d5ac..149570301 100644
+--- a/drm/mediadrm/plugins/clearkey/hidl/CryptoPlugin.cpp
++++ b/drm/mediadrm/plugins/clearkey/hidl/CryptoPlugin.cpp
+@@ -148,14 +148,17 @@ Return<void> CryptoPlugin::decrypt_1_2(
+     // Calculate the output buffer size and determine if any subsamples are
+     // encrypted.
+     size_t destSize = 0;
++    size_t srcSize = 0;
+     bool haveEncryptedSubsamples = false;
+     for (size_t i = 0; i < subSamples.size(); i++) {
+         const SubSample &subSample = subSamples[i];
+-        if (__builtin_add_overflow(destSize, subSample.numBytesOfClearData, &destSize)) {
++        if (__builtin_add_overflow(destSize, subSample.numBytesOfClearData, &destSize) ||
++            __builtin_add_overflow(srcSize, subSample.numBytesOfClearData, &srcSize)) {
+             _hidl_cb(Status_V1_2::ERROR_DRM_FRAME_TOO_LARGE, 0, "subsample clear size overflow");
+             return Void();
+         }
+-        if (__builtin_add_overflow(destSize, subSample.numBytesOfEncryptedData, &destSize)) {
++        if (__builtin_add_overflow(destSize, subSample.numBytesOfEncryptedData, &destSize) ||
++            __builtin_add_overflow(srcSize, subSample.numBytesOfEncryptedData, &srcSize)) {
+             _hidl_cb(Status_V1_2::ERROR_DRM_FRAME_TOO_LARGE, 0, "subsample encrypted size overflow");
+             return Void();
+         }
+@@ -164,7 +167,7 @@ Return<void> CryptoPlugin::decrypt_1_2(
+         }
+     }
+ 
+-    if (destSize > destBuffer.size) {
++    if (destSize > destBuffer.size || srcSize > source.size) {
+         _hidl_cb(Status_V1_2::ERROR_DRM_FRAME_TOO_LARGE, 0, "subsample sum too large");
+         return Void();
+     }
+-- 
+2.17.1
+

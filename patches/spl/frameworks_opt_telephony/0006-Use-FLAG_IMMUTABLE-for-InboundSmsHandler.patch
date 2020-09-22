@@ -1,0 +1,33 @@
+From e21351195336d507ccf014e02e62c2b1d0fe8b23 Mon Sep 17 00:00:00 2001
+From: Shuo Qian <shuoq@google.com>
+Date: Thu, 7 May 2020 11:32:31 -0700
+Subject: [PATCH 6/8] Use FLAG_IMMUTABLE for InboundSmsHandler
+
+Require that the PendingIntent be immutable so that a malicious app is
+ not able to hijack and mutate any of the details.
+
+Test: Android builds
+Bug: 155094269
+Change-Id: Idc684438d2cd622adee9a1c4d1801e308ee5ead7
+Merged-In: Idc684438d2cd622adee9a1c4d1801e308ee5ead7
+(cherry picked from commit 1673a7be236cdb9f9a94bffe5824a58008e247ca)
+---
+ src/java/com/android/internal/telephony/InboundSmsHandler.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/src/java/com/android/internal/telephony/InboundSmsHandler.java b/src/java/com/android/internal/telephony/InboundSmsHandler.java
+index cc0e42bfc..616681a9c 100644
+--- a/src/java/com/android/internal/telephony/InboundSmsHandler.java
++++ b/src/java/com/android/internal/telephony/InboundSmsHandler.java
+@@ -1041,7 +1041,7 @@ public abstract class InboundSmsHandler extends StateMachine {
+             mContext,
+             0,
+             new Intent(ACTION_OPEN_SMS_APP),
+-            PendingIntent.FLAG_ONE_SHOT);
++                PendingIntent.FLAG_ONE_SHOT | PendingIntent.FLAG_IMMUTABLE);
+         Notification.Builder mBuilder = new Notification.Builder(mContext)
+                 .setSmallIcon(com.android.internal.R.drawable.sym_action_chat)
+                 .setAutoCancel(true)
+-- 
+2.17.1
+

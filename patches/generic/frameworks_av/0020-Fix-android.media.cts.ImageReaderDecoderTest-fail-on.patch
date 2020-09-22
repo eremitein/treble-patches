@@ -1,0 +1,87 @@
+From 8a1f19075ce93a1cd6d9afadf7ffceac20379558 Mon Sep 17 00:00:00 2001
+From: Marcus Huang <marcus.huang@mediatek.com>
+Date: Fri, 18 Oct 2019 15:51:35 +0800
+Subject: [PATCH 20/24] Fix android.media.cts.ImageReaderDecoderTest fail on
+ MT6580 project
+
+Root Cause:
+Google C2 H264/H265 decoder request 64-aligned stride from graphic block; but ARM GPU would return
+with 128-aligned stride when input height ONLY satisfies 2-aligned (e.g. 130).
+
+Solution:
+Revise stride alignment from 64 to 128 of C2 H264/H265 decoder
+
+Bug: 142924202
+Test: Build C2 Codec
+Test:
+run cts -m CtsMediaTestCases -t android.media.cts.ImageReaderDecoderTest#testGoogH264Image
+run cts -m CtsMediaTestCases -t android.media.cts.ImageReaderDecoderTest#testGoogH264ImageReader
+run cts -m CtsMediaTestCases -t android.media.cts.ImageReaderDecoderTest#testGoogH265Image
+run cts -m CtsMediaTestCases -t android.media.cts.ImageReaderDecoderTest#testGoogH265ImageReader
+
+Change-Id: I6eaff1b858e031b64744bc67d8aee5cc51cfd92d
+(cherry picked from commit 28af1154b5f52c1f1a3687ff099ca609218bd78a)
+---
+ media/codec2/components/avc/C2SoftAvcDec.cpp   | 4 ++--
+ media/codec2/components/avc/C2SoftAvcDec.h     | 1 +
+ media/codec2/components/hevc/C2SoftHevcDec.cpp | 4 ++--
+ media/codec2/components/hevc/C2SoftHevcDec.h   | 1 +
+ 4 files changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/media/codec2/components/avc/C2SoftAvcDec.cpp b/media/codec2/components/avc/C2SoftAvcDec.cpp
+index fa98178187..75a612276d 100644
+--- a/media/codec2/components/avc/C2SoftAvcDec.cpp
++++ b/media/codec2/components/avc/C2SoftAvcDec.cpp
+@@ -755,8 +755,8 @@ c2_status_t C2SoftAvcDec::ensureDecoderState(const std::shared_ptr<C2BlockPool>
+         ALOGE("not supposed to be here, invalid decoder context");
+         return C2_CORRUPTED;
+     }
+-    if (mStride != ALIGN64(mWidth)) {
+-        mStride = ALIGN64(mWidth);
++    if (mStride != ALIGN128(mWidth)) {
++        mStride = ALIGN128(mWidth);
+         if (OK != setParams(mStride, IVD_DECODE_FRAME)) return C2_CORRUPTED;
+     }
+     if (mOutBlock &&
+diff --git a/media/codec2/components/avc/C2SoftAvcDec.h b/media/codec2/components/avc/C2SoftAvcDec.h
+index 4414a26c96..ed27493f32 100644
+--- a/media/codec2/components/avc/C2SoftAvcDec.h
++++ b/media/codec2/components/avc/C2SoftAvcDec.h
+@@ -40,6 +40,7 @@ namespace android {
+ #define ivdext_ctl_get_vui_params_ip_t  ih264d_ctl_get_vui_params_ip_t
+ #define ivdext_ctl_get_vui_params_op_t  ih264d_ctl_get_vui_params_op_t
+ #define ALIGN64(x)                      ((((x) + 63) >> 6) << 6)
++#define ALIGN128(x)                     ((((x) + 127) >> 7) << 7)
+ #define MAX_NUM_CORES                   4
+ #define IVDEXT_CMD_CTL_SET_NUM_CORES    \
+         (IVD_CONTROL_API_COMMAND_TYPE_T)IH264D_CMD_CTL_SET_NUM_CORES
+diff --git a/media/codec2/components/hevc/C2SoftHevcDec.cpp b/media/codec2/components/hevc/C2SoftHevcDec.cpp
+index df677c284e..389ea610dc 100644
+--- a/media/codec2/components/hevc/C2SoftHevcDec.cpp
++++ b/media/codec2/components/hevc/C2SoftHevcDec.cpp
+@@ -752,8 +752,8 @@ c2_status_t C2SoftHevcDec::ensureDecoderState(const std::shared_ptr<C2BlockPool>
+         ALOGE("not supposed to be here, invalid decoder context");
+         return C2_CORRUPTED;
+     }
+-    if (mStride != ALIGN64(mWidth)) {
+-        mStride = ALIGN64(mWidth);
++    if (mStride != ALIGN128(mWidth)) {
++        mStride = ALIGN128(mWidth);
+         if (OK != setParams(mStride, IVD_DECODE_FRAME)) return C2_CORRUPTED;
+     }
+     if (mOutBlock &&
+diff --git a/media/codec2/components/hevc/C2SoftHevcDec.h b/media/codec2/components/hevc/C2SoftHevcDec.h
+index ce63a6c4c3..aecd1011de 100644
+--- a/media/codec2/components/hevc/C2SoftHevcDec.h
++++ b/media/codec2/components/hevc/C2SoftHevcDec.h
+@@ -38,6 +38,7 @@ namespace android {
+ #define ivdext_ctl_get_vui_params_ip_t  ihevcd_cxa_ctl_get_vui_params_ip_t
+ #define ivdext_ctl_get_vui_params_op_t  ihevcd_cxa_ctl_get_vui_params_op_t
+ #define ALIGN64(x)                      ((((x) + 63) >> 6) << 6)
++#define ALIGN128(x)                     ((((x) + 127) >> 7) << 7)
+ #define MAX_NUM_CORES                   4
+ #define IVDEXT_CMD_CTL_SET_NUM_CORES    \
+         (IVD_CONTROL_API_COMMAND_TYPE_T)IHEVCD_CXA_CMD_CTL_SET_NUM_CORES
+-- 
+2.17.1
+

@@ -1,0 +1,107 @@
+From eaca7c06a44e5f538a7415e6baac7f17e7da7f56 Mon Sep 17 00:00:00 2001
+From: Evan Severson <evanseverson@google.com>
+Date: Thu, 23 Apr 2020 20:08:41 -0700
+Subject: [PATCH] DO NOT MERGE Use permission group definintion if defined in
+ PermissionController
+
+Test: Manual + `atest PermissionsHostTest`
+Bug: 153879813
+Change-Id: I41084d247eda582391e6751ce76b412aeb4f72df
+(cherry picked from commit f454ed41d3b1500d60ab2fc260d6d3b87f6c935a)
+---
+ .../ui/GrantPermissionsActivity.java          |  2 ++
+ .../permission/utils/SafetyNetLogger.java     | 29 +++++++++++++++++++
+ .../permission/utils/Utils.java               |  8 ++++-
+ 3 files changed, 38 insertions(+), 1 deletion(-)
+
+diff --git a/src/com/android/packageinstaller/permission/ui/GrantPermissionsActivity.java b/src/com/android/packageinstaller/permission/ui/GrantPermissionsActivity.java
+index 18de0cd1..3649b0ea 100644
+--- a/src/com/android/packageinstaller/permission/ui/GrantPermissionsActivity.java
++++ b/src/com/android/packageinstaller/permission/ui/GrantPermissionsActivity.java
+@@ -268,6 +268,8 @@ public class GrantPermissionsActivity extends Activity
+         // Cache this as this can only read on onCreate, not later.
+         mCallingPackage = getCallingPackage();
+ 
++        SafetyNetLogger.logIfHasUndefinedPermissionGroup(getPackageManager(), mCallingPackage);
++
+         setFinishOnTouchOutside(false);
+ 
+         setTitle(R.string.permission_request_title);
+diff --git a/src/com/android/packageinstaller/permission/utils/SafetyNetLogger.java b/src/com/android/packageinstaller/permission/utils/SafetyNetLogger.java
+index b77502ae..c4376ac4 100644
+--- a/src/com/android/packageinstaller/permission/utils/SafetyNetLogger.java
++++ b/src/com/android/packageinstaller/permission/utils/SafetyNetLogger.java
+@@ -16,10 +16,15 @@
+ 
+ package com.android.packageinstaller.permission.utils;
+ 
++import android.Manifest;
+ import android.content.pm.PackageInfo;
++import android.content.pm.PackageManager;
++import android.content.pm.PermissionInfo;
++import android.text.TextUtils;
+ import android.util.ArrayMap;
+ import android.util.ArraySet;
+ import android.util.EventLog;
++import android.util.Log;
+ 
+ import com.android.packageinstaller.permission.model.AppPermissionGroup;
+ import com.android.packageinstaller.permission.model.Permission;
+@@ -37,6 +42,7 @@ public final class SafetyNetLogger {
+ 
+     // Log tag for the result of permissions toggling.
+     private static final String PERMISSIONS_TOGGLED = "individual_permissions_toggled";
++    public static final String LOG_TAG = SafetyNetLogger.class.getSimpleName();
+ 
+     private SafetyNetLogger() {
+         /* do nothing */
+@@ -129,4 +135,27 @@ public final class SafetyNetLogger {
+ 
+         return builder.toString();
+     }
++
++    /**
++     * Log if the given package has defined a permission in the undefined group.
++     *
++     * @param pm A PackageManager to look up the package.
++     * @param packageName The name of the package to check.
++     */
++    public static void logIfHasUndefinedPermissionGroup(PackageManager pm, String packageName) {
++        try { //Avoid crashing for any reason
++            PermissionInfo[] permissions =
++                    pm.getPackageInfo(packageName, PackageManager.GET_PERMISSIONS).permissions;
++            if (permissions == null) {
++                return;
++            }
++            for (PermissionInfo permission : permissions) {
++                if (TextUtils.equals(permission.group, Manifest.permission_group.UNDEFINED)) {
++                    EventLog.writeEvent(SNET_NET_EVENT_LOG_TAG, "153879813");
++                }
++            }
++        } catch (Throwable e) {
++            Log.e(LOG_TAG, "Unable to log undefined permission event for " + packageName + ".", e);
++        }
++    }
+ }
+diff --git a/src/com/android/packageinstaller/permission/utils/Utils.java b/src/com/android/packageinstaller/permission/utils/Utils.java
+index 4690cda2..4224f4fd 100644
+--- a/src/com/android/packageinstaller/permission/utils/Utils.java
++++ b/src/com/android/packageinstaller/permission/utils/Utils.java
+@@ -321,7 +321,13 @@ public final class Utils {
+     public static @NonNull List<PermissionInfo> getPermissionInfosForGroup(
+             @NonNull PackageManager pm, @NonNull String group)
+             throws PackageManager.NameNotFoundException {
+-        List<PermissionInfo> permissions = pm.queryPermissionsByGroup(group, 0);
++        List<PermissionInfo> permissions = new ArrayList<>();
++        for (PermissionInfo permission : pm.queryPermissionsByGroup(group, 0)) {
++            // PermissionController's mapping takes precedence
++            if (getGroupOfPermission(permission).equals(group)) {
++                permissions.add(permission);
++            }
++        }
+         permissions.addAll(getPlatformPermissionsOfGroup(pm, group));
+ 
+         return permissions;
+-- 
+2.17.1
+

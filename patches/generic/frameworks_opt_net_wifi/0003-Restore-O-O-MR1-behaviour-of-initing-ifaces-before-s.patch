@@ -1,0 +1,94 @@
+From 2fc574ac8a173456ea8b8e9fc2eb4a18b632a2ca Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Mon, 16 Sep 2019 17:42:37 +0200
+Subject: [PATCH 3/4] Restore O/O-MR1 behaviour of initing ifaces before supp.
+ Still not perfect, because wifi can be turned on only once
+
+Change-Id: I7a94b3c4a3fca140a50962e6787af3a7aa2c7d61
+---
+ .../server/wifi/SupplicantStaIfaceHal.java       |  4 ++--
+ .../java/com/android/server/wifi/WifiNative.java | 16 ++++++++++++++--
+ 2 files changed, 16 insertions(+), 4 deletions(-)
+
+diff --git a/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java b/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java
+index 8db7c90ee..fa82cca20 100644
+--- a/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java
++++ b/service/java/com/android/server/wifi/SupplicantStaIfaceHal.java
+@@ -741,7 +741,7 @@ public class SupplicantStaIfaceHal {
+      * the device.
+      * @return true if supported, false otherwise.
+      */
+-    private boolean isV1_1() {
++    /* package */ boolean isV1_1() {
+         return checkHalVersionByInterfaceName(
+                 android.hardware.wifi.supplicant.V1_1.ISupplicant.kInterfaceName);
+     }
+@@ -751,7 +751,7 @@ public class SupplicantStaIfaceHal {
+      * the device.
+      * @return true if supported, false otherwise.
+      */
+-    private boolean isV1_2() {
++    /* package */ boolean isV1_2() {
+         return checkHalVersionByInterfaceName(
+                 android.hardware.wifi.supplicant.V1_2.ISupplicant.kInterfaceName);
+     }
+diff --git a/service/java/com/android/server/wifi/WifiNative.java b/service/java/com/android/server/wifi/WifiNative.java
+index 63907e67c..917494a10 100644
+--- a/service/java/com/android/server/wifi/WifiNative.java
++++ b/service/java/com/android/server/wifi/WifiNative.java
+@@ -370,9 +370,11 @@ public class WifiNative {
+     }
+ 
+     /** Helper method invoked to start supplicant if there were no STA ifaces */
++    private boolean supplicantOn = false;
+     private boolean startSupplicant() {
+         synchronized (mLock) {
+-            if (!mIfaceMgr.hasAnyStaIfaceForConnectivity()) {
++            boolean prePieWifi = !mSupplicantStaIfaceHal.isV1_2();
++            if (!mIfaceMgr.hasAnyStaIfaceForConnectivity() || (prePieWifi && !supplicantOn)) {
+                 if (!startAndWaitForSupplicantConnection()) {
+                     Log.e(TAG, "Failed to connect to supplicant");
+                     return false;
+@@ -382,6 +384,8 @@ public class WifiNative {
+                     Log.e(TAG, "Failed to register supplicant death handler");
+                     return false;
+                 }
++
++		supplicantOn = true;
+             }
+             return true;
+         }
+@@ -395,6 +399,7 @@ public class WifiNative {
+                     Log.e(TAG, "Failed to deregister supplicant death handler");
+                 }
+                 mSupplicantStaIfaceHal.terminate();
++		supplicantOn = false;
+             }
+         }
+     }
+@@ -941,7 +946,9 @@ public class WifiNative {
+                 mWifiMetrics.incrementNumSetupClientInterfaceFailureDueToHal();
+                 return null;
+             }
+-            if (!startSupplicant()) {
++            boolean prePieWifi = !mSupplicantStaIfaceHal.isV1_2();
++
++            if (!prePieWifi && !startSupplicant()) {
+                 Log.e(TAG, "Failed to start supplicant");
+                 mWifiMetrics.incrementNumSetupClientInterfaceFailureDueToSupplicant();
+                 return null;
+@@ -965,6 +972,11 @@ public class WifiNative {
+                 mWifiMetrics.incrementNumSetupClientInterfaceFailureDueToWificond();
+                 return null;
+             }
++            if (prePieWifi && !startSupplicant()) {
++                Log.e(TAG, "Failed to start supplicant");
++                mWifiMetrics.incrementNumSetupClientInterfaceFailureDueToSupplicant();
++                return null;
++            }
+             if (!mSupplicantStaIfaceHal.setupIface(iface.name)) {
+                 Log.e(TAG, "Failed to setup iface in supplicant on " + iface);
+                 teardownInterface(iface.name);
+-- 
+2.17.1
+

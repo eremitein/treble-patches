@@ -1,0 +1,71 @@
+From ded7fc2f94d4c21822b536ea57ffc6449b041033 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 24 Mar 2019 23:05:14 +0100
+Subject: [PATCH 033/186] Support new samsung light hal
+
+Change-Id: I88ca834894320129737b4e31fa8f7e5ee918889a
+---
+ services/core/jni/Android.bp                  |  2 ++
+ ...om_android_server_lights_LightsService.cpp | 19 +++++++++++++++++++
+ 2 files changed, 21 insertions(+)
+
+diff --git a/services/core/jni/Android.bp b/services/core/jni/Android.bp
+index 62184986959..33d4a323134 100644
+--- a/services/core/jni/Android.bp
++++ b/services/core/jni/Android.bp
+@@ -134,6 +134,8 @@ cc_defaults {
+         "android.frameworks.sensorservice@1.0",
+         "android.system.suspend@1.0",
+         "suspend_control_aidl_interface-cpp",
++
++        "vendor.samsung.hardware.light@2.0",
+     ],
+ 
+     static_libs: [
+diff --git a/services/core/jni/com_android_server_lights_LightsService.cpp b/services/core/jni/com_android_server_lights_LightsService.cpp
+index 26f6d7428fc..258bc9e050d 100644
+--- a/services/core/jni/com_android_server_lights_LightsService.cpp
++++ b/services/core/jni/com_android_server_lights_LightsService.cpp
+@@ -22,6 +22,8 @@
+ 
+ #include <android/hardware/light/2.0/ILight.h>
+ #include <android/hardware/light/2.0/types.h>
++#include <vendor/samsung/hardware/light/2.0/ISecLight.h>
++#include <vendor/samsung/hardware/light/2.0/types.h>
+ #include <android-base/chrono_utils.h>
+ #include <utils/misc.h>
+ #include <utils/Log.h>
+@@ -39,6 +41,8 @@ using Type       = ::android::hardware::light::V2_0::Type;
+ template<typename T>
+ using Return     = ::android::hardware::Return<T>;
+ 
++using ISecLight  = ::vendor::samsung::hardware::light::V2_0::ISecLight;
++using SecType    = ::vendor::samsung::hardware::light::V2_0::SecType;
+ static bool sLightSupported = true;
+ 
+ static bool validate(jint light, jint flash, jint brightness) {
+@@ -141,6 +145,21 @@ static void setLight_native(
+         return;
+     }
+ 
++    sp<ISecLight> secHal = ISecLight::getService();
++
++    if(secHal != nullptr) {
++        SecType type = static_cast<SecType>(light);
++        LightState state = constructState(
++                colorARGB, flashMode, onMS, offMS, brightnessMode);
++
++        {
++            android::base::Timer t;
++            Return<Status> ret = secHal->setLightSec(type, state);
++            processReturn(ret, static_cast<Type>(light), state);
++            if (t.duration() > 50ms) ALOGD("Excessive delay setting light");
++        }
++    }
++
+     Type type = static_cast<Type>(light);
+     LightState state = constructState(
+         colorARGB, flashMode, onMS, offMS, brightnessMode);
+-- 
+2.17.1
+

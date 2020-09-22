@@ -1,0 +1,24 @@
+From ec0171483bfc6154635e75b8ceaaf16d3d0d1a91 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Thu, 12 Sep 2019 20:41:03 +0200
+Subject: [PATCH] Disable rlimit on bpfloader, because it will crash 8.0 init
+
+Change-Id: Ic6d7c8fa702ed5d2df7d4fff4f1c0a848a91e86b
+---
+ bpfloader/bpfloader.rc | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/bpfloader/bpfloader.rc b/bpfloader/bpfloader.rc
+index 31747fb..d95cdbd 100644
+--- a/bpfloader/bpfloader.rc
++++ b/bpfloader/bpfloader.rc
+@@ -5,5 +5,5 @@ service bpfloader /system/bin/bpfloader
+     # Actually only 8MB is needed, but since bpfloader runs as root, it shares
+     # the global rlimit. Once bpfloader is running as its own user in the
+     # future, it will have dedicated rlimit to itself and this can be 8MB.
+-    rlimit memlock 67108864 67108864
++    #rlimit memlock 67108864 67108864
+     oneshot
+-- 
+2.17.1
+

@@ -1,0 +1,104 @@
+From c72bd497423fb100767757943fd29f4625527d65 Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Wed, 26 Jul 2017 17:18:41 -0400
+Subject: [PATCH 179/186] require unlocking to use rotation lock quick tile
+
+---
+ .../systemui/qs/tiles/RotationLockTile.java   | 38 ++++++++++++++++++-
+ 1 file changed, 36 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/RotationLockTile.java b/packages/SystemUI/src/com/android/systemui/qs/tiles/RotationLockTile.java
+index 7ca1e44c93c..57508346113 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/RotationLockTile.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/RotationLockTile.java
+@@ -24,12 +24,15 @@ import android.service.quicksettings.Tile;
+ import android.widget.Switch;
+ 
+ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
++import com.android.systemui.Dependency;
+ import com.android.systemui.R;
+ import com.android.systemui.plugins.qs.QSTile.BooleanState;
+ import com.android.systemui.qs.QSHost;
+ import com.android.systemui.qs.tileimpl.QSTileImpl;
+ import com.android.systemui.statusbar.policy.RotationLockController;
+ import com.android.systemui.statusbar.policy.RotationLockController.RotationLockControllerCallback;
++import com.android.systemui.plugins.ActivityStarter;
++import com.android.systemui.statusbar.policy.KeyguardMonitor;
+ 
+ import javax.inject.Inject;
+ 
+@@ -39,11 +42,15 @@ public class RotationLockTile extends QSTileImpl<BooleanState> {
+     private final Icon mIcon = ResourceIcon.get(com.android.internal.R.drawable.ic_qs_auto_rotate);
+     private final RotationLockController mController;
+ 
++    private final KeyguardMonitor mKeyguard;
++    private final KeyguardCallback mKeyguardCallback = new KeyguardCallback();
++
+     @Inject
+     public RotationLockTile(QSHost host, RotationLockController rotationLockController) {
+         super(host);
+         mController = rotationLockController;
+         mController.observe(this, mCallback);
++        mKeyguard = Dependency.get(KeyguardMonitor.class);
+     }
+ 
+     @Override
+@@ -51,7 +58,15 @@ public class RotationLockTile extends QSTileImpl<BooleanState> {
+         return new BooleanState();
+     }
+ 
++    @Override
+     public void handleSetListening(boolean listening) {
++        if (listening) {
++            mController.addCallback(mCallback);
++            mKeyguard.addCallback(mKeyguardCallback);
++        } else {
++            mController.removeCallback(mCallback);
++            mKeyguard.removeCallback(mKeyguardCallback);
++        }
+     }
+ 
+     @Override
+@@ -59,13 +74,25 @@ public class RotationLockTile extends QSTileImpl<BooleanState> {
+         return new Intent(Settings.ACTION_DISPLAY_SETTINGS);
+     }
+ 
+-    @Override
+-    protected void handleClick() {
++    private void handleClickInner() {
+         final boolean newState = !mState.value;
+         mController.setRotationLocked(!newState);
+         refreshState(newState);
+     }
+ 
++    @Override
++    protected void handleClick() {
++        if (mController == null) return;
++        if (mKeyguard.isSecure() && mKeyguard.isShowing()) {
++            Dependency.get(ActivityStarter.class).postQSRunnableDismissingKeyguard(() -> {
++                mHost.openPanels();
++                handleClickInner();
++            });
++            return;
++        }
++        handleClickInner();
++    }
++
+     @Override
+     public CharSequence getTileLabel() {
+         return getState().label;
+@@ -120,4 +147,11 @@ public class RotationLockTile extends QSTileImpl<BooleanState> {
+             refreshState(rotationLocked);
+         }
+     };
++
++    private final class KeyguardCallback implements KeyguardMonitor.Callback {
++        @Override
++        public void onKeyguardShowingChanged() {
++            refreshState();
++        }
++    }
+ }
+-- 
+2.17.1
+

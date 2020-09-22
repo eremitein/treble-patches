@@ -1,0 +1,44 @@
+From 3eda0d6a07fd713dc4e9e067d7e4bea055e3d8b4 Mon Sep 17 00:00:00 2001
+From: Winson Chiu <chiuwinson@google.com>
+Date: Tue, 16 Jun 2020 21:41:22 +0000
+Subject: [PATCH 004/186] Revert "Ignores protected broadcasts if not priv-app"
+
+Revert of I5bd2bf3bd7c38fd9cc563a02b24bc569495d79ed
+
+For now, allow all system apps to declare protected
+broadcasts. This will be cleaned up in a future change.
+
+Bug: 158570769
+
+Merged-In: I54d236c0a6daaa934bd64a3bd05e2654e0e868fe
+Change-Id: I54d236c0a6daaa934bd64a3bd05e2654e0e868fe
+(cherry picked from commit e1843e8a1fe3dda4038c3474e6321854aac99127)
+---
+ .../java/com/android/server/pm/PackageManagerService.java     | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/services/core/java/com/android/server/pm/PackageManagerService.java b/services/core/java/com/android/server/pm/PackageManagerService.java
+index 002bdc0c842..30d30210fc5 100644
+--- a/services/core/java/com/android/server/pm/PackageManagerService.java
++++ b/services/core/java/com/android/server/pm/PackageManagerService.java
+@@ -11657,6 +11657,8 @@ public class PackageManagerService extends IPackageManager.Stub
+                     ~ApplicationInfo.PRIVATE_FLAG_DEFAULT_TO_DEVICE_PROTECTED_STORAGE;
+             pkg.applicationInfo.privateFlags &=
+                     ~ApplicationInfo.PRIVATE_FLAG_DIRECT_BOOT_AWARE;
++            // clear protected broadcasts
++            pkg.protectedBroadcasts = null;
+             // cap permission priorities
+             if (pkg.permissionGroups != null && pkg.permissionGroups.size() > 0) {
+                 for (int i = pkg.permissionGroups.size() - 1; i >= 0; --i) {
+@@ -11665,8 +11667,6 @@ public class PackageManagerService extends IPackageManager.Stub
+             }
+         }
+         if ((scanFlags & SCAN_AS_PRIVILEGED) == 0) {
+-            // clear protected broadcasts
+-            pkg.protectedBroadcasts = null;
+             // ignore export request for single user receivers
+             if (pkg.receivers != null) {
+                 for (int i = pkg.receivers.size() - 1; i >= 0; --i) {
+-- 
+2.17.1
+

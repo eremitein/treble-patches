@@ -1,0 +1,28 @@
+From a79c17309758040e36c460df6b28b56319c08852 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 7 Feb 2020 03:40:13 +0200
+Subject: [PATCH 089/186] overlay: Fix derp in package name
+
+  * from https://github.com/Havoc-OS/android_frameworks_base/commit/f858a771ba567ceee5ac7ac125fcfcc14f85f473
+
+	modified:   packages/overlays/Android.mk
+---
+ packages/overlays/Android.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 3eb90491f90..eecc10158e8 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -42,7 +42,7 @@ LOCAL_REQUIRED_MODULES := \
+ 	IconPackRoundedLauncherOverlay \
+ 	IconPackRoundedSettingsOverlay \
+ 	IconPackRoundedSystemUIOverlay \
+-	IconPackRoundedThemePickerUIOverlay \
++	IconPackRoundedThemePickerOverlay \
+ 	IconShapeRoundedRectOverlay \
+ 	IconShapeSquircleOverlay \
+ 	IconShapeTeardropOverlay \
+-- 
+2.17.1
+

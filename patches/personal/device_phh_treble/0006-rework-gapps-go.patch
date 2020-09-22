@@ -1,0 +1,64 @@
+From 81ca68340543170ad0c188876f74338559f63d70 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 27 May 2020 05:57:53 +0300
+Subject: [PATCH 6/7] rework gapps & go
+
+---
+ gapps.mk             |  1 -
+ overrides/Android.mk | 14 ++++++++++++++
+ 2 files changed, 14 insertions(+), 1 deletion(-)
+
+diff --git a/gapps.mk b/gapps.mk
+index e3039c3..eeb9538 100644
+--- a/gapps.mk
++++ b/gapps.mk
+@@ -8,7 +8,6 @@ PRODUCT_PACKAGES := $(filter-out GoogleContacts, $(PRODUCT_PACKAGES))
+ 
+ PRODUCT_PACKAGES += \
+ 	phh-gapps-overrides \
+-	Chrome \
+ 	GoogleContactsSyncAdapter \
+ 	talkback \
+ 
+diff --git a/overrides/Android.mk b/overrides/Android.mk
+index 813d66b..d50ee9d 100644
+--- a/overrides/Android.mk
++++ b/overrides/Android.mk
+@@ -8,6 +8,16 @@ PACKAGES.$(LOCAL_MODULE).OVERRIDES := \
+ 	YouTubeGo \
+ 	DuoGo \
+ 	Traceur \
++	Etar \
++	GalleryGo \
++	SimpleGallery \
++	Messaging \
++	Chrome \
++	NavGo \
++	MapsGo \
++	GoogleTTS \
++	FilesGoogle \
++	GooglePartnerSetup \
+ 	GmsSampleIntegration \
+ 	GmsSampleIntegrationGo \
+ 	GmsSampleIntegrationGo2GB \
+@@ -37,6 +47,7 @@ include $(BUILD_PREBUILT)
+ include $(CLEAR_VARS)
+ LOCAL_MODULE := phh-gapps-overrides
+ PACKAGES.$(LOCAL_MODULE).OVERRIDES := \
++	Chrome \
+ 	Drive \
+ 	YTMusic \
+ 	Videos \
+@@ -48,6 +59,9 @@ PACKAGES.$(LOCAL_MODULE).OVERRIDES := \
+ 	Maps \
+ 	Gmail2 \
+ 	FilesGoogle \
++	SimpleGallery \
++	Messaging \
++	Etar \
+ 	GmsSampleIntegration \
+ 	GmsSampleIntegrationGo \
+ 	GmsSampleIntegrationGo2GB \
+-- 
+2.17.1
+

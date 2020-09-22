@@ -1,0 +1,61 @@
+From 3748f667723746bfa79321afd95fec95cd690400 Mon Sep 17 00:00:00 2001
+From: Wonsik Kim <wonsik@google.com>
+Date: Fri, 10 Jan 2020 09:59:42 -0800
+Subject: [PATCH 21/24] avc/hevc: Align 128 everywhere
+
+Bug: 142924202
+Test: media module tests
+Change-Id: Icef9b6b19d11bbf1ce0a2078113bfcc0a9cdc3ad
+(cherry picked from commit 48dfc8c137b161cfcf652947621439deed7d9252)
+---
+ media/codec2/components/avc/C2SoftAvcDec.cpp   | 4 ++--
+ media/codec2/components/hevc/C2SoftHevcDec.cpp | 4 ++--
+ 2 files changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/media/codec2/components/avc/C2SoftAvcDec.cpp b/media/codec2/components/avc/C2SoftAvcDec.cpp
+index 75a612276d..2be51dd49e 100644
+--- a/media/codec2/components/avc/C2SoftAvcDec.cpp
++++ b/media/codec2/components/avc/C2SoftAvcDec.cpp
+@@ -500,7 +500,7 @@ void C2SoftAvcDec::getVersion() {
+ status_t C2SoftAvcDec::initDecoder() {
+     if (OK != createDecoder()) return UNKNOWN_ERROR;
+     mNumCores = MIN(getCpuCoreCount(), MAX_NUM_CORES);
+-    mStride = ALIGN64(mWidth);
++    mStride = ALIGN128(mWidth);
+     mSignalledError = false;
+     resetPlugin();
+     (void) setNumCores();
+@@ -908,7 +908,7 @@ void C2SoftAvcDec::process(
+         if (0 < s_decode_op.u4_pic_wd && 0 < s_decode_op.u4_pic_ht) {
+             if (mHeaderDecoded == false) {
+                 mHeaderDecoded = true;
+-                setParams(ALIGN64(s_decode_op.u4_pic_wd), IVD_DECODE_FRAME);
++                setParams(ALIGN128(s_decode_op.u4_pic_wd), IVD_DECODE_FRAME);
+             }
+             if (s_decode_op.u4_pic_wd != mWidth || s_decode_op.u4_pic_ht != mHeight) {
+                 mWidth = s_decode_op.u4_pic_wd;
+diff --git a/media/codec2/components/hevc/C2SoftHevcDec.cpp b/media/codec2/components/hevc/C2SoftHevcDec.cpp
+index 389ea610dc..6db4387272 100644
+--- a/media/codec2/components/hevc/C2SoftHevcDec.cpp
++++ b/media/codec2/components/hevc/C2SoftHevcDec.cpp
+@@ -497,7 +497,7 @@ status_t C2SoftHevcDec::getVersion() {
+ status_t C2SoftHevcDec::initDecoder() {
+     if (OK != createDecoder()) return UNKNOWN_ERROR;
+     mNumCores = MIN(getCpuCoreCount(), MAX_NUM_CORES);
+-    mStride = ALIGN64(mWidth);
++    mStride = ALIGN128(mWidth);
+     mSignalledError = false;
+     resetPlugin();
+     (void) setNumCores();
+@@ -904,7 +904,7 @@ void C2SoftHevcDec::process(
+         if (0 < s_decode_op.u4_pic_wd && 0 < s_decode_op.u4_pic_ht) {
+             if (mHeaderDecoded == false) {
+                 mHeaderDecoded = true;
+-                setParams(ALIGN64(s_decode_op.u4_pic_wd), IVD_DECODE_FRAME);
++                setParams(ALIGN128(s_decode_op.u4_pic_wd), IVD_DECODE_FRAME);
+             }
+             if (s_decode_op.u4_pic_wd != mWidth ||  s_decode_op.u4_pic_ht != mHeight) {
+                 mWidth = s_decode_op.u4_pic_wd;
+-- 
+2.17.1
+

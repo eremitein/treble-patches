@@ -1,0 +1,96 @@
+From d792ff19a0c707fed620abf8d3d4995371cde181 Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Wed, 26 Jul 2017 15:10:38 -0400
+Subject: [PATCH 175/186] require unlocking to use nfc quick tile
+
+---
+ .../android/systemui/qs/tiles/NfcTile.java    | 31 +++++++++++++++++--
+ 1 file changed, 29 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java b/packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java
+index 476a239de72..8a71261af91 100644
+--- a/packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java
++++ b/packages/SystemUI/src/com/android/systemui/qs/tiles/NfcTile.java
+@@ -28,10 +28,13 @@ import android.service.quicksettings.Tile;
+ import android.widget.Switch;
+ 
+ import com.android.internal.logging.nano.MetricsProto.MetricsEvent;
++import com.android.systemui.Dependency;
+ import com.android.systemui.R;
+ import com.android.systemui.plugins.qs.QSTile.BooleanState;
+ import com.android.systemui.qs.QSHost;
+ import com.android.systemui.qs.tileimpl.QSTileImpl;
++import com.android.systemui.plugins.ActivityStarter;
++import com.android.systemui.statusbar.policy.KeyguardMonitor;
+ 
+ import javax.inject.Inject;
+ 
+@@ -42,9 +45,13 @@ public class NfcTile extends QSTileImpl<BooleanState> {
+ 
+     private boolean mListening;
+ 
++    private final KeyguardMonitor mKeyguard;
++    private final KeyguardCallback mKeyguardCallback = new KeyguardCallback();
++
+     @Inject
+     public NfcTile(QSHost host) {
+         super(host);
++        mKeyguard = Dependency.get(KeyguardMonitor.class);
+     }
+ 
+     @Override
+@@ -58,8 +65,10 @@ public class NfcTile extends QSTileImpl<BooleanState> {
+         if (mListening) {
+             mContext.registerReceiver(mNfcReceiver,
+                     new IntentFilter(NfcAdapter.ACTION_ADAPTER_STATE_CHANGED));
++            mKeyguard.addCallback(mKeyguardCallback);
+         } else {
+             mContext.unregisterReceiver(mNfcReceiver);
++            mKeyguard.removeCallback(mKeyguardCallback);
+         }
+     }
+ 
+@@ -77,8 +86,7 @@ public class NfcTile extends QSTileImpl<BooleanState> {
+         return new Intent(Settings.ACTION_NFC_SETTINGS);
+     }
+ 
+-    @Override
+-    protected void handleClick() {
++    private void handleClickInner() {
+         if (getAdapter() == null) {
+             return;
+         }
+@@ -89,6 +97,18 @@ public class NfcTile extends QSTileImpl<BooleanState> {
+         }
+     }
+ 
++    @Override
++    protected void handleClick() {
++        if (mKeyguard.isSecure() && mKeyguard.isShowing()) {
++            Dependency.get(ActivityStarter.class).postQSRunnableDismissingKeyguard(() -> {
++                mHost.openPanels();
++                handleClickInner();
++            });
++            return;
++        }
++        handleClickInner();
++    }
++
+     @Override
+     protected void handleSecondaryClick() {
+         handleClick();
+@@ -143,4 +163,11 @@ public class NfcTile extends QSTileImpl<BooleanState> {
+             refreshState();
+         }
+     };
++
++    private final class KeyguardCallback implements KeyguardMonitor.Callback {
++        @Override
++        public void onKeyguardShowingChanged() {
++            refreshState();
++        }
++    }
+ }
+-- 
+2.17.1
+

@@ -1,0 +1,57 @@
+From 9bd15fc4c3c2e132f6573dc60c7c8d05fa4a22b2 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 7 Feb 2020 04:14:40 +0200
+Subject: [PATCH 16/40] add android icons style selector
+
+	modified:   res/values/strings.xml
+	modified:   res/xml/display_settings.xml
+	modified:   src/com/android/settings/DisplaySettings.java
+---
+ res/values/strings.xml                        | 2 ++
+ res/xml/display_settings.xml                  | 3 +++
+ src/com/android/settings/DisplaySettings.java | 2 ++
+ 3 files changed, 7 insertions(+)
+
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 023d23746b..045a8eb11b 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -10091,6 +10091,8 @@
+     <string name="theme_customization_accent_color_title">Accent color</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize headline and body fonts. -->
+     <string name="theme_customization_font_title">Headline / Body font</string>
++    <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the icon pack (e.g. statusbar icons) -->
++    <string name="theme_customization_icon_pack_title">Icon style</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the adaptive icon shape (e.g. launcher and quick settings icons). -->
+     <string name="theme_customization_icon_shape_title">Icon shape</string>
+     <!-- [CHAR_LIMIT=NONE] Developer Settings: Label for the option that turns off customizations for a given category.-->
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index 8e484713a6..0c59c64898 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -166,6 +166,9 @@
+         <ListPreference
+             android:key="android.theme.customization.accent_color"
+             android:title="@string/theme_customization_accent_color_title"/>
++        <ListPreference
++            android:key="android.theme.customization.icon_pack.android"
++            android:title="@string/theme_customization_icon_pack_title"/>
+         <ListPreference
+             android:key="android.theme.customization.adaptive_icon_shape"
+             android:title="@string/theme_customization_icon_shape_title"/>
+diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
+index 657a4cb688..4ae970a762 100644
+--- a/src/com/android/settings/DisplaySettings.java
++++ b/src/com/android/settings/DisplaySettings.java
+@@ -97,6 +97,8 @@ public class DisplaySettings extends DashboardFragment {
+                 "android.theme.customization.font"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.accent_color"));
++        controllers.add(new OverlayCategoryPreferenceController(context,
++                "android.theme.customization.icon_pack.android"));
+         controllers.add(new OverlayCategoryPreferenceController(context,
+                 "android.theme.customization.adaptive_icon_shape"));
+         return controllers;
+-- 
+2.17.1
+
