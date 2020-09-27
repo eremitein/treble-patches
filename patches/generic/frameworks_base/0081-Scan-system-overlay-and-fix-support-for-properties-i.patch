@@ -1,7 +1,7 @@
-From 54359796d0b3016747be3a5eb4afbe72a38143dc Mon Sep 17 00:00:00 2001
+From 0319d1dff877ff94ad78d807c909eda559c0bf7c Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 14 Oct 2019 23:50:46 +0200
-Subject: [PATCH 081/127] Scan /system/overlay and fix support for properties
+Subject: [PATCH 081/130] Scan /system/overlay and fix support for properties
  in idmap2
 
 Change-Id: Ic04b5b1cc7b5d8cee67b1e2fdaa8aa793546b6d6
@@ -97,7 +97,7 @@ index 71ba3f0f1ac..7fda402b80f 100644
    if (iter != tag->end()) {
      info.is_static = std::stoul(iter->second) != 0U;
 diff --git a/core/java/android/content/pm/PackageParser.java b/core/java/android/content/pm/PackageParser.java
-index bce50186b60..a502789024b 100644
+index 0e71020d6ed..cb174f97547 100644
 --- a/core/java/android/content/pm/PackageParser.java
 +++ b/core/java/android/content/pm/PackageParser.java
 @@ -1355,6 +1355,7 @@ public class PackageParser {

@@ -1,7 +1,7 @@
-From e9a63a6e5c8d64980cf025fd2062f7b122b3dc32 Mon Sep 17 00:00:00 2001
+From b29f358c6393428bf0d6ce2469e9c4dfac67f9ae Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 2 Jul 2019 21:15:07 +0200
-Subject: [PATCH 070/127] Make samsung light HAL more overridable
+Subject: [PATCH 070/130] Make samsung light HAL more overridable
 
 ---
  .../android/server/lights/LightsService.java  | 24 ++++++++++++-------

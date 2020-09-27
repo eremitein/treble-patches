@@ -1,0 +1,34 @@
+From 3874285b728237d3f5d771f5de9094d6b6bee921 Mon Sep 17 00:00:00 2001
+From: Peter Wang <tpwang@google.com>
+Date: Mon, 11 May 2020 14:31:11 -0700
+Subject: [PATCH 2/3] Restrict access to the resolution PendingIntent created
+ by EuiccController to EuiccResolutionUiDispatcherActivity
+
+Bug: 156097472
+Bug: 155094269
+Fix: 156097472
+Test: Local, with jpd@'s PoC app
+Change-Id: Ifdf81cf9d22bf70a488cca3613bd81e18a576ae1
+Merged-In: Ifdf81cf9d22bf70a488cca3613bd81e18a576ae1
+(cherry picked from commit 4e6a25843d7ef14301eb8cb5985c84d54785fbc4)
+---
+ AndroidManifest.xml | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/AndroidManifest.xml b/AndroidManifest.xml
+index a47100b4d..dda96f892 100644
+--- a/AndroidManifest.xml
++++ b/AndroidManifest.xml
+@@ -454,6 +454,9 @@
+             Handler for EuiccManager's resolution intents. These are locked down so that only
+             privileged processes can start them, which means we can trust the Intent used to start
+             it (which contains a description of the next step to perform after resolution).
++
++            If modified, also change EuiccController#RESOLUTION_ACTIVITY_PACKAGE_NAME and
++            EuiccController#RESOLUTION_ACTIVITY_CLASS_NAME
+         -->
+         <activity android:name=".euicc.EuiccResolutionUiDispatcherActivity"
+             android:permission="android.permission.CALL_PRIVILEGED">
+-- 
+2.17.1
+

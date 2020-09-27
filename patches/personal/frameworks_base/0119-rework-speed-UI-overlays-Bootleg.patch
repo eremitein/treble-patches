@@ -1,7 +1,7 @@
-From e39b20e4e8a5056e018d118ff6480192f1b18cc4 Mon Sep 17 00:00:00 2001
+From f823cbe476bc065650d1b494212862f521908697 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 10 Jul 2020 06:40:36 +0300
-Subject: [PATCH 119/127] rework speed UI overlays (Bootleg)
+Subject: [PATCH 119/130] rework speed UI overlays (Bootleg)
 
 Change-Id: I8cc748a2d95bb9d4ff9613d0cee2668f66378e8d
 ---
@@ -46,7 +46,7 @@ Change-Id: I8cc748a2d95bb9d4ff9613d0cee2668f66378e8d
  create mode 100644 packages/overlays/Level7SpeedUIOverlay/res/values/config.xml
 
 diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
-index 8fc0509d8ea..c597e80158c 100644
+index e9c2840903e..2dc454d3c66 100644
 --- a/core/res/res/values/config.xml
 +++ b/core/res/res/values/config.xml
 @@ -101,6 +101,10 @@
@@ -61,7 +61,7 @@ index 8fc0509d8ea..c597e80158c 100644
           connected.  If you use the ims apn DCT will block
           any other apn from connecting until ims apn is connected-->
 diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
-index 128b447e2e2..e849230e76a 100644
+index c5862979b3e..35301b043f3 100644
 --- a/packages/SystemUI/res/values/config.xml
 +++ b/packages/SystemUI/res/values/config.xml
 @@ -22,7 +22,7 @@
@@ -129,10 +129,10 @@ index dd320abd53e..1f46988c7f5 100644
          mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_LAUNCHER, mLauncherPackage);
          mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_THEME_PICKER, mThemePickerPackage);
 diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
-index 48e0c5a07e3..b15841a2ce9 100644
+index 907caf392d8..898d8e6cbea 100644
 --- a/packages/overlays/Android.mk
 +++ b/packages/overlays/Android.mk
-@@ -53,6 +53,11 @@ LOCAL_REQUIRED_MODULES := \
+@@ -59,6 +59,11 @@ LOCAL_REQUIRED_MODULES := \
  	StatusBar3Overlay \
  	Level1SpeedUIOverlay \
  	Level2SpeedUIOverlay \

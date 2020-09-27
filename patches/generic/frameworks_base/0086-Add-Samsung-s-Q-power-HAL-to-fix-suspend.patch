@@ -1,7 +1,7 @@
-From 8c4d5386428233c757577bc5b10a303b16e45869 Mon Sep 17 00:00:00 2001
+From be390a5fe71d44aa78306872e52aee4131c1471c Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 22:14:12 +0100
-Subject: [PATCH 086/127] Add Samsung's Q power HAL to fix suspend
+Subject: [PATCH 086/130] Add Samsung's Q power HAL to fix suspend
 
 ---
  services/core/jni/Android.bp                   |  2 ++

@@ -1,0 +1,38 @@
+From f872d238bd8ac5f3637c943a5e58b7e3d9388290 Mon Sep 17 00:00:00 2001
+From: Jakub Pawlowski <jpawlowski@google.com>
+Date: Thu, 14 May 2020 02:03:14 +0200
+Subject: [PATCH 01/40] Prevent overlay drawing on top of Bluetooth pairing
+ dialog
+
+Bug: 155648639
+Change-Id: I99643ee9084f3a9bc1ad9a459ac27c587d832c91
+(cherry picked from commit 88815d145669555ed089b0a10c943943a57275d2)
+---
+ .../android/settings/bluetooth/BluetoothPairingDialog.java    | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/com/android/settings/bluetooth/BluetoothPairingDialog.java b/src/com/android/settings/bluetooth/BluetoothPairingDialog.java
+index 060c17491a..0cc0c1ee30 100644
+--- a/src/com/android/settings/bluetooth/BluetoothPairingDialog.java
++++ b/src/com/android/settings/bluetooth/BluetoothPairingDialog.java
+@@ -27,6 +27,8 @@ import android.os.Bundle;
+ import androidx.annotation.VisibleForTesting;
+ import androidx.fragment.app.FragmentActivity;
+ 
++import static android.view.WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
++
+ /**
+  * BluetoothPairingDialog asks the user to enter a PIN / Passkey / simple confirmation
+  * for pairing with a remote Bluetooth device. It is an activity that appears as a dialog.
+@@ -64,6 +66,8 @@ public class BluetoothPairingDialog extends FragmentActivity {
+     @Override
+     protected void onCreate(@Nullable Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
++
++        getWindow().addSystemFlags(SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS);
+         Intent intent = getIntent();
+         mBluetoothPairingController = new BluetoothPairingController(intent, this);
+         // build the dialog fragment
+-- 
+2.17.1
+

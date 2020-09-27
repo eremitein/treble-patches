@@ -1,0 +1,53 @@
+From a5ed7aa132a476800d8be8e063d3c8cf536fc28e Mon Sep 17 00:00:00 2001
+From: Abhijeet Kaur <abkaur@google.com>
+Date: Wed, 1 Apr 2020 17:22:36 +0100
+Subject: [PATCH 1/2] Copy Screenshot to fd if and only if user consent
+ approved
+
+Currently the dumpstate screenshot file is copied to the screenshot fd
+(provided by the API caller) even when user consent times out.
+
+Bug: 152944488
+Test: BugreportManagerTest#normalflow_full
+Change-Id: I0ede8bc8cf5333ea586218a37fd6456f782a50c7
+Merged-in: I0ede8bc8cf5333ea586218a37fd6456f782a50c7
+(cherry picked from commit 90f8249030e02080e937eeed12fc8c8c692bbc64)
+---
+ cmds/dumpstate/dumpstate.cpp | 14 +++++++-------
+ 1 file changed, 7 insertions(+), 7 deletions(-)
+
+diff --git a/cmds/dumpstate/dumpstate.cpp b/cmds/dumpstate/dumpstate.cpp
+index 5de40776b..39f3f051e 100644
+--- a/cmds/dumpstate/dumpstate.cpp
++++ b/cmds/dumpstate/dumpstate.cpp
+@@ -2718,13 +2718,6 @@ Dumpstate::RunStatus Dumpstate::RunInternal(int32_t calling_uid,
+             MYLOGI("User denied consent. Returning\n");
+             return status;
+         }
+-        if (options_->do_fb && options_->screenshot_fd.get() != -1) {
+-            bool copy_succeeded = android::os::CopyFileToFd(screenshot_path_,
+-                                                            options_->screenshot_fd.get());
+-            if (copy_succeeded) {
+-                android::os::UnlinkAndLogOnError(screenshot_path_);
+-            }
+-        }
+         if (status == Dumpstate::RunStatus::USER_CONSENT_TIMED_OUT) {
+             MYLOGI(
+                 "Did not receive user consent yet."
+@@ -2832,6 +2825,13 @@ Dumpstate::RunStatus Dumpstate::CopyBugreportIfUserConsented() {
+         bool copy_succeeded = android::os::CopyFileToFd(path_, options_->bugreport_fd.get());
+         if (copy_succeeded) {
+             android::os::UnlinkAndLogOnError(path_);
++            if (options_->do_fb && options_->screenshot_fd.get() != -1) {
++                copy_succeeded = android::os::CopyFileToFd(screenshot_path_,
++                                                           options_->screenshot_fd.get());
++                if (copy_succeeded) {
++                    android::os::UnlinkAndLogOnError(screenshot_path_);
++                }
++            }
+         }
+         return copy_succeeded ? Dumpstate::RunStatus::OK : Dumpstate::RunStatus::ERROR;
+     } else if (consent_result == UserConsentResult::UNAVAILABLE) {
+-- 
+2.17.1
+

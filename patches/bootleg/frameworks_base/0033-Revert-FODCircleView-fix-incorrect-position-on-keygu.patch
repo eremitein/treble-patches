@@ -1,7 +1,7 @@
-From 8e8b8b90ce60872783c3fd4753132713ab021221 Mon Sep 17 00:00:00 2001
+From ddcad36242199ce437ce044d542c6e8168849b68 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:23:50 -0400
-Subject: [PATCH 033/127] Revert "FODCircleView: fix incorrect position on
+Subject: [PATCH 033/130] Revert "FODCircleView: fix incorrect position on
  keyguard"
 
 This reverts commit a091025b73062c39806571ab9971e7f2a4bc0820.

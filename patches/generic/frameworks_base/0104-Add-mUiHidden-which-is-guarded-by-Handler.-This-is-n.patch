@@ -1,7 +1,7 @@
-From f6e3b3362b039facc3bec3dacc3bcfc4c0438c63 Mon Sep 17 00:00:00 2001
+From ccf91b6d47527495deb5722e1c63cf8460e8eee9 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 21 May 2020 18:41:57 +0200
-Subject: [PATCH 104/127] Add mUiHidden which is guarded by Handler. This is
+Subject: [PATCH 104/130] Add mUiHidden which is guarded by Handler. This is
  needed because backlight listener might intervene at the wrong time
 
 ---

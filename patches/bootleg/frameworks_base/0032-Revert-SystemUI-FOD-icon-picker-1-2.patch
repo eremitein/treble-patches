@@ -1,7 +1,7 @@
-From fcc111572fbcba88ca04fa6d3188f81567abc3a5 Mon Sep 17 00:00:00 2001
+From a2306da4f90d90af507494addc0e6f780105bf22 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:23:48 -0400
-Subject: [PATCH 032/127] Revert "SystemUI: FOD icon picker [1/2]"
+Subject: [PATCH 032/130] Revert "SystemUI: FOD icon picker [1/2]"
 
 This reverts commit f9776a8b807c8047d58f7354c92d3dafd74de67e.
 
@@ -18,10 +18,10 @@ Change-Id: Ie340be1b4b88e9ecb3993036f454ae7a3bda62eb
  delete mode 100644 packages/SystemUI/res/drawable/fod_icon_default_3.png
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index fdf23750f83..5893712610a 100644
+index cef9730dede..0a90ef5d1fe 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5476,12 +5476,6 @@ public final class Settings {
+@@ -5577,12 +5577,6 @@ public final class Settings {
          /** @hide */
          public static final Validator POCKET_JUDGE_VALIDATOR = BOOLEAN_VALIDATOR;
  

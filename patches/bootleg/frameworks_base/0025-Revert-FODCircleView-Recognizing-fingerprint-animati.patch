@@ -1,7 +1,7 @@
-From 9b7d8dfdd3361cb1f465628826fc467515c5abee Mon Sep 17 00:00:00 2001
+From 7b303813c14a3ba4e4eff6dcd369533881523f48 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:21:27 -0400
-Subject: [PATCH 025/127] Revert "FODCircleView: Recognizing fingerprint
+Subject: [PATCH 025/130] Revert "FODCircleView: Recognizing fingerprint
  animation [1/2]"
 
 This reverts commit bffc7f75221ce5e84aacdc6d6c0f89275387933e.
@@ -35,9 +35,9 @@ Change-Id: Iee9c1cc660c078fb56e7336e92bdf11828a878fd
  .../gxzw_pulse_recognizing_anim_white_7.png   | Bin 31925 -> 0 bytes
  .../gxzw_pulse_recognizing_anim_white_8.png   | Bin 41264 -> 0 bytes
  .../gxzw_pulse_recognizing_anim_white_9.png   | Bin 49255 -> 0 bytes
- .../SystemUI/res/values/bootleg_dimens.xml    |  12 +--
+ .../SystemUI/res/values/bootleg_dimens.xml    |  11 +--
  .../systemui/biometrics/FODCircleView.java    |  87 ------------------
- 29 files changed, 4 insertions(+), 144 deletions(-)
+ 29 files changed, 4 insertions(+), 143 deletions(-)
  delete mode 100644 packages/SystemUI/res/drawable/fod_pulse_recognizing_white_anim.xml
  delete mode 100644 packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_1.png
  delete mode 100644 packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_10.png
@@ -66,10 +66,10 @@ Change-Id: Iee9c1cc660c078fb56e7336e92bdf11828a878fd
  delete mode 100644 packages/SystemUI/res/drawable/gxzw_pulse_recognizing_anim_white_9.png
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 6ffbebd1258..edde4c5f6c7 100644
+index fc27e5d6cdb..d12234a0b71 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5488,12 +5488,6 @@ public final class Settings {
+@@ -5589,12 +5589,6 @@ public final class Settings {
           */
          public static final String FOD_PRESSED_STATE = "fod_pressed_state";
  
@@ -26191,7 +26191,7 @@ zmSeZ`feY*ZAHffQH?~gHiueiU|Gx6C&W0dPP<1N*yZRA<_rEi%@PDUY`FRW&|GWNw
 jAOCL#{;$lyox&A<;yDIA)O`r{-w(=3DFZ7di~|2ZxcjK<
 
 diff --git a/packages/SystemUI/res/values/bootleg_dimens.xml b/packages/SystemUI/res/values/bootleg_dimens.xml
-index 6b71530a0a8..0c41d6199ce 100644
+index 4297b4165c0..433202800bd 100644
 --- a/packages/SystemUI/res/values/bootleg_dimens.xml
 +++ b/packages/SystemUI/res/values/bootleg_dimens.xml
 @@ -37,10 +37,10 @@
@@ -26209,15 +26209,16 @@ index 6b71530a0a8..0c41d6199ce 100644
  
     <!-- Tri-state UI -->
      <dimen name="tri_state_down_dialog_padding_edge">8.0dip</dimen>
-@@ -86,8 +86,4 @@
- 
+@@ -87,9 +87,6 @@
      <!-- Screenrecord UI -->
      <dimen name="screenrecord_dot_size">48dp</dimen>
--
+ 
 -    <!-- FOD Animation Size -->
 -    <dimen name="fod_animation_size">280dp</dimen>
 -
- </resources>
+     <!-- Custom Carrier Label -->
+     <dimen name="status_bar_carrier_height">14dp</dimen>
+ 
 diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
 index 03afbd16106..7fdc8e3167b 100644
 --- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java

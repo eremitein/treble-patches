@@ -1,4 +1,4 @@
-From 41a2b4238d8be32ddae36965438effbf4a1d4105 Mon Sep 17 00:00:00 2001
+From ed5bcda19aa64c501d3c505310753560d234a602 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 13 Aug 2020 12:17:07 -0400
 Subject: [PATCH 4/6] stop using outdated webview
@@ -9,7 +9,7 @@ Subject: [PATCH 4/6] stop using outdated webview
  2 files changed, 2 deletions(-)
 
 diff --git a/products/gms.mk b/products/gms.mk
-index 8ef59f8..b7b7d3a 100644
+index e8c772c..9b58773 100644
 --- a/products/gms.mk
 +++ b/products/gms.mk
 @@ -24,7 +24,6 @@ GMS_PRODUCT_PACKAGES += \
@@ -21,7 +21,7 @@ index 8ef59f8..b7b7d3a 100644
  
  # GMS mandatory libraries
 diff --git a/products/gms_go.mk b/products/gms_go.mk
-index 8d33151..85de00d 100644
+index 3e5f0ef..d0256d5 100644
 --- a/products/gms_go.mk
 +++ b/products/gms_go.mk
 @@ -24,7 +24,6 @@ GMS_PRODUCT_PACKAGES += \

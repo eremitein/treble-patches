@@ -1,0 +1,32 @@
+From d5e1dd463a6a13be0f49b5731cba7e7364d2f499 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 27 Sep 2020 13:59:59 -0400
+Subject: [PATCH 3/3] Revert "vendor: Allow providing camera server and
+ service"
+
+This reverts commit cf9df27ffa24402db231d15a8ff05b0cc6bc660f.
+---
+ config/BoardConfigBootleggers.mk | 9 +--------
+ 1 file changed, 1 insertion(+), 8 deletions(-)
+
+diff --git a/config/BoardConfigBootleggers.mk b/config/BoardConfigBootleggers.mk
+index 1ec72abd..6fe5feae 100644
+--- a/config/BoardConfigBootleggers.mk
++++ b/config/BoardConfigBootleggers.mk
+@@ -6,11 +6,4 @@ include vendor/bootleggers/config/BoardConfigQcom.mk
+ endif
+ 
+ 
+-include vendor/bootleggers/config/BoardConfigSoong.mk
+-
+-
+-ifneq ($(TARGET_USES_PREBUILT_CAMERA_SERVICE), true)
+-PRODUCT_SOONG_NAMESPACES += \
+-    frameworks/av/camera/cameraserver \
+-    frameworks/av/services/camera/libcameraservice
+-endif
++include vendor/bootleggers/config/BoardConfigSoong.mk
+\ No newline at end of file
+-- 
+2.17.1
+

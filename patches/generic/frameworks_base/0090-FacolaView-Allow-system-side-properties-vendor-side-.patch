@@ -1,7 +1,7 @@
-From 8fdbd34476ac19b8fb4d2e03dffdfadd357ecfdc Mon Sep 17 00:00:00 2001
+From 9bf694034f49a5d4f2bf4f47aa900366510268b6 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 22 Feb 2020 23:25:51 +0100
-Subject: [PATCH 090/127] FacolaView] Allow system-side properties (vendor-side
+Subject: [PATCH 090/130] FacolaView] Allow system-side properties (vendor-side
  works only with proper selinux)
 
 ---

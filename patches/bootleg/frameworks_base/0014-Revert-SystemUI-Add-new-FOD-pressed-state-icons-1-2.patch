@@ -1,7 +1,7 @@
-From 940490f8293e3c3e89da7d119b13ea3e9e803037 Mon Sep 17 00:00:00 2001
+From cabb854504313141058af496acb88bf2c94948dd Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 08:59:29 -0400
-Subject: [PATCH 014/127] Revert "SystemUI: Add new FOD pressed state icons
+Subject: [PATCH 014/130] Revert "SystemUI: Add new FOD pressed state icons
  [1/2]"
 
 This reverts commit 1375d693c1c9d7e9bbb3265b1e7c16c8d1130e7e.
@@ -29,10 +29,10 @@ This reverts commit 1375d693c1c9d7e9bbb3265b1e7c16c8d1130e7e.
  delete mode 100644 packages/SystemUI/res/drawable/fod_icon_pressed_vivo_yellow_shadow.png
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 9b2e83a4891..97d8fb674e6 100644
+index 75308fb75cc..e6bb46f865b 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5493,7 +5493,7 @@ public final class Settings {
+@@ -5594,7 +5594,7 @@ public final class Settings {
  
          /** @hide */
          private static final Validator FOD_PRESSED_STATE_VALIDATOR =

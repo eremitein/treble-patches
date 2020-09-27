@@ -1,0 +1,54 @@
+From 3bbcfeb0b16289af7824aaee2070834afb1fab73 Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Sun, 17 Mar 2019 19:54:30 -0400
+Subject: [PATCH] stop auto-granting location to system browsers
+
+---
+ .../DefaultPermissionGrantPolicy.java         | 24 +++++++++----------
+ 1 file changed, 12 insertions(+), 12 deletions(-)
+
+diff --git a/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java b/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
+index c5ae17b2b11..b9c61186742 100644
+--- a/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
++++ b/services/core/java/com/android/server/pm/permission/DefaultPermissionGrantPolicy.java
+@@ -602,16 +602,16 @@ public final class DefaultPermissionGrantPolicy {
+                 userId, CONTACTS_PERMISSIONS, CALENDAR_PERMISSIONS);
+ 
+         // Browser
+-        String browserPackage = getKnownPackage(PackageManagerInternal.PACKAGE_BROWSER, userId);
+-        if (browserPackage == null) {
+-            browserPackage = getDefaultSystemHandlerActivityPackageForCategory(
+-                    Intent.CATEGORY_APP_BROWSER, userId);
+-            if (!isSystemPackage(browserPackage)) {
+-                browserPackage = null;
+-            }
+-        }
+-        grantPermissionsToPackage(browserPackage, userId, false /* ignoreSystemPackage */,
+-                true /*whitelistRestrictedPermissions*/, ALWAYS_LOCATION_PERMISSIONS);
++        //String browserPackage = getKnownPackage(PackageManagerInternal.PACKAGE_BROWSER, userId);
++        //if (browserPackage == null) {
++            //browserPackage = getDefaultSystemHandlerActivityPackageForCategory(
++                    //Intent.CATEGORY_APP_BROWSER, userId);
++            //if (!isSystemPackage(browserPackage)) {
++                //browserPackage = null;
++            //}
++        //}
++        //grantPermissionsToPackage(browserPackage, userId, false [> ignoreSystemPackage <],
++                //true [>whitelistRestrictedPermissions<], ALWAYS_LOCATION_PERMISSIONS);
+ 
+         // Voice interaction
+         if (voiceInteractPackageNames != null) {
+@@ -899,8 +899,8 @@ public final class DefaultPermissionGrantPolicy {
+     }
+ 
+     public void grantDefaultPermissionsToDefaultBrowser(String packageName, int userId) {
+-        Log.i(TAG, "Granting permissions to default browser for user:" + userId);
+-        grantPermissionsToSystemPackage(packageName, userId, ALWAYS_LOCATION_PERMISSIONS);
++        //Log.i(TAG, "Granting permissions to default browser for user:" + userId);
++        //grantPermissionsToSystemPackage(packageName, userId, ALWAYS_LOCATION_PERMISSIONS);
+     }
+ 
+     private String getDefaultSystemHandlerActivityPackage(String intentAction, int userId) {
+-- 
+2.17.1
+

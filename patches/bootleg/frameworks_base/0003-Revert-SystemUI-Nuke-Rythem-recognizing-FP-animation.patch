@@ -1,7 +1,7 @@
-From b015037fa2f75f6c6a55008375ba2fb42caaeef0 Mon Sep 17 00:00:00 2001
+From 4bc96010cb2a54c12dc4311e19657f6cd868ea47 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 08:56:36 -0400
-Subject: [PATCH 003/127] Revert "SystemUI: Nuke Rythem recognizing FP
+Subject: [PATCH 003/130] Revert "SystemUI: Nuke Rythem recognizing FP
  animations [1/2]"
 
 This reverts commit 68139e8508a9f1ddf21da296280e83ba53ade7ed.
@@ -57,10 +57,10 @@ This reverts commit 68139e8508a9f1ddf21da296280e83ba53ade7ed.
  create mode 100644 packages/SystemUI/res/drawable/gxzw_rhythm_recognizing_anim_9.png
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index e2326821fbf..a7a4efb5a13 100644
+index 33944e0b64a..b2c8718c5a8 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5513,7 +5513,7 @@ public final class Settings {
+@@ -5614,7 +5614,7 @@ public final class Settings {
  
          /** @hide */
          private static final Validator FOD_ANIM_VALIDATOR =

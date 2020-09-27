@@ -1,7 +1,7 @@
-From 301cf4826ed758388d612985165ef881024bf3c4 Mon Sep 17 00:00:00 2001
+From 860e1ae97d6acdce422113049d962886f7656930 Mon Sep 17 00:00:00 2001
 From: Steve Kondik <steve@cyngn.com>
 Date: Sat, 3 Jan 2015 05:13:26 -0800
-Subject: [PATCH 060/127] power: Disable keyboard/button lights while
+Subject: [PATCH 060/130] power: Disable keyboard/button lights while
  dozing/dreaming
 
  * With hardkeys and doze mode enabled, entering suspend results in

@@ -1,7 +1,7 @@
-From 80645b964f427370d4ab8f4968b03ac959043692 Mon Sep 17 00:00:00 2001
+From 0263c66f1bb47caaf59f356b8417c5aa0a612e77 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 24 Apr 2019 20:09:53 +0200
-Subject: [PATCH 069/127] Fix backlight on S10*. Add an additional property to
+Subject: [PATCH 069/130] Fix backlight on S10*. Add an additional property to
  check, so testers can try it more easily
 
 ---

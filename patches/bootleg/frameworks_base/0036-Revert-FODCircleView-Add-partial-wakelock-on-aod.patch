@@ -1,7 +1,7 @@
-From 2fc18f1dc72b3b69254e7e44cdf775ae04dc1f16 Mon Sep 17 00:00:00 2001
+From f8e926850dde773e136c1e6aee50ecb1bf4300f7 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:23:55 -0400
-Subject: [PATCH 036/127] Revert "FODCircleView: Add partial wakelock on aod"
+Subject: [PATCH 036/130] Revert "FODCircleView: Add partial wakelock on aod"
 
 This reverts commit e2dad8927cccf110ab8b4f404f3670ea7468ea03.
 ---

@@ -1,7 +1,7 @@
-From 9c9955908b63103a1efa7773dc96602e02c8abc1 Mon Sep 17 00:00:00 2001
+From 01689c86bf92e9eb909171ea10849344d7179463 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:23:52 -0400
-Subject: [PATCH 034/127] Revert "FODCircleView: Add MIUI FP icon"
+Subject: [PATCH 034/130] Revert "FODCircleView: Add MIUI FP icon"
 
 This reverts commit ab17e64ba6049471f8d7f593ed7dfa75933a8384.
 ---

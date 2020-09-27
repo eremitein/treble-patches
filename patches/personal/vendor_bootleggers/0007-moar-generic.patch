@@ -1,0 +1,27 @@
+From e4e886a89f950ed0db3a0c363a80c105f0e3fd9e Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sun, 27 Sep 2020 14:47:48 -0400
+Subject: [PATCH] moar generic
+
+Change-Id: Iffecbad908ac8efdb840fda2a9bcded930066503
+---
+ config/btlg_branding.mk | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/config/btlg_branding.mk b/config/btlg_branding.mk
+index 465a3c98..e8d1d4ec 100644
+--- a/config/btlg_branding.mk
++++ b/config/btlg_branding.mk
+@@ -22,9 +22,6 @@ endif
+ 
+ BOOTLEGGERS_VERSION := BootleggersROM-$(PRODUCT_VERSION_MAJOR)4gsi-$(BOOTLEGGERS_VERSION_NUMBER)-$(BOOTLEGGERS_BUILD_TYPE)$(BOOTLEGGERS_POSTFIX)
+ 
+-PRODUCT_PACKAGES += \
+-    bootanimation.zip
+-
+ #ifneq ($(TARGET_USE_SINGLE_BOOTANIMATION),true)
+ #    PRODUCT_PACKAGES += \
+ #        bootanimation2.zip \
+-- 
+2.17.1
+

@@ -1,7 +1,7 @@
-From 654f918d60b91966a06419b568d33bb9483566b4 Mon Sep 17 00:00:00 2001
+From e4d83cd1c50f7e9c7fb284195bcb043acc9b4871 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 21 Jul 2020 03:10:58 +0300
-Subject: [PATCH 125/127] add USB Tether QS tile
+Subject: [PATCH 125/130] add USB Tether QS tile
 
   from
   https://github.com/LineageOS/android_frameworks_base/commit/bcbac24c0ff560f385b00fd99d4c12c48345af89
@@ -46,15 +46,15 @@ index 00000000000..2d22c88e80f
 +        android:pathData="M48.677,29.724h5.255V22.47h4.401l-7.047-9.611l-7.052,9.611h4.443V29.724z M48.677,34.537h5.255v7.254h4.401l-7.047,9.611 l-7.052-9.611h4.443V34.537z M38.85,16.447h-8.444v8.445h2.11v3.251l-8.574,4.36V14.337h4.562l-6.547-8.975l-6.545,8.975h4.561 v21.805l-8.571-3.715v-3.896c1.257-0.734,2.111-2.079,2.111-3.639c0-2.33-1.887-4.222-4.224-4.222c-2.332,0-4.222,1.892-4.222,4.222c0,1.56,0.854,2.905,2.113,3.639v6.668l12.794,5.547v5.609c-2.518,0.837-4.348,3.184-4.348,5.987c0,3.495,2.835,6.333,6.332,6.333c3.501,0,6.337-2.838,6.337-6.333c0-2.802-1.83-5.15-4.352-5.987v-9.113l12.798-6.512v-5.839h2.11L38.85,16.447L38.85,16.447z" />
 +</vector>
 diff --git a/packages/SystemUI/res/values/config.xml b/packages/SystemUI/res/values/config.xml
-index e849230e76a..f405cc32d71 100644
+index 35301b043f3..08311b8f4ac 100644
 --- a/packages/SystemUI/res/values/config.xml
 +++ b/packages/SystemUI/res/values/config.xml
 @@ -117,7 +117,7 @@
  
      <!-- Tiles native to System UI. Order should match "quick_settings_tiles_default" -->
      <string name="quick_settings_tiles_stock" translatable="false">
--        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,gaming,location,hotspot,inversion,saver,dark,work,cast,night,reboot
-+        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,gaming,location,hotspot,inversion,saver,dark,work,cast,night,reboot,usb_tether
+-        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,gaming,location,hotspot,inversion,saver,dark,work,cast,night,reboot,livedisplay
++        wifi,cell,battery,dnd,flashlight,rotation,bt,airplane,nfc,gaming,location,hotspot,inversion,saver,dark,work,cast,night,reboot,livedisplay,usb_tether
      </string>
  
      <!-- The tiles to display in QuickSettings -->
@@ -71,10 +71,10 @@ index b48645240c6..e680a834369 100644
 +
  </resources>
 diff --git a/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java b/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
-index 16029bf0d2e..4f78f94c526 100644
+index 12b5d996ade..8b4f37e00c6 100644
 --- a/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
 +++ b/packages/SystemUI/src/com/android/systemui/qs/tileimpl/QSFactoryImpl.java
-@@ -49,6 +49,7 @@ import com.android.systemui.qs.tiles.RebootTile;
+@@ -50,6 +50,7 @@ import com.android.systemui.qs.tiles.RebootTile;
  import com.android.systemui.qs.tiles.RotationLockTile;
  import com.android.systemui.qs.tiles.ScreenRecordTile;
  import com.android.systemui.qs.tiles.UiModeNightTile;
@@ -82,7 +82,7 @@ index 16029bf0d2e..4f78f94c526 100644
  import com.android.systemui.qs.tiles.SoundTile;
  import com.android.systemui.qs.tiles.SmartPixelsTile;
  import com.android.systemui.qs.tiles.SoundSearchTile;
-@@ -88,6 +89,7 @@ public class QSFactoryImpl implements QSFactory {
+@@ -89,6 +90,7 @@ public class QSFactoryImpl implements QSFactory {
      private final Provider<NfcTile> mNfcTileProvider;
      private final Provider<GarbageMonitor.MemoryTile> mMemoryTileProvider;
      private final Provider<UiModeNightTile> mUiModeNightTileProvider;
@@ -90,7 +90,7 @@ index 16029bf0d2e..4f78f94c526 100644
      private final Provider<SmartPixelsTile> mSmartPixelsTileProvider;
      private final Provider<GamingModeTile> mGamingModeTileProvider;
      private final Provider<SoundSearchTile> mSoundSearchTileProvider;
-@@ -118,6 +120,7 @@ public class QSFactoryImpl implements QSFactory {
+@@ -121,6 +123,7 @@ public class QSFactoryImpl implements QSFactory {
              Provider<NfcTile> nfcTileProvider,
              Provider<GarbageMonitor.MemoryTile> memoryTileProvider,
              Provider<UiModeNightTile> uiModeNightTileProvider,
@@ -98,7 +98,7 @@ index 16029bf0d2e..4f78f94c526 100644
              Provider<SmartPixelsTile> smartPixelsTileProvider,
              Provider<GamingModeTile> gamingModeTileProvider,
              Provider<SoundSearchTile> soundSearchTileProvider,
-@@ -145,6 +148,7 @@ public class QSFactoryImpl implements QSFactory {
+@@ -149,6 +152,7 @@ public class QSFactoryImpl implements QSFactory {
          mNfcTileProvider = nfcTileProvider;
          mMemoryTileProvider = memoryTileProvider;
          mUiModeNightTileProvider = uiModeNightTileProvider;
@@ -106,7 +106,7 @@ index 16029bf0d2e..4f78f94c526 100644
          mSmartPixelsTileProvider = smartPixelsTileProvider;
          mGamingModeTileProvider = gamingModeTileProvider;
          mSoundSearchTileProvider = soundSearchTileProvider;
-@@ -206,6 +210,8 @@ public class QSFactoryImpl implements QSFactory {
+@@ -211,6 +215,8 @@ public class QSFactoryImpl implements QSFactory {
                  return mNfcTileProvider.get();
              case "dark":
                  return mUiModeNightTileProvider.get();

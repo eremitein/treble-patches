@@ -1,7 +1,7 @@
-From 9af01cfb1319ad54b7c135d23021a73100a274cb Mon Sep 17 00:00:00 2001
+From a69ff295aa71ec24333dc07592e31070bab5d596 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 24 Mar 2019 22:48:39 +0100
-Subject: [PATCH 077/127] wip
+Subject: [PATCH 077/130] wip
 
 Change-Id: I50fa9a7a670cef5b93fc4a3a027f1587b1214831
 ---
@@ -16,10 +16,10 @@ Change-Id: I50fa9a7a670cef5b93fc4a3a027f1587b1214831
  create mode 100644 services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
 
 diff --git a/Android.bp b/Android.bp
-index 3af7e4612ce..80513406b9a 100644
+index b3f9e0a63fd..4c5e9447d80 100644
 --- a/Android.bp
 +++ b/Android.bp
-@@ -779,6 +779,8 @@ java_defaults {
+@@ -783,6 +783,8 @@ java_defaults {
          "android.hardware.vibrator-V1.2-java",
          "android.hardware.vibrator-V1.3-java",
          "android.hardware.wifi-V1.0-java-constants",
@@ -27,7 +27,7 @@ index 3af7e4612ce..80513406b9a 100644
 +	"vendor.samsung.hardware.radio-V1.2-java",
          "devicepolicyprotosnano",
          "vendor.lineage.touch-V1.0-java",
-     ],
+         "vendor.lineage.livedisplay-V2.0-java",
 diff --git a/services/core/Android.bp b/services/core/Android.bp
 index 9855e4ea339..b2e8af938f3 100644
 --- a/services/core/Android.bp
@@ -349,10 +349,10 @@ index fcf87ee2a4b..0aa948417c1 100644
              // There's no data to apply, so leave it as-is.
              return null;
 diff --git a/services/core/java/com/android/server/wm/ActivityRecord.java b/services/core/java/com/android/server/wm/ActivityRecord.java
-index e5d40442f18..a5844f18063 100644
+index 3b43387d0ee..7d0bac660a3 100644
 --- a/services/core/java/com/android/server/wm/ActivityRecord.java
 +++ b/services/core/java/com/android/server/wm/ActivityRecord.java
-@@ -2835,12 +2835,6 @@ final class ActivityRecord extends ConfigurationContainer {
+@@ -2861,12 +2861,6 @@ final class ActivityRecord extends ConfigurationContainer {
      // TODO(b/36505427): Consider moving this method and similar ones to ConfigurationContainer.
      private void updateOverrideConfiguration() {
          final Configuration overrideConfig = mTmpConfig;

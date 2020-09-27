@@ -1,7 +1,7 @@
-From 3c4eeb3b2133dc63450f166bb2a702fc217ea074 Mon Sep 17 00:00:00 2001
+From 6d7593ddf4a78cc362f8ba8533f783c010484d26 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 20:49:53 +0200
-Subject: [PATCH] Add back SELinux info
+Subject: [PATCH 16/18] Add back SELinux info
 
   * based on https://github.com/Evolution-X/packages_apps_Settings/commit/d1dc320beb1b6d0c8d5c04f69951f903d841a183
 
@@ -16,10 +16,10 @@ Subject: [PATCH] Add back SELinux info
  create mode 100644 src/com/android/settings/deviceinfo/firmwareversion/SelinuxStatusPreferenceController.java
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index b1e09d62f3..5a8047e7e0 100644
+index c8ac288346..27a211b61d 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -3143,6 +3143,8 @@
+@@ -3173,6 +3173,8 @@
      <string name="build_number">Build number</string>
      <!-- About phone screen, tapping this button will take user to a seperate UI to check Google Play system update [CHAR LIMIT=60] -->
      <string name="module_version">Google Play system update</string>
@@ -28,7 +28,7 @@ index b1e09d62f3..5a8047e7e0 100644
  
      <!-- About phone screen, show when a value of some status item is unavailable. -->
      <string name="device_info_not_available">Not available</string>
-@@ -6738,6 +6740,11 @@
+@@ -6768,6 +6770,11 @@
      from their cell phone carrier. The use of the string is similar to the string
      "system_update_settings_list_item_title" in this project. [CHAR LIMIT=25] -->
      <string name="additional_system_update_settings_list_item_title">Additional system updates</string>

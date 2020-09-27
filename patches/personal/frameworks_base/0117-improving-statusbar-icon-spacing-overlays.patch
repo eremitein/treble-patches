@@ -1,7 +1,7 @@
-From 5c824f606f3620fa1d0972e14afc652cadf0881f Mon Sep 17 00:00:00 2001
+From 337ecd92e536855359ee637537c0f4b79a99c549 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 30 Apr 2020 06:54:36 +0300
-Subject: [PATCH 117/127] improving statusbar icon spacing overlays
+Subject: [PATCH 117/130] improving statusbar icon spacing overlays
 
 	modified:   core/res/res/values/dimens.xml
 	modified:   packages/SystemUI/res/values/dimens.xml
@@ -30,7 +30,7 @@ index a09a50ce742..73a925b5945 100644
      <!-- Default radius of the software rounded corners. -->
      <dimen name="rounded_corner_radius">0dp</dimen>
 diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
-index c246e5f0f13..28266f44172 100644
+index f30442b3bf3..67e32d9fbbd 100644
 --- a/packages/SystemUI/res/values/dimens.xml
 +++ b/packages/SystemUI/res/values/dimens.xml
 @@ -76,7 +76,7 @@

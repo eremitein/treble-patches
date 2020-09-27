@@ -1,7 +1,7 @@
-From b47b3571e785f5bc931185c0326bb7d173d576cf Mon Sep 17 00:00:00 2001
+From 4c8a2873c0221466af4360f23c6c8b491f523d76 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 11 May 2020 20:12:55 +0300
-Subject: [PATCH 118/127] add speed UI overlays
+Subject: [PATCH 118/130] add speed UI overlays
 
 	modified:   packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
 	modified:   packages/overlays/Android.mk
@@ -76,10 +76,10 @@ index 2e111dcb6e3..dd320abd53e 100644
          mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_LAUNCHER, mLauncherPackage);
          mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_THEME_PICKER, mThemePickerPackage);
 diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
-index 822dc69fb7c..48e0c5a07e3 100644
+index 26fc7125c99..907caf392d8 100644
 --- a/packages/overlays/Android.mk
 +++ b/packages/overlays/Android.mk
-@@ -51,6 +51,8 @@ LOCAL_REQUIRED_MODULES := \
+@@ -57,6 +57,8 @@ LOCAL_REQUIRED_MODULES := \
  	StatusBar1Overlay \
  	StatusBar2Overlay \
  	StatusBar3Overlay \

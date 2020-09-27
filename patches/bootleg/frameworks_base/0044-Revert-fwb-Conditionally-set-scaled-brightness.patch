@@ -1,7 +1,7 @@
-From d492f45ef8667dae2c5ae0aef2834acb72d08d32 Mon Sep 17 00:00:00 2001
+From 63f7e0f374a4cd84e4c5aa7dba2934310cbb2adf Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 14:03:28 -0400
-Subject: [PATCH 044/127] Revert "fwb: Conditionally set scaled brightness"
+Subject: [PATCH 044/130] Revert "fwb: Conditionally set scaled brightness"
 
 This reverts commit 932a8f3fce38e9b6745a887fad2dc2183d46d72c.
 
@@ -13,7 +13,7 @@ Change-Id: Ibfda26d9a62dbe898b4404594e418340c9a00c3b
  3 files changed, 3 insertions(+), 15 deletions(-)
 
 diff --git a/core/res/res/values/bootleg_config.xml b/core/res/res/values/bootleg_config.xml
-index c81765e8b74..9c26a594e2e 100644
+index 7ed989ec0eb..da4b3eeed2f 100644
 --- a/core/res/res/values/bootleg_config.xml
 +++ b/core/res/res/values/bootleg_config.xml
 @@ -113,9 +113,6 @@
@@ -27,10 +27,10 @@ index c81765e8b74..9c26a594e2e 100644
         to communicate pocket state to the pocket judge kernel driver. -->
      <string name="config_pocketBridgeSysfsInpocket"></string>
 diff --git a/core/res/res/values/bootleg_symbols.xml b/core/res/res/values/bootleg_symbols.xml
-index 1773e41e4e3..019d644e03e 100644
+index 4fb90a24e2a..1266d38c07d 100644
 --- a/core/res/res/values/bootleg_symbols.xml
 +++ b/core/res/res/values/bootleg_symbols.xml
-@@ -101,9 +101,6 @@
+@@ -104,9 +104,6 @@
      <java-symbol type="string" name="config_SmartChargingSupspendValue" />
      <java-symbol type="string" name="config_SmartChargingResumeValue" />
  

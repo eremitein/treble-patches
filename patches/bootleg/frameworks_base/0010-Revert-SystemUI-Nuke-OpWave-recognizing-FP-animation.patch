@@ -1,7 +1,7 @@
-From 42644dd332fb9c72a8962805a67bcb30fcf8f1b1 Mon Sep 17 00:00:00 2001
+From 910e37d41d7531a7978a924574b0f19649d01d85 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 08:58:07 -0400
-Subject: [PATCH 010/127] Revert "SystemUI: Nuke OpWave recognizing FP
+Subject: [PATCH 010/130] Revert "SystemUI: Nuke OpWave recognizing FP
  animations [1/2]"
 
 This reverts commit ceb88baa562bd02a8c7d5b80277c744b5a1dfcb9.
@@ -89,10 +89,10 @@ This reverts commit ceb88baa562bd02a8c7d5b80277c744b5a1dfcb9.
  create mode 100644 packages/SystemUI/res/drawable/fod_op_wave_recognizing_anim.xml
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 545ee5c01c7..a26220ad86c 100644
+index 981a824f88e..91474394282 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5513,7 +5513,7 @@ public final class Settings {
+@@ -5614,7 +5614,7 @@ public final class Settings {
  
          /** @hide */
          private static final Validator FOD_ANIM_VALIDATOR =

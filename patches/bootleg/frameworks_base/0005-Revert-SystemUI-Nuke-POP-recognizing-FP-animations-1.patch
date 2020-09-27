@@ -1,7 +1,7 @@
-From c9c20ef695f09e40787d0d3cb0dc598c5539cd33 Mon Sep 17 00:00:00 2001
+From affc64e8d51e1a8a595b1c3eaffd649ef13214ba Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 08:58:00 -0400
-Subject: [PATCH 005/127] Revert "SystemUI: Nuke POP recognizing FP animations
+Subject: [PATCH 005/130] Revert "SystemUI: Nuke POP recognizing FP animations
  [1/2]"
 
 This reverts commit 607900ea605f5257f64162507c4b4b909e29fed6.
@@ -41,10 +41,10 @@ This reverts commit 607900ea605f5257f64162507c4b4b909e29fed6.
  create mode 100644 packages/SystemUI/res/drawable/gxzw_pop_recognizing_anim_9.webp
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 75eb3dc782e..1bf07588732 100644
+index 4f79a10d540..9af5717cf09 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5513,7 +5513,7 @@ public final class Settings {
+@@ -5614,7 +5614,7 @@ public final class Settings {
  
          /** @hide */
          private static final Validator FOD_ANIM_VALIDATOR =

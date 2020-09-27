@@ -1,7 +1,7 @@
-From dce54cdf78d0c52614d4c0a037eea56145b0da24 Mon Sep 17 00:00:00 2001
+From 00bbc4a61656c551307a254147bc99ee46cc6ed1 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 1 May 2018 17:47:36 +0200
-Subject: [PATCH 047/127] Also scan /system/overlay
+Subject: [PATCH 047/130] Also scan /system/overlay
 
 Change-Id: Ib0223560606b80cdaaa986b159b34b4db0154589
 ---

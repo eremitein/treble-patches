@@ -1,7 +1,7 @@
-From 4bbecd13533ed0ae02239c496790c561db94057d Mon Sep 17 00:00:00 2001
+From de383e4d90157b5fac44a993a0b7055b1f7ad449 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 8 Jul 2020 05:32:30 +0300
-Subject: [PATCH] hide lock icon
+Subject: [PATCH 128/130] hide lock icon
 
   based on
   https://github.com/BlissRoms/platform_frameworks_base/commit/a7cece1d33365fd6f1f1a3482e496691306f4805
@@ -10,10 +10,10 @@ Subject: [PATCH] hide lock icon
  1 file changed, 2 insertions(+)
 
 diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarKeyguardViewManager.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarKeyguardViewManager.java
-index 68ee8bbbb69..fb311f8c246 100644
+index 4d14b753b3e..fb9f2b4ae40 100644
 --- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarKeyguardViewManager.java
 +++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/StatusBarKeyguardViewManager.java
-@@ -794,6 +794,8 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
+@@ -798,6 +798,8 @@ public class StatusBarKeyguardViewManager implements RemoteInputController.Callb
              updateNavigationBarVisibility(navBarVisible);
          }
  

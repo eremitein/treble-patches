@@ -1,4 +1,4 @@
-From aaf539f6f567c206780bad526f6c05d863046d77 Mon Sep 17 00:00:00 2001
+From 9de03faffc5858f6f948f8cf0b0fbda91ccb3c2c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 8 Jul 2020 15:40:08 +0300
 Subject: [PATCH 3/6] use generic LatinIME in Go builds
@@ -8,7 +8,7 @@ Subject: [PATCH 3/6] use generic LatinIME in Go builds
  1 file changed, 1 deletion(-)
 
 diff --git a/products/gms_go.mk b/products/gms_go.mk
-index 55f445a..8d33151 100644
+index 7198693..3e5f0ef 100644
 --- a/products/gms_go.mk
 +++ b/products/gms_go.mk
 @@ -67,7 +67,6 @@ GMS_PRODUCT_PACKAGES += \
@@ -18,7 +18,7 @@ index 55f445a..8d33151 100644
 -    LatinImeGoogleGo \
      MapsGo \
      NavGo \
-     YouTubeGo
+     YouTube
 -- 
 2.17.1
 

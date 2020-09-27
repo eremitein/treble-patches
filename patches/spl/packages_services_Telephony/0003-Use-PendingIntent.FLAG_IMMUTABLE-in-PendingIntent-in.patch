@@ -1,0 +1,64 @@
+From 21bef5f625f48855483054f934c430571cc38b13 Mon Sep 17 00:00:00 2001
+From: Shuo Qian <shuoq@google.com>
+Date: Fri, 24 Apr 2020 19:19:31 -0700
+Subject: [PATCH 3/3] Use PendingIntent.FLAG_IMMUTABLE in PendingIntent in
+ NotificationMgr
+
+Require that the PendingIntent be immutable so that a malicious app is
+ not able to hijack and mutate any of the details.
+
+Test: Android builds
+Bug: 153356561
+Change-Id: Ib278926f4327b3fcbec25795b78643774911d1dc
+Merged-In: Ib278926f4327b3fcbec25795b78643774911d1dc
+(cherry picked from commit b722e6d0bef5bdcf3cf7368b765ed08a98bdee1c)
+---
+ src/com/android/phone/NotificationMgr.java | 11 +++++++----
+ 1 file changed, 7 insertions(+), 4 deletions(-)
+
+diff --git a/src/com/android/phone/NotificationMgr.java b/src/com/android/phone/NotificationMgr.java
+index 27749e4ab..78ed15f0b 100644
+--- a/src/com/android/phone/NotificationMgr.java
++++ b/src/com/android/phone/NotificationMgr.java
+@@ -358,7 +358,8 @@ public class NotificationMgr {
+             }
+ 
+             PendingIntent pendingIntent =
+-                    PendingIntent.getActivity(mContext, subId /* requestCode */, intent, 0);
++                    PendingIntent.getActivity(mContext, subId /* requestCode */, intent,
++                            PendingIntent.FLAG_IMMUTABLE);
+ 
+             Resources res = mContext.getResources();
+             PersistableBundle carrierConfig = PhoneGlobals.getInstance().getCarrierConfigForSubId(
+@@ -547,7 +548,7 @@ public class NotificationMgr {
+             SubscriptionInfoHelper.addExtrasToIntent(
+                     intent, mSubscriptionManager.getActiveSubscriptionInfo(subId));
+             builder.setContentIntent(PendingIntent.getActivity(mContext, subId /* requestCode */,
+-                    intent, 0));
++                    intent, PendingIntent.FLAG_IMMUTABLE));
+             mNotificationManager.notifyAsUser(
+                     Integer.toString(subId) /* tag */,
+                     CALL_FORWARD_NOTIFICATION,
+@@ -590,7 +591,8 @@ public class NotificationMgr {
+         // "Mobile network settings" screen / dialog
+         Intent intent = new Intent(Settings.ACTION_DATA_ROAMING_SETTINGS);
+         intent.putExtra(Settings.EXTRA_SUB_ID, subId);
+-        PendingIntent contentIntent = PendingIntent.getActivity(mContext, subId, intent, 0);
++        PendingIntent contentIntent = PendingIntent.getActivity(
++                mContext, subId, intent, PendingIntent.FLAG_IMMUTABLE);
+ 
+         CharSequence contentTitle = mContext.getText(roamingOn
+                 ? R.string.roaming_on_notification_title
+@@ -738,7 +740,8 @@ public class NotificationMgr {
+                 mContext.getString(R.string.mobile_network_settings_package),
+                 mContext.getString(R.string.mobile_network_settings_class)));
+         intent.putExtra(GsmUmtsOptions.EXTRA_SUB_ID, subId);
+-        builder.setContentIntent(PendingIntent.getActivity(mContext, 0, intent, 0));
++        builder.setContentIntent(PendingIntent.getActivity(
++                mContext, 0, intent, PendingIntent.FLAG_IMMUTABLE));
+         mNotificationManager.notifyAsUser(
+                 Integer.toString(subId) /* tag */,
+                 SELECTED_OPERATOR_FAIL_NOTIFICATION,
+-- 
+2.17.1
+

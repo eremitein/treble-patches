@@ -1,7 +1,7 @@
-From fd891fcf5744a11479e2fa1f18b4f05789ccc886 Mon Sep 17 00:00:00 2001
+From 1a418c58abab1e706171095ca1f9be450a07a59c Mon Sep 17 00:00:00 2001
 From: Song Fuchang <song.fc@gmail.com>
 Date: Sun, 17 Jun 2018 22:39:37 +0800
-Subject: [PATCH 054/127] Fix typo on fnmatch return value check
+Subject: [PATCH 054/130] Fix typo on fnmatch return value check
 
 ---
  cmds/idmap/scan.cpp | 2 +-

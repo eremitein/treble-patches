@@ -1,0 +1,37 @@
+From a882dfc90a0b02da6bc0c1b278b2b10652dfa74c Mon Sep 17 00:00:00 2001
+From: Steve Elliott <steell@google.com>
+Date: Mon, 3 Aug 2020 13:45:44 -0400
+Subject: [PATCH 009/186] Mark implicit PendingIntents as immutable
+
+Bug: 156020795
+Test: manual, atest
+Change-Id: I72206c7a52b067b77d6542d170a6483713dfeee7
+(cherry picked from commit 84e08280d3882cfe4bad12ab426016c6d0efc7fb)
+(cherry picked from commit 599c3e4b75a638a725de1c96bab762cdaae9eb22)
+---
+ .../src/com/android/systemui/util/leak/LeakReporter.java  | 8 ++++++--
+ 1 file changed, 6 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/util/leak/LeakReporter.java b/packages/SystemUI/src/com/android/systemui/util/leak/LeakReporter.java
+index b25df5f9c07..5e7280840bb 100644
+--- a/packages/SystemUI/src/com/android/systemui/util/leak/LeakReporter.java
++++ b/packages/SystemUI/src/com/android/systemui/util/leak/LeakReporter.java
+@@ -104,9 +104,13 @@ public class LeakReporter {
+                     .setContentText(String.format(
+                             "SystemUI has detected %d leaked objects. Tap to send", garbageCount))
+                     .setSmallIcon(com.android.internal.R.drawable.stat_sys_adb)
+-                    .setContentIntent(PendingIntent.getActivityAsUser(mContext, 0,
++                    .setContentIntent(PendingIntent.getActivityAsUser(
++                            mContext,
++                            0,
+                             getIntent(hprofFile, dumpFile),
+-                            PendingIntent.FLAG_UPDATE_CURRENT, null, UserHandle.CURRENT));
++                            PendingIntent.FLAG_UPDATE_CURRENT | PendingIntent.FLAG_IMMUTABLE,
++                            null,
++                            UserHandle.CURRENT));
+             notiMan.notify(TAG, 0, builder.build());
+         } catch (IOException e) {
+             Log.e(TAG, "Couldn't dump heap for leak", e);
+-- 
+2.17.1
+

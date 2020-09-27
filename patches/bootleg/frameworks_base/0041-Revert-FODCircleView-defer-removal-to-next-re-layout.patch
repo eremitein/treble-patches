@@ -1,7 +1,7 @@
-From 4349d879c8bee1810367c44300f41133cf921b06 Mon Sep 17 00:00:00 2001
+From d2659192ccfbf1eaa90efa992c69b4a232ae39f6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:31:37 -0400
-Subject: [PATCH 041/127] Revert "FODCircleView: defer removal to next
+Subject: [PATCH 041/130] Revert "FODCircleView: defer removal to next
  re-layout"
 
 This reverts commit 9ff1f77b07eb09a758ae9fca9753c820e27c9917.

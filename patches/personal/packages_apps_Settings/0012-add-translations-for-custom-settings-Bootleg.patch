@@ -1,7 +1,7 @@
-From 145647c429c1a0792e89f11b340f492d15eb1a43 Mon Sep 17 00:00:00 2001
+From 8acb7c243e56dd421acac3f104be773a0cd9be97 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 3 Jun 2020 12:54:20 +0300
-Subject: [PATCH 12/15] add translations for custom settings (Bootleg)
+Subject: [PATCH 12/18] add translations for custom settings (Bootleg)
 
   RU
   FR

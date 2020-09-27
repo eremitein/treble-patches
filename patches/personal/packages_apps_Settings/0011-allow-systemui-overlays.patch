@@ -1,7 +1,7 @@
-From 54001eb2fee714f3c341f2580b8d24c3c92dd085 Mon Sep 17 00:00:00 2001
+From ff128b48cd4a036ca61cb4aedb562276e32010e1 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 3 Jun 2020 17:32:46 +0300
-Subject: [PATCH 11/15] allow systemui overlays
+Subject: [PATCH 11/18] allow systemui overlays
 
 Change-Id: Id9779ef38182f5ddf63b70340f380b33490160c6
 ---

@@ -1,7 +1,7 @@
-From b3bf08993709431518f84e5f4a5a81d45ec463f0 Mon Sep 17 00:00:00 2001
+From 9347ef17ad361dccfbb774d307671e52d7652666 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 24 Mar 2019 23:05:14 +0100
-Subject: [PATCH 068/127] Support new samsung light hal
+Subject: [PATCH 068/130] Support new samsung light hal
 
 Change-Id: I88ca834894320129737b4e31fa8f7e5ee918889a
 ---

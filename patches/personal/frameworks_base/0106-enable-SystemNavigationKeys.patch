@@ -1,7 +1,7 @@
-From 7e387af5710875ab7b5d44478f8158f13ad5396d Mon Sep 17 00:00:00 2001
+From f379ec4dfa192f0eb270ac5c330b158e9d0f1b90 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 18 Dec 2019 14:52:32 +0200
-Subject: [PATCH 106/127] enable SystemNavigationKeys
+Subject: [PATCH 106/130] enable SystemNavigationKeys
 
 	modified:   core/res/res/values/config.xml
 ---
@@ -9,10 +9,10 @@ Subject: [PATCH 106/127] enable SystemNavigationKeys
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
-index aaba101ba6c..4d1b478f1af 100644
+index b8b9b9be791..8f70206568b 100644
 --- a/core/res/res/values/config.xml
 +++ b/core/res/res/values/config.xml
-@@ -3510,7 +3510,7 @@
+@@ -3512,7 +3512,7 @@
      <bool name="config_allowDisablingAssistDisclosure">true</bool>
  
      <!-- True if the device supports system navigation keys. -->

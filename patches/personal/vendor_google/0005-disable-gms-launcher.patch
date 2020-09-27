@@ -1,4 +1,4 @@
-From 2f0422b72040811bb222b2c7d7cfcf98c95b4c7f Mon Sep 17 00:00:00 2001
+From 78dfc6ced1c2ae7b126ee2d6adaa523e7541f0b3 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 13 Aug 2020 13:56:14 -0400
 Subject: [PATCH 5/6] disable gms launcher
@@ -8,7 +8,7 @@ Subject: [PATCH 5/6] disable gms launcher
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/products/gms.mk b/products/gms.mk
-index b7b7d3a..8782fe8 100644
+index 9b58773..b4ad2ba 100644
 --- a/products/gms.mk
 +++ b/products/gms.mk
 @@ -89,8 +89,7 @@ GMS_PRODUCT_PACKAGES += \

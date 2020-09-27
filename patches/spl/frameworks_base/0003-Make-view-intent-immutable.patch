@@ -1,0 +1,30 @@
+From 175c939caee5535395d705f57011fb6265e990be Mon Sep 17 00:00:00 2001
+From: Beth Thibodeau <ethibodeau@google.com>
+Date: Mon, 15 Jun 2020 13:24:18 -0400
+Subject: [PATCH 003/186] Make view intent immutable
+
+Bug: 156959408
+Test: manual, atest
+Change-Id: I80de1ea9c4535559f4ca2838a66da9e19eacf49d
+(cherry picked from commit 4cecd359ab06ab8653c9381e660c3f1b1b19c94a)
+(cherry picked from commit 64049fad82c13030c365b52b9538d7cf47ebf876)
+---
+ .../src/com/android/systemui/screenrecord/RecordingService.java | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/screenrecord/RecordingService.java b/packages/SystemUI/src/com/android/systemui/screenrecord/RecordingService.java
+index 0383dee4f9c..dfe46044976 100644
+--- a/packages/SystemUI/src/com/android/systemui/screenrecord/RecordingService.java
++++ b/packages/SystemUI/src/com/android/systemui/screenrecord/RecordingService.java
+@@ -362,7 +362,7 @@ public class RecordingService extends Service {
+                         this,
+                         REQUEST_CODE,
+                         viewIntent,
+-                        Intent.FLAG_GRANT_READ_URI_PERMISSION))
++                        PendingIntent.FLAG_IMMUTABLE))
+                 .addAction(shareAction)
+                 .addAction(deleteAction)
+                 .setAutoCancel(true);
+-- 
+2.17.1
+

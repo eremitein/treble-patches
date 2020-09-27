@@ -1,7 +1,7 @@
-From 2b012114563db6d27bd198ee220e85f641297c46 Mon Sep 17 00:00:00 2001
+From f85de08c7306e9752fd51141205ac3154510e57b Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 12 Aug 2019 23:08:26 +0200
-Subject: [PATCH 074/127] Add support for samsung touch proximity sensor as
+Subject: [PATCH 074/130] Add support for samsung touch proximity sensor as
  fallback to real proximity sensor
 
 ---

@@ -1,7 +1,7 @@
-From b0e81c7578ce196aa035f735816b38ecbfc633f6 Mon Sep 17 00:00:00 2001
+From d8d552b514eb0567abe956b78ece74314fb3bb73 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sat, 22 Feb 2020 23:45:54 +0100
-Subject: [PATCH 091/127] report press events to oppo fingerprint sensor
+Subject: [PATCH 091/130] report press events to oppo fingerprint sensor
 
 ---
  .../biometrics/fingerprint/FacolaView.java       | 16 ++++++++++++++++

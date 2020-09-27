@@ -2,7 +2,7 @@
 set -e
 
 patches="$(readlink -f -- $1)"
-assets="bootleg generic personal"
+assets="spl bootleg generic personal"
 
 for d in ${assets}; do
   for project in $(cd ${patches}/patches/${d}; echo *); do

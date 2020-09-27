@@ -1,7 +1,7 @@
-From af9605631c1caf4d12701178da085af9c617e222 Mon Sep 17 00:00:00 2001
+From 5eb13e467bd6b4487d6b2b104b41e36c022950d5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 11 May 2020 20:18:14 +0300
-Subject: [PATCH 10/15] add system speedup tuning
+Subject: [PATCH 10/18] add system speedup tuning
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -13,10 +13,10 @@ Subject: [PATCH 10/15] add system speedup tuning
  3 files changed, 7 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 0e8dd44de8..b1e09d62f3 100644
+index cc9e65a0a1..c8ac288346 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10077,6 +10077,8 @@
+@@ -10107,6 +10107,8 @@
      <string name="theme_customization_category">Theming</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar icons spacing (e.g. set 2dp paddings). -->
      <string name="theme_customization_statusbar_title">Status Bar spacing</string>
@@ -26,10 +26,10 @@ index 0e8dd44de8..b1e09d62f3 100644
      <string name="theme_customization_device_default">Device default</string>
  
 diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
-index 143967de51..1650ee47b8 100644
+index 8486d3b929..f67c1558eb 100644
 --- a/res/xml/display_settings.xml
 +++ b/res/xml/display_settings.xml
-@@ -171,6 +171,9 @@
+@@ -178,6 +178,9 @@
          <ListPreference
              android:key="android.theme.customization.statusbar"
              android:title="@string/theme_customization_statusbar_title"/>
@@ -40,13 +40,13 @@ index 143967de51..1650ee47b8 100644
  
  </PreferenceScreen>
 diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
-index 95910573bb..e4e70b69d3 100644
+index 095fe2815b..2646a5756a 100644
 --- a/src/com/android/settings/DisplaySettings.java
 +++ b/src/com/android/settings/DisplaySettings.java
-@@ -95,6 +95,8 @@ public class DisplaySettings extends DashboardFragment {
-         controllers.add(new BrightnessLevelPreferenceController(context, lifecycle));
+@@ -97,6 +97,8 @@ public class DisplaySettings extends DashboardFragment {
          controllers.add(new OverlayCategoryPreferenceController(context,
                  "android.theme.customization.statusbar"));
+         controllers.add(new LiveDisplayPreferenceController(context));
 +        controllers.add(new OverlayCategoryPreferenceController(context,
 +                "android.theme.customization.speedui"));
          return controllers;

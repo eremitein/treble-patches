@@ -1,7 +1,7 @@
-From c92d51fae3b10333a9569b34683edc7c45b95692 Mon Sep 17 00:00:00 2001
+From 768cdcfb642d20620e88b036d1aff1b413301fbf Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 23:19:32 +0100
-Subject: [PATCH 087/127] FacolaView: Support goodix ext and fix wrong forced
+Subject: [PATCH 087/130] FacolaView: Support goodix ext and fix wrong forced
  brightness
 
 ---

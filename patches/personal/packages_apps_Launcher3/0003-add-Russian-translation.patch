@@ -1,0 +1,285 @@
+From 32254559f5c7ccb651c732ccf2cf410aa8b35b9e Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 29 Sep 2020 07:23:28 -0400
+Subject: [PATCH] add Russian translation
+
+Change-Id: I3c8c754a53d80654bf3a96667d1c2dd2ef540c28
+---
+ res/values-ru/shishu_strings.xml | 265 +++++++++++++++++++++++++++++++
+ 1 file changed, 265 insertions(+)
+ create mode 100644 res/values-ru/shishu_strings.xml
+
+diff --git a/res/values-ru/shishu_strings.xml b/res/values-ru/shishu_strings.xml
+new file mode 100644
+index 000000000..601326c1a
+--- /dev/null
++++ b/res/values-ru/shishu_strings.xml
+@@ -0,0 +1,265 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/*
++* Copyright (C) 2008 The Android Open Source Project
++*
++* Licensed under the Apache License, Version 2.0 (the "License");
++* you may not use this file except in compliance with the License.
++* You may obtain a copy of the License at
++*
++*      http://www.apache.org/licenses/LICENSE-2.0
++*
++* Unless required by applicable law or agreed to in writing, software
++* distributed under the License is distributed on an "AS IS" BASIS,
++* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++* See the License for the specific language governing permissions and
++* limitations under the License.
++*/
++-->
++
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++
++    <!-- Application name -->
++    <string name="app_name">Shishu 家 Launcher</string>
++
++    <!-- About info -->
++    <string name="about_shishu_title" translatable="false">@string/app_name</string>
++    <string name="about_shishu_summary">by Bootleggers ROM</string>
++    <string name="about_based_on_title">Based on AOSP Launcher3</string>
++    <string name="about_based_on_summary">by the Android Open Source Project</string>
++    <string name="about_thanks_cat">Special thanks</string>
++    <string name="about">About</string>
++    <string name="about_summary">Info about the launcher</string>
++    <string name="about_app_version">Version</string>
++
++    <!-- General -->
++    <string name="settings_title">Настройки</string>
++
++    <!-- Categories -->
++    <string name="home_category_title">Домашний экран</string>
++    <string name="home_category_summary">Панель Google Now и многое другое</string>
++    <string name="icons_category_title">Иконки</string>
++    <string name="icons_category_summary">Форма значков и многое другое</string>
++    <string name="app_drawer_category_title">Список приложений</string>
++    <string name="app_drawer_category_summary">Настройте панель приложений</string>
++    <string name="misc_category_title">Прочее</string>
++    <string name="misc_category_summary">Другие опции</string>
++
++    <!-- Show searchbar -->
++    <string name="show_searchbar_title">Показывать панель поиска</string>
++    <string name="show_searchbar_summary">Показывать панель поиска на главном экране</string>
++
++    <!-- Google Feed -->
++    <string name="google_feed_title">Показывать Google Now</string>
++    <string name="google_feed_summary">Слева от главного экрана</string>
++ 
++     <!-- Gradients on Workspace/Hotseat -->
++    <string name="workspace_gradient_title">Показывать градиент сверху</string>
++    <string name="workspace_gradient_summary">Включите слабый градиент от строки состояния</string>
++    <string name="hotseat_gradient_title">Показывать градиент внизу</string>
++    <string name="hotseat_gradient_summary">Включите слабый градиент от панели запуска</string>
++
++    <!-- Swipe down to clear recents -->
++    <string name="allow_swipe_down_clearall_title">Закрыть все приложения, проведя пальцем вниз от просмотра последних</string>
++    <string name="allow_swipe_down_clearall_desc">Не работает, если включены Pie жесты</string>
++
++    <!-- AppInfo -->
++    <string name="app_info_subtext" translatable="false">Swipe down to close app info</string>
++    <string name="app_info_version_value" translatable="false">%1$s (%2$d)</string>
++    <string name="placeholder_string" translatable="false">Loading...</string> <!-- Used for preference height loading. -->
++    <string name="app_info_icon_pack" translatable="false">Icon pack</string>
++    <string name="app_info_icon_pack_none" translatable="false">None</string>
++    <string name="app_info_source" translatable="false">Source</string>
++    <string name="app_info_source_unknown" translatable="false">Unknown</string>
++    <string name="app_info_last_update" translatable="false">Last update</string>
++    <string name="app_info_version" translatable="false">Version</string>
++    <string name="app_info_more" translatable="false">More</string>
++    <!-- Preference default value -->
++    <string name="pref_value_default" translatable="false">Default</string>
++
++    <!-- Icon mask -->
++    <string name="legacy_icon_mask_title">Отключить маску формы на устаревших значках</string>
++    <string name="legacy_icon_mask_summary">Не позволяет изменять форму значков с помощью адаптивной маски значков</string>
++
++    <!-- QuickSpace -->
++    <string name="show_quickspace_title">Блок \"at-a-glance\"</string>
++    <string name="show_quickspace_summary">Показывать наверху главного экрана</string>
++    <string name="abbrev_wday_month_day_no_year">EEEEMMMd</string>
++
++    <!-- QuickSpace: QuickEvent: Device Intro Event -->
++    <string name="quick_event_rom_intro_welcome">Welcome to Bootleggers</string>
++    <string name="quick_event_rom_intro_bridge">Tap here %s</string>
++    <string name="quick_event_rom_intro_title1">to learn more</string>
++    <string name="quick_event_rom_intro_title2">and have fun!</string>
++    <string name="quick_event_rom_intro_title3">to learn about our project</string>
++    <string name="quick_event_rom_intro_title4">to get to know some stuff</string>
++    <string name="quick_event_rom_intro_title5">and have a good day</string>
++    <string name="quick_event_rom_intro_title6">to learn about our VoLTE services</string>
++    <string name="quick_event_rom_intro_title7">to get some info you might know</string>
++    <!-- QuickSpace: QuickEvent: Ambient Play -->
++    <string name="quick_event_ambient_now_playing">Now Playing</string>
++    <string name="quick_event_ambient_song_artist">%1$s by %2$s</string>
++
++    <!-- QuickSpace Date format -->
++    <string name="date_format_title">Формат даты</string>
++    <string name="date_format_long_name">Полный</string>
++    <string name="date_format_normal_name">Нормальный</string>
++    <string name="date_format_short_name">Короткий</string>
++    <string name="date_format_daydate_long_name">День (с номером)</string>
++    <string name="date_format_daydate_short_name">День (коротко с номером)</string>
++    <string name="date_format_dayonly_name">Только сегодня</string>
++    <string name="date_format_long" translatable="false">EEEE, MMMM d</string>
++    <string name="date_format_normal" translatable="false">EEEE, MMM d</string>
++    <string name="date_format_short" translatable="false">EEE, MMM d</string>
++    <string name="date_format_daydate_long" translatable="false">EEEEd</string>
++    <string name="date_format_daydate_short" translatable="false">EEEd</string>
++    <string name="date_format_dayonly" translatable="false">EEEE</string>
++
++    <!-- At a glance style -->
++    <string name="date_style_font">Шрифт даты</string>
++    <string name="date_style_font_systembold">System bold</string>
++    <string name="date_style_font_systemitalic">System italic</string>
++    <string name="date_style_font_system">System default</string>
++    <string name="date_style_font_system_header">System headline</string>
++    <string name="date_style_font_system_body">System body</string>
++    <string name="date_style_headline_font" translatable="false">@*android:string/config_headlineFontFamily</string>
++    <string name="date_style_body_font" translatable="false">@*android:string/config_bodyFontFamily</string>
++    <string name="date_style_font_systemlight">System light</string>
++    <string name="date_style_font_abelreg" translatable="false">Abel</string>
++    <string name="date_style_font_adamcg" translatable="false">Adan CG Pro</string>
++    <string name="date_style_font_alienleague" translatable="false">Alien League</string>
++    <string name="date_style_font_archivo" translatable="false">Archivo Narrow</string>
++    <string name="date_style_font_badscript" translatable="false">Bad Script</string>
++    <string name="date_style_font_bariol" translatable="false">Bariol</string>
++    <string name="date_style_font_bignoodle" translatable="false">Big Noodle Tilting</string>
++    <string name="date_style_font_biko" translatable="false">Biko</string>
++    <string name="date_style_font_cherryswash" translatable="false">Cherry Swash</string>
++    <string name="date_style_font_ginorasans" translatable="false">Ginora Sans</string>
++    <string name="date_style_font_gobold" translatable="false">GoBold Light</string>
++    <string name="date_style_font_google" translatable="false">Google Sans</string>
++    <string name="date_style_font_ibmplex" translatable="false">IBM Plex Mono</string>
++    <string name="date_style_font_inkferno" translatable="false">Inkferno</string>
++    <string name="date_style_font_instruction" translatable="false">Instruction</string>
++    <string name="date_style_font_jacklane" translatable="false">Jack Lane</string>
++    <string name="date_style_font_kellyslab" translatable="false">Kelly Slab</string>
++    <string name="date_style_font_monad" translatable="false">Monad</string>
++    <string name="date_style_font_noir" translatable="false">Noir</string>
++    <string name="date_style_font_outrunfuture" translatable="false">Outrun Future</string>
++    <string name="date_style_font_pompiere" translatable="false">Pompiere</string>
++    <string name="date_style_font_raleway" translatable="false">Raleway</string>
++    <string name="date_style_font_reemkufi" translatable="false">Reem Kufi</string>
++    <string name="date_style_font_riviera" translatable="false">Riviera</string>
++    <string name="date_style_font_satify" translatable="false">Satisfy</string>
++    <string name="date_style_font_seaweedsc" translatable="false">Seaweed Script</string>
++    <string name="date_style_font_sedgwick" translatable="false">Sedgwick Ave Display</string>
++    <string name="date_style_font_snowstorm" translatable="false">Snowstorm</string>
++    <string name="date_style_font_theoutbox" translatable="false">The Outbox</string>
++    <string name="date_style_font_vibur" translatable="false">Vibur</string>
++    <string name="date_style_font_voltaire" translatable="false">Voltaire</string>
++
++    <!-- At a glance uppercase -->
++    <string name="date_style_transform_title">Показывать заглавные буквы на дате</string>
++    <string name="date_style_transform_summary">Преобразование даты и текста в верхний регистр</string>
++
++    <!-- At a glance font spacing -->
++    <string name="date_style_spacing">Интервал даты</string>
++    <string name="date_style_spacing_normal">Нормальный</string>
++    <string name="date_style_spacing_barely">Едва заметный</string>
++    <string name="date_style_spacing_aesthetic" translatable="false">A e s t h e t i c</string>
++    <string name="date_style_spacing_ott">Приподнятый</string>
++
++    <!-- Quickspace alternative view -->
++    <string name="quickspace_shishufied_style_title">Использовать альтернативный стиль</string>
++    <string name="quickspace_shishufied_style_summary">Используйте другой стиль для \"at-a-glance\", более минималистичный</string>
++
++    <!-- Quickspace Now Playing -->
++    <string name="quickspace_now_playing_title">Сейчас играет</string>
++    <string name="quickspace_now_playing_summary">Показывает название проигрываемой песни. ВНИМАНИЕ: не полностью совместим со всеми медиаплеерами!</string>
++
++    <!-- Quickspace PSA - Custom messages for the glance -->
++    <string name="quickspace_psa_title">Случайное сообщение</string>
++    <string name="quickspace_psa_summary">Показывать иногда приятные сообщения</string>
++
++    <string-array name="quickspace_psa_morning">
++        <item>Good morning!</item>
++        <item>Good morning, gamer!</item>
++        <item>What a beautiful day!</item>
++        <item>Have a nice day!</item>
++        <item>What about a small 5 minutes nap?</item>
++        <item>That\'s one way to wake up.</item>
++        <item>You should change your alarm sounds.</item>
++        <item>Looks like it\'s a beautiful day, isn\'t it?</item>
++        <item>Let\'s get this bread.</item>
++        <item>Check the weather just in case</item>
++        <item>Feeling a bit sleepy yet</item>
++        <item>Have you looked outside yet?</item>
++        <item>Let\'s get this done.</item>
++    </string-array>
++    <string-array name="quickspace_psa_evening">
++        <item>Good night!</item>
++        <item>Sleep well!</item>
++        <item>See you tomorrow!</item>
++        <item>Sweet dreams!</item>
++        <item>Don\'t stay up too long</item>
++        <item>Have a good sleep</item>
++        <item>Get some sleep</item>
++        <item>Time to relax</item>
++        <item>Enjoy the night!</item>
++        <item>Time to charge the batteries!</item>
++        <item>Tomorrow might be a great day</item>
++        <item>Get your bones ready for tomorrow</item>
++    </string-array>
++    <string-array name="quickspace_psa_midnight">
++        <item>Um... good night?</item>
++        <item>It\'s a bit late now</item>
++        <item>You should fix your sleep schedule</item>
++        <item>Are you more productive at this time?</item>
++    </string-array>
++    <string-array name="quickspace_psa_random">
++        <item>It do be like that sometimes</item>
++        <item>Is it time to flash another ROM already?</item>
++        <item>Hyped about Android 10?</item>
++        <item>Oh hey, what\'s up?</item>
++        <item>Time to brag my #setup</item>
++        <item>How many screenshots do you take?</item>
++        <item>Is your device shishufied?</item>
++        <item>I wish i could use VoLTE</item>
++        <item>Have fun!</item>
++        <item>Let\'s get this grind, gamer!</item>
++        <item>\u003C\u003C\u003C\u003C\u003C\u003C\u003C HEAD</item>
++        <item>You need Shishu Launcher Premium to see this</item>
++        <item>Remember the lineage of the unicorn</item>
++        <item>A carbonized owl statue</item>
++        <item>Starting from the ground zero</item>
++        <item>Eat your veggies and send logs</item>
++        <item>Oh no, it\'s updog again</item>
++        <item>I\'ve come to make an announcement</item>
++        <item>What is a kang?</item>
++        <item>How is everything going?</item>
++        <item>How to cherry-pick correctly?</item>
++        <item>Thank you for your support</item>
++        <item>Are you guys really giving us &quot;teasers&quot; about adding paid features on a rom that was free to use previously?</item>
++        <item>One of the buildbot\'s best picks</item>
++        <item>If you love an app, please, support it by purchasing it</item>
++        <item>What a lovely experience, isn\'t it?</item>
++        <item>What a buggy experience, isn\'t it?</item>
++        <item>nice</item>
++        <item>Enjoy the sunset!</item>
++        <item>Get Shishufied</item>
++        <item>Unshishufied</item>
++        <item>rm -rf \/</item>
++    </string-array>
++
++    <!-- Hide and Lock apps -->
++    <string name="hide_apps_manager_name">Скрытые приложения</string>
++    <string name="hidelock_apps_manager_name">Скрытые и защищенные приложения</string>
++    <string name="hide_apps_manager_summary">Скрыть приложения из панели приложений</string>
++    <string name="hidelock_apps_manager_summary">Скрыть и защитить приложения из панели приложений</string>
++    <string name="hidelock_apps_auth_manager">Разблокируйте для управления скрытыми и защищенными приложениями</string>
++    <string name="hidelock_apps_auth_open_app">Авторизуйтесь, чтобы открыть %1$s</string>
++    <string name="hidelock_apps_loading">L0aD1nG\u2026</string>
++    <string name="hidelock_apps_no_lock_error">Настройте безопасный экран блокировки, чтобы ограничить доступ к приложениям</string>
++    <string name="hidelock_apps_help">Помощь</string>
++    <string name="hidelock_apps_info_hidden">Скрытые приложения и их виджеты скрыты с панели</string>
++    <string name="hidelock_apps_info_protected">Защищенные приложения требуют аутентификации для запуска из панели</string>
++</resources>
+-- 
+2.17.1
+

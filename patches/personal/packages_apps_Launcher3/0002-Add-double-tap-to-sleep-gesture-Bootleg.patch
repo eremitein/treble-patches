@@ -1,7 +1,7 @@
-From 08349fb2bddb4b1ec906fe5019cfbb271163c653 Mon Sep 17 00:00:00 2001
+From f9d3e3ac9429d4459a15b6730d454165f12c9b59 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 21 Aug 2020 14:43:04 -0400
-Subject: [PATCH] Add double tap to sleep gesture (Bootleg)
+Subject: [PATCH 2/2] Add double tap to sleep gesture (Bootleg)
 
   * based on
     https://github.com/crdroidandroid/android_packages_apps_Launcher3/commit/1ced8c431b3a8ccb397199f68e1dd1ac401a90d4
@@ -11,12 +11,13 @@ Change-Id: I3d62543093a6c5112d904b4a7606d4c4b48773f5
 ---
  AndroidManifest-common.xml                    |  2 +-
  SecondaryDisplayLauncher/Android.mk           |  3 ++-
+ res/values-ru/strings.xml                     |  3 +++
  res/values/strings.xml                        |  4 ++++
  res/xml/misc_preferences.xml                  |  7 +++++++
  src/com/android/launcher3/Utilities.java      |  6 ++++++
  src/com/android/launcher3/Workspace.java      | 20 +++++++++++++++++++
  .../touch/WorkspaceTouchListener.java         |  1 +
- 7 files changed, 41 insertions(+), 2 deletions(-)
+ 8 files changed, 44 insertions(+), 2 deletions(-)
 
 diff --git a/AndroidManifest-common.xml b/AndroidManifest-common.xml
 index f08a79bc2..01ad2a2e8 100644
@@ -45,6 +46,18 @@ index 0c2659361..e49b21cda 100644
  LOCAL_MODULE := SecondaryDisplayLauncherLib
  LOCAL_PRIVILEGED_MODULE := true
  
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index 1cc699f1c..1efea2eff 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -141,4 +141,7 @@
+     <string name="bottom_work_tab_user_education_close_button" msgid="4224492243977802135">"Закрыть"</string>
+     <string name="bottom_work_tab_user_education_closed" msgid="1098340939861869465">"Закрыта"</string>
+     <string name="remote_action_failed" msgid="1383965239183576790">"Не удалось выполнить действие (<xliff:g id="WHAT">%1$s</xliff:g>)."</string>
++    <!-- DT2S option -->
++    <string name="pref_sleep_gesture_title">Двойное касание для перехода в сон</string>
++    <string name="pref_sleep_gesture_summary">Дважды коснитесь пустого пространства для выключения экрана</string>
+ </resources>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
 index f696bf1aa..d8f26e0c2 100644
 --- a/res/values/strings.xml

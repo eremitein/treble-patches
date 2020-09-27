@@ -1,12 +1,12 @@
-From a206e6ddca97db04a83a2aaafdeb3fea49da86c7 Mon Sep 17 00:00:00 2001
+From a577d7606dfb1d45a4c76421644cc5960ec8b522 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 23 Aug 2020 12:44:27 -0400
-Subject: [PATCH] add statusbar padding overlays
+Subject: [PATCH 129/130] add statusbar padding overlays
 
 Change-Id: I8cc5e5f03c1eddd8cd3208623a7219e8a17353aa
 ---
  .../systemui/theme/ThemeOverlayManager.java   |  8 ++++-
- packages/overlays/Android.mk                  |  4 +++
+ packages/overlays/Android.mk                  |  5 ++++
  .../overlays/Padding12dpOverlay/Android.mk    | 30 +++++++++++++++++++
  .../Padding12dpOverlay/AndroidManifest.xml    | 24 +++++++++++++++
  .../Padding12dpOverlay/res/values/dimens.xml  | 23 ++++++++++++++
@@ -19,7 +19,10 @@ Change-Id: I8cc5e5f03c1eddd8cd3208623a7219e8a17353aa
  .../overlays/Padding24dpOverlay/Android.mk    | 30 +++++++++++++++++++
  .../Padding24dpOverlay/AndroidManifest.xml    | 24 +++++++++++++++
  .../Padding24dpOverlay/res/values/dimens.xml  | 23 ++++++++++++++
- 14 files changed, 319 insertions(+), 1 deletion(-)
+ .../overlays/Padding28dpOverlay/Android.mk    | 30 +++++++++++++++++++
+ .../Padding28dpOverlay/AndroidManifest.xml    | 24 +++++++++++++++
+ .../Padding28dpOverlay/res/values/dimens.xml  | 23 ++++++++++++++
+ 17 files changed, 397 insertions(+), 1 deletion(-)
  create mode 100644 packages/overlays/Padding12dpOverlay/Android.mk
  create mode 100644 packages/overlays/Padding12dpOverlay/AndroidManifest.xml
  create mode 100644 packages/overlays/Padding12dpOverlay/res/values/dimens.xml
@@ -32,6 +35,9 @@ Change-Id: I8cc5e5f03c1eddd8cd3208623a7219e8a17353aa
  create mode 100644 packages/overlays/Padding24dpOverlay/Android.mk
  create mode 100644 packages/overlays/Padding24dpOverlay/AndroidManifest.xml
  create mode 100644 packages/overlays/Padding24dpOverlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/Padding28dpOverlay/Android.mk
+ create mode 100644 packages/overlays/Padding28dpOverlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/Padding28dpOverlay/res/values/dimens.xml
 
 diff --git a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
 index 1f46988c7f5..c2881969063 100644
@@ -81,20 +87,21 @@ index 1f46988c7f5..c2881969063 100644
          mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SETTINGS, SETTINGS_PACKAGE);
          mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_LAUNCHER, mLauncherPackage);
 diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
-index b15841a2ce9..753b53272d6 100644
+index 898d8e6cbea..45e6ac34685 100644
 --- a/packages/overlays/Android.mk
 +++ b/packages/overlays/Android.mk
-@@ -48,6 +48,10 @@ LOCAL_REQUIRED_MODULES := \
- 	IconShapeSquircleOverlay \
- 	IconShapeTeardropOverlay \
- 	IconShapeCircleOverlay \
+@@ -57,6 +57,11 @@ LOCAL_REQUIRED_MODULES := \
+ 	StatusBar1Overlay \
+ 	StatusBar2Overlay \
+ 	StatusBar3Overlay \
 +	Padding12dpOverlay \
 +	Padding16dpOverlay \
 +	Padding20dpOverlay \
 +	Padding24dpOverlay \
- 	StatusBar1Overlay \
- 	StatusBar2Overlay \
- 	StatusBar3Overlay \
++	Padding28dpOverlay \
+ 	Level1SpeedUIOverlay \
+ 	Level2SpeedUIOverlay \
+ 	Level3SpeedUIOverlay \
 diff --git a/packages/overlays/Padding12dpOverlay/Android.mk b/packages/overlays/Padding12dpOverlay/Android.mk
 new file mode 100644
 index 00000000000..1af553a09dd
@@ -474,6 +481,101 @@ index 00000000000..bcd1fcc7271
 +    <dimen name="status_bar_padding_start">24dp</dimen>
 +    <!-- the padding on the end of the statusbar -->
 +    <dimen name="status_bar_padding_end">24dp</dimen>
++</resources>
+diff --git a/packages/overlays/Padding28dpOverlay/Android.mk b/packages/overlays/Padding28dpOverlay/Android.mk
+new file mode 100644
+index 00000000000..ddec96d968e
+--- /dev/null
++++ b/packages/overlays/Padding28dpOverlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := Padding28dp
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := Padding28dpOverlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/Padding28dpOverlay/AndroidManifest.xml b/packages/overlays/Padding28dpOverlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..162c95aae1e
+--- /dev/null
++++ b/packages/overlays/Padding28dpOverlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.padding28"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.padding" android:priority="1"/>
++    <application android:label="28dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/Padding28dpOverlay/res/values/dimens.xml b/packages/overlays/Padding28dpOverlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..6d30dfab1fa
+--- /dev/null
++++ b/packages/overlays/Padding28dpOverlay/res/values/dimens.xml
+@@ -0,0 +1,23 @@
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- the padding on the start of the statusbar -->
++    <dimen name="status_bar_padding_start">28dp</dimen>
++    <!-- the padding on the end of the statusbar -->
++    <dimen name="status_bar_padding_end">28dp</dimen>
 +</resources>
 -- 
 2.17.1

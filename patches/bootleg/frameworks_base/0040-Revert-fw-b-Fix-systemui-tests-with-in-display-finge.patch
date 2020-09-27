@@ -1,7 +1,7 @@
-From 24fd02c74fbe2ddea4a14aca7fa7072f58df2c02 Mon Sep 17 00:00:00 2001
+From c83d040e12b513be40e135ee096ecbaf90d798f4 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:31:35 -0400
-Subject: [PATCH 040/127] Revert "fw/b: Fix systemui tests with in-display
+Subject: [PATCH 040/130] Revert "fw/b: Fix systemui tests with in-display
  fingerprint"
 
 This reverts commit 2a6b9b8822279c5011658c2afa17f2565a05a035.
@@ -10,10 +10,10 @@ This reverts commit 2a6b9b8822279c5011658c2afa17f2565a05a035.
  1 file changed, 1 insertion(+), 2 deletions(-)
 
 diff --git a/packages/SystemUI/Android.bp b/packages/SystemUI/Android.bp
-index dcdde85c820..7eae80ceba6 100644
+index 28a1125e9f9..2a3085306a1 100644
 --- a/packages/SystemUI/Android.bp
 +++ b/packages/SystemUI/Android.bp
-@@ -124,8 +124,7 @@ android_library {
+@@ -133,8 +133,7 @@ android_library {
          "testables",
          "truth-prebuilt",
          "dagger2-2.19",

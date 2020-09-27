@@ -1,7 +1,7 @@
-From 3ae4795f736f17d9cacbedc5a14fb04d29d39f15 Mon Sep 17 00:00:00 2001
+From eeeaa9cfe10c9f50ea6274aeae62410d28523237 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:21:34 -0400
-Subject: [PATCH 029/127] Revert "FODCircleView: Dont change alpha of fod on
+Subject: [PATCH 029/130] Revert "FODCircleView: Dont change alpha of fod on
  AOD"
 
 This reverts commit c6f2bdb54986dbf462c5db5ecf9330b20423444a.

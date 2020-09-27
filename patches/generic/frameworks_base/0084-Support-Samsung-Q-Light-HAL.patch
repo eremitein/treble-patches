@@ -1,7 +1,7 @@
-From fe92b0f59e960666988a97073e2a9d9bd914916d Mon Sep 17 00:00:00 2001
+From 962d3ccbb1d884750a4a5b04e027a7d36379dc42 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 15 Dec 2019 16:38:44 +0100
-Subject: [PATCH 084/127] Support Samsung Q Light HAL
+Subject: [PATCH 084/130] Support Samsung Q Light HAL
 
 ---
  services/core/jni/Android.bp                  |  1 +

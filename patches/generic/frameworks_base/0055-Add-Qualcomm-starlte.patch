@@ -1,7 +1,7 @@
-From 7304928479ccf797c4687a741499ef607d8ef037 Mon Sep 17 00:00:00 2001
+From b53bd703364b9113c7d0111a404be3da2dad3bd7 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 25 Jun 2018 22:43:32 +0200
-Subject: [PATCH 055/127] Add Qualcomm starlte
+Subject: [PATCH 055/130] Add Qualcomm starlte
 
 ---
  .../core/java/com/android/server/lights/LightsService.java    | 4 +++-

@@ -1,7 +1,7 @@
-From 09a93e362f8f85954683680649dec2a39c20cec3 Mon Sep 17 00:00:00 2001
+From 4831fd695b03e3c4212222d8415b006ab0c6cf2f Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 9 Apr 2020 22:57:47 +0200
-Subject: [PATCH 098/127] Additional fod command for non-optical samsung
+Subject: [PATCH 098/130] Additional fod command for non-optical samsung
  devices running Q vendor
 
 ---

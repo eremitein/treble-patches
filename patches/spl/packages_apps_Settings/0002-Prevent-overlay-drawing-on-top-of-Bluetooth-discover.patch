@@ -1,0 +1,38 @@
+From 08285dbc81a06e05ad36f9d509d8f3725040d2c8 Mon Sep 17 00:00:00 2001
+From: Jakub Pawlowski <jpawlowski@google.com>
+Date: Thu, 14 May 2020 02:15:26 +0200
+Subject: [PATCH 02/40] Prevent overlay drawing on top of Bluetooth discovery
+ request dialog
+
+Bug: 155650356
+Change-Id: I9cee6e5bb8cef77aa385d664fe0738db1496ef20
+(cherry picked from commit c48d63752a60443db076b1538588c2b57862d285)
+---
+ .../android/settings/bluetooth/RequestPermissionActivity.java | 4 ++++
+ 1 file changed, 4 insertions(+)
+
+diff --git a/src/com/android/settings/bluetooth/RequestPermissionActivity.java b/src/com/android/settings/bluetooth/RequestPermissionActivity.java
+index 54854065e9..4446fb6d8d 100644
+--- a/src/com/android/settings/bluetooth/RequestPermissionActivity.java
++++ b/src/com/android/settings/bluetooth/RequestPermissionActivity.java
+@@ -37,6 +37,8 @@ import androidx.appcompat.app.AlertDialog;
+ import com.android.settings.R;
+ import com.android.settingslib.bluetooth.BluetoothDiscoverableTimeoutReceiver;
+ 
++import static android.view.WindowManager.LayoutParams.SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS;
++
+ /**
+  * RequestPermissionActivity asks the user whether to enable discovery. This is
+  * usually started by an application wanted to start bluetooth and or discovery
+@@ -72,6 +74,8 @@ public class RequestPermissionActivity extends Activity implements
+     protected void onCreate(Bundle savedInstanceState) {
+         super.onCreate(savedInstanceState);
+ 
++        getWindow().addSystemFlags(SYSTEM_FLAG_HIDE_NON_SYSTEM_OVERLAY_WINDOWS);
++
+         setResult(Activity.RESULT_CANCELED);
+ 
+         // Note: initializes mBluetoothAdapter and returns true on error
+-- 
+2.17.1
+

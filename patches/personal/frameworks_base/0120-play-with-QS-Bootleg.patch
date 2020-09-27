@@ -1,7 +1,7 @@
-From 30b84595d9e8d208df25452a4eeb18d5ddfe8d08 Mon Sep 17 00:00:00 2001
+From 6a4656492eeeffc6dfed7d983f67c5933bdadb6f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 8 Mar 2020 15:26:13 +0200
-Subject: [PATCH 120/127] play with QS (Bootleg)
+Subject: [PATCH 120/130] play with QS (Bootleg)
 
 	modified:   packages/SystemUI/res/values/dimens.xml
 ---
@@ -9,7 +9,7 @@ Subject: [PATCH 120/127] play with QS (Bootleg)
  1 file changed, 3 insertions(+), 3 deletions(-)
 
 diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
-index 28266f44172..130dd2ee4dd 100644
+index 67e32d9fbbd..243d8437d3f 100644
 --- a/packages/SystemUI/res/values/dimens.xml
 +++ b/packages/SystemUI/res/values/dimens.xml
 @@ -440,7 +440,7 @@

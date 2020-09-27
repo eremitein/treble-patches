@@ -1,7 +1,7 @@
-From c9811d2b0897ce2a1dc6e4303a07964e1c15cdc6 Mon Sep 17 00:00:00 2001
+From 8fddf39bc65b5a348668265f96695523881ee11b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 11 Apr 2020 02:59:51 +0300
-Subject: [PATCH 115/127] add StatusBar icon spacing overlays
+Subject: [PATCH 115/130] add StatusBar icon spacing overlays
 
 	modified:   packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
 	modified:   packages/overlays/Android.mk
@@ -85,13 +85,13 @@ index 7a56cadd9e6..2e111dcb6e3 100644
          mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SETTINGS, SETTINGS_PACKAGE);
          mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_LAUNCHER, mLauncherPackage);
 diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
-index 0f517f3ca4d..822dc69fb7c 100644
+index 6a4f952176f..26fc7125c99 100644
 --- a/packages/overlays/Android.mk
 +++ b/packages/overlays/Android.mk
-@@ -48,6 +48,9 @@ LOCAL_REQUIRED_MODULES := \
- 	IconShapeSquircleOverlay \
- 	IconShapeTeardropOverlay \
- 	IconShapeCircleOverlay \
+@@ -54,6 +54,9 @@ LOCAL_REQUIRED_MODULES := \
+ 	IconShapeVesselOverlay \
+ 	IconShapeRoundedHexagonOverlay \
+ 	IconShapePebbleOverlay \
 +	StatusBar1Overlay \
 +	StatusBar2Overlay \
 +	StatusBar3Overlay \

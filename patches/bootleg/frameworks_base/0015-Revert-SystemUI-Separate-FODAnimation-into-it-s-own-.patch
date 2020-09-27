@@ -1,7 +1,7 @@
-From f638e9070c25a54fc04413f704b6fdd77d0c4aa0 Mon Sep 17 00:00:00 2001
+From 8e35e7e8a1728845508131843744dc06793ba4fe Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 08:59:31 -0400
-Subject: [PATCH 015/127] Revert "SystemUI: Separate FODAnimation into it's own
+Subject: [PATCH 015/130] Revert "SystemUI: Separate FODAnimation into it's own
  class"
 
 This reverts commit 88645051b470692d5b30392ab85b3942c23105cd.

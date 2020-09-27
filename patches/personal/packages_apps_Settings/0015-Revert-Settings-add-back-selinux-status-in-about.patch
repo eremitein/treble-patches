@@ -1,7 +1,7 @@
-From a22da84f76f6aee023878c11727aa1b5b2b81a0b Mon Sep 17 00:00:00 2001
+From 20e640b0ee0a9847034c59420dc5c606a9ef5bdb Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 23 Aug 2020 11:07:09 -0400
-Subject: [PATCH] Revert "Settings: add back selinux status in about"
+Subject: [PATCH 15/18] Revert "Settings: add back selinux status in about"
 
 This reverts commit 5a284ec207c5c3e328a98805d2e1b017db6a25fe.
 
@@ -15,7 +15,7 @@ Change-Id: If8c23f663e5c169dc353bacc0b08e182c918395b
  delete mode 100644 src/com/android/settings/deviceinfo/SELinuxStatusPreferenceController.java
 
 diff --git a/res/values/bootleg_strings.xml b/res/values/bootleg_strings.xml
-index 9f69ca3f10..d6e4d71dcf 100644
+index a07f03d41b..47867877a3 100644
 --- a/res/values/bootleg_strings.xml
 +++ b/res/values/bootleg_strings.xml
 @@ -101,12 +101,6 @@

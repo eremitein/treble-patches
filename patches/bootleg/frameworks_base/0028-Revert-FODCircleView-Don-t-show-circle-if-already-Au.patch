@@ -1,7 +1,7 @@
-From 3b9b8f24e121c20e685f3f7fe9ca427c6aa589eb Mon Sep 17 00:00:00 2001
+From 1460b8fb731e2bc3cfb782bf860b7d9cde196226 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:21:32 -0400
-Subject: [PATCH 028/127] Revert "FODCircleView: Don't show circle if already
+Subject: [PATCH 028/130] Revert "FODCircleView: Don't show circle if already
  Authenticated"
 
 This reverts commit 89e9a2b413715284da6e34c9f026b406d742e695.

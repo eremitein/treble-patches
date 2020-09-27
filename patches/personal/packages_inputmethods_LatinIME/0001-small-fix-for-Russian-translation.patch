@@ -1,0 +1,22 @@
+From a047369a3d904fc61821916e01e6ded4403a32d1 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 28 Sep 2020 18:10:32 -0400
+Subject: [PATCH] small fix for Russian translation
+
+---
+ java/res/values-ru/cm_strings.xml | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/java/res/values-ru/cm_strings.xml b/java/res/values-ru/cm_strings.xml
+index cf1421f3c..d0a9ade92 100644
+--- a/java/res/values-ru/cm_strings.xml
++++ b/java/res/values-ru/cm_strings.xml
+@@ -17,4 +17,5 @@
+     <string name="subtype_no_language_bepo">Алфавит (Bépo)</string>
+     <string name="subtype_hu_ZZ">Венгерский (QWERTY)</string>
+     <string name="keyboard_theme_follow_system">Следовать настройкам системы</string>
++    <string name="prefs_keyboard_height_scale">Высота клавиатуры</string>
+ </resources>
+-- 
+2.17.1
+

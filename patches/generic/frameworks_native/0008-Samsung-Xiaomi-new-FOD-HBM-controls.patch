@@ -1,4 +1,4 @@
-From 8ec9cb9b97fc1694c8a85058f6bbb857496e0b54 Mon Sep 17 00:00:00 2001
+From 792da63bc6e0783c3477b86dc32a160062d36f89 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 20 May 2020 21:16:56 +0200
 Subject: [PATCH 8/8] Samsung + Xiaomi new FOD HBM controls
@@ -9,7 +9,7 @@ Subject: [PATCH 8/8] Samsung + Xiaomi new FOD HBM controls
  2 files changed, 41 insertions(+), 4 deletions(-)
 
 diff --git a/services/surfaceflinger/BufferQueueLayer.cpp b/services/surfaceflinger/BufferQueueLayer.cpp
-index af5fe6246..13c32fb72 100644
+index df032e72b..aa7f1fa2d 100644
 --- a/services/surfaceflinger/BufferQueueLayer.cpp
 +++ b/services/surfaceflinger/BufferQueueLayer.cpp
 @@ -24,6 +24,7 @@
@@ -20,9 +20,9 @@ index af5fe6246..13c32fb72 100644
  
  #include "BufferQueueLayer.h"
  #include "LayerRejecter.h"
-@@ -31,6 +32,14 @@
- 
- #include "TimeStats/TimeStats.h"
+@@ -35,6 +36,14 @@
+ #include "smomo_interface.h"
+ #endif
  
 +static bool sCheckedProps = false;
 +static bool sSamsungFod = false;
@@ -35,7 +35,7 @@ index af5fe6246..13c32fb72 100644
  namespace android {
  
  BufferQueueLayer::BufferQueueLayer(const LayerCreationArgs& args) : BufferLayer(args) {}
-@@ -538,7 +547,10 @@ void BufferQueueLayer::onFirstRef() {
+@@ -596,7 +605,10 @@ void BufferQueueLayer::onFirstRef() {
          mConsumer =
                  new BufferLayerConsumer(consumer, mFlinger->getRenderEngine(), mTextureName, this);
      }
@@ -47,7 +47,7 @@ index af5fe6246..13c32fb72 100644
      mConsumer->setContentsChangedListener(this);
      mConsumer->setName(mName);
  
-@@ -564,10 +576,16 @@ status_t BufferQueueLayer::setDefaultBufferProperties(uint32_t w, uint32_t h, Pi
+@@ -622,10 +634,16 @@ status_t BufferQueueLayer::setDefaultBufferProperties(uint32_t w, uint32_t h, Pi
      }
  
      mFormat = format;

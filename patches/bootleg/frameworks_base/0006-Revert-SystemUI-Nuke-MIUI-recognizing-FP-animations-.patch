@@ -1,7 +1,7 @@
-From 5d76461310c1ebde3a49eb038faa90436c443a45 Mon Sep 17 00:00:00 2001
+From 3da4acc133a76fa7f646957064cd6655019ada1c Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 08:58:02 -0400
-Subject: [PATCH 006/127] Revert "SystemUI: Nuke MIUI recognizing FP animations
+Subject: [PATCH 006/130] Revert "SystemUI: Nuke MIUI recognizing FP animations
  [1/2]"
 
 This reverts commit 2d751abea0710e93e85a3503093146a8898c06da.
@@ -71,10 +71,10 @@ This reverts commit 2d751abea0710e93e85a3503093146a8898c06da.
  create mode 100644 packages/SystemUI/res/drawable/gxzw_normal_recognizing_anim_9.webp
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 1bf07588732..79ee828dfae 100644
+index 9af5717cf09..55d48e1bdf3 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5513,7 +5513,7 @@ public final class Settings {
+@@ -5614,7 +5614,7 @@ public final class Settings {
  
          /** @hide */
          private static final Validator FOD_ANIM_VALIDATOR =

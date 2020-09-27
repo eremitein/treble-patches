@@ -1,7 +1,7 @@
-From d45c02728fb456bb10689fa96e71c1269170b0bb Mon Sep 17 00:00:00 2001
+From 64ad97feb413595cc70132f5c9935505d8a9e4d4 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 20 May 2020 21:17:58 +0200
-Subject: [PATCH 102/127] Add support for new Goodix, Samsung, Xiaomi FODs
+Subject: [PATCH 102/130] Add support for new Goodix, Samsung, Xiaomi FODs
 
 - Xiaomi on MIUI12 has new magical Z to trigger HBM, and trigger feedback. Dim layer is done by kernel, but we need to set alpha
 - Samsung has usageBits to trigger HBM and trigger feedback

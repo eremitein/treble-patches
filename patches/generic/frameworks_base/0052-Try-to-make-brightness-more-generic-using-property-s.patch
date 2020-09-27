@@ -1,7 +1,7 @@
-From 67d47d840998b3461e8b7988fb81b90b7e57803f Mon Sep 17 00:00:00 2001
+From d6e7fd70d0936168317a53b8a285d41872b851d1 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Sun, 10 Jun 2018 22:54:55 +0200
-Subject: [PATCH 052/127] Try to make brightness more generic using property
+Subject: [PATCH 052/130] Try to make brightness more generic using property
  set by rw-system
 
 ---

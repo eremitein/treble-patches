@@ -1,7 +1,7 @@
-From 3f9ca304b862bc57d941c6b236e8db89682712bc Mon Sep 17 00:00:00 2001
+From 53d30d27f2547e3d5a6cf795ed7db2ad8e1a7984 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:17:54 -0400
-Subject: [PATCH 017/127] Revert "Settings: Add FOD icon picker settings values
+Subject: [PATCH 017/130] Revert "Settings: Add FOD icon picker settings values
  to backup"
 
 This reverts commit 361cd68a0679d3e82501227ba820a89c080edc67.
@@ -12,10 +12,10 @@ Change-Id: I9d12921693394ad6b931d188958f9405260fc6df
  1 file changed, 23 deletions(-)
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index ff5edfa01cb..1c132002405 100644
+index b1b2a982871..ef95421ef8f 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5482,39 +5482,24 @@ public final class Settings {
+@@ -5583,39 +5583,24 @@ public final class Settings {
           */
          public static final String FOD_ICON = "fod_icon";
  
@@ -55,7 +55,7 @@ index ff5edfa01cb..1c132002405 100644
          /**
           * Whether to show heads up only for dialer and sms apps
           * @hide
-@@ -5701,10 +5686,6 @@ public final class Settings {
+@@ -6012,10 +5997,6 @@ public final class Settings {
              CUSTOM_DEVICE_GESTURE_FEEDBACK_ENABLED,
              CUSTOM_DEVICE_FEATURE_SETTINGS,
              QS_BLUR,
@@ -66,7 +66,7 @@ index ff5edfa01cb..1c132002405 100644
              LESS_BORING_HEADS_UP,
              STATUS_BAR_BRIGHTNESS_CONTROL,
              HEADSET_CONNECT_PLAYER,
-@@ -6062,10 +6043,6 @@ public final class Settings {
+@@ -6389,10 +6370,6 @@ public final class Settings {
              VALIDATORS.put(DEVICE_INTRODUCTION_COMPLETED, DEVICE_INTRODUCTION_COMPLETED_VALIDATOR);
              VALIDATORS.put(QS_BLUR, QS_BLUR_VALIDATOR);
              VALIDATORS.put(POCKET_JUDGE, POCKET_JUDGE_VALIDATOR);

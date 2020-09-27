@@ -1,0 +1,46 @@
+From c4f1163e1dc692a134f97ef40a73e73d60b2a07e Mon Sep 17 00:00:00 2001
+From: Chuangjie Xia <chuangjie.xia@mediatek.com>
+Date: Wed, 9 Oct 2019 13:55:16 +0800
+Subject: [PATCH 2/3] Delete an uninitialized object in AACExtractor
+
+Due to some reason, for example bad file, readAt header fails
+in AACExtractor(...) and the variable mMeta is not initialized.
+Then exception happens when to delete mMeta in ~AMRExtractor().
+
+Bug: 142630125
+Bug: 142641801
+Test: MTBF test and make sure
+      no assertion in AMediaFormat_delete(mMeta) of ~AACExtractor()
+Change-Id: Ie04989f20170391961c8a6d12e1882262be18d7f
+Merged-In: Ie04989f20170391961c8a6d12e1882262be18d7f
+(cherry picked from commit 19e92b5bf7db4adaaf8375904fec8417a3c1fa3d)
+---
+ media/extractors/aac/AACExtractor.cpp | 5 ++++-
+ 1 file changed, 4 insertions(+), 1 deletion(-)
+
+diff --git a/media/extractors/aac/AACExtractor.cpp b/media/extractors/aac/AACExtractor.cpp
+index 9d183d498..5d00d94ae 100644
+--- a/media/extractors/aac/AACExtractor.cpp
++++ b/media/extractors/aac/AACExtractor.cpp
+@@ -132,6 +132,7 @@ static size_t getAdtsFrameLength(DataSourceHelper *source, off64_t offset, size_
+ AACExtractor::AACExtractor(
+         DataSourceHelper *source, off64_t offset)
+     : mDataSource(source),
++      mMeta(nullptr),
+       mInitCheck(NO_INIT),
+       mFrameDurationUs(0) {
+ 
+@@ -180,7 +181,9 @@ AACExtractor::AACExtractor(
+ }
+ 
+ AACExtractor::~AACExtractor() {
+-    AMediaFormat_delete(mMeta);
++    if (mMeta != nullptr) {
++        AMediaFormat_delete(mMeta);
++    }
+ }
+ 
+ media_status_t AACExtractor::getMetaData(AMediaFormat *meta) {
+-- 
+2.17.1
+

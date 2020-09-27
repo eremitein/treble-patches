@@ -1,7 +1,7 @@
-From 66ea0a39b8106f163b4e4c19a12b635d74adc5d8 Mon Sep 17 00:00:00 2001
+From 27e70a1922518704f56951fc019eb058d7600597 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:21:29 -0400
-Subject: [PATCH 026/127] Revert "FODCircleView: disable touch detection on
+Subject: [PATCH 026/130] Revert "FODCircleView: disable touch detection on
  screen off"
 
 This reverts commit 4bc4347017a9918b3fb577c38e7b493b8115e15f.

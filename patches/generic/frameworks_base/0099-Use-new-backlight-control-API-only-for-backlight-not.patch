@@ -1,7 +1,7 @@
-From cbb6aa228d585b61f8466666916befd21698f46e Mon Sep 17 00:00:00 2001
+From 3d15e4e08378718805295701a1453c7b59c35f1b Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Wed, 20 May 2020 17:21:48 +0200
-Subject: [PATCH 099/127] Use new backlight control API only for backlight, not
+Subject: [PATCH 099/130] Use new backlight control API only for backlight, not
  for other lights
 
 ---

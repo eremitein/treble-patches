@@ -1,7 +1,7 @@
-From ecf1c163fa6377408e842a9c9be7cbd4656bbcd0 Mon Sep 17 00:00:00 2001
+From d8912e118f3d0d115d5cf283af5ebbbfc9519062 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Tue, 4 Feb 2020 11:09:32 +0200
-Subject: [PATCH 09/15] add statusbar icon spacing tuning (Bootleg)
+Subject: [PATCH 09/18] add statusbar icon spacing tuning (Bootleg)
 
   * based on
   https://github.com/neon-os/packages_apps_Settings/commit/ba07105ed23396f47d78bc3867bcd112ff1584bd
@@ -23,10 +23,10 @@ Change-Id: I5fd08e898f69da64131805f115a18f2ad74dda4f
  rename src/com/android/settings/{development => display}/OverlayCategoryPreferenceController.java (92%)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index e1486ee865..0e8dd44de8 100644
+index aaec4d8322..cc9e65a0a1 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10075,6 +10075,8 @@
+@@ -10105,6 +10105,8 @@
  
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the settings category for theme overlays. -->
      <string name="theme_customization_category">Theming</string>
@@ -36,10 +36,10 @@ index e1486ee865..0e8dd44de8 100644
      <string name="theme_customization_device_default">Device default</string>
  
 diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
-index 90608f183c..143967de51 100644
+index 4fac594c17..8486d3b929 100644
 --- a/res/xml/display_settings.xml
 +++ b/res/xml/display_settings.xml
-@@ -163,4 +163,14 @@
+@@ -170,4 +170,14 @@
          android:title="@string/display_vr_pref_title"
          android:fragment="com.android.settings.display.VrDisplayPreferencePicker" />
  
@@ -55,10 +55,10 @@ index 90608f183c..143967de51 100644
 +
  </PreferenceScreen>
 diff --git a/src/com/android/settings/DisplaySettings.java b/src/com/android/settings/DisplaySettings.java
-index 06e469435d..95910573bb 100644
+index a69df2ad02..095fe2815b 100644
 --- a/src/com/android/settings/DisplaySettings.java
 +++ b/src/com/android/settings/DisplaySettings.java
-@@ -33,6 +33,7 @@ import com.android.settings.display.TapToWakePreferenceController;
+@@ -34,6 +34,7 @@ import com.android.settings.display.TapToWakePreferenceController;
  import com.android.settings.display.ThemePreferenceController;
  import com.android.settings.display.TimeoutPreferenceController;
  import com.android.settings.display.VrDisplayPreferenceController;
@@ -66,15 +66,15 @@ index 06e469435d..95910573bb 100644
  import com.android.settings.search.BaseSearchIndexProvider;
  import com.android.settings.search.Indexable;
  import com.android.settingslib.core.AbstractPreferenceController;
-@@ -92,6 +93,8 @@ public class DisplaySettings extends DashboardFragment {
+@@ -93,6 +94,8 @@ public class DisplaySettings extends DashboardFragment {
          controllers.add(new ShowOperatorNamePreferenceController(context));
          controllers.add(new ThemePreferenceController(context));
          controllers.add(new BrightnessLevelPreferenceController(context, lifecycle));
 +        controllers.add(new OverlayCategoryPreferenceController(context,
 +                "android.theme.customization.statusbar"));
+         controllers.add(new LiveDisplayPreferenceController(context));
          return controllers;
      }
- 
 diff --git a/src/com/android/settings/development/EmulateDisplayCutoutPreferenceController.java b/src/com/android/settings/development/EmulateDisplayCutoutPreferenceController.java
 index ef88baa134..c4f7838bf3 100644
 --- a/src/com/android/settings/development/EmulateDisplayCutoutPreferenceController.java

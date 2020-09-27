@@ -1,0 +1,125 @@
+From 00c1b0dff5928c0c856763986ddec5c0de195efd Mon Sep 17 00:00:00 2001
+From: Vishnu Nair <vishnun@google.com>
+Date: Mon, 22 Jun 2020 11:52:39 -0700
+Subject: [PATCH 2/2] Call Layer::getLayerDebugInfo from the main thread
+
+Fixes an issue where drawing state could be accessed from a binder
+thread. The function also mixed current state with drawing state
+incorrectly. The function now only retrieves drawing state.
+
+Bug: 150226608
+Test: Steps in bug doesn't repro
+Test: atest sffakehwc_test
+Merged-In: I5537c53e8214e2785473839d71fd483d1a3219b6
+Change-Id: I04daedcb9a890083cc710bab30b295e14b9872ae
+(cherry picked from commit b123f47bbde4d30be44ca02fc369f6ff83dbff8f)
+---
+ libs/gui/ISurfaceComposer.cpp              |  2 +-
+ libs/gui/include/gui/ISurfaceComposer.h    |  2 +-
+ libs/gui/tests/Surface_test.cpp            |  2 +-
+ services/surfaceflinger/Layer.cpp          |  2 +-
+ services/surfaceflinger/SurfaceFlinger.cpp | 19 ++++++-------------
+ services/surfaceflinger/SurfaceFlinger.h   |  2 +-
+ 6 files changed, 11 insertions(+), 18 deletions(-)
+
+diff --git a/libs/gui/ISurfaceComposer.cpp b/libs/gui/ISurfaceComposer.cpp
+index e487792c8..233325599 100644
+--- a/libs/gui/ISurfaceComposer.cpp
++++ b/libs/gui/ISurfaceComposer.cpp
+@@ -611,7 +611,7 @@ public:
+         return result;
+     }
+ 
+-    virtual status_t getLayerDebugInfo(std::vector<LayerDebugInfo>* outLayers) const
++    virtual status_t getLayerDebugInfo(std::vector<LayerDebugInfo>* outLayers)
+     {
+         if (!outLayers) {
+             return UNEXPECTED_NULL;
+diff --git a/libs/gui/include/gui/ISurfaceComposer.h b/libs/gui/include/gui/ISurfaceComposer.h
+index c84910b6e..7060bb1fa 100644
+--- a/libs/gui/include/gui/ISurfaceComposer.h
++++ b/libs/gui/include/gui/ISurfaceComposer.h
+@@ -310,7 +310,7 @@ public:
+      *
+      * Requires the ACCESS_SURFACE_FLINGER permission.
+      */
+-    virtual status_t getLayerDebugInfo(std::vector<LayerDebugInfo>* outLayers) const = 0;
++    virtual status_t getLayerDebugInfo(std::vector<LayerDebugInfo>* outLayers) = 0;
+ 
+     virtual status_t getColorManagement(bool* outGetColorManagement) const = 0;
+ 
+diff --git a/libs/gui/tests/Surface_test.cpp b/libs/gui/tests/Surface_test.cpp
+index a8516872f..293789b95 100644
+--- a/libs/gui/tests/Surface_test.cpp
++++ b/libs/gui/tests/Surface_test.cpp
+@@ -774,7 +774,7 @@ public:
+         return NO_ERROR;
+     }
+     status_t injectVSync(nsecs_t /*when*/) override { return NO_ERROR; }
+-    status_t getLayerDebugInfo(std::vector<LayerDebugInfo>* /*layers*/) const override {
++    status_t getLayerDebugInfo(std::vector<LayerDebugInfo>* /*layers*/) override {
+         return NO_ERROR;
+     }
+     status_t getCompositionPreference(
+diff --git a/services/surfaceflinger/Layer.cpp b/services/surfaceflinger/Layer.cpp
+index 44f3eae1e..3ee4ef129 100644
+--- a/services/surfaceflinger/Layer.cpp
++++ b/services/surfaceflinger/Layer.cpp
+@@ -1280,7 +1280,7 @@ LayerDebugInfo Layer::getLayerDebugInfo() const {
+     LayerDebugInfo info;
+     const State& ds = getDrawingState();
+     info.mName = getName();
+-    sp<Layer> parent = getParent();
++    sp<Layer> parent = mDrawingParent.promote();
+     info.mParentName = (parent == nullptr ? std::string("none") : parent->getName().string());
+     info.mType = std::string(getTypeId());
+     info.mTransparentRegion = ds.activeTransparentRegion_legacy;
+diff --git a/services/surfaceflinger/SurfaceFlinger.cpp b/services/surfaceflinger/SurfaceFlinger.cpp
+index fd7f12841..3f32d05fd 100644
+--- a/services/surfaceflinger/SurfaceFlinger.cpp
++++ b/services/surfaceflinger/SurfaceFlinger.cpp
+@@ -1265,22 +1265,15 @@ status_t SurfaceFlinger::injectVSync(nsecs_t when) {
+     return NO_ERROR;
+ }
+ 
+-status_t SurfaceFlinger::getLayerDebugInfo(std::vector<LayerDebugInfo>* outLayers) const
++status_t SurfaceFlinger::getLayerDebugInfo(std::vector<LayerDebugInfo>* outLayers)
+         NO_THREAD_SAFETY_ANALYSIS {
+-    // Try to acquire a lock for 1s, fail gracefully
+-    const status_t err = mStateLock.timedLock(s2ns(1));
+-    const bool locked = (err == NO_ERROR);
+-    if (!locked) {
+-        ALOGE("LayerDebugInfo: SurfaceFlinger unresponsive (%s [%d]) - exit", strerror(-err), err);
+-        return TIMED_OUT;
+-    }
+-
+     outLayers->clear();
+-    mCurrentState.traverseInZOrder([&](Layer* layer) {
+-        outLayers->push_back(layer->getLayerDebugInfo());
+-    });
++    postMessageSync(new LambdaMessage([&]() { 
++            mDrawingState.traverseInZOrder([&](Layer* layer) {
++            outLayers->push_back(layer->getLayerDebugInfo());
++        });
+ 
+-    mStateLock.unlock();
++    }));
+     return NO_ERROR;
+ }
+ 
+diff --git a/services/surfaceflinger/SurfaceFlinger.h b/services/surfaceflinger/SurfaceFlinger.h
+index a22d6fc64..776778952 100644
+--- a/services/surfaceflinger/SurfaceFlinger.h
++++ b/services/surfaceflinger/SurfaceFlinger.h
+@@ -446,7 +446,7 @@ private:
+                                 HdrCapabilities* outCapabilities) const override;
+     status_t enableVSyncInjections(bool enable) override;
+     status_t injectVSync(nsecs_t when) override;
+-    status_t getLayerDebugInfo(std::vector<LayerDebugInfo>* outLayers) const override;
++    status_t getLayerDebugInfo(std::vector<LayerDebugInfo>* outLayers) override;
+     status_t getColorManagement(bool* outGetColorManagement) const override;
+     status_t getCompositionPreference(ui::Dataspace* outDataspace, ui::PixelFormat* outPixelFormat,
+                                       ui::Dataspace* outWideColorGamutDataspace,
+-- 
+2.17.1
+

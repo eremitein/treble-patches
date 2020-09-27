@@ -1,7 +1,7 @@
-From 5c82844f3a8ee290cab79417f8d38f1b3f83e51f Mon Sep 17 00:00:00 2001
+From b4dcc655a2165e7c1e8da8a5e566720938666584 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 12 Sep 2019 20:38:08 +0200
-Subject: [PATCH 079/127] Check for samsung light service everytime
+Subject: [PATCH 079/130] Check for samsung light service everytime
 
 This is needed because it is possible sec light service isn't ready at
 that time.

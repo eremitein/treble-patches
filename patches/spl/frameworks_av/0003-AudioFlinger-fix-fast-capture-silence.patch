@@ -1,0 +1,154 @@
+From 2e8a64e60efccd89e1c7bea5287e99a49ec3833e Mon Sep 17 00:00:00 2001
+From: Eric Laurent <elaurent@google.com>
+Date: Fri, 29 May 2020 18:35:06 -0700
+Subject: [PATCH 3/3] AudioFlinger: fix fast capture silence
+
+Silencing fast catpure tracks was not properly implemented.
+Fix by zeroing fast capture thread HAL read buffer if the silenced
+track is the only active, or by invalidating the silenced track
+if other non fast tracks are active.
+
+Bug: 157708122
+Test: repro steps in the bug
+Change-Id: I88b19540815bc1491b9e76c1ae6b6f85e32afa8f
+Merged-In: I88b19540815bc1491b9e76c1ae6b6f85e32afa8f
+(cherry picked from commit 33403f0ef8ec7e6217f4969879fa81101e6b84ee)
+(cherry picked from commit 377d9bd34da3ef852b59148d4cc94572bc48a0f9)
+---
+ services/audioflinger/FastCapture.cpp         |  5 ++-
+ .../audioflinger/FastCaptureDumpState.cpp     |  5 +--
+ services/audioflinger/FastCaptureDumpState.h  |  1 +
+ services/audioflinger/FastCaptureState.h      |  2 ++
+ services/audioflinger/Threads.cpp             | 31 +++++++++++++++++--
+ 5 files changed, 38 insertions(+), 6 deletions(-)
+
+diff --git a/services/audioflinger/FastCapture.cpp b/services/audioflinger/FastCapture.cpp
+index dd84bf2b0..d6d6e257c 100644
+--- a/services/audioflinger/FastCapture.cpp
++++ b/services/audioflinger/FastCapture.cpp
+@@ -154,7 +154,7 @@ void FastCapture::onStateChange()
+         mReadBufferState = -1;
+         dumpState->mFrameCount = frameCount;
+     }
+-
++    dumpState->mSilenced = current->mSilenceCapture;
+ }
+ 
+ void FastCapture::onWork()
+@@ -208,6 +208,9 @@ void FastCapture::onWork()
+             mReadBufferState = frameCount;
+         }
+         if (mReadBufferState > 0) {
++            if (current->mSilenceCapture) {
++                memset(mReadBuffer, 0, mReadBufferState * Format_frameSize(mFormat));
++            }
+             ssize_t framesWritten = mPipeSink->write(mReadBuffer, mReadBufferState);
+             audio_track_cblk_t* cblk = current->mCblk;
+             if (fastPatchRecordBufferProvider != 0) {
+diff --git a/services/audioflinger/FastCaptureDumpState.cpp b/services/audioflinger/FastCaptureDumpState.cpp
+index 53eeba59d..b8b386696 100644
+--- a/services/audioflinger/FastCaptureDumpState.cpp
++++ b/services/audioflinger/FastCaptureDumpState.cpp
+@@ -44,10 +44,11 @@ void FastCaptureDumpState::dump(int fd) const
+     double periodSec = (double) mFrameCount / mSampleRate;
+     dprintf(fd, "  FastCapture command=%s readSequence=%u framesRead=%u\n"
+                 "              readErrors=%u sampleRate=%u frameCount=%zu\n"
+-                "              measuredWarmup=%.3g ms, warmupCycles=%u period=%.2f ms\n",
++                "              measuredWarmup=%.3g ms, warmupCycles=%u period=%.2f ms\n"
++                "              silenced: %s\n",
+                 FastCaptureState::commandToString(mCommand), mReadSequence, mFramesRead,
+                 mReadErrors, mSampleRate, mFrameCount, measuredWarmupMs, mWarmupCycles,
+-                periodSec * 1e3);
++                periodSec * 1e3, mSilenced ? "true" : "false");
+ }
+ 
+ }   // android
+diff --git a/services/audioflinger/FastCaptureDumpState.h b/services/audioflinger/FastCaptureDumpState.h
+index 6f9c4c318..a1b8706e9 100644
+--- a/services/audioflinger/FastCaptureDumpState.h
++++ b/services/audioflinger/FastCaptureDumpState.h
+@@ -35,6 +35,7 @@ struct FastCaptureDumpState : FastThreadDumpState {
+     uint32_t mReadErrors;       // total number of read() errors
+     uint32_t mSampleRate;
+     size_t   mFrameCount;
++    bool     mSilenced = false; // capture is silenced
+ };
+ 
+ }   // android
+diff --git a/services/audioflinger/FastCaptureState.h b/services/audioflinger/FastCaptureState.h
+index d28723277..f949275e5 100644
+--- a/services/audioflinger/FastCaptureState.h
++++ b/services/audioflinger/FastCaptureState.h
+@@ -41,6 +41,8 @@ struct FastCaptureState : FastThreadState {
+     audio_format_t  mFastPatchRecordFormat = AUDIO_FORMAT_INVALID;
+     AudioBufferProvider* mFastPatchRecordBufferProvider = nullptr;   // a reference to a patch
+                                                                      // record in fast mode
++    bool            mSilenceCapture = false;    // request to silence capture for fast track.
++                                                // note: this also silences the normal mixer pipe
+ 
+     // Extends FastThreadState::Command
+     static const Command
+diff --git a/services/audioflinger/Threads.cpp b/services/audioflinger/Threads.cpp
+index bd9bf7b4b..039e4f763 100644
+--- a/services/audioflinger/Threads.cpp
++++ b/services/audioflinger/Threads.cpp
+@@ -6885,6 +6885,8 @@ reacquire_wakelock:
+         // reference to a fast track which is about to be removed
+         sp<RecordTrack> fastTrackToRemove;
+ 
++        bool silenceFastCapture = false;
++
+         { // scope for mLock
+             Mutex::Autolock _l(mLock);
+ 
+@@ -6969,14 +6971,33 @@ reacquire_wakelock:
+                             __func__, activeTrackState, activeTrack->id(), size);
+                 }
+ 
+-                activeTracks.add(activeTrack);
+-                i++;
+-
+                 if (activeTrack->isFastTrack()) {
+                     ALOG_ASSERT(!mFastTrackAvail);
+                     ALOG_ASSERT(fastTrack == 0);
++                    // if the active fast track is silenced either:
++                    // 1) silence the whole capture from fast capture buffer if this is
++                    //    the only active track
++                    // 2) invalidate this track: this will cause the client to reconnect and possibly
++                    //    be invalidated again until unsilenced
++                    if (activeTrack->isSilenced()) {
++                        if (size > 1) {
++                            activeTrack->invalidate();
++                            ALOG_ASSERT(fastTrackToRemove == 0);
++                            fastTrackToRemove = activeTrack;
++                            removeTrack_l(activeTrack);
++                            mActiveTracks.remove(activeTrack);
++                            size--;
++                            continue;
++                        } else {
++                            silenceFastCapture = true;
++                        }
++                    }
+                     fastTrack = activeTrack;
+                 }
++
++                activeTracks.add(activeTrack);
++                i++;
++
+             }
+ 
+             mActiveTracks.updatePowerState(this);
+@@ -7050,6 +7071,10 @@ reacquire_wakelock:
+                         AUDIO_FORMAT_INVALID : fastTrack->format();
+                 didModify = true;
+             }
++            if (state->mSilenceCapture != silenceFastCapture) {
++                state->mSilenceCapture = silenceFastCapture;
++                didModify = true;
++            }
+             sq->end(didModify);
+             if (didModify) {
+                 sq->push(block);
+-- 
+2.17.1
+

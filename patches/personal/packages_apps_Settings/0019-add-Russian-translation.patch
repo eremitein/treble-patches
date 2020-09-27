@@ -1,0 +1,237 @@
+From b72c97e6a51b7c3f09d6e5d707ff6b41839e89dc Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 28 Sep 2020 08:18:03 -0400
+Subject: [PATCH] add Russian translation
+
+Change-Id: Ie5713c67ee5efb03aa8e8f78d9c2ad3ab2ab0a43
+---
+ res/values-ru/bootleg_strings.xml | 202 ++++++++++++++++++++++++++++++
+ res/values-ru/strings.xml         |   5 +
+ 2 files changed, 207 insertions(+)
+ create mode 100644 res/values-ru/bootleg_strings.xml
+
+diff --git a/res/values-ru/bootleg_strings.xml b/res/values-ru/bootleg_strings.xml
+new file mode 100644
+index 0000000000..bf6251f8c1
+--- /dev/null
++++ b/res/values-ru/bootleg_strings.xml
+@@ -0,0 +1,202 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2007 The Android Open Source Project
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++          http://www.apache.org/licenses/LICENSE-2.0
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Bootleggers version in About phone -->
++    <string name="rom_version_title">Версия Bootleggers</string>
++
++    <!-- Fingerprint location message - default -->
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_front" product="default">Locate the fingerprint sensor on the front of your phone.</string>
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_left" product="default">Locate the fingerprint sensor on the left side of your phone.</string>
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_right" product="default">Locate the fingerprint sensor on the right side of your phone.</string>
++
++    <!-- Fingerprint location message - generic -->
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_front" product="device">Locate the fingerprint sensor on the front of your device.</string>
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_left" product="device">Locate the fingerprint sensor on the left side of your device.</string>
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_right" product="device">Locate the fingerprint sensor on the right side of your device.</string>
++
++    <!-- Fingerprint location message - tablet -->
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_front" product="tablet">Locate the fingerprint sensor on the front of your tablet.</string>
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_left" product="tablet">Locate the fingerprint sensor on the left side of your tablet.</string>
++    <string name="security_settings_fingerprint_enroll_find_sensor_message_right" product="tablet">Locate the fingerprint sensor on the right side of your tablet.</string>
++
++    <!-- Strings for suggestion card's close button [CHAR LIMIT=20] -->
++    <string name="suggestion_button_close">Закрыть</string>
++
++    <!-- Device specific doze package -->
++    <string name="config_customDozePackage" translatable="false"></string>
++
++    <!-- String for removal of sensitive info on about, depending on tap -->
++    <string name="device_info_protected_single_press">Нажмите, чтобы посмотреть</string>
++
++    <!-- Bootleg Dumpster -->
++    <string name="bootleg_dumpster_title">Bootleg Dumpster</string>
++    <string name="bootleg_dumpster_summary">Где поломанное собрано</string>
++
++    <!-- Bootleggers extra data -->
++    <!-- Build date, parsed? -->
++    <string name="bootleggers_build_date">Дата сборки</string>
++    <!-- About phone screen, device maintainer name -->
++    <string name="device_maintainer">Who to blame (Maintainer)</string>
++    <!-- Build types, now with translations -->
++    <string name="bootleg_type_official">Official</string>
++    <string name="bootleg_type_unofficial">Unofficial</string>
++    <string name="bootleg_type_unknown">Unsupported. ¯\\_(ツ)_/¯</string>
++    <string name="bootleggers_releasetype_skeleton">%s (%s)</string>
++
++    <!-- Notch behavior -->
++    <string name="display_cutout_mode_title">Notch behavior</string>
++    <string name="display_cutout_mode_normal">Default</string>
++    <string name="display_cutout_mode_hidden">Hidden</string>
++
++    <!-- FP gestures to dismiss notifications -->
++    <string name="fp_swipe_to_dismiss_notifications_title">Проведите пальцем по отпечатку пальца влево или вправо, чтобы \"смахнуть\" уведомления</string>
++    <string name="fp_swipe_to_dismiss_notifications_summary">Чтобы закрыть уведомления, проведите пальцем влево или вправо по датчику отпечатков пальцев</string>
++
++    <!-- Allow to choose lockscreen or Ambient on wake gestures -->
++    <string name="ambient_wake_gestures_title">Ambient жест пробуждения</string>
++    <string name="ambient_wake_gestures_summary">Показывать Ambient Display вместо обычного экрана блокировки при жестах пробуждения</string>
++    <string name="back_height_low_label">Целиком</string>
++    <string name="back_height_high_label">Низ</string>
++    <string name="back_options_dialog_title">Опции</string>
++    <string name="back_height_message">Высота экрана, используемая в качестве сенсорной области для жеста назад</string>
++    <string name="back_gesture_haptic">Включить тактильный эффект для жеста назад</string>
++
++    <!-- Allow to quickly open Running Services from QS panel -->
++    <string name="background_processes_settings_title">Background processes</string>
++
++    <!-- NavigationBar Gestural Mode Tweaks -->
++    <string name="gesture_pill_message">Скрыть панель навигации для полноэкранных жестов</string>
++
++    <!-- Screenshot sound -->
++    <string name="screenshot_sound_title">Звук скриншота</string>
++
++    <!-- Changelog error -->
++    <string name="changelog_error">Unable to load changelog</string>
++
++    <!-- Custom light color -->
++    <string name="custom_light_title">Light color</string>
++    <string name="custom_light_on_time_title">Light ON time during led pulse (ms)</string>
++    <string name="custom_light_off_time_title">Light OFF time during led pulse (ms)"</string>
++    <string name="value_equals_default">def</string>
++
++    <!-- Back gesture animation -->
++    <string name="back_gesture_arrow_message">Показывать анимированную стрелку для жеста назад</string>
++
++    <!-- Smart charging -->
++    <string name="smart_charging_title">Умная зарядка</string>
++    <string name="smart_charging_summary">Установите максимальный уровень зарядки</string>
++    <string name="smart_charging_switch_title">Использовать \"умную\" зарядку</string>
++    <string name="smart_charging_level_title">нижний уровень</string>
++    <string name="smart_charging_resume_level_title">верхний уровень</string>
++    <string name="smart_charging_footer">Интеллектуальная зарядка позволяет установить максимальный уровень зарядки, чтобы продлить срок службы аккумулятора</string>
++
++    <!-- Volume link notification -->
++    <string name="volume_link_notification_title">Связать громкости звонка и уведомлений</string>
++
++    <!-- UI debug setting: show CPU info? [CHAR LIMIT=25] -->
++    <string name="show_cpu_info">Показывать информацию ЦПУ</string>
++    <!-- UI debug setting: show cpu usage summary [CHAR LIMIT=50] -->
++    <string name="show_cpu_info_summary">Наложение на экран текущей информации о процессоре</string>
++
++    <!-- Notification log --> 
++    <string name="notification_log_summary">Показать журнал истории уведомлений</string>
++
++    <!-- Title for connected TWS device group [CHAR LIMIT=none]-->
++    <string name="connected_tws_device_saved_title">Сохраненные наушники</string>
++
++    <!-- LiveDisplay -->
++    <string name="live_display_summary">Оптимизируйте экран в зависимости от времени суток и окружающих условий, чтобы улучшить читаемость и снизить утомляемость глаз</string>
++    <string name="live_display_mode">Режим экрана</string>
++    <string name="live_display_color_temperature_title">Температура цвета</string>
++    <string name="live_display_color_temperature_summary">День: <xliff:g id="day_temperature">%1$d</xliff:g>K  Ночь: <xliff:g id="night_temperature">%2$d</xliff:g>K</string>
++    <string name="live_display_color_temperature_label"><xliff:g id="degrees">%1$d</xliff:g>K</string>
++    <string name="live_display_day">День</string>
++    <string name="live_display_night">Ночь</string>
++    <string name="live_display_outdoor_mode_title">Автоматический наружный режим</string>
++    <string name="live_display_outdoor_mode_summary">Автоматическое увеличение яркости и насыщенности при ярком солнечном свете</string>
++    <string name="live_display_low_power_title">Снизить потребление энергии</string>
++    <string name="live_display_low_power_summary">Настройте дисплей для минимального энергопотребления без ухудшения характеристик</string>
++    <string name="live_display_enhance_color_title">Улучшение цветов</string>
++    <string name="live_display_enhance_color_summary">Улучшение цветовой насыщенности телесных тонов, пейзажей и других изображений</string>
++    <string name="live_display_color_profile_title">Цветовой профиль</string>
++    <string name="live_display_color_profile_standard_title">Стандартный</string>
++    <string name="live_display_color_profile_standard_summary">Accurate colors and bright whites</string>
++    <string name="live_display_color_profile_natural_title">Natural</string>
++    <string name="live_display_color_profile_natural_summary">Realistic colors and flesh tones</string>
++    <string name="live_display_color_profile_dynamic_title">Dynamic</string>
++    <string name="live_display_color_profile_dynamic_summary">Enhanced colors and bright whites</string>
++    <string name="live_display_color_profile_cinema_title">Cinema</string>
++    <string name="live_display_color_profile_cinema_summary">Perfect color reproduction for video</string>
++    <string name="live_display_color_profile_astronomy_title">Astronomy</string>
++    <string name="live_display_color_profile_astronomy_summary">Deep red for preserving night vision</string>
++    <string name="live_display_color_profile_photography_title">Photography</string>
++    <string name="live_display_color_profile_photography_summary">Perfect color reproduction for photos</string>
++    <string name="live_display_color_profile_basic_title">Basic</string>
++    <string name="live_display_color_profile_basic_summary">Use the display uncalibrated</string>
++    <string name="live_display_color_profile_adaptive_title">Adaptive</string>
++    <string name="live_display_color_profile_adaptive_summary">Colors adapt to ambient conditions</string>
++    <string name="live_display_color_profile_reading_title">Reading</string>
++    <string name="live_display_color_profile_reading_summary">Warmer colors for less eye strain</string>
++    <string name="live_display_color_profile_srgb_title">sRGB</string>
++    <string name="live_display_color_profile_srgb_summary">Colors accurate to the sRGB color space</string>
++    <string name="live_display_color_profile_dci_p3_title">DCI-P3</string>
++    <string name="live_display_color_profile_dci_p3_summary">Colors accurate to the DCI-P3 color space</string>
++    <string name="live_display_reading_mode_title">Режим чтения</string>
++    <string name="live_display_reading_mode_summary">Режим градаций серого для длительного чтения</string>
++    <string name="color_calibration_title">Калибровка цвета</string>
++    <string name="color_calibration_summary">Откалибруйте цвета на экране</string>
++    <string name="color_red_title">Красный</string>
++    <string name="color_green_title">Зелёный</string>
++    <string name="color_blue_title">Синий</string>
++
++    <!-- LiveDisplay : Picture Adjustment -->
++    <string name="picture_adjustment_title">Настройка отображения</string>
++    <string name="picture_adjustment_summary">Отрегулируйте оттенок, насыщенность, интенсивность и контраст</string>
++    <string name="adj_hue_title">Оттенок</string>
++    <string name="adj_saturation_title">Насыщенность</string>
++    <string name="adj_intensity_title">Интенсивность</string>
++    <string name="adj_contrast_title">Контраст</string>
++
++    <!-- Hotspot extras -->
++    <string name="tethering_allow_vpn_upstreams_title">Разрешить клиентам использовать VPN</string>
++    <string name="tethering_allow_vpn_upstreams_summary">Разрешить клиентам точки доступа использовать VPN-подключения этого устройства</string>
++
++    <!-- Per-app data restrictions -->
++    <string name="data_usage_app_restrict_all">Разрешить доступ к сети</string>
++    <string name="data_usage_app_restrict_all_summary">Разрешить использование сети</string>
++    <string name="data_usage_app_restrict_data">Сотовые данные</string>
++    <string name="data_usage_app_restrict_data_summary">Разрешить использование сотовых данных</string>
++    <string name="data_usage_app_restrict_vpn">VPN данные</string>
++    <string name="data_usage_app_restrict_vpn_summary">Разрешить использование VPN данных</string>
++    <string name="data_usage_app_restrict_wifi">Wi\u2011Fi данные</string>
++    <string name="data_usage_app_restrict_wifi_summary">Разрешить использование Wi\u2011Fi</string>
++
++    <!-- Volume Steps -->
++    <string name="volume_steps_title">Шаги громкости</string>
++    <string name="volume_steps_summary">Количество ступеней регулировки громкости</string>
++    <string name="volume_steps_alarm_title">Шаги громкости: Будильник</string>
++    <string name="volume_steps_dtmf_title">Шаги громкости: Тональный набор</string>
++    <string name="volume_steps_music_title">Шаги громкости: Музыка</string>
++    <string name="volume_steps_notification_title">Шаги громкости: Уведомления</string>
++    <string name="volume_steps_ring_title">Шаги громкости: Рингтон</string>
++    <string name="volume_steps_system_title">Шаги громкости: Система</string>
++    <string name="volume_steps_voice_call_title">Шаги громкости: Голосовые звонки</string>
++    <string name="volume_steps_reset">Сброс</string>
++    <string name="volume_steps_60" translatable="false">60</string>
++    <string name="volume_steps_45" translatable="false">45</string>
++    <string name="volume_steps_30" translatable="false">30</string>
++    <string name="volume_steps_15" translatable="false">15</string>
++    <string name="volume_steps_7" translatable="false">7</string>
++    <string name="volume_steps_5" translatable="false">5</string>
++
++</resources>
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index 225465725b..f3d8370b5b 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -4842,4 +4842,9 @@
+     <string name="rtt_settings_always_visible" msgid="2364173070088756238"></string>
+     <string name="theme_customization_statusbar_title">Разделение иконок в строке состояния</string>
+     <string name="theme_customization_speedui_title">Ускорение интерфейса/Энергосбережение</string>
++    <string name="theme_customization_padding_title">Отступы строки состояния</string>
++    <string name="selinux_status">Состояние SELinux защиты</string>
++    <string name="selinux_status_disabled">Отсутствует</string>
++    <string name="selinux_status_permissive">Отключена</string>
++    <string name="selinux_status_enforcing">Включена</string>
+ </resources>
+-- 
+2.17.1
+

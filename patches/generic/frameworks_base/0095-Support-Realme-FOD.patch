@@ -1,7 +1,7 @@
-From d04d8ee22f1cf84bcf4e01d6cb0667dfccb21766 Mon Sep 17 00:00:00 2001
+From 51f23f35ba3097afba0dae1f5996c0bf500e78aa Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 10 Mar 2020 23:32:00 +0100
-Subject: [PATCH 095/127] Support Realme FOD
+Subject: [PATCH 095/130] Support Realme FOD
 
 List of changes:
 - Enable dimlayer_hbm. This dims the framebuffer, while putting screen

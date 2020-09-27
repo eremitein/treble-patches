@@ -1,7 +1,7 @@
-From 2cbfd6fb5bf540cfd803f9458230bd3c601e295c Mon Sep 17 00:00:00 2001
+From 14d1a8e55f642d17f257fe9f312e2e21af8e8a90 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 08:58:03 -0400
-Subject: [PATCH 007/127] Revert "SystemUI: Nuke AOD recognizing FP animations
+Subject: [PATCH 007/130] Revert "SystemUI: Nuke AOD recognizing FP animations
  [1/2]"
 
 This reverts commit d4fdcdc6aec18cedbbab9a2cf20ecec3549dd35c.
@@ -71,10 +71,10 @@ This reverts commit d4fdcdc6aec18cedbbab9a2cf20ecec3549dd35c.
  create mode 100644 packages/SystemUI/res/drawable/gxzw_aod_recognizing_anim_9.png
 
 diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
-index 79ee828dfae..277918f20bb 100644
+index 55d48e1bdf3..40356fcc654 100644
 --- a/core/java/android/provider/Settings.java
 +++ b/core/java/android/provider/Settings.java
-@@ -5513,7 +5513,7 @@ public final class Settings {
+@@ -5614,7 +5614,7 @@ public final class Settings {
  
          /** @hide */
          private static final Validator FOD_ANIM_VALIDATOR =

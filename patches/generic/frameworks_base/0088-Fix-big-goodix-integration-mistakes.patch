@@ -1,7 +1,7 @@
-From fca05bc1f80528baa794b81c564e0a2d84f8e6b4 Mon Sep 17 00:00:00 2001
+From d370efbea3e0f825697f1ed32946437af70c197e Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Mon, 16 Dec 2019 19:31:12 +0100
-Subject: [PATCH 088/127] Fix (big) goodix integration mistakes
+Subject: [PATCH 088/130] Fix (big) goodix integration mistakes
 
 ---
  .../biometrics/fingerprint/FacolaView.java    | 19 ++++++++++++-------

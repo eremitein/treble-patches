@@ -1,7 +1,7 @@
-From eed0b0daa6da07722f96d60dbda6f1e6d225cac2 Mon Sep 17 00:00:00 2001
+From 5ff403160abd28dcf7be37d18a2e8daab1b17bfd Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 09:17:58 -0400
-Subject: [PATCH 019/127] Revert "FODCircleView: Fix position if cutout is
+Subject: [PATCH 019/130] Revert "FODCircleView: Fix position if cutout is
  hidden"
 
 This reverts commit df2a09f5cf3f90e65455d1941e66c40197758d3a.

@@ -1,7 +1,7 @@
-From cf347d6b4687d5d0612135b470f9cc9d607f00b8 Mon Sep 17 00:00:00 2001
+From 0e5fde688edfe6bdc96216dd79a6828d82c07afa Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Tue, 22 Oct 2019 00:33:23 +0200
-Subject: [PATCH 082/127] Improve FacolaView life cycle, though it is still
+Subject: [PATCH 082/130] Improve FacolaView life cycle, though it is still
  missing few cases. It might require to change BiometricServiceBase for actual
  fix
 

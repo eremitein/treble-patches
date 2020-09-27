@@ -1,0 +1,25 @@
+From d440f517f18148d11d4b986d306d1fc1e2ff8513 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Tue, 29 Sep 2020 07:29:18 -0400
+Subject: [PATCH] enable LiveDisplay
+
+Change-Id: Iacf5dcf6975d6b6ab401bf3766f46f07c0d40b5d
+---
+ core/res/res/values/bootleg_config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/res/res/values/bootleg_config.xml b/core/res/res/values/bootleg_config.xml
+index da4b3eeed2f..3ed1c330ff2 100644
+--- a/core/res/res/values/bootleg_config.xml
++++ b/core/res/res/values/bootleg_config.xml
+@@ -152,6 +152,6 @@
+     <bool name="config_filterDisplayModes">false</bool>
+ 
+     <!-- Default state for LiveDisplay -->
+-    <bool name="config_liveDisplayAvailable">false</bool>
++    <bool name="config_liveDisplayAvailable">true</bool>
+ 
+ </resources>
+-- 
+2.17.1
+

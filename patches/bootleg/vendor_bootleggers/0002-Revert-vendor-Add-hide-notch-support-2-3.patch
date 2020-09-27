@@ -1,7 +1,7 @@
-From 9a5af1eb441f5db602b6d858219ed41d890d37b9 Mon Sep 17 00:00:00 2001
+From 2296d517e8dd42171bd5ecf86fdc0b15e28a4973 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 20 Aug 2020 18:50:22 -0400
-Subject: [PATCH 2/6] Revert "vendor: Add hide notch support [2/3]"
+Subject: [PATCH 2/3] Revert "vendor: Add hide notch support [2/3]"
 
 This reverts commit 79c0f4ac20422ddfec58a952ba67f9de9ef78657.
 ---
@@ -193,10 +193,10 @@ This reverts commit 79c0f4ac20422ddfec58a952ba67f9de9ef78657.
  delete mode 100644 packages/overlays/NoCutoutOverlay/res/values/strings.xml
 
 diff --git a/config/btlg_packages.mk b/config/btlg_packages.mk
-index bbca605d..462c132a 100644
+index 34c235d9..ed9e96da 100644
 --- a/config/btlg_packages.mk
 +++ b/config/btlg_packages.mk
-@@ -45,9 +45,10 @@ PRODUCT_PACKAGES += \
+@@ -46,9 +46,10 @@ PRODUCT_PACKAGES += \
  #PRODUCT_PACKAGES += \
  #    CustomFonts
  
@@ -208,7 +208,7 @@ index bbca605d..462c132a 100644
 +#    HideCutout \
 +#    StatusBarStock
  
- # Call the overlays folder to build all the rest 
+ # Call the overlays folder to build all the rest
  include packages/overlays/Shishufied/shishu.mk
 diff --git a/packages/Android.mk b/packages/Android.mk
 deleted file mode 100644

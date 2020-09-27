@@ -1,7 +1,7 @@
-From 40520153aad7a1c0130e788055e233c67447b2cd Mon Sep 17 00:00:00 2001
+From 6b34683a0bcc4c4838a982fa702f06d759aba69d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 10 Feb 2020 16:33:15 +0200
-Subject: [PATCH 04/15] rework info about security patch date
+Subject: [PATCH 04/18] rework info about security patch date
 
 	modified:   res/xml/firmware_version.xml
 	modified:   src/com/android/settings/deviceinfo/firmwareversion/SecurityPatchLevelPreferenceController.java

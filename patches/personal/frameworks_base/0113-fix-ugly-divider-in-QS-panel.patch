@@ -1,7 +1,7 @@
-From 554a620373f6a32986961c509f70d035adce5fce Mon Sep 17 00:00:00 2001
+From a460f275fe2558afa16ff2e26c77765acacc7e47 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 08:28:53 +0200
-Subject: [PATCH 113/127] fix ugly divider in QS panel
+Subject: [PATCH 113/130] fix ugly divider in QS panel
 
 	modified:   packages/SystemUI/res/layout/qs_divider.xml
 ---

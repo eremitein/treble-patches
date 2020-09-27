@@ -1,7 +1,7 @@
-From 64a0f50d5a159b44f639be2af2990f4a55d0fb07 Mon Sep 17 00:00:00 2001
+From 3b0fd6df619d44195f64fef3c56384a16ba97188 Mon Sep 17 00:00:00 2001
 From: Pierre-Hugues Husson <phh@phh.me>
 Date: Thu, 21 May 2020 18:42:20 +0200
-Subject: [PATCH 105/127] Always try to get FOD HALs, because we check samsung
+Subject: [PATCH 105/130] Always try to get FOD HALs, because we check samsung
  HAL later to compute width
 
 ---
