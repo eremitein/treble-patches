@@ -1,0 +1,51 @@
+From 5367fdf400b8bec4f5a41d3ea25e5d2e32b5f701 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:43:41 -0400
+Subject: [PATCH 38/57] Revert "FODCircleView: fix incorrect position on
+ keyguard"
+
+This reverts commit ea5574c45c20e247ba14ff303f474d7a8310351f.
+---
+ .../android/systemui/biometrics/FODCircleView.java   | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index e02233c7de9..10e902c6bcc 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -78,7 +78,6 @@ public class FODCircleView extends ImageView {
+ 
+     private boolean mIsBouncer;
+     private boolean mIsDreaming;
+-    private boolean mIsKeyguard;
+     private boolean mIsCircleShowing;
+ 
+     private Handler mHandler;
+@@ -124,12 +123,6 @@ public class FODCircleView extends ImageView {
+             }
+         }
+ 
+-        @Override
+-        public void onKeyguardVisibilityChanged(boolean showing) {
+-            mIsKeyguard = showing;
+-            updatePosition();
+-        }
+-
+         @Override
+         public void onKeyguardBouncerChanged(boolean isBouncer) {
+             mIsBouncer = isBouncer;
+@@ -500,11 +493,6 @@ public class FODCircleView extends ImageView {
+         mPressedParams.x = mParams.x = x;
+         mPressedParams.y = mParams.y = y;
+ 
+-        if (mIsKeyguard) {
+-            mParams.x = mPositionX;
+-            mParams.y = mPositionY;
+-        }
+-
+         if (mIsDreaming) {
+             mParams.y += mDreamingOffsetY;
+         }
+-- 
+2.17.1
+

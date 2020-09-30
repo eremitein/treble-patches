@@ -1,0 +1,52 @@
+From 59b56d170d989b92229f76a5dbf8d590ffa51d00 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:59:31 -0400
+Subject: [PATCH 46/57] Revert "Revert "FODCircleView: dispatch onPress to HAL
+ only after dimming is applied""
+
+This reverts commit 0dcd7fee60e41f937c8b52753279f8d70b2e0748.
+---
+ .../android/systemui/biometrics/FODCircleView.java  | 13 ++++++++++++-
+ 1 file changed, 12 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index e480d704a05..6be2fef143d 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -74,6 +74,8 @@ public class FODCircleView extends ImageView {
+     private boolean mIsShowing;
+     private boolean mIsCircleShowing;
+ 
++    private float mCurrentDimAmount = 0.0f;
++
+     private Handler mHandler;
+ 
+     private LockPatternUtils mLockPatternUtils;
+@@ -192,6 +194,16 @@ public class FODCircleView extends ImageView {
+ 
+         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
+         mUpdateMonitor.registerCallback(mMonitorCallback);
++
++        getViewTreeObserver().addOnGlobalLayoutListener(() -> {
++            float drawingDimAmount = mParams.dimAmount;
++            if (mCurrentDimAmount == 0.0f && drawingDimAmount > 0.0f) {
++                dispatchPress();
++                mCurrentDimAmount = drawingDimAmount;
++            } else if (mCurrentDimAmount > 0.0f && drawingDimAmount == 0.0f) {
++                mCurrentDimAmount = drawingDimAmount;
++            }
++        });
+     }
+ 
+     @Override
+@@ -285,7 +297,6 @@ public class FODCircleView extends ImageView {
+ 
+         setDim(true);
+         updateAlpha();
+-        dispatchPress();
+ 
+         mPaintFingerprint.setColor(mColor);
+         setImageDrawable(null);
+-- 
+2.17.1
+

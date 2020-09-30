@@ -1,19 +1,19 @@
-From 20d2856cf565cacb705230d0aa909120ed3780ce Mon Sep 17 00:00:00 2001
+From fda5fc72a6760a92c742835d199ce26321468516 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 15 Aug 2020 09:36:19 -0400
-Subject: [PATCH 6/7] set build name (crDroid)
+Subject: [PATCH 6/6] set build name (crDroid)
 
 ---
  config/common.mk | 30 ++----------------------------
  1 file changed, 2 insertions(+), 28 deletions(-)
 
 diff --git a/config/common.mk b/config/common.mk
-index d2960b15..1bde29df 100644
+index ad57aa5c..bd27dd2d 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -190,38 +190,12 @@ PRODUCT_VERSION_MINOR = 0
+@@ -195,38 +195,12 @@ PRODUCT_VERSION_MINOR = 0
  # Increase CR Version with each major release.
- CR_VERSION := 6.9
+ CR_VERSION := 6.10
  
 -LINEAGE_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date +%Y%m%d)-$(LINEAGE_BUILD)-v$(CR_VERSION)
 -LINEAGE_DISPLAY_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(LINEAGE_BUILD)-v$(CR_VERSION)

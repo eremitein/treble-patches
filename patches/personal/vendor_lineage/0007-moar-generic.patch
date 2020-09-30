@@ -1,0 +1,27 @@
+From fce6917348d9060fe3cc6f223ee328948cddafa7 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 09:52:25 -0400
+Subject: [PATCH] moar generic
+
+---
+ config/common.mk | 4 ----
+ 1 file changed, 4 deletions(-)
+
+diff --git a/config/common.mk b/config/common.mk
+index bd27dd2d..1c94277c 100644
+--- a/config/common.mk
++++ b/config/common.mk
+@@ -104,10 +104,6 @@ PRODUCT_MINIMIZE_JAVA_DEBUG_INFO := true
+ # Disable vendor restrictions
+ PRODUCT_RESTRICT_VENDOR_FILES := false
+ 
+-# Bootanimation
+-PRODUCT_PACKAGES += \
+-    bootanimation.zip
+-
+ # AOSP packages
+ PRODUCT_PACKAGES += \
+     Terminal
+-- 
+2.17.1
+

@@ -1,0 +1,51 @@
+From ca7a092de9e650a2f2d1340e74c7a3ba6beb4b21 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:18:01 -0400
+Subject: [PATCH 05/57] Revert "FODCircleView: Move setImageResource out of
+ onDraw"
+
+This reverts commit 1a6beb66b0f1bd88f3a5c83fea9ac134257cea04.
+---
+ .../systemui/biometrics/FODCircleView.java    | 19 +++++++++----------
+ 1 file changed, 9 insertions(+), 10 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index e03a79f83bd..5c1f3312bfa 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -283,8 +283,15 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         mPressedView = new ImageView(context)  {
+             @Override
+             protected void onDraw(Canvas canvas) {
+-                if (mIsCircleShowing && mPressedState == 2) {
+-		    canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
++                if (mIsCircleShowing) {
++                    if (mPressedState == 0) {
++                        mPressedView.setImageResource(R.drawable.fod_icon_pressed);
++                    } else if (mPressedState == 1) {
++                        mPressedView.setImageResource(R.drawable.fod_icon_pressed_white);
++                    } else if (mPressedState == 2) {
++                        mPressedView.setImageDrawable(null);
++                        canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
++                    }
+                 }
+                 super.onDraw(canvas);
+             }
+@@ -414,14 +421,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     private void setFODPressedState() {
+         mPressedState = Settings.System.getInt(mContext.getContentResolver(),
+                 Settings.System.FOD_PRESSED_STATE, 0);
+-
+-        if (mPressedState == 0) {
+-            mPressedView.setImageResource(R.drawable.fod_icon_pressed);
+-        } else if (mPressedState == 1) {
+-            mPressedView.setImageResource(R.drawable.fod_icon_pressed_white);
+-        } else if (mPressedState == 2) {
+-            mPressedView.setImageDrawable(null);
+-        }
+     }
+ 
+     @Override
+-- 
+2.17.1
+

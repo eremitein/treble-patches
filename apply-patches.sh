@@ -13,7 +13,7 @@ for d in ${assets}; do
     pushd $p
       git clean -fdx
       git reset --hard
-      git am ${patches}/patches/${d}/${project}/0*.patch ||exit
+      git am --keep-cr ${patches}/patches/${d}/${project}/0*.patch ||exit
     popd
   done
 done

@@ -36,9 +36,9 @@ index 4f79e220706..52437fa7b08 100644
 -    private float mWindowAnimationScaleSetting = 1.0f;
 -    private float mTransitionAnimationScaleSetting = 1.0f;
 -    private float mAnimatorDurationScaleSetting = 1.0f;
-+    private float mWindowAnimationScaleSetting = 0.8f;
-+    private float mTransitionAnimationScaleSetting = 0.8f;
-+    private float mAnimatorDurationScaleSetting = 0.8f;
++    private float mWindowAnimationScaleSetting = 0.80f;
++    private float mTransitionAnimationScaleSetting = 0.80f;
++    private float mAnimatorDurationScaleSetting = 0.80f;
      private boolean mAnimationsDisabled = false;
      boolean mPointerLocationEnabled = false;
      private boolean mAnimationsForceDisabled = false;

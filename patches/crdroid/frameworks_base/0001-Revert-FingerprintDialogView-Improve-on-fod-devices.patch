@@ -1,10 +1,9 @@
-From 39f452b60222a1ed611aabb50c15b423302df65d Mon Sep 17 00:00:00 2001
+From 9a709b9c7811be79d6a2a0159f4456893f692be6 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
-Date: Wed, 29 Jul 2020 06:32:38 +0300
-Subject: [PATCH 001/116] Revert "FingerprintDialogView: Improve on fod
- devices"
+Date: Wed, 30 Sep 2020 01:17:11 -0400
+Subject: [PATCH 01/57] Revert "FingerprintDialogView: Improve on fod devices"
 
-This reverts commit 8333ba1b77dd60ba275a2dea8d2a3a688432e8b1.
+This reverts commit d841a8a2bbcec9b8b113b34f7930f715f0b5275c.
 ---
  .../SystemUI/res/layout/biometric_dialog.xml  |  4 ++--
  packages/SystemUI/res/values/cr_dimens.xml    |  8 -------
@@ -27,7 +26,7 @@ index d2398ee6ae5..c560d7e8f12 100644
                              android:gravity="center_horizontal"
                              android:accessibilityLiveRegion="polite"
 diff --git a/packages/SystemUI/res/values/cr_dimens.xml b/packages/SystemUI/res/values/cr_dimens.xml
-index d24c6dda2c3..5e3796b705b 100644
+index 7ba65956999..f1c95de5211 100644
 --- a/packages/SystemUI/res/values/cr_dimens.xml
 +++ b/packages/SystemUI/res/values/cr_dimens.xml
 @@ -120,14 +120,6 @@

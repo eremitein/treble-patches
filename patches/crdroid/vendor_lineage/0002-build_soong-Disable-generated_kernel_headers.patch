@@ -1,7 +1,7 @@
-From 43852bd2f943ba2fa47606afd9bf9a2f4e02527f Mon Sep 17 00:00:00 2001
+From aab2fa8a8494a5728eb455fa68bfc7cdd496446f Mon Sep 17 00:00:00 2001
 From: AndyCGYan <GeForce8800Ultra@gmail.com>
 Date: Sun, 3 Mar 2019 14:07:33 +0800
-Subject: [PATCH 2/7] build_soong: Disable generated_kernel_headers
+Subject: [PATCH 2/6] build_soong: Disable generated_kernel_headers
 
 Change-Id: I630857cec208f1830e776bf5031d7bb9bc4435d0
 ---

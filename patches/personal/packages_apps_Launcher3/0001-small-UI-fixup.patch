@@ -1,0 +1,25 @@
+From 86f9dc14132c5fa4dff96451315be452f290b100 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 19 Sep 2020 20:20:59 -0400
+Subject: [PATCH] small UI fixup
+
+Change-Id: Id73ccc886f61677c9527514f550d8998d9acc583
+---
+ quickstep/res/drawable/ic_task_menu.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/quickstep/res/drawable/ic_task_menu.xml b/quickstep/res/drawable/ic_task_menu.xml
+index 044889d4f..ff78d28f6 100644
+--- a/quickstep/res/drawable/ic_task_menu.xml
++++ b/quickstep/res/drawable/ic_task_menu.xml
+@@ -7,6 +7,6 @@
+     android:tint="?attr/workspaceTextColor">
+ 
+     <path
+-        android:fillColor="#FFFFFFFF"
++        android:fillColor="#33FFFFFF"
+         android:pathData="M12,16A2,2 0 0,1 14,18A2,2 0 0,1 12,20A2,2 0 0,1 10,18A2,2 0 0,1 12,16M12,10A2,2 0 0,1 14,12A2,2 0 0,1 12,14A2,2 0 0,1 10,12A2,2 0 0,1 12,10M12,4A2,2 0 0,1 14,6A2,2 0 0,1 12,8A2,2 0 0,1 10,6A2,2 0 0,1 12,4Z" />
+ </vector>
+-- 
+2.17.1
+

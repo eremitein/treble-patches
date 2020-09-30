@@ -1,7 +1,7 @@
-From a53b58dd20421b0507b05f036596c0f030dbcabf Mon Sep 17 00:00:00 2001
+From 2346260890c4dc0546a8d7584d80f88603f8bf0d Mon Sep 17 00:00:00 2001
 From: Andy CrossGate Yan <GeForce8800Ultra@gmail.com>
 Date: Thu, 5 Sep 2019 02:08:22 +0000
-Subject: [PATCH 1/7] vendor_lineage: Log privapp-permissions whitelist
+Subject: [PATCH 1/6] vendor_lineage: Log privapp-permissions whitelist
  violations instead
 
 Change-Id: I49dba61f332253e291a65e79ca70d9a07d45bb07
@@ -10,10 +10,10 @@ Change-Id: I49dba61f332253e291a65e79ca70d9a07d45bb07
  1 file changed, 1 insertion(+), 1 deletion(-)
 
 diff --git a/config/common.mk b/config/common.mk
-index c3ff806d..53edba8c 100644
+index 3da62081..5f8b546c 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -70,7 +70,7 @@ PRODUCT_COPY_FILES += \
+@@ -75,7 +75,7 @@ PRODUCT_COPY_FILES += \
  
  # Enforce privapp-permissions whitelist
  PRODUCT_SYSTEM_DEFAULT_PROPERTIES += \

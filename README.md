@@ -6,11 +6,11 @@ This is GSI project, patches based on the Phh's and Andy Yan works
 apply-patches.sh to apply all patches
 	ex. usage:
 	cd /where/crdroid/sources
-	bash ~/files/patches/crdroid/v222/apply-patches.sh ~/files/patches/crdroid/v222/
+	bash ~/files/patches/crdroid/v223/apply-patches.sh ~/files/patches/crdroid/v223/
 
 buildcrDRom.sh for starting build process from zero
 	ex. usage:
-	cd ~/files/patches/crdroid/v222
+	cd ~/files/patches/crdroid/v223
 	bash buildcrDRom.sh /where/crdroid/sources
 
 Patches separated to the three category:

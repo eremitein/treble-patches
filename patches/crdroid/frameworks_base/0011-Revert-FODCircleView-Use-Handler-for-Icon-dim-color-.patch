@@ -1,0 +1,30 @@
+From 75c43f96a88329d8ab3a38e00bcbc55b36c0dad7 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:18:10 -0400
+Subject: [PATCH 11/57] Revert "FODCircleView: Use Handler for Icon dim color
+ filter"
+
+This reverts commit 533008f5c31807800ce4e0dcd3ec2c5dab2b4307.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 33492dffbd7..77b344fb341 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -399,9 +399,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         mCurrentBrightness = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.SCREEN_BRIGHTNESS, 100, UserHandle.USER_CURRENT);
+         if (!mIsCircleShowing && mTargetUsesInKernelDimming) {
+-            mHandler.post(() -> setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
++            setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
+         } else {
+-            mHandler.post(() -> setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
++            setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP);
+         }
+     }
+ 
+-- 
+2.17.1
+

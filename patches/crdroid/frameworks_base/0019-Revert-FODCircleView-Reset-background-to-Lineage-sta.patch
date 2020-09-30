@@ -1,0 +1,28 @@
+From 811ee7280c8829a4adf9aca121f31bf57f3425c5 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:38:38 -0400
+Subject: [PATCH 19/57] Revert "FODCircleView: Reset background to Lineage
+ state for default FOD icon"
+
+This reverts commit 25b87606fdbb4f04fbcb171276719686c079d178.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java     | 3 ++-
+ 1 file changed, 2 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index c72647b130c..8788951b2e5 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -386,7 +386,8 @@ public class FODCircleView extends ImageView implements ConfigurationListener, T
+ 
+     @Override
+     protected void onDraw(Canvas canvas) {
+-        if (!mIsCircleShowing && mSelectedIcon == 0) {
++        if (!mIsCircleShowing) {
++            mPaintFingerprintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+             canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprintBackground);
+         }
+         super.onDraw(canvas);
+-- 
+2.17.1
+

@@ -1,0 +1,50 @@
+From 92e7cc51ccba3277738cdcb6d17234717a95e276 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:17:59 -0400
+Subject: [PATCH 04/57] Revert "base: Guard some functions against face unlock"
+
+This reverts commit 06983824f54f0eb6115f97e9c19371efecdbb923.
+---
+ .../com/android/systemui/biometrics/FODCircleView.java   | 3 +--
+ .../android/server/biometrics/BiometricServiceBase.java  | 9 +++------
+ 2 files changed, 4 insertions(+), 8 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 8f4084f0dbe..e03a79f83bd 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -217,8 +217,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         @Override
+         public void onBiometricHelp(int msgId, String helpString,
+                 BiometricSourceType biometricSourceType) {
+-            if (biometricSourceType == BiometricSourceType.FINGERPRINT &&
+-                    msgId == -1) { // Auth error
++            if (msgId == -1) { // Auth error
+                 hideCircle();
+                 mHandler.post(() -> mFODAnimation.hideFODanimation());
+             }
+diff --git a/services/core/java/com/android/server/biometrics/BiometricServiceBase.java b/services/core/java/com/android/server/biometrics/BiometricServiceBase.java
+index e8afdaaad92..4c95a69fdc7 100644
+--- a/services/core/java/com/android/server/biometrics/BiometricServiceBase.java
++++ b/services/core/java/com/android/server/biometrics/BiometricServiceBase.java
+@@ -656,14 +656,11 @@ public abstract class BiometricServiceBase extends SystemService
+         mPowerManager = mContext.getSystemService(PowerManager.class);
+         mUserManager = UserManager.get(mContext);
+         mMetricsLogger = new MetricsLogger();
+-        mPostResetRunnableForAllClients = statsModality() == BiometricsProtoEnums.MODALITY_FINGERPRINT
+-                && mContext.getResources().getBoolean(
++        mPostResetRunnableForAllClients = mContext.getResources().getBoolean(
+                 com.android.internal.R.bool.config_fingerprintPostResetRunnableForAllClients);
+-        mCleanupUnusedFingerprints = statsModality() == BiometricsProtoEnums.MODALITY_FINGERPRINT
+-                && mContext.getResources().getBoolean(
++        mCleanupUnusedFingerprints = mContext.getResources().getBoolean(
+                 com.android.internal.R.bool.config_cleanupUnusedFingerprints);
+-        mNotifyClient = statsModality() == BiometricsProtoEnums.MODALITY_FINGERPRINT
+-                && mContext.getResources().getBoolean(
++        mNotifyClient = mContext.getResources().getBoolean(
+                 com.android.internal.R.bool.config_notifyClientOnFingerprintCancelSuccess);
+     }
+ 
+-- 
+2.17.1
+

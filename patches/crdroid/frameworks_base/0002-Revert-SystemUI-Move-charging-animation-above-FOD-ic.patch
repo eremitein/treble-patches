@@ -1,10 +1,10 @@
-From 6b07f1830762179c652ca8c453a05fc3eb7e49a8 Mon Sep 17 00:00:00 2001
+From fab0d3e0b1c95dbcba7b4dd5b60a62f3259fda03 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
-Date: Wed, 29 Jul 2020 06:32:40 +0300
-Subject: [PATCH 002/116] Revert "SystemUI: Move charging animation above FOD
+Date: Wed, 30 Sep 2020 01:17:15 -0400
+Subject: [PATCH 02/57] Revert "SystemUI: Move charging animation above FOD
  icon if In-display fingerprint is active"
 
-This reverts commit b391f6d321663f13bbcd3952cdbc441449915e80.
+This reverts commit 3bcc13533a76709a28467867e91c8255fffd97ea.
 ---
  .../KeyguardIndicationController.java         | 58 -------------------
  1 file changed, 58 deletions(-)

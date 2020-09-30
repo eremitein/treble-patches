@@ -1,0 +1,222 @@
+From 061287bba82932935c756ee1db771b06344b6038 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:44:09 -0400
+Subject: [PATCH 40/57] Revert "FODCircleView: add FOD icon picker and
+ wallpaper based color option [1/2]"
+
+This reverts commit 4a6760ba076d20a7f8ddeb3a818f577af716a48b.
+---
+ core/java/android/provider/Settings.java      |   6 -
+ .../systemui/biometrics/FODCircleView.java    | 118 ++----------------
+ 2 files changed, 10 insertions(+), 114 deletions(-)
+
+diff --git a/core/java/android/provider/Settings.java b/core/java/android/provider/Settings.java
+index 8adf661219f..af8eaab1541 100644
+--- a/core/java/android/provider/Settings.java
++++ b/core/java/android/provider/Settings.java
+@@ -5097,12 +5097,6 @@ public final class Settings {
+          */
+         public static final String SMART_CHARGING_RESUME_LEVEL = "smart_charging_resume_level";
+ 
+-        /**
+-         * FOD icon picker
+-         * @hide
+-         */
+-        public static final String FOD_ICON = "fod_icon";
+-
+         /**
+          * FOD use wallpaper color
+          * @hide
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 67351c872ac..939b9571b32 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -16,23 +16,16 @@
+ 
+ package com.android.systemui.biometrics;
+ 
+-import android.app.WallpaperColors;
+-import android.app.WallpaperManager;
+ import android.app.admin.DevicePolicyManager;
+-import android.content.ContentResolver;
+ import android.content.Context;
+ import android.content.res.Configuration;
+ import android.content.res.Resources;
+-import android.graphics.Bitmap;
+ import android.graphics.Canvas;
+ import android.graphics.Color;
+ import android.graphics.Paint;
+ import android.graphics.PixelFormat;
+ import android.graphics.Point;
+-import android.graphics.drawable.BitmapDrawable;
+-import android.graphics.drawable.Drawable;
+ import android.os.Handler;
+-import android.os.UserHandle;
+ import android.os.Looper;
+ import android.os.PowerManager;
+ import android.os.RemoteException;
+@@ -44,7 +37,6 @@ import android.view.Surface;
+ import android.view.View;
+ import android.view.WindowManager;
+ import android.widget.ImageView;
+-import androidx.palette.graphics.Palette;
+ 
+ import com.android.internal.widget.LockPatternUtils;
+ import com.android.keyguard.KeyguardSecurityModel.SecurityMode;
+@@ -76,6 +68,9 @@ public class FODCircleView extends ImageView {
+ 
+     private int mDreamingOffsetY;
+ 
++    private int mColor;
++    private int mColorBackground;
++
+     private boolean mIsBouncer;
+     private boolean mIsDreaming;
+     private boolean mIsCircleShowing;
+@@ -91,9 +86,6 @@ public class FODCircleView extends ImageView {
+     private PowerManager mPowerManager;
+     private PowerManager.WakeLock mWakeLock;
+ 
+-    private WallpaperManager mWallManager;
+-    private int iconcolor = 0xFF3980FF;
+-
+     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
+             new IFingerprintInscreenCallback.Stub() {
+         @Override
+@@ -153,6 +145,8 @@ public class FODCircleView extends ImageView {
+     public FODCircleView(Context context) {
+         super(context);
+ 
++        setScaleType(ScaleType.CENTER);
++
+         IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
+         if (daemon == null) {
+             throw new RuntimeException("Unable to get IFingerprintInscreen");
+@@ -169,10 +163,12 @@ public class FODCircleView extends ImageView {
+ 
+         Resources res = context.getResources();
+ 
+-        mPaintFingerprint.setColor(res.getColor(R.color.config_fodColor));
++        mColor = res.getColor(R.color.config_fodColor);
++        mPaintFingerprint.setColor(mColor);
+         mPaintFingerprint.setAntiAlias(true);
+ 
+-        mPaintFingerprintBackground.setColor(res.getColor(R.color.config_fodColorBackground));
++        mColorBackground = res.getColor(R.color.config_fodColorBackground);
++        mPaintFingerprintBackground.setColor(mColorBackground);
+         mPaintFingerprintBackground.setAntiAlias(true);
+ 
+         mWindowManager = context.getSystemService(WindowManager.class);
+@@ -329,7 +325,7 @@ public class FODCircleView extends ImageView {
+     public void hideCircle() {
+         mIsCircleShowing = false;
+ 
+-        setFODIcon();
++        setImageResource(R.drawable.fod_icon_default);
+         invalidate();
+ 
+         dispatchRelease();
+@@ -338,100 +334,6 @@ public class FODCircleView extends ImageView {
+         setKeepScreenOn(false);
+     }
+ 
+-    private boolean useWallpaperColor() {
+-        return Settings.System.getInt(mContext.getContentResolver(),
+-                Settings.System.FOD_ICON_WALLPAPER_COLOR, 0) != 0;
+-    }
+-
+-    private int getFODIcon() {
+-        return Settings.System.getInt(mContext.getContentResolver(),
+-                Settings.System.FOD_ICON, 0);
+-    }
+-
+-    private void setFODIcon() {
+-        int fodicon = getFODIcon();
+-
+-        if (fodicon == 0) {
+-            this.setImageResource(R.drawable.fod_icon_default);
+-        } else if (fodicon == 1) {
+-            this.setImageResource(R.drawable.fod_icon_default_1);
+-        } else if (fodicon == 2) {
+-            this.setImageResource(R.drawable.fod_icon_default_2);
+-        } else if (fodicon == 3) {
+-            this.setImageResource(R.drawable.fod_icon_default_3);
+-        } else if (fodicon == 4) {
+-            this.setImageResource(R.drawable.fod_icon_default_4);
+-        } else if (fodicon == 5) {
+-            this.setImageResource(R.drawable.fod_icon_default_5);
+-        } else if (fodicon == 6) {
+-            this.setImageResource(R.drawable.fod_icon_arc_reactor);
+-        } else if (fodicon == 7) {
+-            this.setImageResource(R.drawable.fod_icon_cpt_america_flat);
+-        } else if (fodicon == 8) {
+-            this.setImageResource(R.drawable.fod_icon_cpt_america_flat_gray);
+-        } else if (fodicon == 9) {
+-            this.setImageResource(R.drawable.fod_icon_dragon_black_flat);
+-        } else if (fodicon == 10) {
+-            this.setImageResource(R.drawable.fod_icon_future);
+-        } else if (fodicon == 11) {
+-            this.setImageResource(R.drawable.fod_icon_glow_circle);
+-        } else if (fodicon == 12) {
+-            this.setImageResource(R.drawable.fod_icon_neon_arc);
+-        } else if (fodicon == 13) {
+-            this.setImageResource(R.drawable.fod_icon_neon_arc_gray);
+-        } else if (fodicon == 14) {
+-            this.setImageResource(R.drawable.fod_icon_neon_circle_pink);
+-        } else if (fodicon == 15) {
+-            this.setImageResource(R.drawable.fod_icon_neon_triangle);
+-        } else if (fodicon == 16) {
+-            this.setImageResource(R.drawable.fod_icon_paint_splash_circle);
+-        } else if (fodicon == 17) {
+-            this.setImageResource(R.drawable.fod_icon_rainbow_horn);
+-        } else if (fodicon == 18) {
+-            this.setImageResource(R.drawable.fod_icon_shooky);
+-        } else if (fodicon == 19) {
+-            this.setImageResource(R.drawable.fod_icon_spiral_blue);
+-        } else if (fodicon == 20) {
+-            this.setImageResource(R.drawable.fod_icon_sun_metro);
+-        }
+-
+-        if (useWallpaperColor()) {
+-            try {
+-                WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
+-                Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+-                Bitmap bitmap = ((BitmapDrawable)wallpaperDrawable).getBitmap();
+-                if (bitmap != null) {
+-                    Palette p = Palette.from(bitmap).generate();
+-                    int wallColor = p.getDominantColor(iconcolor);
+-                    if (iconcolor != wallColor) {
+-                        iconcolor = wallColor;
+-                    }
+-                    this.setColorFilter(lighter(iconcolor, 3));
+-                }
+-            } catch (Exception e) {
+-                // Nothing to do
+-            }
+-        } else {
+-            this.setColorFilter(null);
+-        }
+-    }
+-
+-    private static int lighter(int color, int factor) {
+-        int red = Color.red(color);
+-        int green = Color.green(color);
+-        int blue = Color.blue(color);
+-
+-        blue = blue * factor;
+-        green = green * factor;
+-        blue = blue * factor;
+-
+-        blue = blue > 255 ? 255 : blue;
+-        green = green > 255 ? 255 : green;
+-        red = red > 255 ? 255 : red;
+-
+-        return Color.argb(Color.alpha(color), red, green, blue);
+-    }
+-
+     public void show() {
+         if (!mUpdateMonitor.isScreenOn()) {
+             // Keyguard is shown just after screen turning off
+-- 
+2.17.1
+
