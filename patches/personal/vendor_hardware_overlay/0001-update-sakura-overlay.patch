@@ -1,7 +1,7 @@
-From 85a16eb4241eca4ffb5cb3e002d17480ee4c34a7 Mon Sep 17 00:00:00 2001
+From 58b57586c4ac75b878ed61598b6c9e1c71391768 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 2 Mar 2020 22:41:26 +0200
-Subject: [PATCH 1/2] update 'sakura' overlay
+Subject: [PATCH 1/4] update 'sakura' overlay
 
 	modified:   Xiaomi/Redmi6Pro/res/values/config.xml
 	modified:   Xiaomi/Redmi6Pro/res/values/notch.xml

@@ -1,4 +1,4 @@
-From 7584f58c74961172890f55ede6b457f3fb88ac3b Mon Sep 17 00:00:00 2001
+From 3b62ea3225965f24b0899237969b1da63e4a8a9b Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sun, 16 Feb 2020 22:25:00 +0200
 Subject: [PATCH 1/2] Add double tap to sleep gesture
@@ -7,28 +7,19 @@ Subject: [PATCH 1/2] Add double tap to sleep gesture
   https://github.com/crdroidandroid/android_packages_apps_Launcher3/commit/1ced8c431b3a8ccb397199f68e1dd1ac401a90d4
   https://github.com/crdroidandroid/android_packages_apps_Launcher3/commit/2581d966c61bbfca344803eb443f5426abf2348a
 
-	modified:   Android.mk
-	modified:   AndroidManifest-common.xml
-	modified:   AndroidManifest.xml
-	modified:   SecondaryDisplayLauncher/Android.mk
-	modified:   res/values/strings.xml
-	modified:   res/xml/launcher_preferences.xml
-	modified:   src/com/android/launcher3/Utilities.java
-	modified:   src/com/android/launcher3/Workspace.java
-	modified:   src/com/android/launcher3/touch/WorkspaceTouchListener.java
-
-Change-Id: I9a172cfbc38617914dcdc626e19e397ca8d7c229
+Change-Id: I84fee3f7ed0f40c602f8dd89baf8e065697adcf5
 ---
  Android.mk                                    | 13 ++++++++----
  AndroidManifest-common.xml                    |  6 ++++--
  AndroidManifest.xml                           |  4 +++-
  SecondaryDisplayLauncher/Android.mk           |  3 ++-
+ res/values-ru/strings.xml                     |  3 +++
  res/values/strings.xml                        |  4 ++++
  res/xml/launcher_preferences.xml              |  7 +++++++
  src/com/android/launcher3/Utilities.java      |  7 +++++++
  src/com/android/launcher3/Workspace.java      | 20 +++++++++++++++++++
  .../touch/WorkspaceTouchListener.java         |  1 +
- 9 files changed, 57 insertions(+), 8 deletions(-)
+ 10 files changed, 60 insertions(+), 8 deletions(-)
 
 diff --git a/Android.mk b/Android.mk
 index e492f4a64..e3f940109 100644
@@ -83,7 +74,7 @@ index e492f4a64..e3f940109 100644
  LOCAL_OVERRIDES_PACKAGES := Home Launcher2 Launcher3 Launcher3QuickStep
  LOCAL_REQUIRED_MODULES := privapp_whitelist_com.android.launcher3
 diff --git a/AndroidManifest-common.xml b/AndroidManifest-common.xml
-index 5e67e4e07..97727f1c1 100644
+index 43c08c3cd..27bb2fab5 100644
 --- a/AndroidManifest-common.xml
 +++ b/AndroidManifest-common.xml
 @@ -19,7 +19,9 @@
@@ -135,6 +126,18 @@ index 7f305bba5..134e70893 100644
  LOCAL_MIN_SDK_VERSION := 21
  LOCAL_MODULE := SecondaryDisplayLauncherLib
  LOCAL_PRIVILEGED_MODULE := true
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index 1cc699f1c..1efea2eff 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -141,4 +141,7 @@
+     <string name="bottom_work_tab_user_education_close_button" msgid="4224492243977802135">"Закрыть"</string>
+     <string name="bottom_work_tab_user_education_closed" msgid="1098340939861869465">"Закрыта"</string>
+     <string name="remote_action_failed" msgid="1383965239183576790">"Не удалось выполнить действие (<xliff:g id="WHAT">%1$s</xliff:g>)."</string>
++    <!-- DT2S option -->
++    <string name="pref_sleep_gesture_title">Двойное касание для перехода в сон</string>
++    <string name="pref_sleep_gesture_summary">Дважды коснитесь пустого пространства для выключения экрана</string>
+ </resources>
 diff --git a/res/values/strings.xml b/res/values/strings.xml
 index 9d9c2e8de..96e3caecc 100644
 --- a/res/values/strings.xml
@@ -149,23 +152,23 @@ index 9d9c2e8de..96e3caecc 100644
 +    <string name="pref_sleep_gesture_summary">Double tap on empty space for power-off screen</string>
  </resources>
 diff --git a/res/xml/launcher_preferences.xml b/res/xml/launcher_preferences.xml
-index b9801fe4d..ee7960b42 100644
+index 69371e573..9155e31ff 100644
 --- a/res/xml/launcher_preferences.xml
 +++ b/res/xml/launcher_preferences.xml
-@@ -52,6 +52,13 @@
-         android:defaultValue="@bool/allow_rotation"
-         android:persistent="true" />
+@@ -34,6 +34,13 @@
+             android:defaultValue="@bool/allow_rotation"
+             android:persistent="true" />
  
-+    <SwitchPreference
-+        android:key="pref_sleep_gesture"
-+        android:title="@string/pref_sleep_gesture_title"
-+        android:summary="@string/pref_sleep_gesture_summary"
-+        android:defaultValue="true"
-+        android:persistent="true"/>
++        <SwitchPreference
++            android:key="pref_sleep_gesture"
++            android:title="@string/pref_sleep_gesture_title"
++            android:summary="@string/pref_sleep_gesture_summary"
++            android:defaultValue="true"
++            android:persistent="true"/>
 +
-     <SwitchPreference
-         android:defaultValue="true"
-         android:key="pref_enable_minus_one"
+         <SwitchPreference
+             android:defaultValue="true"
+             android:key="pref_workspace_edit"
 diff --git a/src/com/android/launcher3/Utilities.java b/src/com/android/launcher3/Utilities.java
 index 108898e99..e5e9df9c7 100644
 --- a/src/com/android/launcher3/Utilities.java
@@ -259,5 +262,5 @@ index 310d598b2..1d67bd669 100644
          int action = ev.getActionMasked();
          if (action == ACTION_DOWN) {
 -- 
-2.25.1
+2.17.1
 

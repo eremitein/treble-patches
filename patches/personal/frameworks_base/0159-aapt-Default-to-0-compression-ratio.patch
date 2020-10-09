@@ -1,0 +1,31 @@
+From e5d157268cc5565cd22082e0ad0475a135f6efd0 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 25 Sep 2020 08:19:40 -0400
+Subject: [PATCH] aapt: Default to 0 compression ratio
+
+  from
+  https://github.com/BootleggersROM/frameworks_base/commit/8421525187f17bf217fab51f28eef6a5efb9505f
+
+Change-Id: I765136dd0e73f32d1c0f462ab3b65c90ff4de624
+---
+ tools/aapt/Main.cpp | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/tools/aapt/Main.cpp b/tools/aapt/Main.cpp
+index 2f2ef92e72b..7576b53c7bb 100644
+--- a/tools/aapt/Main.cpp
++++ b/tools/aapt/Main.cpp
+@@ -281,8 +281,8 @@ int main(int argc, char* const argv[])
+     int result = 1;    // pessimistically assume an error.
+     int tolerance = 0;
+ 
+-    /* default to compression */
+-    bundle.setCompressionMethod(ZipEntry::kCompressDeflated);
++    /* default to zero compression */
++    bundle.setCompressionMethod(ZipEntry::kCompressStored);
+ 
+     if (argc < 2) {
+         wantUsage = true;
+-- 
+2.17.1
+

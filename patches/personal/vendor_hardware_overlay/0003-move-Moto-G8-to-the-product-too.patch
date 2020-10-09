@@ -1,0 +1,26 @@
+From 6751ff79c4100beab3e8bd437bf252c2836d7537 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 7 Oct 2020 09:24:12 -0400
+Subject: [PATCH 3/4] move Moto G8 to the product too
+
+  fix d8ea24d
+---
+ Moto/G8/Android.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Moto/G8/Android.mk b/Moto/G8/Android.mk
+index daefbeb..1c99f4b 100644
+--- a/Moto/G8/Android.mk
++++ b/Moto/G8/Android.mk
+@@ -2,7 +2,7 @@ LOCAL_PATH := $(call my-dir)
+ include $(CLEAR_VARS)
+ LOCAL_MODULE_TAGS := optional
+ LOCAL_PACKAGE_NAME := treble-overlay-moto-g8
+-LOCAL_MODULE_PATH := $(TARGET_OUT)/overlay
++LOCAL_MODULE_PATH := $(TARGET_OUT_PRODUCT)/overlay
+ LOCAL_IS_RUNTIME_RESOURCE_OVERLAY := true
+ LOCAL_PRIVATE_PLATFORM_APIS := true
+ include $(BUILD_PACKAGE)
+-- 
+2.17.1
+

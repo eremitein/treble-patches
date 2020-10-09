@@ -1,0 +1,30 @@
+From 7cbd54fdba35917e4ff91953ba1866e1c3c29b4f Mon Sep 17 00:00:00 2001
+From: Daniel Micay <danielmicay@gmail.com>
+Date: Mon, 2 Apr 2018 10:37:46 -0400
+Subject: [PATCH] SettingsLib: use Cloudflare DNS servers as hints
+
+Cloudflare DNS has a better privacy policy than Google Public DNS while
+still supporting DNS over TLS.
+---
+ packages/SettingsLib/res/values/strings.xml | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SettingsLib/res/values/strings.xml b/packages/SettingsLib/res/values/strings.xml
+index 0e9183940f2..6c9f9282997 100644
+--- a/packages/SettingsLib/res/values/strings.xml
++++ b/packages/SettingsLib/res/values/strings.xml
+@@ -1053,9 +1053,9 @@
+     <!-- Hint text for the IP address -->
+     <string name="wifi_ip_address_hint" translatable="false">192.168.1.128</string>
+     <!-- Hint text for DNS -->
+-    <string name="wifi_dns1_hint" translatable="false">8.8.8.8</string>
++    <string name="wifi_dns1_hint" translatable="false">1.0.0.1</string>
+     <!-- Hint text for DNS -->
+-    <string name="wifi_dns2_hint" translatable="false">8.8.4.4</string>
++    <string name="wifi_dns2_hint" translatable="false">1.1.1.1</string>
+     <!-- Hint text for the gateway -->
+     <string name="wifi_gateway_hint" translatable="false">192.168.1.1</string>
+     <!-- Hint text for network prefix length -->
+-- 
+2.17.1
+

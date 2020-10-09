@@ -1,4 +1,4 @@
-From e08c1620a12d1827a28a41a9719ab1f7ded18695 Mon Sep 17 00:00:00 2001
+From 862ff4a328fff1b6c484082a3cdc209ee174faf5 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Dec 2019 14:29:51 +0200
 Subject: [PATCH 2/2] Improve Searchbar
@@ -64,5 +64,5 @@ index d9b0f9a0b..921171817 100644
      <dimen name="all_apps_work_profile_tab_footer_bottom_padding">20dp</dimen>
      <dimen name="all_apps_tabs_side_padding">12dp</dimen>
 -- 
-2.25.1
+2.17.1
 

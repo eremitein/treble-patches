@@ -1,0 +1,61 @@
+From b44491a6388be7b0a121aad21fa0332e3c588ff8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 9 Oct 2020 13:08:40 -0400
+Subject: [PATCH] add Google Cloud restore option
+
+Change-Id: I6a742b6a257235220aabe1332b005d3a74e5d662
+---
+ res/values-ru/strings.xml               |  3 +++
+ res/values/strings.xml                  |  4 ++++
+ res/xml/accounts_dashboard_settings.xml | 12 ++++++++++++
+ 3 files changed, 19 insertions(+)
+
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index d50be87265..2e60f4d9df 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -4874,4 +4874,7 @@
+     <string name="theme_customization_qsalpha_title">Прозрачность панели быстрых настроек</string>
+     <string name="theme_customization_speedui_title">Ускорение интерфейса/Энергосбережение</string>
+     <string name="theme_customization_header_title">Верхний отступ</string>
++    <!-- Google backup restore -->
++    <string name="custom_google_sync_title">Восстановить резервную копию из Google Cloud</string>
++    <string name="custom_google_sync_summary">Запустить вручную восстановление резервной копии из Google Cloud\nПримечание: нужны com.google.android.apps.restore и вход в учётную запись</string>
+ </resources>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 9e7f33ee9a..d95e31912a 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -11457,4 +11457,8 @@
+     <!-- Quick unlock -->
+     <string name="unlock_quick_unlock_control_title">Quick unlock</string>
+     <string name="unlock_quick_unlock_control_summary">Unlock automatically when the correct PIN/password is entered</string>
++
++    <!-- Google backup restore -->
++    <string name="custom_google_sync_title">Restore Google Cloud backup</string>
++    <string name="custom_google_sync_summary">Manually launch Google Cloud backup restore action\nNote: need com.google.android.apps.restore and logging in to the Google account</string>
+ </resources>
+diff --git a/res/xml/accounts_dashboard_settings.xml b/res/xml/accounts_dashboard_settings.xml
+index 6b5f825987..59b771c3c5 100644
+--- a/res/xml/accounts_dashboard_settings.xml
++++ b/res/xml/accounts_dashboard_settings.xml
+@@ -44,4 +44,16 @@
+         android:summary="@string/auto_sync_account_summary"
+         android:order="104"/>
+ 
++    <Preference
++        android:order="150"
++        android:title="@string/custom_google_sync_title"
++        android:summary="@string/custom_google_sync_summary">
++
++        <intent
++            android:action="android.intent.action.VIEW"
++            android:targetPackage="com.google.android.apps.restore"
++            android:targetClass="com.google.android.apps.pixelmigrate.cloudrestore.component.CloudRestoreFlowActivity" />
++
++    </Preference>
++
+ </PreferenceScreen>
+-- 
+2.17.1
+

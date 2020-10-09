@@ -1,0 +1,31 @@
+From 651f1e4b557fc4eaf45ad6ee9a9f733a7fe271aa Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 8 Oct 2020 14:53:53 -0400
+Subject: [PATCH] FacolaView: On galaxy A71 mask_brightness is unreadable.
+ Assume max_brightness instead
+
+  from
+  https://github.com/phhusson/platform_frameworks_base/commit/40ea7ed9211382d156d6a364ead057f8a14106ae
+
+Change-Id: Ic124849f00f3f7b5a25a421c3269b43934f4c456
+---
+ .../com/android/server/biometrics/fingerprint/FacolaView.java  | 3 +++
+ 1 file changed, 3 insertions(+)
+
+diff --git a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+index 3536093a4ee..9617578dd55 100644
+--- a/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
++++ b/services/core/java/com/android/server/biometrics/fingerprint/FacolaView.java
+@@ -213,6 +213,9 @@ public class FacolaView extends ImageView implements OnTouchListener {
+                 brightnessFile = "/sys/class/lcd/panel/device/backlight/panel/brightness";
+ 
+             String maskBrightnessStr = readFile("/sys/class/lcd/panel/mask_brightness");
++            if(maskBrightnessStr == null) {
++                maskBrightnessStr = readFile("/sys/class/backlight/panel0-backlight/max_brightness");
++            }
+             String actualMaskBrightnessPath = "/sys/class/lcd/panel/actual_mask_brightness";
+ 
+             Slog.d("PHH-Enroll", "Got fod position, mask brightness " + fodPositionString + ", " + maskBrightnessStr);
+-- 
+2.17.1
+

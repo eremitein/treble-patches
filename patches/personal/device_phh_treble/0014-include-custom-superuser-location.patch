@@ -1,0 +1,24 @@
+From 651ad9e616c90baa0a2b19acbffa5ed9bc17a98b Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 10 Oct 2020 02:59:26 -0400
+Subject: [PATCH] include custom superuser location
+
+---
+ phh-securize.sh | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/phh-securize.sh b/phh-securize.sh
+index ad7e64e..48947df 100644
+--- a/phh-securize.sh
++++ b/phh-securize.sh
+@@ -22,6 +22,7 @@ rm $SYSTEM/bin/phh-su
+ rm $SYSTEM/etc/init/su.rc
+ rm $SYSTEM/bin/phh-securize.sh
+ rm -Rf $SYSTEM/{app,priv-app}/me.phh.superuser/
++rm -Rf $SYSTEM/product/app/Superuser/
+ rm -Rf /data/su || true
+ mount -o remount,ro $MOUNTPOINT
+ sync
+-- 
+2.17.1
+

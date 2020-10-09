@@ -1,0 +1,48 @@
+From 4d1f94d5e799c65a6d43af29c73bd6ed5c0d2657 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 25 Sep 2020 09:20:02 -0400
+Subject: [PATCH] RE: rework speed UI overlays
+
+Change-Id: Iff6e8540d68647d7f0478b2e63fad39423190b63
+---
+ packages/overlays/Level3SpeedUIOverlay/res/values/config.xml | 2 +-
+ packages/overlays/Level4SpeedUIOverlay/res/values/config.xml | 2 +-
+ packages/overlays/Level7SpeedUIOverlay/res/values/config.xml | 2 +-
+ 3 files changed, 3 insertions(+), 3 deletions(-)
+
+diff --git a/packages/overlays/Level3SpeedUIOverlay/res/values/config.xml b/packages/overlays/Level3SpeedUIOverlay/res/values/config.xml
+index 488203930dd..45056eb784c 100644
+--- a/packages/overlays/Level3SpeedUIOverlay/res/values/config.xml
++++ b/packages/overlays/Level3SpeedUIOverlay/res/values/config.xml
+@@ -17,5 +17,5 @@
+ -->
+ <resources>
+     <bool name="config_speedui_value">false</bool>
+-    <bool name="config_supportsRoundedCornersOnWindows">false</bool>
++    <bool name="config_enableAutoPowerModes">true</bool>
+ </resources>
+diff --git a/packages/overlays/Level4SpeedUIOverlay/res/values/config.xml b/packages/overlays/Level4SpeedUIOverlay/res/values/config.xml
+index 3dcdba01ed5..51aba72a5b6 100644
+--- a/packages/overlays/Level4SpeedUIOverlay/res/values/config.xml
++++ b/packages/overlays/Level4SpeedUIOverlay/res/values/config.xml
+@@ -18,5 +18,5 @@
+ <resources>
+     <bool name="config_speedui_value">false</bool>
+     <bool name="config_speedui_ips_value">false</bool>
+-    <bool name="config_supportsRoundedCornersOnWindows">false</bool>
++    <bool name="config_enableAutoPowerModes">true</bool>
+ </resources>
+diff --git a/packages/overlays/Level7SpeedUIOverlay/res/values/config.xml b/packages/overlays/Level7SpeedUIOverlay/res/values/config.xml
+index a68a9303609..97715bbe89a 100644
+--- a/packages/overlays/Level7SpeedUIOverlay/res/values/config.xml
++++ b/packages/overlays/Level7SpeedUIOverlay/res/values/config.xml
+@@ -17,5 +17,5 @@
+ -->
+ <resources>
+     <bool name="config_enableAutoPowerModes">true</bool>
+-    <bool name="config_supportsRoundedCornersOnWindows">false</bool>
++    <bool name="config_supportsRoundedCornersOnWindows">true</bool>
+ </resources>
+-- 
+2.17.1
+

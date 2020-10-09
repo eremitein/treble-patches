@@ -1,0 +1,706 @@
+From 077c9e2e2eeb84a1f3c26cf2df9eeca2bab0bd45 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 9 Oct 2020 13:25:32 -0400
+Subject: [PATCH] disable above/below dividers
+
+Change-Id: If4e53292e22d9c7a54507826056aad483513a686
+---
+ res/xml/accessibility_control_timeout_settings.xml |  2 +-
+ res/xml/account_type_settings.xml                  |  2 +-
+ res/xml/accounts_dashboard_settings.xml            |  2 +-
+ res/xml/adaptive_sleep_detail.xml                  |  2 +-
+ res/xml/app_and_notification.xml                   |  2 +-
+ res/xml/app_info_settings.xml                      | 12 ++++++------
+ res/xml/app_storage_settings.xml                   |  2 +-
+ res/xml/auto_brightness_detail.xml                 |  2 +-
+ res/xml/automatic_storage_management_settings.xml  |  4 ++--
+ res/xml/bluetooth_device_details_fragment.xml      | 10 +++++-----
+ res/xml/bluetooth_screen.xml                       |  2 +-
+ res/xml/channel_notification_settings.xml          |  8 ++++----
+ res/xml/connected_devices.xml                      |  6 +++---
+ res/xml/dark_mode_settings.xml                     |  4 ++--
+ res/xml/inapp_notification_settings.xml            |  2 +-
+ res/xml/mobile_network_settings.xml                |  2 +-
+ res/xml/mobile_network_settings_v2.xml             |  8 ++++----
+ res/xml/my_device_info.xml                         |  6 +++---
+ res/xml/network_and_internet_v2.xml                |  4 ++--
+ res/xml/notification_group_settings.xml            |  2 +-
+ res/xml/power_usage_detail.xml                     |  2 +-
+ res/xml/power_usage_summary.xml                    |  2 +-
+ res/xml/privacy_dashboard_settings.xml             |  6 +++---
+ res/xml/smart_battery_detail.xml                   |  2 +-
+ res/xml/sound_settings.xml                         |  2 +-
+ res/xml/storage_dashboard_fragment.xml             |  6 +++---
+ res/xml/tether_prefs.xml                           |  2 +-
+ res/xml/user_settings.xml                          |  2 +-
+ res/xml/wifi_network_details_fragment.xml          |  6 +++---
+ res/xml/wifi_settings.xml                          |  2 +-
+ res/xml/zen_mode_custom_rule_configuration.xml     |  2 +-
+ res/xml/zen_mode_event_rule_settings.xml           |  2 +-
+ res/xml/zen_mode_schedule_rule_settings.xml        |  2 +-
+ res/xml/zen_mode_settings.xml                      |  6 +++---
+ 34 files changed, 64 insertions(+), 64 deletions(-)
+
+diff --git a/res/xml/accessibility_control_timeout_settings.xml b/res/xml/accessibility_control_timeout_settings.xml
+index e5a6e5b0b2..cb5483e99b 100644
+--- a/res/xml/accessibility_control_timeout_settings.xml
++++ b/res/xml/accessibility_control_timeout_settings.xml
+@@ -33,7 +33,7 @@
+     <com.android.settings.widget.RadioButtonPreference
+         android:key="accessibility_control_timeout_default"
+         android:title="@string/accessibility_timeout_default"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         android:persistent="false" />
+ 
+     <com.android.settings.widget.RadioButtonPreference
+diff --git a/res/xml/account_type_settings.xml b/res/xml/account_type_settings.xml
+index 98a5e8b67c..6f925c82e6 100644
+--- a/res/xml/account_type_settings.xml
++++ b/res/xml/account_type_settings.xml
+@@ -40,6 +40,6 @@
+       android:layout="@layout/remove_account_button"
+       android:order="1000"
+       android:selectable="false"
+-      settings:allowDividerAbove="true"/>
++      settings:allowDividerAbove="false"/>
+ 
+ </PreferenceScreen>
+diff --git a/res/xml/accounts_dashboard_settings.xml b/res/xml/accounts_dashboard_settings.xml
+index 7870fdf56b..c1e219b9fb 100644
+--- a/res/xml/accounts_dashboard_settings.xml
++++ b/res/xml/accounts_dashboard_settings.xml
+@@ -30,7 +30,7 @@
+         android:title="@string/auto_sync_account_title"
+         android:summary="@string/auto_sync_account_summary"
+         android:order="102"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <SwitchPreference
+         android:key="auto_sync_work_account_data"
+diff --git a/res/xml/adaptive_sleep_detail.xml b/res/xml/adaptive_sleep_detail.xml
+index 568e694458..cf629c62c3 100644
+--- a/res/xml/adaptive_sleep_detail.xml
++++ b/res/xml/adaptive_sleep_detail.xml
+@@ -43,6 +43,6 @@
+         settings:keywords="@string/keywords_display_adaptive_sleep"
+         settings:controller="com.android.settings.display.AdaptiveSleepDetailPreferenceController"
+         settings:useAdminDisabledSummary="true"
+-        settings:allowDividerAbove="true" />
++        settings:allowDividerAbove="false" />
+ 
+ </PreferenceScreen>
+\ No newline at end of file
+diff --git a/res/xml/app_and_notification.xml b/res/xml/app_and_notification.xml
+index eccb0d13f4..9bddf61d2f 100644
+--- a/res/xml/app_and_notification.xml
++++ b/res/xml/app_and_notification.xml
+@@ -37,7 +37,7 @@
+         android:layout="@layout/app_entities_header"
+         android:selectable="false"
+         android:order="-998"
+-        settings:allowDividerBelow="true"
++        settings:allowDividerBelow="false"
+         settings:controller="com.android.settings.applications.RecentAppsPreferenceController"/>
+ 
+     <!-- Empty category to draw divider -->
+diff --git a/res/xml/app_info_settings.xml b/res/xml/app_info_settings.xml
+index 1d9e236f42..8a440dc12e 100644
+--- a/res/xml/app_info_settings.xml
++++ b/res/xml/app_info_settings.xml
+@@ -26,15 +26,15 @@
+         android:layout="@layout/settings_entity_header"
+         android:selectable="false"
+         android:order="-10000"
+-        settings:allowDividerBelow="true"/>
++        settings:allowDividerBelow="false"/>
+ 
+     <com.android.settingslib.widget.LayoutPreference
+         android:key="instant_app_buttons"
+         android:layout="@layout/instant_app_buttons"
+         android:selectable="false"
+         android:order="-9999"
+-        settings:allowDividerAbove="true"
+-        settings:allowDividerBelow="true"/>
++        settings:allowDividerAbove="false"
++        settings:allowDividerBelow="false"/>
+ 
+     <com.android.settingslib.widget.ActionButtonsPreference
+         android:key="action_buttons"
+@@ -44,7 +44,7 @@
+         android:key="notification_settings"
+         android:title="@string/notifications_label"
+         settings:controller="com.android.settings.applications.appinfo.AppNotificationPreferenceController"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <com.android.settings.widget.FixedLineSummaryPreference
+         android:key="permission_settings"
+@@ -169,14 +169,14 @@
+         android:key="app_settings_link"
+         android:title="@string/app_settings_link"
+         settings:controller="com.android.settings.applications.appinfo.AppSettingPreferenceController"
+-        settings:allowDividerAbove="true" />
++        settings:allowDividerAbove="false" />
+ 
+     <Preference
+         android:key="app_version"
+         android:selectable="false"
+         android:order="9998"
+         settings:controller="com.android.settings.applications.appinfo.AppVersionPreferenceController"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:enableCopying="true"/>
+ 
+     <Preference
+diff --git a/res/xml/app_storage_settings.xml b/res/xml/app_storage_settings.xml
+index 376f09e985..925a9aed8a 100644
+--- a/res/xml/app_storage_settings.xml
++++ b/res/xml/app_storage_settings.xml
+@@ -25,7 +25,7 @@
+     <com.android.settings.applications.SpacePreference
+         android:key="storage_space"
+         android:layout_height="8dp"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <Preference
+         android:key="storage_used"
+diff --git a/res/xml/auto_brightness_detail.xml b/res/xml/auto_brightness_detail.xml
+index abf535f81b..02e4249afb 100644
+--- a/res/xml/auto_brightness_detail.xml
++++ b/res/xml/auto_brightness_detail.xml
+@@ -37,6 +37,6 @@
+         settings:controller="com.android.settings.display.AutoBrightnessDetailPreferenceController"
+         settings:useAdminDisabledSummary="true"
+         settings:userRestriction="no_config_brightness"
+-        settings:allowDividerAbove="true" />
++        settings:allowDividerAbove="false" />
+ 
+ </PreferenceScreen>
+\ No newline at end of file
+diff --git a/res/xml/automatic_storage_management_settings.xml b/res/xml/automatic_storage_management_settings.xml
+index 1428741e8c..b2887254be 100644
+--- a/res/xml/automatic_storage_management_settings.xml
++++ b/res/xml/automatic_storage_management_settings.xml
+@@ -24,12 +24,12 @@
+             android:title="@string/automatic_storage_manager_days_title"
+             android:entries="@array/automatic_storage_management_days"
+             android:entryValues="@array/automatic_storage_management_days_values"
+-            settings:allowDividerBelow="true" />
++            settings:allowDividerBelow="false" />
+ 
+         <Preference
+             android:key="freed_bytes"
+             android:persistent="false"
+             android:selectable="false"
+-            settings:allowDividerAbove="true" />
++            settings:allowDividerAbove="false" />
+ 
+ </PreferenceScreen>
+\ No newline at end of file
+diff --git a/res/xml/bluetooth_device_details_fragment.xml b/res/xml/bluetooth_device_details_fragment.xml
+index f485c6a870..b6ec02913e 100644
+--- a/res/xml/bluetooth_device_details_fragment.xml
++++ b/res/xml/bluetooth_device_details_fragment.xml
+@@ -23,26 +23,26 @@
+         android:key="bluetooth_device_header"
+         android:layout="@layout/settings_entity_header"
+         android:selectable="false"
+-        settings:allowDividerBelow="true"
++        settings:allowDividerBelow="false"
+         settings:searchable="false"/>
+ 
+     <com.android.settingslib.widget.LayoutPreference
+         android:key="advanced_bluetooth_device_header"
+         android:layout="@layout/advanced_bt_entity_header"
+         android:selectable="false"
+-        settings:allowDividerBelow="true"
++        settings:allowDividerBelow="false"
+         settings:searchable="false"
+         settings:controller="com.android.settings.bluetooth.AdvancedBluetoothDetailsHeaderController"/>
+ 
+     <com.android.settingslib.widget.ActionButtonsPreference
+         android:key="action_buttons"
+-        settings:allowDividerBelow="true"/>
++        settings:allowDividerBelow="false"/>
+ 
+     <com.android.settings.slices.SlicePreference
+         android:key="bt_device_slice"
+         settings:controller="com.android.settings.slices.BlockingSlicePrefController"
+-        settings:allowDividerBelow="true"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerBelow="false"
++        settings:allowDividerAbove="false"/>
+ 
+     <PreferenceCategory
+         android:key="bluetooth_profiles"/>
+diff --git a/res/xml/bluetooth_screen.xml b/res/xml/bluetooth_screen.xml
+index 42f71b3a86..5f5a54e287 100644
+--- a/res/xml/bluetooth_screen.xml
++++ b/res/xml/bluetooth_screen.xml
+@@ -31,7 +31,7 @@
+         android:icon="@drawable/ic_add_24dp"
+         android:summary="@string/connected_device_add_device_summary"
+         android:fragment="com.android.settings.bluetooth.BluetoothPairingDetail"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:userRestriction="no_config_bluetooth"
+         settings:useAdminDisabledSummary="true"
+         settings:controller="com.android.settings.connecteddevice.AddDevicePreferenceController"/>
+diff --git a/res/xml/channel_notification_settings.xml b/res/xml/channel_notification_settings.xml
+index 267281f28c..92378677b3 100644
+--- a/res/xml/channel_notification_settings.xml
++++ b/res/xml/channel_notification_settings.xml
+@@ -42,19 +42,19 @@
+         android:key="importance"
+         android:order="4"
+         android:title="@string/notification_importance_title"
+-        settings:allowDividerBelow="true"/>
++        settings:allowDividerBelow="false"/>
+ 
+     <com.android.settingslib.RestrictedSwitchPreference
+         android:key="min_importance"
+         android:order="5"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         android:title="@string/notification_importance_min_title"
+         android:summary="@string/notification_channel_summary_min"/>
+ 
+     <com.android.settingslib.RestrictedSwitchPreference
+         android:key="high_importance"
+         android:order="6"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         android:title="@string/notification_importance_high_title"
+         android:summary="@string/notification_channel_summary_high"/>
+ 
+@@ -118,7 +118,7 @@
+             android:key="app_link"
+             android:order="18"
+             android:title="@string/app_settings_link"
+-            settings:allowDividerAbove="true"/>
++            settings:allowDividerAbove="false"/>
+     </PreferenceCategory>
+ 
+     <com.android.settings.notification.NotificationFooterPreference
+diff --git a/res/xml/connected_devices.xml b/res/xml/connected_devices.xml
+index da55fe33f4..a6aab1a546 100644
+--- a/res/xml/connected_devices.xml
++++ b/res/xml/connected_devices.xml
+@@ -24,7 +24,7 @@
+         android:key="bt_nearby_slice"
+         android:title="@string/summary_placeholder"
+         settings:controller="com.android.settings.slices.SlicePreferenceController"
+-        settings:allowDividerBelow="true"/>
++        settings:allowDividerBelow="false"/>
+ 
+     <PreferenceCategory
+         android:key="available_device_list"
+@@ -47,7 +47,7 @@
+         android:icon="@drawable/ic_add_24dp"
+         android:summary="@string/connected_device_add_device_summary"
+         android:fragment="com.android.settings.bluetooth.BluetoothPairingDetail"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:userRestriction="no_config_bluetooth"
+         settings:useAdminDisabledSummary="true"
+         settings:controller="com.android.settings.connecteddevice.AddDevicePreferenceController"/>
+@@ -69,7 +69,7 @@
+         android:key="connection_preferences"
+         android:title="@string/connected_device_connections_title"
+         android:fragment="com.android.settings.connecteddevice.AdvancedConnectedDeviceDashboardFragment"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:controller="com.android.settings.connecteddevice.AdvancedConnectedDeviceController"/>
+ 
+ </PreferenceScreen>
+diff --git a/res/xml/dark_mode_settings.xml b/res/xml/dark_mode_settings.xml
+index 88cf4c978a..dc73059d2d 100644
+--- a/res/xml/dark_mode_settings.xml
++++ b/res/xml/dark_mode_settings.xml
+@@ -36,7 +36,7 @@
+         android:title="@string/dark_ui_title"
+         android:selectable="false"
+         android:layout="@layout/dark_ui_activation_button"
+-        settings:allowDividerBelow="true"
++        settings:allowDividerBelow="false"
+         settings:controller="com.android.settings.display.darkmode.DarkModeActivationPreferenceController"
+         settings:keywords="@string/keywords_dark_ui_mode"/>
+ 
+@@ -51,6 +51,6 @@
+             android:title="@string/dark_ui_text"
+             android:selectable="false"
+             settings:searchable="false"
+-            settings:allowDividerAbove="true"/>
++            settings:allowDividerAbove="false"/>
+ 
+ </PreferenceScreen>
+\ No newline at end of file
+diff --git a/res/xml/inapp_notification_settings.xml b/res/xml/inapp_notification_settings.xml
+index 7547f3c144..a9265389f5 100644
+--- a/res/xml/inapp_notification_settings.xml
++++ b/res/xml/inapp_notification_settings.xml
+@@ -21,6 +21,6 @@
+         android:key="app_link"
+         android:title="@string/app_settings_link"
+         android:order="500"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+ </PreferenceScreen>
+diff --git a/res/xml/mobile_network_settings.xml b/res/xml/mobile_network_settings.xml
+index 1a9b88508f..ad4884c613 100644
+--- a/res/xml/mobile_network_settings.xml
++++ b/res/xml/mobile_network_settings.xml
+@@ -140,7 +140,7 @@
+         android:key="telephony_apn_key"
+         android:persistent="false"
+         android:title="@string/mobile_network_apn_title"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:controller="com.android.settings.network.telephony.ApnPreferenceController"/>
+ 
+     <Preference
+diff --git a/res/xml/mobile_network_settings_v2.xml b/res/xml/mobile_network_settings_v2.xml
+index 506b354ba4..06022664f4 100644
+--- a/res/xml/mobile_network_settings_v2.xml
++++ b/res/xml/mobile_network_settings_v2.xml
+@@ -39,7 +39,7 @@
+             android:key="calls_preference"
+             android:title="@string/calls_preference"
+             settings:controller="com.android.settings.network.telephony.CallsDefaultSubscriptionController"
+-            settings:allowDividerAbove="true"/>
++            settings:allowDividerAbove="false"/>
+ 
+         <ListPreference
+             android:key="sms_preference"
+@@ -50,7 +50,7 @@
+             android:key="cdma_lte_data_service_key"
+             android:title="@string/cdma_lte_data_service"
+             settings:controller="com.android.settings.network.telephony.DataServiceSetupPreferenceController"
+-            settings:allowDividerAbove="true"
++            settings:allowDividerAbove="false"
+             settings:allowDividerBelow="false"/>
+ 
+         <SwitchPreference
+@@ -58,7 +58,7 @@
+             android:title="@string/mobile_data_settings_title"
+             android:summary="@string/mobile_data_settings_summary"
+             settings:controller="com.android.settings.network.telephony.MobileDataPreferenceController"
+-            settings:allowDividerAbove="true"/>
++            settings:allowDividerAbove="false"/>
+ 
+         <com.android.settingslib.RestrictedSwitchPreference
+             android:key="button_roaming_key"
+@@ -186,7 +186,7 @@
+             android:key="telephony_apn_key"
+             android:persistent="false"
+             android:title="@string/mobile_network_apn_title"
+-            settings:allowDividerAbove="true"
++            settings:allowDividerAbove="false"
+             settings:controller="com.android.settings.network.telephony.ApnPreferenceController"/>
+ 
+         <Preference
+diff --git a/res/xml/my_device_info.xml b/res/xml/my_device_info.xml
+index aa653ddded..1c93d609bc 100644
+--- a/res/xml/my_device_info.xml
++++ b/res/xml/my_device_info.xml
+@@ -59,7 +59,7 @@
+         android:title="@string/sim_status_title"
+         settings:keywords="@string/keywords_sim_status"
+         android:summary="@string/summary_placeholder"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <!-- Model & hardware -->
+     <Preference
+@@ -87,7 +87,7 @@
+         android:title="@string/wifi_ip_address"
+         android:summary="@string/summary_placeholder"
+         android:selectable="false"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:enableCopying="true"/>
+ 
+     <!-- Wi-Fi MAC address -->
+@@ -129,7 +129,7 @@
+         android:order="53"
+         android:title="@string/build_number"
+         android:summary="@string/summary_placeholder"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:enableCopying="true"
+         settings:controller="com.android.settings.deviceinfo.BuildNumberPreferenceController"/>
+ 
+diff --git a/res/xml/network_and_internet_v2.xml b/res/xml/network_and_internet_v2.xml
+index 36044803d1..a56ee9fb1e 100644
+--- a/res/xml/network_and_internet_v2.xml
++++ b/res/xml/network_and_internet_v2.xml
+@@ -25,7 +25,7 @@
+         android:key="multi_network_header"
+         android:title="@string/summary_placeholder"
+         android:layout="@layout/preference_category_no_label"
+-        settings:allowDividerBelow="true"
++        settings:allowDividerBelow="false"
+         android:order="-40"
+         settings:controller="com.android.settings.network.MultiNetworkHeaderController"/>
+ 
+@@ -36,7 +36,7 @@
+         android:summary="@string/summary_placeholder"
+         android:icon="@drawable/ic_settings_wireless"
+         android:order="-30"
+-        settings:allowDividerAbove="true">
++        settings:allowDividerAbove="false">
+         <intent
+             android:action="android.settings.WIFI_SETTINGS"
+             android:targetClass="Settings$WifiSettingsActivity" />
+diff --git a/res/xml/notification_group_settings.xml b/res/xml/notification_group_settings.xml
+index 7192f90cdc..6edb8f36f7 100644
+--- a/res/xml/notification_group_settings.xml
++++ b/res/xml/notification_group_settings.xml
+@@ -30,7 +30,7 @@
+     <Preference
+         android:key="app_link"
+         android:title="@string/app_settings_link"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <com.android.settings.notification.NotificationFooterPreference
+         android:key="desc" />
+diff --git a/res/xml/power_usage_detail.xml b/res/xml/power_usage_detail.xml
+index 945ceed893..f7c3468b2a 100644
+--- a/res/xml/power_usage_detail.xml
++++ b/res/xml/power_usage_detail.xml
+@@ -24,7 +24,7 @@
+         android:layout="@layout/settings_entity_header"
+         android:selectable="false"
+         android:order="-10000"
+-        settings:allowDividerBelow="true"/>
++        settings:allowDividerBelow="false"/>
+ 
+     <com.android.settingslib.widget.ActionButtonsPreference
+         android:key="action_buttons"
+diff --git a/res/xml/power_usage_summary.xml b/res/xml/power_usage_summary.xml
+index 946b24709d..0a015a401c 100644
+--- a/res/xml/power_usage_summary.xml
++++ b/res/xml/power_usage_summary.xml
+@@ -63,7 +63,7 @@
+         android:key="last_full_charge"
+         android:title="@string/battery_last_full_charge"
+         android:selectable="false"
+-        settings:allowDividerAbove="true" />
++        settings:allowDividerAbove="false" />
+ 
+     <com.android.settings.fuelgauge.PowerGaugePreference
+         android:key="screen_usage"
+diff --git a/res/xml/privacy_dashboard_settings.xml b/res/xml/privacy_dashboard_settings.xml
+index 3618c2fb0e..ea562217d2 100644
+--- a/res/xml/privacy_dashboard_settings.xml
++++ b/res/xml/privacy_dashboard_settings.xml
+@@ -34,14 +34,14 @@
+         android:key="work_policy_info"
+         android:title="@string/work_policy_privacy_settings"
+         android:summary="@string/work_policy_privacy_settings_summary"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:controller="com.android.settings.privacy.WorkPolicyInfoPreferenceController"/>
+ 
+     <!-- Accessibility usage -->
+     <Preference
+         android:key="privacy_accessibility_usage"
+         android:title="@string/accessibility_usage_title"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:controller="com.android.settings.privacy.AccessibilityUsagePreferenceController">
+         <intent android:action="android.intent.action.REVIEW_ACCESSIBILITY_SERVICES"/>
+     </Preference>
+@@ -50,7 +50,7 @@
+     <Preference
+         android:key="privacy_manage_perms"
+         android:title="@string/app_permissions"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:keywords="@string/keywords_app_permissions"
+         settings:controller="com.android.settings.applications.AppPermissionsPreferenceController">
+         <intent android:action="android.intent.action.MANAGE_PERMISSIONS"/>
+diff --git a/res/xml/smart_battery_detail.xml b/res/xml/smart_battery_detail.xml
+index fa1b20be53..f0703174af 100644
+--- a/res/xml/smart_battery_detail.xml
++++ b/res/xml/smart_battery_detail.xml
+@@ -34,7 +34,7 @@
+         android:title="@string/smart_battery_title"
+         android:summary="@string/smart_battery_summary"
+         settings:controller="com.android.settings.fuelgauge.SmartBatteryPreferenceController"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <SwitchPreference
+         android:key="auto_restriction"
+diff --git a/res/xml/sound_settings.xml b/res/xml/sound_settings.xml
+index ce9a25eac4..f7cc000226 100644
+--- a/res/xml/sound_settings.xml
++++ b/res/xml/sound_settings.xml
+@@ -126,7 +126,7 @@
+         android:order="-120"
+         settings:useAdminDisabledSummary="true"
+         settings:keywords="@string/keywords_sounds_and_notifications_interruptions"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         settings:controller="com.android.settings.notification.ZenModePreferenceController"/>
+ 
+     <Preference
+diff --git a/res/xml/storage_dashboard_fragment.xml b/res/xml/storage_dashboard_fragment.xml
+index 63ce90b480..34c1a19042 100644
+--- a/res/xml/storage_dashboard_fragment.xml
++++ b/res/xml/storage_dashboard_fragment.xml
+@@ -29,14 +29,14 @@
+         android:title="@string/automatic_storage_manager_preference_title"
+         android:icon="@drawable/ic_storage"
+         android:order="1"
+-        settings:allowDividerAbove="true"
+-        settings:allowDividerBelow="true"
++        settings:allowDividerAbove="false"
++        settings:allowDividerBelow="false"
+         settings:controller="com.android.settings.deviceinfo.storage.AutomaticStorageManagementSwitchPreferenceController" />
+     <com.android.settings.deviceinfo.StorageItemPreference
+         android:key="pref_photos_videos"
+         android:title="@string/storage_photos_videos"
+         android:icon="@drawable/ic_photo_library"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         android:order="2" />
+     <com.android.settings.deviceinfo.StorageItemPreference
+         android:key="pref_music_audio"
+diff --git a/res/xml/tether_prefs.xml b/res/xml/tether_prefs.xml
+index 65bf555236..277a9a4e30 100644
+--- a/res/xml/tether_prefs.xml
++++ b/res/xml/tether_prefs.xml
+@@ -48,5 +48,5 @@
+         android:key="disabled_on_data_saver"
+         android:summary="@string/tether_settings_disabled_on_data_saver"
+         android:selectable="false"
+-        settings:allowDividerAbove="true" />
++        settings:allowDividerAbove="false" />
+ </PreferenceScreen>
+diff --git a/res/xml/user_settings.xml b/res/xml/user_settings.xml
+index 269aa3a448..d470526e60 100644
+--- a/res/xml/user_settings.xml
++++ b/res/xml/user_settings.xml
+@@ -38,6 +38,6 @@
+         android:title="@string/user_add_on_lockscreen_menu"
+         android:singleLineTitle="false"
+         android:order="105"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+ </PreferenceScreen>
+diff --git a/res/xml/wifi_network_details_fragment.xml b/res/xml/wifi_network_details_fragment.xml
+index d45f9bc179..6e41452ff9 100644
+--- a/res/xml/wifi_network_details_fragment.xml
++++ b/res/xml/wifi_network_details_fragment.xml
+@@ -24,7 +24,7 @@
+         android:layout="@layout/settings_entity_header"
+         android:selectable="false"
+         android:order="-10000"
+-        settings:allowDividerBelow="true"/>
++        settings:allowDividerBelow="false"/>
+ 
+     <com.android.settings.datausage.DataUsageSummaryPreference
+         android:key="status_header"
+@@ -41,7 +41,7 @@
+         android:key="signal_strength"
+         android:title="@string/wifi_signal"
+         android:selectable="false"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <Preference
+         android:key="frequency"
+@@ -74,7 +74,7 @@
+         android:key="add_device_to_network"
+         android:title="@string/wifi_dpp_add_device"
+         android:summary="@string/wifi_dpp_connect_network_using_qr_code"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <!-- Network Details -->
+     <PreferenceCategory
+diff --git a/res/xml/wifi_settings.xml b/res/xml/wifi_settings.xml
+index d7c299e6a8..7e80511d7b 100644
+--- a/res/xml/wifi_settings.xml
++++ b/res/xml/wifi_settings.xml
+@@ -34,7 +34,7 @@
+     <Preference
+         android:key="configure_settings"
+         android:title="@string/wifi_configure_settings_preference_title"
+-        settings:allowDividerAbove="true"
++        settings:allowDividerAbove="false"
+         android:fragment="com.android.settings.wifi.ConfigureWifiSettings"/>
+ 
+     <Preference
+diff --git a/res/xml/zen_mode_custom_rule_configuration.xml b/res/xml/zen_mode_custom_rule_configuration.xml
+index c1732a3ac6..7292b488ce 100644
+--- a/res/xml/zen_mode_custom_rule_configuration.xml
++++ b/res/xml/zen_mode_custom_rule_configuration.xml
+@@ -62,5 +62,5 @@
+     <Preference
+         android:key="zen_rule_notifications"
+         android:title="@string/zen_mode_restrict_notifications_title"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ </PreferenceScreen>
+diff --git a/res/xml/zen_mode_event_rule_settings.xml b/res/xml/zen_mode_event_rule_settings.xml
+index 841fc065a8..7918a946ad 100644
+--- a/res/xml/zen_mode_event_rule_settings.xml
++++ b/res/xml/zen_mode_event_rule_settings.xml
+@@ -24,7 +24,7 @@
+     <com.android.settingslib.widget.LayoutPreference
+         android:key="pref_app_header"
+         android:layout="@layout/settings_entity_header"
+-        settings:allowDividerBelow="true" />
++        settings:allowDividerBelow="false" />
+ 
+     <com.android.settingslib.widget.ActionButtonsPreference
+         android:key="zen_action_buttons" />
+diff --git a/res/xml/zen_mode_schedule_rule_settings.xml b/res/xml/zen_mode_schedule_rule_settings.xml
+index 8484854189..d1d37b104a 100644
+--- a/res/xml/zen_mode_schedule_rule_settings.xml
++++ b/res/xml/zen_mode_schedule_rule_settings.xml
+@@ -24,7 +24,7 @@
+     <com.android.settingslib.widget.LayoutPreference
+         android:key="pref_app_header"
+         android:layout="@layout/settings_entity_header"
+-        settings:allowDividerBelow="true"/>
++        settings:allowDividerBelow="false"/>
+ 
+     <com.android.settingslib.widget.ActionButtonsPreference
+         android:key="zen_action_buttons"/>
+diff --git a/res/xml/zen_mode_settings.xml b/res/xml/zen_mode_settings.xml
+index 320a37c3da..ca38e9ccb0 100644
+--- a/res/xml/zen_mode_settings.xml
++++ b/res/xml/zen_mode_settings.xml
+@@ -50,7 +50,7 @@
+         android:key="zen_mode_block_effects_settings"
+         android:title="@string/zen_mode_restrict_notifications_title"
+         android:fragment="com.android.settings.notification.ZenModeRestrictNotificationsSettings"
+-        settings:allowDividerAbove="true"/>
++        settings:allowDividerAbove="false"/>
+ 
+     <!-- DND duration settings -->
+     <com.android.settings.notification.ZenDurationDialogPreference
+@@ -70,8 +70,8 @@
+         android:title="@string/zen_mode_settings_title"
+         android:selectable="false"
+         android:layout="@layout/zen_mode_settings_button"
+-        settings:allowDividerAbove="true"
+-        settings:allowDividerBelow="true"
++        settings:allowDividerAbove="false"
++        settings:allowDividerBelow="false"
+         settings:keywords="@string/keywords_zen_mode_settings"/>
+ 
+     <!-- Footer that shows if user is put into alarms only or total silence mode by an app -->
+-- 
+2.17.1
+

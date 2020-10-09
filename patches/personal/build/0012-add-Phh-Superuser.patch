@@ -1,0 +1,25 @@
+From 5e17c1acd7e516ade949895697dfa61cad9588a4 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 10 Oct 2020 01:13:40 -0400
+Subject: [PATCH] add Phh Superuser
+
+Change-Id: I8ddaaace77a3539bc61400b675624a098c7e3603
+---
+ target/product/handheld_product.mk | 1 +
+ 1 file changed, 1 insertion(+)
+
+diff --git a/target/product/handheld_product.mk b/target/product/handheld_product.mk
+index b52ad44cb..3b84dfbd0 100644
+--- a/target/product/handheld_product.mk
++++ b/target/product/handheld_product.mk
+@@ -37,6 +37,7 @@ PRODUCT_PACKAGES += \
+     SimpleGallery \
+     StorageManager \
+     SystemUI \
++    Superuser \
+     WallpaperCropper \
+     frameworks-base-overlays
+ 
+-- 
+2.17.1
+
