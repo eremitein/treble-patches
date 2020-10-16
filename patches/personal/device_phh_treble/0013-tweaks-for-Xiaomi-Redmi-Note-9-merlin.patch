@@ -1,0 +1,46 @@
+From d0736d2da2c46e593093db815d4bea0b5fb45345 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 17 Oct 2020 06:58:04 -0400
+Subject: [PATCH] tweaks for Xiaomi Redmi Note 9 'merlin'
+
+  audiojack, brightness, fp touches
+  (thanks Akitake for reports)
+---
+ rw-system.sh | 9 +++++++--
+ 1 file changed, 7 insertions(+), 2 deletions(-)
+
+diff --git a/rw-system.sh b/rw-system.sh
+index 336dc1b..a716163 100644
+--- a/rw-system.sh
++++ b/rw-system.sh
+@@ -89,7 +89,7 @@ changeKeylayout() {
+         -e xiaomi/wayne -e xiaomi/jasmine -e xiaomi/jasmine_sprout \
+         -e xiaomi/platina -e iaomi/perseus -e xiaomi/ysl -e Redmi/begonia\
+         -e xiaomi/nitrogen -e xiaomi/sakura -e xiaomi/andromeda \
+-        -e xiaomi/whyred -e xiaomi/tulip -e xiaomi/onc \
++        -e xiaomi/whyred -e xiaomi/tulip -e xiaomi/onc -e Redmi/merlin \
+         -e redmi/curtana -e redmi/picasso -e redmi/galahad; then
+         if [ ! -f /mnt/phh/keylayout/uinput-goodix.kl ]; then
+           cp /system/phh/empty /mnt/phh/keylayout/uinput-goodix.kl
+@@ -299,12 +299,17 @@ fi
+ 
+ if getprop ro.vendor.build.fingerprint | grep -q -i \
+     -e xiaomi/clover -e xiaomi/wayne -e xiaomi/sakura \
+-    -e xiaomi/nitrogen -e xiaomi/whyred -e xiaomi/platina \
++    -e xiaomi/nitrogen -e xiaomi/whyred -e xiaomi/platina -e Redmi/merlin \
+     -e xiaomi/ysl -e nubia/nx60 -e nubia/nx61 -e xiaomi/tulip -e Redmi/begonia\
+     -e xiaomi/lavender -e xiaomi/olive -e xiaomi/olivelite -e xiaomi/pine; then
+     setprop persist.sys.qcom-brightness "$(cat /sys/class/leds/lcd-backlight/max_brightness)"
+ fi
+ 
++#Xiaomi Redmi Note 9
++if getprop ro.vendor.build.fingerprint |grep -qi -e Redmi/merlin; then
++    setprop persist.sys.overlay.devinputjack true
++fi
++
+ #Realme 6
+ if getprop ro.vendor.product.device |grep -iq -e RMX2001;then
+     setprop persist.sys.phh.fingerprint.nocleanup true
+-- 
+2.17.1
+
