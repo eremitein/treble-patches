@@ -1,7 +1,7 @@
-From 4dd9a874895bd196db9f45796d296e830c5c7d3e Mon Sep 17 00:00:00 2001
+From 53eacd66ac39ae4c477498cb6091b034dae8dda8 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Thu, 5 Mar 2020 04:10:22 +0200
-Subject: [PATCH 07/17] Revert "Battery saver mode should disable dark mode
+Subject: [PATCH 07/20] Revert "Battery saver mode should disable dark mode
  modification"
 
 	modified:   src/com/android/settings/display/DarkUIPreferenceController.java

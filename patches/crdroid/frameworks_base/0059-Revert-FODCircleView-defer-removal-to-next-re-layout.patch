@@ -1,0 +1,155 @@
+From b9add27966bd2765d7eca6af3098d9594707d540 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:59:50 -0400
+Subject: [PATCH 059/148] Revert "FODCircleView: defer removal to next
+ re-layout"
+
+This reverts commit 6ee0230af2bb4590ba302bb84631628a784b25d9.
+---
+ .../systemui/biometrics/FODCircleView.java    | 79 ++++++-------------
+ 1 file changed, 23 insertions(+), 56 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 771d1f81e3d..f7fb54935bf 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -76,7 +76,6 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+     private boolean mIsPulsing;
+     private boolean mIsScreenOn;
+     private boolean mIsViewAdded;
+-    private boolean mIsRemoving;
+ 
+     private Handler mHandler;
+ 
+@@ -247,20 +246,6 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+     @Override
+     protected void onDraw(Canvas canvas) {
+         super.onDraw(canvas);
+-
+-        if (mIsInsideCircle) {
+-            canvas.drawCircle(mWidth / 2, mHeight / 2, (float) (mWidth / 2.0f), mPaintFingerprint);
+-        }
+-    }
+-
+-    @Override
+-    protected void onLayout(boolean changed, int left, int top, int right, int bottom) {
+-        super.onLayout(changed, left, top, right, bottom);
+-
+-        // onLayout is a good time to call the HAL because dim layer
+-        // added by setDim() should have come into effect
+-        // the HAL is expected (if supported) to set the screen brightness
+-        // to maximum / minimum immediately when called
+         if (mIsInsideCircle) {
+             if (mIsDreaming) {
+                 setAlpha(1.0f);
+@@ -276,6 +261,7 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+                 }
+                 mIsPressed = true;
+             }
++            canvas.drawCircle(mWidth / 2, mHeight / 2, (float) (mWidth / 2.0f), mPaintFingerprint);
+         } else {
+             setAlpha(mIsDreaming ? 0.5f : 1.0f);
+             if (mIsPressed) {
+@@ -289,11 +275,6 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+                 }
+                 mIsPressed = false;
+             }
+-
+-            if (mIsRemoving) {
+-                mIsRemoving = false;
+-                mWindowManager.removeView(this);
+-            }
+         }
+     }
+ 
+@@ -339,33 +320,6 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+         }
+     }
+ 
+-    @Override
+-    protected void onDetachedFromWindow() {
+-        super.onDetachedFromWindow();
+-
+-        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
+-        if (daemon != null) {
+-            try {
+-                daemon.onHideFODView();
+-            } catch (RemoteException e) {
+-                // do nothing
+-            }
+-        }
+-    }
+-
+-    @Override
+-    protected void onAttachedToWindow() {
+-        super.onAttachedToWindow();
+-
+-        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
+-        if (daemon != null) {
+-            try {
+-                daemon.onShowFODView();
+-            } catch (RemoteException e) {
+-                // do nothing
+-            }
+-        }
+-    }
+ 
+     public synchronized IFingerprintInscreen getFingerprintInScreenDaemon() {
+         if (mFingerprintInscreenDaemon == null) {
+@@ -385,12 +339,6 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+     }
+ 
+     public void show() {
+-        if (mIsRemoving) {
+-            // Last removal hasn't been finished yet
+-            mIsRemoving = false;
+-            mWindowManager.removeView(this);
+-        }
+-
+         if (mIsViewAdded) {
+             return;
+         }
+@@ -421,6 +369,15 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+ 
+         mIsPressed = false;
+         setDim(false);
++
++        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
++        if (daemon != null) {
++            try {
++                daemon.onShowFODView();
++            } catch (RemoteException e) {
++                // do nothing
++            }
++        }
+     }
+ 
+     public void hide() {
+@@ -429,11 +386,21 @@ public class FODCircleView extends ImageView implements OnTouchListener {
+         }
+ 
+         mIsInsideCircle = false;
++
++        mWindowManager.removeView(this);
+         mIsViewAdded = false;
+-        // Postpone removal to next re-layout to avoid blinking
+-        mIsRemoving = true;
++
++        mIsPressed = false;
+         setDim(false);
+-        invalidate();
++
++        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
++        if (daemon != null) {
++            try {
++                daemon.onHideFODView();
++            } catch (RemoteException e) {
++                // do nothing
++            }
++        }
+     }
+ 
+     private void resetPosition() {
+-- 
+2.17.1
+

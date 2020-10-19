@@ -1,0 +1,400 @@
+From 97491da71e0f385db3c5698a753bb498def56cbb Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 11 Apr 2020 02:59:51 +0300
+Subject: [PATCH 132/148] add StatusBar icon spacing overlays
+
+	modified:   packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+	modified:   packages/overlays/Android.mk
+	new file:   packages/overlays/StatusBar1Overlay/Android.mk
+	new file:   packages/overlays/StatusBar1Overlay/AndroidManifest.xml
+	new file:   packages/overlays/StatusBar1Overlay/res/values/dimens.xml
+	new file:   packages/overlays/StatusBar2Overlay/Android.mk
+	new file:   packages/overlays/StatusBar2Overlay/AndroidManifest.xml
+	new file:   packages/overlays/StatusBar2Overlay/res/values/dimens.xml
+	new file:   packages/overlays/StatusBar3Overlay/Android.mk
+	new file:   packages/overlays/StatusBar3Overlay/AndroidManifest.xml
+	new file:   packages/overlays/StatusBar3Overlay/res/values/dimens.xml
+---
+ .../systemui/theme/ThemeOverlayManager.java   |  8 ++++-
+ packages/overlays/Android.mk                  |  3 ++
+ .../overlays/StatusBar1Overlay/Android.mk     | 30 +++++++++++++++++++
+ .../StatusBar1Overlay/AndroidManifest.xml     | 24 +++++++++++++++
+ .../StatusBar1Overlay/res/values/dimens.xml   | 27 +++++++++++++++++
+ .../overlays/StatusBar2Overlay/Android.mk     | 30 +++++++++++++++++++
+ .../StatusBar2Overlay/AndroidManifest.xml     | 24 +++++++++++++++
+ .../StatusBar2Overlay/res/values/dimens.xml   | 27 +++++++++++++++++
+ .../overlays/StatusBar3Overlay/Android.mk     | 30 +++++++++++++++++++
+ .../StatusBar3Overlay/AndroidManifest.xml     | 24 +++++++++++++++
+ .../StatusBar3Overlay/res/values/dimens.xml   | 27 +++++++++++++++++
+ 11 files changed, 253 insertions(+), 1 deletion(-)
+ create mode 100644 packages/overlays/StatusBar1Overlay/Android.mk
+ create mode 100644 packages/overlays/StatusBar1Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/StatusBar1Overlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/StatusBar2Overlay/Android.mk
+ create mode 100644 packages/overlays/StatusBar2Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/StatusBar2Overlay/res/values/dimens.xml
+ create mode 100644 packages/overlays/StatusBar3Overlay/Android.mk
+ create mode 100644 packages/overlays/StatusBar3Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/StatusBar3Overlay/res/values/dimens.xml
+
+diff --git a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+index 41e026af7c7..5ae3c6a1679 100644
+--- a/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
++++ b/packages/SystemUI/src/com/android/systemui/theme/ThemeOverlayManager.java
+@@ -67,6 +67,9 @@ class ThemeOverlayManager {
+     @VisibleForTesting
+     static final String OVERLAY_CATEGORY_ICON_THEME_PICKER =
+             "android.theme.customization.icon_pack.themepicker";
++    @VisibleForTesting
++    static final String OVERLAY_CATEGORY_STATUSBAR =
++            "android.theme.customization.statusbar";
+ 
+     /*
+      * All theme customization categories used by the system, in order that they should be applied,
+@@ -77,6 +80,7 @@ class ThemeOverlayManager {
+             OVERLAY_CATEGORY_SHAPE,
+             OVERLAY_CATEGORY_FONT,
+             OVERLAY_CATEGORY_COLOR,
++            OVERLAY_CATEGORY_STATUSBAR,
+             OVERLAY_CATEGORY_ICON_ANDROID,
+             OVERLAY_CATEGORY_ICON_SYSUI,
+             OVERLAY_CATEGORY_ICON_SETTINGS,
+@@ -88,6 +92,7 @@ class ThemeOverlayManager {
+             OVERLAY_CATEGORY_COLOR,
+             OVERLAY_CATEGORY_FONT,
+             OVERLAY_CATEGORY_SHAPE,
++            OVERLAY_CATEGORY_STATUSBAR,
+             OVERLAY_CATEGORY_ICON_ANDROID,
+             OVERLAY_CATEGORY_ICON_SYSUI);
+ 
+@@ -107,7 +112,7 @@ class ThemeOverlayManager {
+         mLauncherPackage = launcherPackage;
+         mThemePickerPackage = themePickerPackage;
+         mTargetPackageToCategories.put(ANDROID_PACKAGE, Sets.newHashSet(
+-                OVERLAY_CATEGORY_COLOR, OVERLAY_CATEGORY_FONT,
++                OVERLAY_CATEGORY_COLOR, OVERLAY_CATEGORY_FONT, OVERLAY_CATEGORY_STATUSBAR,
+                 OVERLAY_CATEGORY_SHAPE, OVERLAY_CATEGORY_ICON_ANDROID));
+         mTargetPackageToCategories.put(SYSUI_PACKAGE,
+                 Sets.newHashSet(OVERLAY_CATEGORY_ICON_SYSUI));
+@@ -120,6 +125,7 @@ class ThemeOverlayManager {
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_COLOR, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_FONT, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_SHAPE, ANDROID_PACKAGE);
++        mCategoryToTargetPackage.put(OVERLAY_CATEGORY_STATUSBAR, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_ANDROID, ANDROID_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SYSUI, SYSUI_PACKAGE);
+         mCategoryToTargetPackage.put(OVERLAY_CATEGORY_ICON_SETTINGS, SETTINGS_PACKAGE);
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index dd9d342c347..c3c6c717bfe 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -49,6 +49,9 @@ LOCAL_REQUIRED_MODULES := \
+ 	IconShapeHeartOverlay \
+ 	IconShapeLeafOverlay \
+ 	IconShapeSquareOverlay \
++	StatusBar1Overlay \
++	StatusBar2Overlay \
++	StatusBar3Overlay \
+ 	NavigationBarMode3ButtonOverlay \
+ 	NavigationBarMode2ButtonOverlay \
+ 	NavigationBarModeGesturalOverlay \
+diff --git a/packages/overlays/StatusBar1Overlay/Android.mk b/packages/overlays/StatusBar1Overlay/Android.mk
+new file mode 100644
+index 00000000000..2d2fa06cd89
+--- /dev/null
++++ b/packages/overlays/StatusBar1Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := StatusBar1
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := StatusBar1Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/StatusBar1Overlay/AndroidManifest.xml b/packages/overlays/StatusBar1Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..0ee1a881206
+--- /dev/null
++++ b/packages/overlays/StatusBar1Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.statusbar1"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.statusbar" android:priority="1"/>
++    <application android:label="1dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/StatusBar1Overlay/res/values/dimens.xml b/packages/overlays/StatusBar1Overlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..14c6ec142a1
+--- /dev/null
++++ b/packages/overlays/StatusBar1Overlay/res/values/dimens.xml
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- Default horizontal drawable padding for status bar icons -->
++    <dimen name="status_bar_horizontal_padding_core">1dp</dimen>
++    <!-- Height of notification icons in the status bar -->
++    <dimen name="status_bar_icon_size">19dip</dimen>
++    <!-- Intrinsic size of most system icons in status bar. This is the default value that
++         is used if a Drawable reports an intrinsic size of 0. -->
++    <dimen name="status_bar_system_icon_intrinsic_size">15dp</dimen>
++</resources>
+diff --git a/packages/overlays/StatusBar2Overlay/Android.mk b/packages/overlays/StatusBar2Overlay/Android.mk
+new file mode 100644
+index 00000000000..fd385f30cca
+--- /dev/null
++++ b/packages/overlays/StatusBar2Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := StatusBar2
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := StatusBar2Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/StatusBar2Overlay/AndroidManifest.xml b/packages/overlays/StatusBar2Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..84438dea369
+--- /dev/null
++++ b/packages/overlays/StatusBar2Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.statusbar2"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.statusbar" android:priority="1"/>
++    <application android:label="2dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/StatusBar2Overlay/res/values/dimens.xml b/packages/overlays/StatusBar2Overlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..0c6284d42ad
+--- /dev/null
++++ b/packages/overlays/StatusBar2Overlay/res/values/dimens.xml
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- Default horizontal drawable padding for status bar icons -->
++    <dimen name="status_bar_horizontal_padding_core">2dp</dimen>
++    <!-- Height of notification icons in the status bar -->
++    <dimen name="status_bar_icon_size">21dip</dimen>
++    <!-- Intrinsic size of most system icons in status bar. This is the default value that
++         is used if a Drawable reports an intrinsic size of 0. -->
++    <dimen name="status_bar_system_icon_intrinsic_size">16dp</dimen>
++</resources>
+diff --git a/packages/overlays/StatusBar3Overlay/Android.mk b/packages/overlays/StatusBar3Overlay/Android.mk
+new file mode 100644
+index 00000000000..470c2bda8a7
+--- /dev/null
++++ b/packages/overlays/StatusBar3Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := StatusBar3
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := StatusBar3Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/StatusBar3Overlay/AndroidManifest.xml b/packages/overlays/StatusBar3Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..a1bb0ee413a
+--- /dev/null
++++ b/packages/overlays/StatusBar3Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.statusbar3"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="android" android:category="android.theme.customization.statusbar" android:priority="1"/>
++    <application android:label="3dp" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/StatusBar3Overlay/res/values/dimens.xml b/packages/overlays/StatusBar3Overlay/res/values/dimens.xml
+new file mode 100644
+index 00000000000..2bdbf325b85
+--- /dev/null
++++ b/packages/overlays/StatusBar3Overlay/res/values/dimens.xml
+@@ -0,0 +1,27 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- Default horizontal drawable padding for status bar icons -->
++    <dimen name="status_bar_horizontal_padding_core">3dp</dimen>
++    <!-- Height of notification icons in the status bar -->
++    <dimen name="status_bar_icon_size">23dip</dimen>
++    <!-- Intrinsic size of most system icons in status bar. This is the default value that
++         is used if a Drawable reports an intrinsic size of 0. -->
++    <dimen name="status_bar_system_icon_intrinsic_size">17dp</dimen>
++</resources>
+-- 
+2.17.1
+

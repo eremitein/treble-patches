@@ -1,0 +1,35 @@
+From fcecfe1b5799020cb08e025e2279d5d333aa7dc2 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:43:43 -0400
+Subject: [PATCH 043/148] Revert "FODCircleView: add crDroid fod icon [1/2]"
+
+This reverts commit 244b8e96443747b039f8df09a8a6fbe364d32d2c.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java    | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 10e902c6bcc..67351c872ac 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -354,7 +354,7 @@ public class FODCircleView extends ImageView {
+         if (fodicon == 0) {
+             this.setImageResource(R.drawable.fod_icon_default);
+         } else if (fodicon == 1) {
+-            this.setImageResource(R.drawable.fod_icon_crdroid);
++            this.setImageResource(R.drawable.fod_icon_default_1);
+         } else if (fodicon == 2) {
+             this.setImageResource(R.drawable.fod_icon_default_2);
+         } else if (fodicon == 3) {
+@@ -393,8 +393,6 @@ public class FODCircleView extends ImageView {
+             this.setImageResource(R.drawable.fod_icon_spiral_blue);
+         } else if (fodicon == 20) {
+             this.setImageResource(R.drawable.fod_icon_sun_metro);
+-        } else if (fodicon == 21) {
+-            this.setImageResource(R.drawable.fod_icon_default_1);
+         }
+ 
+         if (useWallpaperColor()) {
+-- 
+2.17.1
+

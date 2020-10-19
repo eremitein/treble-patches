@@ -1,7 +1,7 @@
-From 813b74aa74004885d3f063eec6ad824c166ebfd9 Mon Sep 17 00:00:00 2001
+From 907473280077e3cacc64b7c9d57ee326e9003e8f Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 25 Jul 2020 10:59:33 -0400
-Subject: [PATCH 4/6] add NearbyMessagingService & DiscoveryService
+Subject: [PATCH 4/7] add NearbyMessagingService & DiscoveryService
 
   from
   https://github.com/LineageOS/android_device_oneplus_oneplus2/commit/ 9b916939432bb5dda339bb2405f4c45ca82f80f4#diff-e0a3646285a5f4f89d0d2f1cd05c0458
@@ -13,10 +13,10 @@ Change-Id: Idf0200a0b9ef2199b85e02bf0d2a5ccd2a081dc3
  1 file changed, 2 insertions(+)
 
 diff --git a/overlay/common/frameworks/base/core/res/res/values/config.xml b/overlay/common/frameworks/base/core/res/res/values/config.xml
-index 79167c1d..9a887a59 100644
+index 00d9be5d..7c459650 100644
 --- a/overlay/common/frameworks/base/core/res/res/values/config.xml
 +++ b/overlay/common/frameworks/base/core/res/res/values/config.xml
-@@ -106,6 +106,8 @@
+@@ -112,6 +112,8 @@
          <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateActivity</item>
          <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateGcmTaskService</item>
          <item>com.google.android.gms/com.google.android.gms.update.SystemUpdateService</item>

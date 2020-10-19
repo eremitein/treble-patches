@@ -1,0 +1,35 @@
+From 3a92cc0e98b8bb4131887d4dbdc7391876e0f7ec Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:39:47 -0400
+Subject: [PATCH 028/148] Revert "FODCircleView: Apply color filter to FOD
+ background"
+
+This reverts commit f8a9ed7ebe124cb8a6e78ff25f7c1a70927856b5.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java     | 3 ---
+ 1 file changed, 3 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index b6fb7d8f530..337f229292f 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -31,8 +31,6 @@ import android.graphics.Color;
+ import android.graphics.Paint;
+ import android.graphics.PixelFormat;
+ import android.graphics.Point;
+-import android.graphics.PorterDuff;
+-import android.graphics.PorterDuffXfermode;
+ import android.hardware.biometrics.BiometricSourceType;
+ import android.graphics.drawable.AnimationDrawable;
+ import android.graphics.drawable.BitmapDrawable;
+@@ -315,7 +313,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     @Override
+     protected void onDraw(Canvas canvas) {
+         if (!mIsCircleShowing) {
+-            mPaintFingerprintBackground.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC_IN));
+             canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprintBackground);
+         }
+         super.onDraw(canvas);
+-- 
+2.17.1
+

@@ -1,7 +1,7 @@
-From 09b12a912a4871e0075198b3d5c895851f76892e Mon Sep 17 00:00:00 2001
+From 21e4940e81f6d612e952b060e6d54d30933f9287 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 07:54:22 +0200
-Subject: [PATCH 11/17] move down from searchbar
+Subject: [PATCH 11/20] move down from searchbar
 
 	modified:   res/values/dimens.xml
 ---

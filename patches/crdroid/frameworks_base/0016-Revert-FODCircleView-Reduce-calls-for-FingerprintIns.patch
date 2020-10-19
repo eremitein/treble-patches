@@ -1,0 +1,101 @@
+From c9d8c1ac7c79f06c26f2dcb759e00bbe6702202c Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:18:12 -0400
+Subject: [PATCH 016/148] Revert "FODCircleView: Reduce calls for
+ FingerprintInscreen daemon init"
+
+This reverts commit 470f0088aa1c9224f0666f92765a27a6d3618108.
+---
+ .../systemui/biometrics/FODCircleView.java    | 28 +++++++++++--------
+ 1 file changed, 16 insertions(+), 12 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 77b344fb341..96d41edefde 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -109,7 +109,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     private final WindowManager mWindowManager;
+ 
+     private IFingerprintInscreen mFingerprintInscreenDaemon;
+-    private IFingerprintInscreen mDaemon = null;
+ 
+     private Bitmap mIconBitmap;
+ 
+@@ -228,16 +227,16 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     public FODCircleView(Context context) {
+         super(context);
+ 
+-        mDaemon = getFingerprintInScreenDaemon();
+-        if (mDaemon == null) {
++        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
++        if (daemon == null) {
+             throw new RuntimeException("Unable to get IFingerprintInscreen");
+         }
+ 
+         try {
+-            mShouldBoostBrightness = mDaemon.shouldBoostBrightness();
+-            mPositionX = mDaemon.getPositionX();
+-            mPositionY = mDaemon.getPositionY();
+-            mSize = mDaemon.getSize();
++            mShouldBoostBrightness = daemon.shouldBoostBrightness();
++            mPositionX = daemon.getPositionX();
++            mPositionY = daemon.getPositionY();
++            mSize = daemon.getSize();
+         } catch (RemoteException e) {
+             throw new RuntimeException("Failed to retrieve FOD circle position or size");
+         }
+@@ -467,32 +466,36 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     }
+ 
+     public void dispatchPress() {
++        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
+         try {
+-            mDaemon.onPress();
++            daemon.onPress();
+         } catch (RemoteException e) {
+             // do nothing
+         }
+     }
+ 
+     public void dispatchRelease() {
++        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
+         try {
+-            mDaemon.onRelease();
++            daemon.onRelease();
+         } catch (RemoteException e) {
+             // do nothing
+         }
+     }
+ 
+     public void dispatchShow() {
++        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
+         try {
+-            mDaemon.onShowFODView();
++            daemon.onShowFODView();
+         } catch (RemoteException e) {
+             // do nothing
+         }
+     }
+ 
+     public void dispatchHide() {
++        IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
+         try {
+-            mDaemon.onHideFODView();
++            daemon.onHideFODView();
+         } catch (RemoteException e) {
+             // do nothing
+         }
+@@ -677,8 +680,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         if (dim) {
+             int dimAmount = 0;
+ 
++            IFingerprintInscreen daemon = getFingerprintInScreenDaemon();
+             try {
+-                dimAmount = mDaemon.getDimAmount(mCurrentBrightness);
++                dimAmount = daemon.getDimAmount(mCurrentBrightness);
+             } catch (RemoteException e) {
+                 // do nothing
+             }
+-- 
+2.17.1
+

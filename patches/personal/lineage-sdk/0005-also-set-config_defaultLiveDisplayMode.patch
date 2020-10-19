@@ -1,0 +1,26 @@
+From 1d4ddd3f5bc10251ec0506dc712faef6820f6f54 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 12 Oct 2020 14:22:42 -0400
+Subject: [PATCH] also set config_defaultLiveDisplayMode
+
+Change-Id: I792167822bc5abbac87cec196297f9ce02cd74b1
+---
+ lineage/res/res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/lineage/res/res/values/config.xml b/lineage/res/res/values/config.xml
+index 92650ab7..f0007251 100644
+--- a/lineage/res/res/values/config.xml
++++ b/lineage/res/res/values/config.xml
+@@ -28,7 +28,7 @@
+     <integer name="config_nightColorTemperature">4800</integer>
+     <integer name="config_outdoorAmbientLux">12000</integer>
+     <integer name="config_outdoorAmbientLuxHysteresis">1500</integer>
+-    <integer name="config_defaultLiveDisplayMode">0</integer>
++    <integer name="config_defaultLiveDisplayMode">2</integer>
+ 
+     <!-- These values should map to the true min and max
+          that the backend is capable of adjusting to. This
+-- 
+2.17.1
+

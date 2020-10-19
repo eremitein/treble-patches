@@ -1,0 +1,43 @@
+From f0e2c9f96400582a94c076311659e95ce6d065a3 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:18:03 -0400
+Subject: [PATCH 010/148] Revert "FODCircleView: Use default brightness for
+ icon dim when screen brightness not available"
+
+This reverts commit c2758c38ccbf4993b92f0cd549534c0deaaf70f2.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java    | 4 +---
+ 1 file changed, 1 insertion(+), 3 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 5c1f3312bfa..461f29254fd 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -117,7 +117,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     private int mDreamingOffsetY;
+ 
+     private int mCurrentBrightness;
+-    private int mDefaultScreenBrightness;
+     private int mPressedState;
+ 
+     private boolean mIsBouncer;
+@@ -315,7 +314,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         mPowerManager = context.getSystemService(PowerManager.class);
+         mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+                 FODCircleView.class.getSimpleName());
+-        mDefaultScreenBrightness = mPowerManager.getDefaultScreenBrightnessSetting();
+ 
+         mFODAnimation = new FODAnimation(context, mPositionX, mPositionY);
+     }
+@@ -402,7 +400,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+ 
+     public void updateIconDim() {
+         mCurrentBrightness = Settings.System.getIntForUser(mContext.getContentResolver(),
+-                Settings.System.SCREEN_BRIGHTNESS, mDefaultScreenBrightness, UserHandle.USER_CURRENT);
++                Settings.System.SCREEN_BRIGHTNESS, 100, UserHandle.USER_CURRENT);
+         if (!mIsCircleShowing && mTargetUsesInKernelDimming) {
+             mHandler.post(() -> setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
+         } else {
+-- 
+2.17.1
+

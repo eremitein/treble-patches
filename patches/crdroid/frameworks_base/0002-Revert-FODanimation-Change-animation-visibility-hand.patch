@@ -1,0 +1,59 @@
+From 305d571e2bb11109370913261fb9e2de247943c8 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 19 Oct 2020 12:34:14 -0400
+Subject: [PATCH 002/148] Revert "FODanimation: Change animation visibility
+ handle"
+
+This reverts commit d8abaa2c2a2062b1999a7848610683ab006721ce.
+---
+ .../android/systemui/biometrics/FODAnimation.java   | 13 +++++++------
+ 1 file changed, 7 insertions(+), 6 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
+index c4bb1fbdb33..2b4465704d0 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
+@@ -91,9 +91,6 @@ public class FODAnimation extends ImageView {
+ 
+         setScaleType(ImageView.ScaleType.CENTER_INSIDE);
+         update();
+-        setVisibility(View.GONE);
+-
+-        mWindowManager.addView(this, mAnimParams);
+     }
+ 
+     public void update() {
+@@ -111,7 +108,6 @@ public class FODAnimation extends ImageView {
+ 
+     public void updateParams(int positionY) {
+         mAnimParams.y = positionY - (mAnimationSize / 2) + mAnimationOffset;
+-        mWindowManager.updateViewLayout(this, mAnimParams);
+     }
+ 
+     public void setAnimationKeyguard(boolean state) {
+@@ -121,7 +117,10 @@ public class FODAnimation extends ImageView {
+     public void showFODanimation() {
+         if (mAnimParams != null && !mShowing && mIsKeyguard && !mIsDreaming) {
+             mShowing = true;
+-            setVisibility(View.VISIBLE);
++            if (this.getWindowToken() == null) {
++                mWindowManager.addView(this, mAnimParams);
++                mWindowManager.updateViewLayout(this, mAnimParams);
++            }
+             recognizingAnim.start();
+         }
+     }
+@@ -134,7 +133,9 @@ public class FODAnimation extends ImageView {
+                 recognizingAnim.stop();
+                 recognizingAnim.selectDrawable(0);
+             }
+-            setVisibility(View.GONE);
++            if (this.getWindowToken() != null) {
++                mWindowManager.removeViewImmediate(this);
++            }
+         }
+     }
+ }
+-- 
+2.17.1
+

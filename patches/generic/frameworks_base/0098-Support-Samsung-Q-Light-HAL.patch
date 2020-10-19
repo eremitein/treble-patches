@@ -1,0 +1,87 @@
+From f3cff9a02648927284d494284844f833fc9a8e24 Mon Sep 17 00:00:00 2001
+From: Pierre-Hugues Husson <phh@phh.me>
+Date: Sun, 15 Dec 2019 16:38:44 +0100
+Subject: [PATCH 098/148] Support Samsung Q Light HAL
+
+Change-Id: Ic5745eb115a14de348391e69ed6bf3c2a24b157e
+---
+ services/core/jni/Android.bp                  |  1 +
+ ...om_android_server_lights_LightsService.cpp | 26 +++++++++++++++++++
+ 2 files changed, 27 insertions(+)
+
+diff --git a/services/core/jni/Android.bp b/services/core/jni/Android.bp
+index d8645012e24..3ffa7561028 100644
+--- a/services/core/jni/Android.bp
++++ b/services/core/jni/Android.bp
+@@ -136,6 +136,7 @@ cc_defaults {
+         "suspend_control_aidl_interface-cpp",
+         "vendor.lineage.power@1.0",
+         "vendor.samsung.hardware.light@2.0",
++        "vendor.samsung.hardware.light@3.0",
+     ],
+ 
+     static_libs: [
+diff --git a/services/core/jni/com_android_server_lights_LightsService.cpp b/services/core/jni/com_android_server_lights_LightsService.cpp
+index e3c5a74c2ca..998ea7feb1a 100644
+--- a/services/core/jni/com_android_server_lights_LightsService.cpp
++++ b/services/core/jni/com_android_server_lights_LightsService.cpp
+@@ -25,6 +25,8 @@
+ #include <android/hardware/light/2.0/types.h>
+ #include <vendor/samsung/hardware/light/2.0/ISecLight.h>
+ #include <vendor/samsung/hardware/light/2.0/types.h>
++#include <vendor/samsung/hardware/light/3.0/ISehLight.h>
++#include <vendor/samsung/hardware/light/3.0/types.h>
+ #include <android-base/chrono_utils.h>
+ #include <utils/misc.h>
+ #include <utils/Log.h>
+@@ -44,9 +46,13 @@ using Return     = ::android::hardware::Return<T>;
+ 
+ using ISecLight  = ::vendor::samsung::hardware::light::V2_0::ISecLight;
+ using SecType    = ::vendor::samsung::hardware::light::V2_0::SecType;
++using ISehLight  = ::vendor::samsung::hardware::light::V3_0::ISehLight;
++using SehType    = ::vendor::samsung::hardware::light::V3_0::SehType;
++using SehLightState = ::vendor::samsung::hardware::light::V3_0::SehLightState;
+ static bool sLightSupported = true;
+ 
+ static sp<ISecLight> sSecHal;
++static sp<ISehLight> sSehHal;
+ static bool sSecTried = false;
+ 
+ static bool validate(jint light, jint flash, jint brightness) {
+@@ -161,6 +167,7 @@ static void setLight_native(
+ 
+     if(!sSecTried) {
+         sSecHal = ISecLight::getService();
++        sSehHal = ISehLight::getService();
+         //sSecTried = true;
+     }
+ 
+@@ -178,6 +185,25 @@ static void setLight_native(
+ 	return;
+     }
+ 
++    if(sSehHal != nullptr && light == 0 && flashMode == static_cast<jint>(Flash::HARDWARE)) {
++        SehType type = static_cast<SehType>(light);
++        SehLightState state {};
++        state.flashMode = Flash::NONE;
++	Brightness brightness = static_cast<Brightness>(brightnessMode);
++	state.brightnessMode = brightness;
++	state.extendedBrightness = colorARGB;
++
++        {
++            android::base::Timer t;
++            Return<Status> ret = sSehHal->sehSetLight(type, state);
++	    if(!ret.isOk()) {
++		    ALOGE("Failed to issue set light command.");
++	    }
++            if (t.duration() > 50ms) ALOGD("Excessive delay setting light");
++        }
++	return;
++    }
++
+     Type type = static_cast<Type>(light);
+     LightState state = constructState(
+         colorARGB, flashMode, onMS, offMS, brightnessMode);
+-- 
+2.17.1
+

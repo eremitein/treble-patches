@@ -1,7 +1,7 @@
-From 4480e0562f0c7714d42672d0b0ec612f01744097 Mon Sep 17 00:00:00 2001
+From 7311aef06abffc770fd1a546c2c700f3f337bf09 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 29 Jul 2020 19:31:45 +0300
-Subject: [PATCH 3/6] Revert "crdroid: Allow providing camera server and
+Subject: [PATCH 3/7] Revert "crdroid: Allow providing camera server and
  service"
 
 This reverts commit 9b98f73fb989b850578137bd485c9b2190725fc5.

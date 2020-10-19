@@ -1,0 +1,47 @@
+From e112e77c93cfbb3d684633feeb9a45d655a9bb18 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 8 Jul 2020 05:47:55 +0300
+Subject: [PATCH 139/148] set 0.8x amination scale as default (crDroid)
+
+  from
+  https://github.com/BlissRoms/platform_frameworks_base/commit/e3cdd07ebb181086c4a32d91a2a06fd24f6d2235
+---
+ packages/SettingsProvider/res/values/defaults.xml           | 4 ++--
+ .../java/com/android/server/wm/WindowManagerService.java    | 6 +++---
+ 2 files changed, 5 insertions(+), 5 deletions(-)
+
+diff --git a/packages/SettingsProvider/res/values/defaults.xml b/packages/SettingsProvider/res/values/defaults.xml
+index 05246a42ded..db18e28c702 100644
+--- a/packages/SettingsProvider/res/values/defaults.xml
++++ b/packages/SettingsProvider/res/values/defaults.xml
+@@ -32,8 +32,8 @@
+     <!-- Default screen brightness, from 0 to 255.  102 is 40%. -->
+     <integer name="def_screen_brightness">102</integer>
+     <bool name="def_screen_brightness_automatic_mode">false</bool>
+-    <fraction name="def_window_animation_scale">100%</fraction>
+-    <fraction name="def_window_transition_scale">100%</fraction>
++    <fraction name="def_window_animation_scale">80%</fraction>
++    <fraction name="def_window_transition_scale">80%</fraction>
+     <bool name="def_haptic_feedback">true</bool>
+ 
+     <bool name="def_bluetooth_on">true</bool>
+diff --git a/services/core/java/com/android/server/wm/WindowManagerService.java b/services/core/java/com/android/server/wm/WindowManagerService.java
+index bf3aedefe13..acb157555ec 100644
+--- a/services/core/java/com/android/server/wm/WindowManagerService.java
++++ b/services/core/java/com/android/server/wm/WindowManagerService.java
+@@ -800,9 +800,9 @@ public class WindowManagerService extends IWindowManager.Stub
+     PowerManager mPowerManager;
+     PowerManagerInternal mPowerManagerInternal;
+ 
+-    private float mWindowAnimationScaleSetting = 1.0f;
+-    private float mTransitionAnimationScaleSetting = 1.0f;
+-    private float mAnimatorDurationScaleSetting = 1.0f;
++    private float mWindowAnimationScaleSetting = 0.80f;
++    private float mTransitionAnimationScaleSetting = 0.80f;
++    private float mAnimatorDurationScaleSetting = 0.80f;
+     private boolean mAnimationsDisabled = false;
+     boolean mPointerLocationEnabled = false;
+     private boolean mAnimationsForceDisabled = false;
+-- 
+2.17.1
+

@@ -1,7 +1,7 @@
-From 5277f49c3305d3371f5eea913ff4ad23b00a3e10 Mon Sep 17 00:00:00 2001
+From 36c0ce0e05480a1ff84a9aaf1733f7961bbd5c55 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 28 Mar 2020 16:36:24 +0200
-Subject: [PATCH 12/17] change searchbar bgcolor
+Subject: [PATCH 12/20] change searchbar bgcolor
 
 ---
  res/values-night/colors.xml | 2 +-

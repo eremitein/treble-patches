@@ -1,0 +1,29 @@
+From 1dceb1d2a684d6cf8526369479b043b1c78ad566 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:59:32 -0400
+Subject: [PATCH 051/148] Revert "FODCircleView: Let us call show() when
+ mIsBouncer() && !isPinOrPattern()"
+
+This reverts commit 5fa02eab60af8fccded11911391eedb3f3d20299.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java    | 4 ++--
+ 1 file changed, 2 insertions(+), 2 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 6be2fef143d..38f89549f0c 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -324,8 +324,8 @@ public class FODCircleView extends ImageView {
+             return;
+         }
+ 
+-        if (mIsBouncer && !isPinOrPattern(mUpdateMonitor.getCurrentUser())) {
+-            // Ignore show calls when Keyguard password screen is being shown
++        if (mIsBouncer) {
++            // Ignore show calls when Keyguard pin screen is being shown
+             return;
+         }
+ 
+-- 
+2.17.1
+

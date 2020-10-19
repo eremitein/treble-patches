@@ -1,7 +1,7 @@
-From 7c849a1507d144a88d5e99684974fece0c310ef1 Mon Sep 17 00:00:00 2001
+From cb588309047bad42111550d2e6fd89ec330e19dd Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 23 Dec 2019 12:20:39 +0200
-Subject: [PATCH 10/17] Move custom DPI settings in to Display menu
+Subject: [PATCH 10/20] Move custom DPI settings in to Display menu
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/ae0244c957ec115822da526d54ee3665488e50ef
@@ -31,10 +31,10 @@ index 7a8ddeced2..7d01f6924d 100644
              android:key="display_cutout_emulation"
              android:title="@string/display_cutout_emulation"
 diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
-index 9bd37f4a22..e27a126d3e 100644
+index 75983b4328..64bf0f6412 100644
 --- a/res/xml/display_settings.xml
 +++ b/res/xml/display_settings.xml
-@@ -121,6 +121,10 @@
+@@ -125,6 +125,10 @@
          android:entries="@array/refresh_rate_entries"
          android:entryValues="@array/refresh_rate_values" />
  

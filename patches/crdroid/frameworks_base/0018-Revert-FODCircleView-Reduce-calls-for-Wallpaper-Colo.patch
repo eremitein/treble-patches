@@ -1,0 +1,72 @@
+From 95f6f66fc75174d6c673b7db1b7eaef43ca54ef7 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:18:15 -0400
+Subject: [PATCH 018/148] Revert "FODCircleView: Reduce calls for Wallpaper
+ Color usage update"
+
+This reverts commit 3739400a9f9d2a1fb84d4778b1508240cf14eaa6.
+---
+ .../systemui/biometrics/FODCircleView.java       | 16 ++++------------
+ 1 file changed, 4 insertions(+), 12 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 96d41edefde..e9958c0b674 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -123,7 +123,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     private boolean mIsCircleShowing;
+     private boolean mIsShowing;
+     private boolean mPressedViewDisplayed = false;
+-    private boolean mUseWallpaperColor;
+ 
+     private Handler mHandler;
+ 
+@@ -335,9 +334,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             resolver.registerContentObserver(Settings.System.getUriFor(
+                     Settings.System.FOD_PRESSED_STATE),
+                     false, this, UserHandle.USER_ALL);
+-            resolver.registerContentObserver(Settings.System.getUriFor(
+-                    Settings.System.FOD_ICON_WALLPAPER_COLOR),
+-                    false, this, UserHandle.USER_ALL);
+         }
+ 
+         @Override
+@@ -354,9 +350,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             } else if (uri.equals(Settings.System.getUriFor(
+                     Settings.System.FOD_PRESSED_STATE))) {
+                 setFODPressedState();
+-            } else if (uri.equals(Settings.System.getUriFor(
+-                    Settings.System.FOD_ICON_WALLPAPER_COLOR))) {
+-                useWallpaperColor();
+             }
+         }
+ 
+@@ -364,7 +357,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             updateStyle();
+             updateIconDim();
+             setFODPressedState();
+-            useWallpaperColor();
+         }
+     }
+ 
+@@ -531,13 +523,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         setKeepScreenOn(false);
+     }
+ 
+-    private void useWallpaperColor() {
+-        mUseWallpaperColor = Settings.System.getInt(mContext.getContentResolver(),
+-                Settings.System.FOD_ICON_WALLPAPER_COLOR, 0) == 1;
++    private boolean useWallpaperColor() {
++        return Settings.System.getInt(mContext.getContentResolver(),
++                Settings.System.FOD_ICON_WALLPAPER_COLOR, 0) != 0;
+     }
+ 
+     private void setFODIcon() {
+-        if (mUseWallpaperColor) {
++        if (useWallpaperColor()) {
+             try {
+                 WallpaperManager wallpaperManager = WallpaperManager.getInstance(mContext);
+                 Drawable wallpaperDrawable = wallpaperManager.getDrawable();
+-- 
+2.17.1
+

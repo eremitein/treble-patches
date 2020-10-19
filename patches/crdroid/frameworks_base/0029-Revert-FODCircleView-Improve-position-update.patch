@@ -1,0 +1,72 @@
+From 32a94c5fba1a96bdb776dcacdb0aaff97950ea78 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:39:48 -0400
+Subject: [PATCH 029/148] Revert "FODCircleView: Improve position update"
+
+This reverts commit 261adde06a279b9016ae9a446b78612a1f143ee9.
+---
+ .../com/android/systemui/biometrics/FODAnimation.java  |  4 ++--
+ .../com/android/systemui/biometrics/FODCircleView.java | 10 ++--------
+ 2 files changed, 4 insertions(+), 10 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
+index 43a08c447df..ce89dc6ff61 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
+@@ -81,8 +81,8 @@ public class FODAnimation extends ImageView {
+         recognizingAnim = (AnimationDrawable) getBackground();
+     }
+ 
+-    public void updateParams(int positionY) {
+-        mAnimParams.y = positionY - (mAnimationSize / 2) + mAnimationOffset;
++    public void updateParams(int mDreamingOffsetY) {
++        mAnimParams.y = mDreamingOffsetY - (mAnimationSize / 2) + mAnimationOffset;
+     }
+ 
+     public void setAnimationKeyguard(boolean state) {
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 337f229292f..59dadce7267 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -31,7 +31,6 @@ import android.graphics.Color;
+ import android.graphics.Paint;
+ import android.graphics.PixelFormat;
+ import android.graphics.Point;
+-import android.hardware.biometrics.BiometricSourceType;
+ import android.graphics.drawable.AnimationDrawable;
+ import android.graphics.drawable.BitmapDrawable;
+ import android.graphics.drawable.Drawable;
+@@ -136,7 +135,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+                 mBurnInProtectionTimer.schedule(new BurnInProtectionTask(), 0, 60 * 1000);
+             } else if (mBurnInProtectionTimer != null) {
+                 mBurnInProtectionTimer.cancel();
+-                updatePosition();
+             }
+         }
+ 
+@@ -432,7 +430,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         dispatchPress();
+ 
+         setFODPressedState();
+-        updatePosition();
+         invalidate();
+     }
+ 
+@@ -570,12 +567,9 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             mParams.y = mPositionY - cutoutMaskedExtra;
+         }
+ 
+-        if (mFODAnimation != null) {
+-            mFODAnimation.updateParams(mParams.y);
+-        }
+-
+-        if (mIsDreaming && !mIsCircleShowing) {
++        if (mIsDreaming) {
+             mParams.y += mDreamingOffsetY;
++            mFODAnimation.updateParams(mParams.y);
+         }
+ 
+         mWindowManager.updateViewLayout(this, mParams);
+-- 
+2.17.1
+

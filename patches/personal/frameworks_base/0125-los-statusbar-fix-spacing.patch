@@ -1,0 +1,26 @@
+From 921f01cffdbfa65b23e761ffbb5adb2c59e7cd58 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 10 Feb 2020 22:35:26 +0200
+Subject: [PATCH 125/148] los statusbar fix spacing
+
+	modified:   packages/SystemUI/src/com/android/systemui/statusbar/StatusBarIconView.java
+---
+ .../src/com/android/systemui/statusbar/StatusBarIconView.java   | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/StatusBarIconView.java b/packages/SystemUI/src/com/android/systemui/statusbar/StatusBarIconView.java
+index 04b59133427..78e1fc4b96c 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/StatusBarIconView.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/StatusBarIconView.java
+@@ -75,7 +75,7 @@ public class StatusBarIconView extends AnimatedImageView implements StatusIconDi
+      * values will be in px.
+      */
+     private float mSystemIconDesiredHeight = 15f;
+-    private float mSystemIconIntrinsicHeight = 17f;
++    private float mSystemIconIntrinsicHeight = 15f;
+     private float mSystemIconDefaultScale = mSystemIconDesiredHeight / mSystemIconIntrinsicHeight;
+     private final int ANIMATION_DURATION_FAST = 100;
+ 
+-- 
+2.17.1
+

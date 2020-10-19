@@ -1,7 +1,7 @@
-From 1eeba9c495e7115fb6191bac74b02f1d4041f19a Mon Sep 17 00:00:00 2001
+From 56cefe195de44e410390dadc840d392ff8e96796 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Wed, 3 Jun 2020 12:54:20 +0300
-Subject: [PATCH 16/17] add translations for custom settings (crDroid)
+Subject: [PATCH 16/20] add translations for custom settings (crDroid)
 
   RU
   FR

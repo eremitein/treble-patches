@@ -1,7 +1,7 @@
-From a778dc3840efdd6589e110030f9e660c389df33a Mon Sep 17 00:00:00 2001
+From 47175d60309fa5cb31165ae932622405ef6c3eea Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 15 Aug 2020 22:11:43 -0400
-Subject: [PATCH 17/17] rework custom overlays order
+Subject: [PATCH 17/20] rework custom overlays order
 
 ---
  res/values/strings.xml       | 2 +-
@@ -9,10 +9,10 @@ Subject: [PATCH 17/17] rework custom overlays order
  2 files changed, 4 insertions(+), 5 deletions(-)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index db2a7cd5b8..a34476f1d1 100644
+index 2a2e77906e..1e972fa685 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10074,7 +10074,7 @@
+@@ -10068,7 +10068,7 @@
      <string name="notification_log_details_ranking_none">Ranking object doesn\'t contain this key.</string>
  
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the settings category for theme overlays. -->
@@ -22,7 +22,7 @@ index db2a7cd5b8..a34476f1d1 100644
      <string name="theme_customization_statusbar_title">Status Bar spacing</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      SystemUI speed performance -->
 diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
-index a323f58409..46434ded3f 100644
+index a74d862727..b867a64eb0 100644
 --- a/res/xml/display_settings.xml
 +++ b/res/xml/display_settings.xml
 @@ -32,10 +32,6 @@
@@ -36,7 +36,7 @@ index a323f58409..46434ded3f 100644
      <com.android.settings.display.darkmode.DarkModePreference
          android:key="dark_ui_mode"
          android:title="@string/dark_ui_mode"
-@@ -210,6 +206,9 @@
+@@ -214,6 +210,9 @@
          <ListPreference
              android:key="android.theme.customization.statusbar"
              android:title="@string/theme_customization_statusbar_title"/>

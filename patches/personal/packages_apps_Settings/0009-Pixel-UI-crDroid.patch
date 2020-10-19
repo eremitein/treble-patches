@@ -1,7 +1,7 @@
-From 501f0bd228197fad64b5a62697f264d8d4abc600 Mon Sep 17 00:00:00 2001
+From ed142b6fb6cb04521b6e1627138f170afe8c32d9 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Fri, 27 Dec 2019 12:35:49 +0200
-Subject: [PATCH 09/17] Pixel UI (crDroid)
+Subject: [PATCH 09/20] Pixel UI (crDroid)
 
   * from
   https://github.com/Havoc-OS/android_packages_apps_Settings/commit/fe6ec9d5978149a5652c70a665d914e389e40890

@@ -1,0 +1,61 @@
+From 33fa7d56e23893d8b62ec329c7faef8f24a36c12 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 19 Oct 2020 12:34:28 -0400
+Subject: [PATCH 003/148] Revert "FODCircleView: Move show/hide FOD animation
+ to show/hide circle methods"
+
+This reverts commit 9c58ecd3fe3940b03e3d381ab4075cd8d02b497b.
+---
+ .../android/systemui/biometrics/FODCircleView.java   | 12 +++++-------
+ 1 file changed, 5 insertions(+), 7 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 1820dbbc223..62064a59c16 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -285,7 +285,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             @Override
+             protected void onDraw(Canvas canvas) {
+                 if (mIsCircleShowing && mPressedState == 2) {
+-                    canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
++		    canvas.drawCircle(mSize / 2, mSize / 2, mSize / 2.0f, mPaintFingerprint);
+                 }
+                 super.onDraw(canvas);
+             }
+@@ -432,9 +432,13 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+ 
+         if (event.getAction() == MotionEvent.ACTION_DOWN && newIsInside) {
+             showCircle();
++            if (mIsRecognizingAnimEnabled) {
++                mHandler.post(() -> mFODAnimation.showFODanimation());
++            }
+             return true;
+         } else if (event.getAction() == MotionEvent.ACTION_UP) {
+             hideCircle();
++            mHandler.post(() -> mFODAnimation.hideFODanimation());
+             return true;
+         } else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+             return true;
+@@ -513,10 +517,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+             dispatchPress();
+         });
+ 
+-        if (mIsRecognizingAnimEnabled) {
+-            mHandler.post(() -> mFODAnimation.showFODanimation());
+-        }
+-
+         updatePosition();
+         invalidate();
+     }
+@@ -532,8 +532,6 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         });
+         setDim(false);
+ 
+-        mHandler.post(() -> mFODAnimation.hideFODanimation());
+-
+         setKeepScreenOn(false);
+     }
+ 
+-- 
+2.17.1
+

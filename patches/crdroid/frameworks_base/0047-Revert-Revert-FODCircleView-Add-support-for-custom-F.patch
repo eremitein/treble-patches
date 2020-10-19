@@ -1,0 +1,40 @@
+From cc7fc27e8532f4197b57a5c4641644255d954179 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:47:19 -0400
+Subject: [PATCH 047/148] Revert "Revert "FODCircleView: Add support for custom
+ FP pressed icon""
+
+This reverts commit c1c68edd5aef6b2c044f91b94d4f1bf189f3b2d3.
+---
+ .../res/drawable-nodpi/fod_icon_pressed.png       | Bin 0 -> 108 bytes
+ .../systemui/biometrics/FODCircleView.java        |   1 +
+ 2 files changed, 1 insertion(+)
+ create mode 100644 packages/SystemUI/res/drawable-nodpi/fod_icon_pressed.png
+
+diff --git a/packages/SystemUI/res/drawable-nodpi/fod_icon_pressed.png b/packages/SystemUI/res/drawable-nodpi/fod_icon_pressed.png
+new file mode 100644
+index 0000000000000000000000000000000000000000..4102e28c1300b49323b50625d8cfaa73b006561f
+GIT binary patch
+literal 108
+zcmeAS@N?(olHy`uVBq!ia0vp^j3CUx1|;Q0k8}bl$r9IylHmNblJdl&R0hYC{G?O`
+z&)mfH)S%SFl*+=BsWw1Ge4Z|jAr-fh5*U~o7?>FtSQ!{^cTT<plwt66^>bP0l+XkK
+D@OB!I
+
+literal 0
+HcmV?d00001
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index a1691b9cb69..00172dd8f3e 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -201,6 +201,7 @@ public class FODCircleView extends ImageView {
+                 super.onDraw(canvas);
+             }
+         };
++        mPressedView.setImageResource(R.drawable.fod_icon_pressed);
+ 
+         mWindowManager.addView(this, mParams);
+ 
+-- 
+2.17.1
+

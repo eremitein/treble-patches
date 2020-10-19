@@ -1,7 +1,7 @@
-From d9b54e2672a96ff84171b941cd6912449a2c8c6f Mon Sep 17 00:00:00 2001
+From 835d09db106e34ee4736d341a3aeb680bbcdd2fa Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 11 May 2020 20:18:14 +0300
-Subject: [PATCH 14/17] add system speedup tuning
+Subject: [PATCH 14/20] add system speedup tuning
 
 	modified:   res/values/strings.xml
 	modified:   res/xml/display_settings.xml
@@ -13,10 +13,10 @@ Subject: [PATCH 14/17] add system speedup tuning
  3 files changed, 8 insertions(+)
 
 diff --git a/res/values/strings.xml b/res/values/strings.xml
-index 9fcbdbcb7d..db2a7cd5b8 100644
+index f5c4436342..2a2e77906e 100644
 --- a/res/values/strings.xml
 +++ b/res/values/strings.xml
-@@ -10077,6 +10077,8 @@
+@@ -10071,6 +10071,8 @@
      <string name="theme_customization_category">Statusbar Theming</string>
      <!-- [CHAR_LIMIT=NONE] Developer Settings: Title of the setting which enables overlays to customize the      statusbar icons spacing (e.g. set 2dp paddings). -->
      <string name="theme_customization_statusbar_title">Status Bar spacing</string>
@@ -26,7 +26,7 @@ index 9fcbdbcb7d..db2a7cd5b8 100644
      <string name="theme_customization_device_default">Device default</string>
  
 diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
-index c1becdfe38..a323f58409 100644
+index 21a4d8ab31..a74d862727 100644
 --- a/res/xml/display_settings.xml
 +++ b/res/xml/display_settings.xml
 @@ -32,6 +32,10 @@

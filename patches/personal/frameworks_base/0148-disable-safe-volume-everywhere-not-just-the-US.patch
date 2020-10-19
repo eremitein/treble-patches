@@ -1,0 +1,35 @@
+From e4234d6c0ac86c2f9c76481801e48f8a20415b9d Mon Sep 17 00:00:00 2001
+From: Rusty Bird <rustybird@net-c.com>
+Date: Wed, 22 Apr 2020 18:28:33 +0000
+Subject: [PATCH 148/148] disable safe volume everywhere, not just the US
+
+Safe Volume has many false alarms. And if overridden by the user, at
+every 20 hours of accumulated(!) audio playback it will intentionally
+reset - even while the audio is playing. This can ruin the listening
+experience, and ironically pose a safety hazard when e.g. the user is
+operating a vehicle...
+
+AOSP already opted out of Safe Volume in the overlays for Mobile Country
+Code 310-316 (= US). Make this universal.
+
+Signed-off-by: Rusty Bird <rustybird@net-c.com>
+---
+ core/res/res/values/config.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/res/res/values/config.xml b/core/res/res/values/config.xml
+index 37a72d6e16e..647d7b94ad0 100644
+--- a/core/res/res/values/config.xml
++++ b/core/res/res/values/config.xml
+@@ -2621,7 +2621,7 @@
+     <bool name="config_useDevInputEventForAudioJack">false</bool>
+ 
+     <!-- Whether safe headphone volume is enabled or not (country specific). -->
+-    <bool name="config_safe_media_volume_enabled">true</bool>
++    <bool name="config_safe_media_volume_enabled">false</bool>
+ 
+     <!-- Whether safe headphone volume warning dialog is disabled on Vol+ (operator specific). -->
+     <bool name="config_safe_media_disable_on_volume_up">true</bool>
+-- 
+2.17.1
+

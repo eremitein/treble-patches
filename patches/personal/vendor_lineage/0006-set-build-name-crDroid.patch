@@ -1,19 +1,19 @@
-From fda5fc72a6760a92c742835d199ce26321468516 Mon Sep 17 00:00:00 2001
+From 6b245d4945d7386dbc8a6271adfde39e2e16c27d Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Sat, 15 Aug 2020 09:36:19 -0400
-Subject: [PATCH 6/6] set build name (crDroid)
+Subject: [PATCH 6/7] set build name (crDroid)
 
 ---
- config/common.mk | 30 ++----------------------------
- 1 file changed, 2 insertions(+), 28 deletions(-)
+ config/common.mk | 23 ++---------------------
+ 1 file changed, 2 insertions(+), 21 deletions(-)
 
 diff --git a/config/common.mk b/config/common.mk
-index ad57aa5c..bd27dd2d 100644
+index d2d2eb39..af619d15 100644
 --- a/config/common.mk
 +++ b/config/common.mk
-@@ -195,38 +195,12 @@ PRODUCT_VERSION_MINOR = 0
+@@ -195,31 +195,12 @@ PRODUCT_VERSION_MINOR = 0
  # Increase CR Version with each major release.
- CR_VERSION := 6.10
+ CR_VERSION := 6.11
  
 -LINEAGE_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(shell date +%Y%m%d)-$(LINEAGE_BUILD)-v$(CR_VERSION)
 -LINEAGE_DISPLAY_VERSION := crDroidAndroid-$(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(LINEAGE_BUILD)-v$(CR_VERSION)
@@ -24,8 +24,6 @@ index ad57aa5c..bd27dd2d 100644
      vendor/lineage/build/target/product/security/lineage
  
  -include vendor/lineage-priv/keys/keys.mk
--
--LINEAGE_DISPLAY_VERSION := $(LINEAGE_VERSION)
 -
 -ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),)
 -ifneq ($(PRODUCT_DEFAULT_DEV_CERTIFICATE),build/target/product/security/testkey)
@@ -40,11 +38,6 @@ index ad57aa5c..bd27dd2d 100644
 -            endif
 -        else
 -            TARGET_VENDOR_RELEASE_BUILD_ID := $(TARGET_VENDOR_RELEASE_BUILD_ID)
--        endif
--        ifeq ($(LINEAGE_VERSION_MAINTENANCE),0)
--            LINEAGE_DISPLAY_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR)-$(TARGET_VENDOR_RELEASE_BUILD_ID)-$(LINEAGE_BUILD)
--        else
--            LINEAGE_DISPLAY_VERSION := $(PRODUCT_VERSION_MAJOR).$(PRODUCT_VERSION_MINOR).$(LINEAGE_VERSION_MAINTENANCE)-$(TARGET_VENDOR_RELEASE_BUILD_ID)-$(LINEAGE_BUILD)
 -        endif
 -    endif
 -endif

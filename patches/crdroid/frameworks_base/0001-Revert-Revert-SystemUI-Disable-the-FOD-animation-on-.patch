@@ -1,0 +1,78 @@
+From f91ec8153421d40cc6ec136d3c53072a411b2472 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 19 Oct 2020 12:34:09 -0400
+Subject: [PATCH 001/148] Revert "Revert "SystemUI: Disable the FOD animation
+ on AOD""
+
+This reverts commit 74cac8e801327c56330133760adda14b716aee50.
+---
+ .../systemui/biometrics/FODAnimation.java     | 27 ++++++++++++++++++-
+ 1 file changed, 26 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
+index 3d34665003a..c4bb1fbdb33 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODAnimation.java
+@@ -27,6 +27,8 @@ import android.view.View;
+ import android.view.WindowManager;
+ import android.widget.ImageView;
+ 
++import com.android.keyguard.KeyguardUpdateMonitor;
++import com.android.keyguard.KeyguardUpdateMonitorCallback;
+ import com.android.systemui.R;
+ 
+ public class FODAnimation extends ImageView {
+@@ -40,18 +42,41 @@ public class FODAnimation extends ImageView {
+     private int mAnimationPositionY;
+     private AnimationDrawable recognizingAnim;
+     private WindowManager mWindowManager;
++    private boolean mIsDreaming;
++    private boolean mIsPulsing;
+     private boolean mIsKeyguard;
+ 
+     private int mSelectedAnim;
+     private TypedArray mAnimationStyles;
+     private int mAnimationStylesCount;
+ 
++    private KeyguardUpdateMonitor mUpdateMonitor;
++
++    private KeyguardUpdateMonitorCallback mMonitorCallback = new KeyguardUpdateMonitorCallback() {
++        @Override
++        public void onDreamingStateChanged(boolean dreaming) {
++            mIsDreaming = dreaming;
++        }
++
++        @Override
++        public void onPulsing(boolean pulsing) {
++            super.onPulsing(pulsing);
++            mIsPulsing = pulsing;
++            if (mIsPulsing) {
++                mIsDreaming = false;
++            }
++        }
++    };
++
+     public FODAnimation(Context context, int mPositionX, int mPositionY) {
+         super(context);
+ 
+         mContext = context;
+         mWindowManager = mContext.getSystemService(WindowManager.class);
+ 
++        mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
++        mUpdateMonitor.registerCallback(mMonitorCallback);
++
+         mAnimationSize = mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_size);
+         mAnimationOffset = mContext.getResources().getDimensionPixelSize(R.dimen.fod_animation_offset);
+         mAnimParams.height = mAnimationSize;
+@@ -94,7 +119,7 @@ public class FODAnimation extends ImageView {
+     }
+ 
+     public void showFODanimation() {
+-        if (mAnimParams != null && !mShowing && mIsKeyguard) {
++        if (mAnimParams != null && !mShowing && mIsKeyguard && !mIsDreaming) {
+             mShowing = true;
+             setVisibility(View.VISIBLE);
+             recognizingAnim.start();
+-- 
+2.17.1
+

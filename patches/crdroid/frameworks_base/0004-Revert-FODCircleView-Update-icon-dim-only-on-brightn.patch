@@ -1,0 +1,46 @@
+From 0923eac7ca53a3abfa06c057be64c2120efdd8a1 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 19 Oct 2020 12:34:34 -0400
+Subject: [PATCH 004/148] Revert "FODCircleView: Update icon dim only on
+ brightness change"
+
+This reverts commit 16bee4ad95b48e9d333a9c69e2b769e43bbd4beb.
+---
+ .../src/com/android/systemui/biometrics/FODCircleView.java  | 6 +++++-
+ 1 file changed, 5 insertions(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 62064a59c16..8f4084f0dbe 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -397,8 +397,10 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+     public void updateIconDim() {
+         mCurrentBrightness = Settings.System.getIntForUser(mContext.getContentResolver(),
+                 Settings.System.SCREEN_BRIGHTNESS, mDefaultScreenBrightness, UserHandle.USER_CURRENT);
+-        if (mTargetUsesInKernelDimming) {
++        if (!mIsCircleShowing && mTargetUsesInKernelDimming) {
+             mHandler.post(() -> setColorFilter(Color.argb(getDimAlpha(), 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
++        } else {
++            mHandler.post(() -> setColorFilter(Color.argb(0, 0, 0, 0), PorterDuff.Mode.SRC_ATOP));
+         }
+     }
+ 
+@@ -518,6 +520,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         });
+ 
+         updatePosition();
++        updateIconDim();
+         invalidate();
+     }
+ 
+@@ -525,6 +528,7 @@ public class FODCircleView extends ImageView implements ConfigurationListener {
+         mIsCircleShowing = false;
+ 
+         setFODIcon();
++        updateIconDim();
+         invalidate();
+ 
+         ThreadUtils.postOnBackgroundThread(() -> {
+-- 
+2.17.1
+

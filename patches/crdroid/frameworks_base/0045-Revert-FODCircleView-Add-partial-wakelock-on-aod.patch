@@ -1,0 +1,57 @@
+From e7f01a25dad712b1032535109ad987a317003527 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 30 Sep 2020 01:44:11 -0400
+Subject: [PATCH 045/148] Revert "FODCircleView: Add partial wakelock on aod"
+
+This reverts commit e9f1dc1cdf0cde945a1d77d1835930d97d7f00ba.
+---
+ .../android/systemui/biometrics/FODCircleView.java   | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+index 939b9571b32..7ff4f3736bc 100644
+--- a/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
++++ b/packages/SystemUI/src/com/android/systemui/biometrics/FODCircleView.java
+@@ -27,7 +27,6 @@ import android.graphics.PixelFormat;
+ import android.graphics.Point;
+ import android.os.Handler;
+ import android.os.Looper;
+-import android.os.PowerManager;
+ import android.os.RemoteException;
+ import android.provider.Settings;
+ import android.view.Display;
+@@ -83,9 +82,6 @@ public class FODCircleView extends ImageView {
+ 
+     private Timer mBurnInProtectionTimer;
+ 
+-    private PowerManager mPowerManager;
+-    private PowerManager.WakeLock mWakeLock;
+-
+     private IFingerprintInscreenCallback mFingerprintInscreenCallback =
+             new IFingerprintInscreenCallback.Stub() {
+         @Override
+@@ -214,10 +210,6 @@ public class FODCircleView extends ImageView {
+ 
+         mUpdateMonitor = KeyguardUpdateMonitor.getInstance(context);
+         mUpdateMonitor.registerCallback(mMonitorCallback);
+-
+-        mPowerManager = context.getSystemService(PowerManager.class);
+-        mWakeLock = mPowerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+-                FODCircleView.class.getSimpleName());
+     }
+ 
+     @Override
+@@ -311,10 +303,6 @@ public class FODCircleView extends ImageView {
+ 
+         setKeepScreenOn(true);
+ 
+-        if (mIsDreaming) {
+-            mWakeLock.acquire(300);
+-        }
+-
+         setDim(true);
+         dispatchPress();
+ 
+-- 
+2.17.1
+
