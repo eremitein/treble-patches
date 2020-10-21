@@ -1,0 +1,60 @@
+From 49c68ba19a132e54ce195a8bcbd4687c99bf01d9 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Fri, 9 Oct 2020 13:08:40 -0400
+Subject: [PATCH] add Google Cloud restore option
+
+Change-Id: I6a742b6a257235220aabe1332b005d3a74e5d662
+---
+ res/values-ru/strings.xml               |  3 +++
+ res/values/strings.xml                  |  3 +++
+ res/xml/accounts_dashboard_settings.xml | 12 ++++++++++++
+ 3 files changed, 18 insertions(+)
+
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index f3d8370b5b..51358a5b5f 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -4847,4 +4847,7 @@
+     <string name="selinux_status_disabled">Отсутствует</string>
+     <string name="selinux_status_permissive">Отключена</string>
+     <string name="selinux_status_enforcing">Включена</string>
++    <!-- Google backup restore -->
++    <string name="custom_google_sync_title">Восстановить резервную копию из Google Cloud</string>
++    <string name="custom_google_sync_summary">Запустить вручную восстановление резервной копии из Google Cloud\nПримечание: нужны com.google.android.apps.restore и вход в учётную запись</string>
+ </resources>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 20331b4939..29bcabdbb1 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -11475,4 +11475,7 @@
+     <!-- Subtext for showing the option of RTT setting. [CHAR LIMIT=NONE] -->
+     <string name="rtt_settings_always_visible"></string>
+ 
++    <!-- Google backup restore -->
++    <string name="custom_google_sync_title">Restore Google Cloud backup</string>
++    <string name="custom_google_sync_summary">Manually launch Google Cloud backup restore action\nNote: need com.google.android.apps.restore and logging in to the Google account</string>
+ </resources>
+diff --git a/res/xml/accounts_dashboard_settings.xml b/res/xml/accounts_dashboard_settings.xml
+index 6b5f825987..59b771c3c5 100644
+--- a/res/xml/accounts_dashboard_settings.xml
++++ b/res/xml/accounts_dashboard_settings.xml
+@@ -44,4 +44,16 @@
+         android:summary="@string/auto_sync_account_summary"
+         android:order="104"/>
+ 
++    <Preference
++        android:order="150"
++        android:title="@string/custom_google_sync_title"
++        android:summary="@string/custom_google_sync_summary">
++
++        <intent
++            android:action="android.intent.action.VIEW"
++            android:targetPackage="com.google.android.apps.restore"
++            android:targetClass="com.google.android.apps.pixelmigrate.cloudrestore.component.CloudRestoreFlowActivity" />
++
++    </Preference>
++
+ </PreferenceScreen>
+-- 
+2.17.1
+

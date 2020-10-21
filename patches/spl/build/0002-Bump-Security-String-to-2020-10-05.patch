@@ -1,0 +1,31 @@
+From d69e5810908662a6869ec9dacb48ce6286aa7853 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 12 Oct 2020 15:05:06 -0400
+Subject: [PATCH] Bump Security String to 2020-10-05
+
+  from
+  https://github.com/LineageOS/android_build/commit/2ebbb9b8d01109e8ff857554a327bec97663c0f9
+  (don't worry, included all patches from
+  https://source.android.com/security/bulletin/2020-10-01)
+
+Change-Id: Ieecee794ba52d0fb5ab3e99e13728cf9ffed6543
+---
+ core/version_defaults.mk | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/core/version_defaults.mk b/core/version_defaults.mk
+index d1eafa41c..3e957b7b6 100644
+--- a/core/version_defaults.mk
++++ b/core/version_defaults.mk
+@@ -256,7 +256,7 @@ ifndef PLATFORM_SECURITY_PATCH
+     #  It must be of the form "YYYY-MM-DD" on production devices.
+     #  It must match one of the Android Security Patch Level strings of the Public Security Bulletins.
+     #  If there is no $PLATFORM_SECURITY_PATCH set, keep it empty.
+-      PLATFORM_SECURITY_PATCH := 2020-09-05
++      PLATFORM_SECURITY_PATCH := 2020-10-05
+ endif
+ .KATI_READONLY := PLATFORM_SECURITY_PATCH
+ 
+-- 
+2.17.1
+

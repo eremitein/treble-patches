@@ -1,0 +1,46 @@
+From 685f33c215a64838f7c60835b97915c1a9693c7f Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Wed, 21 Oct 2020 13:58:06 -0400
+Subject: [PATCH] tweaks for Xiaomi Redmi 9 (Prime) 'lancelot'
+
+  from
+  https://forum.xda-developers.com/showpost.php?p=83640257&postcount=365
+---
+ rw-system.sh | 8 ++++----
+ 1 file changed, 4 insertions(+), 4 deletions(-)
+
+diff --git a/rw-system.sh b/rw-system.sh
+index a716163..886dafe 100644
+--- a/rw-system.sh
++++ b/rw-system.sh
+@@ -88,7 +88,7 @@ changeKeylayout() {
+         -e xiaomi/polaris -e xiaomi/sirius -e xiaomi/dipper \
+         -e xiaomi/wayne -e xiaomi/jasmine -e xiaomi/jasmine_sprout \
+         -e xiaomi/platina -e iaomi/perseus -e xiaomi/ysl -e Redmi/begonia\
+-        -e xiaomi/nitrogen -e xiaomi/sakura -e xiaomi/andromeda \
++        -e xiaomi/nitrogen -e xiaomi/sakura -e xiaomi/andromeda -e Redmi/lancelot \
+         -e xiaomi/whyred -e xiaomi/tulip -e xiaomi/onc -e Redmi/merlin \
+         -e redmi/curtana -e redmi/picasso -e redmi/galahad; then
+         if [ ! -f /mnt/phh/keylayout/uinput-goodix.kl ]; then
+@@ -298,15 +298,15 @@ if grep -qF 'mkdir /data/.fps 0770 system fingerp' vendor/etc/init/hw/init.mmi.r
+ fi
+ 
+ if getprop ro.vendor.build.fingerprint | grep -q -i \
+-    -e xiaomi/clover -e xiaomi/wayne -e xiaomi/sakura \
++    -e xiaomi/clover -e xiaomi/wayne -e xiaomi/sakura -e Redmi/lancelot \
+     -e xiaomi/nitrogen -e xiaomi/whyred -e xiaomi/platina -e Redmi/merlin \
+     -e xiaomi/ysl -e nubia/nx60 -e nubia/nx61 -e xiaomi/tulip -e Redmi/begonia\
+     -e xiaomi/lavender -e xiaomi/olive -e xiaomi/olivelite -e xiaomi/pine; then
+     setprop persist.sys.qcom-brightness "$(cat /sys/class/leds/lcd-backlight/max_brightness)"
+ fi
+ 
+-#Xiaomi Redmi Note 9
+-if getprop ro.vendor.build.fingerprint |grep -qi -e Redmi/merlin; then
++#Xiaomi Redmi Note 9, Redmi 9 (Prime)
++if getprop ro.vendor.build.fingerprint |grep -qi -e Redmi/merlin -e Redmi/lancelot; then
+     setprop persist.sys.overlay.devinputjack true
+ fi
+ 
+-- 
+2.17.1
+

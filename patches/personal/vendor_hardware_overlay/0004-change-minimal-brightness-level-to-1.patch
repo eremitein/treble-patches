@@ -1,0 +1,26 @@
+From 95140f6e29b0ed1ec27bf7abb2ad0590ebeb3bbc Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Sat, 17 Oct 2020 07:53:50 -0400
+Subject: [PATCH] change minimal brightness level to 1
+
+  user said it too light
+---
+ Xiaomi/RedmiNote8Pro/res/values/brightness.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/Xiaomi/RedmiNote8Pro/res/values/brightness.xml b/Xiaomi/RedmiNote8Pro/res/values/brightness.xml
+index 77469ab..16de8da 100644
+--- a/Xiaomi/RedmiNote8Pro/res/values/brightness.xml
++++ b/Xiaomi/RedmiNote8Pro/res/values/brightness.xml
+@@ -13,7 +13,7 @@
+     <integer name="config_screenBrightnessDoze">17</integer>
+     <integer name="config_screenBrightnessSettingDefault">128</integer>
+     <integer name="config_screenBrightnessSettingMaximum">255</integer>
+-    <integer name="config_screenBrightnessSettingMinimum">3</integer>    
++    <integer name="config_screenBrightnessSettingMinimum">1</integer>
+     <integer-array name="config_autoBrightnessLcdBacklightValues">
+         <item>2</item>
+         <item>5</item>
+-- 
+2.17.1
+

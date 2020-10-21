@@ -6,11 +6,11 @@ This is GSI project, patches based on the Phh's and Andy Yan works
 apply-patches.sh to apply all patches
 	ex. usage:
 	cd /where/bootleggers/sources
-	bash ~/files/patches/bootleggers/v223/apply-patches.sh ~/files/patches/bootleggers/v223/
+	bash ~/files/patches/bootleggers/v224/apply-patches.sh ~/files/patches/bootleggers/v224/
 
 buildqiDroid.sh for starting build process from zero
 	ex. usage:
-	cd ~/files/patches/bootleggers/v223
+	cd ~/files/patches/bootleggers/v224
 	bash buildqiDroid.sh /where/bootleggers/sources
 
 Patches separated to the three category:
