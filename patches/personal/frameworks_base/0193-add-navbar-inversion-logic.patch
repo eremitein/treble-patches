@@ -1,0 +1,41 @@
+From cde83d7e22d75ad6239a8d678951bcce19d41024 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 26 Oct 2020 14:23:12 -0400
+Subject: [PATCH] add navbar inversion logic
+
+Change-Id: Id840bebc37ea50e012fd9b99cc5e64ffc7b01f3a
+---
+ .../statusbar/phone/NavigationBarInflaterView.java     | 10 ++++++++++
+ 1 file changed, 10 insertions(+)
+
+diff --git a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java
+index 662c744f8c9..dbedad8206a 100644
+--- a/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java
++++ b/packages/SystemUI/src/com/android/systemui/statusbar/phone/NavigationBarInflaterView.java
+@@ -21,6 +21,7 @@ import android.annotation.Nullable;
+ import android.content.Context;
+ import android.content.res.Configuration;
+ import android.graphics.drawable.Icon;
++import android.os.SystemProperties;
+ import android.util.AttributeSet;
+ import android.util.Log;
+ import android.util.SparseArray;
+@@ -271,6 +272,15 @@ public class NavigationBarInflaterView extends FrameLayout
+         inflateButtons(end, mVertical.findViewById(R.id.ends_group),
+                 true /* landscape */, false /* start */);
+ 
++        if (SystemProperties.getBoolean("persist.sys.navbar.inverse", true)) {
++            Configuration config = mContext.getResources().getConfiguration();
++            if (config.getLayoutDirection() == View.LAYOUT_DIRECTION_RTL) {
++                setLayoutDirection(View.LAYOUT_DIRECTION_LTR);
++            } else {
++                setLayoutDirection(View.LAYOUT_DIRECTION_RTL);
++            }
++        }
++
+         updateButtonDispatchersCurrentView();
+     }
+ 
+-- 
+2.17.1
+

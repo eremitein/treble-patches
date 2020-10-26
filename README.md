@@ -6,10 +6,10 @@ This is GSI project, patches based on the Phh's works
 apply-patches.sh to apply all patches
 	ex. usage:
 		cd /where/aosp/sources
-		bash ~/files/patches/aosp/v223/apply-patches.sh ~/files/patches/aosp/v223/
+		bash ~/files/patches/aosp/v224/apply-patches.sh ~/files/patches/aosp/v224/
 
 buildCaos.sh for starting build process from zero
 	ex. usage:
-		cd ~/files/patches/aosp/v223
+		cd ~/files/patches/aosp/v224
 		bash buildCaos.sh /where/aosp/sources
 

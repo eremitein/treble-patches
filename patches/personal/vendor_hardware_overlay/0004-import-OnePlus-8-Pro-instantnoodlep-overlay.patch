@@ -1,0 +1,681 @@
+From 7d06ac4f885538583ee4c1b6ea346050a7c694ab Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Mon, 26 Oct 2020 02:40:31 -0400
+Subject: [PATCH 4/5] import OnePlus 8 Pro (instantnoodlep) overlay
+
+  from https://github.com/luk1337/android_device_oneplus_instantnoodlep
+---
+ OnePlus/OP8Pro-SystemUI/Android.mk            |   6 +
+ OnePlus/OP8Pro-SystemUI/AndroidManifest.xml   |   9 +
+ OnePlus/OP8Pro-SystemUI/res/values/dimens.xml |  29 ++
+ OnePlus/OP8Pro/Android.mk                     |   8 +
+ OnePlus/OP8Pro/AndroidManifest.xml            |  10 +
+ OnePlus/OP8Pro/res/values/config.xml          | 386 ++++++++++++++++++
+ OnePlus/OP8Pro/res/xml/power_profile.xml      | 151 +++++++
+ overlay.mk                                    |   2 +
+ 8 files changed, 601 insertions(+)
+ create mode 100644 OnePlus/OP8Pro-SystemUI/Android.mk
+ create mode 100644 OnePlus/OP8Pro-SystemUI/AndroidManifest.xml
+ create mode 100644 OnePlus/OP8Pro-SystemUI/res/values/dimens.xml
+ create mode 100644 OnePlus/OP8Pro/Android.mk
+ create mode 100644 OnePlus/OP8Pro/AndroidManifest.xml
+ create mode 100644 OnePlus/OP8Pro/res/values/config.xml
+ create mode 100644 OnePlus/OP8Pro/res/xml/power_profile.xml
+
+diff --git a/OnePlus/OP8Pro-SystemUI/Android.mk b/OnePlus/OP8Pro-SystemUI/Android.mk
+new file mode 100644
+index 0000000..54dd8f2
+--- /dev/null
++++ b/OnePlus/OP8Pro-SystemUI/Android.mk
+@@ -0,0 +1,6 @@
++LOCAL_PATH := $(call my-dir)
++include $(CLEAR_VARS)
++LOCAL_MODULE_TAGS := optional
++LOCAL_PACKAGE_NAME := treble-overlay-oneplus-op8pro-systemui
++LOCAL_PRIVATE_PLATFORM_APIS := true
++include $(BUILD_PACKAGE)
+diff --git a/OnePlus/OP8Pro-SystemUI/AndroidManifest.xml b/OnePlus/OP8Pro-SystemUI/AndroidManifest.xml
+new file mode 100644
+index 0000000..11908eb
+--- /dev/null
++++ b/OnePlus/OP8Pro-SystemUI/AndroidManifest.xml
+@@ -0,0 +1,9 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++        package="me.phh.treble.overlay.oneplus.op8pro.systemui"
++        android:versionCode="1"
++        android:versionName="1.0">
++        <overlay android:targetPackage="com.android.systemui"
++                android:requiredSystemPropertyName="ro.vendor.build.fingerprint"
++                android:requiredSystemPropertyValue="+OnePlus/OnePlus8Pro/OnePlus8Pro*"
++		android:priority="60" />
++</manifest>
+diff --git a/OnePlus/OP8Pro-SystemUI/res/values/dimens.xml b/OnePlus/OP8Pro-SystemUI/res/values/dimens.xml
+new file mode 100644
+index 0000000..ca85f48
+--- /dev/null
++++ b/OnePlus/OP8Pro-SystemUI/res/values/dimens.xml
+@@ -0,0 +1,29 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++ * Copyright (c) 2006, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++*/
++-->
++<resources>
++    <!-- Height of the status bar header bar when on Keyguard -->
++    <dimen name="status_bar_header_height_keyguard">@*android:dimen/status_bar_height</dimen>
++
++    <!-- Margin on the left side of the carrier text on Keyguard -->
++    <dimen name="keyguard_carrier_text_margin">32dp</dimen>
++
++    <!-- Margin on the right side of the system icon group on Keyguard. -->
++    <dimen name="system_icons_keyguard_padding_end">26dp</dimen>
++
++    <dimen name="rounded_corner_content_padding">74px</dimen>
++</resources>
+diff --git a/OnePlus/OP8Pro/Android.mk b/OnePlus/OP8Pro/Android.mk
+new file mode 100644
+index 0000000..e533101
+--- /dev/null
++++ b/OnePlus/OP8Pro/Android.mk
+@@ -0,0 +1,8 @@
++LOCAL_PATH := $(call my-dir)
++include $(CLEAR_VARS)
++LOCAL_MODULE_TAGS := optional
++LOCAL_PACKAGE_NAME := treble-overlay-oneplus-op8pro
++LOCAL_MODULE_PATH := $(TARGET_OUT_PRODUCT)/overlay
++LOCAL_IS_RUNTIME_RESOURCE_OVERLAY := true
++LOCAL_PRIVATE_PLATFORM_APIS := true
++include $(BUILD_PACKAGE)
+diff --git a/OnePlus/OP8Pro/AndroidManifest.xml b/OnePlus/OP8Pro/AndroidManifest.xml
+new file mode 100644
+index 0000000..3cf2e84
+--- /dev/null
++++ b/OnePlus/OP8Pro/AndroidManifest.xml
+@@ -0,0 +1,10 @@
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++        package="me.phh.treble.overlay.oneplus.op8pro"
++        android:versionCode="1"
++        android:versionName="1.0">
++        <overlay android:targetPackage="android"
++                android:requiredSystemPropertyName="ro.vendor.build.fingerprint"
++		android:requiredSystemPropertyValue="+OnePlus/OnePlus8Pro/OnePlus8Pro*"
++		android:priority="74"
++		android:isStatic="true" />
++</manifest>
+diff --git a/OnePlus/OP8Pro/res/values/config.xml b/OnePlus/OP8Pro/res/values/config.xml
+new file mode 100644
+index 0000000..e409cef
+--- /dev/null
++++ b/OnePlus/OP8Pro/res/values/config.xml
+@@ -0,0 +1,386 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!-- Copyright (C) 2009 The Android Open Source Project
++
++     Licensed under the Apache License, Version 2.0 (the "License");
++     you may not use this file except in compliance with the License.
++     You may obtain a copy of the License at
++
++          http://www.apache.org/licenses/LICENSE-2.0
++
++     Unless required by applicable law or agreed to in writing, software
++     distributed under the License is distributed on an "AS IS" BASIS,
++     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++     See the License for the specific language governing permissions and
++     limitations under the License.
++-->
++
++<!-- These resources are around just to allow their values to be customized
++     for different hardware and product builds.  Do not translate. -->
++<resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
++    <!-- Flag indicating whether the we should enable the automatic brightness in Settings.
++         Software implementation will be used if config_hardware_auto_brightness_available is not set -->
++    <bool name="config_automatic_brightness_available">true</bool>
++
++    <!-- Array of light sensor lux values to define our levels for auto backlight brightness support.
++         The N entries of this array define N + 1 control points as follows:
++         (1-based arrays)
++
++         Point 1:            (0, value[1]):             lux <= 0
++         Point 2:     (level[1], value[2]):  0        < lux <= level[1]
++         Point 3:     (level[2], value[3]):  level[2] < lux <= level[3]
++         ...
++         Point N+1: (level[N], value[N+1]):  level[N] < lux
++
++         The control points must be strictly increasing.  Each control point
++         corresponds to an entry in the brightness backlight values arrays.
++         For example, if lux == level[1] (first element of the levels array)
++         then the brightness will be determined by value[2] (second element
++         of the brightness values array).
++
++         Spline interpolation is used to determine the auto-brightness
++         backlight values for lux levels between these control points.
++
++         Must be overridden in platform specific overlays -->
++    <integer-array name="config_autoBrightnessLevels">
++        <item>1</item>
++        <item>4</item>
++        <item>12</item>
++        <item>20</item>
++        <item>40</item>
++        <item>65</item>
++        <item>95</item>
++        <item>140</item>
++        <item>200</item>
++        <item>350</item>
++        <item>650</item>
++        <item>1300</item>
++        <item>2000</item>
++        <item>3300</item>
++        <item>6000</item>
++        <item>10000</item>
++    </integer-array>
++
++    <!-- Array of desired screen brightness in nits corresponding to the lux values
++         in the config_autoBrightnessLevels array. As with config_screenBrightnessMinimumNits and
++         config_screenBrightnessMaximumNits, the display brightness is defined as the measured
++         brightness of an all-white image.
++
++         If this is defined then:
++            - config_autoBrightnessLcdBacklightValues should not be defined
++            - config_screenBrightnessNits must be defined
++            - config_screenBrightnessBacklight must be defined
++
++         This array should have size one greater than the size of the config_autoBrightnessLevels
++         array. The brightness values must be non-negative and non-decreasing. This must be
++         overridden in platform specific overlays -->
++    <array name="config_autoBrightnessDisplayValuesNits">
++        <item>3.5077</item>
++        <item>6.8394</item>
++        <item>15.2619</item>
++        <item>30.2619</item>
++        <item>40.671</item>
++        <item>52.3019</item>
++        <item>65.2512</item>
++        <item>77.37</item>
++        <item>90.152</item>
++        <item>100.297</item>
++        <item>110.385</item>
++        <item>135.064</item>
++        <item>160.5179</item>
++        <item>195.0267</item>
++        <item>380.2814</item>
++        <item>409.2867</item>
++        <item>427.6287</item>
++    </array>
++
++    <!-- An array of floats describing the screen brightness in nits corresponding to the backlight
++         values in the config_screenBrightnessBacklight array.  On OLED displays these  values
++         should be measured with an all white image while the display is in the fully on state.
++         Note that this value should *not* reflect the maximum brightness value for any high
++         brightness modes but only the maximum brightness value obtainable in a sustainable manner.
++
++         This array should be equal in size to config_screenBrightnessBacklight -->
++    <array name="config_screenBrightnessNits">
++        <item>2.0482</item>
++        <item>2.7841</item>
++        <item>3.79505</item>
++        <item>4.4748</item>
++        <item>5.08</item>
++        <item>6.4233</item>
++        <item>8.0848</item>
++        <item>11.6607</item>
++        <item>13.2347</item>
++        <item>15.0676</item>
++        <item>16.8302</item>
++        <item>18.4261</item>
++        <item>20.3103</item>
++        <item>21.9042</item>
++        <item>23.5456</item>
++        <item>25.2137</item>
++        <item>27.1769</item>
++        <item>28.9571</item>
++        <item>30.5244</item>
++        <item>32.3535</item>
++        <item>34.0867</item>
++        <item>42.366</item>
++        <item>51.1309</item>
++        <item>59.52</item>
++        <item>67.744</item>
++        <item>75.9738</item>
++        <item>84.6332</item>
++        <item>94.1525</item>
++        <item>102.2207</item>
++        <item>110.4878</item>
++        <item>117.0405</item>
++        <item>124.3733</item>
++        <item>130.9928</item>
++        <item>140.4247</item>
++        <item>149.3156</item>
++        <item>157.1995</item>
++        <item>165.3651</item>
++        <item>173.2726</item>
++        <item>181.4272</item>
++        <item>189.1402</item>
++        <item>197.5334</item>
++        <item>205.6301</item>
++        <item>213.9381</item>
++        <item>222.2769</item>
++        <item>230.0891</item>
++        <item>238.6084</item>
++        <item>246.5399</item>
++        <item>255.6544</item>
++        <item>263.6221</item>
++        <item>271.9324</item>
++        <item>279.1449</item>
++        <item>288.5736</item>
++        <item>297.6628</item>
++        <item>306.1899</item>
++        <item>314.4511</item>
++        <item>322.1404</item>
++        <item>330.969</item>
++        <item>338.2251</item>
++        <item>346.2251</item>
++        <item>354.567</item>
++        <item>370.799</item>
++        <item>413.1738</item>
++        <item>415.6397</item>
++        <item>417.264</item>
++        <item>419.264</item>
++        <item>421.264</item>
++        <item>424.646</item>
++        <item>427.6287</item>
++    </array>
++
++    <!-- An array describing the screen's backlight values corresponding to the brightness
++         values in the config_screenBrightnessNits array.
++
++         This array should be equal in size to config_screenBrightnessBacklight. -->
++    <integer-array name="config_screenBrightnessBacklight">
++        <item>0</item>
++        <item>1</item>
++        <item>2</item>
++        <item>3</item>
++        <item>4</item>
++        <item>5</item>
++        <item>6</item>
++        <item>7</item>
++        <item>8</item>
++        <item>9</item>
++        <item>10</item>
++        <item>11</item>
++        <item>12</item>
++        <item>13</item>
++        <item>14</item>
++        <item>15</item>
++        <item>16</item>
++        <item>17</item>
++        <item>18</item>
++        <item>19</item>
++        <item>20</item>
++        <item>25</item>
++        <item>30</item>
++        <item>35</item>
++        <item>40</item>
++        <item>45</item>
++        <item>50</item>
++        <item>55</item>
++        <item>60</item>
++        <item>65</item>
++        <item>70</item>
++        <item>75</item>
++        <item>80</item>
++        <item>85</item>
++        <item>90</item>
++        <item>95</item>
++        <item>100</item>
++        <item>105</item>
++        <item>110</item>
++        <item>115</item>
++        <item>120</item>
++        <item>125</item>
++        <item>130</item>
++        <item>135</item>
++        <item>140</item>
++        <item>145</item>
++        <item>150</item>
++        <item>155</item>
++        <item>160</item>
++        <item>165</item>
++        <item>170</item>
++        <item>174</item>
++        <item>179</item>
++        <item>184</item>
++        <item>189</item>
++        <item>194</item>
++        <item>199</item>
++        <item>204</item>
++        <item>209</item>
++        <item>214</item>
++        <item>219</item>
++        <item>224</item>
++        <item>229</item>
++        <item>234</item>
++        <item>239</item>
++        <item>244</item>
++        <item>249</item>
++        <item>255</item>
++    </integer-array>
++
++    <!-- Array of hysteresis constraint values for brightening, represented as tenths of a
++         percent. The length of this array is assumed to be one greater than
++         config_dynamicHysteresisLuxLevels. The brightening threshold is calculated as
++         lux * (1.0f + CONSTRAINT_VALUE). When the current lux is higher than this threshold,
++         the screen brightness is recalculated. See the config_dynamicHysteresisLuxLevels
++         description for how the constraint value is chosen. -->
++    <integer-array name="config_dynamicHysteresisBrightLevels">
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>250</item>
++        <item>300</item>
++        <item>300</item>
++        <item>300</item>
++        <item>300</item>
++        <item>300</item>
++        <item>300</item>
++        <item>400</item>
++        <item>500</item>
++    </integer-array>
++
++    <!-- Array of hysteresis constraint values for darkening, represented as tenths of a
++         percent. The length of this array is assumed to be one greater than
++         config_dynamicHysteresisLuxLevels. The darkening threshold is calculated as
++         lux * (1.0f - CONSTRAINT_VALUE). When the current lux is lower than this threshold,
++         the screen brightness is recalculated. See the config_dynamicHysteresisLuxLevels
++         description for how the constraint value is chosen. -->
++    <integer-array name="config_dynamicHysteresisDarkLevels">
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>200</item>
++        <item>300</item>
++        <item>400</item>
++        <item>400</item>
++        <item>400</item>
++        <item>400</item>
++        <item>400</item>
++        <item>400</item>
++        <item>500</item>
++        <item>500</item>
++    </integer-array>
++
++    <!-- Array of ambient lux threshold values. This is used for determining hysteresis constraint
++         values by calculating the index to use for lookup and then setting the constraint value
++         to the corresponding value of the array. The new brightening hysteresis constraint value
++         is the n-th element of config_dynamicHysteresisBrightLevels, and the new darkening
++         hysteresis constraint value is the n-th element of config_dynamicHysteresisDarkLevels.
++
++         The (zero-based) index is calculated as follows: (MAX is the largest index of the array)
++         condition                      calculated index
++         value < lux[0]                 0
++         lux[n] <= value < lux[n+1]     n+1
++         lux[MAX] <= value              MAX+1 -->
++    <integer-array name="config_dynamicHysteresisLuxLevels">
++        <item>1</item>
++        <item>4</item>
++        <item>12</item>
++        <item>20</item>
++        <item>40</item>
++        <item>65</item>
++        <item>95</item>
++        <item>140</item>
++        <item>200</item>
++        <item>350</item>
++        <item>650</item>
++        <item>1300</item>
++        <item>2000</item>
++        <item>3300</item>
++        <item>6000</item>
++        <item>10000</item>
++    </integer-array>
++
++    <!-- Screen brightness used to dim the screen when the user activity
++         timeout expires.  May be less than the minimum allowed brightness setting
++         that can be set by the user. -->
++    <integer name="config_screenBrightnessDim">6</integer>
++
++    <!-- Default screen brightness setting.
++         Must be in the range specified by minimum and maximum. -->
++    <integer name="config_screenBrightnessSettingDefault">184</integer>
++
++    <!-- Minimum screen brightness setting allowed by the power manager.
++         The user is forbidden from setting the brightness below this level. -->
++    <integer name="config_screenBrightnessSettingMinimum">2</integer>
++
++    <!-- Stability requirements in milliseconds for accepting a new brightness level.  This is used
++         for debouncing the light sensor.  Different constants are used to debounce the light sensor
++         when adapting to brighter or darker environments.  This parameter controls how quickly
++         brightness changes occur in response to an observed change in light level that exceeds the
++         hysteresis threshold. -->
++    <integer name="config_autoBrightnessBrighteningLightDebounce">2000</integer>
++    <integer name="config_autoBrightnessDarkeningLightDebounce">4000</integer>
++
++    <!-- The maximum range of gamma adjustment possible using the screen
++         auto-brightness adjustment setting. -->
++    <fraction name="config_autoBrightnessAdjustmentMaxGamma">300%</fraction>
++
++    <!-- Amount of time it takes for the light sensor to warm up in milliseconds.
++         For this time after the screen turns on, the Power Manager
++         will not debounce light sensor readings -->
++    <integer name="config_lightSensorWarmupTime">200</integer>
++
++    <!-- The bounding path of the cutout region of the main built-in display.
++         Must either be empty if there is no cutout region, or a string that is parsable by
++         {@link android.util.PathParser}.
++
++         The path is assumed to be specified in display coordinates with pixel units and in
++         the display's native orientation, with the origin of the coordinate system at the
++         center top of the display.
++
++         To facilitate writing device-independent emulation overlays, the marker `@dp` can be
++         appended after the path string to interpret coordinates in dp instead of px units.
++         Note that a physical cutout should be configured in pixels for the best results.
++         -->
++    <string translatable="false" name="config_mainBuiltInDisplayCutout">
++        M 0, 0
++        H 44
++        V 44
++        H 0
++        L 0, 0
++        @dp
++        @left
++    </string>
++
++    <!-- Height of the status bar -->
++    <dimen name="status_bar_height_portrait">153px</dimen>
++    <dimen name="status_bar_height_landscape">153px</dimen>
++</resources>
+diff --git a/OnePlus/OP8Pro/res/xml/power_profile.xml b/OnePlus/OP8Pro/res/xml/power_profile.xml
+new file mode 100644
+index 0000000..d5742da
+--- /dev/null
++++ b/OnePlus/OP8Pro/res/xml/power_profile.xml
+@@ -0,0 +1,151 @@
++<?xml version="1.0" encoding="utf-8"?>
++<device name="Android">
++    <item name="none">0</item>
++    <item name="screen.on">159</item>
++    <item name="screen.full">334</item>
++    <item name="bluetooth.active">132</item>
++    <item name="bluetooth.on">1</item>
++    <item name="wifi.on">8</item>
++    <item name="wifi.active">157</item>
++    <item name="wifi.scan">127</item>
++    <item name="dsp.audio">43</item>
++    <item name="dsp.video">62</item>
++    <item name="camera.flashlight">118</item>
++    <item name="camera.avg">547</item>
++    <item name="radio.active">103</item>
++    <item name="radio.scanning">1</item>
++    <item name="gps.on">10</item>
++    <array name="radio.on">
++        <value>3</value>
++        <value>2</value>
++    </array>
++    <array name="cpu.clusters.cores">
++        <value>4</value>
++        <value>3</value>
++        <value>1</value>
++    </array>
++    <array name="cpu.core_speeds.cluster0">
++        <value>691200</value>
++        <value>787200</value>
++        <value>883200</value>
++        <value>979200</value>
++        <value>1075200</value>
++        <value>1171200</value>
++        <value>1248000</value>
++        <value>1344000</value>
++        <value>1420800</value>
++        <value>1516800</value>
++        <value>1612800</value>
++        <value>1708800</value>
++        <value>1804800</value>
++    </array>
++    <array name="cpu.core_speeds.cluster1">
++        <value>710400</value>
++        <value>825600</value>
++        <value>940800</value>
++        <value>1056000</value>
++        <value>1171200</value>
++        <value>1286400</value>
++        <value>1382400</value>
++        <value>1478400</value>
++        <value>1574400</value>
++        <value>1670400</value>
++        <value>1766400</value>
++        <value>1862400</value>
++        <value>1958400</value>
++        <value>2054400</value>
++        <value>2150400</value>
++        <value>2246400</value>
++        <value>2342400</value>
++        <value>2419200</value>
++    </array>
++    <array name="cpu.core_speeds.cluster2">
++        <value>844800</value>
++        <value>960000</value>
++        <value>1075200</value>
++        <value>1190400</value>
++        <value>1305600</value>
++        <value>1401600</value>
++        <value>1516800</value>
++        <value>1632000</value>
++        <value>1747200</value>
++        <value>1862400</value>
++        <value>1977600</value>
++        <value>2073600</value>
++        <value>2169600</value>
++        <value>2265600</value>
++        <value>2361600</value>
++        <value>2457600</value>
++        <value>2553600</value>
++        <value>2649600</value>
++        <value>2745600</value>
++        <value>2841600</value>
++    </array>
++    <array name="cpu.core_power.cluster0">
++        <value>10.70</value>
++        <value>12.43</value>
++        <value>12.95</value>
++        <value>14.29</value>
++        <value>15.31</value>
++        <value>17.12</value>
++        <value>18.29</value>
++        <value>20.06</value>
++        <value>21.82</value>
++        <value>24.55</value>
++        <value>26.61</value>
++        <value>29.12</value>
++        <value>30.90</value>
++    </array>
++    <array name="cpu.core_power.cluster1">
++        <value>50.95</value>
++        <value>60.84</value>
++        <value>70.19</value>
++        <value>79.80</value>
++        <value>89.95</value>
++        <value>102.26</value>
++        <value>110.31</value>
++        <value>121.19</value>
++        <value>133.52</value>
++        <value>146.63</value>
++        <value>162.23</value>
++        <value>184.57</value>
++        <value>203.82</value>
++        <value>224.39</value>
++        <value>246.47</value>
++        <value>271.22</value>
++        <value>296.33</value>
++        <value>320.30</value>
++    </array>
++    <array name="cpu.core_power.cluster2">
++        <value>63.69</value>
++        <value>78.19</value>
++        <value>87.25</value>
++        <value>96.54</value>
++        <value>107.03</value>
++        <value>115.65</value>
++        <value>131.76</value>
++        <value>147.01</value>
++        <value>166.07</value>
++        <value>180.54</value>
++        <value>205.71</value>
++        <value>222.18</value>
++        <value>260.81</value>
++        <value>272.85</value>
++        <value>289.49</value>
++        <value>316.00</value>
++        <value>343.74</value>
++        <value>377.29</value>
++        <value>418.30</value>
++        <value>459.55</value>
++    </array>
++    <item name="cpu.idle">6</item>
++    <item name="cpu.awake">8</item>
++    <item name="battery.capacity">4510</item>
++    <array name="wifi.batchedscan">
++        <value>.0002</value>
++        <value>.002</value>
++        <value>.02</value>
++        <value>.2</value>
++        <value>2</value>
++    </array>
++</device>
+diff --git a/overlay.mk b/overlay.mk
+index c5eec8b..40368a6 100644
+--- a/overlay.mk
++++ b/overlay.mk
+@@ -73,6 +73,8 @@ PRODUCT_PACKAGES += \
+ 	treble-overlay-oneplus-op6 \
+ 	treble-overlay-oneplus-op6t \
+ 	treble-overlay-oneplus-op6t-systemui \
++	treble-overlay-oneplus-op8pro \
++	treble-overlay-oneplus-op8pro-systemui \
+ 	treble-overlay-razer-cheryl \
+ 	treble-overlay-realme-6 \
+ 	treble-overlay-realme-6i \
+-- 
+2.17.1
+

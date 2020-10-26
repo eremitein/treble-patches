@@ -1,0 +1,127 @@
+From 9f1726ef49e0f55d8d91d1f853a4aaa510ec41df Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 8 Oct 2020 15:10:16 -0400
+Subject: [PATCH] add 4x2 QS panel overlay
+
+Change-Id: Ibaaee7732c84473c5b25fa7570943d73b7b0831f
+---
+ packages/overlays/Android.mk                  |  1 +
+ packages/overlays/QSPanel42Overlay/Android.mk | 30 +++++++++++++++++++
+ .../QSPanel42Overlay/AndroidManifest.xml      | 24 +++++++++++++++
+ .../QSPanel42Overlay/res/values/config.xml    | 24 +++++++++++++++
+ 4 files changed, 79 insertions(+)
+ create mode 100644 packages/overlays/QSPanel42Overlay/Android.mk
+ create mode 100644 packages/overlays/QSPanel42Overlay/AndroidManifest.xml
+ create mode 100644 packages/overlays/QSPanel42Overlay/res/values/config.xml
+
+diff --git a/packages/overlays/Android.mk b/packages/overlays/Android.mk
+index 85faf15f58c..58aa68204b9 100644
+--- a/packages/overlays/Android.mk
++++ b/packages/overlays/Android.mk
+@@ -76,6 +76,7 @@ LOCAL_REQUIRED_MODULES := \
+ 	QSPanel32Overlay \
+ 	QSPanel33Overlay \
+ 	QSPanel34Overlay \
++	QSPanel42Overlay \
+ 	QSPanel43Overlay \
+ 	QSPanel55Overlay \
+ 	StatusBar1Overlay \
+diff --git a/packages/overlays/QSPanel42Overlay/Android.mk b/packages/overlays/QSPanel42Overlay/Android.mk
+new file mode 100644
+index 00000000000..0ed0586a6f9
+--- /dev/null
++++ b/packages/overlays/QSPanel42Overlay/Android.mk
+@@ -0,0 +1,30 @@
++#
++#  Copyright 2019, The Android Open Source Project
++#
++# Licensed under the Apache License, Version 2.0 (the "License");
++# you may not use this file except in compliance with the License.
++# You may obtain a copy of the License at
++#
++#     http://www.apache.org/licenses/LICENSE-2.0
++#
++# Unless required by applicable law or agreed to in writing, software
++# distributed under the License is distributed on an "AS IS" BASIS,
++# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++# See the License for the specific language governing permissions and
++# limitations under the License.
++#
++LOCAL_PATH:= $(call my-dir)
++include $(CLEAR_VARS)
++
++LOCAL_RRO_THEME := QSPanel42
++
++LOCAL_PRODUCT_MODULE := true
++
++LOCAL_SRC_FILES := $(call all-subdir-java-files)
++
++LOCAL_RESOURCE_DIR := $(LOCAL_PATH)/res
++
++LOCAL_PACKAGE_NAME := QSPanel42Overlay
++LOCAL_SDK_VERSION := current
++
++include $(BUILD_RRO_PACKAGE)
+diff --git a/packages/overlays/QSPanel42Overlay/AndroidManifest.xml b/packages/overlays/QSPanel42Overlay/AndroidManifest.xml
+new file mode 100644
+index 00000000000..f032c96e561
+--- /dev/null
++++ b/packages/overlays/QSPanel42Overlay/AndroidManifest.xml
+@@ -0,0 +1,24 @@
++<!--
++/**
++ * Copyright (c) 2019, The Android Open Source Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<manifest xmlns:android="http://schemas.android.com/apk/res/android"
++    package="com.android.theme.qspanel42"
++    android:versionCode="1"
++    android:versionName="1.0">
++    <overlay android:targetPackage="com.android.systemui" android:category="android.theme.customization.qspanel" android:priority="1"/>
++    <application android:label="4x2" android:hasCode="false"/>
++</manifest>
+diff --git a/packages/overlays/QSPanel42Overlay/res/values/config.xml b/packages/overlays/QSPanel42Overlay/res/values/config.xml
+new file mode 100644
+index 00000000000..0a82179e758
+--- /dev/null
++++ b/packages/overlays/QSPanel42Overlay/res/values/config.xml
+@@ -0,0 +1,24 @@
++<?xml version="1.0" encoding="utf-8"?>
++<!--
++/**
++ * Copyright (c) 2020, CAOS Project
++ *
++ * Licensed under the Apache License, Version 2.0 (the "License");
++ * you may not use this file except in compliance with the License.
++ * You may obtain a copy of the License at
++ *
++ *     http://www.apache.org/licenses/LICENSE-2.0
++ *
++ * Unless required by applicable law or agreed to in writing, software
++ * distributed under the License is distributed on an "AS IS" BASIS,
++ * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
++ * See the License for the specific language governing permissions and
++ * limitations under the License.
++ */
++-->
++<resources>
++    <!-- The number of columns in the QuickSettings -->
++    <integer name="quick_settings_num_columns">4</integer>
++    <!-- The number of rows in the QuickSettings -->
++    <integer name="quick_settings_max_rows">2</integer>
++</resources>
+-- 
+2.17.1
+
