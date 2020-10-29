@@ -1,0 +1,71 @@
+From 4bae14886142f64d17275a45dee791dd062e87d0 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 29 Oct 2020 08:12:00 -0400
+Subject: [PATCH] add System UI tuner option
+
+Change-Id: I419b5a661e0a1027998c73ed4787b710edc2841d
+---
+ res/values-ru/strings.xml    |  5 ++++-
+ res/values/strings.xml       |  4 ++++
+ res/xml/display_settings.xml | 11 +++++++++++
+ 3 files changed, 19 insertions(+), 1 deletion(-)
+
+diff --git a/res/values-ru/strings.xml b/res/values-ru/strings.xml
+index edd732a933..26c86711e9 100644
+--- a/res/values-ru/strings.xml
++++ b/res/values-ru/strings.xml
+@@ -4849,7 +4849,7 @@
+     <string name="screenshot_sound_title">Звук сохранения снимка экрана</string>
+     <!-- Three-fingers-swipe to screenshot -->
+     <string name="three_finger_gesture">Жест для сохранения снимка экрана</string>
+-    <string name="three_finger_gesture_summary">Проведите тремя пальцами вниз по экрану для сохранения его       снимка</string>
++    <string name="three_finger_gesture_summary">Проведите тремя пальцами вниз по экрану для сохранения его снимка</string>
+     <!-- NavigationBar Gestural Mode Tweaks -->
+     <string name="gesture_pill_message">Скрыть панель навигации для полноэкранных жестов</string>
+     <!-- Vendor security -->
+@@ -4874,4 +4874,7 @@
+     <!-- Google backup restore -->
+     <string name="custom_google_sync_title">Восстановить резервную копию из Google Cloud</string>
+     <string name="custom_google_sync_summary">Запустить вручную восстановление резервной копии из Google Cloud\nПримечание: нужны com.google.android.apps.restore и вход в учётную запись</string>
++    <!-- SystemUI tuner -->
++    <string name="custom_systemui_tuner">System UI тюнер</string>
++    <string name="custom_systemui_tuner_summary">Открыть настройки старого SystemUI тюнера</string>
+ </resources>
+diff --git a/res/values/strings.xml b/res/values/strings.xml
+index 8b0bfff15d..ef13075455 100644
+--- a/res/values/strings.xml
++++ b/res/values/strings.xml
+@@ -11486,4 +11486,8 @@
+     <string name="custom_google_sync_title">Restore Google Cloud backup</string>
+     <string name="custom_google_sync_summary">Manually launch Google Cloud backup restore action\nNote: need com.google.android.apps.restore and logging in to the Google account</string>
+ 
++    <!-- SystemUI tuner -->
++    <string name="custom_systemui_tuner">System UI Tuner</string>
++    <string name="custom_systemui_tuner_summary">Open old SystemUI tuner\u2019s settings</string>
++
+ </resources>
+diff --git a/res/xml/display_settings.xml b/res/xml/display_settings.xml
+index cb10b93561..b4641830b8 100644
+--- a/res/xml/display_settings.xml
++++ b/res/xml/display_settings.xml
+@@ -145,6 +145,17 @@
+         android:title="@string/tap_to_wake"
+         android:summary="@string/tap_to_wake_summary" />
+ 
++    <Preference
++        android:title="@string/custom_systemui_tuner"
++        android:summary="@string/custom_systemui_tuner_summary">
++
++        <intent
++            android:action="android.intent.action.VIEW"
++            android:targetPackage="com.android.systemui"
++            android:targetClass="com.android.systemui.DemoMode" />
++
++    </Preference>
++
+     <ListPreference
+         android:key="theme"
+         android:title="@string/device_theme"
+-- 
+2.17.1
+

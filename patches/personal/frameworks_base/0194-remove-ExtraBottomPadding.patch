@@ -1,0 +1,26 @@
+From ed5da020237cdd66f54c364c55aaaeb1256c5ffa Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 29 Oct 2020 12:11:39 -0400
+Subject: [PATCH] remove ExtraBottomPadding
+
+Change-Id: I5daa38da7fa3d69b2a5e12a143201975f0787c8c
+---
+ packages/SystemUI/res/values/dimens.xml | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/packages/SystemUI/res/values/dimens.xml b/packages/SystemUI/res/values/dimens.xml
+index 125f22b0147..3b72232a4fb 100644
+--- a/packages/SystemUI/res/values/dimens.xml
++++ b/packages/SystemUI/res/values/dimens.xml
+@@ -574,7 +574,7 @@
+     <dimen name="notification_header_height">53dp</dimen>
+ 
+     <!-- The height of the divider between the individual notifications when the notification wants it to be increased. This is currently the case for notification groups -->
+-    <dimen name="notification_divider_height_increased">3dp</dimen>
++    <dimen name="notification_divider_height_increased">0dp</dimen>
+ 
+     <!-- The height of the gap between adjacent notification sections. -->
+     <dimen name="notification_section_divider_height">3dp</dimen>
+-- 
+2.17.1
+

@@ -1,9 +1,12 @@
-From cde83d7e22d75ad6239a8d678951bcce19d41024 Mon Sep 17 00:00:00 2001
+From 0f22690aebafb4b9f40fae2efe3f36cd9e7d6094 Mon Sep 17 00:00:00 2001
 From: Victor Bo <bvoid@yandex.ru>
 Date: Mon, 26 Oct 2020 14:23:12 -0400
 Subject: [PATCH] add navbar inversion logic
 
-Change-Id: Id840bebc37ea50e012fd9b99cc5e64ffc7b01f3a
+  based on
+  https://github.com/LineageOS/android_frameworks_base/commit/e1f96c674a2ed4f793b7d7ce61e31a4db585f146
+
+Change-Id: I41b593f125136630e3ceecb07a45f7753c142058
 ---
  .../statusbar/phone/NavigationBarInflaterView.java     | 10 ++++++++++
  1 file changed, 10 insertions(+)

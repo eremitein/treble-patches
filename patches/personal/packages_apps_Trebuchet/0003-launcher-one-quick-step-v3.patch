@@ -1,0 +1,152 @@
+From 9961090078af8c88f04a9e8fb3a053287eec6244 Mon Sep 17 00:00:00 2001
+From: Victor Bo <bvoid@yandex.ru>
+Date: Thu, 12 Mar 2020 23:26:15 +0200
+Subject: [PATCH 3/3] launcher one quick step v3
+
+	modified:   res/anim/no_anim.xml
+	modified:   res/anim/task_open_enter.xml
+	modified:   res/animator/all_apps_fastscroll_icon_anim.xml
+	modified:   res/animator/discovery_bounce.xml
+	modified:   res/values/config.xml
+
+Change-Id: If8a97815abf1a65216cc8718799a366343a48583
+---
+ res/anim/no_anim.xml                           |  2 +-
+ res/anim/task_open_enter.xml                   |  4 ++--
+ res/animator/all_apps_fastscroll_icon_anim.xml | 10 +++++-----
+ res/animator/discovery_bounce.xml              |  4 ++--
+ res/values/config.xml                          |  8 ++++----
+ 5 files changed, 14 insertions(+), 14 deletions(-)
+
+diff --git a/res/anim/no_anim.xml b/res/anim/no_anim.xml
+index 02b162519..5ff00d16b 100644
+--- a/res/anim/no_anim.xml
++++ b/res/anim/no_anim.xml
+@@ -15,4 +15,4 @@
+ -->
+ 
+ <alpha xmlns:android="http://schemas.android.com/apk/res/android"
+-    android:duration="417" />
++    android:duration="208" />
+diff --git a/res/anim/task_open_enter.xml b/res/anim/task_open_enter.xml
+index 3eb191537..dc252ef90 100644
+--- a/res/anim/task_open_enter.xml
++++ b/res/anim/task_open_enter.xml
+@@ -24,11 +24,11 @@
+             android:fillEnabled="true" android:fillBefore="true" android:fillAfter="true"
+             android:interpolator="@interpolator/decelerate_quart"
+             android:startOffset="0"
+-            android:duration="167"/>
++            android:duration="83"/>
+ 
+     <translate android:fromYDelta="110%" android:toYDelta="0"
+             android:fillEnabled="true" android:fillBefore="true" android:fillAfter="true"
+             android:interpolator="@interpolator/decelerate_quint"
+             android:startOffset="0"
+-            android:duration="417" />
++            android:duration="208" />
+ </set>
+diff --git a/res/animator/all_apps_fastscroll_icon_anim.xml b/res/animator/all_apps_fastscroll_icon_anim.xml
+index 380b009a6..8e3b20171 100644
+--- a/res/animator/all_apps_fastscroll_icon_anim.xml
++++ b/res/animator/all_apps_fastscroll_icon_anim.xml
+@@ -19,12 +19,12 @@
+     <item android:state_activated="true">
+         <set>
+             <objectAnimator
+-                android:duration="225"
++                android:duration="112"
+                 android:propertyName="scaleX"
+                 android:valueTo="1.15"
+                 android:valueType="floatType" />
+             <objectAnimator
+-                android:duration="225"
++                android:duration="112"
+                 android:propertyName="scaleY"
+                 android:valueTo="1.15"
+                 android:valueType="floatType" />
+@@ -34,16 +34,16 @@
+     <item>
+         <set>
+             <objectAnimator
+-                android:duration="275"
++                android:duration="137"
+                 android:propertyName="scaleX"
+                 android:valueTo="1"
+                 android:valueType="floatType" />
+             <objectAnimator
+-                android:duration="275"
++                android:duration="137"
+                 android:propertyName="scaleY"
+                 android:valueTo="1"
+                 android:valueType="floatType" />
+         </set>
+     </item>
+ 
+-</selector>
+\ No newline at end of file
++</selector>
+diff --git a/res/animator/discovery_bounce.xml b/res/animator/discovery_bounce.xml
+index f02ebdbac..64ae9aef2 100644
+--- a/res/animator/discovery_bounce.xml
++++ b/res/animator/discovery_bounce.xml
+@@ -19,7 +19,7 @@
+ <set xmlns:android="http://schemas.android.com/apk/res/android"
+     android:ordering="sequentially">
+     <objectAnimator
+-        android:duration="166"
++        android:duration="83"
+         android:interpolator="@interpolator/disco_bounce"
+         android:propertyName="progress"
+         android:startOffset="750"
+@@ -27,7 +27,7 @@
+         android:valueTo="0.9438f"
+         android:valueType="floatType" />
+     <objectAnimator
+-        android:duration="500"
++        android:duration="250"
+         android:interpolator="@interpolator/disco_bounce"
+         android:propertyName="progress"
+         android:valueTo="1f"
+diff --git a/res/values/config.xml b/res/values/config.xml
+index b3e07e28f..c00b6fc1a 100644
+--- a/res/values/config.xml
++++ b/res/values/config.xml
+@@ -37,7 +37,7 @@
+ <!-- Workspace -->
+     <!-- The duration (in ms) of the fade animation on the object outlines, used when
+          we are dragging objects around on the home screen. -->
+-    <integer name="config_dragOutlineFadeTime">900</integer>
++    <integer name="config_dragOutlineFadeTime">450</integer>
+ 
+     <!-- The alpha value at which to show the most recent drop visualization outline. -->
+     <integer name="config_dragOutlineMaxAlpha">128</integer>
+@@ -45,14 +45,14 @@
+     <!-- Parameters controlling the animation for when an item is dropped on the home screen,
+          and it animates from its old position to the new one. -->
+     <integer name="config_dropAnimMinDuration">100</integer>
+-    <integer name="config_dropAnimMaxDuration">500</integer>
++    <integer name="config_dropAnimMaxDuration">250</integer>
+ 
+     <!-- The duration of the UserFolder opening and closing animation -->
+     <integer name="config_materialFolderExpandDuration">200</integer>
+     <integer name="config_folderDelay">30</integer>
+ 
+     <!-- The distance at which the animation should take the max duration -->
+-    <integer name="config_dropAnimMaxDist">800</integer>
++    <integer name="config_dropAnimMaxDist">400</integer>
+ 
+     <!-- The duration of the caret animation -->
+     <integer name="config_caretAnimationDuration">200</integer>
+@@ -95,7 +95,7 @@
+     <!-- Popup items -->
+     <integer name="config_popupOpenCloseDuration">150</integer>
+     <integer name="config_popupArrowOpenCloseDuration">40</integer>
+-    <integer name="config_removeNotificationViewDuration">300</integer>
++    <integer name="config_removeNotificationViewDuration">200</integer>
+ 
+ <!-- Accessibility actions -->
+     <item type="id" name="action_remove" />
+-- 
+2.17.1
+
