@@ -11,8 +11,8 @@ fi
 
 pushd "$1"
 
-repo init -u https://github.com/crdroidandroid/android.git -b 10.0
-git clone --single-branch https://github.com/eremitein/treble_manifest_crdrom -b v224 .repo/local_manifests
+repo init -u https://github.com/crdroidandroid/android.git -b 11.0
+git clone https://github.com/eremitein/treble_manifest_crdrom -b v316 .repo/local_manifests
 repo sync -j${para} -c -q --force-sync --no-tags --no-clone-bundle --optimized-fetch --prune ||exit
 bash ${rund}/apply-patches.sh ${rund}
 cd device/phh/treble
